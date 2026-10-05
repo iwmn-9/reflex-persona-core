@@ -1,0 +1,206 @@
+{
+  "seeds": 8,
+  "turns": 60,
+  "episodes": 384,
+  "groups": [
+    {
+      "game": "cyclic_arena",
+      "mode": "fixed",
+      "episodes": 32,
+      "mean_score": -0.058124999999999816,
+      "losses": 508,
+      "late_losses": 124,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 0.7432499987771735
+    },
+    {
+      "game": "cyclic_arena",
+      "mode": "guard",
+      "episodes": 32,
+      "mean_score": -0.058124999999999816,
+      "losses": 508,
+      "late_losses": 124,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 0.8780250063864514
+    },
+    {
+      "game": "cyclic_arena",
+      "mode": "experience",
+      "episodes": 32,
+      "mean_score": 16.0325,
+      "losses": 93,
+      "late_losses": 16,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 1.9490749982651323
+    },
+    {
+      "game": "cyclic_arena",
+      "mode": "experience_read",
+      "episodes": 32,
+      "mean_score": 18.359375,
+      "losses": 94,
+      "late_losses": 16,
+      "reading_nodes": 600,
+      "reading_changes": 24,
+      "p50_ms": 3.15730000147596
+    },
+    {
+      "game": "four_player_commons",
+      "mode": "fixed",
+      "episodes": 32,
+      "mean_score": 4.425000000000001,
+      "losses": 840,
+      "late_losses": 315,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 0.7394749845843762
+    },
+    {
+      "game": "four_player_commons",
+      "mode": "guard",
+      "episodes": 32,
+      "mean_score": 4.425000000000001,
+      "losses": 840,
+      "late_losses": 315,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 0.9266249981010333
+    },
+    {
+      "game": "four_player_commons",
+      "mode": "experience",
+      "episodes": 32,
+      "mean_score": 24.287499999999987,
+      "losses": 92,
+      "late_losses": 0,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 1.473050011554733
+    },
+    {
+      "game": "four_player_commons",
+      "mode": "experience_read",
+      "episodes": 32,
+      "mean_score": 24.287499999999987,
+      "losses": 92,
+      "late_losses": 0,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 2.3444500257028267
+    },
+    {
+      "game": "branching_delivery",
+      "mode": "fixed",
+      "episodes": 32,
+      "mean_score": -6.399999999999999,
+      "losses": 640,
+      "late_losses": 224,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 0.8280000038212165
+    },
+    {
+      "game": "branching_delivery",
+      "mode": "guard",
+      "episodes": 32,
+      "mean_score": -6.399999999999999,
+      "losses": 640,
+      "late_losses": 224,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 0.9839249833021313
+    },
+    {
+      "game": "branching_delivery",
+      "mode": "experience",
+      "episodes": 32,
+      "mean_score": 19.940000000000005,
+      "losses": 160,
+      "late_losses": 0,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 1.4584750024368986
+    },
+    {
+      "game": "branching_delivery",
+      "mode": "experience_read",
+      "episodes": 32,
+      "mean_score": 19.940000000000005,
+      "losses": 160,
+      "late_losses": 0,
+      "reading_nodes": 0,
+      "reading_changes": 0,
+      "p50_ms": 2.443224992020987
+    }
+  ],
+  "paired": [
+    {
+      "mode": "guard",
+      "pairs": 96,
+      "better": 0,
+      "same": 96,
+      "worse": 0
+    },
+    {
+      "mode": "experience",
+      "pairs": 96,
+      "better": 78,
+      "same": 18,
+      "worse": 0
+    },
+    {
+      "mode": "experience_read",
+      "pairs": 96,
+      "better": 78,
+      "same": 18,
+      "worse": 0
+    }
+  ],
+  "conflict": [
+    {
+      "profile": "growth",
+      "action": "CLAIM",
+      "removed": [
+        "WASTEFUL_SECURE"
+      ]
+    },
+    {
+      "profile": "steady",
+      "action": "SECURE",
+      "removed": [
+        "WASTEFUL_SECURE"
+      ]
+    },
+    {
+      "profile": "care",
+      "action": "HELP",
+      "removed": [
+        "WASTEFUL_SECURE"
+      ]
+    },
+    {
+      "profile": "ego",
+      "action": "CLAIM",
+      "removed": [
+        "WASTEFUL_SECURE"
+      ]
+    }
+  ],
+  "benchmark": {
+    "npcs": 1000,
+    "actions": 4,
+    "repeats": 7,
+    "p50_ms": {
+      "policy": 2.616899961140007,
+      "guard_policy": 4.648000001907349,
+      "population_step": 2.4398999521508813,
+      "adaptive_step_observe": 14.277799986302853
+    },
+    "excludes": "compile, per-owner outcome memory, game transitions, optional reading, IO"
+  },
+  "local_cpu_only": true,
+  "inference": "synthetic challenges; repeated profiles/seeds are correlated; no general strength proof"
+}

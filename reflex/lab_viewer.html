@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>人格判断・40手の検証</title>
+<style>
+:root{color-scheme:dark;--bg:#161a22;--panel:#222834;--fg:#eef1f7;--muted:#bac4d4;--line:#455066;--accent:#85dac6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 system-ui,"Meiryo",sans-serif}
+main{max-width:1160px;margin:auto;padding:28px 22px}h1{font-size:27px;margin:0 0 7px}h2{font-size:18px;margin:0 0 12px}p{margin:5px 0;color:var(--muted)}
+.controls,.tradeoffs,.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}.controls{margin:22px 0}.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+button,select{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 12px}select{max-width:100%;min-width:0}button{cursor:pointer}button:focus-visible,select:focus-visible{outline:2px solid var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent);margin:18px 0 4px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card h2{display:flex;justify-content:space-between}.action{font-size:21px;color:var(--accent);font-weight:650}.small{font-size:13px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:15px 0}.value{font-size:21px;color:var(--fg)}.tag{font-size:13px;border:1px solid var(--line);border-radius:20px;padding:3px 9px}
+details{border-top:1px solid var(--line);padding-top:10px;margin-top:14px}summary{cursor:pointer;color:var(--muted)}.tradeoffs{margin-top:22px}.notice{min-height:27px;color:#f0d39d}.split{display:grid;grid-template-columns:1fr 1fr;gap:24px}.timeline{display:flex;gap:2px;margin-top:12px;flex-wrap:wrap}.tick{height:8px;width:8px;border-radius:2px;background:var(--line)}.tick.current{outline:2px solid var(--fg)}
+@media(max-width:720px){.grid,.split{grid-template-columns:1fr}.stats{gap:6px}main{padding:18px 12px}.toolbar{gap:8px}.controls{padding:12px}}
+</style>
+</head>
+<body>
+<main>
+<h1>人格判断・多手での検証</h1>
+<p>固定の性格・主義と、変わる欲求・経験。同時に選ぶ4個体の記録を手ごとに追える。</p>
+<div class="controls">
+<div class="toolbar"><label for="episode">条件</label><select id="episode"></select><button id="previous" aria-label="前の手">←</button><button id="play">再生</button><button id="next" aria-label="次の手">→</button><strong id="round"></strong></div>
+<input id="scrub" type="range" min="0" value="0" aria-label="表示する手">
+<p id="description"></p><p class="small">表示は各手の判断と、その直後の結果。確率的な失敗は、それだけで判断の誤りとはしない。</p>
+</div>
+<div class="grid" id="actors"></div>
+<div class="tradeoffs">
+<div class="split"><section><h2>得たもの</h2><p id="gained"></p></section><section><h2>省いたもの・後回し</h2><p>移動、戦闘の描画、会話、広い人間関係網、深い探索。相手読みは小さな観測モデル。通常の判断コアは数値のまま。</p></section></div>
+<p class="small" style="margin-top:12px">ゲームの接続・コスト設定を検査する段階。固定設定は心理診断ではない。LLM教師による採用学習はまだ行っていない。</p>
+</div>
+</main>
+<script id="lab-data" type="application/json">__LAB_DATA__</script>
+<script>
+const data=JSON.parse(document.getElementById('lab-data').textContent);
+const names={CLAIM:'取り分を主張',HELP:'協力',RECOVER:'応急回復',REST:'休息',SECURE:'確実な取り分',TRAIN_RISK:'高リスクの成長',TRAIN_SAFE:'堅実な成長',WORK_RISK:'高収益の作業',WORK_SAFE:'堅実な作業'};
+const needs={physiology:'活動・回復',safety:'安全・備え',belonging:'所属',esteem:'承認',growth:'成長'};
+const traits={openness:'開放性',conscientiousness:'誠実性',extraversion:'外向性',agreeableness:'協調性',neuroticism:'神経症傾向'};
+const values={self_direction:'自律',stimulation:'刺激',hedonism:'快楽',achievement:'達成',power:'権力',security:'安全',conformity:'同調',tradition:'伝統',benevolence:'慈善',universalism:'普遍性'};
+const colors={CLAIM:'#e5aa78',HELP:'#85dac6',RECOVER:'#9babc7',REST:'#9babc7',SECURE:'#a0b9ef',TRAIN_RISK:'#cf9fea',TRAIN_SAFE:'#cf9fea',WORK_RISK:'#f0d39d',WORK_SAFE:'#f0d39d'};
+const select=document.getElementById('episode'),slider=document.getElementById('scrub');let timer=null;
+data.episodes.forEach((e,i)=>{let o=document.createElement('option');o.value=i;o.textContent=e.label;select.append(o)});
+function text(parent,tag,value,className){let element=document.createElement(tag);element.textContent=value;if(className)element.className=className;parent.append(element);return element}
+function render(){
+ const e=data.episodes[Number(select.value)],turn=Number(slider.value);slider.max=e.turns-1;
+ document.getElementById('round').textContent=`${turn+1} / ${e.turns} 手`;
+ document.getElementById('description').textContent=e.description;
+ const grid=document.getElementById('actors');grid.replaceChildren();
+ const current=e.trace.filter(x=>x.round===turn);
+ current.forEach(r=>{
+  const card=document.createElement('article');card.className='card';grid.append(card);
+  const title=text(card,'h2',r.name);text(title,'span',r.mode==='principle'?'主義を優先':'欲求を優先','tag');
+  text(card,'div',names[r.action],'action');text(card,'p',`主欲求：${needs[r.primary]||'切迫なし'} ／ 相手：${r.partner}`,'small');
+  const stats=document.createElement('div');stats.className='stats';card.append(stats);
+  [['供給',r.before.stock,r.after.stock],['活動余力',r.before.energy,r.after.energy],['技能',r.before.skill,r.after.skill]].forEach(([name,b,a])=>{const box=document.createElement('div');stats.append(box);text(box,'div',name,'small');text(box,'div',a.toFixed(2),'value');text(box,'div',`前 ${b.toFixed(2)}`,'small')});
+  let read=r.reading_used?`読みを反映：${names[r.reflex_action]} → ${names[r.action]}`:r.read_confidence<.6?'読み：根拠が不足':r.read_ahead&&!r.read_threatened?'読み：現在の有利な手段を維持':'読み：変更利益が小さい';
+  text(card,'p',`${read}（確信度 ${r.read_confidence.toFixed(2)}）`,'small');
+  text(card,'div',r.cause==='observed_workshop_broken'?'工房の故障を自分で確認。この結果は次の判断から使う。':r.cause==='risk_failed'?'確率的な失敗。恒久的な故障とは区別。':r.known_broken?'確認済みの工房故障を避けている。':'','notice');
+  const timeline=document.createElement('div');timeline.className='timeline';card.append(timeline);
+  e.trace.filter(t=>t.npc===r.npc).forEach(t=>{let mark=document.createElement('span');mark.className='tick'+(t.round===turn?' current':'');mark.style.background=colors[t.action];mark.title=`${t.round+1}手目 ${names[t.action]}`;timeline.append(mark)});
+  const detail=document.createElement('details');card.append(detail);text(detail,'summary','固定設定を見る');
+  const settings=e.settings[r.npc];text(detail,'p',Object.entries(settings.personality).map(([k,v])=>`${traits[k]} ${v.toFixed(2)}`).join(' ／ '),'small');
+  text(detail,'p','主義：'+(Object.entries(settings.values).filter(([k,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${values[k]} ${v.toFixed(2)}`).join(' ／ ')||'設定なし'),'small');
+ });
+}
+function stop(){if(timer)clearInterval(timer);timer=null;document.getElementById('play').textContent='再生'}
+select.addEventListener('change',()=>{stop();slider.value=0;render()});slider.addEventListener('input',render);
+document.getElementById('previous').addEventListener('click',()=>{slider.value=Math.max(0,Number(slider.value)-1);render()});
+document.getElementById('next').addEventListener('click',()=>{slider.value=Math.min(Number(slider.max),Number(slider.value)+1);render()});
+document.getElementById('play').addEventListener('click',()=>{if(timer){stop();return}if(Number(slider.value)>=Number(slider.max))slider.value=0;document.getElementById('play').textContent='停止';timer=setInterval(()=>{if(Number(slider.value)>=Number(slider.max)){stop();return}slider.value=Number(slider.value)+1;render()},650)});
+document.getElementById('gained').textContent=`${data.checks.decisions.toLocaleString()}判断。実行不能 ${data.checks.illegal}、理解済み失敗の再選択 ${data.checks.understood_failure_repeats}。読みで実際に選択が変わった場面 ${data.checks.choices_changed_by_reading}。`;
+render();
+</script>
+</body></html>

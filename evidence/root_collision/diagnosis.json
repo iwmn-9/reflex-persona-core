@@ -1,0 +1,210 @@
+{
+  "format": "friendly-root-collision-readonly-diagnosis-v1",
+  "source_commit": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+  "input_artifacts": {
+    "/workspace/shared/reflex-continuation-final/reflex_artifacts/persona_continuation/trajectories.jsonl": "7743e9b12a9e92933f700ef309276fd1dc4b55a566b4db5c67575816f59bd916",
+    "/workspace/shared/reflex-continuation-final/reflex_artifacts/persona_continuation/snapshots.json": "45b27b28e98b8b2a9bc6eae00421730c99d61210ebf005e8d090c77b5152a974",
+    "/workspace/shared/reflex-continuation-final/reflex_artifacts/persona_continuation/preregister.json": "e987ea2086f88dbfad31c86b0c88382aecba40fc90910c2ba6ece5b6bc402e8c"
+  },
+  "source_compatibility": {
+    "core.py": {
+      "source_revision": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+      "sha256": "7a347bb699fffc0481dc5b9e9e31ff2a54d38f8f46de5e190cbd4798b05c3143",
+      "matches_original_execution": true
+    },
+    "judgment.py": {
+      "source_revision": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+      "sha256": "bc8654324bdbdd4c74b2765c1092dc4a02489ec54125e61ad6a4a6024ddd2004",
+      "matches_original_execution": true
+    },
+    "routes.py": {
+      "source_revision": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+      "sha256": "61122363d681258529152628bee34ad89490ce2c91b68375bcd90bc650e323fb",
+      "matches_original_execution": true
+    },
+    "combat.py": {
+      "source_revision": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+      "sha256": "0e7a764ebe19af17f52d618e756f0dd85872f4fdf8c432c19f5fdca690935877",
+      "matches_original_execution": true
+    },
+    "decision_loop.py": {
+      "source_revision": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+      "sha256": "3dee93b03fcad1bfece16a9002a3329bc7467181afdbcdb1fa8bf0cbc3fade9b",
+      "matches_original_execution": true
+    },
+    "combat_planning.py": {
+      "source_revision": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+      "sha256": "2c532d7e2947f4cbf258685f93aee88d910d677b3f7bc2910bbe82e0ecd154a1",
+      "matches_original_execution": true
+    },
+    "progress.py": {
+      "source_revision": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+      "sha256": "7fa6f1c71ea0addf25707632deb6a3870a63e929b7b58670e7f6bf0b877b060a",
+      "matches_original_execution": true
+    },
+    "progress_adapters.py": {
+      "source_revision": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+      "sha256": "bc76af5883f5ae7caaf8599d8b4d4758b9806fbfe07d79fdd332ecdd014c1463",
+      "matches_original_execution": true
+    },
+    "validation_experiment.py": {
+      "source_revision": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+      "sha256": "15809ba4e91348694743714a6d9c4cd073a1443fa8de67f5891a4740961dccd4",
+      "matches_original_execution": true
+    }
+  },
+  "scope": "Read-only reconstruction and enumeration at frozen previously executed heldout roots. No new episodes, planner rollouts, opponent queries, changed choices fed into memory, or counterfactual outcomes.",
+  "method": [
+    "Carry each existing trace actual chosen action through the unchanged Policy state update and OutcomeMemory update with the recorded revealed before/after transition effect. Rebuild route choice and immediate empirical contexts using unchanged original modules.",
+    "Score immediate Policy under recorded final progress masks and exact cost-only waste certification. Derive existing strongest-value eligible set first and then its existing .025 near-best band.",
+    "Freeze noncolliding actors at their recorded actual roots. Enumerate band combinations for colliding actors only, rejecting duplicate own move destinations. Rank first by fewest changed actors and then by summed unchanged persona scores; illustrative residual ties use lexicographically greatest action tuple.",
+    "Sensitivity preserves each actor original tier and band before removing any alternative already marked blocked in recorded progress evidence. A recorded original root may remain even if blocked; never introduce a different blocked root."
+  ],
+  "validation": {
+    "saved_snapshot_actor_contexts_exact": 48,
+    "saved_snapshot_ticks_exact": 16,
+    "declined_ticks_reconstructed": 177,
+    "collision_ticks_sampled_fallback_exact": 13,
+    "noncollision_final_mask_sample_differences": [
+      [
+        "objective",
+        "choke/eliminate",
+        "care",
+        281,
+        25,
+        [
+          "move:7:3",
+          "move:5:1",
+          "move:3:2"
+        ],
+        [
+          "move:7:1",
+          "move:5:1",
+          "move:3:2"
+        ]
+      ],
+      [
+        "objective",
+        "choke/eliminate",
+        "care",
+        281,
+        32,
+        [
+          "move:7:1",
+          "move:6:1",
+          "move:4:2"
+        ],
+        [
+          "move:7:1",
+          "move:6:3",
+          "move:4:2"
+        ]
+      ],
+      [
+        "objective",
+        "choke/eliminate",
+        "care",
+        281,
+        34,
+        [
+          "move:6:0",
+          "move:6:1",
+          "guard"
+        ],
+        [
+          "move:6:0",
+          "move:5:2",
+          "guard"
+        ]
+      ],
+      [
+        "persona-band",
+        "choke/eliminate",
+        "care",
+        282,
+        22,
+        [
+          "heal:0",
+          "move:3:1"
+        ],
+        [
+          "heal:0",
+          "move:3:3"
+        ]
+      ],
+      [
+        "objective",
+        "choke/both",
+        "care",
+        282,
+        35,
+        [
+          "guard",
+          "move:2:1",
+          "move:4:2"
+        ],
+        [
+          "guard",
+          "move:2:3",
+          "move:4:2"
+        ]
+      ],
+      [
+        "persona-band",
+        "choke/both",
+        "care",
+        281,
+        12,
+        [
+          "move:6:2",
+          "move:5:2",
+          "move:6:3"
+        ],
+        [
+          "move:7:1",
+          "move:5:2",
+          "move:6:3"
+        ]
+      ]
+    ],
+    "sample_difference_note": "Six noncollision declined ticks differ when independently resampling under the final mask. DecisionLoop can retain its pre-proof baseline draw even when final masks apply; this does not change primary/mode state, and reconstruction always carries the original recorded action forward. Every collision tick sampled fallback matches exactly. Nine relevant source modules hash-match original execution."
+  },
+  "summary": [
+    {"variant":"objective","games":32,"ticks":723,"declined_ticks":96,"collision_ticks":12,"colliding_actor_moves":25,"adopted_collision_ticks":0,"collision_profiles":["care"],"band_feasible_collision_ticks":11},
+    {"variant":"persona-band","games":32,"ticks":701,"declined_ticks":81,"collision_ticks":1,"colliding_actor_moves":2,"adopted_collision_ticks":0,"collision_profiles":["care"],"band_feasible_collision_ticks":1}
+  ],
+  "causal_findings": [
+    {"finding":"Adopted coordinated plans cannot contain own root destination duplicates; every observed own collision instead follows final planner decline.","sources":["reflex/combat_planning.py:118-127","reflex/decision_loop.py:355-391"]},
+    {"finding":"All 25 objective colliding actor selections are in principle mode, but max immediate benevolence effect is zero. No collision is forced by an immediate benevolence-tier exclusion. Five colliding selections have singleton near-best bands; only two singleton eligible sets exist, both caused by active progress masks at choke/both care282 tick24.","sources":["reflex/core.py:260-277"]},
+    {"finding":"At eliminate care281 tick28 and both care282 tick19, supported candidate purpose exists but original colliding roots have no purpose value because coordinated proposal generation excluded them. Proof base_purpose is null; existing recovery comparison rejects and final progress masks restore viable roots with unresolved=true. A score-only completion would choose expired guard, so final-mask preservation alone is weaker than avoiding newly introduced blocked stops.","sources":["reflex/combat_planning.py:124","reflex/decision_loop.py:379-388","reflex/progress.py:123-131"]},
+    {"finding":"11/12 objective collision ticks (23/25 colliding moves) admit immediate collision-free .025-band combinations without changing noncolliding actors. The blocked-alternative sensitivity keeps this 11/12 count and needs 12 changed actor roots. This is local feasibility, not evidence of later outcome, survival, stop-rate, or runtime improvement.","sources":["existing trajectory same-root enumeration in examples"]}
+  ],
+  "sensitivity_summary": {
+    "objective_feasible": 11,
+    "objective_collision_ticks": 12,
+    "objective_changed_actor_roots": 12,
+    "objective_new_blocked_roots": 0,
+    "persona_band_feasible": 1,
+    "persona_band_collision_ticks": 1
+  },
+  "limits": [
+    "Existing heldout trajectories are diagnostic inputs, not a new candidate test or estimate of candidate win benefit. Persona-band comparison is descriptive because its earlier choices change later states.",
+    "Only friendly own same-destination root collisions are addressed; opposing intents remain unknown and opposing destination conflicts are not predicted.",
+    "Preserving masks, tiers, and the .025 band does not establish real-world benefit; introducing any guard or move can change later trajectories and must remain subject to frozen candidate evaluation."
+  ],
+  "examples": [
+    {"variant":"objective","scenario":"choke/eliminate","profile":"care","seed":281,"tick":7,"actors":[3,4,5],"actual":["guard","move:7:2","move:7:2"],"colliding":[1,2],"band_free_combinations":14,"tier_free_combinations":23,"best":["guard","reload","move:7:2"],"details":[{"actor":3,"actual":"guard","mode":0,"tier":["guard","move:6:1","move:7:0","move:7:2","move:8:1"],"band":["guard","move:6:1","move:7:2"],"band_scores":{"guard":0.021728333333333336,"move:6:1":0.007850000000000001,"move:7:2":0.016325000000000006},"all_scores":{"guard":0.021728333333333336,"move:6:1":0.007850000000000001,"move:7:0":-0.006254999999999983,"move:7:2":0.016325000000000006,"move:8:1":-0.006254999999999983},"top_effect":{"guard":0.041666666666666664,"move:6:1":0.0,"move:7:0":0.0,"move:7:2":0.0,"move:8:1":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":4,"actual":"move:7:2","mode":1,"tier":["guard","move:7:2","move:8:1","move:8:3","reload"],"band":["guard","move:7:2","reload"],"band_scores":{"guard":0.007850000000000001,"move:7:2":0.016325000000000006,"reload":0.025164999999999993},"all_scores":{"guard":0.007850000000000001,"move:7:2":0.016325000000000006,"move:8:1":-0.006254999999999983,"move:8:3":-0.006254999999999983,"reload":0.025164999999999993},"top_effect":{"guard":0.0,"move:7:2":0.0,"move:8:1":0.0,"move:8:3":0.0,"reload":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":5,"actual":"move:7:2","mode":1,"tier":["guard","move:6:3","move:7:2","move:7:4","move:8:3"],"band":["guard","move:6:3","move:7:2","move:7:4","move:8:3"],"band_scores":{"guard":0.007850000000000001,"move:6:3":0.007850000000000001,"move:7:2":0.016325000000000006,"move:7:4":-0.006254999999999983,"move:8:3":-0.006254999999999983},"all_scores":{"guard":0.007850000000000001,"move:6:3":0.007850000000000001,"move:7:2":0.016325000000000006,"move:7:4":-0.006254999999999983,"move:8:3":-0.006254999999999983},"top_effect":{"guard":0.0,"move:6:3":0.0,"move:7:2":0.0,"move:7:4":0.0,"move:8:3":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[null,null,null],"blocked_alternative_sensitivity":{"combinations":14,"selected_example":["guard","reload","move:7:2"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":0.008839999999999987}},
+    {"variant":"objective","scenario":"choke/eliminate","profile":"care","seed":281,"tick":28,"actors":[3,4,5],"actual":["move:8:2","move:5:2","move:5:2"],"colliding":[1,2],"band_free_combinations":14,"tier_free_combinations":14,"best":["move:8:2","move:5:2","guard"],"details":[{"actor":3,"actual":"move:8:2","mode":0,"tier":["guard","move:7:1","move:7:3","move:8:2"],"band":["guard","move:7:1","move:7:3","move:8:2"],"band_scores":{"guard":0.006348125000000006,"move:7:1":0.007850000000000001,"move:7:3":-0.00014083333333332095,"move:8:2":0.007850000000000001},"all_scores":{"guard":0.006348125000000006,"move:7:1":0.007850000000000001,"move:7:3":-0.00014083333333332095,"move:8:2":0.007850000000000001},"top_effect":{"guard":0.0,"move:7:1":0.0,"move:7:3":0.0,"move:8:2":0.0},"progress":{"blocked":{"guard":"no demonstrated progress or useful maintenance","move:8:2":"no demonstrated progress or useful maintenance"},"applied":false,"unresolved":true}},{"actor":4,"actual":"move:5:2","mode":1,"tier":["guard","move:5:0","move:5:2","move:6:1"],"band":["guard","move:5:0","move:5:2","move:6:1"],"band_scores":{"guard":0.0031483333333333346,"move:5:0":-0.006254999999999983,"move:5:2":0.016324999999999992,"move:6:1":-0.006254999999999983},"all_scores":{"guard":0.0031483333333333346,"move:5:0":-0.006254999999999983,"move:5:2":0.016324999999999992,"move:6:1":-0.006254999999999983},"top_effect":{"guard":0.0,"move:5:0":0.0,"move:5:2":0.0,"move:6:1":0.0},"progress":{"blocked":{"move:6:1":"no demonstrated progress or useful maintenance","guard":"no demonstrated progress or useful maintenance","move:5:0":"no demonstrated progress or useful maintenance"},"applied":false,"unresolved":true}},{"actor":5,"actual":"move:5:2","mode":1,"tier":["guard","move:5:2","move:6:1","move:6:3"],"band":["guard","move:5:2","move:6:1","move:6:3"],"band_scores":{"guard":0.007045714285714287,"move:5:2":0.015049285714285704,"move:6:1":-0.006254999999999983,"move:6:3":-0.006254999999999983},"all_scores":{"guard":0.007045714285714287,"move:5:2":0.015049285714285704,"move:6:1":-0.006254999999999983,"move:6:3":-0.006254999999999983},"top_effect":{"guard":0.0,"move:5:2":0.0,"move:6:1":0.0,"move:6:3":0.0},"progress":{"blocked":{"guard":"no demonstrated progress or useful maintenance"},"applied":false,"unresolved":true}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":{"adopted":true,"reason":null,"supported_plans":null,"tier_options_per_actor":null}},"purpose_recovery":[{"needed":true,"base_purpose":null,"candidate_purpose":0.44160879629629624,"margin":0.02},{"needed":true,"base_purpose":null,"candidate_purpose":0.44160879629629624,"margin":0.02},{"needed":true,"base_purpose":null,"candidate_purpose":0.44160879629629624,"margin":0.02}],"blocked_alternative_sensitivity":{"combinations":2,"selected_example":["move:8:2","move:5:2","move:6:3"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":-0.021304285714285685}},
+    {"variant":"objective","scenario":"choke/eliminate","profile":"care","seed":282,"tick":10,"actors":[0,1,2],"actual":["move:2:1","shoot:4","move:2:1"],"colliding":[0,2],"band_free_combinations":8,"tier_free_combinations":19,"best":["move:2:1","shoot:4","guard"],"details":[{"actor":0,"actual":"move:2:1","mode":1,"tier":["guard","move:2:1","move:3:0","move:3:2"],"band":["move:2:1","move:3:0","move:3:2"],"band_scores":{"move:2:1":0.01344166666666667,"move:3:0":-0.006254999999999955,"move:3:2":0.016325000000000034},"all_scores":{"guard":-0.023840999999999998,"move:2:1":0.01344166666666667,"move:3:0":-0.006254999999999955,"move:3:2":0.016325000000000034},"top_effect":{"guard":0.0,"move:2:1":0.0,"move:3:0":0.0,"move:3:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":1,"actual":"shoot:4","mode":1,"tier":["guard","move:1:2","move:2:1","move:2:3","move:3:2","reload","shoot:4"],"band":["shoot:4"],"band_scores":{"shoot:4":0.0641554168722222},"all_scores":{"guard":-0.004584052222222249,"move:1:2":-0.006839833333333288,"move:2:1":-0.006839833333333288,"move:2:3":-0.006839833333333288,"move:3:2":-0.00652442888888892,"reload":0.011305345777777785,"shoot:4":0.0641554168722222},"top_effect":{"guard":0.0,"move:1:2":0.0,"move:2:1":0.0,"move:2:3":0.0,"move:3:2":0.0,"reload":0.0,"shoot:4":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":2,"actual":"move:2:1","mode":1,"tier":["guard","move:0:1","move:1:0","move:1:2","move:2:1"],"band":["guard","move:1:2","move:2:1"],"band_scores":{"guard":0.029450476190476187,"move:1:2":0.016325000000000034,"move:2:1":0.016325000000000034},"all_scores":{"guard":0.029450476190476187,"move:0:1":-0.006254999999999955,"move:1:0":-0.006254999999999955,"move:1:2":0.016325000000000034,"move:2:1":0.016325000000000034},"top_effect":{"guard":0.0,"move:0:1":0.0,"move:1:0":0.0,"move:1:2":0.0,"move:2:1":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[null,null,null],"blocked_alternative_sensitivity":{"combinations":8,"selected_example":["move:2:1","shoot:4","guard"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":0.013125476190476153}},
+    {"variant":"objective","scenario":"choke/eliminate","profile":"care","seed":282,"tick":11,"actors":[0,1,2],"actual":["move:2:1","reload","move:2:1"],"colliding":[0,2],"band_free_combinations":9,"tier_free_combinations":19,"best":["move:2:1","reload","guard"],"details":[{"actor":0,"actual":"move:2:1","mode":1,"tier":["guard","move:2:1","move:3:0","move:3:2"],"band":["move:2:1","move:3:2"],"band_scores":{"move:2:1":0.02349309523809524,"move:3:2":0.01632499999999998},"all_scores":{"guard":-0.023840999999999998,"move:2:1":0.02349309523809524,"move:3:0":-0.006255000000000014,"move:3:2":0.01632499999999998},"top_effect":{"guard":0.0,"move:2:1":0.0,"move:3:0":0.0,"move:3:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":1,"actual":"reload","mode":1,"tier":["guard","move:1:2","move:2:1","move:2:3","move:3:2","reload"],"band":["move:3:2","reload"],"band_scores":{"move:3:2":0.01632499999999998,"reload":0.04082999999999999},"all_scores":{"guard":0.007850000000000001,"move:1:2":-0.006255000000000014,"move:2:1":-0.006255000000000014,"move:2:3":-0.006255000000000014,"move:3:2":0.01632499999999998,"reload":0.04082999999999999},"top_effect":{"guard":0.0,"move:1:2":0.0,"move:2:1":0.0,"move:2:3":0.0,"move:3:2":0.0,"reload":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":2,"actual":"move:2:1","mode":1,"tier":["guard","move:0:1","move:1:0","move:1:2","move:2:1"],"band":["guard","move:0:1","move:1:0","move:1:2","move:2:1"],"band_scores":{"guard":0.029450476190476187,"move:0:1":0.007850000000000001,"move:1:0":0.007850000000000001,"move:1:2":0.01632499999999998,"move:2:1":0.01632499999999998},"all_scores":{"guard":0.029450476190476187,"move:0:1":0.007850000000000001,"move:1:0":0.007850000000000001,"move:1:2":0.01632499999999998,"move:2:1":0.01632499999999998},"top_effect":{"guard":0.0,"move:0:1":0.0,"move:1:0":0.0,"move:1:2":0.0,"move:2:1":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[null,null,null],"blocked_alternative_sensitivity":{"combinations":9,"selected_example":["move:2:1","reload","guard"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":0.013125476190476208}},
+    {"variant":"objective","scenario":"choke/eliminate","profile":"care","seed":282,"tick":12,"actors":[0,1,2],"actual":["move:2:1","move:2:1","move:2:1"],"colliding":[0,1,2],"band_free_combinations":17,"tier_free_combinations":79,"best":["move:2:1","move:3:2","guard"],"details":[{"actor":0,"actual":"move:2:1","mode":1,"tier":["guard","move:2:1","move:3:0","move:3:2"],"band":["move:2:1","move:3:2"],"band_scores":{"move:2:1":0.024910885416666674,"move:3:2":0.016325000000000006},"all_scores":{"guard":-0.023840999999999998,"move:2:1":0.024910885416666674,"move:3:0":-0.006255000000000014,"move:3:2":0.016325000000000006},"top_effect":{"guard":0.0,"move:2:1":0.0,"move:3:0":0.0,"move:3:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":1,"actual":"move:2:1","mode":1,"tier":["guard","move:1:2","move:2:1","move:2:3","move:3:2"],"band":["guard","move:1:2","move:2:1","move:2:3","move:3:2"],"band_scores":{"guard":0.007850000000000001,"move:1:2":-0.006255000000000014,"move:2:1":-0.006255000000000014,"move:2:3":-0.006255000000000014,"move:3:2":0.016325000000000006},"all_scores":{"guard":0.007850000000000001,"move:1:2":-0.006255000000000014,"move:2:1":-0.006255000000000014,"move:2:3":-0.006255000000000014,"move:3:2":0.016325000000000006},"top_effect":{"guard":0.0,"move:1:2":0.0,"move:2:1":0.0,"move:2:3":0.0,"move:3:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":2,"actual":"move:2:1","mode":1,"tier":["guard","move:0:1","move:1:0","move:1:2","move:2:1"],"band":["guard","move:1:2","move:2:1"],"band_scores":{"guard":0.029450476190476187,"move:1:2":0.016325000000000006,"move:2:1":0.03756833333333335},"all_scores":{"guard":0.029450476190476187,"move:0:1":0.007850000000000001,"move:1:0":0.007850000000000001,"move:1:2":0.016325000000000006,"move:2:1":0.03756833333333335},"top_effect":{"guard":0.0,"move:0:1":0.0,"move:1:0":0.0,"move:1:2":0.0,"move:2:1":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[null,null,null],"blocked_alternative_sensitivity":{"combinations":17,"selected_example":["move:2:1","move:3:2","guard"],"changed_actors":2,"new_blocked_roots":[],"persona_score_delta":0.014462142857142857}},
+    {"variant":"objective","scenario":"choke/eliminate","profile":"care","seed":282,"tick":13,"actors":[0,1,2],"actual":["move:2:1","move:3:2","move:2:1"],"colliding":[0,2],"band_free_combinations":4,"tier_free_combinations":14,"best":["move:2:1","move:3:2","guard"],"details":[{"actor":0,"actual":"move:2:1","mode":1,"tier":["guard","move:2:1","move:3:0","move:3:2"],"band":["move:2:1","move:3:2"],"band_scores":{"move:2:1":0.02590111111111111,"move:3:2":0.016325000000000006},"all_scores":{"guard":-0.023840999999999998,"move:2:1":0.02590111111111111,"move:3:0":-0.006255000000000014,"move:3:2":0.016325000000000006},"top_effect":{"guard":0.0,"move:2:1":0.0,"move:3:0":0.0,"move:3:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":1,"actual":"move:3:2","mode":1,"tier":["guard","move:1:2","move:2:1","move:2:3","move:3:2"],"band":["guard","move:1:2","move:2:1","move:2:3","move:3:2"],"band_scores":{"guard":0.007850000000000001,"move:1:2":-0.006255000000000014,"move:2:1":-0.006255000000000014,"move:2:3":-0.006255000000000014,"move:3:2":0.016325000000000006},"all_scores":{"guard":0.007850000000000001,"move:1:2":-0.006255000000000014,"move:2:1":-0.006255000000000014,"move:2:3":-0.006255000000000014,"move:3:2":0.016325000000000006},"top_effect":{"guard":0.0,"move:1:2":0.0,"move:2:1":0.0,"move:2:3":0.0,"move:3:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":2,"actual":"move:2:1","mode":1,"tier":["guard","move:0:1","move:1:0","move:1:2","move:2:1"],"band":["guard","move:0:1","move:1:0","move:1:2","move:2:1"],"band_scores":{"guard":0.029450476190476187,"move:0:1":0.007850000000000001,"move:1:0":0.007850000000000001,"move:1:2":0.016325000000000006,"move:2:1":0.032615277777777785},"all_scores":{"guard":0.029450476190476187,"move:0:1":0.007850000000000001,"move:1:0":0.007850000000000001,"move:1:2":0.016325000000000006,"move:2:1":0.032615277777777785},"top_effect":{"guard":0.0,"move:0:1":0.0,"move:1:0":0.0,"move:1:2":0.0,"move:2:1":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[null,null,null],"blocked_alternative_sensitivity":{"combinations":4,"selected_example":["move:2:1","move:3:2","guard"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":-0.003164801587301598}},
+    {"variant":"objective","scenario":"choke/eliminate","profile":"care","seed":282,"tick":14,"actors":[0,1,2],"actual":["move:2:1","move:4:2","move:2:1"],"colliding":[0,2],"band_free_combinations":4,"tier_free_combinations":14,"best":["move:2:1","move:4:2","guard"],"details":[{"actor":0,"actual":"move:2:1","mode":1,"tier":["guard","move:2:1","move:3:0"],"band":["move:2:1"],"band_scores":{"move:2:1":0.026655791666666668},"all_scores":{"guard":-0.023840999999999998,"move:2:1":0.026655791666666668,"move:3:0":-0.006255000000000014},"top_effect":{"guard":0.0,"move:2:1":0.0,"move:3:0":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":1,"actual":"move:4:2","mode":1,"tier":["guard","move:2:2","move:3:3","move:4:2"],"band":["guard","move:2:2","move:3:3","move:4:2"],"band_scores":{"guard":0.007850000000000001,"move:2:2":-0.006255000000000014,"move:3:3":-0.006255000000000014,"move:4:2":0.016325000000000006},"all_scores":{"guard":0.007850000000000001,"move:2:2":-0.006255000000000014,"move:3:3":-0.006255000000000014,"move:4:2":0.016325000000000006},"top_effect":{"guard":0.0,"move:2:2":0.0,"move:3:3":0.0,"move:4:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":2,"actual":"move:2:1","mode":1,"tier":["guard","move:0:1","move:1:0","move:1:2","move:2:1"],"band":["guard","move:0:1","move:1:0","move:1:2","move:2:1"],"band_scores":{"guard":0.029450476190476187,"move:0:1":0.007850000000000001,"move:1:0":0.007850000000000001,"move:1:2":0.016325000000000006,"move:2:1":0.030288095238095246},"all_scores":{"guard":0.029450476190476187,"move:0:1":0.007850000000000001,"move:1:0":0.007850000000000001,"move:1:2":0.016325000000000006,"move:2:1":0.030288095238095246},"top_effect":{"guard":0.0,"move:0:1":0.0,"move:1:0":0.0,"move:1:2":0.0,"move:2:1":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[null,null,null],"blocked_alternative_sensitivity":{"combinations":4,"selected_example":["move:2:1","move:4:2","guard"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":-0.0008376190476190593}},
+    {"variant":"persona-band","scenario":"choke/eliminate","profile":"care","seed":282,"tick":10,"actors":[0,1,2],"actual":["move:2:2","shoot:4","move:2:2"],"colliding":[0,2],"band_free_combinations":23,"tier_free_combinations":23,"best":["guard","shoot:4","move:2:2"],"details":[{"actor":0,"actual":"move:2:2","mode":1,"tier":["guard","move:1:3","move:2:2","move:2:4","move:3:3"],"band":["guard","move:1:3","move:2:2","move:2:4","move:3:3"],"band_scores":{"guard":0.012183999999999997,"move:1:3":-0.006255000000000014,"move:2:2":0.01632499999999998,"move:2:4":-0.006255000000000014,"move:3:3":0.007850000000000001},"all_scores":{"guard":0.012183999999999997,"move:1:3":-0.006255000000000014,"move:2:2":0.01632499999999998,"move:2:4":-0.006255000000000014,"move:3:3":0.007850000000000001},"top_effect":{"guard":0.0,"move:1:3":0.0,"move:2:2":0.0,"move:2:4":0.0,"move:3:3":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":1,"actual":"shoot:4","mode":0,"tier":["guard","move:2:2","move:3:1","move:3:3","move:4:2","reload","shoot:4"],"band":["shoot:4"],"band_scores":{"shoot:4":0.0949510656},"all_scores":{"guard":0.0007459733333333388,"move:2:2":-0.0091622311111111,"move:3:1":-0.006698666666666683,"move:3:3":-0.006698666666666683,"move:4:2":-0.013824915555555536,"reload":0.015990032000000008,"shoot:4":0.0949510656},"top_effect":{"guard":0.0,"move:2:2":0.0,"move:3:1":0.0,"move:3:3":0.0,"move:4:2":0.0,"reload":0.0,"shoot:4":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":2,"actual":"move:2:2","mode":1,"tier":["guard","move:0:2","move:1:1","move:1:3","move:2:2"],"band":["guard","move:0:2","move:1:1","move:1:3","move:2:2"],"band_scores":{"guard":0.01035809523809524,"move:0:2":-0.006255000000000014,"move:1:1":-0.006255000000000014,"move:1:3":-0.006255000000000014,"move:2:2":0.01632499999999998},"all_scores":{"guard":0.01035809523809524,"move:0:2":-0.006255000000000014,"move:1:1":-0.006255000000000014,"move:1:3":-0.006255000000000014,"move:2:2":0.01632499999999998},"top_effect":{"guard":0.0,"move:0:2":0.0,"move:1:1":0.0,"move:1:3":0.0,"move:2:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[null,null,null],"blocked_alternative_sensitivity":{"combinations":23,"selected_example":["guard","shoot:4","move:2:2"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":-0.0041409999999999815}},
+    {"variant":"objective","scenario":"choke/both","profile":"care","seed":281,"tick":14,"actors":[3,4,5],"actual":["move:5:2","move:5:2","move:8:3"],"colliding":[0,1],"band_free_combinations":4,"tier_free_combinations":34,"best":["guard","move:5:2","move:8:3"],"details":[{"actor":3,"actual":"move:5:2","mode":1,"tier":["guard","move:5:2","move:6:1","move:6:3","move:7:2"],"band":["guard","move:5:2","move:6:1","move:6:3","move:7:2"],"band_scores":{"guard":0.03874999999999998,"move:5:2":0.04045625,"move:6:1":0.03704375,"move:6:3":0.03704375,"move:7:2":0.03704375},"all_scores":{"guard":0.03874999999999998,"move:5:2":0.04045625,"move:6:1":0.03704375,"move:6:3":0.03704375,"move:7:2":0.03704375},"top_effect":{"guard":0.0,"move:5:2":0.0,"move:6:1":0.0,"move:6:3":0.0,"move:7:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":4,"actual":"move:5:2","mode":1,"tier":["guard","heal:4","move:3:2","move:5:2","reload","shoot:0","shoot:2"],"band":["move:5:2"],"band_scores":{"move:5:2":-0.15001399999999995},"all_scores":{"guard":-0.5171572216000001,"heal:4":-0.23139703860000005,"move:3:2":-0.7431031824,"move:5:2":-0.15001399999999995,"reload":-0.7877036454399999,"shoot:0":-0.789545812544,"shoot:2":-0.789545812544},"top_effect":{"guard":0.0,"heal:4":0.0,"move:3:2":0.0,"move:5:2":0.0,"reload":0.0,"shoot:0":0.0,"shoot:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":5,"actual":"move:8:3","mode":1,"tier":["guard","move:7:2","move:7:4","move:8:3"],"band":["guard","move:7:2","move:7:4","move:8:3"],"band_scores":{"guard":0.03874999999999998,"move:7:2":0.04045625,"move:7:4":0.03874999999999998,"move:8:3":0.03874999999999998},"all_scores":{"guard":0.03874999999999998,"move:6:3":-0.12201012499999998,"move:7:2":0.04045625,"move:7:4":0.03874999999999998,"move:8:3":0.03874999999999998},"top_effect":{"guard":0.0,"move:6:3":-0.06666666666666667,"move:7:2":0.0,"move:7:4":0.0,"move:8:3":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[null,null,null],"blocked_alternative_sensitivity":{"combinations":4,"selected_example":["guard","move:5:2","move:8:3"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":-0.0017062500000000203}},
+    {"variant":"objective","scenario":"choke/both","profile":"care","seed":282,"tick":9,"actors":[0,1,2],"actual":["move:2:4","move:3:2","move:2:4"],"colliding":[0,2],"band_free_combinations":13,"tier_free_combinations":13,"best":["move:3:3","move:3:2","move:2:4"],"details":[{"actor":0,"actual":"move:2:4","mode":1,"tier":["guard","move:1:3","move:2:2","move:2:4","move:3:3"],"band":["guard","move:1:3","move:2:2","move:2:4","move:3:3"],"band_scores":{"guard":0.03000208333333334,"move:1:3":0.03704375000000003,"move:2:2":0.04045625,"move:2:4":0.03704375000000003,"move:3:3":0.04045625},"all_scores":{"guard":0.03000208333333334,"move:1:3":0.03704375000000003,"move:2:2":0.04045625,"move:2:4":0.03704375000000003,"move:3:3":0.04045625},"top_effect":{"guard":0.0,"move:1:3":0.0,"move:2:2":0.0,"move:2:4":0.0,"move:3:3":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":1,"actual":"move:3:2","mode":1,"tier":["guard","move:3:2","move:5:2","shoot:3","shoot:5"],"band":["move:3:2"],"band_scores":{"move:3:2":-0.08527399999999997},"all_scores":{"guard":-0.44298798999999994,"move:3:2":-0.08527399999999997,"move:5:2":-0.64275014,"shoot:3":-0.6514107056760001,"shoot:5":-0.6514107056760001},"top_effect":{"guard":0.0,"move:3:2":0.0,"move:5:2":0.0,"shoot:3":0.0,"shoot:5":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":2,"actual":"move:2:4","mode":1,"tier":["guard","move:2:4","move:3:3"],"band":["guard","move:2:4","move:3:3"],"band_scores":{"guard":0.03875,"move:2:4":0.03704375000000003,"move:3:3":0.04045625},"all_scores":{"guard":0.03875,"move:2:4":0.03704375000000003,"move:3:3":0.04045625},"top_effect":{"guard":0.0,"move:2:4":0.0,"move:3:3":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[null,null,null],"blocked_alternative_sensitivity":{"combinations":13,"selected_example":["move:3:3","move:3:2","move:2:4"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":0.003412499999999971}},
+    {"variant":"objective","scenario":"choke/both","profile":"care","seed":282,"tick":11,"actors":[0,1,2],"actual":["move:3:3","guard","move:3:3"],"colliding":[0,2],"band_free_combinations":9,"tier_free_combinations":13,"best":["move:3:3","guard","guard"],"details":[{"actor":0,"actual":"move:3:3","mode":1,"tier":["guard","move:1:3","move:2:2","move:2:4","move:3:3"],"band":["guard","move:1:3","move:2:2","move:2:4","move:3:3"],"band_scores":{"guard":0.033062499999999995,"move:1:3":0.03875,"move:2:2":0.04045625,"move:2:4":0.03875,"move:3:3":0.04045625},"all_scores":{"guard":0.033062499999999995,"move:1:3":0.03875,"move:2:2":0.04045625,"move:2:4":0.03875,"move:3:3":0.04045625},"top_effect":{"guard":0.0,"move:1:3":0.0,"move:2:2":0.0,"move:2:4":0.0,"move:3:3":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":1,"actual":"guard","mode":0,"tier":["guard","move:3:2","move:5:2"],"band":["guard"],"band_scores":{"guard":0.026180104166666683},"all_scores":{"guard":0.026180104166666683,"move:3:2":-0.07879499999999996,"move:5:2":-0.07174249999999996},"top_effect":{"guard":0.0,"move:3:2":0.0,"move:5:2":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}},{"actor":2,"actual":"move:3:3","mode":1,"tier":["guard","move:2:4","move:3:3"],"band":["guard","move:3:3"],"band_scores":{"guard":0.044502499999999987,"move:3:3":0.04045625},"all_scores":{"guard":0.044502499999999987,"move:2:4":0.007474187500000009,"move:3:3":0.04045625},"top_effect":{"guard":0.0,"move:2:4":0.0,"move:3:3":0.0},"progress":{"blocked":{},"applied":false,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[null,null,null],"blocked_alternative_sensitivity":{"combinations":9,"selected_example":["move:3:3","guard","guard"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":0.004046249999999987}},
+    {"variant":"objective","scenario":"choke/both","profile":"care","seed":282,"tick":19,"actors":[0,1,2],"actual":["move:4:2","move:4:2","guard"],"colliding":[0,1],"band_free_combinations":3,"tier_free_combinations":19,"best":["guard","move:4:2","guard"],"details":[{"actor":0,"actual":"move:4:2","mode":1,"tier":["guard","move:3:1","move:3:3","move:4:2"],"band":["guard","move:3:1","move:3:3","move:4:2"],"band_scores":{"guard":0.006911666666666672,"move:3:1":-0.006254999999999955,"move:3:3":-0.006254999999999955,"move:4:2":0.016325000000000006},"all_scores":{"guard":0.006911666666666672,"move:3:1":-0.006254999999999955,"move:3:3":-0.006254999999999955,"move:4:2":0.016325000000000006},"top_effect":{"guard":0.0,"move:3:1":0.0,"move:3:3":0.0,"move:4:2":0.0},"progress":{"blocked":{"guard":"no demonstrated progress or useful maintenance"},"applied":false,"unresolved":true}},{"actor":1,"actual":"move:4:2","mode":1,"tier":["guard","move:4:2","move:6:2","shoot:3","shoot:5"],"band":["move:4:2"],"band_scores":{"move:4:2":-0.004119333333333294},"all_scores":{"guard":-0.2917566666666667,"move:4:2":-0.004119333333333294,"move:6:2":-0.5462523333333335,"shoot:3":-0.4257275465555558,"shoot:5":-0.4257275465555558},"top_effect":{"guard":0.0,"move:4:2":0.0,"move:6:2":0.0,"shoot:3":0.0,"shoot:5":0.0},"progress":{"blocked":{"move:6:2":"no demonstrated progress or useful maintenance"},"applied":false,"unresolved":true}},{"actor":2,"actual":"guard","mode":1,"tier":["guard","move:1:2","move:2:1","move:2:3"],"band":["guard","move:1:2","move:2:1","move:2:3"],"band_scores":{"guard":0.008256428571428573,"move:1:2":-0.006254999999999955,"move:2:1":-0.006254999999999955,"move:2:3":-0.006254999999999955},"all_scores":{"guard":0.008256428571428573,"move:1:2":-0.006254999999999955,"move:2:1":-0.006254999999999955,"move:2:3":-0.006254999999999955},"top_effect":{"guard":0.0,"move:1:2":0.0,"move:2:1":0.0,"move:2:3":0.0},"progress":{"blocked":{"guard":"no demonstrated progress or useful maintenance","move:1:2":"no demonstrated progress or useful maintenance"},"applied":false,"unresolved":true}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[{"needed":true,"base_purpose":null,"candidate_purpose":0.29469907407407403,"margin":0.02},{"needed":true,"base_purpose":null,"candidate_purpose":0.29469907407407403,"margin":0.02},{"needed":true,"base_purpose":null,"candidate_purpose":0.29469907407407403,"margin":0.02}],"blocked_alternative_sensitivity":{"combinations":2,"selected_example":["move:3:3","move:4:2","guard"],"changed_actors":1,"new_blocked_roots":[],"persona_score_delta":-0.02257999999999996}},
+    {"variant":"objective","scenario":"choke/both","profile":"care","seed":282,"tick":24,"actors":[0,1,2],"actual":["move:3:2","move:4:2","move:3:2"],"colliding":[0,2],"band_free_combinations":0,"tier_free_combinations":0,"best":null,"details":[{"actor":0,"actual":"move:3:2","mode":1,"tier":["move:3:2"],"band":["move:3:2"],"band_scores":{"move:3:2":0.01632499999999998},"all_scores":{"guard":0.005499166666666675,"move:2:1":-0.006255000000000014,"move:3:0":-0.006255000000000014,"move:3:2":0.01632499999999998},"top_effect":{"guard":0.0,"move:2:1":0.0,"move:3:0":0.0,"move:3:2":0.0},"progress":{"blocked":{"guard":"no demonstrated progress or useful maintenance","move:3:0":"no demonstrated progress or useful maintenance","move:2:1":"no demonstrated progress or useful maintenance"},"applied":true,"unresolved":false}},{"actor":1,"actual":"move:4:2","mode":1,"tier":["guard","move:4:2","shoot:3","shoot:5"],"band":["move:4:2"],"band_scores":{"move:4:2":-0.0027728124999999906},"all_scores":{"guard":-0.3930700000000001,"move:4:2":-0.0027728124999999906,"move:6:2":-0.733597,"shoot:3":-0.5773574770000002,"shoot:5":-0.5773574770000002},"top_effect":{"guard":0.0,"move:4:2":0.0,"move:6:2":0.0,"shoot:3":0.0,"shoot:5":0.0},"progress":{"blocked":{"move:6:2":"no demonstrated progress or useful maintenance"},"applied":true,"unresolved":false}},{"actor":2,"actual":"move:3:2","mode":1,"tier":["move:3:2"],"band":["move:3:2"],"band_scores":{"move:3:2":0.01632499999999998},"all_scores":{"guard":0.006864750000000005,"move:2:3":-0.006255000000000014,"move:3:2":0.01632499999999998,"move:3:4":-0.006255000000000014},"top_effect":{"guard":0.0,"move:2:3":0.0,"move:3:2":0.0,"move:3:4":0.0},"progress":{"blocked":{"move:2:3":"no demonstrated progress or useful maintenance","guard":"no demonstrated progress or useful maintenance","move:3:4":"no demonstrated progress or useful maintenance"},"applied":true,"unresolved":false}}],"planning":{"adopted":false,"reason":"no joint personality-compatible plan in purpose corridor","selected_path":null,"recovery_attempt":null},"purpose_recovery":[{"needed":false,"base_purpose":null,"candidate_purpose":null,"margin":0.02},{"needed":false,"base_purpose":null,"candidate_purpose":null,"margin":0.02},{"needed":false,"base_purpose":null,"candidate_purpose":null,"margin":0.02}],"blocked_alternative_sensitivity":{"combinations":0,"selected_example":null,"changed_actors":0,"new_blocked_roots":[],"persona_score_delta":null}}
+  ]
+}

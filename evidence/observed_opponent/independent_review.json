@@ -1,0 +1,347 @@
+{
+  "format": "observed-opponent-independent-review-v1",
+  "reviewed_repository": "/workspace/shared/reflex-observed-opponent",
+  "reviewed_base_commit": "b1c0b711a2b3786a7206853593fa5598cb1b0bbc",
+  "conclusion": {
+    "correctness_blockers_found": false,
+    "recommendation": "Acceptable as a default-off offline prediction diagnostic, with limited, mixed prediction signal wording and prominent regression caveats. No live integration inference is supported.",
+    "repository_edited_by_reviewer": false,
+    "publication_performed": false
+  },
+  "methodology": {
+    "code_review": [
+      "reflex/observed_opponent.py",
+      "reflex/observed_opponent_experiment.py",
+      "tests/test_observed_opponent.py",
+      "evidence/observed_opponent/design.json",
+      "Unchanged combat legality, geometry, actual-opponent chronology and fixed-hypothesis helpers"
+    ],
+    "independent_probability_recomputation": "Separate transient Python implementation consumed original frozen baseline before-states, independently constructed context/signature assignments, discounted opponent counts, legal-action prior normalization, categorical mixtures and joint occupancy probabilities. All current distributions were constructed before current revealed choices were read. It compared each result with the stored predictions. It did not call PublicOpponentMemory, IntentForecast, evaluate_run or experiment.",
+    "reused_rule_and_baseline_helpers": [
+      "reflex.combat.battle_from_record",
+      "reflex.combat.alive",
+      "reflex.combat.legal",
+      "reflex.combat.in_zone",
+      "reflex.combat.zone_distance",
+      "reflex.combat.firing_distance",
+      "reflex.congestion_experiment.enemy_hypotheses"
+    ],
+    "reuse_limit": "This independently verifies candidate update/probability mathematics and artifact reproduction, not an independently rewritten game-rule engine or fixed-hypothesis policy. The reused fixed-hypothesis helper is unchanged baseline code and was separately inspected for actual-policy/RNG/current-choice leakage.",
+    "aggregate_recomputation": "Independently calculated both partitions categorical and occupancy Brier, true log loss and infinite-loss counts directly from raw predictions. No candidate metric helper was used for those comparisons. Calibration/ECE formulas were inspected in code; ECE was not separately recomputed.",
+    "focused_tests": "Ran python -B -m unittest tests.test_observed_opponent -v; these tests intentionally exercise candidate APIs and metric helpers. No claim of independent implementation applies to the test suite.",
+    "matrix_check": "Confirmed the frozen input hash, 64 baseline runs, 1015 ticks and continuity in the independent pass. Reviewed the experiment code enforcing the exact jobs() matrix. The separate independent pass did not reimplement the jobs() matrix generator.",
+    "historical_limit": "Current hash agreement establishes unchanged reviewed artifacts and reported frozen-run inputs. It does not independently establish absence of earlier tuning or externally timestamp the preregistration.",
+    "additional_games_generated": false,
+    "report_written_from_completed_checks": true,
+    "macro_log_loss_recomputation": "Independently calculated means and improved/worsened counts from the candidate-generated per_game.json log-loss entries. These per-game losses were not separately recomputed from raw predictions; full raw recomputation was performed at partition level."
+  },
+  "verification": {
+    "focused_tests_passed": 17,
+    "focused_tests_failed": 0,
+    "baseline_games": 64,
+    "controlled_games": 48,
+    "heldout_games": 16,
+    "ticks": 1015,
+    "adjacent_saved_state_links_verified": 951,
+    "occupancy_rows": 9414,
+    "intent_rows": 2393,
+    "raw_event_keys_unique": true,
+    "occupancy_probability_comparisons": 47070,
+    "categorical_probability_comparisons": 62555,
+    "maximum_probability_absolute_error": 0.0,
+    "aggregate_loss_absolute_tolerance": 1e-14,
+    "all_independently_recomputed_partition_losses_passed": true,
+    "maximum_observed_discounted_count_mass_per_opponent": 9.852191170585657,
+    "theoretical_discounted_count_mass_bound_per_opponent": 10.0,
+    "maximum_counters_per_owner": 312,
+    "bounded_numeric_payload_bytes_at_eight_bytes_per_counter": 2496,
+    "payload_limit": "Numeric payload is not measured Python resident memory; Python float/list/metadata overhead and shared rule geometry caches are additional.",
+    "prequential_order_verified": true,
+    "owner_game_opponent_store_isolation_reviewed": true,
+    "atomic_reveal_validation_reviewed_and_tested": true,
+    "immutable_forecasts_reviewed_and_tested": true,
+    "joint_fixed_dependence_preserved": true,
+    "legal_negative_domains_verified": true,
+    "fixed_zero_support_infinity_preserved": true
+  },
+  "hash_checks": {
+    "all_checks_passed": true,
+    "input": {
+      "path": "/workspace/shared/reflex-controlled-congestion/reflex_artifacts/controlled_congestion/trajectories.jsonl",
+      "sha256": "7d0477223ef66a7d8fd884b976572cec901f7b58f67fe8fbf450ccf4b8be6861",
+      "matched_preregister": true,
+      "matched_frozen_controlled_congestion_verification": true
+    },
+    "design": {
+      "path": "evidence/observed_opponent/design.json",
+      "sha256": "6e1842c10d5cd24efcce73748a05a87e9d861791b3936ba322b26510523e22a4",
+      "matched_preregister": true
+    },
+    "tests": {
+      "path": "tests/test_observed_opponent.py",
+      "sha256": "0aef6d81ed67b5a8de61618f7d12486b0131fdb6645394544a7f527a59fed5ee",
+      "matched_preregister": true
+    },
+    "predictions": {
+      "path": "reflex_artifacts/observed_opponent/predictions.jsonl",
+      "sha256": "f0fa6bd8c7b14106f2b2b6e32c08aa37f72f201eb1cd06d5e320adfc4ea51c23",
+      "matched_verification": true
+    },
+    "source_files": {
+      "directory": "reflex",
+      "all_matched_preregister": true,
+      "sha256_by_filename": {
+        "__init__.py": "0f031d0ea857b357eba4f325f4034ed4886a17ed28e1a1dc9e32a434db08f71e",
+        "adapters.py": "45a792a85158b9c26bf2ae0ed31e43c0acb936152ce15864fb0072607e636603",
+        "adaptive_reading_experiment.py": "d898638d59cb7683d0b02fc2360adab8edb8a3a4fe7dcfe520100217e85d71de",
+        "alignment.py": "249e749ab7a589ffe7e43c833ce0ee8a6750c3541758beb46b35656b8d850ee2",
+        "alignment_experiment.py": "3c9aeeb44de5a27333bced6781bdb0f4cc9db910582acebf9e617eed8634a1c5",
+        "board_models.py": "52b53761ee343a827465228fd47fe324067e1cca7fdb4137de9411a960c8a101",
+        "board_planning.py": "dcd82e738399cdaa8c27071567afa9fd52f88ac273eece79d351ee5e3f5ab374",
+        "cli.py": "2c4847184dc8664295ae3395fab392dc531c19284231be4a9404fc540b48657e",
+        "combat.py": "0e7a764ebe19af17f52d618e756f0dd85872f4fdf8c432c19f5fdca690935877",
+        "combat_experiment.py": "22cb5889fad36dd6d66ff408bd3aef58330ac1cb429f913b3e77dc765e5df8df",
+        "combat_planning.py": "916faa260e6847b3095165869259d649b6201c30efb0aaf12048b528a0f46b65",
+        "congestion_experiment.py": "e6dd629520307e1099693916846e23f3c1809087b60796164b715685c38c10e3",
+        "contests.py": "80caf08f3347ad7de989ad66485b3751f1418fa6fe309400e44a716b529fc150",
+        "contests_experiment.py": "8e9dc3de5efd07e4550732be78092a4c70296c75d433d84b3b62953678669aa0",
+        "continuation_experiment.py": "e7dad0b39e2e5fdd4bc781a362588a44ba23bf032ce28f0779c9625e7cedecca",
+        "core.py": "7a347bb699fffc0481dc5b9e9e31ff2a54d38f8f46de5e190cbd4798b05c3143",
+        "cross_games.py": "3d1899d5b2a9b77673c916114e812955fdb3812fab552f227126a8d4194dc2cf",
+        "decision_loop.py": "4a416a226da2e2e439d16e90078385756a148f7aa1cb6b03a2a4c0ceaf47a370",
+        "deliberation.py": "3d7bd87e9796516d2016d2487fd32c1e75a569dd5d863feebc12f945c325be87",
+        "examples.py": "85610dc68fa527526369eb58151c6b29e01be0f5f2795873690a399829a171f8",
+        "experience.py": "ddd27d9d028af9a1b56ee27176df6106a3d070b3e53c4f34ff91d310f0033223",
+        "gambling.py": "41aa8cff4243a464b82524594fde47de6531ef7b5d11bc0bf83361f1e4d9d55f",
+        "goofspiel.py": "4864e6acc50fdf12aa5ef8da5187a9387105aacd56bd5d66a8762817a395f99d",
+        "goofspiel_beliefs.py": "f92a4ea14e147a3a101c4fd0c7bb696f1fbba92525531b3d5345a2cbf8e7af60",
+        "goofspiel_experiment.py": "1b582902eca0f9dd2b823d5cc634196c2f10fbb06f064a0bbcf8eb7d4e3385f3",
+        "goofspiel_reading.py": "a1efd5e1f0ecae6913d9c702aad71dd6f1b5b489cab821b0bb935c5e1dd0b1b2",
+        "horizon.py": "12cb784c7a21784851f641653acdf348e6bc032b80d38c0c9dcbb01dcc917aca",
+        "judgment.py": "bc8654324bdbdd4c74b2765c1092dc4a02489ec54125e61ad6a4a6024ddd2004",
+        "judgment_experiment.py": "d373b67a7255dea0ee1116775d890eb1991603c9f08f906c14931c8b99e35d61",
+        "laboratory.py": "dabd8eb5cf2acff2d03ed7659b2f86bd5eedc0012fb3b5d7c978cb8b99f0ac4c",
+        "loop_experiment.py": "25cec52da933a5388bf6bd8c45c18637cc6278f45c2cc35916a89bed514d49bf",
+        "loop_predictor.py": "4e69c8b375359dc19227cabf31bc4649f121a85c3c1e2c6b105cef1dfb99f9b3",
+        "mahjong_adapter.py": "5ae03b81d523b67a9e7a7397ba314ddbed138eb607f50c776e440da9b146dd3e",
+        "mahjong_experiment.py": "63db3b7ccaf5d425472d7b5683edd94b09274a0640660492e4895066d253e867",
+        "monte_carlo.py": "8e2e925fc429eb2aa5546bc6b835ae60ac972da269204c21de3471e38bedfdd2",
+        "monte_carlo_comparison.py": "147c4813f915f49f565c5afc2eb9aab696f0ae1b67b56547b3b77de5ee297007",
+        "observed_opponent.py": "d618062dd3d457b5bfb355b32233c173aa8e6f8289fd7665c078f0dd583d2022",
+        "observed_opponent_experiment.py": "417ec0479b7ab050a3940569e99797495c6ecfb07134395af30b788ba241fe80",
+        "opponent.py": "747bfc7c77e0edee7b05406e72996becc642aae7ca4ef4b4789688d5704bc4d5",
+        "opponent_beliefs.py": "95777a52db389112b03772237a61c2182aaa3b9c52ac01ceebf165ca38aaa435",
+        "opponent_reading_experiment.py": "60512cf56d07dc9a053f7c0e621096779d005186650b15a3eb16b17fc4b868be",
+        "persona_continuation.py": "00bfffe37dfffca62e2730c8fb5856810593e5ce6ae2049d85d2a1b8a2f6411b",
+        "planning.py": "759e374da0da012ea06dc57679c495ba1562419ad1f24a555ed49f8693af4bf6",
+        "pressure.py": "2f5840b4aab118cc0755a414c550766c1f425e45b47f6281e941a7405fa9923e",
+        "progress.py": "7fa6f1c71ea0addf25707632deb6a3870a63e929b7b58670e7f6bf0b877b060a",
+        "progress_adapters.py": "bc76af5883f5ae7caaf8599d8b4d4758b9806fbfe07d79fdd332ecdd014c1463",
+        "purpose_experiment.py": "eb1e541f14a9b2ee3e32e824911930281cb941f42d339b8be4b8e08982511543",
+        "quoridor.py": "d35e34f06c8c662ae09203b87ce558309b1148a7688b1eaf3dc3be344455a0b8",
+        "recovery_experiment.py": "a95c701866d03071fe5c59a85a81488293f7363865e071651aab2efdc6802de1",
+        "resource_experiment.py": "42704b5f0e76686844559c60fa9551bd5853bc6aa80360af1a08762c5179f0c5",
+        "resource_planning.py": "2b834c17e1ad424b8f215128ac3d38db1266f95c594825e0a9e5dead7a32433b",
+        "resource_world.py": "541d31eb487e8b5d800e5cd3895f486a1c8397883193c96115de821d2bd4adbf",
+        "reversi.py": "755dffd1c8ebcee2b309cd26bc9a00edcb0e4db857b446f257415ad3f63b76ea",
+        "rolling_plan_experiment.py": "25c818b74d615327fa20c9989d01ff725886e118a9948eaff000c5c728114ded",
+        "rolling_plans.py": "361ba57ad61d8869da35b2f5c2f4d38d899371486f7ee82679da46e8fb29aabc",
+        "rollout_boards.py": "485ba25a4deec06aff6eef66bbbd156812bf6e67b5a0e83550b2d2923c05298f",
+        "root_collision_experiment.py": "f2d7361162409fc39535194d5c0cd5df991d12893650bc4432ad8d9c3d06fad6",
+        "root_completion.py": "729cd9c94d4a0a6e0200438e4f1b1d1ce8dd04619dee1fc9eab5cb7f30082780",
+        "route_experiment.py": "7c406d1a4c2d2f9acac1ca34e3d52c1e58ebaea914bd28f8faacc85f0099cd50",
+        "routes.py": "61122363d681258529152628bee34ad89490ce2c91b68375bcd90bc650e323fb",
+        "rule_baseline.py": "9d4961388fa97adc218622f5db234a00bfd7967dec37422b393cb4404535e801",
+        "rule_baseline_experiment.py": "ffa2102bb0c53edc86618c51d5d2eba7161a33aee2aa6b3e7cebb86d9e4427f1",
+        "runtime.py": "9c8de4a3a44e64f2b7433befb7eaf2472605cc90dc719084d11301dde175ce9a",
+        "scale_experiment.py": "e0ef67c2643b8ee441e86932227c97661dc66670b6491425c51959bc37c870fd",
+        "scaling.py": "a6be8a3e180fe838e04a2052d8690923d90a4d6904b69c98e11f07d26042d33c",
+        "stability_experiment.py": "e3057edabd970dd0904e38623aaa73f9eb81b4790076271e6e7181fa5465e571",
+        "teachers.py": "7e4c69cd14eba8c84bb4c3d486d0d26d9ddaa64463f5bd754806fcc8b7817c10",
+        "training.py": "b55a220dfbcfac524bd2c9a5821cb33dcca53b8ef01538242fdd6459bbb2816f",
+        "validation_experiment.py": "7d3c035365f08af28f6b9d36c54e1fe09cf97c88b8db3595e10ce9a11a63e9d2",
+        "wait_experiment.py": "db6a076abc18883583d9fb5409d3bce9753ce265e3ad54bbd9ba9aa6e13f0e0b"
+      }
+    },
+    "scope": "SHA-256 was independently computed for the listed input, design, test, predictions and every listed source module during the completed audit. This report copies the already-verified hash values from the manifests; it does not rerun those checks.",
+    "temporal_scope": "Hash checks describe the completed review snapshot, not a promise that files remain unchanged after the audit. The included hashes identify exactly that snapshot."
+  },
+  "event_domains": {
+    "controlled": {
+      "occupancy_rows": 6922,
+      "positive_observer_destination_rows": 68,
+      "distinct_game_tick_destination_rows": 5822,
+      "distinct_positive_game_tick_destination_events": 58,
+      "structural_enemy_unreachable_negatives": 6503,
+      "enemy_reachable_rows": 419,
+      "intent_events": 1636,
+      "selected_move_rows": 816,
+      "selected_move_positive_rows": 16,
+      "fixed_selected_move_zero_support_misses": 10
+    },
+    "heldout": {
+      "occupancy_rows": 2492,
+      "positive_observer_destination_rows": 13,
+      "distinct_game_tick_destination_rows": 2136,
+      "distinct_positive_game_tick_destination_events": 13,
+      "structural_enemy_unreachable_negatives": 2350,
+      "enemy_reachable_rows": 142,
+      "intent_events": 757,
+      "selected_move_rows": 421,
+      "selected_move_positive_rows": 3,
+      "fixed_selected_move_zero_support_misses": 0
+    },
+    "historical_ten_misses": {
+      "gained_support_under_fixed_coverage_cold_and_observed_memory": 10,
+      "tick_zero_memory_equals_cold": 4,
+      "remaining_memory_probability_increases_vs_cold": 3,
+      "remaining_memory_probability_decreases_vs_cold": 3
+    }
+  },
+  "selected_recomputed_metrics": {
+    "controlled": {
+      "uniform": {
+        "occupancy_brier": 0.008620685413270109,
+        "occupancy_log_loss": 0.027892714333838754,
+        "intent_brier": 0.7909569410486281,
+        "intent_log_loss": 1.6159591607742294
+      },
+      "cold_memory": {
+        "occupancy_brier": 0.008453852730297274,
+        "occupancy_log_loss": 0.026802313854725958
+      },
+      "observed_memory": {
+        "occupancy_brier": 0.00815243442446075,
+        "occupancy_log_loss": 0.02550156487239847,
+        "intent_brier": 0.8518156935064235,
+        "intent_log_loss": 1.6794013545041868
+      },
+      "fixed": {
+        "occupancy_infinite_log_losses": 58,
+        "intent_infinite_log_losses": 1278
+      }
+    },
+    "heldout": {
+      "uniform": {
+        "occupancy_brier": 0.004952535537504344,
+        "occupancy_log_loss": 0.018288879120927335
+      },
+      "cold_memory": {
+        "occupancy_brier": 0.004802174430740737,
+        "occupancy_log_loss": 0.01644219271650367
+      },
+      "observed_memory": {
+        "occupancy_brier": 0.004654170180176251,
+        "occupancy_log_loss": 0.01499866791561408,
+        "intent_brier": 0.5786866104224002,
+        "intent_log_loss": 1.122362262135884
+      },
+      "fixed": {
+        "occupancy_infinite_log_losses": 20,
+        "intent_infinite_log_losses": 381
+      }
+    },
+    "precision_note": "Exact values copied from the evaluation artifact after independent recomputation had verified agreement within 1e-14."
+  },
+  "regression_cautions": [
+    {
+      "finding": "Declared pooled occupancy criteria genuinely pass, but controlled equal-game Brier worsens versus cold and fixed coverage.",
+      "controlled_mean_game_brier_delta_vs_cold": 0.00023000347228987791,
+      "controlled_mean_game_brier_delta_vs_fixed_coverage": 0.00027027538127512757
+    },
+    {
+      "finding": "Controlled categorical memory remains worse than uniform despite occupancy improvement.",
+      "memory_intent_brier": 0.851815694,
+      "uniform_intent_brier": 0.790956941,
+      "memory_intent_log_loss": 1.679401355,
+      "uniform_intent_log_loss": 1.615959161
+    },
+    {
+      "finding": "Controlled steady profile worsens both occupancy losses against cold.",
+      "brier_delta_vs_cold": 0.00013288390881902035,
+      "log_loss_delta_vs_cold": 0.00039787496000994946
+    },
+    {
+      "finding": "Heldout growth profile worsens both occupancy losses against cold and uniform.",
+      "brier_delta_vs_cold": 0.0012364482982460175,
+      "log_loss_delta_vs_cold": 0.0022477412221247224
+    },
+    {
+      "finding": "Heldout reference controller worsens Brier against cold and both losses against uniform.",
+      "brier_delta_vs_cold": 0.000510503405689023,
+      "brier_delta_vs_uniform": 0.002519398563389596,
+      "log_loss_delta_vs_uniform": 0.0021907143692310067
+    },
+    {
+      "finding": "Heldout switch occupancy is already perfect under fixed hypotheses. Memory beats cold but loses to fixed coverage before and after the switch; this does not demonstrate superior switch-event prediction."
+    },
+    {
+      "finding": "Heldout memory versus fixed coverage improves only four games and worsens eleven despite better aggregate averages.",
+      "improved_games": 4,
+      "worsened_games": 11,
+      "unchanged_games": 1
+    },
+    {
+      "finding": "Coverage-floor support repair is distinct from useful learned probability accuracy; all ten selected historical misses receive support even without observations."
+    },
+    {
+      "finding": "Structural negatives dominate and some positive destination events are repeated for multiple observers. Loss/ECE magnitudes and row counts are not evidence of many independent contest predictions."
+    },
+    {
+      "finding": "Observational baseline-path scores do not establish counterfactual policy benefit, live collision reduction, wins, personality, trust or deployment safety. Earlier focal actions affect later public states even though current focal intent is absent."
+    },
+    {
+      "finding": "Heldout is the original fixed matrix partition, not newly collected blind confirmatory data; no significance or broad generalization claim is justified."
+    }
+  ],
+  "additional_independent_macro_log_loss_checks": [
+    {
+      "partition": "controlled",
+      "baseline": "cold_memory",
+      "mean_game_delta": -5.6247247520378324e-05,
+      "improved": 24,
+      "worsened": 15,
+      "unchanged": 9
+    },
+    {
+      "partition": "controlled",
+      "baseline": "uniform",
+      "mean_game_delta": -0.007095831373161013,
+      "improved": 28,
+      "worsened": 14,
+      "unchanged": 6
+    },
+    {
+      "partition": "controlled",
+      "baseline": "fixed_coverage",
+      "mean_game_delta": -0.0016971522249202059,
+      "improved": 21,
+      "worsened": 21,
+      "unchanged": 6
+    },
+    {
+      "partition": "heldout",
+      "baseline": "cold_memory",
+      "mean_game_delta": -0.00098264629817394,
+      "improved": 14,
+      "worsened": 1,
+      "unchanged": 1
+    },
+    {
+      "partition": "heldout",
+      "baseline": "uniform",
+      "mean_game_delta": -0.00264888645516114,
+      "improved": 12,
+      "worsened": 3,
+      "unchanged": 1
+    },
+    {
+      "partition": "heldout",
+      "baseline": "fixed_coverage",
+      "mean_game_delta": -0.003321268765411151,
+      "improved": 4,
+      "worsened": 11,
+      "unchanged": 1
+    }
+  ]
+}

@@ -1,0 +1,4808 @@
+{
+  "format": "victory-route-v1",
+  "games": 32,
+  "seeds": 4,
+  "replayed_decisions": 654,
+  "core_before": {
+    "core.py": "7a347bb699fffc0481dc5b9e9e31ff2a54d38f8f46de5e190cbd4798b05c3143",
+    "runtime.py": "9c8de4a3a44e64f2b7433befb7eaf2472605cc90dc719084d11301dde175ce9a"
+  },
+  "core_after": {
+    "core.py": "7a347bb699fffc0481dc5b9e9e31ff2a54d38f8f46de5e190cbd4798b05c3143",
+    "runtime.py": "9c8de4a3a44e64f2b7433befb7eaf2472605cc90dc719084d11301dde175ce9a"
+  },
+  "summary": [
+    {
+      "profile": "growth",
+      "routed": false,
+      "games": 4,
+      "wins": 4,
+      "switches": 0,
+      "chosen_routes": {},
+      "median_p50_ms": 3.8707250059815124
+    },
+    {
+      "profile": "growth",
+      "routed": true,
+      "games": 4,
+      "wins": 4,
+      "switches": 1,
+      "chosen_routes": {
+        "power": 69,
+        "science": 2
+      },
+      "median_p50_ms": 5.914800014579669
+    },
+    {
+      "profile": "steady",
+      "routed": false,
+      "games": 4,
+      "wins": 4,
+      "switches": 0,
+      "chosen_routes": {},
+      "median_p50_ms": 5.247724999208003
+    },
+    {
+      "profile": "steady",
+      "routed": true,
+      "games": 4,
+      "wins": 4,
+      "switches": 5,
+      "chosen_routes": {
+        "culture": 41,
+        "power": 3
+      },
+      "median_p50_ms": 7.348299986915663
+    },
+    {
+      "profile": "care",
+      "routed": false,
+      "games": 4,
+      "wins": 4,
+      "switches": 0,
+      "chosen_routes": {},
+      "median_p50_ms": 4.328700015321374
+    },
+    {
+      "profile": "care",
+      "routed": true,
+      "games": 4,
+      "wins": 4,
+      "switches": 4,
+      "chosen_routes": {
+        "power": 44,
+        "culture": 28
+      },
+      "median_p50_ms": 6.908224997459911
+    },
+    {
+      "profile": "ego",
+      "routed": false,
+      "games": 4,
+      "wins": 1,
+      "switches": 0,
+      "chosen_routes": {},
+      "median_p50_ms": 3.8288999639917165
+    },
+    {
+      "profile": "ego",
+      "routed": true,
+      "games": 4,
+      "wins": 2,
+      "switches": 0,
+      "chosen_routes": {
+        "power": 117
+      },
+      "median_p50_ms": 6.116499978816137
+    }
+  ],
+  "probe": [
+    {
+      "scenario": "initial_world",
+      "profile": "growth",
+      "chosen": "power",
+      "scores": {
+        "culture": 0.7366333333333335,
+        "power": 1.3952666666666669,
+        "science": 0.540688888888889
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "initial_world",
+      "profile": "steady",
+      "chosen": "culture",
+      "scores": {
+        "culture": -0.08634791666666673,
+        "power": 0.2108666666666666,
+        "science": -0.5163652777777776
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "initial_world",
+      "profile": "care",
+      "chosen": "power",
+      "scores": {
+        "culture": 0.35863333333333336,
+        "power": 1.017266666666667,
+        "science": 0.13668888888888897
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "initial_world",
+      "profile": "ego",
+      "chosen": "power",
+      "scores": {
+        "culture": 0.3694333333333333,
+        "power": 1.200966666666667,
+        "science": 0.14748888888888897
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "science_capacity",
+      "profile": "growth",
+      "chosen": "science",
+      "scores": {
+        "culture": 0.7366333333333335,
+        "power": 1.3952666666666669,
+        "science": 1.480055555555556
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 5.0,
+          "quality": 0.8611111111111112,
+          "pressure": 0.0
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "science_capacity",
+      "profile": "steady",
+      "chosen": "science",
+      "scores": {
+        "culture": -0.08634791666666673,
+        "power": 0.2108666666666666,
+        "science": 1.0760555555555558
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 5.0,
+          "quality": 0.8611111111111112,
+          "pressure": 0.0
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "science_capacity",
+      "profile": "care",
+      "chosen": "science",
+      "scores": {
+        "culture": 0.35863333333333336,
+        "power": 1.017266666666667,
+        "science": 1.0760555555555558
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 5.0,
+          "quality": 0.8611111111111112,
+          "pressure": 0.0
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "science_capacity",
+      "profile": "ego",
+      "chosen": "power",
+      "scores": {
+        "culture": 0.3694333333333333,
+        "power": 1.200966666666667,
+        "science": 1.0868555555555557
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 5.0,
+          "quality": 0.8611111111111112,
+          "pressure": 0.0
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "culture_capacity",
+      "profile": "growth",
+      "chosen": "culture",
+      "scores": {
+        "culture": 1.4540555555555557,
+        "power": 1.3952666666666669,
+        "science": 0.540688888888889
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 5.0,
+          "quality": 0.8611111111111112,
+          "pressure": 0.0
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "culture_capacity",
+      "profile": "steady",
+      "chosen": "culture",
+      "scores": {
+        "culture": 1.0760555555555558,
+        "power": 0.2108666666666666,
+        "science": -0.5163652777777776
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 5.0,
+          "quality": 0.8611111111111112,
+          "pressure": 0.0
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "culture_capacity",
+      "profile": "care",
+      "chosen": "culture",
+      "scores": {
+        "culture": 1.0760555555555558,
+        "power": 1.017266666666667,
+        "science": 0.13668888888888897
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 5.0,
+          "quality": 0.8611111111111112,
+          "pressure": 0.0
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "culture_capacity",
+      "profile": "ego",
+      "chosen": "power",
+      "scores": {
+        "culture": 1.0868555555555557,
+        "power": 1.200966666666667,
+        "science": 0.14748888888888897
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 5.0,
+          "quality": 0.8611111111111112,
+          "pressure": 0.0
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "military_capacity",
+      "profile": "growth",
+      "chosen": "power",
+      "scores": {
+        "culture": 0.7366333333333335,
+        "power": 1.5824222222222224,
+        "science": 0.540688888888889
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 2.0,
+          "quality": 0.9444444444444444,
+          "pressure": 0.2
+        }
+      }
+    },
+    {
+      "scenario": "military_capacity",
+      "profile": "steady",
+      "chosen": "power",
+      "scores": {
+        "culture": -0.08634791666666673,
+        "power": 0.9356222222222222,
+        "science": -0.5163652777777776
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 2.0,
+          "quality": 0.9444444444444444,
+          "pressure": 0.2
+        }
+      }
+    },
+    {
+      "scenario": "military_capacity",
+      "profile": "care",
+      "chosen": "power",
+      "scores": {
+        "culture": 0.35863333333333336,
+        "power": 1.2044222222222223,
+        "science": 0.13668888888888897
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 2.0,
+          "quality": 0.9444444444444444,
+          "pressure": 0.2
+        }
+      }
+    },
+    {
+      "scenario": "military_capacity",
+      "profile": "ego",
+      "chosen": "power",
+      "scores": {
+        "culture": 0.3694333333333333,
+        "power": 1.3881222222222225,
+        "science": 0.14748888888888897
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 2.0,
+          "quality": 0.9444444444444444,
+          "pressure": 0.2
+        }
+      }
+    },
+    {
+      "scenario": "military_closed",
+      "profile": "growth",
+      "chosen": "culture",
+      "scores": {
+        "culture": 0.7366333333333335,
+        "power": 1.3952666666666669,
+        "science": 0.540688888888889
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "military_closed",
+      "profile": "steady",
+      "chosen": "culture",
+      "scores": {
+        "culture": -0.08634791666666673,
+        "power": 0.2108666666666666,
+        "science": -0.5163652777777776
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "military_closed",
+      "profile": "care",
+      "chosen": "culture",
+      "scores": {
+        "culture": 0.35863333333333336,
+        "power": 1.017266666666667,
+        "science": 0.13668888888888897
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    },
+    {
+      "scenario": "military_closed",
+      "profile": "ego",
+      "chosen": "culture",
+      "scores": {
+        "culture": 0.3694333333333333,
+        "power": 1.200966666666667,
+        "science": 0.14748888888888897
+      },
+      "estimates": {
+        "science": {
+          "work_proxy": 26.0,
+          "quality": 0.2777777777777778,
+          "pressure": 0.3
+        },
+        "culture": {
+          "work_proxy": 21.0,
+          "quality": 0.41666666666666663,
+          "pressure": 0.3
+        },
+        "power": {
+          "work_proxy": 6.0,
+          "quality": 0.8333333333333334,
+          "pressure": 0.6000000000000001
+        }
+      }
+    }
+  ],
+  "runs": [
+    {
+      "profile": "growth",
+      "seed": 0,
+      "seat": 0,
+      "routed": false,
+      "won": true,
+      "winners": [
+        0
+      ],
+      "rounds": 28,
+      "achieved": [
+        "power"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 3.847200016025454,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              7,
+              18,
+              15,
+              2
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 4,
+            "overflow": 11
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 83
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 83
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 83
+          }
+        ],
+        "turn": 0,
+        "round": 28,
+        "frontier": 5,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "growth",
+      "seed": 0,
+      "seat": 0,
+      "routed": true,
+      "won": true,
+      "winners": [
+        0
+      ],
+      "rounds": 22,
+      "achieved": [
+        "science"
+      ],
+      "route_counts": {
+        "power": 21,
+        "science": 2
+      },
+      "switches": 1,
+      "decision_p50_ms": 6.392600014805794,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              17,
+              15,
+              0
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              2,
+              0
+            ],
+            "science": 14,
+            "culture": 0,
+            "army": 2,
+            "tech": 3,
+            "monuments": 0,
+            "land": 3,
+            "shortages": 0,
+            "overflow": 10
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 47
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 47
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 47
+          }
+        ],
+        "turn": 0,
+        "round": 22,
+        "frontier": 6,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "growth",
+      "seed": 1,
+      "seat": 1,
+      "routed": false,
+      "won": true,
+      "winners": [
+        1
+      ],
+      "rounds": 12,
+      "achieved": [
+        "science"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 4.952749994117767,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              10,
+              8,
+              13
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 10
+          },
+          {
+            "stock": [
+              18,
+              18,
+              14,
+              1
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              2,
+              0
+            ],
+            "science": 14,
+            "culture": 0,
+            "army": 0,
+            "tech": 3,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 3
+          },
+          {
+            "stock": [
+              18,
+              10,
+              8,
+              13
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 10
+          },
+          {
+            "stock": [
+              18,
+              10,
+              8,
+              13
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 10
+          }
+        ],
+        "turn": 0,
+        "round": 12,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "growth",
+      "seed": 1,
+      "seat": 1,
+      "routed": true,
+      "won": true,
+      "winners": [
+        1
+      ],
+      "rounds": 18,
+      "achieved": [
+        "power"
+      ],
+      "route_counts": {
+        "power": 19
+      },
+      "switches": 0,
+      "decision_p50_ms": 5.4370000143535435,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          },
+          {
+            "stock": [
+              8,
+              4,
+              13,
+              1
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              2,
+              0
+            ],
+            "science": 40,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 0,
+            "overflow": 0
+          },
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          },
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          }
+        ],
+        "turn": 1,
+        "round": 18,
+        "frontier": 5,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "growth",
+      "seed": 2,
+      "seat": 2,
+      "routed": false,
+      "won": true,
+      "winners": [
+        2
+      ],
+      "rounds": 18,
+      "achieved": [
+        "power"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 3.7704999558627605,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          },
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          },
+          {
+            "stock": [
+              1,
+              16,
+              13,
+              2
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 0,
+            "overflow": 0
+          },
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          }
+        ],
+        "turn": 2,
+        "round": 18,
+        "frontier": 5,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "growth",
+      "seed": 2,
+      "seat": 2,
+      "routed": true,
+      "won": true,
+      "winners": [
+        2
+      ],
+      "rounds": 12,
+      "achieved": [
+        "power"
+      ],
+      "route_counts": {
+        "power": 13
+      },
+      "switches": 0,
+      "decision_p50_ms": 6.964200001675636,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              10,
+              8,
+              13
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 10
+          },
+          {
+            "stock": [
+              18,
+              10,
+              8,
+              13
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 10
+          },
+          {
+            "stock": [
+              0,
+              7,
+              6,
+              0
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 0,
+            "overflow": 0
+          },
+          {
+            "stock": [
+              18,
+              10,
+              8,
+              13
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 10
+          }
+        ],
+        "turn": 2,
+        "round": 12,
+        "frontier": 5,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "growth",
+      "seed": 3,
+      "seat": 3,
+      "routed": false,
+      "won": true,
+      "winners": [
+        3
+      ],
+      "rounds": 17,
+      "achieved": [
+        "power"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 3.894249995937571,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              15,
+              13,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 25
+          },
+          {
+            "stock": [
+              18,
+              15,
+              13,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 25
+          },
+          {
+            "stock": [
+              18,
+              15,
+              13,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 25
+          },
+          {
+            "stock": [
+              1,
+              15,
+              10,
+              2
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 0,
+            "overflow": 0
+          }
+        ],
+        "turn": 3,
+        "round": 17,
+        "frontier": 5,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "growth",
+      "seed": 3,
+      "seat": 3,
+      "routed": true,
+      "won": true,
+      "winners": [
+        3
+      ],
+      "rounds": 15,
+      "achieved": [
+        "power"
+      ],
+      "route_counts": {
+        "power": 16
+      },
+      "switches": 0,
+      "decision_p50_ms": 5.341799987945706,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              13,
+              11,
+              16
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 19
+          },
+          {
+            "stock": [
+              18,
+              13,
+              11,
+              16
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 19
+          },
+          {
+            "stock": [
+              18,
+              13,
+              11,
+              16
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 19
+          },
+          {
+            "stock": [
+              0,
+              7,
+              6,
+              1
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 2,
+            "overflow": 0
+          }
+        ],
+        "turn": 3,
+        "round": 15,
+        "frontier": 5,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "steady",
+      "seed": 0,
+      "seat": 0,
+      "routed": false,
+      "won": true,
+      "winners": [
+        0
+      ],
+      "rounds": 10,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 5.058349983301014,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              5,
+              14,
+              1
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              2
+            ],
+            "science": 0,
+            "culture": 20,
+            "army": 0,
+            "tech": 0,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 3
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          }
+        ],
+        "turn": 0,
+        "round": 10,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "steady",
+      "seed": 0,
+      "seat": 0,
+      "routed": true,
+      "won": true,
+      "winners": [
+        0
+      ],
+      "rounds": 10,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {
+        "culture": 9,
+        "power": 1
+      },
+      "switches": 2,
+      "decision_p50_ms": 7.4311499774921685,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              5,
+              14,
+              1
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              2
+            ],
+            "science": 0,
+            "culture": 20,
+            "army": 0,
+            "tech": 0,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 3
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          }
+        ],
+        "turn": 0,
+        "round": 10,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "steady",
+      "seed": 1,
+      "seat": 1,
+      "routed": false,
+      "won": true,
+      "winners": [
+        1
+      ],
+      "rounds": 12,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 5.097799992654473,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              10,
+              8,
+              13
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 10
+          },
+          {
+            "stock": [
+              17,
+              1,
+              18,
+              0
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              3
+            ],
+            "science": 0,
+            "culture": 32,
+            "army": 0,
+            "tech": 0,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 6
+          },
+          {
+            "stock": [
+              18,
+              10,
+              8,
+              13
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 10
+          },
+          {
+            "stock": [
+              18,
+              10,
+              8,
+              13
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 10
+          }
+        ],
+        "turn": 1,
+        "round": 12,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "steady",
+      "seed": 1,
+      "seat": 1,
+      "routed": true,
+      "won": true,
+      "winners": [
+        1
+      ],
+      "rounds": 13,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {
+        "culture": 14
+      },
+      "switches": 0,
+      "decision_p50_ms": 6.995600007940084,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              11,
+              9,
+              14
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 13
+          },
+          {
+            "stock": [
+              18,
+              5,
+              18,
+              1
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              3
+            ],
+            "science": 0,
+            "culture": 32,
+            "army": 0,
+            "tech": 0,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 10
+          },
+          {
+            "stock": [
+              18,
+              11,
+              9,
+              14
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 13
+          },
+          {
+            "stock": [
+              18,
+              11,
+              9,
+              14
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 13
+          }
+        ],
+        "turn": 1,
+        "round": 13,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "steady",
+      "seed": 2,
+      "seat": 2,
+      "routed": false,
+      "won": true,
+      "winners": [
+        2
+      ],
+      "rounds": 10,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 5.397650005761534,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              5,
+              11,
+              4
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              2
+            ],
+            "science": 0,
+            "culture": 20,
+            "army": 0,
+            "tech": 0,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 0
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          }
+        ],
+        "turn": 0,
+        "round": 10,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "steady",
+      "seed": 2,
+      "seat": 2,
+      "routed": true,
+      "won": true,
+      "winners": [
+        2
+      ],
+      "rounds": 10,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {
+        "power": 2,
+        "culture": 8
+      },
+      "switches": 3,
+      "decision_p50_ms": 7.673299987800419,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              5,
+              11,
+              4
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              2
+            ],
+            "science": 0,
+            "culture": 20,
+            "army": 0,
+            "tech": 0,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 0
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          }
+        ],
+        "turn": 0,
+        "round": 10,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "steady",
+      "seed": 3,
+      "seat": 3,
+      "routed": false,
+      "won": true,
+      "winners": [
+        3
+      ],
+      "rounds": 10,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 5.666199984261766,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              15,
+              8,
+              14,
+              4
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              2
+            ],
+            "science": 0,
+            "culture": 20,
+            "army": 0,
+            "tech": 0,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 0
+          }
+        ],
+        "turn": 0,
+        "round": 10,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "steady",
+      "seed": 3,
+      "seat": 3,
+      "routed": true,
+      "won": true,
+      "winners": [
+        3
+      ],
+      "rounds": 10,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {
+        "culture": 10
+      },
+      "switches": 0,
+      "decision_p50_ms": 7.265449996339157,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              15,
+              8,
+              14,
+              4
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              2
+            ],
+            "science": 0,
+            "culture": 20,
+            "army": 0,
+            "tech": 0,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 0
+          }
+        ],
+        "turn": 0,
+        "round": 10,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "care",
+      "seed": 0,
+      "seat": 0,
+      "routed": false,
+      "won": true,
+      "winners": [
+        0
+      ],
+      "rounds": 22,
+      "achieved": [
+        "science"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 4.085100023075938,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              14,
+              15,
+              0
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              2,
+              3
+            ],
+            "science": 14,
+            "culture": 40,
+            "army": 2,
+            "tech": 3,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 12
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 47
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 47
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 47
+          }
+        ],
+        "turn": 0,
+        "round": 22,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "care",
+      "seed": 0,
+      "seat": 0,
+      "routed": true,
+      "won": true,
+      "winners": [
+        0
+      ],
+      "rounds": 17,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {
+        "power": 15,
+        "culture": 2
+      },
+      "switches": 1,
+      "decision_p50_ms": 6.968199973925948,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              6,
+              18,
+              1
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              1,
+              2
+            ],
+            "science": 14,
+            "culture": 20,
+            "army": 0,
+            "tech": 2,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 27
+          },
+          {
+            "stock": [
+              18,
+              15,
+              13,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 25
+          },
+          {
+            "stock": [
+              18,
+              15,
+              13,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 25
+          },
+          {
+            "stock": [
+              18,
+              15,
+              13,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 25
+          }
+        ],
+        "turn": 0,
+        "round": 17,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "care",
+      "seed": 1,
+      "seat": 1,
+      "routed": false,
+      "won": true,
+      "winners": [
+        1
+      ],
+      "rounds": 18,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 4.802300012670457,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          },
+          {
+            "stock": [
+              18,
+              15,
+              18,
+              2
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              2
+            ],
+            "science": 0,
+            "culture": 32,
+            "army": 2,
+            "tech": 0,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 19
+          },
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          },
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          }
+        ],
+        "turn": 1,
+        "round": 18,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "care",
+      "seed": 1,
+      "seat": 1,
+      "routed": true,
+      "won": true,
+      "winners": [
+        1
+      ],
+      "rounds": 18,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {
+        "power": 11,
+        "culture": 8
+      },
+      "switches": 1,
+      "decision_p50_ms": 7.22430000314489,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          },
+          {
+            "stock": [
+              18,
+              15,
+              18,
+              0
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              1,
+              2
+            ],
+            "science": 16,
+            "culture": 32,
+            "army": 0,
+            "tech": 2,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 20
+          },
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          },
+          {
+            "stock": [
+              18,
+              16,
+              14,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 29
+          }
+        ],
+        "turn": 1,
+        "round": 18,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "care",
+      "seed": 2,
+      "seat": 2,
+      "routed": false,
+      "won": true,
+      "winners": [
+        2
+      ],
+      "rounds": 26,
+      "achieved": [
+        "science"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 4.57230000756681,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 71
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 71
+          },
+          {
+            "stock": [
+              18,
+              18,
+              17,
+              12
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              1,
+              2
+            ],
+            "science": 14,
+            "culture": 40,
+            "army": 2,
+            "tech": 3,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 27
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 71
+          }
+        ],
+        "turn": 0,
+        "round": 26,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "care",
+      "seed": 2,
+      "seat": 2,
+      "routed": true,
+      "won": true,
+      "winners": [
+        2
+      ],
+      "rounds": 26,
+      "achieved": [
+        "science"
+      ],
+      "route_counts": {
+        "power": 11,
+        "culture": 15
+      },
+      "switches": 1,
+      "decision_p50_ms": 5.65369997639209,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 71
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 71
+          },
+          {
+            "stock": [
+              18,
+              18,
+              16,
+              1
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              1,
+              2
+            ],
+            "science": 14,
+            "culture": 40,
+            "army": 2,
+            "tech": 3,
+            "monuments": 1,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 28
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 71
+          }
+        ],
+        "turn": 0,
+        "round": 26,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "care",
+      "seed": 3,
+      "seat": 3,
+      "routed": false,
+      "won": true,
+      "winners": [
+        3
+      ],
+      "rounds": 32,
+      "achieved": [
+        "science"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 3.595999995013699,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 107
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 107
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 107
+          },
+          {
+            "stock": [
+              18,
+              18,
+              17,
+              3
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              2,
+              3
+            ],
+            "science": 16,
+            "culture": 40,
+            "army": 2,
+            "tech": 3,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 58
+          }
+        ],
+        "turn": 0,
+        "round": 32,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "care",
+      "seed": 3,
+      "seat": 3,
+      "routed": true,
+      "won": true,
+      "winners": [
+        3
+      ],
+      "rounds": 10,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {
+        "power": 7,
+        "culture": 3
+      },
+      "switches": 1,
+      "decision_p50_ms": 6.8482500209938735,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              18,
+              8,
+              6,
+              11
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 4
+          },
+          {
+            "stock": [
+              15,
+              8,
+              14,
+              4
+            ],
+            "buildings": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              2
+            ],
+            "science": 0,
+            "culture": 20,
+            "army": 0,
+            "tech": 0,
+            "monuments": 2,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 0
+          }
+        ],
+        "turn": 0,
+        "round": 10,
+        "frontier": 8,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "ego",
+      "seed": 0,
+      "seat": 0,
+      "routed": false,
+      "won": true,
+      "winners": [
+        0
+      ],
+      "rounds": 24,
+      "achieved": [
+        "science"
+      ],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 5.213149997871369,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              4,
+              10,
+              18,
+              10
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "science": 14,
+            "culture": 0,
+            "army": 0,
+            "tech": 3,
+            "monuments": 0,
+            "land": 5,
+            "shortages": 0,
+            "overflow": 7
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 59
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 59
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 59
+          }
+        ],
+        "turn": 0,
+        "round": 24,
+        "frontier": 4,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "ego",
+      "seed": 0,
+      "seat": 0,
+      "routed": true,
+      "won": true,
+      "winners": [
+        0
+      ],
+      "rounds": 24,
+      "achieved": [
+        "science"
+      ],
+      "route_counts": {
+        "power": 24
+      },
+      "switches": 0,
+      "decision_p50_ms": 7.349949999479577,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              8,
+              16,
+              18,
+              17
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "science": 14,
+            "culture": 0,
+            "army": 0,
+            "tech": 3,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 0,
+            "overflow": 11
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 59
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 59
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 59
+          }
+        ],
+        "turn": 0,
+        "round": 24,
+        "frontier": 5,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "ego",
+      "seed": 1,
+      "seat": 1,
+      "routed": false,
+      "won": false,
+      "winners": [
+        0
+      ],
+      "rounds": 35,
+      "achieved": [],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 3.473400021903217,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              12,
+              11,
+              18,
+              14
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 0,
+            "overflow": 115
+          },
+          {
+            "stock": [
+              7,
+              16,
+              18,
+              3
+            ],
+            "buildings": [
+              3,
+              1,
+              1,
+              0,
+              0,
+              2
+            ],
+            "science": 0,
+            "culture": 40,
+            "army": 1,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 1,
+            "overflow": 30
+          },
+          {
+            "stock": [
+              16,
+              18,
+              15,
+              17
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 7,
+            "tech": 0,
+            "monuments": 0,
+            "land": 2,
+            "shortages": 0,
+            "overflow": 115
+          },
+          {
+            "stock": [
+              16,
+              18,
+              15,
+              17
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 7,
+            "tech": 0,
+            "monuments": 0,
+            "land": 2,
+            "shortages": 0,
+            "overflow": 115
+          }
+        ],
+        "turn": 0,
+        "round": 35,
+        "frontier": 0,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "ego",
+      "seed": 1,
+      "seat": 1,
+      "routed": true,
+      "won": true,
+      "winners": [
+        1
+      ],
+      "rounds": 22,
+      "achieved": [
+        "culture"
+      ],
+      "route_counts": {
+        "power": 23
+      },
+      "switches": 0,
+      "decision_p50_ms": 6.2809999799355865,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 47
+          },
+          {
+            "stock": [
+              2,
+              11,
+              18,
+              0
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              0,
+              0,
+              1
+            ],
+            "science": 0,
+            "culture": 28,
+            "army": 2,
+            "tech": 0,
+            "monuments": 2,
+            "land": 4,
+            "shortages": 2,
+            "overflow": 6
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 47
+          },
+          {
+            "stock": [
+              18,
+              18,
+              18,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 1,
+            "shortages": 0,
+            "overflow": 47
+          }
+        ],
+        "turn": 1,
+        "round": 22,
+        "frontier": 5,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "ego",
+      "seed": 2,
+      "seat": 2,
+      "routed": false,
+      "won": false,
+      "winners": [
+        0
+      ],
+      "rounds": 35,
+      "achieved": [],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 4.038299957755953,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              12,
+              17,
+              15,
+              16
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 0,
+            "overflow": 106
+          },
+          {
+            "stock": [
+              15,
+              18,
+              16,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 3,
+            "shortages": 0,
+            "overflow": 107
+          },
+          {
+            "stock": [
+              6,
+              13,
+              16,
+              2
+            ],
+            "buildings": [
+              3,
+              1,
+              1,
+              0,
+              0,
+              1
+            ],
+            "science": 0,
+            "culture": 40,
+            "army": 4,
+            "tech": 0,
+            "monuments": 0,
+            "land": 2,
+            "shortages": 1,
+            "overflow": 21
+          },
+          {
+            "stock": [
+              15,
+              18,
+              16,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 3,
+            "shortages": 0,
+            "overflow": 107
+          }
+        ],
+        "turn": 0,
+        "round": 35,
+        "frontier": 0,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "ego",
+      "seed": 2,
+      "seat": 2,
+      "routed": true,
+      "won": false,
+      "winners": [
+        0
+      ],
+      "rounds": 35,
+      "achieved": [],
+      "route_counts": {
+        "power": 35
+      },
+      "switches": 0,
+      "decision_p50_ms": 5.951999977696687,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              12,
+              17,
+              15,
+              16
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 0,
+            "overflow": 106
+          },
+          {
+            "stock": [
+              15,
+              18,
+              16,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 3,
+            "shortages": 0,
+            "overflow": 107
+          },
+          {
+            "stock": [
+              9,
+              13,
+              18,
+              4
+            ],
+            "buildings": [
+              3,
+              1,
+              1,
+              0,
+              0,
+              1
+            ],
+            "science": 0,
+            "culture": 40,
+            "army": 2,
+            "tech": 0,
+            "monuments": 0,
+            "land": 2,
+            "shortages": 1,
+            "overflow": 22
+          },
+          {
+            "stock": [
+              15,
+              18,
+              16,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 3,
+            "shortages": 0,
+            "overflow": 107
+          }
+        ],
+        "turn": 0,
+        "round": 35,
+        "frontier": 0,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "ego",
+      "seed": 3,
+      "seat": 3,
+      "routed": false,
+      "won": false,
+      "winners": [
+        0
+      ],
+      "rounds": 35,
+      "achieved": [],
+      "route_counts": {},
+      "switches": 0,
+      "decision_p50_ms": 3.61949997022748,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              12,
+              17,
+              15,
+              16
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 0,
+            "overflow": 106
+          },
+          {
+            "stock": [
+              15,
+              18,
+              16,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 3,
+            "shortages": 0,
+            "overflow": 107
+          },
+          {
+            "stock": [
+              15,
+              18,
+              16,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 3,
+            "shortages": 0,
+            "overflow": 107
+          },
+          {
+            "stock": [
+              7,
+              18,
+              17,
+              0
+            ],
+            "buildings": [
+              3,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 4,
+            "tech": 0,
+            "monuments": 0,
+            "land": 2,
+            "shortages": 4,
+            "overflow": 9
+          }
+        ],
+        "turn": 0,
+        "round": 35,
+        "frontier": 0,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    },
+    {
+      "profile": "ego",
+      "seed": 3,
+      "seat": 3,
+      "routed": true,
+      "won": false,
+      "winners": [
+        0
+      ],
+      "rounds": 35,
+      "achieved": [],
+      "route_counts": {
+        "power": 35
+      },
+      "switches": 0,
+      "decision_p50_ms": 5.620800016913563,
+      "final": {
+        "empires": [
+          {
+            "stock": [
+              12,
+              17,
+              15,
+              16
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 4,
+            "shortages": 0,
+            "overflow": 106
+          },
+          {
+            "stock": [
+              15,
+              18,
+              16,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 3,
+            "shortages": 0,
+            "overflow": 107
+          },
+          {
+            "stock": [
+              15,
+              18,
+              16,
+              18
+            ],
+            "buildings": [
+              2,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 6,
+            "tech": 0,
+            "monuments": 0,
+            "land": 3,
+            "shortages": 0,
+            "overflow": 107
+          },
+          {
+            "stock": [
+              7,
+              18,
+              17,
+              0
+            ],
+            "buildings": [
+              3,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "science": 0,
+            "culture": 0,
+            "army": 4,
+            "tech": 0,
+            "monuments": 0,
+            "land": 2,
+            "shortages": 4,
+            "overflow": 9
+          }
+        ],
+        "turn": 0,
+        "round": 35,
+        "frontier": 0,
+        "food_yield": 2,
+        "ore_yield": 1,
+        "trade_price": 3,
+        "routes": [
+          "science",
+          "culture",
+          "power"
+        ],
+        "limit": 36
+      }
+    }
+  ],
+  "limitations": [
+    "route opportunities/effects/progress are game-authored proxies, not universal automatic win valuation",
+    "no opponents/future event simulation in opportunity estimate",
+    "development probe; no validated Big Five-to-victory psychological mapping",
+    "route preference and route-specific value changed together, so attribution is limited",
+    "hard rejection/known failure and hysteresis handle route change; calibrated route advantage prediction pending",
+    "timings include possible concurrent local experiment load; not isolated throughput measurements"
+  ]
+}

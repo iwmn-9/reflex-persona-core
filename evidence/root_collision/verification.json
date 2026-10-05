@@ -1,0 +1,222 @@
+{
+  "format": "root-collision-verification-v1",
+  "base": "3ca35a3f0eccc8665c7f39596b52abe8e3ff3149",
+  "baseline_tests": {
+    "ran": 401,
+    "optional_skips": 14,
+    "passed": true
+  },
+  "final_tests": {
+    "ran": 435,
+    "optional_skips": 14,
+    "passed": true
+  },
+  "focused_tests": 34,
+  "compileall": true,
+  "diff_check": true,
+  "independent_code_review": "no must-fix implementation issue; mixed versus friendly-only failure categories distinguished in report",
+  "heldout_identity_complete": true,
+  "heldout_source_freeze_intact": true,
+  "heldout_pairs": 32,
+  "identical_paired_trajectories": 32,
+  "heldout_interventions": 0,
+  "rule_transitions_replayed": 1308,
+  "purpose_updates_replayed": 3752,
+  "raw_trajectory_sha256": "265833434e6d899091930aec923d33c6248ff98cec7a6842c45bfa8ed59a57e5",
+  "efficacy_conclusion": "Not established: no friendly collisions in heldout; no post-result seed replacement or threshold tuning",
+  "defaults_changed": false,
+  "objective_continuation_changed": false,
+  "comparison_note": "Persisted prior JSON normalizes map keys and tuple/list representation before equality comparison; no policy change",
+  "serial_reference": {
+    "repetitions": 3,
+    "trace_noninterference_cases": 4,
+    "old_base_trajectory_matches": 2,
+    "source_freeze_intact": true,
+    "raw_sha256": "c74e345faa6ed03db6dfdbd818f8dfe9797af6e8866494325b6d92b15ba0b152",
+    "actual_rule_checks": 160,
+    "actual_purpose_checks": 480,
+    "distinct_cases": [
+      {
+        "scenario": "choke/eliminate",
+        "profile": "care",
+        "seed": 281,
+        "variant": "baseline",
+        "won": false,
+        "lost": false,
+        "ticks": 40,
+        "decisions": 120,
+        "movement": {
+          "move_attempts": 72,
+          "failed_moves": 10,
+          "friendly_collision_moves": 4,
+          "opponent_collision_moves": 6,
+          "unwon_unlost_games": 1
+        },
+        "unresolved_stop_selections": 22,
+        "expired_stop_selections": 22,
+        "unsupported_root_selections": 0,
+        "longest_observed_stall": 4,
+        "final_eliminate_progress": 0.33333333333333337,
+        "final_secure_progress": 1.0,
+        "total_work": {
+          "planner_seconds": 8.274196390997531,
+          "calls": 47,
+          "model_transitions": 12868,
+          "recovery_calls": 7
+        },
+        "completion_max_persona_regret": 0.0
+      },
+      {
+        "scenario": "choke/eliminate",
+        "profile": "care",
+        "seed": 281,
+        "variant": "root-completion",
+        "won": false,
+        "lost": false,
+        "ticks": 40,
+        "decisions": 120,
+        "movement": {
+          "move_attempts": 78,
+          "completion_calls": 20,
+          "completion_collision_ticks": 2,
+          "completion_feasible_ticks": 2,
+          "completion_search_combinations": 115,
+          "completion_adopted_ticks": 2,
+          "completion_changed_actors": 3,
+          "completion_unresolved_ticks": 0,
+          "persona_band_violations": 0,
+          "introduced_blocked_roots": 0,
+          "failed_moves": 14,
+          "opponent_collision_moves": 14,
+          "unwon_unlost_games": 1
+        },
+        "unresolved_stop_selections": 19,
+        "expired_stop_selections": 19,
+        "unsupported_root_selections": 0,
+        "longest_observed_stall": 7,
+        "final_eliminate_progress": 0.3916666666666667,
+        "final_secure_progress": 1.0,
+        "total_work": {
+          "planner_seconds": 7.1738780309897265,
+          "calls": 42,
+          "model_transitions": 10288,
+          "recovery_calls": 2
+        },
+        "completion_max_persona_regret": 0.008475000000000019
+      },
+      {
+        "scenario": "choke/both",
+        "profile": "care",
+        "seed": 282,
+        "variant": "baseline",
+        "won": false,
+        "lost": false,
+        "ticks": 40,
+        "decisions": 120,
+        "movement": {
+          "move_attempts": 68,
+          "failed_moves": 8,
+          "friendly_collision_moves": 8,
+          "unwon_unlost_games": 1
+        },
+        "unresolved_stop_selections": 31,
+        "expired_stop_selections": 31,
+        "unsupported_root_selections": 0,
+        "longest_observed_stall": 11,
+        "final_eliminate_progress": 0.3916666666666667,
+        "final_secure_progress": 1.0,
+        "total_work": {
+          "planner_seconds": 14.351943189998565,
+          "calls": 46,
+          "model_transitions": 14205,
+          "recovery_calls": 6
+        },
+        "completion_max_persona_regret": 0.0
+      },
+      {
+        "scenario": "choke/both",
+        "profile": "care",
+        "seed": 282,
+        "variant": "root-completion",
+        "won": false,
+        "lost": false,
+        "ticks": 40,
+        "decisions": 120,
+        "movement": {
+          "move_attempts": 76,
+          "completion_calls": 15,
+          "completion_collision_ticks": 5,
+          "completion_feasible_ticks": 1,
+          "completion_search_combinations": 19,
+          "completion_adopted_ticks": 1,
+          "completion_changed_actors": 1,
+          "completion_unresolved_ticks": 4,
+          "persona_band_violations": 0,
+          "introduced_blocked_roots": 0,
+          "failed_moves": 8,
+          "friendly_collision_moves": 8,
+          "unwon_unlost_games": 1
+        },
+        "unresolved_stop_selections": 17,
+        "expired_stop_selections": 17,
+        "unsupported_root_selections": 0,
+        "longest_observed_stall": 4,
+        "final_eliminate_progress": 0.3916666666666667,
+        "final_secure_progress": 1.0,
+        "total_work": {
+          "planner_seconds": 18.710255653026252,
+          "calls": 46,
+          "model_transitions": 24392,
+          "recovery_calls": 6
+        },
+        "completion_max_persona_regret": 0.003412499999999971
+      }
+    ],
+    "paired_divergences": [
+      {
+        "scenario": "choke/eliminate",
+        "seed": 281,
+        "tick": 7,
+        "same_public_before": true,
+        "completion_caused_first_difference": true,
+        "actors": [
+          3,
+          4,
+          5
+        ],
+        "before": [
+          "guard",
+          "move:7:2",
+          "move:7:2"
+        ],
+        "after": [
+          "guard",
+          "reload",
+          "move:7:2"
+        ]
+      },
+      {
+        "scenario": "choke/both",
+        "seed": 282,
+        "tick": 9,
+        "same_public_before": true,
+        "completion_caused_first_difference": true,
+        "actors": [
+          0,
+          1,
+          2
+        ],
+        "before": [
+          "move:2:4",
+          "move:3:2",
+          "move:2:4"
+        ],
+        "after": [
+          "move:3:3",
+          "move:3:2",
+          "move:2:4"
+        ]
+      }
+    ]
+  }
+}

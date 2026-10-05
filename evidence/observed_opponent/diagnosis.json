@@ -1,0 +1,5306 @@
+{
+  "base_commit": "b1c0b711a2b3786a7206853593fa5598cb1b0bbc",
+  "source_file": "/workspace/shared/reflex-controlled-congestion/reflex_artifacts/controlled_congestion/trajectories.jsonl",
+  "source_sha256": "7d0477223ef66a7d8fd884b976572cec901f7b58f67fe8fbf450ccf4b8be6861",
+  "scope": "Read-only re-scoring and comparison of frozen controlled baseline traces; no candidate implementation, new game, seed, rollout or experiment.",
+  "summary": {
+    "own_move_trials": 816,
+    "actual_contested_own_moves": 16,
+    "zero_support_contested_own_moves": 10,
+    "contest_events": 16,
+    "zero_support_events": 10,
+    "covered_events": 6,
+    "contest_runs": 13,
+    "miss_runs": 7,
+    "unique_team_public_prestate_destination_contest_cases": 9,
+    "unique_team_public_prestate_destination_miss_cases": 7,
+    "unique_public_prestate_miss_states": 6,
+    "miss_events_by_scenario": {
+      "enemy_convergence/both": 6,
+      "mixed_junction/both": 4
+    },
+    "all_misses_goal_both": true,
+    "all_misses_rival_unsecured": true,
+    "all_missed_contesting_actors_legal": true,
+    "all_missed_actor_hypotheses_shoot": true,
+    "all_missed_hypothesis_joint_pairs_identical": true,
+    "all_missed_contesting_actors_first_in_enemy_order": true,
+    "no_pending_root_reaction": true
+  },
+  "verification": {
+    "stored_prediction_prestate_actual_and_hypotheses_matches": 705,
+    "actual_action_legality_checks": 3745,
+    "hypothesis_action_legality_checks": 3272,
+    "actual_opponent_prestate_reproduction_checks": 1636,
+    "saved_selected_execution_first_step_matches": 2424,
+    "paired_runs_checked": 48,
+    "paired_identical_prestate_enemy_choice_matches": 650,
+    "first_shared_state_own_action_divergences_with_same_enemy_choices": 4
+  },
+  "conclusions": {
+    "legal_support": "All missed moves are in the exact public prestate legal action set. No legality exclusion caused any of these misses.",
+    "hypothesis_support": "The two-point behavioral distribution excludes the actual contest move in all ten misses. This is missing behavioral hypothesis support, not missing game-rule legality.",
+    "weights": "All ten missed states have identical complete joint actions in both hypotheses and neither includes the contested destination. Any normalized nonnegative reweighting of those same two hypotheses keeps probability zero. The six covered contests have one supporting hypothesis and probability 0.5; their calibration is separate.",
+    "public_state": "Saved public-state digests, stored hypotheses, actual revealed choices, selected execution first-step prestate/hypotheses, and legal actions reproduce exactly. The actual controller also reproduces from each saved prestate. No observed state/chronology mismatch found.",
+    "behavioral_difference": "All ten misses occur under goal both with the rival unsecured: enemy_hypotheses takes routes(...)[0], which is eliminate while enemy elimination is incomplete; reference explicitly prioritizes secure until that team secures. All missed contesters already have firing access, so their eliminate-distance gain for the central move is zero and shooting wins the tactical score. The actual secure objective favors entering the zone.",
+    "coordination": "No missed central move is removed by within-enemy reservation: each missed contester is the first living enemy actor, and the contested move has tactical score zero versus a positive shoot score. Actual reference decisions are independent and may collide with their own allies (e.g. ego592 tick7 enemies4/5 both target8:2).",
+    "chronology": "validation_experiment.combat commits focal choices, calls opponent(w, actor, seed, rival) on unchanged w, then resolve(w, choices,...). opponent receives no pending choices. First-step forecast likewise computes theirs from unchanged model=w, not from first/ours. Both can respond to prior resolved public positions/HP/ammo, but neither can react to the focal current candidate/root. Later forecast depths legitimately depend on previously simulated joint actions.",
+    "reference_preview": "The actual reference comparator evaluates single-action previews with other players stationary. Each missed central move has secure progress 0.4375 -> 0.6666666667 in that uncontested preview, including first capture hold. In the actual joint resolution the matching focal move causes collision. This stationary preview is a documented controller-model assumption, not a stale or different observed prestate."
+  },
+  "code_references": {
+    "hypotheses": "reflex/congestion_experiment.py:58-70",
+    "occupancy_counting": "reflex/congestion_experiment.py:117-128",
+    "routes_and_scores": "reflex/combat_planning.py:60-111",
+    "forecast_chronology": "reflex/combat_planning.py:190-218",
+    "actual_controller": "reflex/combat.py:366-389",
+    "actual_chronology": "reflex/validation_experiment.py:231-242",
+    "legal_and_resolve": "reflex/combat.py:99-136"
+  },
+  "paired_first_own_divergence_evidence": [
+    {
+      "scenario": "friendly_convergence/both",
+      "profile": "care",
+      "seed": 592,
+      "tick": 11,
+      "identical_enemy_choices": true
+    },
+    {
+      "scenario": "friendly_convergence/both",
+      "profile": "steady",
+      "seed": 592,
+      "tick": 8,
+      "identical_enemy_choices": true
+    },
+    {
+      "scenario": "enemy_convergence/both",
+      "profile": "care",
+      "seed": 592,
+      "tick": 7,
+      "identical_enemy_choices": true
+    },
+    {
+      "scenario": "mixed_junction/both",
+      "profile": "care",
+      "seed": 591,
+      "tick": 11,
+      "identical_enemy_choices": true
+    }
+  ],
+  "events": [
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "enemy_convergence/both",
+      "profile": "growth",
+      "seed": 591,
+      "rival": "reference",
+      "tick": 0,
+      "contested_action": "move:4:1",
+      "own_actors": [
+        3
+      ],
+      "enemy_actors": [
+        0
+      ],
+      "occupancy_probability": 0.0,
+      "zero_support": true,
+      "focal_team": 1,
+      "public_before_digest": "c5c50778a27a1ab5095b3f4427441e6d6c5552b0d68e7cfe6589fa23109bf401",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 1,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 1,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [],
+        "covers": [],
+        "goal": "both",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 0,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "3": [
+          "guard",
+          "move:4:1",
+          "move:5:0",
+          "move:5:2",
+          "move:6:1",
+          "shoot:0"
+        ],
+        "4": [
+          "guard",
+          "move:6:0",
+          "move:7:1",
+          "move:8:0"
+        ],
+        "5": [
+          "guard",
+          "move:6:4",
+          "move:7:3",
+          "move:8:4"
+        ],
+        "0": [
+          "guard",
+          "move:2:1",
+          "move:3:0",
+          "move:3:2",
+          "move:4:1",
+          "shoot:3"
+        ],
+        "1": [
+          "guard",
+          "move:0:0",
+          "move:1:1",
+          "move:2:0"
+        ],
+        "2": [
+          "guard",
+          "move:0:4",
+          "move:1:3",
+          "move:2:4"
+        ]
+      },
+      "all_actual_actions": {
+        "3": "move:4:1",
+        "4": "move:7:1",
+        "5": "move:6:4",
+        "0": "move:4:1",
+        "1": "guard",
+        "2": "move:2:4"
+      },
+      "actual_enemy_actions": {
+        "0": "move:4:1",
+        "1": "guard",
+        "2": "move:2:4"
+      },
+      "hypotheses": [
+        {
+          "0": "shoot:3",
+          "1": "move:2:0",
+          "2": "move:2:4"
+        },
+        {
+          "0": "shoot:3",
+          "1": "move:2:0",
+          "2": "move:2:4"
+        }
+      ],
+      "hypothesis_routes": [
+        "eliminate",
+        "secure"
+      ],
+      "hypothesis_selected_route": "eliminate",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "3": "secure",
+        "4": "secure",
+        "5": "secure"
+      },
+      "prior_tick_actions": null,
+      "enemy_score_evidence": [
+        {
+          "actor": 0,
+          "actual_route": "secure",
+          "actual_action": "move:4:1",
+          "forecast_actions": [
+            "shoot:3",
+            "shoot:3"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:1",
+              "objective": 0.08249999999999996,
+              "safety": -0.22000000000000006,
+              "physiology": 0.0,
+              "weighted_safety": -0.03300000000000001,
+              "weighted_physiology": 0.0,
+              "score": 0.049499999999999954
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.06666666666666662,
+              "physiology": 0.0,
+              "weighted_safety": 0.009999999999999993,
+              "weighted_physiology": 0.0,
+              "score": 0.009999999999999993
+            },
+            {
+              "action": "move:3:2",
+              "objective": 0.0,
+              "safety": 0.02666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": 0.003999999999999996,
+              "weighted_physiology": 0.0,
+              "score": 0.003999999999999996
+            },
+            {
+              "action": "shoot:3",
+              "objective": 0.003079999999999956,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.003079999999999956
+            },
+            {
+              "action": "move:2:1",
+              "objective": -0.02250000000000002,
+              "safety": 0.02666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": 0.003999999999999996,
+              "weighted_physiology": 0.0,
+              "score": -0.018500000000000023
+            },
+            {
+              "action": "move:3:0",
+              "objective": -0.02250000000000002,
+              "safety": -0.1666666666666667,
+              "physiology": 0.0,
+              "weighted_safety": -0.025000000000000005,
+              "weighted_physiology": 0.0,
+              "score": -0.04750000000000003
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:2:1": 0.0,
+              "move:3:0": 0.0,
+              "move:3:2": 0.0,
+              "move:4:1": 0.0,
+              "shoot:3": 0.148
+            },
+            {
+              "guard": 0.004,
+              "move:2:1": 0.0,
+              "move:3:0": 0.0,
+              "move:3:2": 0.0,
+              "move:4:1": 0.0,
+              "shoot:3": 0.148
+            }
+          ],
+          "public_facts": {
+            "position": [
+              3,
+              1
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              3,
+              4,
+              5
+            ],
+            "visible_shots": {
+              "3": 0.74
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 2.2199999999999998,
+            "incoming_damage_proxy_after_uncontested_preview": 4.2,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.6666666666666666,
+            "hold_after_uncontested_preview": 1
+          }
+        }
+      ],
+      "explanation": "Both finite hypotheses take the first incomplete route, eliminate; the actual reference controller uses secure until its own team secures. The central move is legal and best under the reference objective/safety/physiology score, but neither hypothesis includes it. Both instead shoot; changing their mixture weights cannot put mass on this destination."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "enemy_convergence/both",
+      "profile": "growth",
+      "seed": 592,
+      "rival": "reference",
+      "tick": 0,
+      "contested_action": "move:4:1",
+      "own_actors": [
+        0
+      ],
+      "enemy_actors": [
+        3
+      ],
+      "occupancy_probability": 0.0,
+      "zero_support": true,
+      "focal_team": 0,
+      "public_before_digest": "c5c50778a27a1ab5095b3f4427441e6d6c5552b0d68e7cfe6589fa23109bf401",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 1,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 1,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [],
+        "covers": [],
+        "goal": "both",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 0,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "0": [
+          "guard",
+          "move:2:1",
+          "move:3:0",
+          "move:3:2",
+          "move:4:1",
+          "shoot:3"
+        ],
+        "1": [
+          "guard",
+          "move:0:0",
+          "move:1:1",
+          "move:2:0"
+        ],
+        "2": [
+          "guard",
+          "move:0:4",
+          "move:1:3",
+          "move:2:4"
+        ],
+        "3": [
+          "guard",
+          "move:4:1",
+          "move:5:0",
+          "move:5:2",
+          "move:6:1",
+          "shoot:0"
+        ],
+        "4": [
+          "guard",
+          "move:6:0",
+          "move:7:1",
+          "move:8:0"
+        ],
+        "5": [
+          "guard",
+          "move:6:4",
+          "move:7:3",
+          "move:8:4"
+        ]
+      },
+      "all_actual_actions": {
+        "0": "move:4:1",
+        "1": "move:2:0",
+        "2": "move:2:4",
+        "3": "move:4:1",
+        "4": "guard",
+        "5": "move:6:4"
+      },
+      "actual_enemy_actions": {
+        "3": "move:4:1",
+        "4": "guard",
+        "5": "move:6:4"
+      },
+      "hypotheses": [
+        {
+          "3": "shoot:0",
+          "4": "move:7:1",
+          "5": "move:6:4"
+        },
+        {
+          "3": "shoot:0",
+          "4": "move:7:1",
+          "5": "move:6:4"
+        }
+      ],
+      "hypothesis_routes": [
+        "eliminate",
+        "secure"
+      ],
+      "hypothesis_selected_route": "eliminate",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "0": "secure",
+        "1": "secure",
+        "2": "secure"
+      },
+      "prior_tick_actions": null,
+      "enemy_score_evidence": [
+        {
+          "actor": 3,
+          "actual_route": "secure",
+          "actual_action": "move:4:1",
+          "forecast_actions": [
+            "shoot:0",
+            "shoot:0"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:1",
+              "objective": 0.08249999999999996,
+              "safety": -0.22000000000000006,
+              "physiology": 0.0,
+              "weighted_safety": -0.03300000000000001,
+              "weighted_physiology": 0.0,
+              "score": 0.049499999999999954
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.06666666666666662,
+              "physiology": 0.0,
+              "weighted_safety": 0.009999999999999993,
+              "weighted_physiology": 0.0,
+              "score": 0.009999999999999993
+            },
+            {
+              "action": "move:5:2",
+              "objective": 0.0,
+              "safety": 0.02666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": 0.003999999999999996,
+              "weighted_physiology": 0.0,
+              "score": 0.003999999999999996
+            },
+            {
+              "action": "shoot:0",
+              "objective": 0.003079999999999956,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.003079999999999956
+            },
+            {
+              "action": "move:6:1",
+              "objective": -0.02250000000000002,
+              "safety": 0.02666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": 0.003999999999999996,
+              "weighted_physiology": 0.0,
+              "score": -0.018500000000000023
+            },
+            {
+              "action": "move:5:0",
+              "objective": -0.02250000000000002,
+              "safety": -0.1666666666666667,
+              "physiology": 0.0,
+              "weighted_safety": -0.025000000000000005,
+              "weighted_physiology": 0.0,
+              "score": -0.04750000000000003
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:4:1": 0.0,
+              "move:5:0": 0.0,
+              "move:5:2": 0.0,
+              "move:6:1": 0.0,
+              "shoot:0": 0.148
+            },
+            {
+              "guard": 0.004,
+              "move:4:1": 0.0,
+              "move:5:0": 0.0,
+              "move:5:2": 0.0,
+              "move:6:1": 0.0,
+              "shoot:0": 0.148
+            }
+          ],
+          "public_facts": {
+            "position": [
+              5,
+              1
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              0,
+              1,
+              2
+            ],
+            "visible_shots": {
+              "0": 0.74
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 2.2199999999999998,
+            "incoming_damage_proxy_after_uncontested_preview": 4.2,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.6666666666666666,
+            "hold_after_uncontested_preview": 1
+          }
+        }
+      ],
+      "explanation": "Both finite hypotheses take the first incomplete route, eliminate; the actual reference controller uses secure until its own team secures. The central move is legal and best under the reference objective/safety/physiology score, but neither hypothesis includes it. Both instead shoot; changing their mixture weights cannot put mass on this destination."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "enemy_convergence/both",
+      "profile": "growth",
+      "seed": 592,
+      "rival": "reference",
+      "tick": 1,
+      "contested_action": "move:4:1",
+      "own_actors": [
+        0
+      ],
+      "enemy_actors": [
+        3
+      ],
+      "occupancy_probability": 0.0,
+      "zero_support": true,
+      "focal_team": 0,
+      "public_before_digest": "326b7c5047d6a383ded681ee3cf48128327e9e780e2cbe9e69ccaa5952157c0b",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": true
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [],
+        "covers": [],
+        "goal": "both",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 1,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "0": [
+          "guard",
+          "move:2:1",
+          "move:3:0",
+          "move:3:2",
+          "move:4:1",
+          "shoot:3"
+        ],
+        "1": [
+          "guard",
+          "move:1:0",
+          "move:2:1",
+          "move:3:0",
+          "shoot:3"
+        ],
+        "2": [
+          "guard",
+          "move:1:4",
+          "move:2:3",
+          "move:3:4",
+          "shoot:5"
+        ],
+        "3": [
+          "guard",
+          "move:4:1",
+          "move:5:0",
+          "move:5:2",
+          "move:6:1",
+          "shoot:0",
+          "shoot:1"
+        ],
+        "4": [
+          "guard",
+          "move:6:0",
+          "move:7:1",
+          "move:8:0"
+        ],
+        "5": [
+          "guard",
+          "move:5:4",
+          "move:6:3",
+          "move:7:4",
+          "shoot:2"
+        ]
+      },
+      "all_actual_actions": {
+        "0": "move:4:1",
+        "1": "shoot:3",
+        "2": "shoot:5",
+        "3": "move:4:1",
+        "4": "guard",
+        "5": "move:7:4"
+      },
+      "actual_enemy_actions": {
+        "3": "move:4:1",
+        "4": "guard",
+        "5": "move:7:4"
+      },
+      "hypotheses": [
+        {
+          "3": "shoot:0",
+          "4": "move:7:1",
+          "5": "shoot:2"
+        },
+        {
+          "3": "shoot:0",
+          "4": "move:7:1",
+          "5": "shoot:2"
+        }
+      ],
+      "hypothesis_routes": [
+        "eliminate",
+        "secure"
+      ],
+      "hypothesis_selected_route": "eliminate",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "0": "secure",
+        "1": "secure",
+        "2": "secure"
+      },
+      "prior_tick_actions": {
+        "0": "move:4:1",
+        "1": "move:2:0",
+        "2": "move:2:4",
+        "3": "move:4:1",
+        "4": "guard",
+        "5": "move:6:4"
+      },
+      "enemy_score_evidence": [
+        {
+          "actor": 3,
+          "actual_route": "secure",
+          "actual_action": "move:4:1",
+          "forecast_actions": [
+            "shoot:0",
+            "shoot:0"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:1",
+              "objective": 0.08250000000000002,
+              "safety": -0.05333333333333328,
+              "physiology": 0.0,
+              "weighted_safety": -0.007999999999999991,
+              "weighted_physiology": 0.0,
+              "score": 0.07450000000000002
+            },
+            {
+              "action": "move:5:2",
+              "objective": 0.0,
+              "safety": 0.22,
+              "physiology": 0.0,
+              "weighted_safety": 0.033,
+              "weighted_physiology": 0.0,
+              "score": 0.033
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.1333333333333333,
+              "physiology": 0.0,
+              "weighted_safety": 0.019999999999999993,
+              "weighted_physiology": 0.0,
+              "score": 0.019999999999999993
+            },
+            {
+              "action": "move:6:1",
+              "objective": -0.022500000000000075,
+              "safety": 0.22,
+              "physiology": 0.0,
+              "weighted_safety": 0.033,
+              "weighted_physiology": 0.0,
+              "score": 0.010499999999999926
+            },
+            {
+              "action": "shoot:0",
+              "objective": 0.0030799999999999703,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.0030799999999999703
+            },
+            {
+              "action": "shoot:1",
+              "objective": 0.0016933333333333063,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.0016933333333333063
+            },
+            {
+              "action": "move:5:0",
+              "objective": -0.022500000000000075,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.022500000000000075
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:4:1": 0.0,
+              "move:5:0": 0.0,
+              "move:5:2": 0.0,
+              "move:6:1": 0.0,
+              "shoot:0": 0.148,
+              "shoot:1": 0.11600000000000002
+            },
+            {
+              "guard": 0.004,
+              "move:4:1": 0.0,
+              "move:5:0": 0.0,
+              "move:5:2": 0.0,
+              "move:6:1": 0.0,
+              "shoot:0": 0.148,
+              "shoot:1": 0.11600000000000002
+            }
+          ],
+          "public_facts": {
+            "position": [
+              5,
+              1
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              0,
+              1,
+              2
+            ],
+            "visible_shots": {
+              "0": 0.74,
+              "1": 0.5800000000000001
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 3.96,
+            "incoming_damage_proxy_after_uncontested_preview": 4.4399999999999995,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.6666666666666666,
+            "hold_after_uncontested_preview": 1
+          }
+        }
+      ],
+      "explanation": "Both finite hypotheses take the first incomplete route, eliminate; the actual reference controller uses secure until its own team secures. The central move is legal and best under the reference objective/safety/physiology score, but neither hypothesis includes it. Both instead shoot; changing their mixture weights cannot put mass on this destination."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "enemy_convergence/both",
+      "profile": "growth",
+      "seed": 592,
+      "rival": "reference",
+      "tick": 2,
+      "contested_action": "move:4:1",
+      "own_actors": [
+        0
+      ],
+      "enemy_actors": [
+        3
+      ],
+      "occupancy_probability": 0.0,
+      "zero_support": true,
+      "focal_team": 0,
+      "public_before_digest": "6030cff834305192bbbb437ab266cd9853f51edc1b559bbfbfc23565c1e64073",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 0,
+            "hp": 9,
+            "ammo": 2,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 4,
+            "hp": 9,
+            "ammo": 2,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 1,
+            "hp": 6,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": true
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [],
+        "covers": [],
+        "goal": "both",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 2,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "0": [
+          "guard",
+          "move:2:1",
+          "move:3:0",
+          "move:3:2",
+          "move:4:1",
+          "shoot:3"
+        ],
+        "1": [
+          "guard",
+          "move:1:0",
+          "move:2:1",
+          "move:3:0",
+          "reload",
+          "shoot:3"
+        ],
+        "2": [
+          "guard",
+          "move:1:4",
+          "move:2:3",
+          "move:3:4",
+          "reload"
+        ],
+        "3": [
+          "guard",
+          "heal:3",
+          "move:4:1",
+          "move:5:0",
+          "move:5:2",
+          "move:6:1",
+          "shoot:0",
+          "shoot:1"
+        ],
+        "4": [
+          "guard",
+          "move:6:0",
+          "move:7:1",
+          "move:8:0"
+        ],
+        "5": [
+          "guard",
+          "move:6:4",
+          "move:7:3",
+          "move:8:4"
+        ]
+      },
+      "all_actual_actions": {
+        "0": "move:4:1",
+        "1": "move:3:0",
+        "2": "move:3:4",
+        "3": "move:4:1",
+        "4": "guard",
+        "5": "guard"
+      },
+      "actual_enemy_actions": {
+        "3": "move:4:1",
+        "4": "guard",
+        "5": "guard"
+      },
+      "hypotheses": [
+        {
+          "3": "shoot:0",
+          "4": "move:7:1",
+          "5": "move:6:4"
+        },
+        {
+          "3": "shoot:0",
+          "4": "move:7:1",
+          "5": "move:6:4"
+        }
+      ],
+      "hypothesis_routes": [
+        "eliminate",
+        "secure"
+      ],
+      "hypothesis_selected_route": "eliminate",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "0": "secure",
+        "1": "secure",
+        "2": "secure"
+      },
+      "prior_tick_actions": {
+        "0": "move:4:1",
+        "1": "shoot:3",
+        "2": "shoot:5",
+        "3": "move:4:1",
+        "4": "guard",
+        "5": "move:7:4"
+      },
+      "enemy_score_evidence": [
+        {
+          "actor": 3,
+          "actual_route": "secure",
+          "actual_action": "move:4:1",
+          "forecast_actions": [
+            "shoot:0",
+            "shoot:0"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:1",
+              "objective": 0.08249999999999996,
+              "safety": -0.05333333333333328,
+              "physiology": 0.0,
+              "weighted_safety": -0.007999999999999991,
+              "weighted_physiology": 0.0,
+              "score": 0.07449999999999997
+            },
+            {
+              "action": "move:5:2",
+              "objective": 0.0,
+              "safety": 0.22,
+              "physiology": 0.0,
+              "weighted_safety": 0.033,
+              "weighted_physiology": 0.0,
+              "score": 0.033
+            },
+            {
+              "action": "heal:3",
+              "objective": 0.009999999999999953,
+              "safety": 0.0,
+              "physiology": 0.3333333333333333,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.019999999999999997,
+              "score": 0.02999999999999995
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.1333333333333333,
+              "physiology": 0.0,
+              "weighted_safety": 0.019999999999999993,
+              "weighted_physiology": 0.0,
+              "score": 0.019999999999999993
+            },
+            {
+              "action": "move:6:1",
+              "objective": -0.022500000000000075,
+              "safety": 0.22,
+              "physiology": 0.0,
+              "weighted_safety": 0.033,
+              "weighted_physiology": 0.0,
+              "score": 0.010499999999999926
+            },
+            {
+              "action": "shoot:0",
+              "objective": 0.0030799999999999296,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.0030799999999999296
+            },
+            {
+              "action": "shoot:1",
+              "objective": 0.0016933333333332737,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.0016933333333332737
+            },
+            {
+              "action": "move:5:0",
+              "objective": -0.022500000000000075,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.022500000000000075
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "heal:3": 0.026250000000000002,
+              "move:4:1": 0.0,
+              "move:5:0": 0.0,
+              "move:5:2": 0.0,
+              "move:6:1": 0.0,
+              "shoot:0": 0.148,
+              "shoot:1": 0.11600000000000002
+            },
+            {
+              "guard": 0.004,
+              "heal:3": 0.026250000000000002,
+              "move:4:1": 0.0,
+              "move:5:0": 0.0,
+              "move:5:2": 0.0,
+              "move:6:1": 0.0,
+              "shoot:0": 0.148,
+              "shoot:1": 0.11600000000000002
+            }
+          ],
+          "public_facts": {
+            "position": [
+              5,
+              1
+            ],
+            "hp": 6,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              0,
+              1,
+              2
+            ],
+            "visible_shots": {
+              "0": 0.74,
+              "1": 0.5800000000000001
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 3.96,
+            "incoming_damage_proxy_after_uncontested_preview": 4.4399999999999995,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.6666666666666666,
+            "hold_after_uncontested_preview": 1
+          }
+        }
+      ],
+      "explanation": "Both finite hypotheses take the first incomplete route, eliminate; the actual reference controller uses secure until its own team secures. The central move is legal and best under the reference objective/safety/physiology score, but neither hypothesis includes it. Both instead shoot; changing their mixture weights cannot put mass on this destination."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "enemy_convergence/both",
+      "profile": "steady",
+      "seed": 592,
+      "rival": "reference",
+      "tick": 0,
+      "contested_action": "move:4:1",
+      "own_actors": [
+        0
+      ],
+      "enemy_actors": [
+        3
+      ],
+      "occupancy_probability": 0.0,
+      "zero_support": true,
+      "focal_team": 0,
+      "public_before_digest": "c5c50778a27a1ab5095b3f4427441e6d6c5552b0d68e7cfe6589fa23109bf401",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 1,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 1,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [],
+        "covers": [],
+        "goal": "both",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 0,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "0": [
+          "guard",
+          "move:2:1",
+          "move:3:0",
+          "move:3:2",
+          "move:4:1",
+          "shoot:3"
+        ],
+        "1": [
+          "guard",
+          "move:0:0",
+          "move:1:1",
+          "move:2:0"
+        ],
+        "2": [
+          "guard",
+          "move:0:4",
+          "move:1:3",
+          "move:2:4"
+        ],
+        "3": [
+          "guard",
+          "move:4:1",
+          "move:5:0",
+          "move:5:2",
+          "move:6:1",
+          "shoot:0"
+        ],
+        "4": [
+          "guard",
+          "move:6:0",
+          "move:7:1",
+          "move:8:0"
+        ],
+        "5": [
+          "guard",
+          "move:6:4",
+          "move:7:3",
+          "move:8:4"
+        ]
+      },
+      "all_actual_actions": {
+        "0": "move:4:1",
+        "1": "move:2:0",
+        "2": "move:2:4",
+        "3": "move:4:1",
+        "4": "guard",
+        "5": "move:6:4"
+      },
+      "actual_enemy_actions": {
+        "3": "move:4:1",
+        "4": "guard",
+        "5": "move:6:4"
+      },
+      "hypotheses": [
+        {
+          "3": "shoot:0",
+          "4": "move:7:1",
+          "5": "move:6:4"
+        },
+        {
+          "3": "shoot:0",
+          "4": "move:7:1",
+          "5": "move:6:4"
+        }
+      ],
+      "hypothesis_routes": [
+        "eliminate",
+        "secure"
+      ],
+      "hypothesis_selected_route": "eliminate",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "0": "secure",
+        "1": "secure",
+        "2": "secure"
+      },
+      "prior_tick_actions": null,
+      "enemy_score_evidence": [
+        {
+          "actor": 3,
+          "actual_route": "secure",
+          "actual_action": "move:4:1",
+          "forecast_actions": [
+            "shoot:0",
+            "shoot:0"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:1",
+              "objective": 0.08249999999999996,
+              "safety": -0.22000000000000006,
+              "physiology": 0.0,
+              "weighted_safety": -0.03300000000000001,
+              "weighted_physiology": 0.0,
+              "score": 0.049499999999999954
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.06666666666666662,
+              "physiology": 0.0,
+              "weighted_safety": 0.009999999999999993,
+              "weighted_physiology": 0.0,
+              "score": 0.009999999999999993
+            },
+            {
+              "action": "move:5:2",
+              "objective": 0.0,
+              "safety": 0.02666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": 0.003999999999999996,
+              "weighted_physiology": 0.0,
+              "score": 0.003999999999999996
+            },
+            {
+              "action": "shoot:0",
+              "objective": 0.003079999999999956,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.003079999999999956
+            },
+            {
+              "action": "move:6:1",
+              "objective": -0.02250000000000002,
+              "safety": 0.02666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": 0.003999999999999996,
+              "weighted_physiology": 0.0,
+              "score": -0.018500000000000023
+            },
+            {
+              "action": "move:5:0",
+              "objective": -0.02250000000000002,
+              "safety": -0.1666666666666667,
+              "physiology": 0.0,
+              "weighted_safety": -0.025000000000000005,
+              "weighted_physiology": 0.0,
+              "score": -0.04750000000000003
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:4:1": 0.0,
+              "move:5:0": 0.0,
+              "move:5:2": 0.0,
+              "move:6:1": 0.0,
+              "shoot:0": 0.148
+            },
+            {
+              "guard": 0.004,
+              "move:4:1": 0.0,
+              "move:5:0": 0.0,
+              "move:5:2": 0.0,
+              "move:6:1": 0.0,
+              "shoot:0": 0.148
+            }
+          ],
+          "public_facts": {
+            "position": [
+              5,
+              1
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              0,
+              1,
+              2
+            ],
+            "visible_shots": {
+              "0": 0.74
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 2.2199999999999998,
+            "incoming_damage_proxy_after_uncontested_preview": 4.2,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.6666666666666666,
+            "hold_after_uncontested_preview": 1
+          }
+        }
+      ],
+      "explanation": "Both finite hypotheses take the first incomplete route, eliminate; the actual reference controller uses secure until its own team secures. The central move is legal and best under the reference objective/safety/physiology score, but neither hypothesis includes it. Both instead shoot; changing their mixture weights cannot put mass on this destination."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "enemy_convergence/both",
+      "profile": "ego",
+      "seed": 591,
+      "rival": "reference",
+      "tick": 0,
+      "contested_action": "move:4:1",
+      "own_actors": [
+        3
+      ],
+      "enemy_actors": [
+        0
+      ],
+      "occupancy_probability": 0.0,
+      "zero_support": true,
+      "focal_team": 1,
+      "public_before_digest": "c5c50778a27a1ab5095b3f4427441e6d6c5552b0d68e7cfe6589fa23109bf401",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 1,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 1,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 7,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [],
+        "covers": [],
+        "goal": "both",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 0,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "3": [
+          "guard",
+          "move:4:1",
+          "move:5:0",
+          "move:5:2",
+          "move:6:1",
+          "shoot:0"
+        ],
+        "4": [
+          "guard",
+          "move:6:0",
+          "move:7:1",
+          "move:8:0"
+        ],
+        "5": [
+          "guard",
+          "move:6:4",
+          "move:7:3",
+          "move:8:4"
+        ],
+        "0": [
+          "guard",
+          "move:2:1",
+          "move:3:0",
+          "move:3:2",
+          "move:4:1",
+          "shoot:3"
+        ],
+        "1": [
+          "guard",
+          "move:0:0",
+          "move:1:1",
+          "move:2:0"
+        ],
+        "2": [
+          "guard",
+          "move:0:4",
+          "move:1:3",
+          "move:2:4"
+        ]
+      },
+      "all_actual_actions": {
+        "3": "move:4:1",
+        "4": "move:7:1",
+        "5": "move:6:4",
+        "0": "move:4:1",
+        "1": "guard",
+        "2": "move:2:4"
+      },
+      "actual_enemy_actions": {
+        "0": "move:4:1",
+        "1": "guard",
+        "2": "move:2:4"
+      },
+      "hypotheses": [
+        {
+          "0": "shoot:3",
+          "1": "move:2:0",
+          "2": "move:2:4"
+        },
+        {
+          "0": "shoot:3",
+          "1": "move:2:0",
+          "2": "move:2:4"
+        }
+      ],
+      "hypothesis_routes": [
+        "eliminate",
+        "secure"
+      ],
+      "hypothesis_selected_route": "eliminate",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "3": "eliminate",
+        "4": "eliminate",
+        "5": "eliminate"
+      },
+      "prior_tick_actions": null,
+      "enemy_score_evidence": [
+        {
+          "actor": 0,
+          "actual_route": "secure",
+          "actual_action": "move:4:1",
+          "forecast_actions": [
+            "shoot:3",
+            "shoot:3"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:1",
+              "objective": 0.08249999999999996,
+              "safety": -0.22000000000000006,
+              "physiology": 0.0,
+              "weighted_safety": -0.03300000000000001,
+              "weighted_physiology": 0.0,
+              "score": 0.049499999999999954
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.06666666666666662,
+              "physiology": 0.0,
+              "weighted_safety": 0.009999999999999993,
+              "weighted_physiology": 0.0,
+              "score": 0.009999999999999993
+            },
+            {
+              "action": "move:3:2",
+              "objective": 0.0,
+              "safety": 0.02666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": 0.003999999999999996,
+              "weighted_physiology": 0.0,
+              "score": 0.003999999999999996
+            },
+            {
+              "action": "shoot:3",
+              "objective": 0.003079999999999956,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.003079999999999956
+            },
+            {
+              "action": "move:2:1",
+              "objective": -0.02250000000000002,
+              "safety": 0.02666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": 0.003999999999999996,
+              "weighted_physiology": 0.0,
+              "score": -0.018500000000000023
+            },
+            {
+              "action": "move:3:0",
+              "objective": -0.02250000000000002,
+              "safety": -0.1666666666666667,
+              "physiology": 0.0,
+              "weighted_safety": -0.025000000000000005,
+              "weighted_physiology": 0.0,
+              "score": -0.04750000000000003
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:2:1": 0.0,
+              "move:3:0": 0.0,
+              "move:3:2": 0.0,
+              "move:4:1": 0.0,
+              "shoot:3": 0.148
+            },
+            {
+              "guard": 0.004,
+              "move:2:1": 0.0,
+              "move:3:0": 0.0,
+              "move:3:2": 0.0,
+              "move:4:1": 0.0,
+              "shoot:3": 0.148
+            }
+          ],
+          "public_facts": {
+            "position": [
+              3,
+              1
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              3,
+              4,
+              5
+            ],
+            "visible_shots": {
+              "3": 0.74
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 2.2199999999999998,
+            "incoming_damage_proxy_after_uncontested_preview": 4.2,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.6666666666666666,
+            "hold_after_uncontested_preview": 1
+          }
+        }
+      ],
+      "explanation": "Both finite hypotheses take the first incomplete route, eliminate; the actual reference controller uses secure until its own team secures. The central move is legal and best under the reference objective/safety/physiology score, but neither hypothesis includes it. Both instead shoot; changing their mixture weights cannot put mass on this destination."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "mixed_junction/secure",
+      "profile": "growth",
+      "seed": 591,
+      "rival": "reference",
+      "tick": 0,
+      "contested_action": "move:4:2",
+      "own_actors": [
+        4
+      ],
+      "enemy_actors": [
+        0
+      ],
+      "occupancy_probability": 0.5,
+      "zero_support": false,
+      "focal_team": 1,
+      "public_before_digest": "cff1370604f9357f7ae88a4ae1f66d02f4375e490c3bfb1b547f07ab6339732e",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 4,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "covers": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "goal": "secure",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 0,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "3": [
+          "guard",
+          "move:4:2",
+          "move:5:1",
+          "move:5:3",
+          "move:6:2",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ],
+        "4": [
+          "guard",
+          "move:3:1",
+          "move:4:2",
+          "move:5:1",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ],
+        "5": [
+          "guard",
+          "move:5:3",
+          "move:6:2",
+          "move:6:4",
+          "move:7:3",
+          "shoot:0",
+          "shoot:2"
+        ],
+        "0": [
+          "guard",
+          "move:2:2",
+          "move:3:1",
+          "move:3:3",
+          "move:4:2",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "1": [
+          "guard",
+          "move:1:1",
+          "move:2:0",
+          "move:2:2",
+          "move:3:1",
+          "shoot:3",
+          "shoot:4"
+        ],
+        "2": [
+          "guard",
+          "move:1:3",
+          "move:2:2",
+          "move:2:4",
+          "move:3:3",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ]
+      },
+      "all_actual_actions": {
+        "3": "shoot:2",
+        "4": "move:4:2",
+        "5": "move:5:3",
+        "0": "move:4:2",
+        "1": "move:2:0",
+        "2": "move:2:4"
+      },
+      "actual_enemy_actions": {
+        "0": "move:4:2",
+        "1": "move:2:0",
+        "2": "move:2:4"
+      },
+      "hypotheses": [
+        {
+          "0": "move:4:2",
+          "1": "shoot:4",
+          "2": "move:3:3"
+        },
+        {
+          "0": "shoot:4",
+          "1": "shoot:4",
+          "2": "shoot:5"
+        }
+      ],
+      "hypothesis_routes": [
+        "secure"
+      ],
+      "hypothesis_selected_route": "secure",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "3": "secure",
+        "4": "secure",
+        "5": "secure"
+      },
+      "prior_tick_actions": null,
+      "enemy_score_evidence": [
+        {
+          "actor": 0,
+          "actual_route": "secure",
+          "actual_action": "move:4:2",
+          "forecast_actions": [
+            "move:4:2",
+            "shoot:4"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:2",
+              "objective": 0.030000000000000027,
+              "safety": -0.11666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": -0.017499999999999995,
+              "weighted_physiology": 0.0,
+              "score": 0.012500000000000032
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.07777777777777778,
+              "physiology": 0.0,
+              "weighted_safety": 0.011666666666666667,
+              "weighted_physiology": 0.0,
+              "score": 0.011666666666666667
+            },
+            {
+              "action": "move:3:1",
+              "objective": 0.0,
+              "safety": 0.01111111111111112,
+              "physiology": 0.0,
+              "weighted_safety": 0.001666666666666668,
+              "weighted_physiology": 0.0,
+              "score": 0.001666666666666668
+            },
+            {
+              "action": "shoot:5",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:4",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:3",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "move:3:3",
+              "objective": 0.0,
+              "safety": -0.0811111111111111,
+              "physiology": 0.0,
+              "weighted_safety": -0.012166666666666666,
+              "weighted_physiology": 0.0,
+              "score": -0.012166666666666666
+            },
+            {
+              "action": "move:2:2",
+              "objective": -0.030000000000000082,
+              "safety": 0.02888888888888889,
+              "physiology": 0.0,
+              "weighted_safety": 0.004333333333333333,
+              "weighted_physiology": 0.0,
+              "score": -0.025666666666666747
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:2:2": -0.06,
+              "move:3:1": 0.0,
+              "move:3:3": 0.0,
+              "move:4:2": 0.1,
+              "shoot:3": 0.052000000000000005,
+              "shoot:4": 0.074,
+              "shoot:5": 0.05800000000000001
+            },
+            {
+              "guard": 0.004,
+              "move:2:2": -0.06,
+              "move:3:1": 0.0,
+              "move:3:3": 0.0,
+              "move:4:2": 0.1,
+              "shoot:3": 0.10400000000000001,
+              "shoot:4": 0.148,
+              "shoot:5": 0.11600000000000002
+            }
+          ],
+          "public_facts": {
+            "position": [
+              3,
+              2
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              3,
+              4,
+              5
+            ],
+            "visible_shots": {
+              "3": 0.52,
+              "4": 0.74,
+              "5": 0.5800000000000001
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 1.58,
+            "incoming_damage_proxy_after_uncontested_preview": 2.63,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.5,
+            "hold_after_uncontested_preview": 0
+          }
+        }
+      ],
+      "explanation": "Goal secure makes the nonaggressive hypothesis choose the central move. The aggressive hypothesis shoots, so equal weights assign 0.5 occupancy support. Actual reference chooses the central move."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "mixed_junction/secure",
+      "profile": "growth",
+      "seed": 592,
+      "rival": "reference",
+      "tick": 0,
+      "contested_action": "move:4:2",
+      "own_actors": [
+        0
+      ],
+      "enemy_actors": [
+        3
+      ],
+      "occupancy_probability": 0.5,
+      "zero_support": false,
+      "focal_team": 0,
+      "public_before_digest": "46f34e1070e96fb60771eba0eef3717ac7ec6191ee0427cc3bb636c1336963bc",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 4,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "covers": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "goal": "secure",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 0,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "0": [
+          "guard",
+          "move:2:2",
+          "move:3:1",
+          "move:3:3",
+          "move:4:2",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "1": [
+          "guard",
+          "move:3:1",
+          "move:4:2",
+          "move:5:1",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "2": [
+          "guard",
+          "move:1:3",
+          "move:2:2",
+          "move:2:4",
+          "move:3:3",
+          "shoot:3",
+          "shoot:5"
+        ],
+        "3": [
+          "guard",
+          "move:4:2",
+          "move:5:1",
+          "move:5:3",
+          "move:6:2",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ],
+        "4": [
+          "guard",
+          "move:5:1",
+          "move:6:0",
+          "move:6:2",
+          "move:7:1",
+          "shoot:0",
+          "shoot:1"
+        ],
+        "5": [
+          "guard",
+          "move:5:3",
+          "move:6:2",
+          "move:6:4",
+          "move:7:3",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ]
+      },
+      "all_actual_actions": {
+        "0": "move:4:2",
+        "1": "shoot:4",
+        "2": "move:3:3",
+        "3": "move:4:2",
+        "4": "move:7:1",
+        "5": "move:7:3"
+      },
+      "actual_enemy_actions": {
+        "3": "move:4:2",
+        "4": "move:7:1",
+        "5": "move:7:3"
+      },
+      "hypotheses": [
+        {
+          "3": "move:4:2",
+          "4": "shoot:1",
+          "5": "move:5:3"
+        },
+        {
+          "3": "shoot:1",
+          "4": "shoot:1",
+          "5": "shoot:2"
+        }
+      ],
+      "hypothesis_routes": [
+        "secure"
+      ],
+      "hypothesis_selected_route": "secure",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "0": "secure",
+        "1": "secure",
+        "2": "secure"
+      },
+      "prior_tick_actions": null,
+      "enemy_score_evidence": [
+        {
+          "actor": 3,
+          "actual_route": "secure",
+          "actual_action": "move:4:2",
+          "forecast_actions": [
+            "move:4:2",
+            "shoot:1"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:2",
+              "objective": 0.030000000000000027,
+              "safety": -0.11666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": -0.017499999999999995,
+              "weighted_physiology": 0.0,
+              "score": 0.012500000000000032
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.07777777777777778,
+              "physiology": 0.0,
+              "weighted_safety": 0.011666666666666667,
+              "weighted_physiology": 0.0,
+              "score": 0.011666666666666667
+            },
+            {
+              "action": "move:5:1",
+              "objective": 0.0,
+              "safety": 0.01111111111111112,
+              "physiology": 0.0,
+              "weighted_safety": 0.001666666666666668,
+              "weighted_physiology": 0.0,
+              "score": 0.001666666666666668
+            },
+            {
+              "action": "shoot:2",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:1",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:0",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "move:5:3",
+              "objective": 0.0,
+              "safety": -0.0811111111111111,
+              "physiology": 0.0,
+              "weighted_safety": -0.012166666666666666,
+              "weighted_physiology": 0.0,
+              "score": -0.012166666666666666
+            },
+            {
+              "action": "move:6:2",
+              "objective": -0.030000000000000082,
+              "safety": 0.02888888888888889,
+              "physiology": 0.0,
+              "weighted_safety": 0.004333333333333333,
+              "weighted_physiology": 0.0,
+              "score": -0.025666666666666747
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:4:2": 0.1,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": -0.06,
+              "shoot:0": 0.052000000000000005,
+              "shoot:1": 0.074,
+              "shoot:2": 0.05800000000000001
+            },
+            {
+              "guard": 0.004,
+              "move:4:2": 0.1,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": -0.06,
+              "shoot:0": 0.10400000000000001,
+              "shoot:1": 0.148,
+              "shoot:2": 0.11600000000000002
+            }
+          ],
+          "public_facts": {
+            "position": [
+              5,
+              2
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              0,
+              1,
+              2
+            ],
+            "visible_shots": {
+              "0": 0.52,
+              "1": 0.74,
+              "2": 0.5800000000000001
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 1.58,
+            "incoming_damage_proxy_after_uncontested_preview": 2.63,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.5,
+            "hold_after_uncontested_preview": 0
+          }
+        }
+      ],
+      "explanation": "Goal secure makes the nonaggressive hypothesis choose the central move. The aggressive hypothesis shoots, so equal weights assign 0.5 occupancy support. Actual reference chooses the central move."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "mixed_junction/secure",
+      "profile": "steady",
+      "seed": 592,
+      "rival": "reference",
+      "tick": 0,
+      "contested_action": "move:4:2",
+      "own_actors": [
+        0
+      ],
+      "enemy_actors": [
+        3
+      ],
+      "occupancy_probability": 0.5,
+      "zero_support": false,
+      "focal_team": 0,
+      "public_before_digest": "46f34e1070e96fb60771eba0eef3717ac7ec6191ee0427cc3bb636c1336963bc",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 4,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "covers": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "goal": "secure",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 0,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "0": [
+          "guard",
+          "move:2:2",
+          "move:3:1",
+          "move:3:3",
+          "move:4:2",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "1": [
+          "guard",
+          "move:3:1",
+          "move:4:2",
+          "move:5:1",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "2": [
+          "guard",
+          "move:1:3",
+          "move:2:2",
+          "move:2:4",
+          "move:3:3",
+          "shoot:3",
+          "shoot:5"
+        ],
+        "3": [
+          "guard",
+          "move:4:2",
+          "move:5:1",
+          "move:5:3",
+          "move:6:2",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ],
+        "4": [
+          "guard",
+          "move:5:1",
+          "move:6:0",
+          "move:6:2",
+          "move:7:1",
+          "shoot:0",
+          "shoot:1"
+        ],
+        "5": [
+          "guard",
+          "move:5:3",
+          "move:6:2",
+          "move:6:4",
+          "move:7:3",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ]
+      },
+      "all_actual_actions": {
+        "0": "move:4:2",
+        "1": "shoot:4",
+        "2": "move:3:3",
+        "3": "move:4:2",
+        "4": "move:7:1",
+        "5": "move:7:3"
+      },
+      "actual_enemy_actions": {
+        "3": "move:4:2",
+        "4": "move:7:1",
+        "5": "move:7:3"
+      },
+      "hypotheses": [
+        {
+          "3": "move:4:2",
+          "4": "shoot:1",
+          "5": "move:5:3"
+        },
+        {
+          "3": "shoot:1",
+          "4": "shoot:1",
+          "5": "shoot:2"
+        }
+      ],
+      "hypothesis_routes": [
+        "secure"
+      ],
+      "hypothesis_selected_route": "secure",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "0": "secure",
+        "1": "secure",
+        "2": "secure"
+      },
+      "prior_tick_actions": null,
+      "enemy_score_evidence": [
+        {
+          "actor": 3,
+          "actual_route": "secure",
+          "actual_action": "move:4:2",
+          "forecast_actions": [
+            "move:4:2",
+            "shoot:1"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:2",
+              "objective": 0.030000000000000027,
+              "safety": -0.11666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": -0.017499999999999995,
+              "weighted_physiology": 0.0,
+              "score": 0.012500000000000032
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.07777777777777778,
+              "physiology": 0.0,
+              "weighted_safety": 0.011666666666666667,
+              "weighted_physiology": 0.0,
+              "score": 0.011666666666666667
+            },
+            {
+              "action": "move:5:1",
+              "objective": 0.0,
+              "safety": 0.01111111111111112,
+              "physiology": 0.0,
+              "weighted_safety": 0.001666666666666668,
+              "weighted_physiology": 0.0,
+              "score": 0.001666666666666668
+            },
+            {
+              "action": "shoot:2",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:1",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:0",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "move:5:3",
+              "objective": 0.0,
+              "safety": -0.0811111111111111,
+              "physiology": 0.0,
+              "weighted_safety": -0.012166666666666666,
+              "weighted_physiology": 0.0,
+              "score": -0.012166666666666666
+            },
+            {
+              "action": "move:6:2",
+              "objective": -0.030000000000000082,
+              "safety": 0.02888888888888889,
+              "physiology": 0.0,
+              "weighted_safety": 0.004333333333333333,
+              "weighted_physiology": 0.0,
+              "score": -0.025666666666666747
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:4:2": 0.1,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": -0.06,
+              "shoot:0": 0.052000000000000005,
+              "shoot:1": 0.074,
+              "shoot:2": 0.05800000000000001
+            },
+            {
+              "guard": 0.004,
+              "move:4:2": 0.1,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": -0.06,
+              "shoot:0": 0.10400000000000001,
+              "shoot:1": 0.148,
+              "shoot:2": 0.11600000000000002
+            }
+          ],
+          "public_facts": {
+            "position": [
+              5,
+              2
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              0,
+              1,
+              2
+            ],
+            "visible_shots": {
+              "0": 0.52,
+              "1": 0.74,
+              "2": 0.5800000000000001
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 1.58,
+            "incoming_damage_proxy_after_uncontested_preview": 2.63,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.5,
+            "hold_after_uncontested_preview": 0
+          }
+        }
+      ],
+      "explanation": "Goal secure makes the nonaggressive hypothesis choose the central move. The aggressive hypothesis shoots, so equal weights assign 0.5 occupancy support. Actual reference chooses the central move."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "mixed_junction/secure",
+      "profile": "care",
+      "seed": 592,
+      "rival": "reference",
+      "tick": 0,
+      "contested_action": "move:4:2",
+      "own_actors": [
+        0
+      ],
+      "enemy_actors": [
+        3
+      ],
+      "occupancy_probability": 0.5,
+      "zero_support": false,
+      "focal_team": 0,
+      "public_before_digest": "46f34e1070e96fb60771eba0eef3717ac7ec6191ee0427cc3bb636c1336963bc",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 4,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "covers": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "goal": "secure",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 0,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "0": [
+          "guard",
+          "move:2:2",
+          "move:3:1",
+          "move:3:3",
+          "move:4:2",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "1": [
+          "guard",
+          "move:3:1",
+          "move:4:2",
+          "move:5:1",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "2": [
+          "guard",
+          "move:1:3",
+          "move:2:2",
+          "move:2:4",
+          "move:3:3",
+          "shoot:3",
+          "shoot:5"
+        ],
+        "3": [
+          "guard",
+          "move:4:2",
+          "move:5:1",
+          "move:5:3",
+          "move:6:2",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ],
+        "4": [
+          "guard",
+          "move:5:1",
+          "move:6:0",
+          "move:6:2",
+          "move:7:1",
+          "shoot:0",
+          "shoot:1"
+        ],
+        "5": [
+          "guard",
+          "move:5:3",
+          "move:6:2",
+          "move:6:4",
+          "move:7:3",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ]
+      },
+      "all_actual_actions": {
+        "0": "move:4:2",
+        "1": "move:3:1",
+        "2": "move:3:3",
+        "3": "move:4:2",
+        "4": "move:7:1",
+        "5": "move:7:3"
+      },
+      "actual_enemy_actions": {
+        "3": "move:4:2",
+        "4": "move:7:1",
+        "5": "move:7:3"
+      },
+      "hypotheses": [
+        {
+          "3": "move:4:2",
+          "4": "shoot:1",
+          "5": "move:5:3"
+        },
+        {
+          "3": "shoot:1",
+          "4": "shoot:1",
+          "5": "shoot:2"
+        }
+      ],
+      "hypothesis_routes": [
+        "secure"
+      ],
+      "hypothesis_selected_route": "secure",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "0": "secure",
+        "1": "secure",
+        "2": "secure"
+      },
+      "prior_tick_actions": null,
+      "enemy_score_evidence": [
+        {
+          "actor": 3,
+          "actual_route": "secure",
+          "actual_action": "move:4:2",
+          "forecast_actions": [
+            "move:4:2",
+            "shoot:1"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:2",
+              "objective": 0.030000000000000027,
+              "safety": -0.11666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": -0.017499999999999995,
+              "weighted_physiology": 0.0,
+              "score": 0.012500000000000032
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.07777777777777778,
+              "physiology": 0.0,
+              "weighted_safety": 0.011666666666666667,
+              "weighted_physiology": 0.0,
+              "score": 0.011666666666666667
+            },
+            {
+              "action": "move:5:1",
+              "objective": 0.0,
+              "safety": 0.01111111111111112,
+              "physiology": 0.0,
+              "weighted_safety": 0.001666666666666668,
+              "weighted_physiology": 0.0,
+              "score": 0.001666666666666668
+            },
+            {
+              "action": "shoot:2",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:1",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:0",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "move:5:3",
+              "objective": 0.0,
+              "safety": -0.0811111111111111,
+              "physiology": 0.0,
+              "weighted_safety": -0.012166666666666666,
+              "weighted_physiology": 0.0,
+              "score": -0.012166666666666666
+            },
+            {
+              "action": "move:6:2",
+              "objective": -0.030000000000000082,
+              "safety": 0.02888888888888889,
+              "physiology": 0.0,
+              "weighted_safety": 0.004333333333333333,
+              "weighted_physiology": 0.0,
+              "score": -0.025666666666666747
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:4:2": 0.1,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": -0.06,
+              "shoot:0": 0.052000000000000005,
+              "shoot:1": 0.074,
+              "shoot:2": 0.05800000000000001
+            },
+            {
+              "guard": 0.004,
+              "move:4:2": 0.1,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": -0.06,
+              "shoot:0": 0.10400000000000001,
+              "shoot:1": 0.148,
+              "shoot:2": 0.11600000000000002
+            }
+          ],
+          "public_facts": {
+            "position": [
+              5,
+              2
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              0,
+              1,
+              2
+            ],
+            "visible_shots": {
+              "0": 0.52,
+              "1": 0.74,
+              "2": 0.5800000000000001
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 1.58,
+            "incoming_damage_proxy_after_uncontested_preview": 2.63,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.5,
+            "hold_after_uncontested_preview": 0
+          }
+        }
+      ],
+      "explanation": "Goal secure makes the nonaggressive hypothesis choose the central move. The aggressive hypothesis shoots, so equal weights assign 0.5 occupancy support. Actual reference chooses the central move."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "mixed_junction/secure",
+      "profile": "ego",
+      "seed": 592,
+      "rival": "reference",
+      "tick": 0,
+      "contested_action": "move:4:2",
+      "own_actors": [
+        0
+      ],
+      "enemy_actors": [
+        3
+      ],
+      "occupancy_probability": 0.5,
+      "zero_support": false,
+      "focal_team": 0,
+      "public_before_digest": "46f34e1070e96fb60771eba0eef3717ac7ec6191ee0427cc3bb636c1336963bc",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 4,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "covers": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "goal": "secure",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 0,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "0": [
+          "guard",
+          "move:2:2",
+          "move:3:1",
+          "move:3:3",
+          "move:4:2",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "1": [
+          "guard",
+          "move:3:1",
+          "move:4:2",
+          "move:5:1",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "2": [
+          "guard",
+          "move:1:3",
+          "move:2:2",
+          "move:2:4",
+          "move:3:3",
+          "shoot:3",
+          "shoot:5"
+        ],
+        "3": [
+          "guard",
+          "move:4:2",
+          "move:5:1",
+          "move:5:3",
+          "move:6:2",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ],
+        "4": [
+          "guard",
+          "move:5:1",
+          "move:6:0",
+          "move:6:2",
+          "move:7:1",
+          "shoot:0",
+          "shoot:1"
+        ],
+        "5": [
+          "guard",
+          "move:5:3",
+          "move:6:2",
+          "move:6:4",
+          "move:7:3",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ]
+      },
+      "all_actual_actions": {
+        "0": "move:4:2",
+        "1": "shoot:4",
+        "2": "move:3:3",
+        "3": "move:4:2",
+        "4": "move:7:1",
+        "5": "move:7:3"
+      },
+      "actual_enemy_actions": {
+        "3": "move:4:2",
+        "4": "move:7:1",
+        "5": "move:7:3"
+      },
+      "hypotheses": [
+        {
+          "3": "move:4:2",
+          "4": "shoot:1",
+          "5": "move:5:3"
+        },
+        {
+          "3": "shoot:1",
+          "4": "shoot:1",
+          "5": "shoot:2"
+        }
+      ],
+      "hypothesis_routes": [
+        "secure"
+      ],
+      "hypothesis_selected_route": "secure",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "0": "secure",
+        "1": "secure",
+        "2": "secure"
+      },
+      "prior_tick_actions": null,
+      "enemy_score_evidence": [
+        {
+          "actor": 3,
+          "actual_route": "secure",
+          "actual_action": "move:4:2",
+          "forecast_actions": [
+            "move:4:2",
+            "shoot:1"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:2",
+              "objective": 0.030000000000000027,
+              "safety": -0.11666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": -0.017499999999999995,
+              "weighted_physiology": 0.0,
+              "score": 0.012500000000000032
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.07777777777777778,
+              "physiology": 0.0,
+              "weighted_safety": 0.011666666666666667,
+              "weighted_physiology": 0.0,
+              "score": 0.011666666666666667
+            },
+            {
+              "action": "move:5:1",
+              "objective": 0.0,
+              "safety": 0.01111111111111112,
+              "physiology": 0.0,
+              "weighted_safety": 0.001666666666666668,
+              "weighted_physiology": 0.0,
+              "score": 0.001666666666666668
+            },
+            {
+              "action": "shoot:2",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:1",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:0",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "move:5:3",
+              "objective": 0.0,
+              "safety": -0.0811111111111111,
+              "physiology": 0.0,
+              "weighted_safety": -0.012166666666666666,
+              "weighted_physiology": 0.0,
+              "score": -0.012166666666666666
+            },
+            {
+              "action": "move:6:2",
+              "objective": -0.030000000000000082,
+              "safety": 0.02888888888888889,
+              "physiology": 0.0,
+              "weighted_safety": 0.004333333333333333,
+              "weighted_physiology": 0.0,
+              "score": -0.025666666666666747
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:4:2": 0.1,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": -0.06,
+              "shoot:0": 0.052000000000000005,
+              "shoot:1": 0.074,
+              "shoot:2": 0.05800000000000001
+            },
+            {
+              "guard": 0.004,
+              "move:4:2": 0.1,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": -0.06,
+              "shoot:0": 0.10400000000000001,
+              "shoot:1": 0.148,
+              "shoot:2": 0.11600000000000002
+            }
+          ],
+          "public_facts": {
+            "position": [
+              5,
+              2
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              0,
+              1,
+              2
+            ],
+            "visible_shots": {
+              "0": 0.52,
+              "1": 0.74,
+              "2": 0.5800000000000001
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 1.58,
+            "incoming_damage_proxy_after_uncontested_preview": 2.63,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.5,
+            "hold_after_uncontested_preview": 0
+          }
+        }
+      ],
+      "explanation": "Goal secure makes the nonaggressive hypothesis choose the central move. The aggressive hypothesis shoots, so equal weights assign 0.5 occupancy support. Actual reference chooses the central move."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "mixed_junction/secure",
+      "profile": "ego",
+      "seed": 591,
+      "rival": "reference",
+      "tick": 0,
+      "contested_action": "move:4:2",
+      "own_actors": [
+        3
+      ],
+      "enemy_actors": [
+        0
+      ],
+      "occupancy_probability": 0.5,
+      "zero_support": false,
+      "focal_team": 1,
+      "public_before_digest": "cff1370604f9357f7ae88a4ae1f66d02f4375e490c3bfb1b547f07ab6339732e",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 2,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 4,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 6,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "covers": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "goal": "secure",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 0,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "3": [
+          "guard",
+          "move:4:2",
+          "move:5:1",
+          "move:5:3",
+          "move:6:2",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ],
+        "4": [
+          "guard",
+          "move:3:1",
+          "move:4:2",
+          "move:5:1",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ],
+        "5": [
+          "guard",
+          "move:5:3",
+          "move:6:2",
+          "move:6:4",
+          "move:7:3",
+          "shoot:0",
+          "shoot:2"
+        ],
+        "0": [
+          "guard",
+          "move:2:2",
+          "move:3:1",
+          "move:3:3",
+          "move:4:2",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "1": [
+          "guard",
+          "move:1:1",
+          "move:2:0",
+          "move:2:2",
+          "move:3:1",
+          "shoot:3",
+          "shoot:4"
+        ],
+        "2": [
+          "guard",
+          "move:1:3",
+          "move:2:2",
+          "move:2:4",
+          "move:3:3",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ]
+      },
+      "all_actual_actions": {
+        "3": "move:4:2",
+        "4": "shoot:1",
+        "5": "move:5:3",
+        "0": "move:4:2",
+        "1": "move:2:0",
+        "2": "move:2:4"
+      },
+      "actual_enemy_actions": {
+        "0": "move:4:2",
+        "1": "move:2:0",
+        "2": "move:2:4"
+      },
+      "hypotheses": [
+        {
+          "0": "move:4:2",
+          "1": "shoot:4",
+          "2": "move:3:3"
+        },
+        {
+          "0": "shoot:4",
+          "1": "shoot:4",
+          "2": "shoot:5"
+        }
+      ],
+      "hypothesis_routes": [
+        "secure"
+      ],
+      "hypothesis_selected_route": "secure",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "3": "secure",
+        "4": "secure",
+        "5": "secure"
+      },
+      "prior_tick_actions": null,
+      "enemy_score_evidence": [
+        {
+          "actor": 0,
+          "actual_route": "secure",
+          "actual_action": "move:4:2",
+          "forecast_actions": [
+            "move:4:2",
+            "shoot:4"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:2",
+              "objective": 0.030000000000000027,
+              "safety": -0.11666666666666664,
+              "physiology": 0.0,
+              "weighted_safety": -0.017499999999999995,
+              "weighted_physiology": 0.0,
+              "score": 0.012500000000000032
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.07777777777777778,
+              "physiology": 0.0,
+              "weighted_safety": 0.011666666666666667,
+              "weighted_physiology": 0.0,
+              "score": 0.011666666666666667
+            },
+            {
+              "action": "move:3:1",
+              "objective": 0.0,
+              "safety": 0.01111111111111112,
+              "physiology": 0.0,
+              "weighted_safety": 0.001666666666666668,
+              "weighted_physiology": 0.0,
+              "score": 0.001666666666666668
+            },
+            {
+              "action": "shoot:5",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:4",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "shoot:3",
+              "objective": -0.0033333333333334103,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": -0.0033333333333334103
+            },
+            {
+              "action": "move:3:3",
+              "objective": 0.0,
+              "safety": -0.0811111111111111,
+              "physiology": 0.0,
+              "weighted_safety": -0.012166666666666666,
+              "weighted_physiology": 0.0,
+              "score": -0.012166666666666666
+            },
+            {
+              "action": "move:2:2",
+              "objective": -0.030000000000000082,
+              "safety": 0.02888888888888889,
+              "physiology": 0.0,
+              "weighted_safety": 0.004333333333333333,
+              "weighted_physiology": 0.0,
+              "score": -0.025666666666666747
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:2:2": -0.06,
+              "move:3:1": 0.0,
+              "move:3:3": 0.0,
+              "move:4:2": 0.1,
+              "shoot:3": 0.052000000000000005,
+              "shoot:4": 0.074,
+              "shoot:5": 0.05800000000000001
+            },
+            {
+              "guard": 0.004,
+              "move:2:2": -0.06,
+              "move:3:1": 0.0,
+              "move:3:3": 0.0,
+              "move:4:2": 0.1,
+              "shoot:3": 0.10400000000000001,
+              "shoot:4": 0.148,
+              "shoot:5": 0.11600000000000002
+            }
+          ],
+          "public_facts": {
+            "position": [
+              3,
+              2
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              3,
+              4,
+              5
+            ],
+            "visible_shots": {
+              "3": 0.52,
+              "4": 0.74,
+              "5": 0.5800000000000001
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 1.58,
+            "incoming_damage_proxy_after_uncontested_preview": 2.63,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.5,
+            "hold_after_uncontested_preview": 0
+          }
+        }
+      ],
+      "explanation": "Goal secure makes the nonaggressive hypothesis choose the central move. The aggressive hypothesis shoots, so equal weights assign 0.5 occupancy support. Actual reference chooses the central move."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "mixed_junction/both",
+      "profile": "steady",
+      "seed": 591,
+      "rival": "reference",
+      "tick": 2,
+      "contested_action": "move:4:2",
+      "own_actors": [
+        3
+      ],
+      "enemy_actors": [
+        0
+      ],
+      "occupancy_probability": 0.0,
+      "zero_support": true,
+      "focal_team": 1,
+      "public_before_digest": "d6a2c105bfd7dea3fe3cc9c14495af3c9a47bc653297f8a832eece25569aa2ac",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": true
+          },
+          {
+            "team": 0,
+            "x": 3,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 1,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 2,
+            "hp": 9,
+            "ammo": 1,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 1,
+            "hp": 9,
+            "ammo": 2,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 3,
+            "hp": 9,
+            "ammo": 2,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "covers": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "goal": "both",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 2,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "3": [
+          "guard",
+          "move:4:2",
+          "move:6:2",
+          "reload",
+          "shoot:0"
+        ],
+        "4": [
+          "guard",
+          "move:4:1",
+          "move:5:0",
+          "move:6:1",
+          "reload",
+          "shoot:0"
+        ],
+        "5": [
+          "guard",
+          "move:4:3",
+          "move:5:4",
+          "move:6:3",
+          "reload",
+          "shoot:0"
+        ],
+        "0": [
+          "guard",
+          "move:2:2",
+          "move:3:1",
+          "move:3:3",
+          "move:4:2",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "1": [
+          "guard",
+          "move:2:0",
+          "move:3:1"
+        ],
+        "2": [
+          "guard",
+          "move:0:4",
+          "move:1:3",
+          "move:2:4"
+        ]
+      },
+      "all_actual_actions": {
+        "3": "move:4:2",
+        "4": "move:5:0",
+        "5": "move:4:3",
+        "0": "move:4:2",
+        "1": "move:2:0",
+        "2": "move:2:4"
+      },
+      "actual_enemy_actions": {
+        "0": "move:4:2",
+        "1": "move:2:0",
+        "2": "move:2:4"
+      },
+      "hypotheses": [
+        {
+          "0": "shoot:5",
+          "1": "move:3:1",
+          "2": "move:1:3"
+        },
+        {
+          "0": "shoot:5",
+          "1": "move:3:1",
+          "2": "move:1:3"
+        }
+      ],
+      "hypothesis_routes": [
+        "eliminate",
+        "secure"
+      ],
+      "hypothesis_selected_route": "eliminate",
+      "planning_adopted": false,
+      "selected_own_routes": {
+        "3": "secure",
+        "4": "secure",
+        "5": "secure"
+      },
+      "prior_tick_actions": {
+        "3": "shoot:0",
+        "4": "move:5:1",
+        "5": "shoot:0",
+        "0": "guard",
+        "1": "move:3:0",
+        "2": "move:1:4"
+      },
+      "enemy_score_evidence": [
+        {
+          "actor": 0,
+          "actual_route": "secure",
+          "actual_action": "move:4:2",
+          "forecast_actions": [
+            "shoot:5",
+            "shoot:5"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:2",
+              "objective": 0.08249999999999996,
+              "safety": -0.4999999999999999,
+              "physiology": 0.0,
+              "weighted_safety": -0.07499999999999998,
+              "weighted_physiology": 0.0,
+              "score": 0.007499999999999979
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.0
+            },
+            {
+              "action": "shoot:5",
+              "objective": 0.0023866666666666385,
+              "safety": -0.20000000000000007,
+              "physiology": 0.0,
+              "weighted_safety": -0.03000000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.02761333333333337
+            },
+            {
+              "action": "shoot:4",
+              "objective": 0.0023866666666666385,
+              "safety": -0.20000000000000007,
+              "physiology": 0.0,
+              "weighted_safety": -0.03000000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.02761333333333337
+            },
+            {
+              "action": "shoot:3",
+              "objective": 0.0011733333333333062,
+              "safety": -0.20000000000000007,
+              "physiology": 0.0,
+              "weighted_safety": -0.03000000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.028826666666666702
+            },
+            {
+              "action": "move:3:3",
+              "objective": 0.0,
+              "safety": -0.39333333333333326,
+              "physiology": 0.0,
+              "weighted_safety": -0.05899999999999998,
+              "weighted_physiology": 0.0,
+              "score": -0.05899999999999998
+            },
+            {
+              "action": "move:3:1",
+              "objective": 0.0,
+              "safety": -0.39333333333333326,
+              "physiology": 0.0,
+              "weighted_safety": -0.05899999999999998,
+              "weighted_physiology": 0.0,
+              "score": -0.05899999999999998
+            },
+            {
+              "action": "move:2:2",
+              "objective": -0.02250000000000002,
+              "safety": -0.3400000000000001,
+              "physiology": 0.0,
+              "weighted_safety": -0.05100000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.07350000000000004
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:2:2": 0.0,
+              "move:3:1": 0.0,
+              "move:3:3": 0.0,
+              "move:4:2": 0.0,
+              "shoot:3": 0.10400000000000001,
+              "shoot:4": 0.132,
+              "shoot:5": 0.132
+            },
+            {
+              "guard": 0.004,
+              "move:2:2": 0.0,
+              "move:3:1": 0.0,
+              "move:3:3": 0.0,
+              "move:4:2": 0.0,
+              "shoot:3": 0.10400000000000001,
+              "shoot:4": 0.132,
+              "shoot:5": 0.132
+            }
+          ],
+          "public_facts": {
+            "position": [
+              3,
+              2
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": true,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              3,
+              4,
+              5
+            ],
+            "visible_shots": {
+              "3": 0.52,
+              "4": 0.66,
+              "5": 0.66
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 2.4000000000000004,
+            "incoming_damage_proxy_after_uncontested_preview": 6.8999999999999995,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.6666666666666666,
+            "hold_after_uncontested_preview": 1
+          }
+        }
+      ],
+      "explanation": "Both finite hypotheses take the first incomplete route, eliminate; the actual reference controller uses secure until its own team secures. The central move is legal and best under the reference objective/safety/physiology score, but neither hypothesis includes it. Both instead shoot; changing their mixture weights cannot put mass on this destination."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "mixed_junction/both",
+      "profile": "care",
+      "seed": 591,
+      "rival": "reference",
+      "tick": 2,
+      "contested_action": "move:4:2",
+      "own_actors": [
+        3
+      ],
+      "enemy_actors": [
+        0
+      ],
+      "occupancy_probability": 0.0,
+      "zero_support": true,
+      "focal_team": 1,
+      "public_before_digest": "d6a2c105bfd7dea3fe3cc9c14495af3c9a47bc653297f8a832eece25569aa2ac",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 2,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": true
+          },
+          {
+            "team": 0,
+            "x": 3,
+            "y": 0,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 1,
+            "y": 4,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 2,
+            "hp": 9,
+            "ammo": 1,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 1,
+            "hp": 9,
+            "ammo": 2,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 3,
+            "hp": 9,
+            "ammo": 2,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "covers": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "goal": "both",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          false,
+          false
+        ],
+        "tick": 2,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "3": [
+          "guard",
+          "move:4:2",
+          "move:6:2",
+          "reload",
+          "shoot:0"
+        ],
+        "4": [
+          "guard",
+          "move:4:1",
+          "move:5:0",
+          "move:6:1",
+          "reload",
+          "shoot:0"
+        ],
+        "5": [
+          "guard",
+          "move:4:3",
+          "move:5:4",
+          "move:6:3",
+          "reload",
+          "shoot:0"
+        ],
+        "0": [
+          "guard",
+          "move:2:2",
+          "move:3:1",
+          "move:3:3",
+          "move:4:2",
+          "shoot:3",
+          "shoot:4",
+          "shoot:5"
+        ],
+        "1": [
+          "guard",
+          "move:2:0",
+          "move:3:1"
+        ],
+        "2": [
+          "guard",
+          "move:0:4",
+          "move:1:3",
+          "move:2:4"
+        ]
+      },
+      "all_actual_actions": {
+        "3": "move:4:2",
+        "4": "move:5:0",
+        "5": "move:4:3",
+        "0": "move:4:2",
+        "1": "move:2:0",
+        "2": "move:2:4"
+      },
+      "actual_enemy_actions": {
+        "0": "move:4:2",
+        "1": "move:2:0",
+        "2": "move:2:4"
+      },
+      "hypotheses": [
+        {
+          "0": "shoot:5",
+          "1": "move:3:1",
+          "2": "move:1:3"
+        },
+        {
+          "0": "shoot:5",
+          "1": "move:3:1",
+          "2": "move:1:3"
+        }
+      ],
+      "hypothesis_routes": [
+        "eliminate",
+        "secure"
+      ],
+      "hypothesis_selected_route": "eliminate",
+      "planning_adopted": false,
+      "selected_own_routes": {
+        "3": "secure",
+        "4": "secure",
+        "5": "secure"
+      },
+      "prior_tick_actions": {
+        "3": "shoot:0",
+        "4": "move:5:1",
+        "5": "shoot:0",
+        "0": "guard",
+        "1": "move:3:0",
+        "2": "move:1:4"
+      },
+      "enemy_score_evidence": [
+        {
+          "actor": 0,
+          "actual_route": "secure",
+          "actual_action": "move:4:2",
+          "forecast_actions": [
+            "shoot:5",
+            "shoot:5"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:2",
+              "objective": 0.08249999999999996,
+              "safety": -0.4999999999999999,
+              "physiology": 0.0,
+              "weighted_safety": -0.07499999999999998,
+              "weighted_physiology": 0.0,
+              "score": 0.007499999999999979
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.0
+            },
+            {
+              "action": "shoot:5",
+              "objective": 0.0023866666666666385,
+              "safety": -0.20000000000000007,
+              "physiology": 0.0,
+              "weighted_safety": -0.03000000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.02761333333333337
+            },
+            {
+              "action": "shoot:4",
+              "objective": 0.0023866666666666385,
+              "safety": -0.20000000000000007,
+              "physiology": 0.0,
+              "weighted_safety": -0.03000000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.02761333333333337
+            },
+            {
+              "action": "shoot:3",
+              "objective": 0.0011733333333333062,
+              "safety": -0.20000000000000007,
+              "physiology": 0.0,
+              "weighted_safety": -0.03000000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.028826666666666702
+            },
+            {
+              "action": "move:3:3",
+              "objective": 0.0,
+              "safety": -0.39333333333333326,
+              "physiology": 0.0,
+              "weighted_safety": -0.05899999999999998,
+              "weighted_physiology": 0.0,
+              "score": -0.05899999999999998
+            },
+            {
+              "action": "move:3:1",
+              "objective": 0.0,
+              "safety": -0.39333333333333326,
+              "physiology": 0.0,
+              "weighted_safety": -0.05899999999999998,
+              "weighted_physiology": 0.0,
+              "score": -0.05899999999999998
+            },
+            {
+              "action": "move:2:2",
+              "objective": -0.02250000000000002,
+              "safety": -0.3400000000000001,
+              "physiology": 0.0,
+              "weighted_safety": -0.05100000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.07350000000000004
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:2:2": 0.0,
+              "move:3:1": 0.0,
+              "move:3:3": 0.0,
+              "move:4:2": 0.0,
+              "shoot:3": 0.10400000000000001,
+              "shoot:4": 0.132,
+              "shoot:5": 0.132
+            },
+            {
+              "guard": 0.004,
+              "move:2:2": 0.0,
+              "move:3:1": 0.0,
+              "move:3:3": 0.0,
+              "move:4:2": 0.0,
+              "shoot:3": 0.10400000000000001,
+              "shoot:4": 0.132,
+              "shoot:5": 0.132
+            }
+          ],
+          "public_facts": {
+            "position": [
+              3,
+              2
+            ],
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": true,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              3,
+              4,
+              5
+            ],
+            "visible_shots": {
+              "3": 0.52,
+              "4": 0.66,
+              "5": 0.66
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 2.4000000000000004,
+            "incoming_damage_proxy_after_uncontested_preview": 6.8999999999999995,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.6666666666666666,
+            "hold_after_uncontested_preview": 1
+          }
+        }
+      ],
+      "explanation": "Both finite hypotheses take the first incomplete route, eliminate; the actual reference controller uses secure until its own team secures. The central move is legal and best under the reference objective/safety/physiology score, but neither hypothesis includes it. Both instead shoot; changing their mixture weights cannot put mass on this destination."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "mixed_junction/both",
+      "profile": "ego",
+      "seed": 592,
+      "rival": "reference",
+      "tick": 7,
+      "contested_action": "move:4:2",
+      "own_actors": [
+        0
+      ],
+      "enemy_actors": [
+        3
+      ],
+      "occupancy_probability": 0.0,
+      "zero_support": true,
+      "focal_team": 0,
+      "public_before_digest": "2eac872277e1d0b4e8cf210ef36c5d60fe8fafed3453c6579d29a1ca26c0e713",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 2,
+            "hp": 9,
+            "ammo": 2,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 3,
+            "y": 1,
+            "hp": 9,
+            "ammo": 2,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 3,
+            "y": 3,
+            "hp": 9,
+            "ammo": 1,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 2,
+            "hp": 4,
+            "ammo": 3,
+            "kit": 0,
+            "guard": true
+          },
+          {
+            "team": 1,
+            "x": 8,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": true
+          },
+          {
+            "team": 1,
+            "x": 8,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": true
+          }
+        ],
+        "walls": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "covers": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "goal": "both",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          true,
+          false
+        ],
+        "tick": 7,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "0": [
+          "guard",
+          "move:2:2",
+          "move:4:2",
+          "reload",
+          "shoot:3"
+        ],
+        "1": [
+          "guard",
+          "move:2:1",
+          "move:3:0",
+          "move:4:1",
+          "reload",
+          "shoot:3"
+        ],
+        "2": [
+          "guard",
+          "move:2:3",
+          "move:3:4",
+          "move:4:3",
+          "reload",
+          "shoot:3"
+        ],
+        "3": [
+          "guard",
+          "move:4:2",
+          "move:5:1",
+          "move:5:3",
+          "move:6:2",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ],
+        "4": [
+          "guard",
+          "move:7:1",
+          "move:8:0",
+          "move:8:2"
+        ],
+        "5": [
+          "guard",
+          "move:7:3",
+          "move:8:2",
+          "move:8:4"
+        ]
+      },
+      "all_actual_actions": {
+        "0": "move:4:2",
+        "1": "shoot:3",
+        "2": "shoot:3",
+        "3": "move:4:2",
+        "4": "move:8:2",
+        "5": "move:8:2"
+      },
+      "actual_enemy_actions": {
+        "3": "move:4:2",
+        "4": "move:8:2",
+        "5": "move:8:2"
+      },
+      "hypotheses": [
+        {
+          "3": "shoot:2",
+          "4": "move:7:1",
+          "5": "move:7:3"
+        },
+        {
+          "3": "shoot:2",
+          "4": "move:7:1",
+          "5": "move:7:3"
+        }
+      ],
+      "hypothesis_routes": [
+        "eliminate",
+        "secure"
+      ],
+      "hypothesis_selected_route": "eliminate",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "0": "eliminate",
+        "1": "eliminate",
+        "2": "eliminate"
+      },
+      "prior_tick_actions": {
+        "0": "move:3:2",
+        "1": "shoot:3",
+        "2": "shoot:3",
+        "3": "guard",
+        "4": "guard",
+        "5": "guard"
+      },
+      "enemy_score_evidence": [
+        {
+          "actor": 3,
+          "actual_route": "secure",
+          "actual_action": "move:4:2",
+          "forecast_actions": [
+            "shoot:2",
+            "shoot:2"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:2",
+              "objective": 0.08249999999999996,
+              "safety": -0.4999999999999999,
+              "physiology": 0.0,
+              "weighted_safety": -0.07499999999999998,
+              "weighted_physiology": 0.0,
+              "score": 0.007499999999999979
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.0
+            },
+            {
+              "action": "shoot:2",
+              "objective": 0.002386666666666657,
+              "safety": -0.20000000000000007,
+              "physiology": 0.0,
+              "weighted_safety": -0.03000000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.02761333333333335
+            },
+            {
+              "action": "shoot:1",
+              "objective": 0.002386666666666657,
+              "safety": -0.20000000000000007,
+              "physiology": 0.0,
+              "weighted_safety": -0.03000000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.02761333333333335
+            },
+            {
+              "action": "shoot:0",
+              "objective": 0.0011733333333333329,
+              "safety": -0.20000000000000007,
+              "physiology": 0.0,
+              "weighted_safety": -0.03000000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.02882666666666668
+            },
+            {
+              "action": "move:5:3",
+              "objective": 0.0,
+              "safety": -0.39333333333333326,
+              "physiology": 0.0,
+              "weighted_safety": -0.05899999999999998,
+              "weighted_physiology": 0.0,
+              "score": -0.05899999999999998
+            },
+            {
+              "action": "move:5:1",
+              "objective": 0.0,
+              "safety": -0.39333333333333326,
+              "physiology": 0.0,
+              "weighted_safety": -0.05899999999999998,
+              "weighted_physiology": 0.0,
+              "score": -0.05899999999999998
+            },
+            {
+              "action": "move:6:2",
+              "objective": -0.02250000000000002,
+              "safety": -0.3400000000000001,
+              "physiology": 0.0,
+              "weighted_safety": -0.05100000000000001,
+              "weighted_physiology": 0.0,
+              "score": -0.07350000000000004
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:4:2": 0.0,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": 0.0,
+              "shoot:0": 0.10400000000000001,
+              "shoot:1": 0.132,
+              "shoot:2": 0.132
+            },
+            {
+              "guard": 0.004,
+              "move:4:2": 0.0,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": 0.0,
+              "shoot:0": 0.10400000000000001,
+              "shoot:1": 0.132,
+              "shoot:2": 0.132
+            }
+          ],
+          "public_facts": {
+            "position": [
+              5,
+              2
+            ],
+            "hp": 4,
+            "ammo": 3,
+            "kit": 0,
+            "guard": true,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              0,
+              1,
+              2
+            ],
+            "visible_shots": {
+              "0": 0.52,
+              "1": 0.66,
+              "2": 0.66
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 2.4000000000000004,
+            "incoming_damage_proxy_after_uncontested_preview": 6.8999999999999995,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.6666666666666666,
+            "hold_after_uncontested_preview": 1
+          }
+        }
+      ],
+      "explanation": "Both finite hypotheses take the first incomplete route, eliminate; the actual reference controller uses secure until its own team secures. The central move is legal and best under the reference objective/safety/physiology score, but neither hypothesis includes it. Both instead shoot; changing their mixture weights cannot put mass on this destination."
+    },
+    {
+      "partition": "controlled",
+      "variant": "baseline",
+      "scenario": "mixed_junction/both",
+      "profile": "ego",
+      "seed": 592,
+      "rival": "reference",
+      "tick": 8,
+      "contested_action": "move:4:2",
+      "own_actors": [
+        0
+      ],
+      "enemy_actors": [
+        3
+      ],
+      "occupancy_probability": 0.0,
+      "zero_support": true,
+      "focal_team": 0,
+      "public_before_digest": "2a7af6c843cbd0989abb1949d47ee24f0efc1eda344183bab7329165128eadf4",
+      "public_before": {
+        "units": [
+          {
+            "team": 0,
+            "x": 3,
+            "y": 2,
+            "hp": 9,
+            "ammo": 2,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 3,
+            "y": 1,
+            "hp": 9,
+            "ammo": 1,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 0,
+            "x": 3,
+            "y": 3,
+            "hp": 9,
+            "ammo": 0,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 5,
+            "y": 2,
+            "hp": 1,
+            "ammo": 3,
+            "kit": 0,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 8,
+            "y": 1,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          },
+          {
+            "team": 1,
+            "x": 8,
+            "y": 3,
+            "hp": 9,
+            "ammo": 3,
+            "kit": 1,
+            "guard": false
+          }
+        ],
+        "walls": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "covers": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "goal": "both",
+        "hold": [
+          0,
+          0
+        ],
+        "secured": [
+          true,
+          false
+        ],
+        "tick": 8,
+        "limit": 24
+      },
+      "legal_inputs_by_actor": {
+        "0": [
+          "guard",
+          "move:2:2",
+          "move:4:2",
+          "reload",
+          "shoot:3"
+        ],
+        "1": [
+          "guard",
+          "move:2:1",
+          "move:3:0",
+          "move:4:1",
+          "reload",
+          "shoot:3"
+        ],
+        "2": [
+          "guard",
+          "move:2:3",
+          "move:3:4",
+          "move:4:3",
+          "reload"
+        ],
+        "3": [
+          "guard",
+          "move:4:2",
+          "move:5:1",
+          "move:5:3",
+          "move:6:2",
+          "shoot:0",
+          "shoot:1",
+          "shoot:2"
+        ],
+        "4": [
+          "guard",
+          "move:7:1",
+          "move:8:0",
+          "move:8:2"
+        ],
+        "5": [
+          "guard",
+          "move:7:3",
+          "move:8:2",
+          "move:8:4"
+        ]
+      },
+      "all_actual_actions": {
+        "0": "move:4:2",
+        "1": "shoot:3",
+        "2": "reload",
+        "3": "move:4:2",
+        "4": "move:8:2",
+        "5": "move:7:3"
+      },
+      "actual_enemy_actions": {
+        "3": "move:4:2",
+        "4": "move:8:2",
+        "5": "move:7:3"
+      },
+      "hypotheses": [
+        {
+          "3": "shoot:2",
+          "4": "move:7:1",
+          "5": "move:7:3"
+        },
+        {
+          "3": "shoot:2",
+          "4": "move:7:1",
+          "5": "move:7:3"
+        }
+      ],
+      "hypothesis_routes": [
+        "eliminate",
+        "secure"
+      ],
+      "hypothesis_selected_route": "eliminate",
+      "planning_adopted": true,
+      "selected_own_routes": {
+        "0": "eliminate",
+        "1": "eliminate",
+        "2": "eliminate"
+      },
+      "prior_tick_actions": {
+        "0": "move:4:2",
+        "1": "shoot:3",
+        "2": "shoot:3",
+        "3": "move:4:2",
+        "4": "move:8:2",
+        "5": "move:8:2"
+      },
+      "enemy_score_evidence": [
+        {
+          "actor": 3,
+          "actual_route": "secure",
+          "actual_action": "move:4:2",
+          "forecast_actions": [
+            "shoot:2",
+            "shoot:2"
+          ],
+          "actual_score_ranking": [
+            {
+              "action": "move:4:2",
+              "objective": 0.08250000000000002,
+              "safety": -0.19999999999999993,
+              "physiology": 0.0,
+              "weighted_safety": -0.02999999999999999,
+              "weighted_physiology": 0.0,
+              "score": 0.05250000000000003
+            },
+            {
+              "action": "guard",
+              "objective": 0.0,
+              "safety": 0.13333333333333336,
+              "physiology": 0.0,
+              "weighted_safety": 0.020000000000000004,
+              "weighted_physiology": 0.0,
+              "score": 0.020000000000000004
+            },
+            {
+              "action": "shoot:2",
+              "objective": 0.0023866666666666936,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.0023866666666666936
+            },
+            {
+              "action": "shoot:1",
+              "objective": 0.0023866666666666936,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.0023866666666666936
+            },
+            {
+              "action": "shoot:0",
+              "objective": 0.001173333333333362,
+              "safety": 0.0,
+              "physiology": 0.0,
+              "weighted_safety": 0.0,
+              "weighted_physiology": 0.0,
+              "score": 0.001173333333333362
+            },
+            {
+              "action": "move:5:3",
+              "objective": 0.0,
+              "safety": -0.09333333333333332,
+              "physiology": 0.0,
+              "weighted_safety": -0.013999999999999999,
+              "weighted_physiology": 0.0,
+              "score": -0.013999999999999999
+            },
+            {
+              "action": "move:5:1",
+              "objective": 0.0,
+              "safety": -0.14666666666666656,
+              "physiology": 0.0,
+              "weighted_safety": -0.02199999999999998,
+              "weighted_physiology": 0.0,
+              "score": -0.02199999999999998
+            },
+            {
+              "action": "move:6:2",
+              "objective": -0.02250000000000002,
+              "safety": -0.09333333333333332,
+              "physiology": 0.0,
+              "weighted_safety": -0.013999999999999999,
+              "weighted_physiology": 0.0,
+              "score": -0.03650000000000002
+            }
+          ],
+          "tactical_scores": [
+            {
+              "guard": 0.004,
+              "move:4:2": 0.0,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": 0.0,
+              "shoot:0": 0.10400000000000001,
+              "shoot:1": 0.132,
+              "shoot:2": 0.132
+            },
+            {
+              "guard": 0.004,
+              "move:4:2": 0.0,
+              "move:5:1": 0.0,
+              "move:5:3": 0.0,
+              "move:6:2": 0.0,
+              "shoot:0": 0.10400000000000001,
+              "shoot:1": 0.132,
+              "shoot:2": 0.132
+            }
+          ],
+          "public_facts": {
+            "position": [
+              5,
+              2
+            ],
+            "hp": 1,
+            "ammo": 3,
+            "kit": 0,
+            "guard": false,
+            "team_secured": false,
+            "team_hold": 0,
+            "all_alive_opposing_units": [
+              0,
+              1,
+              2
+            ],
+            "visible_shots": {
+              "0": 0.52,
+              "1": 0.66,
+              "2": 0.66
+            },
+            "destination_in_zone": true,
+            "zone_distance_before": 1,
+            "zone_distance_after": 0,
+            "firing_distance_before": 0,
+            "firing_distance_after": 0,
+            "incoming_damage_proxy_before": 2.8800000000000003,
+            "incoming_damage_proxy_after_uncontested_preview": 4.68,
+            "secure_progress_before": 0.4375,
+            "secure_progress_after_uncontested_preview": 0.6666666666666666,
+            "hold_after_uncontested_preview": 1
+          }
+        }
+      ],
+      "explanation": "Both finite hypotheses take the first incomplete route, eliminate; the actual reference controller uses secure until its own team secures. The central move is legal and best under the reference objective/safety/physiology score, but neither hypothesis includes it. Both instead shoot; changing their mixture weights cannot put mass on this destination."
+    }
+  ],
+  "source_verification": {
+    "reflex/congestion_experiment.py": {
+      "matches_base": true,
+      "sha256": "e6dd629520307e1099693916846e23f3c1809087b60796164b715685c38c10e3"
+    },
+    "reflex/combat_planning.py": {
+      "matches_base": true,
+      "sha256": "916faa260e6847b3095165869259d649b6201c30efb0aaf12048b528a0f46b65"
+    },
+    "reflex/combat.py": {
+      "matches_base": true,
+      "sha256": "0e7a764ebe19af17f52d618e756f0dd85872f4fdf8c432c19f5fdca690935877"
+    },
+    "reflex/validation_experiment.py": {
+      "matches_base": true,
+      "sha256": "7d3c035365f08af28f6b9d36c54e1fe09cf97c88b8db3595e10ce9a11a63e9d2"
+    }
+  },
+  "agent_instructions": "No AGENTS.md found in the repository, /workspace/shared, or checked ancestor paths.",
+  "metric_definition": "A contest is a focal chosen move destination also proposed by at least one living enemy on the same tick. This is competing simultaneous intent, not existing occupancy: legal() already excludes pre-occupied cells. Counts are per focal move; these 16 observations happen to each have exactly one focal and one enemy contester."
+}

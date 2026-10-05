@@ -1,0 +1,28 @@
+{
+  "format": "observed-opponent-design-v1",
+  "base": "b1c0b711a2b3786a7206853593fa5598cb1b0bbc",
+  "scope": "Offline prediction diagnostic only. No decision, trust, outcome learning, persona, route, forecast or runtime integration.",
+  "data": "Exactly the 48 controlled and 16 heldout BASELINE trajectories frozen by controlled_congestion; no candidate trajectories, added seeds, simulation or outcome-based exclusions.",
+  "conditioning": "Enemy next intent conditional on public pre-state and strictly earlier revealed intents. Current own intent is not an input. Existing actual enemy receives no current own choices; responses to earlier choices enter through public state. This is observational path scoring, not counterfactual policy evaluation.",
+  "memory": "One mutable store per (game namespace, observing individual), one fixed 8x13 count array per opposing individual, maximum 3 opponents. No sharing between observers, opponents or games. Every public reveal is processed atomically after all forecasts and scores for that tick. Retention 0.9 per elapsed tick, prior strength 2, no outcome or success weighting.",
+  "public_adapter": "Context = armed, any legal shot, in capture zone (8). Actions = guard/reload/shoot/heal plus 9 move signatures: signs of changes in public static secure distance and firing distance to current enemy positions. Movement geometry reuses unchanged rule helpers. Current hidden controller, actual RNG and current revealed action cannot enter forecast.",
+  "learned_distribution": "For each available signature c, discounted observed count[c] is divided equally across its currently legal actions. Add prior mass 2 uniformly across all legal actions, then normalize. No counts in unavailable signatures contribute. Cold memory is legal-uniform.",
+  "methods": {
+    "uniform": "U: independent uniform over each opponent's rule-legal actions",
+    "fixed": "F: unchanged equal mixture of the two existing JOINT hypotheses, preserving their cross-opponent dependence",
+    "fixed_coverage": "0.8 F + 0.2 U joint mixture",
+    "cold_memory": "0.4 F + 0.6 U joint mixture; same candidate with zero observations",
+    "observed_memory": "0.4 F + 0.4 L + 0.2 U; L is product of independently learned opponent distributions, not a coordinated joint model"
+  },
+  "metrics": [
+    "Primary occupancy domain: every distinct legal movement destination of every living observer each tick, including enemy-impossible structural negatives; also report enemy-reachable subset. Event = at least one enemy INTENDS that destination, not successful post-resolution occupancy.",
+    "Per-opponent categorical intent Brier (sum over all legal action indicators), true log loss and zero-support counts; observers see identical histories so report one canonical living observer per tick to avoid duplicating intent events.",
+    "Occupancy Brier, true binary log loss with infinite observations counted and null mean when any occur, finite-clipped diagnostic at epsilon 1e-12 labeled explicitly, 10 fixed equal-width calibration bins and count-weighted ECE; no fitted calibration.",
+    "All methods on identical pre-states. Separate controlled/heldout, each profile, each heldout controller, before/after declared driver switch tick 8, and per-game macro differences. No significance claim from correlated ticks or negative-cell duplication.",
+    "Previously selected-move contests are a diagnostic subset only, not the primary evaluation denominator. Reproduce 10/16 misses; weights-only cannot create missing support. Every new positive support is separated from useful probability accuracy."
+  ],
+  "decision_rule": "No integration this cycle regardless of results. A promising memory signal requires both primary occupancy Brier and log loss to improve versus same cold mixture and legal-uniform on each partition; report categorical metrics, false alarms, phase shifts and profile regressions without hiding tradeoffs. Coverage gains alone never satisfy useful learning.",
+  "validation": "Scope/owner/opponent isolation; atomic legal reveal validation; immutable prequential forecasts; stale/future/state mismatch rejection; no actual-controller/RNG calls; cold and repeated successful behavior; synthetic phase reversal and recurrence; exact joint occupancy not marginal independence for F; legal support/normalization; all negative denominator; frozen source/data hashes.",
+  "cost": "No additional battle simulations; linear pass through 64 existing trajectories. Fixed 312 float counters (2496 numeric bytes) per observing individual plus bounded metadata. Microbench on first controlled baseline public state, warmup20 then 200 forecast iterations for all three observers; separately measure prediction/reveal pass and stored payload size. No full NPC-throughput claim.",
+  "publication": "Root review required before any push or PR. All performance thresholds/mixtures fixed here before candidate results; no tuning or favorable seed additions."
+}

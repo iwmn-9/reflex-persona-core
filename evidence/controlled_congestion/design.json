@@ -1,0 +1,156 @@
+{
+  "format": "controlled-congestion-design-v1",
+  "base": "5af568ecd93cdb655fd1bceccc4c261e6c5f31ea",
+  "candidate": "Existing root_completion=True unchanged; default stays off. No new algorithm this cycle.",
+  "controlled_geometry": {
+    "friendly_convergence": {
+      "ours": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "theirs": [
+        [
+          7,
+          0
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          7,
+          4
+        ]
+      ],
+      "walls": [],
+      "covers": [],
+      "target": [
+        2,
+        2
+      ]
+    },
+    "enemy_convergence": {
+      "ours": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "theirs": [
+        [
+          5,
+          1
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          7,
+          4
+        ]
+      ],
+      "walls": [],
+      "covers": [],
+      "target": [
+        4,
+        1
+      ]
+    },
+    "mixed_junction": {
+      "ours": [
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "theirs": [
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "walls": [
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "covers": [
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "target": [
+        4,
+        2
+      ]
+    }
+  },
+  "controlled_matrix": "3 starts x secure/both x 4 existing profiles x seeds591/592 (both seats, mirror x and ownership), same reference opponent, 24 tick deadline =48 paired games",
+  "heldout_matrix": "Standard starts, four existing cells open/secure/reference, choke/eliminate/switch, open/either/raider, choke/both/reference x4 profiles; seed611+(cell_index+profile_index)%2, each profile two games per seat; 40tick =16 paired games",
+  "probe_protocol": "On each authored start and mirror, force legal moves toward target for all units that can reach it, otherwise guard. Replay simultaneous rules. Separately enumerate persona-constrained completion on these roots with unchanged immediate contexts, all legal roots and exact cost masks; forced probes are NOT natural game decisions, do NOT update memory, and never count toward efficacy exposure.",
+  "diagnostics": [
+    "legal collision opportunities vs selected root conflicts vs declined-root candidate eligibility vs adopted completions",
+    "friendly-only, opponent-only and mixed failure counts and actual movement denominators",
+    "two existing public enemy-intent hypotheses scored offline on pre-state before reading actual revealed enemy choices; exact first-step forecast equivalence where available",
+    "selected route, legal geometric goal progress and realized movement progress; not optimal goal labels",
+    "wins/losses/unresolved, eliminate and secure components separately, stops/stall, fixed persona axes, first divergence, rule and progress replay",
+    "serial trace-off timing; planner work and candidate search counts separate from game path cost"
+  ],
+  "exposure_gate": "Exposure floor, not statistical evidence: at least12 baseline naturally declined friendly-conflict ticks across at least6 controlled games; otherwise efficacy inconclusive regardless forced probe success",
+  "candidate_gates": [
+    "No changed defaults, learning, forecast, tier/band/progress/waste/owner boundary",
+    "Zero newly introduced blocked roots and persona band violations; no opponent action oracle",
+    "At least20percent reduction in friendly+mixed failed-move rate on controlled games, without increased overall failed-move rate",
+    "No aggregate or profile within-profile loss of wins, summed eliminate progress, summed secure progress; no increase in unresolved-stop rate or profile maximum observed stall",
+    "Heldout aggregate and each profile no win/loss/unresolved worsening or lower objective progress; do not compare different personas as if they should make identical choices",
+    "Serial trace-off median game time ratio<=1.25 and maximum candidate combinations<=1728; diagnostic and full-game costs reported separately"
+  ],
+  "negative_interpretation": "Any gate failure rejects promotion of this implementation; not proof the persona is defective. Choice differences between personas are permitted. Zero target exposure means inconclusive and seeds are not replaced.",
+  "budget": "128 primary efficacy game runs, four workers, existing TacticalControl caps, 24tick controlled and40tick standard; 6 additional serial verification runs: 3 trace-off repetitions per variant of controlled care/both mixed_junction seed592 compared with primary trace-on run. Tiny unit tests excluded. No heldout tuning or added seeds.",
+  "publication": "Root review first; no push, PR, merge or deploy in this assignment"
+}

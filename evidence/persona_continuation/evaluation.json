@@ -1,0 +1,4101 @@
+{
+  "format": "persona-self-continuation-v1",
+  "base_commit": "8a6d05cfc9f487141a8c5a2f6e0698d489929582",
+  "games": 68,
+  "rule_checks": 1575,
+  "purpose_checks": 4526,
+  "elapsed_seconds": null,
+  "summary": [
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "games": 32,
+      "won": 20,
+      "lost": 1,
+      "ticks": 723,
+      "focal_failed_moves": 57,
+      "own_proposal_collisions": 25,
+      "expired_stop_selections": 302,
+      "unresolved_stop_selections": 302,
+      "unsupported_root_selections": 0,
+      "alignment": {
+        "modeled_offsets": 12540,
+        "same_state": 404,
+        "state_diverged": 9873,
+        "self_compared": 404,
+        "self_differences": 306,
+        "opponent_compared": 404,
+        "opponent_differences": 252
+      },
+      "work": {
+        "planner_seconds": 292.71540468404055,
+        "calls": 791,
+        "model_transitions": 251854,
+        "recovery_calls": 68
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "games": 32,
+      "won": 19,
+      "lost": 2,
+      "ticks": 701,
+      "focal_failed_moves": 20,
+      "own_proposal_collisions": 2,
+      "expired_stop_selections": 293,
+      "unresolved_stop_selections": 293,
+      "unsupported_root_selections": 0,
+      "alignment": {
+        "modeled_offsets": 12400,
+        "same_state": 366,
+        "state_diverged": 10064,
+        "self_compared": 366,
+        "self_differences": 302,
+        "opponent_compared": 366,
+        "opponent_differences": 229
+      },
+      "work": {
+        "planner_seconds": 1992.8816879760452,
+        "calls": 764,
+        "model_transitions": 266210,
+        "recovery_calls": 63,
+        "persona_scorings": 396572,
+        "persona_batches": 143753,
+        "persona_cache_hits": 73161,
+        "persona_choices": 596529,
+        "persona_coordination_conflicts": 4065
+      }
+    },
+    {
+      "partition": "known",
+      "variant": "objective",
+      "games": 2,
+      "won": 1,
+      "lost": 0,
+      "ticks": 71,
+      "focal_failed_moves": 1,
+      "own_proposal_collisions": 0,
+      "expired_stop_selections": 43,
+      "unresolved_stop_selections": 43,
+      "unsupported_root_selections": 0,
+      "alignment": {
+        "modeled_offsets": 1420,
+        "same_state": 26,
+        "state_diverged": 1260,
+        "self_compared": 26,
+        "self_differences": 23,
+        "opponent_compared": 26,
+        "opponent_differences": 16
+      },
+      "work": {
+        "planner_seconds": 24.10940553499313,
+        "calls": 80,
+        "model_transitions": 20965,
+        "recovery_calls": 9
+      }
+    },
+    {
+      "partition": "known",
+      "variant": "persona-band",
+      "games": 2,
+      "won": 0,
+      "lost": 0,
+      "ticks": 80,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "expired_stop_selections": 48,
+      "unresolved_stop_selections": 48,
+      "unsupported_root_selections": 0,
+      "alignment": {
+        "modeled_offsets": 1600,
+        "same_state": 32,
+        "state_diverged": 1448,
+        "self_compared": 32,
+        "self_differences": 32,
+        "opponent_compared": 32,
+        "opponent_differences": 24
+      },
+      "work": {
+        "planner_seconds": 102.55737230098384,
+        "calls": 82,
+        "model_transitions": 20240,
+        "recovery_calls": 2,
+        "persona_scorings": 29376,
+        "persona_batches": 10127,
+        "persona_cache_hits": 6545,
+        "persona_choices": 48441,
+        "persona_coordination_conflicts": 272
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "condition": [
+        "heldout",
+        "open/secure",
+        "reference",
+        "steady",
+        282,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 0,
+      "self_compared_after": 0,
+      "self_mismatch_before": 0,
+      "self_mismatch_after": 0
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/secure",
+        "reference",
+        "growth",
+        282,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 0,
+      "self_compared_after": 0,
+      "self_mismatch_before": 0,
+      "self_mismatch_after": 0
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/secure",
+        "reference",
+        "growth",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 4,
+      "self_compared_after": 4,
+      "self_mismatch_before": 0,
+      "self_mismatch_after": 4
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/secure",
+        "reference",
+        "steady",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 4,
+      "self_compared_after": 4,
+      "self_mismatch_before": 0,
+      "self_mismatch_after": 0
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/secure",
+        "reference",
+        "care",
+        282,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 1,
+      "expired_stop_delta": 0,
+      "self_compared_before": 2,
+      "self_compared_after": 0,
+      "self_mismatch_before": 2,
+      "self_mismatch_after": 0
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/secure",
+        "reference",
+        "ego",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 4,
+      "self_compared_after": 4,
+      "self_mismatch_before": 0,
+      "self_mismatch_after": 4
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/secure",
+        "reference",
+        "care",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 4,
+      "self_compared_after": 4,
+      "self_mismatch_before": 0,
+      "self_mismatch_after": 4
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/secure",
+        "reference",
+        "ego",
+        282,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 0,
+      "self_compared_after": 8,
+      "self_mismatch_before": 0,
+      "self_mismatch_after": 4
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/eliminate",
+        "switch",
+        "steady",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 25,
+      "self_compared_before": 28,
+      "self_compared_after": 23,
+      "self_mismatch_before": 28,
+      "self_mismatch_after": 19
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/eliminate",
+        "switch",
+        "growth",
+        282,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": -18,
+      "self_compared_before": 22,
+      "self_compared_after": 32,
+      "self_mismatch_before": 22,
+      "self_mismatch_after": 28
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/eliminate",
+        "switch",
+        "growth",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 8,
+      "self_compared_before": 10,
+      "self_compared_after": 30,
+      "self_mismatch_before": 10,
+      "self_mismatch_after": 22
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/eliminate",
+        "switch",
+        "care",
+        282,
+        true
+      ],
+      "outcome_delta": -1.0,
+      "failed_move_delta": -9,
+      "expired_stop_delta": 4,
+      "self_compared_before": 16,
+      "self_compared_after": 21,
+      "self_mismatch_before": 16,
+      "self_mismatch_after": 17
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/eliminate",
+        "switch",
+        "care",
+        281,
+        true
+      ],
+      "outcome_delta": 1.0,
+      "failed_move_delta": -10,
+      "expired_stop_delta": -22,
+      "self_compared_before": 4,
+      "self_compared_after": 13,
+      "self_mismatch_before": 4,
+      "self_mismatch_after": 10
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/eliminate",
+        "switch",
+        "steady",
+        282,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": -10,
+      "expired_stop_delta": 4,
+      "self_compared_before": 4,
+      "self_compared_after": 16,
+      "self_mismatch_before": 4,
+      "self_mismatch_after": 16
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/either",
+        "raider",
+        "growth",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 8,
+      "self_compared_after": 4,
+      "self_mismatch_before": 4,
+      "self_mismatch_after": 0
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/eliminate",
+        "switch",
+        "ego",
+        281,
+        true
+      ],
+      "outcome_delta": 1.0,
+      "failed_move_delta": -5,
+      "expired_stop_delta": -45,
+      "self_compared_before": 18,
+      "self_compared_after": 18,
+      "self_mismatch_before": 16,
+      "self_mismatch_after": 14
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/either",
+        "raider",
+        "growth",
+        282,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 10,
+      "self_compared_after": 13,
+      "self_mismatch_before": 6,
+      "self_mismatch_after": 11
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/eliminate",
+        "switch",
+        "ego",
+        282,
+        true
+      ],
+      "outcome_delta": -1.0,
+      "failed_move_delta": 9,
+      "expired_stop_delta": 32,
+      "self_compared_before": 23,
+      "self_compared_after": 4,
+      "self_mismatch_before": 18,
+      "self_mismatch_after": 4
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/either",
+        "raider",
+        "steady",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 1,
+      "self_compared_after": 9,
+      "self_mismatch_before": 1,
+      "self_mismatch_after": 9
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/either",
+        "raider",
+        "steady",
+        282,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 8,
+      "self_compared_after": 5,
+      "self_mismatch_before": 5,
+      "self_mismatch_after": 5
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/either",
+        "raider",
+        "ego",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 8,
+      "self_compared_after": 5,
+      "self_mismatch_before": 4,
+      "self_mismatch_after": 1
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/either",
+        "raider",
+        "care",
+        282,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 0,
+      "self_compared_after": 11,
+      "self_mismatch_before": 0,
+      "self_mismatch_after": 8
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/either",
+        "raider",
+        "care",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 9,
+      "self_compared_after": 5,
+      "self_mismatch_before": 9,
+      "self_mismatch_after": 0
+    },
+    {
+      "condition": [
+        "heldout",
+        "open/either",
+        "raider",
+        "ego",
+        282,
+        true
+      ],
+      "outcome_delta": -1.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 0,
+      "self_compared_before": 10,
+      "self_compared_after": 6,
+      "self_mismatch_before": 10,
+      "self_mismatch_after": 5
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/both",
+        "reference",
+        "steady",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 6,
+      "self_compared_before": 31,
+      "self_compared_after": 8,
+      "self_mismatch_before": 27,
+      "self_mismatch_after": 8
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/both",
+        "reference",
+        "growth",
+        281,
+        true
+      ],
+      "outcome_delta": -1.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": -2,
+      "self_compared_before": 41,
+      "self_compared_after": 12,
+      "self_mismatch_before": 25,
+      "self_mismatch_after": 12
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/both",
+        "reference",
+        "growth",
+        282,
+        true
+      ],
+      "outcome_delta": -1.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 10,
+      "self_compared_before": 6,
+      "self_compared_after": 9,
+      "self_mismatch_before": 6,
+      "self_mismatch_after": 5
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/both",
+        "reference",
+        "steady",
+        282,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 12,
+      "self_compared_before": 48,
+      "self_compared_after": 33,
+      "self_mismatch_before": 38,
+      "self_mismatch_after": 31
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/both",
+        "reference",
+        "care",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": -2,
+      "expired_stop_delta": 6,
+      "self_compared_before": 4,
+      "self_compared_after": 23,
+      "self_mismatch_before": 4,
+      "self_mismatch_after": 22
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/both",
+        "reference",
+        "ego",
+        281,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": -3,
+      "expired_stop_delta": 15,
+      "self_compared_before": 50,
+      "self_compared_after": 16,
+      "self_mismatch_before": 24,
+      "self_mismatch_after": 15
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/both",
+        "reference",
+        "care",
+        282,
+        true
+      ],
+      "outcome_delta": 1.0,
+      "failed_move_delta": -8,
+      "expired_stop_delta": -30,
+      "self_compared_before": 0,
+      "self_compared_after": 18,
+      "self_mismatch_before": 0,
+      "self_mismatch_after": 16
+    },
+    {
+      "condition": [
+        "known",
+        "choke/eliminate",
+        "switch",
+        "steady",
+        180,
+        false
+      ],
+      "outcome_delta": -1.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": 14,
+      "self_compared_before": 18,
+      "self_compared_after": 16,
+      "self_mismatch_before": 15,
+      "self_mismatch_after": 16
+    },
+    {
+      "condition": [
+        "known",
+        "choke/eliminate",
+        "switch",
+        "steady",
+        180,
+        true
+      ],
+      "outcome_delta": 0.0,
+      "failed_move_delta": -1,
+      "expired_stop_delta": -9,
+      "self_compared_before": 8,
+      "self_compared_after": 16,
+      "self_mismatch_before": 8,
+      "self_mismatch_after": 16
+    },
+    {
+      "condition": [
+        "heldout",
+        "choke/both",
+        "reference",
+        "ego",
+        282,
+        true
+      ],
+      "outcome_delta": 1.0,
+      "failed_move_delta": 0,
+      "expired_stop_delta": -14,
+      "self_compared_before": 27,
+      "self_compared_after": 8,
+      "self_mismatch_before": 23,
+      "self_mismatch_after": 8
+    }
+  ],
+  "runs": [
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/secure",
+      "profile": "growth",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 11,
+        "shoot": 7
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 1.929094601993711,
+        "calls": 6,
+        "model_transitions": 1760,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 0,
+          "state_diverged": 60,
+          "self_compared": 0,
+          "self_differences": 0,
+          "opponent_compared": 0,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/secure",
+      "profile": "growth",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 7,
+      "actions": {
+        "move": 11,
+        "shoot": 7,
+        "reload": 3
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 7,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 3.7785684800001036,
+        "calls": 7,
+        "model_transitions": 2304,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 140,
+          "same_state": 4,
+          "state_diverged": 68,
+          "self_compared": 4,
+          "self_differences": 0,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/secure",
+      "profile": "steady",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 7,
+      "actions": {
+        "move": 11,
+        "shoot": 7,
+        "reload": 3
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 7,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 2.166473950994259,
+        "calls": 7,
+        "model_transitions": 2322,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 140,
+          "same_state": 4,
+          "state_diverged": 68,
+          "self_compared": 4,
+          "self_differences": 0,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/secure",
+      "profile": "steady",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 11,
+        "shoot": 7
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 1.3980293809945579,
+        "calls": 6,
+        "model_transitions": 1763,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 0,
+          "state_diverged": 60,
+          "self_compared": 0,
+          "self_differences": 0,
+          "opponent_compared": 0,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/secure",
+      "profile": "steady",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 12,
+        "shoot": 4,
+        "reload": 2
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 19.616756750005152,
+        "calls": 6,
+        "model_transitions": 1991,
+        "recovery_calls": 0,
+        "persona_scorings": 3570,
+        "persona_batches": 1218,
+        "persona_cache_hits": 269,
+        "persona_choices": 4374,
+        "persona_coordination_conflicts": 5
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 0,
+          "state_diverged": 59,
+          "self_compared": 0,
+          "self_differences": 0,
+          "opponent_compared": 0,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/secure",
+      "profile": "growth",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "guard": 1,
+        "move": 11,
+        "shoot": 6
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 27.91854170899751,
+        "calls": 6,
+        "model_transitions": 1993,
+        "recovery_calls": 0,
+        "persona_scorings": 3265,
+        "persona_batches": 1133,
+        "persona_cache_hits": 336,
+        "persona_choices": 4261,
+        "persona_coordination_conflicts": 24
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 0,
+          "state_diverged": 58,
+          "self_compared": 0,
+          "self_differences": 0,
+          "opponent_compared": 0,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/secure",
+      "profile": "care",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 5,
+      "actions": {
+        "move": 10,
+        "shoot": 4,
+        "guard": 1
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 5,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 1.3483929990034085,
+        "calls": 5,
+        "model_transitions": 1523,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 100,
+          "same_state": 4,
+          "state_diverged": 36,
+          "self_compared": 4,
+          "self_differences": 0,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/secure",
+      "profile": "care",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 10,
+      "actions": {
+        "move": 20,
+        "shoot": 8,
+        "guard": 2
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 4,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 2.777323754999088,
+        "calls": 10,
+        "model_transitions": 3581,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 2,
+          "state_diverged": 66,
+          "self_compared": 2,
+          "self_differences": 2,
+          "opponent_compared": 2,
+          "opponent_differences": 2
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/secure",
+      "profile": "growth",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 11,
+        "shoot": 5,
+        "guard": 2
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 32.91102285100351,
+        "calls": 6,
+        "model_transitions": 1919,
+        "recovery_calls": 0,
+        "persona_scorings": 3497,
+        "persona_batches": 1209,
+        "persona_cache_hits": 186,
+        "persona_choices": 4054,
+        "persona_coordination_conflicts": 1
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 4,
+          "state_diverged": 52,
+          "self_compared": 4,
+          "self_differences": 4,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/secure",
+      "profile": "steady",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 12,
+        "shoot": 6
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 30.857724516001326,
+        "calls": 6,
+        "model_transitions": 1946,
+        "recovery_calls": 0,
+        "persona_scorings": 3672,
+        "persona_batches": 1247,
+        "persona_cache_hits": 171,
+        "persona_choices": 4185,
+        "persona_coordination_conflicts": 12
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 4,
+          "state_diverged": 53,
+          "self_compared": 4,
+          "self_differences": 0,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/secure",
+      "profile": "ego",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 7,
+      "actions": {
+        "move": 11,
+        "shoot": 7,
+        "reload": 3
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 7,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 3.2733907389992964,
+        "calls": 7,
+        "model_transitions": 2322,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 140,
+          "same_state": 4,
+          "state_diverged": 68,
+          "self_compared": 4,
+          "self_differences": 0,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/secure",
+      "profile": "ego",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 11,
+        "shoot": 7
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 2.4050686379996478,
+        "calls": 6,
+        "model_transitions": 1775,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 0,
+          "state_diverged": 60,
+          "self_compared": 0,
+          "self_differences": 0,
+          "opponent_compared": 0,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/secure",
+      "profile": "care",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 5,
+      "actions": {
+        "move": 13,
+        "shoot": 1,
+        "guard": 1
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 1,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 3,
+      "planning_declines": 2,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 15.040019796993874,
+        "calls": 5,
+        "model_transitions": 1997,
+        "recovery_calls": 0,
+        "persona_scorings": 3959,
+        "persona_batches": 1338,
+        "persona_cache_hits": 239,
+        "persona_choices": 4674,
+        "persona_coordination_conflicts": 22
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 60,
+          "same_state": 0,
+          "state_diverged": 16,
+          "self_compared": 0,
+          "self_differences": 0,
+          "opponent_compared": 0,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/secure",
+      "profile": "ego",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 5,
+      "actions": {
+        "move": 9,
+        "shoot": 5,
+        "guard": 1
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 5,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 24.285103188001813,
+        "calls": 5,
+        "model_transitions": 1661,
+        "recovery_calls": 0,
+        "persona_scorings": 2864,
+        "persona_batches": 1044,
+        "persona_cache_hits": 169,
+        "persona_choices": 3344,
+        "persona_coordination_conflicts": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 100,
+          "same_state": 4,
+          "state_diverged": 36,
+          "self_compared": 4,
+          "self_differences": 4,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/eliminate",
+      "profile": "growth",
+      "seed": 281,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 41,
+        "guard": 58,
+        "shoot": 12,
+        "reload": 6,
+        "heal": 3
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 7,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 44,
+      "unresolved_stop_selections": 44,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 11.50917155400748,
+        "calls": 56,
+        "model_transitions": 13588,
+        "recovery_calls": 16
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 10,
+          "state_diverged": 714,
+          "self_compared": 10,
+          "self_differences": 10,
+          "opponent_compared": 10,
+          "opponent_differences": 2
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/secure",
+      "profile": "care",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 14,
+        "guard": 2,
+        "shoot": 2
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 37.79184986499604,
+        "calls": 6,
+        "model_transitions": 2212,
+        "recovery_calls": 0,
+        "persona_scorings": 4276,
+        "persona_batches": 1472,
+        "persona_cache_hits": 200,
+        "persona_choices": 4874,
+        "persona_coordination_conflicts": 9
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 4,
+          "state_diverged": 53,
+          "self_compared": 4,
+          "self_differences": 4,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/secure",
+      "profile": "ego",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 8,
+      "actions": {
+        "move": 10,
+        "shoot": 9,
+        "reload": 3,
+        "guard": 2
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 8,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 28.336752508002974,
+        "calls": 8,
+        "model_transitions": 2746,
+        "recovery_calls": 0,
+        "persona_scorings": 4543,
+        "persona_batches": 1562,
+        "persona_cache_hits": 500,
+        "persona_choices": 6023,
+        "persona_coordination_conflicts": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 160,
+          "same_state": 8,
+          "state_diverged": 90,
+          "self_compared": 8,
+          "self_differences": 4,
+          "opponent_compared": 8,
+          "opponent_differences": 8
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/eliminate",
+      "profile": "growth",
+      "seed": 282,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 39,
+      "actions": {
+        "move": 49,
+        "guard": 42,
+        "heal": 2,
+        "shoot": 14,
+        "reload": 6
+      },
+      "health": 12,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 39,
+      "planning_declines": 0,
+      "expired_stop_selections": 25,
+      "unresolved_stop_selections": 25,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 8.905926713010558,
+        "calls": 44,
+        "model_transitions": 10377,
+        "recovery_calls": 5
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 780,
+          "same_state": 22,
+          "state_diverged": 671,
+          "self_compared": 22,
+          "self_differences": 22,
+          "opponent_compared": 22,
+          "opponent_differences": 12
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/eliminate",
+      "profile": "steady",
+      "seed": 281,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 49,
+        "guard": 37,
+        "shoot": 18,
+        "heal": 3,
+        "reload": 7
+      },
+      "health": 7,
+      "score": 0.6666666666666666,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 38,
+      "planning_declines": 2,
+      "expired_stop_selections": 22,
+      "unresolved_stop_selections": 22,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 20.64916862098471,
+        "calls": 44,
+        "model_transitions": 11920,
+        "recovery_calls": 4
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 760,
+          "same_state": 28,
+          "state_diverged": 672,
+          "self_compared": 28,
+          "self_differences": 28,
+          "opponent_compared": 28,
+          "opponent_differences": 6
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/eliminate",
+      "profile": "steady",
+      "seed": 282,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 60,
+        "guard": 47,
+        "heal": 3,
+        "shoot": 7,
+        "reload": 3
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 11,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 35,
+      "planning_declines": 5,
+      "expired_stop_selections": 29,
+      "unresolved_stop_selections": 29,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 17.23017867300223,
+        "calls": 46,
+        "model_transitions": 10735,
+        "recovery_calls": 6
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 700,
+          "same_state": 4,
+          "state_diverged": 628,
+          "self_compared": 4,
+          "self_differences": 4,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/eliminate",
+      "profile": "steady",
+      "seed": 281,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 35,
+        "guard": 65,
+        "shoot": 12,
+        "reload": 5,
+        "heal": 3
+      },
+      "health": 27,
+      "score": 0.6666666666666666,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 47,
+      "unresolved_stop_selections": 47,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 52.92924878600752,
+        "calls": 46,
+        "model_transitions": 12120,
+        "recovery_calls": 6,
+        "persona_scorings": 15951,
+        "persona_batches": 5463,
+        "persona_cache_hits": 4541,
+        "persona_choices": 29220,
+        "persona_coordination_conflicts": 167
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 23,
+          "state_diverged": 717,
+          "self_compared": 23,
+          "self_differences": 19,
+          "opponent_compared": 23,
+          "opponent_differences": 11
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/eliminate",
+      "profile": "growth",
+      "seed": 282,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 30,
+      "actions": {
+        "move": 35,
+        "shoot": 17,
+        "reload": 7,
+        "guard": 23,
+        "heal": 2
+      },
+      "health": 10,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 30,
+      "planning_declines": 0,
+      "expired_stop_selections": 7,
+      "unresolved_stop_selections": 7,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 72.04086415799611,
+        "calls": 30,
+        "model_transitions": 7294,
+        "recovery_calls": 0,
+        "persona_scorings": 10705,
+        "persona_batches": 3843,
+        "persona_cache_hits": 2139,
+        "persona_choices": 16655,
+        "persona_coordination_conflicts": 62
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 600,
+          "same_state": 32,
+          "state_diverged": 481,
+          "self_compared": 32,
+          "self_differences": 28,
+          "opponent_compared": 32,
+          "opponent_differences": 12
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/eliminate",
+      "profile": "care",
+      "seed": 281,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 72,
+        "heal": 3,
+        "guard": 31,
+        "shoot": 10,
+        "reload": 4
+      },
+      "health": 24,
+      "score": 1.0,
+      "focal_failed_moves": 10,
+      "own_proposal_collisions": 4,
+      "planned_ticks": 19,
+      "planning_declines": 21,
+      "expired_stop_selections": 22,
+      "unresolved_stop_selections": 22,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 10.676935128001787,
+        "calls": 47,
+        "model_transitions": 12868,
+        "recovery_calls": 7
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 380,
+          "same_state": 4,
+          "state_diverged": 325,
+          "self_compared": 4,
+          "self_differences": 4,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/eliminate",
+      "profile": "care",
+      "seed": 282,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 33,
+      "actions": {
+        "move": 52,
+        "guard": 18,
+        "heal": 3,
+        "shoot": 19,
+        "reload": 7
+      },
+      "health": 13,
+      "score": 1.0,
+      "focal_failed_moves": 11,
+      "own_proposal_collisions": 11,
+      "planned_ticks": 11,
+      "planning_declines": 22,
+      "expired_stop_selections": 2,
+      "unresolved_stop_selections": 2,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 8.173272996005835,
+        "calls": 34,
+        "model_transitions": 9720,
+        "recovery_calls": 1
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 220,
+          "same_state": 16,
+          "state_diverged": 153,
+          "self_compared": 16,
+          "self_differences": 16,
+          "opponent_compared": 16,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/eliminate",
+      "profile": "growth",
+      "seed": 281,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 42,
+        "shoot": 7,
+        "reload": 4,
+        "heal": 2,
+        "guard": 65
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 7,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 52,
+      "unresolved_stop_selections": 52,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 102.7917919350075,
+        "calls": 59,
+        "model_transitions": 14991,
+        "recovery_calls": 19,
+        "persona_scorings": 17223,
+        "persona_batches": 6052,
+        "persona_cache_hits": 6251,
+        "persona_choices": 34701,
+        "persona_coordination_conflicts": 327
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 30,
+          "state_diverged": 707,
+          "self_compared": 30,
+          "self_differences": 22,
+          "opponent_compared": 30,
+          "opponent_differences": 10
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/eliminate",
+      "profile": "ego",
+      "seed": 281,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 38,
+        "shoot": 13,
+        "guard": 61,
+        "reload": 5,
+        "heal": 3
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 5,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 45,
+      "unresolved_stop_selections": 45,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 20.723148053009936,
+        "calls": 54,
+        "model_transitions": 12710,
+        "recovery_calls": 14
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 18,
+          "state_diverged": 705,
+          "self_compared": 18,
+          "self_differences": 16,
+          "opponent_compared": 18,
+          "opponent_differences": 5
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/eliminate",
+      "profile": "care",
+      "seed": 282,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 50,
+        "shoot": 15,
+        "reload": 6,
+        "guard": 25,
+        "heal": 3
+      },
+      "health": 12,
+      "score": 0.6666666666666666,
+      "focal_failed_moves": 2,
+      "own_proposal_collisions": 2,
+      "planned_ticks": 25,
+      "planning_declines": 15,
+      "expired_stop_selections": 6,
+      "unresolved_stop_selections": 6,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 44.89975559499726,
+        "calls": 40,
+        "model_transitions": 9826,
+        "recovery_calls": 0,
+        "persona_scorings": 12375,
+        "persona_batches": 5198,
+        "persona_cache_hits": 2928,
+        "persona_choices": 19084,
+        "persona_coordination_conflicts": 157
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 500,
+          "same_state": 21,
+          "state_diverged": 418,
+          "self_compared": 21,
+          "self_differences": 17,
+          "opponent_compared": 21,
+          "opponent_differences": 10
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/eliminate",
+      "profile": "ego",
+      "seed": 282,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 29,
+      "actions": {
+        "move": 32,
+        "guard": 26,
+        "heal": 3,
+        "shoot": 14,
+        "reload": 5
+      },
+      "health": 12,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 29,
+      "planning_declines": 0,
+      "expired_stop_selections": 2,
+      "unresolved_stop_selections": 2,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 7.820518611009902,
+        "calls": 29,
+        "model_transitions": 6898,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 580,
+          "same_state": 23,
+          "state_diverged": 468,
+          "self_compared": 23,
+          "self_differences": 18,
+          "opponent_compared": 23,
+          "opponent_differences": 8
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/eliminate",
+      "profile": "care",
+      "seed": 281,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 21,
+      "actions": {
+        "move": 20,
+        "shoot": 26,
+        "reload": 11,
+        "heal": 3,
+        "guard": 3
+      },
+      "health": 24,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 15,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 69.41866869399746,
+        "calls": 21,
+        "model_transitions": 6387,
+        "recovery_calls": 0,
+        "persona_scorings": 10293,
+        "persona_batches": 3454,
+        "persona_cache_hits": 1697,
+        "persona_choices": 15352,
+        "persona_coordination_conflicts": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 13,
+          "state_diverged": 72,
+          "self_compared": 13,
+          "self_differences": 10,
+          "opponent_compared": 13,
+          "opponent_differences": 3
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/either",
+      "profile": "growth",
+      "seed": 281,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 8,
+      "actions": {
+        "move": 12,
+        "shoot": 9,
+        "heal": 2,
+        "reload": 1
+      },
+      "health": 12,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 8,
+      "planning_declines": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 5.206903273003263,
+        "calls": 8,
+        "model_transitions": 3156,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 160,
+          "same_state": 8,
+          "state_diverged": 76,
+          "self_compared": 8,
+          "self_differences": 4,
+          "opponent_compared": 8,
+          "opponent_differences": 5
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/eliminate",
+      "profile": "steady",
+      "seed": 282,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 55,
+        "shoot": 9,
+        "reload": 5,
+        "heal": 3,
+        "guard": 48
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 1,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 39,
+      "planning_declines": 1,
+      "expired_stop_selections": 33,
+      "unresolved_stop_selections": 33,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 97.94457128500653,
+        "calls": 43,
+        "model_transitions": 10312,
+        "recovery_calls": 3,
+        "persona_scorings": 16279,
+        "persona_batches": 5622,
+        "persona_cache_hits": 2890,
+        "persona_choices": 24718,
+        "persona_coordination_conflicts": 220
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 780,
+          "same_state": 16,
+          "state_diverged": 704,
+          "self_compared": 16,
+          "self_differences": 16,
+          "opponent_compared": 16,
+          "opponent_differences": 16
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/either",
+      "profile": "growth",
+      "seed": 282,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 7,
+      "actions": {
+        "move": 7,
+        "shoot": 7,
+        "heal": 2,
+        "reload": 2,
+        "guard": 3
+      },
+      "health": 20,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 7,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 4.445512763002625,
+        "calls": 7,
+        "model_transitions": 2793,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 140,
+          "same_state": 10,
+          "state_diverged": 58,
+          "self_compared": 10,
+          "self_differences": 6,
+          "opponent_compared": 10,
+          "opponent_differences": 2
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/either",
+      "profile": "growth",
+      "seed": 281,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 9,
+        "shoot": 7,
+        "guard": 1,
+        "heal": 1
+      },
+      "health": 19,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 25.241834751999704,
+        "calls": 6,
+        "model_transitions": 2187,
+        "recovery_calls": 0,
+        "persona_scorings": 3444,
+        "persona_batches": 1244,
+        "persona_cache_hits": 367,
+        "persona_choices": 4474,
+        "persona_coordination_conflicts": 6
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 4,
+          "state_diverged": 56,
+          "self_compared": 4,
+          "self_differences": 0,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/eliminate",
+      "profile": "ego",
+      "seed": 281,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 16,
+      "actions": {
+        "move": 14,
+        "guard": 7,
+        "heal": 3,
+        "shoot": 17,
+        "reload": 7
+      },
+      "health": 19,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 16,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 49.386456703992735,
+        "calls": 16,
+        "model_transitions": 5088,
+        "recovery_calls": 0,
+        "persona_scorings": 8424,
+        "persona_batches": 2974,
+        "persona_cache_hits": 1174,
+        "persona_choices": 11801,
+        "persona_coordination_conflicts": 3
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 320,
+          "same_state": 18,
+          "state_diverged": 242,
+          "self_compared": 18,
+          "self_differences": 14,
+          "opponent_compared": 18,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/either",
+      "profile": "steady",
+      "seed": 281,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 5,
+      "actions": {
+        "guard": 2,
+        "move": 8,
+        "shoot": 4,
+        "heal": 1
+      },
+      "health": 22,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 4,
+      "planning_declines": 1,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 2.84492458699242,
+        "calls": 5,
+        "model_transitions": 1956,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 80,
+          "same_state": 1,
+          "state_diverged": 23,
+          "self_compared": 1,
+          "self_differences": 1,
+          "opponent_compared": 1,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/either",
+      "profile": "steady",
+      "seed": 282,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 7,
+        "shoot": 6,
+        "reload": 1,
+        "heal": 2,
+        "guard": 2
+      },
+      "health": 14,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 5,
+      "planning_declines": 1,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 3.310391743994842,
+        "calls": 6,
+        "model_transitions": 2330,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 100,
+          "same_state": 8,
+          "state_diverged": 32,
+          "self_compared": 8,
+          "self_differences": 5,
+          "opponent_compared": 8,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/either",
+      "profile": "growth",
+      "seed": 282,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 11,
+      "actions": {
+        "move": 18,
+        "shoot": 10,
+        "heal": 2,
+        "reload": 3
+      },
+      "health": 17,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 11,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 39.46010562399533,
+        "calls": 11,
+        "model_transitions": 4898,
+        "recovery_calls": 0,
+        "persona_scorings": 8735,
+        "persona_batches": 3140,
+        "persona_cache_hits": 702,
+        "persona_choices": 10742,
+        "persona_coordination_conflicts": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 220,
+          "same_state": 13,
+          "state_diverged": 137,
+          "self_compared": 13,
+          "self_differences": 11,
+          "opponent_compared": 13,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/eliminate",
+      "profile": "ego",
+      "seed": 282,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 61,
+        "shoot": 5,
+        "reload": 2,
+        "guard": 51,
+        "heal": 1
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 9,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 34,
+      "unresolved_stop_selections": 34,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 54.370253980996495,
+        "calls": 47,
+        "model_transitions": 10711,
+        "recovery_calls": 7,
+        "persona_scorings": 14164,
+        "persona_batches": 5056,
+        "persona_cache_hits": 3727,
+        "persona_choices": 24716,
+        "persona_coordination_conflicts": 12
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 4,
+          "state_diverged": 732,
+          "self_compared": 4,
+          "self_differences": 4,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/either",
+      "profile": "care",
+      "seed": 281,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 5,
+      "actions": {
+        "move": 11,
+        "heal": 2,
+        "guard": 1,
+        "shoot": 1
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 5,
+      "planning_declines": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 1.5751004020021355,
+        "calls": 5,
+        "model_transitions": 1891,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 100,
+          "same_state": 9,
+          "state_diverged": 31,
+          "self_compared": 9,
+          "self_differences": 9,
+          "opponent_compared": 9,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/either",
+      "profile": "steady",
+      "seed": 281,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 9,
+        "heal": 1,
+        "shoot": 6,
+        "guard": 1,
+        "reload": 1
+      },
+      "health": 19,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 24.526750611999887,
+        "calls": 6,
+        "model_transitions": 2588,
+        "recovery_calls": 0,
+        "persona_scorings": 4606,
+        "persona_batches": 1634,
+        "persona_cache_hits": 378,
+        "persona_choices": 5612,
+        "persona_coordination_conflicts": 6
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 9,
+          "state_diverged": 51,
+          "self_compared": 9,
+          "self_differences": 9,
+          "opponent_compared": 9,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/either",
+      "profile": "care",
+      "seed": 282,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": false,
+      "lost": true,
+      "win_credit": 0.0,
+      "ticks": 7,
+      "actions": {
+        "move": 10,
+        "guard": 1,
+        "shoot": 4,
+        "heal": 1,
+        "reload": 1
+      },
+      "health": 18,
+      "score": 0.3486111111111111,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 2,
+      "planning_declines": 5,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 2.2872424960041826,
+        "calls": 7,
+        "model_transitions": 2919,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 40,
+          "same_state": 0,
+          "state_diverged": 14,
+          "self_compared": 0,
+          "self_differences": 0,
+          "opponent_compared": 0,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/either",
+      "profile": "ego",
+      "seed": 281,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 8,
+      "actions": {
+        "move": 12,
+        "shoot": 9,
+        "heal": 2,
+        "reload": 1
+      },
+      "health": 12,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 8,
+      "planning_declines": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 3.2063852900027996,
+        "calls": 8,
+        "model_transitions": 3176,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 160,
+          "same_state": 8,
+          "state_diverged": 76,
+          "self_compared": 8,
+          "self_differences": 4,
+          "opponent_compared": 8,
+          "opponent_differences": 5
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/either",
+      "profile": "steady",
+      "seed": 282,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 6,
+      "actions": {
+        "move": 9,
+        "shoot": 7,
+        "heal": 2
+      },
+      "health": 14,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 6,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 25.84246585099754,
+        "calls": 6,
+        "model_transitions": 2527,
+        "recovery_calls": 0,
+        "persona_scorings": 4973,
+        "persona_batches": 1728,
+        "persona_cache_hits": 223,
+        "persona_choices": 5558,
+        "persona_coordination_conflicts": 1
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 120,
+          "same_state": 5,
+          "state_diverged": 55,
+          "self_compared": 5,
+          "self_differences": 5,
+          "opponent_compared": 5,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "open/either",
+      "profile": "ego",
+      "seed": 282,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 7,
+      "actions": {
+        "move": 8,
+        "shoot": 7,
+        "heal": 2,
+        "guard": 3,
+        "reload": 1
+      },
+      "health": 20,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 7,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 4.2739798900001915,
+        "calls": 7,
+        "model_transitions": 2791,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 140,
+          "same_state": 10,
+          "state_diverged": 58,
+          "self_compared": 10,
+          "self_differences": 10,
+          "opponent_compared": 10,
+          "opponent_differences": 2
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/either",
+      "profile": "ego",
+      "seed": 281,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 12,
+      "actions": {
+        "guard": 1,
+        "move": 12,
+        "shoot": 16,
+        "reload": 6,
+        "heal": 1
+      },
+      "health": 19,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 12,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 33.6835198309891,
+        "calls": 12,
+        "model_transitions": 5624,
+        "recovery_calls": 0,
+        "persona_scorings": 9661,
+        "persona_batches": 3617,
+        "persona_cache_hits": 855,
+        "persona_choices": 11913,
+        "persona_coordination_conflicts": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 240,
+          "same_state": 5,
+          "state_diverged": 171,
+          "self_compared": 5,
+          "self_differences": 1,
+          "opponent_compared": 5,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/either",
+      "profile": "care",
+      "seed": 282,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": false,
+      "lost": true,
+      "win_credit": 0.0,
+      "ticks": 11,
+      "actions": {
+        "move": 13,
+        "shoot": 5,
+        "heal": 2,
+        "reload": 1,
+        "guard": 4
+      },
+      "health": 0,
+      "score": 0.36111111111111116,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 8,
+      "planning_declines": 3,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 39.673886141004914,
+        "calls": 11,
+        "model_transitions": 4763,
+        "recovery_calls": 0,
+        "persona_scorings": 6722,
+        "persona_batches": 2985,
+        "persona_cache_hits": 806,
+        "persona_choices": 8106,
+        "persona_coordination_conflicts": 41
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 160,
+          "same_state": 11,
+          "state_diverged": 69,
+          "self_compared": 11,
+          "self_differences": 8,
+          "opponent_compared": 11,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/either",
+      "profile": "care",
+      "seed": 281,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 14,
+      "actions": {
+        "guard": 3,
+        "move": 12,
+        "heal": 2,
+        "shoot": 18,
+        "reload": 7
+      },
+      "health": 15,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 3,
+      "planning_declines": 11,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 45.21741771199595,
+        "calls": 14,
+        "model_transitions": 7233,
+        "recovery_calls": 0,
+        "persona_scorings": 14167,
+        "persona_batches": 4960,
+        "persona_cache_hits": 929,
+        "persona_choices": 16841,
+        "persona_coordination_conflicts": 2
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 60,
+          "same_state": 5,
+          "state_diverged": 54,
+          "self_compared": 5,
+          "self_differences": 0,
+          "opponent_compared": 5,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "open/either",
+      "profile": "ego",
+      "seed": 282,
+      "rival": "raider",
+      "recovery_options": true,
+      "won": false,
+      "lost": true,
+      "win_credit": 0.0,
+      "ticks": 9,
+      "actions": {
+        "move": 9,
+        "shoot": 9,
+        "heal": 2,
+        "reload": 2,
+        "guard": 1
+      },
+      "health": 0,
+      "score": 0.4333333333333334,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 9,
+      "planning_declines": 0,
+      "expired_stop_selections": 0,
+      "unresolved_stop_selections": 0,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 33.5846108859987,
+        "calls": 9,
+        "model_transitions": 4190,
+        "recovery_calls": 0,
+        "persona_scorings": 7013,
+        "persona_batches": 2886,
+        "persona_cache_hits": 496,
+        "persona_choices": 8047,
+        "persona_coordination_conflicts": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 180,
+          "same_state": 6,
+          "state_diverged": 113,
+          "self_compared": 6,
+          "self_differences": 5,
+          "opponent_compared": 6,
+          "opponent_differences": 6
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/both",
+      "profile": "growth",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 40,
+      "actions": {
+        "move": 40,
+        "shoot": 22,
+        "reload": 8,
+        "guard": 30,
+        "heal": 3
+      },
+      "health": 10,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 12,
+      "unresolved_stop_selections": 12,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 10.535583382003097,
+        "calls": 42,
+        "model_transitions": 13058,
+        "recovery_calls": 2
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 41,
+          "state_diverged": 588,
+          "self_compared": 41,
+          "self_differences": 25,
+          "opponent_compared": 41,
+          "opponent_differences": 32
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/both",
+      "profile": "growth",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 35,
+      "actions": {
+        "move": 41,
+        "shoot": 19,
+        "reload": 8,
+        "guard": 37
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 35,
+      "planning_declines": 0,
+      "expired_stop_selections": 6,
+      "unresolved_stop_selections": 6,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 8.212368534001143,
+        "calls": 35,
+        "model_transitions": 10978,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 700,
+          "same_state": 6,
+          "state_diverged": 557,
+          "self_compared": 6,
+          "self_differences": 6,
+          "opponent_compared": 6,
+          "opponent_differences": 6
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/both",
+      "profile": "steady",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 48,
+        "guard": 26,
+        "shoot": 24,
+        "reload": 8,
+        "heal": 3
+      },
+      "health": 9,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 8,
+      "unresolved_stop_selections": 8,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 14.237607395007217,
+        "calls": 41,
+        "model_transitions": 16855,
+        "recovery_calls": 1
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 31,
+          "state_diverged": 688,
+          "self_compared": 31,
+          "self_differences": 27,
+          "opponent_compared": 31,
+          "opponent_differences": 16
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/both",
+      "profile": "steady",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 54,
+        "guard": 26,
+        "shoot": 13,
+        "reload": 5,
+        "heal": 2
+      },
+      "health": 16,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 10,
+      "unresolved_stop_selections": 10,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 19.425465239011828,
+        "calls": 41,
+        "model_transitions": 19318,
+        "recovery_calls": 1
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 48,
+          "state_diverged": 689,
+          "self_compared": 48,
+          "self_differences": 38,
+          "opponent_compared": 48,
+          "opponent_differences": 44
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/both",
+      "profile": "steady",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 65,
+        "shoot": 8,
+        "reload": 5,
+        "guard": 42
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 14,
+      "unresolved_stop_selections": 14,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 113.1668583440005,
+        "calls": 42,
+        "model_transitions": 20904,
+        "recovery_calls": 2,
+        "persona_scorings": 29949,
+        "persona_batches": 10223,
+        "persona_cache_hits": 7109,
+        "persona_choices": 50730,
+        "persona_coordination_conflicts": 211
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 8,
+          "state_diverged": 732,
+          "self_compared": 8,
+          "self_differences": 8,
+          "opponent_compared": 8,
+          "opponent_differences": 8
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/both",
+      "profile": "care",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "guard": 19,
+        "move": 51,
+        "heal": 2,
+        "shoot": 16,
+        "reload": 7
+      },
+      "health": 15,
+      "score": 1.0,
+      "focal_failed_moves": 2,
+      "own_proposal_collisions": 2,
+      "planned_ticks": 23,
+      "planning_declines": 17,
+      "expired_stop_selections": 11,
+      "unresolved_stop_selections": 11,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 10.814712567997049,
+        "calls": 40,
+        "model_transitions": 14043,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 460,
+          "same_state": 4,
+          "state_diverged": 396,
+          "self_compared": 4,
+          "self_differences": 4,
+          "opponent_compared": 4,
+          "opponent_differences": 4
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/both",
+      "profile": "growth",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 50,
+        "shoot": 12,
+        "guard": 49,
+        "reload": 7,
+        "heal": 2
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 10,
+      "unresolved_stop_selections": 10,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 153.02319854799862,
+        "calls": 44,
+        "model_transitions": 13772,
+        "recovery_calls": 4,
+        "persona_scorings": 21162,
+        "persona_batches": 7426,
+        "persona_cache_hits": 3902,
+        "persona_choices": 32437,
+        "persona_coordination_conflicts": 184
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 12,
+          "state_diverged": 728,
+          "self_compared": 12,
+          "self_differences": 12,
+          "opponent_compared": 12,
+          "opponent_differences": 8
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/both",
+      "profile": "growth",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 58,
+        "guard": 20,
+        "shoot": 8,
+        "reload": 4
+      },
+      "health": 18,
+      "score": 0.6666666666666666,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 16,
+      "unresolved_stop_selections": 16,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 146.1741483230253,
+        "calls": 41,
+        "model_transitions": 17406,
+        "recovery_calls": 1,
+        "persona_scorings": 17909,
+        "persona_batches": 8221,
+        "persona_cache_hits": 6113,
+        "persona_choices": 30329,
+        "persona_coordination_conflicts": 536
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 9,
+          "state_diverged": 731,
+          "self_compared": 9,
+          "self_differences": 5,
+          "opponent_compared": 9,
+          "opponent_differences": 9
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/both",
+      "profile": "care",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "guard": 42,
+        "move": 68,
+        "shoot": 6,
+        "reload": 4
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 8,
+      "own_proposal_collisions": 8,
+      "planned_ticks": 22,
+      "planning_declines": 18,
+      "expired_stop_selections": 31,
+      "unresolved_stop_selections": 31,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 21.587592962998315,
+        "calls": 46,
+        "model_transitions": 14205,
+        "recovery_calls": 6
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 440,
+          "same_state": 0,
+          "state_diverged": 381,
+          "self_compared": 0,
+          "self_differences": 0,
+          "opponent_compared": 0,
+          "opponent_differences": 0
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/both",
+      "profile": "steady",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 68,
+        "guard": 25,
+        "shoot": 19,
+        "reload": 6,
+        "heal": 2
+      },
+      "health": 16,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 39,
+      "planning_declines": 1,
+      "expired_stop_selections": 22,
+      "unresolved_stop_selections": 22,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 126.76106146200254,
+        "calls": 44,
+        "model_transitions": 21761,
+        "recovery_calls": 4,
+        "persona_scorings": 34895,
+        "persona_batches": 12024,
+        "persona_cache_hits": 5917,
+        "persona_choices": 51932,
+        "persona_coordination_conflicts": 837
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 780,
+          "same_state": 33,
+          "state_diverged": 673,
+          "self_compared": 33,
+          "self_differences": 31,
+          "opponent_compared": 33,
+          "opponent_differences": 30
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/both",
+      "profile": "ego",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 40,
+        "shoot": 15,
+        "reload": 4,
+        "guard": 49,
+        "heal": 2
+      },
+      "health": 11,
+      "score": 1.0,
+      "focal_failed_moves": 3,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 17,
+      "unresolved_stop_selections": 17,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 31.34671667900693,
+        "calls": 43,
+        "model_transitions": 21671,
+        "recovery_calls": 3
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 50,
+          "state_diverged": 672,
+          "self_compared": 50,
+          "self_differences": 24,
+          "opponent_compared": 50,
+          "opponent_differences": 43
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "objective",
+      "scenario": "choke/both",
+      "profile": "ego",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 51,
+        "shoot": 10,
+        "reload": 4,
+        "guard": 34,
+        "heal": 1
+      },
+      "health": 18,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 16,
+      "unresolved_stop_selections": 16,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 24.640254584996,
+        "calls": 42,
+        "model_transitions": 14548,
+        "recovery_calls": 2
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 27,
+          "state_diverged": 712,
+          "self_compared": 27,
+          "self_differences": 23,
+          "opponent_compared": 27,
+          "opponent_differences": 26
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/both",
+      "profile": "care",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "guard": 23,
+        "move": 73,
+        "shoot": 11,
+        "reload": 4,
+        "heal": 3
+      },
+      "health": 16,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 21,
+      "planning_declines": 19,
+      "expired_stop_selections": 17,
+      "unresolved_stop_selections": 17,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 111.76517933302239,
+        "calls": 46,
+        "model_transitions": 19587,
+        "recovery_calls": 6,
+        "persona_scorings": 28675,
+        "persona_batches": 10139,
+        "persona_cache_hits": 6104,
+        "persona_choices": 45848,
+        "persona_coordination_conflicts": 361
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 420,
+          "same_state": 23,
+          "state_diverged": 345,
+          "self_compared": 23,
+          "self_differences": 22,
+          "opponent_compared": 23,
+          "opponent_differences": 22
+        }
+      }
+    },
+    {
+      "partition": "known",
+      "variant": "objective",
+      "scenario": "choke/eliminate",
+      "profile": "steady",
+      "seed": 180,
+      "rival": "switch",
+      "recovery_options": false,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 31,
+      "actions": {
+        "move": 35,
+        "shoot": 19,
+        "heal": 3,
+        "reload": 8,
+        "guard": 28
+      },
+      "health": 15,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 31,
+      "planning_declines": 0,
+      "expired_stop_selections": 10,
+      "unresolved_stop_selections": 10,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 12.131969700996706,
+        "calls": 31,
+        "model_transitions": 8469,
+        "recovery_calls": 0
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 620,
+          "same_state": 18,
+          "state_diverged": 531,
+          "self_compared": 18,
+          "self_differences": 15,
+          "opponent_compared": 18,
+          "opponent_differences": 8
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/both",
+      "profile": "ego",
+      "seed": 281,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 33,
+        "shoot": 12,
+        "reload": 7,
+        "heal": 3,
+        "guard": 65
+      },
+      "health": 25,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 32,
+      "unresolved_stop_selections": 32,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 84.99071482900399,
+        "calls": 51,
+        "model_transitions": 14791,
+        "recovery_calls": 11,
+        "persona_scorings": 19375,
+        "persona_batches": 7113,
+        "persona_cache_hits": 4914,
+        "persona_choices": 32748,
+        "persona_coordination_conflicts": 44
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 16,
+          "state_diverged": 652,
+          "self_compared": 16,
+          "self_differences": 15,
+          "opponent_compared": 16,
+          "opponent_differences": 15
+        }
+      }
+    },
+    {
+      "partition": "known",
+      "variant": "objective",
+      "scenario": "choke/eliminate",
+      "profile": "steady",
+      "seed": 180,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 67,
+        "shoot": 9,
+        "heal": 3,
+        "reload": 4,
+        "guard": 37
+      },
+      "health": 27,
+      "score": 1.0,
+      "focal_failed_moves": 1,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 33,
+      "unresolved_stop_selections": 33,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 11.977435833996424,
+        "calls": 49,
+        "model_transitions": 12496,
+        "recovery_calls": 9
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 8,
+          "state_diverged": 729,
+          "self_compared": 8,
+          "self_differences": 8,
+          "opponent_compared": 8,
+          "opponent_differences": 8
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/both",
+      "profile": "care",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 36,
+      "actions": {
+        "guard": 20,
+        "move": 49,
+        "shoot": 27,
+        "reload": 9,
+        "heal": 3
+      },
+      "health": 15,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 22,
+      "planning_declines": 14,
+      "expired_stop_selections": 1,
+      "unresolved_stop_selections": 1,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 128.97072845599905,
+        "calls": 36,
+        "model_transitions": 15071,
+        "recovery_calls": 0,
+        "persona_scorings": 24087,
+        "persona_batches": 9151,
+        "persona_cache_hits": 3340,
+        "persona_choices": 33315,
+        "persona_coordination_conflicts": 746
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 440,
+          "same_state": 18,
+          "state_diverged": 407,
+          "self_compared": 18,
+          "self_differences": 16,
+          "opponent_compared": 18,
+          "opponent_differences": 9
+        }
+      }
+    },
+    {
+      "partition": "known",
+      "variant": "persona-band",
+      "scenario": "choke/eliminate",
+      "profile": "steady",
+      "seed": 180,
+      "rival": "switch",
+      "recovery_options": false,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 52,
+        "shoot": 6,
+        "reload": 5,
+        "guard": 54,
+        "heal": 3
+      },
+      "health": 25,
+      "score": 0.4930555555555555,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 24,
+      "unresolved_stop_selections": 24,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 51.50494690000778,
+        "calls": 40,
+        "model_transitions": 9880,
+        "recovery_calls": 0,
+        "persona_scorings": 14336,
+        "persona_batches": 4946,
+        "persona_cache_hits": 3190,
+        "persona_choices": 23621,
+        "persona_coordination_conflicts": 136
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 16,
+          "state_diverged": 724,
+          "self_compared": 16,
+          "self_differences": 16,
+          "opponent_compared": 16,
+          "opponent_differences": 12
+        }
+      }
+    },
+    {
+      "partition": "known",
+      "variant": "persona-band",
+      "scenario": "choke/eliminate",
+      "profile": "steady",
+      "seed": 180,
+      "rival": "switch",
+      "recovery_options": true,
+      "won": false,
+      "lost": false,
+      "win_credit": 0.0,
+      "ticks": 40,
+      "actions": {
+        "move": 52,
+        "shoot": 6,
+        "reload": 5,
+        "guard": 54,
+        "heal": 3
+      },
+      "health": 25,
+      "score": 0.4930555555555555,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 40,
+      "planning_declines": 0,
+      "expired_stop_selections": 24,
+      "unresolved_stop_selections": 24,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 51.05242540097606,
+        "calls": 42,
+        "model_transitions": 10360,
+        "recovery_calls": 2,
+        "persona_scorings": 15040,
+        "persona_batches": 5181,
+        "persona_cache_hits": 3355,
+        "persona_choices": 24820,
+        "persona_coordination_conflicts": 136
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 800,
+          "same_state": 16,
+          "state_diverged": 724,
+          "self_compared": 16,
+          "self_differences": 16,
+          "opponent_compared": 16,
+          "opponent_differences": 12
+        }
+      }
+    },
+    {
+      "partition": "heldout",
+      "variant": "persona-band",
+      "scenario": "choke/both",
+      "profile": "ego",
+      "seed": 282,
+      "rival": "reference",
+      "recovery_options": true,
+      "won": true,
+      "lost": false,
+      "win_credit": 1.0,
+      "ticks": 35,
+      "actions": {
+        "move": 48,
+        "shoot": 22,
+        "reload": 9,
+        "guard": 23,
+        "heal": 3
+      },
+      "health": 17,
+      "score": 1.0,
+      "focal_failed_moves": 0,
+      "own_proposal_collisions": 0,
+      "planned_ticks": 35,
+      "planning_declines": 0,
+      "expired_stop_selections": 2,
+      "unresolved_stop_selections": 2,
+      "unsupported_root_selections": 0,
+      "total_work": {
+        "planner_seconds": 100.2598249500079,
+        "calls": 35,
+        "model_transitions": 15714,
+        "recovery_calls": 0,
+        "persona_scorings": 26139,
+        "persona_batches": 9377,
+        "persona_cache_hits": 3589,
+        "persona_choices": 35861,
+        "persona_coordination_conflicts": 69
+      },
+      "alignment": {
+        "continuations": {
+          "modeled_offsets": 700,
+          "same_state": 8,
+          "state_diverged": 600,
+          "self_compared": 8,
+          "self_differences": 8,
+          "opponent_compared": 8,
+          "opponent_differences": 8
+        }
+      }
+    }
+  ],
+  "execution_source_hashes": {
+    "__init__.py": "0f031d0ea857b357eba4f325f4034ed4886a17ed28e1a1dc9e32a434db08f71e",
+    "adapters.py": "45a792a85158b9c26bf2ae0ed31e43c0acb936152ce15864fb0072607e636603",
+    "adaptive_reading_experiment.py": "d898638d59cb7683d0b02fc2360adab8edb8a3a4fe7dcfe520100217e85d71de",
+    "alignment.py": "249e749ab7a589ffe7e43c833ce0ee8a6750c3541758beb46b35656b8d850ee2",
+    "alignment_experiment.py": "3c9aeeb44de5a27333bced6781bdb0f4cc9db910582acebf9e617eed8634a1c5",
+    "board_models.py": "52b53761ee343a827465228fd47fe324067e1cca7fdb4137de9411a960c8a101",
+    "board_planning.py": "dcd82e738399cdaa8c27071567afa9fd52f88ac273eece79d351ee5e3f5ab374",
+    "cli.py": "254775df9bfe66a786640e3f9581765d473f943f1dc27c2a70dd546af374b027",
+    "combat.py": "0e7a764ebe19af17f52d618e756f0dd85872f4fdf8c432c19f5fdca690935877",
+    "combat_experiment.py": "22cb5889fad36dd6d66ff408bd3aef58330ac1cb429f913b3e77dc765e5df8df",
+    "combat_planning.py": "2c532d7e2947f4cbf258685f93aee88d910d677b3f7bc2910bbe82e0ecd154a1",
+    "contests.py": "80caf08f3347ad7de989ad66485b3751f1418fa6fe309400e44a716b529fc150",
+    "contests_experiment.py": "8e9dc3de5efd07e4550732be78092a4c70296c75d433d84b3b62953678669aa0",
+    "continuation_experiment.py": "39210d727a7a418434622bdf4f2deb8c1d43b1eb5d651edc3ba2496236f14730",
+    "core.py": "7a347bb699fffc0481dc5b9e9e31ff2a54d38f8f46de5e190cbd4798b05c3143",
+    "cross_games.py": "3d1899d5b2a9b77673c916114e812955fdb3812fab552f227126a8d4194dc2cf",
+    "decision_loop.py": "3dee93b03fcad1bfece16a9002a3329bc7467181afdbcdb1fa8bf0cbc3fade9b",
+    "deliberation.py": "3d7bd87e9796516d2016d2487fd32c1e75a569dd5d863feebc12f945c325be87",
+    "examples.py": "85610dc68fa527526369eb58151c6b29e01be0f5f2795873690a399829a171f8",
+    "experience.py": "ddd27d9d028af9a1b56ee27176df6106a3d070b3e53c4f34ff91d310f0033223",
+    "gambling.py": "41aa8cff4243a464b82524594fde47de6531ef7b5d11bc0bf83361f1e4d9d55f",
+    "goofspiel.py": "4864e6acc50fdf12aa5ef8da5187a9387105aacd56bd5d66a8762817a395f99d",
+    "goofspiel_beliefs.py": "f92a4ea14e147a3a101c4fd0c7bb696f1fbba92525531b3d5345a2cbf8e7af60",
+    "goofspiel_experiment.py": "1b582902eca0f9dd2b823d5cc634196c2f10fbb06f064a0bbcf8eb7d4e3385f3",
+    "goofspiel_reading.py": "a1efd5e1f0ecae6913d9c702aad71dd6f1b5b489cab821b0bb935c5e1dd0b1b2",
+    "horizon.py": "12cb784c7a21784851f641653acdf348e6bc032b80d38c0c9dcbb01dcc917aca",
+    "judgment.py": "bc8654324bdbdd4c74b2765c1092dc4a02489ec54125e61ad6a4a6024ddd2004",
+    "judgment_experiment.py": "d373b67a7255dea0ee1116775d890eb1991603c9f08f906c14931c8b99e35d61",
+    "laboratory.py": "dabd8eb5cf2acff2d03ed7659b2f86bd5eedc0012fb3b5d7c978cb8b99f0ac4c",
+    "loop_experiment.py": "25cec52da933a5388bf6bd8c45c18637cc6278f45c2cc35916a89bed514d49bf",
+    "loop_predictor.py": "4e69c8b375359dc19227cabf31bc4649f121a85c3c1e2c6b105cef1dfb99f9b3",
+    "mahjong_adapter.py": "5ae03b81d523b67a9e7a7397ba314ddbed138eb607f50c776e440da9b146dd3e",
+    "mahjong_experiment.py": "63db3b7ccaf5d425472d7b5683edd94b09274a0640660492e4895066d253e867",
+    "monte_carlo.py": "8e2e925fc429eb2aa5546bc6b835ae60ac972da269204c21de3471e38bedfdd2",
+    "monte_carlo_comparison.py": "147c4813f915f49f565c5afc2eb9aab696f0ae1b67b56547b3b77de5ee297007",
+    "opponent.py": "747bfc7c77e0edee7b05406e72996becc642aae7ca4ef4b4789688d5704bc4d5",
+    "opponent_beliefs.py": "95777a52db389112b03772237a61c2182aaa3b9c52ac01ceebf165ca38aaa435",
+    "opponent_reading_experiment.py": "60512cf56d07dc9a053f7c0e621096779d005186650b15a3eb16b17fc4b868be",
+    "persona_continuation.py": "00bfffe37dfffca62e2730c8fb5856810593e5ce6ae2049d85d2a1b8a2f6411b",
+    "planning.py": "759e374da0da012ea06dc57679c495ba1562419ad1f24a555ed49f8693af4bf6",
+    "pressure.py": "2f5840b4aab118cc0755a414c550766c1f425e45b47f6281e941a7405fa9923e",
+    "progress.py": "7fa6f1c71ea0addf25707632deb6a3870a63e929b7b58670e7f6bf0b877b060a",
+    "progress_adapters.py": "bc76af5883f5ae7caaf8599d8b4d4758b9806fbfe07d79fdd332ecdd014c1463",
+    "purpose_experiment.py": "eb1e541f14a9b2ee3e32e824911930281cb941f42d339b8be4b8e08982511543",
+    "quoridor.py": "d35e34f06c8c662ae09203b87ce558309b1148a7688b1eaf3dc3be344455a0b8",
+    "recovery_experiment.py": "a95c701866d03071fe5c59a85a81488293f7363865e071651aab2efdc6802de1",
+    "resource_experiment.py": "42704b5f0e76686844559c60fa9551bd5853bc6aa80360af1a08762c5179f0c5",
+    "resource_planning.py": "2b834c17e1ad424b8f215128ac3d38db1266f95c594825e0a9e5dead7a32433b",
+    "resource_world.py": "541d31eb487e8b5d800e5cd3895f486a1c8397883193c96115de821d2bd4adbf",
+    "reversi.py": "755dffd1c8ebcee2b309cd26bc9a00edcb0e4db857b446f257415ad3f63b76ea",
+    "rolling_plan_experiment.py": "25c818b74d615327fa20c9989d01ff725886e118a9948eaff000c5c728114ded",
+    "rolling_plans.py": "361ba57ad61d8869da35b2f5c2f4d38d899371486f7ee82679da46e8fb29aabc",
+    "rollout_boards.py": "485ba25a4deec06aff6eef66bbbd156812bf6e67b5a0e83550b2d2923c05298f",
+    "route_experiment.py": "7c406d1a4c2d2f9acac1ca34e3d52c1e58ebaea914bd28f8faacc85f0099cd50",
+    "routes.py": "61122363d681258529152628bee34ad89490ce2c91b68375bcd90bc650e323fb",
+    "rule_baseline.py": "9d4961388fa97adc218622f5db234a00bfd7967dec37422b393cb4404535e801",
+    "rule_baseline_experiment.py": "ffa2102bb0c53edc86618c51d5d2eba7161a33aee2aa6b3e7cebb86d9e4427f1",
+    "runtime.py": "9c8de4a3a44e64f2b7433befb7eaf2472605cc90dc719084d11301dde175ce9a",
+    "scale_experiment.py": "e0ef67c2643b8ee441e86932227c97661dc66670b6491425c51959bc37c870fd",
+    "scaling.py": "a6be8a3e180fe838e04a2052d8690923d90a4d6904b69c98e11f07d26042d33c",
+    "stability_experiment.py": "e3057edabd970dd0904e38623aaa73f9eb81b4790076271e6e7181fa5465e571",
+    "teachers.py": "7e4c69cd14eba8c84bb4c3d486d0d26d9ddaa64463f5bd754806fcc8b7817c10",
+    "training.py": "b55a220dfbcfac524bd2c9a5821cb33dcca53b8ef01538242fdd6459bbb2816f",
+    "validation_experiment.py": "15809ba4e91348694743714a6d9c4cd073a1443fa8de67f5891a4740961dccd4",
+    "wait_experiment.py": "db6a076abc18883583d9fb5409d3bce9753ce265e3ad54bbd9ba9aa6e13f0e0b"
+  },
+  "postprocess_source_hashes": {
+    "__init__.py": "0f031d0ea857b357eba4f325f4034ed4886a17ed28e1a1dc9e32a434db08f71e",
+    "adapters.py": "45a792a85158b9c26bf2ae0ed31e43c0acb936152ce15864fb0072607e636603",
+    "adaptive_reading_experiment.py": "d898638d59cb7683d0b02fc2360adab8edb8a3a4fe7dcfe520100217e85d71de",
+    "alignment.py": "249e749ab7a589ffe7e43c833ce0ee8a6750c3541758beb46b35656b8d850ee2",
+    "alignment_experiment.py": "3c9aeeb44de5a27333bced6781bdb0f4cc9db910582acebf9e617eed8634a1c5",
+    "board_models.py": "52b53761ee343a827465228fd47fe324067e1cca7fdb4137de9411a960c8a101",
+    "board_planning.py": "dcd82e738399cdaa8c27071567afa9fd52f88ac273eece79d351ee5e3f5ab374",
+    "cli.py": "254775df9bfe66a786640e3f9581765d473f943f1dc27c2a70dd546af374b027",
+    "combat.py": "0e7a764ebe19af17f52d618e756f0dd85872f4fdf8c432c19f5fdca690935877",
+    "combat_experiment.py": "22cb5889fad36dd6d66ff408bd3aef58330ac1cb429f913b3e77dc765e5df8df",
+    "combat_planning.py": "2c532d7e2947f4cbf258685f93aee88d910d677b3f7bc2910bbe82e0ecd154a1",
+    "contests.py": "80caf08f3347ad7de989ad66485b3751f1418fa6fe309400e44a716b529fc150",
+    "contests_experiment.py": "8e9dc3de5efd07e4550732be78092a4c70296c75d433d84b3b62953678669aa0",
+    "continuation_experiment.py": "e7dad0b39e2e5fdd4bc781a362588a44ba23bf032ce28f0779c9625e7cedecca",
+    "core.py": "7a347bb699fffc0481dc5b9e9e31ff2a54d38f8f46de5e190cbd4798b05c3143",
+    "cross_games.py": "3d1899d5b2a9b77673c916114e812955fdb3812fab552f227126a8d4194dc2cf",
+    "decision_loop.py": "3dee93b03fcad1bfece16a9002a3329bc7467181afdbcdb1fa8bf0cbc3fade9b",
+    "deliberation.py": "3d7bd87e9796516d2016d2487fd32c1e75a569dd5d863feebc12f945c325be87",
+    "examples.py": "85610dc68fa527526369eb58151c6b29e01be0f5f2795873690a399829a171f8",
+    "experience.py": "ddd27d9d028af9a1b56ee27176df6106a3d070b3e53c4f34ff91d310f0033223",
+    "gambling.py": "41aa8cff4243a464b82524594fde47de6531ef7b5d11bc0bf83361f1e4d9d55f",
+    "goofspiel.py": "4864e6acc50fdf12aa5ef8da5187a9387105aacd56bd5d66a8762817a395f99d",
+    "goofspiel_beliefs.py": "f92a4ea14e147a3a101c4fd0c7bb696f1fbba92525531b3d5345a2cbf8e7af60",
+    "goofspiel_experiment.py": "1b582902eca0f9dd2b823d5cc634196c2f10fbb06f064a0bbcf8eb7d4e3385f3",
+    "goofspiel_reading.py": "a1efd5e1f0ecae6913d9c702aad71dd6f1b5b489cab821b0bb935c5e1dd0b1b2",
+    "horizon.py": "12cb784c7a21784851f641653acdf348e6bc032b80d38c0c9dcbb01dcc917aca",
+    "judgment.py": "bc8654324bdbdd4c74b2765c1092dc4a02489ec54125e61ad6a4a6024ddd2004",
+    "judgment_experiment.py": "d373b67a7255dea0ee1116775d890eb1991603c9f08f906c14931c8b99e35d61",
+    "laboratory.py": "dabd8eb5cf2acff2d03ed7659b2f86bd5eedc0012fb3b5d7c978cb8b99f0ac4c",
+    "loop_experiment.py": "25cec52da933a5388bf6bd8c45c18637cc6278f45c2cc35916a89bed514d49bf",
+    "loop_predictor.py": "4e69c8b375359dc19227cabf31bc4649f121a85c3c1e2c6b105cef1dfb99f9b3",
+    "mahjong_adapter.py": "5ae03b81d523b67a9e7a7397ba314ddbed138eb607f50c776e440da9b146dd3e",
+    "mahjong_experiment.py": "63db3b7ccaf5d425472d7b5683edd94b09274a0640660492e4895066d253e867",
+    "monte_carlo.py": "8e2e925fc429eb2aa5546bc6b835ae60ac972da269204c21de3471e38bedfdd2",
+    "monte_carlo_comparison.py": "147c4813f915f49f565c5afc2eb9aab696f0ae1b67b56547b3b77de5ee297007",
+    "opponent.py": "747bfc7c77e0edee7b05406e72996becc642aae7ca4ef4b4789688d5704bc4d5",
+    "opponent_beliefs.py": "95777a52db389112b03772237a61c2182aaa3b9c52ac01ceebf165ca38aaa435",
+    "opponent_reading_experiment.py": "60512cf56d07dc9a053f7c0e621096779d005186650b15a3eb16b17fc4b868be",
+    "persona_continuation.py": "00bfffe37dfffca62e2730c8fb5856810593e5ce6ae2049d85d2a1b8a2f6411b",
+    "planning.py": "759e374da0da012ea06dc57679c495ba1562419ad1f24a555ed49f8693af4bf6",
+    "pressure.py": "2f5840b4aab118cc0755a414c550766c1f425e45b47f6281e941a7405fa9923e",
+    "progress.py": "7fa6f1c71ea0addf25707632deb6a3870a63e929b7b58670e7f6bf0b877b060a",
+    "progress_adapters.py": "bc76af5883f5ae7caaf8599d8b4d4758b9806fbfe07d79fdd332ecdd014c1463",
+    "purpose_experiment.py": "eb1e541f14a9b2ee3e32e824911930281cb941f42d339b8be4b8e08982511543",
+    "quoridor.py": "d35e34f06c8c662ae09203b87ce558309b1148a7688b1eaf3dc3be344455a0b8",
+    "recovery_experiment.py": "a95c701866d03071fe5c59a85a81488293f7363865e071651aab2efdc6802de1",
+    "resource_experiment.py": "42704b5f0e76686844559c60fa9551bd5853bc6aa80360af1a08762c5179f0c5",
+    "resource_planning.py": "2b834c17e1ad424b8f215128ac3d38db1266f95c594825e0a9e5dead7a32433b",
+    "resource_world.py": "541d31eb487e8b5d800e5cd3895f486a1c8397883193c96115de821d2bd4adbf",
+    "reversi.py": "755dffd1c8ebcee2b309cd26bc9a00edcb0e4db857b446f257415ad3f63b76ea",
+    "rolling_plan_experiment.py": "25c818b74d615327fa20c9989d01ff725886e118a9948eaff000c5c728114ded",
+    "rolling_plans.py": "361ba57ad61d8869da35b2f5c2f4d38d899371486f7ee82679da46e8fb29aabc",
+    "rollout_boards.py": "485ba25a4deec06aff6eef66bbbd156812bf6e67b5a0e83550b2d2923c05298f",
+    "route_experiment.py": "7c406d1a4c2d2f9acac1ca34e3d52c1e58ebaea914bd28f8faacc85f0099cd50",
+    "routes.py": "61122363d681258529152628bee34ad89490ce2c91b68375bcd90bc650e323fb",
+    "rule_baseline.py": "9d4961388fa97adc218622f5db234a00bfd7967dec37422b393cb4404535e801",
+    "rule_baseline_experiment.py": "ffa2102bb0c53edc86618c51d5d2eba7161a33aee2aa6b3e7cebb86d9e4427f1",
+    "runtime.py": "9c8de4a3a44e64f2b7433befb7eaf2472605cc90dc719084d11301dde175ce9a",
+    "scale_experiment.py": "e0ef67c2643b8ee441e86932227c97661dc66670b6491425c51959bc37c870fd",
+    "scaling.py": "a6be8a3e180fe838e04a2052d8690923d90a4d6904b69c98e11f07d26042d33c",
+    "stability_experiment.py": "e3057edabd970dd0904e38623aaa73f9eb81b4790076271e6e7181fa5465e571",
+    "teachers.py": "7e4c69cd14eba8c84bb4c3d486d0d26d9ddaa64463f5bd754806fcc8b7817c10",
+    "training.py": "b55a220dfbcfac524bd2c9a5821cb33dcca53b8ef01538242fdd6459bbb2816f",
+    "validation_experiment.py": "15809ba4e91348694743714a6d9c4cd073a1443fa8de67f5891a4740961dccd4",
+    "wait_experiment.py": "db6a076abc18883583d9fb5409d3bce9753ce265e3ad54bbd9ba9aa6e13f0e0b"
+  },
+  "defaults_changed": false,
+  "learning_changed": false,
+  "snapshot_recovery_games": 17,
+  "snapshot_recovery_trajectories_identical": true,
+  "postprocessing_recovery": "All 68 games completed and replayed. Aggregate originally direct-indexed an omitted zero stop counter. Only report code was fixed; all raw game traces retained. The 17 predeclared objective snapshot games were reproduced with exactly matching full trajectories. Matrix wall time was not retained after the reporting exception; uncontended runtime is reported separately.",
+  "publication_scope": "Per-condition decisions/quality/work and depth>0 same-state alignment retained; redundant root/per-offset/path diagnostics remain in local raw artifacts."
+}

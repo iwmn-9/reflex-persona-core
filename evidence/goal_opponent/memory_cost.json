@@ -1,0 +1,74 @@
+{
+  "format": "goal-opponent-cost-v1",
+  "fixture": "enemy_convergence/both/seat0, fixed public state after 16 synthetic legal-intent reveals",
+  "source_sha256": {
+    "goal_opponent_cost.py": "9033cfa2c0c33e3c391da16c9f51d5d6c67036c94b3bde301673ca464969a130",
+    "goal_beliefs.py": "66734513ec338d5eae84d55f90918001a0bb63b24311234abe44113731d7cec2",
+    "goal_opponent.py": "d71b645611980e723f4a288d74bc59825e5f98d8611b955866fe66f0c3cb1cad"
+  },
+  "core_numeric_shape": {
+    "opponents": 3,
+    "goals": 2,
+    "retained_log_weights": 6,
+    "maximum_retained_observation_ids": 192,
+    "maximum_retained_lifts": 18
+  },
+  "recursive_python_bytes": {
+    "one_trained_observer_without_pending": 11068,
+    "one_trained_observer_with_pending": 16930
+  },
+  "three_observer_original_fixed_forecast_and_all_legal_move_queries": {
+    "warmups": 20,
+    "samples": 200,
+    "p50_ms": 0.3530020003381651,
+    "p95_ms": 0.6011669993313262,
+    "max_ms": 2.963778000776074
+  },
+  "three_observer_goal_forecast_and_all_legal_move_queries": {
+    "warmups": 20,
+    "samples": 200,
+    "p50_ms": 1.6218400005527656,
+    "p95_ms": 2.4120559992297785,
+    "max_ms": 2.849315000275965
+  },
+  "same_state_p50_ratio": 4.594421558515512,
+  "generic_core_scaling": [
+    {
+      "independent_observers": 1,
+      "opponents_per_observer": 3,
+      "warmups": 5,
+      "samples": 50,
+      "p50_ms": 0.05188799968891544,
+      "p95_ms": 0.055322998377960175,
+      "max_ms": 0.08749200060265139,
+      "p50_ms_per_observer": 0.05188799968891544
+    },
+    {
+      "independent_observers": 32,
+      "opponents_per_observer": 3,
+      "warmups": 5,
+      "samples": 50,
+      "p50_ms": 1.8365334999543848,
+      "p95_ms": 2.7766349994635675,
+      "max_ms": 2.8871519989479566,
+      "p50_ms_per_observer": 0.057391671873574523
+    },
+    {
+      "independent_observers": 128,
+      "opponents_per_observer": 3,
+      "warmups": 5,
+      "samples": 50,
+      "p50_ms": 7.590777499899559,
+      "p95_ms": 9.01258600060828,
+      "max_ms": 10.717725999711547,
+      "p50_ms_per_observer": 0.059302949217965306
+    }
+  ],
+  "caveats": [
+    "Serial shared CPU timing, not a speed guarantee or live gameplay improvement.",
+    "Synthetic reveal history is a cost fixture, not legal consecutive game transitions or efficacy evidence.",
+    "Original baseline computes only its fixed joint hypotheses. Candidate includes original controls, two soft goal experts, state hash, immutable forecasts and goal occupancy queries.",
+    "Recursive size excludes shared Python code, geometry caches, returned transient forecasts outside retained pending state and caller-owned source models.",
+    "Generic replicas test isolated observer inference only, not 128 actors sharing one combat world, planner costs, or end-to-end game throughput."
+  ]
+}

@@ -1,0 +1,1401 @@
+{
+  "format": "continuation-reference-v1",
+  "source_hashes": {
+    "__init__.py": "0f031d0ea857b357eba4f325f4034ed4886a17ed28e1a1dc9e32a434db08f71e",
+    "adapters.py": "45a792a85158b9c26bf2ae0ed31e43c0acb936152ce15864fb0072607e636603",
+    "adaptive_reading_experiment.py": "d898638d59cb7683d0b02fc2360adab8edb8a3a4fe7dcfe520100217e85d71de",
+    "alignment.py": "249e749ab7a589ffe7e43c833ce0ee8a6750c3541758beb46b35656b8d850ee2",
+    "alignment_experiment.py": "3c9aeeb44de5a27333bced6781bdb0f4cc9db910582acebf9e617eed8634a1c5",
+    "board_models.py": "52b53761ee343a827465228fd47fe324067e1cca7fdb4137de9411a960c8a101",
+    "board_planning.py": "dcd82e738399cdaa8c27071567afa9fd52f88ac273eece79d351ee5e3f5ab374",
+    "cli.py": "254775df9bfe66a786640e3f9581765d473f943f1dc27c2a70dd546af374b027",
+    "combat.py": "0e7a764ebe19af17f52d618e756f0dd85872f4fdf8c432c19f5fdca690935877",
+    "combat_experiment.py": "22cb5889fad36dd6d66ff408bd3aef58330ac1cb429f913b3e77dc765e5df8df",
+    "combat_planning.py": "2c532d7e2947f4cbf258685f93aee88d910d677b3f7bc2910bbe82e0ecd154a1",
+    "contests.py": "80caf08f3347ad7de989ad66485b3751f1418fa6fe309400e44a716b529fc150",
+    "contests_experiment.py": "8e9dc3de5efd07e4550732be78092a4c70296c75d433d84b3b62953678669aa0",
+    "continuation_experiment.py": "e7dad0b39e2e5fdd4bc781a362588a44ba23bf032ce28f0779c9625e7cedecca",
+    "core.py": "7a347bb699fffc0481dc5b9e9e31ff2a54d38f8f46de5e190cbd4798b05c3143",
+    "cross_games.py": "3d1899d5b2a9b77673c916114e812955fdb3812fab552f227126a8d4194dc2cf",
+    "decision_loop.py": "3dee93b03fcad1bfece16a9002a3329bc7467181afdbcdb1fa8bf0cbc3fade9b",
+    "deliberation.py": "3d7bd87e9796516d2016d2487fd32c1e75a569dd5d863feebc12f945c325be87",
+    "examples.py": "85610dc68fa527526369eb58151c6b29e01be0f5f2795873690a399829a171f8",
+    "experience.py": "ddd27d9d028af9a1b56ee27176df6106a3d070b3e53c4f34ff91d310f0033223",
+    "gambling.py": "41aa8cff4243a464b82524594fde47de6531ef7b5d11bc0bf83361f1e4d9d55f",
+    "goofspiel.py": "4864e6acc50fdf12aa5ef8da5187a9387105aacd56bd5d66a8762817a395f99d",
+    "goofspiel_beliefs.py": "f92a4ea14e147a3a101c4fd0c7bb696f1fbba92525531b3d5345a2cbf8e7af60",
+    "goofspiel_experiment.py": "1b582902eca0f9dd2b823d5cc634196c2f10fbb06f064a0bbcf8eb7d4e3385f3",
+    "goofspiel_reading.py": "a1efd5e1f0ecae6913d9c702aad71dd6f1b5b489cab821b0bb935c5e1dd0b1b2",
+    "horizon.py": "12cb784c7a21784851f641653acdf348e6bc032b80d38c0c9dcbb01dcc917aca",
+    "judgment.py": "bc8654324bdbdd4c74b2765c1092dc4a02489ec54125e61ad6a4a6024ddd2004",
+    "judgment_experiment.py": "d373b67a7255dea0ee1116775d890eb1991603c9f08f906c14931c8b99e35d61",
+    "laboratory.py": "dabd8eb5cf2acff2d03ed7659b2f86bd5eedc0012fb3b5d7c978cb8b99f0ac4c",
+    "loop_experiment.py": "25cec52da933a5388bf6bd8c45c18637cc6278f45c2cc35916a89bed514d49bf",
+    "loop_predictor.py": "4e69c8b375359dc19227cabf31bc4649f121a85c3c1e2c6b105cef1dfb99f9b3",
+    "mahjong_adapter.py": "5ae03b81d523b67a9e7a7397ba314ddbed138eb607f50c776e440da9b146dd3e",
+    "mahjong_experiment.py": "63db3b7ccaf5d425472d7b5683edd94b09274a0640660492e4895066d253e867",
+    "monte_carlo.py": "8e2e925fc429eb2aa5546bc6b835ae60ac972da269204c21de3471e38bedfdd2",
+    "monte_carlo_comparison.py": "147c4813f915f49f565c5afc2eb9aab696f0ae1b67b56547b3b77de5ee297007",
+    "opponent.py": "747bfc7c77e0edee7b05406e72996becc642aae7ca4ef4b4789688d5704bc4d5",
+    "opponent_beliefs.py": "95777a52db389112b03772237a61c2182aaa3b9c52ac01ceebf165ca38aaa435",
+    "opponent_reading_experiment.py": "60512cf56d07dc9a053f7c0e621096779d005186650b15a3eb16b17fc4b868be",
+    "persona_continuation.py": "00bfffe37dfffca62e2730c8fb5856810593e5ce6ae2049d85d2a1b8a2f6411b",
+    "planning.py": "759e374da0da012ea06dc57679c495ba1562419ad1f24a555ed49f8693af4bf6",
+    "pressure.py": "2f5840b4aab118cc0755a414c550766c1f425e45b47f6281e941a7405fa9923e",
+    "progress.py": "7fa6f1c71ea0addf25707632deb6a3870a63e929b7b58670e7f6bf0b877b060a",
+    "progress_adapters.py": "bc76af5883f5ae7caaf8599d8b4d4758b9806fbfe07d79fdd332ecdd014c1463",
+    "purpose_experiment.py": "eb1e541f14a9b2ee3e32e824911930281cb941f42d339b8be4b8e08982511543",
+    "quoridor.py": "d35e34f06c8c662ae09203b87ce558309b1148a7688b1eaf3dc3be344455a0b8",
+    "recovery_experiment.py": "a95c701866d03071fe5c59a85a81488293f7363865e071651aab2efdc6802de1",
+    "resource_experiment.py": "42704b5f0e76686844559c60fa9551bd5853bc6aa80360af1a08762c5179f0c5",
+    "resource_planning.py": "2b834c17e1ad424b8f215128ac3d38db1266f95c594825e0a9e5dead7a32433b",
+    "resource_world.py": "541d31eb487e8b5d800e5cd3895f486a1c8397883193c96115de821d2bd4adbf",
+    "reversi.py": "755dffd1c8ebcee2b309cd26bc9a00edcb0e4db857b446f257415ad3f63b76ea",
+    "rolling_plan_experiment.py": "25c818b74d615327fa20c9989d01ff725886e118a9948eaff000c5c728114ded",
+    "rolling_plans.py": "361ba57ad61d8869da35b2f5c2f4d38d899371486f7ee82679da46e8fb29aabc",
+    "rollout_boards.py": "485ba25a4deec06aff6eef66bbbd156812bf6e67b5a0e83550b2d2923c05298f",
+    "route_experiment.py": "7c406d1a4c2d2f9acac1ca34e3d52c1e58ebaea914bd28f8faacc85f0099cd50",
+    "routes.py": "61122363d681258529152628bee34ad89490ce2c91b68375bcd90bc650e323fb",
+    "rule_baseline.py": "9d4961388fa97adc218622f5db234a00bfd7967dec37422b393cb4404535e801",
+    "rule_baseline_experiment.py": "ffa2102bb0c53edc86618c51d5d2eba7161a33aee2aa6b3e7cebb86d9e4427f1",
+    "runtime.py": "9c8de4a3a44e64f2b7433befb7eaf2472605cc90dc719084d11301dde175ce9a",
+    "scale_experiment.py": "e0ef67c2643b8ee441e86932227c97661dc66670b6491425c51959bc37c870fd",
+    "scaling.py": "a6be8a3e180fe838e04a2052d8690923d90a4d6904b69c98e11f07d26042d33c",
+    "stability_experiment.py": "e3057edabd970dd0904e38623aaa73f9eb81b4790076271e6e7181fa5465e571",
+    "teachers.py": "7e4c69cd14eba8c84bb4c3d486d0d26d9ddaa64463f5bd754806fcc8b7817c10",
+    "training.py": "b55a220dfbcfac524bd2c9a5821cb33dcca53b8ef01538242fdd6459bbb2816f",
+    "validation_experiment.py": "15809ba4e91348694743714a6d9c4cd073a1443fa8de67f5891a4740961dccd4",
+    "wait_experiment.py": "db6a076abc18883583d9fb5409d3bce9753ce265e3ad54bbd9ba9aa6e13f0e0b",
+    "tools/continuation_reference.py": "1a4b2cea690b46aabe835a539b1c09b39ceef8c5093b69637c472389e443d7b7"
+  },
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "repetitions": 3,
+  "snapshots": [
+    {
+      "condition": [
+        "open/secure",
+        "steady",
+        281,
+        "reference",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "move:6:3",
+        "5": "move:5:4"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.28610899971681647,
+            0.07352099783020094,
+            0.06169200059957802
+          ],
+          "median_ms": 0.07352099783020094,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:6:3",
+            "5": "move:5:4"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true
+        },
+        "persona-band": {
+          "ms": [
+            6.725764000293566,
+            6.160143999295542,
+            5.710211997211445
+          ],
+          "median_ms": 6.160143999295542,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:6:3",
+            "5": "shoot:2"
+          },
+          "same_actual_actors": 2,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            367.38521700317506,
+            291.34492199955275,
+            288.074639000115
+          ],
+          "median_ms": 291.34492199955275,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:6:3",
+            "5": "move:5:4"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 391,
+          "plans": 20,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "open/secure",
+        "care",
+        281,
+        "reference",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "move:5:2",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.18833300055121072,
+            0.07421400005114265,
+            0.06552800186909735
+          ],
+          "median_ms": 0.07421400005114265,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:5:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true
+        },
+        "persona-band": {
+          "ms": [
+            6.483967001258861,
+            6.166622999444371,
+            6.842679998953827
+          ],
+          "median_ms": 6.483967001258861,
+          "choices": {
+            "3": "move:6:1",
+            "4": "shoot:1",
+            "5": "shoot:2"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            470.2693199978967,
+            764.6331679970899,
+            426.26939700130606
+          ],
+          "median_ms": 470.2693199978967,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:5:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 415,
+          "plans": 22,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "open/secure",
+        "growth",
+        281,
+        "reference",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "move:6:3",
+        "5": "move:5:4"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.09907600178848952,
+            0.06109899914008565,
+            0.05679199966834858
+          ],
+          "median_ms": 0.06109899914008565,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:6:3",
+            "5": "move:5:4"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true
+        },
+        "persona-band": {
+          "ms": [
+            4.8177620010392275,
+            4.437413001141977,
+            4.2513770022196695
+          ],
+          "median_ms": 4.437413001141977,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:6:3",
+            "5": "shoot:2"
+          },
+          "same_actual_actors": 2,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            587.2644350019982,
+            341.4094820000173,
+            282.37155600072583
+          ],
+          "median_ms": 341.4094820000173,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:6:3",
+            "5": "move:5:4"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 390,
+          "plans": 20,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "open/secure",
+        "ego",
+        281,
+        "reference",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "move:6:3",
+        "5": "move:5:4"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.20598400078597479,
+            0.06570800178451464,
+            0.05892899935133755
+          ],
+          "median_ms": 0.06570800178451464,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:6:3",
+            "5": "move:5:4"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true
+        },
+        "persona-band": {
+          "ms": [
+            11.369241998181678,
+            5.047377999289893,
+            6.658848000370199
+          ],
+          "median_ms": 6.658848000370199,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:6:3",
+            "5": "shoot:2"
+          },
+          "same_actual_actors": 2,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            323.02085400078795,
+            323.25278200005414,
+            300.27557900029933
+          ],
+          "median_ms": 323.02085400078795,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:6:3",
+            "5": "move:5:4"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 391,
+          "plans": 20,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "choke/eliminate",
+        "growth",
+        281,
+        "switch",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "move:7:2",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.44893800077261403,
+            0.06561199916177429,
+            0.057164001191267744
+          ],
+          "median_ms": 0.06561199916177429,
+          "choices": {
+            "3": "move:7:2",
+            "4": "guard",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            6.737290997989476,
+            7.102822000888409,
+            5.017468000005465
+          ],
+          "median_ms": 6.737290997989476,
+          "choices": {
+            "3": "move:7:2",
+            "4": "guard",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            225.15665000173612,
+            216.46709199922043,
+            188.87187400105176
+          ],
+          "median_ms": 216.46709199922043,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:7:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 264,
+          "plans": 11,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "open/either",
+        "growth",
+        281,
+        "raider",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "shoot:1",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.10613199992803857,
+            0.06608599869650789,
+            0.06062399916118011
+          ],
+          "median_ms": 0.06608599869650789,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:5:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 2,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            4.977761000191094,
+            5.176904996915255,
+            6.757945000572363
+          ],
+          "median_ms": 5.176904996915255,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:5:2",
+            "5": "shoot:2"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            430.68013499942026,
+            579.3820790022437,
+            831.5099749997898
+          ],
+          "median_ms": 579.3820790022437,
+          "choices": {
+            "3": "move:6:1",
+            "4": "shoot:1",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 477,
+          "plans": 24,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "open/either",
+        "steady",
+        281,
+        "raider",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:0",
+        "4": "move:5:2",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.14394800018635578,
+            0.06610499985981733,
+            0.0586259993724525
+          ],
+          "median_ms": 0.06610499985981733,
+          "choices": {
+            "3": "move:7:1",
+            "4": "move:5:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 2,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            4.989466000552056,
+            4.551782996713882,
+            6.335923000733601
+          ],
+          "median_ms": 4.989466000552056,
+          "choices": {
+            "3": "move:7:1",
+            "4": "shoot:1",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            768.0048559996067,
+            452.2100700014562,
+            725.0842430003104
+          ],
+          "median_ms": 725.0842430003104,
+          "choices": {
+            "3": "move:6:0",
+            "4": "move:5:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 501,
+          "plans": 24,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "open/either",
+        "care",
+        281,
+        "raider",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "move:5:2",
+        "5": "move:7:4"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.10897700121859089,
+            0.06734400085406378,
+            0.06344199937302619
+          ],
+          "median_ms": 0.06734400085406378,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:5:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 2,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            9.051622000697535,
+            25.28826200068579,
+            12.454333998903167
+          ],
+          "median_ms": 12.454333998903167,
+          "choices": {
+            "3": "move:6:1",
+            "4": "shoot:1",
+            "5": "shoot:2"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            625.0515710016771,
+            655.3208059995086,
+            598.2032639985846
+          ],
+          "median_ms": 625.0515710016771,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:5:2",
+            "5": "move:7:4"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 481,
+          "plans": 24,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "choke/eliminate",
+        "steady",
+        281,
+        "switch",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "move:7:2",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.10812500113388523,
+            0.06279899753280915,
+            0.059696998505387455
+          ],
+          "median_ms": 0.06279899753280915,
+          "choices": {
+            "3": "move:7:2",
+            "4": "guard",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            4.811073999007931,
+            8.397654000873445,
+            3.802154998993501
+          ],
+          "median_ms": 4.811073999007931,
+          "choices": {
+            "3": "move:7:2",
+            "4": "guard",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            252.7711789989553,
+            185.60468299983768,
+            347.3519839972141
+          ],
+          "median_ms": 252.7711789989553,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:7:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 264,
+          "plans": 11,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "choke/eliminate",
+        "care",
+        281,
+        "switch",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "move:7:2",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.2658990015333984,
+            0.06826900062151253,
+            0.059522997617023066
+          ],
+          "median_ms": 0.06826900062151253,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:7:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true
+        },
+        "persona-band": {
+          "ms": [
+            7.904034002422122,
+            7.271155001944862,
+            9.979287002352066
+          ],
+          "median_ms": 7.904034002422122,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:7:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            599.5491089997813,
+            322.18503600233817,
+            179.2211550018692
+          ],
+          "median_ms": 322.18503600233817,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:7:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 240,
+          "plans": 10,
+          "adopted": false
+        }
+      }
+    },
+    {
+      "condition": [
+        "choke/eliminate",
+        "ego",
+        281,
+        "switch",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "move:7:2",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.10231699707219377,
+            0.06143300197436474,
+            0.146151000080863
+          ],
+          "median_ms": 0.10231699707219377,
+          "choices": {
+            "3": "move:7:2",
+            "4": "guard",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            4.54368499777047,
+            5.685994001396466,
+            6.299652999587124
+          ],
+          "median_ms": 5.685994001396466,
+          "choices": {
+            "3": "move:7:2",
+            "4": "guard",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            248.13782799901674,
+            179.8862370014831,
+            182.9287740001746
+          ],
+          "median_ms": 182.9287740001746,
+          "choices": {
+            "3": "move:6:1",
+            "4": "move:7:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 264,
+          "plans": 11,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "open/either",
+        "ego",
+        281,
+        "raider",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:1",
+        "4": "shoot:1",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.10704400119720958,
+            0.10049699994851835,
+            0.06179200136102736
+          ],
+          "median_ms": 0.10049699994851835,
+          "choices": {
+            "3": "move:7:2",
+            "4": "shoot:1",
+            "5": "shoot:2"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            6.4529619994573295,
+            5.352630003471859,
+            5.97496399859665
+          ],
+          "median_ms": 5.97496399859665,
+          "choices": {
+            "3": "move:7:2",
+            "4": "shoot:1",
+            "5": "shoot:2"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            311.5442320013244,
+            303.54264700144995,
+            461.9240419997368
+          ],
+          "median_ms": 311.5442320013244,
+          "choices": {
+            "3": "move:6:1",
+            "4": "shoot:1",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 481,
+          "plans": 24,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "choke/both",
+        "ego",
+        281,
+        "reference",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:7:2",
+        "4": "move:5:2",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.14111099881120026,
+            0.07985499905771576,
+            0.07184399873949587
+          ],
+          "median_ms": 0.07985499905771576,
+          "choices": {
+            "3": "move:7:2",
+            "4": "shoot:1",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 2,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            4.71665000077337,
+            5.460994998429669,
+            5.2901179988111835
+          ],
+          "median_ms": 5.2901179988111835,
+          "choices": {
+            "3": "move:7:2",
+            "4": "shoot:1",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 2,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            420.87315100070555,
+            416.2931739992928,
+            403.5780579979473
+          ],
+          "median_ms": 416.2931739992928,
+          "choices": {
+            "3": "move:7:2",
+            "4": "move:5:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 576,
+          "plans": 24,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "choke/both",
+        "growth",
+        281,
+        "reference",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:7:2",
+        "4": "move:5:2",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.11888799781445414,
+            0.07519099744968116,
+            0.06840299829491414
+          ],
+          "median_ms": 0.07519099744968116,
+          "choices": {
+            "3": "move:7:2",
+            "4": "move:5:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true
+        },
+        "persona-band": {
+          "ms": [
+            6.249966001632856,
+            11.461236998002278,
+            6.9052219987497665
+          ],
+          "median_ms": 6.9052219987497665,
+          "choices": {
+            "3": "move:7:2",
+            "4": "shoot:1",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 2,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            418.84550499889883,
+            418.6421740014339,
+            435.53616300050635
+          ],
+          "median_ms": 418.84550499889883,
+          "choices": {
+            "3": "move:7:2",
+            "4": "move:5:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 576,
+          "plans": 24,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "choke/both",
+        "care",
+        281,
+        "reference",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "move:6:0",
+        "4": "shoot:1",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.11734199870261364,
+            0.14009900041855872,
+            0.08728700049687177
+          ],
+          "median_ms": 0.11734199870261364,
+          "choices": {
+            "3": "move:7:1",
+            "4": "move:5:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            5.256311000266578,
+            6.065534002118511,
+            4.649097998481011
+          ],
+          "median_ms": 5.256311000266578,
+          "choices": {
+            "3": "move:7:1",
+            "4": "shoot:1",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 2,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            458.5431999985303,
+            453.41045199893415,
+            446.6057399986312
+          ],
+          "median_ms": 453.41045199893415,
+          "choices": {
+            "3": "move:6:0",
+            "4": "shoot:1",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 576,
+          "plans": 24,
+          "adopted": false
+        }
+      }
+    },
+    {
+      "condition": [
+        "choke/both",
+        "steady",
+        281,
+        "reference",
+        true
+      ],
+      "tick": 1,
+      "actual": {
+        "3": "guard",
+        "4": "move:7:2",
+        "5": "move:6:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.13570699957199395,
+            0.062492999859387055,
+            0.05572100053541362
+          ],
+          "median_ms": 0.062492999859387055,
+          "choices": {
+            "3": "move:7:2",
+            "4": "guard",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            4.515395001362776,
+            5.523029998585116,
+            4.475426001590677
+          ],
+          "median_ms": 4.515395001362776,
+          "choices": {
+            "3": "move:7:2",
+            "4": "guard",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 1,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            441.8429270008346,
+            481.8969719999586,
+            457.42580700243707
+          ],
+          "median_ms": 457.42580700243707,
+          "choices": {
+            "3": "guard",
+            "4": "move:7:2",
+            "5": "move:6:3"
+          },
+          "same_actual_actors": 3,
+          "actors": 3,
+          "same_actual_joint": true,
+          "model_transitions": 576,
+          "plans": 24,
+          "adopted": true
+        }
+      }
+    },
+    {
+      "condition": [
+        "choke/eliminate",
+        "steady",
+        180,
+        "switch",
+        true
+      ],
+      "tick": 19,
+      "actual": {
+        "0": "move:2:3",
+        "1": "move:1:3",
+        "2": "move:3:3"
+      },
+      "variants": {
+        "objective": {
+          "ms": [
+            0.4325039990362711,
+            0.06989100074861199,
+            0.0822789988887962
+          ],
+          "median_ms": 0.0822789988887962,
+          "choices": {
+            "0": "guard",
+            "1": "guard",
+            "2": "move:4:2"
+          },
+          "same_actual_actors": 0,
+          "actors": 3,
+          "same_actual_joint": false
+        },
+        "persona-band": {
+          "ms": [
+            4.507855999690946,
+            4.132701000344241,
+            4.519205998803955
+          ],
+          "median_ms": 4.507855999690946,
+          "choices": {
+            "0": "guard",
+            "1": "guard",
+            "2": "move:4:2"
+          },
+          "same_actual_actors": 0,
+          "actors": 3,
+          "same_actual_joint": false,
+          "scorings": 3,
+          "model_transitions": 0,
+          "coordination_conflicts": 0
+        },
+        "nested-reference": {
+          "ms": [
+            140.42626900118194,
+            174.8429040017072,
+            231.4439149995451
+          ],
+          "median_ms": 174.8429040017072,
+          "choices": {
+            "0": "guard",
+            "1": "guard",
+            "2": "guard"
+          },
+          "same_actual_actors": 0,
+          "actors": 3,
+          "same_actual_joint": false,
+          "model_transitions": 216,
+          "plans": 9,
+          "adopted": true
+        }
+      }
+    }
+  ],
+  "summary": {
+    "objective": {
+      "snapshots": 17,
+      "median_snapshot_ms": 0.06826900062151253,
+      "actor_matches": 32,
+      "actors": 51,
+      "joint_matches": 6,
+      "model_transitions": 0
+    },
+    "persona-band": {
+      "snapshots": 17,
+      "median_snapshot_ms": 5.685994001396466,
+      "actor_matches": 24,
+      "actors": 51,
+      "joint_matches": 1,
+      "model_transitions": 0
+    },
+    "nested-reference": {
+      "snapshots": 17,
+      "median_snapshot_ms": 341.4094820000173,
+      "actor_matches": 48,
+      "actors": 51,
+      "joint_matches": 16,
+      "model_transitions": 7079
+    }
+  },
+  "trace_off_games": [
+    {
+      "variant": "objective",
+      "recovery_options": false,
+      "ticks": 31,
+      "won": true,
+      "seconds": 8.782814734997373,
+      "per_tick_ms": 283.31660435475396,
+      "decision_feedback_p50_ms": 284.2906559963012,
+      "work": {
+        "planner_seconds": 6.957189387005201,
+        "calls": 31,
+        "model_transitions": 8469,
+        "recovery_calls": 0
+      },
+      "trace_invariance": true,
+      "rule_checks": 31,
+      "purpose_checks": 93
+    },
+    {
+      "variant": "persona-band",
+      "recovery_options": false,
+      "ticks": 40,
+      "won": false,
+      "seconds": 50.39472668900271,
+      "per_tick_ms": 1259.8681672250677,
+      "decision_feedback_p50_ms": 898.9130909994856,
+      "work": {
+        "planner_seconds": 48.392980501997954,
+        "calls": 40,
+        "model_transitions": 9880,
+        "recovery_calls": 0,
+        "persona_scorings": 14336,
+        "persona_batches": 4946,
+        "persona_cache_hits": 3190,
+        "persona_choices": 23621,
+        "persona_coordination_conflicts": 136
+      },
+      "trace_invariance": true,
+      "rule_checks": 40,
+      "purpose_checks": 120
+    },
+    {
+      "variant": "objective",
+      "recovery_options": true,
+      "ticks": 40,
+      "won": false,
+      "seconds": 18.59307171399996,
+      "per_tick_ms": 464.82679284999904,
+      "decision_feedback_p50_ms": 318.85604850140226,
+      "work": {
+        "planner_seconds": 15.257628004997969,
+        "calls": 49,
+        "model_transitions": 12496,
+        "recovery_calls": 9
+      },
+      "trace_invariance": true,
+      "rule_checks": 40,
+      "purpose_checks": 120
+    },
+    {
+      "variant": "persona-band",
+      "recovery_options": true,
+      "ticks": 40,
+      "won": false,
+      "seconds": 49.8919864740019,
+      "per_tick_ms": 1247.2996618500474,
+      "decision_feedback_p50_ms": 1046.5880570009176,
+      "work": {
+        "planner_seconds": 47.88883698599602,
+        "calls": 42,
+        "model_transitions": 10360,
+        "recovery_calls": 2,
+        "persona_scorings": 15040,
+        "persona_batches": 5181,
+        "persona_cache_hits": 3355,
+        "persona_choices": 24820,
+        "persona_coordination_conflicts": 136
+      },
+      "trace_invariance": true,
+      "rule_checks": 40,
+      "purpose_checks": 120
+    }
+  ],
+  "limits": [
+    "Same-public-state conditional probes, not trajectory calibration or heldout policy wins.",
+    "Nested reference sees current effective root contexts including real observed experience; cheap reconstructs priors.",
+    "Nested reference is full 6-tick/4-sample/24-plan forecast plus persona selection, with objective leaves and no recursive calls.",
+    "No progress-watch recovery or route replanning is simulated by the nested reference.",
+    "Full-game runtime uses four sequential seed180 games; snapshot timings use three repeats, not a large-N NPC benchmark.",
+    "Fixed method order and shared geometry caches make snapshot numbers warmed/cache-sensitive diagnostics, not robust latency estimates."
+  ]
+}
