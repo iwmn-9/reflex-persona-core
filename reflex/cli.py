@@ -64,7 +64,7 @@ def benchmark(output, sizes=(1,100,1000,10000), repeats=15):
 
 
 def main():
-    parser=argparse.ArgumentParser(); parser.add_argument("command",choices=("export","demo","benchmark","seed-smoke","train-reviewed","lab","cross-games","reversi","quoridor","board-planning","monte-carlo","goofspiel","opponent-reading","adaptive-reading","rule-baseline","rolling-plans","mahjong","judgment","resource-world","contests","victory-routes","combat","npc-scale","decision-loop","validation","purpose","stability","purposeful-wait","recovery-options","execution-alignment","self-continuation","root-collision","intertemporal","payback-cycle"))
+    parser=argparse.ArgumentParser(); parser.add_argument("command",choices=("export","demo","benchmark","seed-smoke","train-reviewed","lab","cross-games","reversi","quoridor","board-planning","monte-carlo","goofspiel","opponent-reading","adaptive-reading","rule-baseline","rolling-plans","mahjong","judgment","resource-world","contests","victory-routes","combat","npc-scale","decision-loop","validation","purpose","stability","purposeful-wait","recovery-options","execution-alignment","self-continuation","root-collision","intertemporal","payback-cycle","purpose-recovery"))
     parser.add_argument("--output",default="reflex_artifacts"); parser.add_argument("--reviews")
     args=parser.parse_args(); root=Path(args.output)
     if args.command=="export": print("Exported",len(export(root)),"authored seed rows; LLM generation pending")
@@ -145,6 +145,10 @@ def main():
         from .alignment_experiment import experiment
         result=experiment(root/'execution_alignment',progress=print)
         print(json.dumps(result,ensure_ascii=False,indent=2))
+    elif args.command=='purpose-recovery':
+        from .purpose_recovery import experiment
+        result=experiment(root/'purpose_recovery',progress=print)
+        print(json.dumps({k:v for k,v in result.items() if k not in ('runs','source_hashes')},ensure_ascii=False,indent=2))
     elif args.command=='payback-cycle':
         from .payback_cycle import experiment
         result=experiment(root/'closed_loop_payback',progress=print)

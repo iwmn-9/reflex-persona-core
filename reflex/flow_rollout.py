@@ -12,7 +12,7 @@ from .examples import effect
 from .intertemporal import Branch
 
 
-def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None):
+def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None):
     """Return complete root Branches and a diagnostic continuation audit.
 
     observe(state, actor_state) returns an immediate Policy context.
@@ -21,6 +21,7 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
     Each model seed is one coherent trajectory, with equal probability. Caller
     keeps actual RNG separate. An optional scripted continuation is a control.
     No hypothetical experience is learned; hypothetical intent/mode is carried.
+    Optional assess(final_state) records a game-owned endpoint assessment once.
     """
     compile_batch([c])
     if type(horizon) is not int or not 1 <= horizon <= 16:
@@ -54,6 +55,8 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
                 if row.get('p') != 1:raise ValueError('branch probability must not be counted twice')
                 flows.append(copy.deepcopy(row));actions.append(key)
             branches.append(Branch(1/len(seeds),tuple(flows),(1.,)*horizon))
-            traces.append(dict(seed=seed,actions=actions,absorbed_at=ended,terminal=bool(terminal(state))))
+            trace=dict(seed=seed,actions=actions,absorbed_at=ended,terminal=bool(terminal(state)))
+            if assess is not None:trace['assessment']=copy.deepcopy(assess(copy.deepcopy(state)))
+            traces.append(trace)
         paths[root]=tuple(branches);audit[root]=traces
     return paths,audit

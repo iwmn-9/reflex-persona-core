@@ -221,3 +221,19 @@ loop.observe(result['ticket'], vector(observed_effect))
 最大8本の異なるモデルseedを等確率の一貫経路として使う。実seedや未観測のイベント予定は渡さない。終局後だけゼロ増分で埋める。未知の非終局の計算失敗は例外として残し、ゼロ未来に置換しない。入力盤面・人格状態を分岐ごとに複製し、仮想結果を実経験へ書かない。任意の `continuation(state, context)` は固定継続の対照実験用で、実行可能rootのみ選べる。
 
 再現: `python -m reflex.cli payback-cycle --output FRESH_ROOT`。`FRESH_ROOT/closed_loop_payback` に事前条件・源hashと集計、ローカルの実軌跡を保存し、既存結果の上書きを拒否する。今回は常時有効化せず、[得失と限界](../evidence/closed_loop_payback/REPORT.md)を残す。標準Policy/Population、既存共同planner、実ルールは変更しない。公開は集計だけで、軌跡を持つローカル環境では `python tools/audit_payback_cycle.py FRESH_ROOT/closed_loop_payback` で実ルール再生・集計照合ができる。
+
+## 目的の決着と準備完了の接続
+
+任意の `purpose_plan.Goal(target, status, value)` は、`running` のゲーム側代理値と、`success=1` / `failure=-1` / `draw=0` の決着を区別する。得点最大化では `scored` と有界の実得点を使える。途中までの進捗を終局時の引き分け得点として残してはいけない。誰が勝ったか、相打ちや期限切れが引き分けかはゲーム側の規則が決める。本人の死傷・資源消費・主義の利得は別のflowに残る。共通部品に戦闘・経済・競りのルールは内蔵しない。
+
+`flow_rollout.rollout(..., assess=callback)` の任意callbackは、各モデル経路の最後の状態を一度だけ受け取り、監査用のassessmentを返す。`goal_forecast(context, paths, rollout_audit, horizon=..., unit=..., target=..., max_regret=.15)` はそれを受け取る。全合法root・各一貫分岐に同じtargetのGoalと、実際にモデルが進めたaction列を必要とし、終局とstatusの不一致を拒否する。
+
+目的の許容幅には各分岐の終点valueの期待値を使い、期間平均の分母で勝ち/引き分けの差を薄めない。一方、本人の主観objectiveはモデル内の決着/打切り時点まで `gamma**(steps-1)` で割り引くので、目前と先の利得に対する人格の時間選好を残す。正の終点見込みはその実行経路の最低confidenceでも縮める。予測された負の結果はconfidenceの低さで消さない。元root confidenceは従来Policyで扱う。needs/values/style/costは従来の割引flowを保持し、未来を即時経験へ書かない。
+
+まず全モデル候補で本人の現在の最大主義tierを確定して残し、その中で目的の許容幅を評価する。目的の点が高いだけで下位の主義へ移らせない。許容幅はゲーム側のcompetence設定で、強く狭めれば欲求側の譲歩を制限する。終点proxyは成功確率に校正された値ではなく、先読みが正しい保証でもない。実行時と未来モデルの判断手順は依然異なり、将来の経験更新や進捗監視まではモデル化しない。
+
+準備/待機には既存の `ProgressWatch` / `NeedPressure` と、ゲームが定義するrequest/feedbackを接続する。経済では研究/記念碑の実必要量に達したら待機をidleへ解放し、戦闘では実際の回復/装填や位置準備を観測する。競りでは公知の後続景品を待つ有限Activityを使う。観測されていない準備や、予測が変わっただけの状態を実進捗に加点しない。未達による欲求圧力は固定性格の学習ではない。
+
+`ProgressConfig(preserve_persona_tier=True)` は停滞maskで元の最大主義tier全体が失われる場合に強制変更を留保する。`PersonaProgressWatch` はその設定付きの通常watchで、設定を通常checkpointへ保存し、DecisionLoopがbase watchとして復元しても挙動を維持する。既存設定は既定falseで、古いcheckpointもfalseとして読み込める。元の独立ゲーム経路を自動でこの設定へ変更しない。
+
+比較: `python -m reflex.cli purpose-recovery --output FRESH_ROOT`。旧flow方式、目的定義/終点評価の修正、修正+実観測の準備解除/停滞圧力を分ける。`FRESH_ROOT/purpose_recovery` を凍結し、既存出力の上書きは拒否する。源hash・条件・control/confirmationとseedを比較開始前に保存する。[得失と採否](../evidence/purpose_recovery/REPORT.md)。ローカル実軌跡がある場合は `python tools/audit_purpose_recovery.py FRESH_ROOT/purpose_recovery` で実ルールと実観測更新を再生できる。過去の源hash照合は、その報告を作ったcommitで行う。

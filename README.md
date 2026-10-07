@@ -155,3 +155,7 @@ decision = population.step(needs=needs, effects=effects, confidence=confidence)
 ### 毎手の再判断で見返りを回収する比較
 
 任意の `python -m reflex.cli payback-cycle --output FRESH_ROOT` は、同じ人格による将来の即時判断を予測継続に使い、資源・競り・戦闘の実行を毎手再計画する。192エピソードの比較では、競りの温存後の回収を確認した一方、予測との一致が増えても資源回収量や戦闘の勝利が下がる条件があったため標準へ昇格しない。生存/代理値/勝利・人格の譲歩を区別した[得失と残る急所](evidence/closed_loop_payback/REPORT.md)を参照。
+
+### 目的の決着と準備完了を接続する比較
+
+任意の `python -m reflex.cli purpose-recovery --output FRESH_ROOT` は、終局の勝ち/負け/引き分けと途中の代理値を分け、既存の実進捗監視・準備解除・欲求圧力を再計画へ接続する。共通 `Goal` / `goal_forecast` にゲーム側の終点評価を渡し、まず本人の最大主義tierを残した上で目的を比較する。将来利得の時間選好や死傷・支出の人格上の損失も保持する。[条件ごとの得失と採否](evidence/purpose_recovery/REPORT.md)、[接続契約](docs/DECISION_LOOP.md)を参照。ルールだけから価値判断を自動獲得した仕組みではなく、標準の高速Policy/Populationへ自動適用しない。

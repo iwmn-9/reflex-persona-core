@@ -9,7 +9,7 @@ from collections import OrderedDict
 from dataclasses import dataclass,asdict
 import copy
 import math
-from .core import digest,identifier
+from .core import digest,identifier,Policy,compile_batch
 
 
 def level(x):
@@ -68,8 +68,10 @@ class ProgressConfig:
     floor: float=.005
     capacity: int=64
     proof_margin: float | None=None
+    preserve_persona_tier: bool=False
 
     def __post_init__(self):
+        if type(self.preserve_persona_tier) is not bool:raise ValueError('explicit persona-tier preservation required')
         for k,lo,hi in (('grace',1,16),('repeat_limit',1,16),('capacity',1,1024)):
             v=getattr(self,k)
             if type(v) is not int or not lo<=v<=hi:raise ValueError('bounded '+k)
@@ -111,6 +113,12 @@ class ProgressWatch:
             unresolved=unresolved,stalls=stalls,wait_spent=spent,
             reason='no supported alternative; retain viable roots' if unresolved else 'observed purpose evidence',
             activity={k:asdict(a) for k,a in p.activities.items()})
+        if audit['applied'] and self.config.preserve_persona_tier:
+            b=compile_batch([context]);d=Policy().decide(b,False)
+            tier={k for k,yes in zip(b.ids[0],d.eligible[0]) if yes}
+            if not allowed&tier:
+                allowed=viable
+                audit.update(applied=False,unresolved=True,reason='no supported alternative in original persona tier')
         if recovery is not None:
             if self.config.proof_margin is None or not isinstance(recovery,dict) or set(recovery) not in ({'needed','base_purpose','candidate_purpose'},{'needed','base_purpose','candidate_purpose','margin'}) or type(recovery['needed']) is not bool:
                 raise ValueError('configured explicit recovery comparison required')
