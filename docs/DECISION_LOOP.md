@@ -249,3 +249,18 @@ rolloutのroot contextはDecisionLoopが既にpressureを適用したcontextを�
 今回の `verified` 比較は、新しい重みではなく、既存 `ProgressConfig(proof_margin=0.)` の回復検証をgoal_forecast経路で有効にしたもの。単に停滞回数を超えたから候補を削るのではなく、元の方針と制限後の候補を同じ目的・期間・人格条件で比較し、目的見込みに厳密な正の差があるときだけmaskを採用する。同値/悪化/比較不能なら元の方針を残す。目的はゲーム側の代理値でもあり、実勝利や安全を保証する条件ではない。
 
 verifiedはモデル内observer更新を加えない分離比較で、将来の回復検証を再帰的に再現するとは主張しない。`python -m reflex.cli observed-transfer --output FRESH_ROOT` で凍結比較を作成できる。[別環境での得失と採否](../evidence/observed_transfer/REPORT.md)を参照。ローカル実軌跡がある場合は `python tools/audit_observed_transfer.py FRESH_ROOT/observed_transfer` で実ルールと選択されたモデル分岐の状態更新を再生できる。新納品環境の到達可能性探索は診断だけに使用し、判断入力や教師正解として採用しない。
+## 任意の複数手継続候補
+
+`continuation_search.search_forecast(context, world, observe=..., advance=...,
+terminal=..., assess=..., horizon=6, seeds=(...), width=2, depth=2,
+target=...)` は、既存の `JointForecast` を返す。通常の `Policy` と高速バッチ経路は変更しない。
+
+各合法初手について、従来の反射継続を必ず候補に残し、将来の行動列を有限幅のbeamで追加する。同じ行動列を全モデルseedへ適用し、分岐を平均してから既存の人格評価で比較する。分岐ごとに最も都合のよい列を選び直すことはしない。予定した行動が観測上実行できない場合だけ、その分岐の人格反射へ戻る。実際に実行するのは初手だけで、次の実観測から再計画する。
+
+順位付けは既存の終点目標評価・主義の優先層・目的許容幅・人格スコアを使う。追加の報酬係数やゲーム名別の行動優先表はない。ゲーム側は依然として合法手、公開観測、遷移モデル、目標と効果の意味を提供する必要がある。
+
+`width` は1..4、`depth` は0..horizon-1、`horizon` は1..16。depthは初手の後に列を探索する長さで、残りは人格反射で補う。候補容量は256で、初手を捨てて収めることはせず超過をエラーにする。各層も同じ候補容量に従う。目的が同じでも人格の価値を薄めず、強い主義に沿った不利な選択も許す。
+
+これは完全な条件分岐付き戦略や最適探索ではない。未来の途中で柔軟に方針を変える計画や、beamで早期に落ちる長い準備を見落とす。反射で補った先の評価と、実際の再計画が一致する保証もない。`flow_rollout.rollout` の `schedule` は初手後の行動列、`roots` は明示的な初手部分集合で、一般のforecastへ渡す前には全初手の被覆が必要。
+
+`intertemporal.forecast` / `purpose_plan.goal_forecast` の任意 `plan_roots` は「候補ID→実初手ID」。複数候補が同じ初手を持てるが、全合法初手を少なくとも一度含める。各候補の分岐確率・効果・終点は従来と同じ契約で検査する。省略した既存呼び出しは従来どおり。

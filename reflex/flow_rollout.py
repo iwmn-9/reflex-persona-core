@@ -12,7 +12,7 @@ from .examples import effect
 from .intertemporal import Branch
 
 
-def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None, observer=None):
+def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None, observer=None, schedule=(), roots=None, record_choices=False):
     """Return complete root Branches and a diagnostic continuation audit.
 
     observe(state, actor_state) returns an immediate Policy context.
@@ -35,12 +35,18 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
     if observer is not None:
         from .model_observer import ModelObserver
         if not isinstance(observer,ModelObserver):raise ValueError('ModelObserver required')
-    roots=sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure'])
+    viable_roots={a['id'] for a in c['actions'] if a['legal'] and not a['known_failure']}
+    if roots is None:roots=sorted(viable_roots)
+    elif not isinstance(roots,(tuple,list)) or not roots or len(set(roots))!=len(roots) or not set(roots)<=viable_roots:
+        raise ValueError('explicit viable root subset required')
+    if not isinstance(schedule,(tuple,list)) or len(schedule)>=horizon or any(not isinstance(k,str) for k in schedule):
+        raise ValueError('bounded future action schedule required')
+    if schedule and continuation is not None:raise ValueError('one continuation mechanism required')
     paths={};audit={};policy=Policy()
     for root in roots:
         branches=[];traces=[]
         for seed in seeds:
-            state=copy.deepcopy(initial);memory=copy.deepcopy(c['state']);flows=[];actions=[];ended=None
+            state=copy.deepcopy(initial);memory=copy.deepcopy(c['state']);flows=[];actions=[];ended=None;choices=[];fallbacks=[]
             modeled=None if observer is None else observer.fork();observations=[]
             for tick in range(horizon):
                 if terminal(state):
@@ -58,6 +64,13 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
                 d=policy.decide(replace(b,legal=legal),False)
                 key=root if tick == 0 else (d.records(b)[0]['action_id'] if continuation is None else continuation(copy.deepcopy(state),copy.deepcopy(cc)))
                 viable=[a['id'] for a in cc['actions'] if a['legal'] and not a['known_failure']]
+                if schedule or record_choices:
+                    permitted=viable if allowed is None or tick==0 else [k for k in viable if k in allowed]
+                    choices.append(sorted(permitted))
+                    if 0<tick<=len(schedule):
+                        wanted=schedule[tick-1]
+                        if wanted in permitted:key=wanted
+                        else:fallbacks.append(tick)
                 if key not in viable:raise ValueError('continuation must choose a viable root')
                 if tick>0 and allowed is not None and key not in allowed:raise ValueError('continuation ignored modeled progress mask')
                 # Forced first roots still carry the Policy's current mode and
@@ -72,6 +85,7 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
                         checkpoint=modeled.record()))
             branches.append(Branch(1/len(seeds),tuple(flows),(1.,)*horizon))
             trace=dict(seed=seed,actions=actions,absorbed_at=ended,terminal=bool(terminal(state)))
+            if schedule or record_choices:trace.update(choices=choices,schedule_fallbacks=fallbacks)
             if assess is not None:trace['assessment']=copy.deepcopy(assess(copy.deepcopy(state)))
             if modeled is not None:trace['modeled_observations']=observations
             traces.append(trace)

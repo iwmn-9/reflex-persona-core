@@ -28,7 +28,7 @@ class Goal:
     def record(self):return asdict(self)
 
 
-def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15):
+def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,plan_roots=None):
     """Use one endpoint per coherent branch for objective and competence.
 
     Needs/values/style/cost retain their discounted flow treatment. Subjective
@@ -38,14 +38,14 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15):
     First retain the owner's FULL-forecast strongest-value tier; only then apply
     the purpose corridor inside it. A principle may therefore rationally lose.
     """
-    f=forecast(c,paths,horizon=horizon,unit=unit,target=target,max_regret=max_regret)
+    f=forecast(c,paths,horizon=horizon,unit=unit,target=target,max_regret=max_regret,plan_roots=plan_roots)
     fc=copy.deepcopy(f.contexts[0]);purpose={};endpoint={}
     if set(rollout_audit)!=set(paths):raise ValueError('endpoint coverage must match all viable roots')
     for a in fc['actions']:
-        root=f.roots[a['id']][0];rows=rollout_audit[root]
-        if len(rows)!=len(paths[root]):raise ValueError('one endpoint per coherent branch required')
+        root=f.roots[a['id']][0];proposal=f.audit['plans'][a['id']].get('proposal',root);rows=rollout_audit[proposal]
+        if len(rows)!=len(paths[proposal]):raise ValueError('one endpoint per coherent branch required')
         goals=[];expected=0.
-        for out,trace,branch in zip(a['outcomes'],rows,paths[root]):
+        for out,trace,branch in zip(a['outcomes'],rows,paths[proposal]):
             g=Goal(**trace['assessment'])
             if g.target!=target:raise ValueError('same goal target across branches required')
             if bool(trace['terminal'])!=(g.status!='running'):

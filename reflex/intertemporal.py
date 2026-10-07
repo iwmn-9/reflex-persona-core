@@ -34,7 +34,7 @@ def patience(c):
     return float(np.clip(.45+.45*t['conscientiousness']+.1*(1-t['neuroticism'])-.35*urgent,.25,1.))
 
 
-def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None):
+def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None,plan_roots=None):
     """One actor, all viable roots, <=8 coherent conditional branches per root.
 
     Discounted flows use ONE common denominator sum(gamma**t), keeping effects
@@ -49,13 +49,17 @@ def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None):
     gamma=patience(c) if discount is None else number(discount,0,1)
     number(max_regret,0,2)
     roots={a['id']:a for a in c['actions'] if a['legal'] and not a['known_failure']}
-    if not isinstance(branches,dict) or set(branches)!=set(roots):raise ValueError('complete viable-root coverage required')
+    if plan_roots is None:plan_roots={k:k for k in roots}
+    if not isinstance(plan_roots,dict) or not isinstance(branches,dict) or set(branches)!=set(plan_roots) or set(plan_roots.values())!=set(roots):
+        raise ValueError('complete viable-root coverage required')
+    if not 1<=len(plan_roots)<=256:raise ValueError('bounded proposal count required')
+    for key in plan_roots:identifier(key)
     weights=gamma**np.arange(horizon);normalizer=float(weights.sum())
     future=copy.deepcopy(c);future['actions']=[]
     future['facts']['planning_target']='discounted incremental flows; conditional continuation; separate from immediate feedback'
     plans={};purpose={};audit={}
-    for index,root in enumerate(sorted(roots)):
-        rows=branches[root]
+    for index,proposal in enumerate(sorted(plan_roots)):
+        root=plan_roots[proposal];rows=branches[proposal]
         if not isinstance(rows,(tuple,list)) or not 1<=len(rows)<=MAX_OUTCOMES:raise ValueError('bounded coherent branches required')
         probability=[];outcomes=[];path_values=[]
         for branch in rows:
@@ -88,6 +92,7 @@ def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None):
         future['actions'].append(a);plans[key]=(root,)
         purpose[key]=float(sum(r['p']*r['objective']*(a['confidence'] if r['objective']>0 else 1.) for r in outcomes))
         audit[key]=dict(root=root,paths=path_values,discounted_objective=purpose[key])
+        if proposal!=root:audit[key]['proposal']=proposal
     compile_batch([future])
     return JointForecast((future,),plans,purpose,horizon,max_regret,
         dict(discount=gamma,normalizer=normalizer,unit=unit,plans=audit,

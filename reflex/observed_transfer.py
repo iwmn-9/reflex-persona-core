@@ -45,7 +45,7 @@ def can_finish(w):
     return any(can_finish(step(w,k)) for k in legal(w))
 
 
-def run(spec,profile,variant,seed,horizon=6):
+def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2):
     watched=variant in ('watch','release','observed','verified')
     pressured=variant in ('pressure','release','observed','verified')
     if variant not in ('goal','watch','pressure','release','observed','verified'):raise ValueError('known ablation required')
@@ -63,6 +63,14 @@ def run(spec,profile,variant,seed,horizon=6):
                     feedback=lambda a,b,k:feedback(p,a,b,k,watched,pressured),
                     progress=loop.progress,pressure=loop.pressure,previous=previous)
             saved=digest(loop.record())
+            if search:
+                from .continuation_search import search_forecast
+                f=search_forecast(cs[0],w,observe=p.observe,advance=p.advance,terminal=p.terminal,
+                    horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observer,
+                    width=width,depth=depth,target=p.target)
+                assert digest(loop.record())==saved,'hypothetical state reached actual owner'
+                captured.update(forecast=f)
+                return f
             paths,audit=rollout(cs[0],w,observe=p.observe,advance=p.advance,terminal=p.terminal,
                 horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observer)
             assert digest(loop.record())==saved,'hypothetical state reached actual owner'
@@ -71,6 +79,11 @@ def run(spec,profile,variant,seed,horizon=6):
         req=Request(c,{k:Binding(k,'public',()) for k in p.keys(w)},{k:() for k in p.keys(w)},purpose=pr)
         result=DecisionLoop.decide_batch([(loop,req)],False,planner)[0]
         key=result['decision']['action_id'];before=w;w,row=p.actual(w,key,seed)
+        if search:
+            f=captured['forecast'];proposals=f.audit['continuation_search']['proposals']
+            selected=result['deliberation'].get('selected_plan')
+            proposal=f.audit['plans'][selected]['proposal'] if selected else next(k for k,n in proposals.items() if n['root']==key and not n['schedule'])
+            captured['audit']={key:proposals[proposal]['branches']}
         fb=feedback(p,before,w,key,watched,pressured)
         loop.abandon(result['ticket'],need_progress=fb.needs,maintained=fb.maintained,
             completed=fb.completed,purpose_feedback=fb.purpose)
