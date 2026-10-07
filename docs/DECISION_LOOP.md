@@ -237,3 +237,15 @@ loop.observe(result['ticket'], vector(observed_effect))
 `ProgressConfig(preserve_persona_tier=True)` は停滞maskで元の最大主義tier全体が失われる場合に強制変更を留保する。`PersonaProgressWatch` はその設定付きの通常watchで、設定を通常checkpointへ保存し、DecisionLoopがbase watchとして復元しても挙動を維持する。既存設定は既定falseで、古いcheckpointもfalseとして読み込める。元の独立ゲーム経路を自動でこの設定へ変更しない。
 
 比較: `python -m reflex.cli purpose-recovery --output FRESH_ROOT`。旧flow方式、目的定義/終点評価の修正、修正+実観測の準備解除/停滞圧力を分ける。`FRESH_ROOT/purpose_recovery` を凍結し、既存出力の上書きは拒否する。源hash・条件・control/confirmationとseedを比較開始前に保存する。[得失と採否](../evidence/purpose_recovery/REPORT.md)。ローカル実軌跡がある場合は `python tools/audit_purpose_recovery.py FRESH_ROOT/purpose_recovery` で実ルールと実観測更新を再生できる。過去の源hash照合は、その報告を作ったcommitで行う。
+
+## 観測状態の分岐内更新と、改善根拠付きの停滞解除
+
+任意の `ModelObserver(scope, purpose=..., feedback=..., progress=..., pressure=..., previous=...)` は、現在の実watch/pressureをコピーして持つ。`flow_rollout.rollout(..., observer=observer)` はさらにroot/seedごとにforkし、モデル内の遷移からだけ仮のwatch/pressureを更新する。実ownerの状態・経験・相手仮説には書き戻さない。ゲームcallbackは `PurposeRequest` と `ModelFeedback(purpose, needs, maintained, completed)` を返し、実進捗とモデル進捗の意味を同じにする責任を持つ。
+
+rolloutのroot contextはDecisionLoopが既にpressureを適用したcontextを渡す。最初の手で二重適用せず、2手目以降のraw observationへ仮のpressureを適用する。仮のprogress maskも2手目以降の候補へ適用する。最初の強制rootは、実行時には選べないmask外の手も比較用にモデル化できるが、実際の選択はDecisionLoopのroot_allowedが制限する。identity/性格/主義/seed/目標は継承する。
+
+これは即時Policyに監視/圧力を接続した継続モデルで、将来の本人が同じ先読みを再帰的に実行する完全な自己モデルではない。経験更新・相手学習・別reader・複数人共同計画もモデル化しない。callbacksは公開モデル状態だけを読み、実イベント予定や実乱数を参照してはいけない。任意observer未指定の既存rolloutは従来の経路を維持する。
+
+今回の `verified` 比較は、新しい重みではなく、既存 `ProgressConfig(proof_margin=0.)` の回復検証をgoal_forecast経路で有効にしたもの。単に停滞回数を超えたから候補を削るのではなく、元の方針と制限後の候補を同じ目的・期間・人格条件で比較し、目的見込みに厳密な正の差があるときだけmaskを採用する。同値/悪化/比較不能なら元の方針を残す。目的はゲーム側の代理値でもあり、実勝利や安全を保証する条件ではない。
+
+verifiedはモデル内observer更新を加えない分離比較で、将来の回復検証を再帰的に再現するとは主張しない。`python -m reflex.cli observed-transfer --output FRESH_ROOT` で凍結比較を作成できる。[別環境での得失と採否](../evidence/observed_transfer/REPORT.md)を参照。ローカル実軌跡がある場合は `python tools/audit_observed_transfer.py FRESH_ROOT/observed_transfer` で実ルールと選択されたモデル分岐の状態更新を再生できる。新納品環境の到達可能性探索は診断だけに使用し、判断入力や教師正解として採用しない。
