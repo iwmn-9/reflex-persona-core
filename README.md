@@ -151,3 +151,7 @@ decision = population.step(needs=needs, effects=effects, confidence=confidence)
 ### 目的別相手モデルを判断に使う限定実験
 
 `TacticalControl(opponent_model='goal-uniform')` で、学習なしの目的別相手仮説を既存4標本・6stepの先読みに接続できる。通常は `'fixed'` のまま。新しい96実対戦では移動失敗は減ったが、元方式より勝利が減り留保の停止が増えたため、既定へ昇格しない。`'uniform-coverage'` との支持拡張対照、人格ごとの得失、因果照合、別枠の費用を[実対戦報告](evidence/goal_gameplay/REPORT.md)に保存した。
+
+### 毎手の再判断で見返りを回収する比較
+
+任意の `python -m reflex.cli payback-cycle --output FRESH_ROOT` は、同じ人格による将来の即時判断を予測継続に使い、資源・競り・戦闘の実行を毎手再計画する。192エピソードの比較では、競りの温存後の回収を確認した一方、予測との一致が増えても資源回収量や戦闘の勝利が下がる条件があったため標準へ昇格しない。生存/代理値/勝利・人格の譲歩を区別した[得失と残る急所](evidence/closed_loop_payback/REPORT.md)を参照。

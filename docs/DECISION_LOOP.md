@@ -211,3 +211,13 @@ loop.observe(result['ticket'], vector(observed_effect))
 `DecisionLoop.decide_batch(..., planner=...)` へ接続できる。コールバックはその時点の `contexts[0]` を使って作成し、古い人格状態や観測へ戻さない。即時RequestとBindingsはそのままで、実行時は実rootだけ確定する。未来flowを即時経験へ学習してはいけない。採用は各本人の現在のmodeと、期間全体で評価した最大主義tierに従う。固定人格の数値は変えないが、価値の評価対象を即時から期間全体へ広げる変更である。明示的に禁止されたrootの解禁や、無条件に主義を薄める処理はない。
 
 `python -m reflex.cli intertemporal` は既存の資源/競り/戦闘ルールに接続する条件付き判断試験。初手後の継続は公開・固定して比較し、実際の人格付き再判断との不一致を解決した試験とはしない。新部品は1個体向けで、同時多人数の長期共同計画や、既存の標準戦闘plannerへの自動適用は未実装。[結果・得失](../evidence/intertemporal_integrated/REPORT.md)。
+
+## 毎手の再判断と有限の回収
+
+任意の `flow_rollout.rollout(c, initial, observe=..., advance=..., terminal=..., horizon=..., seeds=...)` は、全実行可能rootに対して同じ1..16stepのflowを構成し、上記forecasterに渡すBranch辞書と継続行動の監査情報を返す。ゲームadapterの `observe(state, actor_state)` はモデル盤面の即時context、`advance(state, root, model_seed)` は次盤面と一度だけ獲得/支払うeffect、`terminal(state)` は既知の終局・本人死亡などを定義する。所有者の性格・主義・scope・seed・objectiveは固定し、各モデル分岐の仮のmode/need/intentを引き継ぐ。モデル盤面から欲求を再構築する責務はadapterにある。
+
+2手目以降は同じ人格Policyの**即時判断**を継続モデルにする。実行時は毎手intertemporal.forecastで選び直すため、これは未来の実行を完全に再現した自己モデルでも、再帰的な最適探索でもない。継続予測と実際の次の選択のずれを記録し、ずれそのものを失敗・学習根拠とは扱わない。変更された状況では選び直すことが正しい場合もある。将来の経験学習・進捗監視・相手の潜在方針変更はこの自己モデルに含まない。
+
+最大8本の異なるモデルseedを等確率の一貫経路として使う。実seedや未観測のイベント予定は渡さない。終局後だけゼロ増分で埋める。未知の非終局の計算失敗は例外として残し、ゼロ未来に置換しない。入力盤面・人格状態を分岐ごとに複製し、仮想結果を実経験へ書かない。任意の `continuation(state, context)` は固定継続の対照実験用で、実行可能rootのみ選べる。
+
+再現: `python -m reflex.cli payback-cycle --output FRESH_ROOT`。`FRESH_ROOT/closed_loop_payback` に事前条件・源hashと集計、ローカルの実軌跡を保存し、既存結果の上書きを拒否する。今回は常時有効化せず、[得失と限界](../evidence/closed_loop_payback/REPORT.md)を残す。標準Policy/Population、既存共同planner、実ルールは変更しない。公開は集計だけで、軌跡を持つローカル環境では `python tools/audit_payback_cycle.py FRESH_ROOT/closed_loop_payback` で実ルール再生・集計照合ができる。
