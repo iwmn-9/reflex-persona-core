@@ -195,3 +195,19 @@ loop.observe(result['ticket'], vector(observed_effect))
 `result['root_completion']` はbefore/after、変更人数、近接帯内のregret、検討数・採否を持つ。`deliberation.adopted` はfalseのままなので、この実行上の補完を未来予測の採用と取り違えない。変更された根のnext_state、intent age、本人の実経験ticketだけを通常の原子的commitへ渡す。仮想結果を記憶へ加えない。共通高速Policy/Populationには接続しない。
 
 再現: `python -m reflex.cli root-collision`。新規32対、元の条件によるserial trace-off費用、既存mainとの既定経路一致、実ルール・purpose再生を分ける。[機構・結果・制限](../evidence/root_collision/REPORT.md)。
+
+## 目前の利得と後の見返り
+
+任意の `intertemporal.forecast(context, branches, horizon=..., unit=..., target=...)` は、1個体の全実行可能rootについて、同じ1..16ステップの**増分効果**を受け取り `JointForecast` を返す。`branches[root]` は最大8個の `Branch(probability, effects, confidence)`。各flowは既存effect契約で `p=1`、分岐確率はBranch側に置き全分岐の合計を1とする。分岐は各ステップの独立な平均ではなく、一貫した将来仮説の経路である。
+
+各効果を `gamma**t` で重み付けし、全候補共通の `sum(gamma**t)` で割る。途中の支出・損害も残し、収入と終局報酬は獲得時に一度だけ計上する。蓄積stockや状態potentialの水準を毎回の収入として渡してはいけない。状態potentialを使う場合は差分として渡す。この増分契約は、従来 `purpose_return` が受け取る「各時点の状態価値」と異なる。終局後はゼロ増分で揃え、未予測の非終局の未来をゼロで補完しない。期間外の末端価値はこの部品に存在しない。
+
+`gamma` は既定で `clip(.45 + .45*勤勉性 + .1*(1-神経症傾向) - .35*切迫度, .25, 1)`。切迫度は有効な生理/安全欲求の最大不足で、成長・主義の評価は従来Policyが担う。これはゲーム設計上の仮の写像で心理測定の主張ではない。`discount=...` を明示してゲーム側で差し替えられる。時間の好みと、探索期間/賢さは別であり、同じ期間を見ても目先を重くする人格があり得る。
+
+各stepのconfidenceは正の利益だけを縮め、予測損失・費用を消さない。元rootのconfidence/familiarityはPolicyで引き続き扱い、現在のintentに一致するrootの切替費用を二重に課さない。`max_regret` は同じ割引目的に対するゲーム側の許容幅（既定.15）。十分な幅を与えるかどうかはゲーム設計の判断であり、これを狭めて全人格に最長期の利益を強制しない。
+
+一度だけ発生するfamiliarity加点とswitch_costも、効果と同じ分母で正規化する。期間を延ばしただけで切替費用が相対的に増えることを避ける。Policyの最大主義tierの許容差.02とpurpose corridorは正規化した期間平均の尺度に対するものなので、異なる期間を横断して同じ総額の許容差と解釈しない。長期化に伴う主義tierの感度は追加検証が必要で、既存Policyを変更してはいない。
+
+`DecisionLoop.decide_batch(..., planner=...)` へ接続できる。コールバックはその時点の `contexts[0]` を使って作成し、古い人格状態や観測へ戻さない。即時RequestとBindingsはそのままで、実行時は実rootだけ確定する。未来flowを即時経験へ学習してはいけない。採用は各本人の現在のmodeと、期間全体で評価した最大主義tierに従う。固定人格の数値は変えないが、価値の評価対象を即時から期間全体へ広げる変更である。明示的に禁止されたrootの解禁や、無条件に主義を薄める処理はない。
+
+`python -m reflex.cli intertemporal` は既存の資源/競り/戦闘ルールに接続する条件付き判断試験。初手後の継続は公開・固定して比較し、実際の人格付き再判断との不一致を解決した試験とはしない。新部品は1個体向けで、同時多人数の長期共同計画や、既存の標準戦闘plannerへの自動適用は未実装。[結果・得失](../evidence/intertemporal_integrated/REPORT.md)。

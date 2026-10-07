@@ -64,7 +64,7 @@ def benchmark(output, sizes=(1,100,1000,10000), repeats=15):
 
 
 def main():
-    parser=argparse.ArgumentParser(); parser.add_argument("command",choices=("export","demo","benchmark","seed-smoke","train-reviewed","lab","cross-games","reversi","quoridor","board-planning","monte-carlo","goofspiel","opponent-reading","adaptive-reading","rule-baseline","rolling-plans","mahjong","judgment","resource-world","contests","victory-routes","combat","npc-scale","decision-loop","validation","purpose","stability","purposeful-wait","recovery-options","execution-alignment","self-continuation","root-collision"))
+    parser=argparse.ArgumentParser(); parser.add_argument("command",choices=("export","demo","benchmark","seed-smoke","train-reviewed","lab","cross-games","reversi","quoridor","board-planning","monte-carlo","goofspiel","opponent-reading","adaptive-reading","rule-baseline","rolling-plans","mahjong","judgment","resource-world","contests","victory-routes","combat","npc-scale","decision-loop","validation","purpose","stability","purposeful-wait","recovery-options","execution-alignment","self-continuation","root-collision","intertemporal"))
     parser.add_argument("--output",default="reflex_artifacts"); parser.add_argument("--reviews")
     args=parser.parse_args(); root=Path(args.output)
     if args.command=="export": print("Exported",len(export(root)),"authored seed rows; LLM generation pending")
@@ -145,6 +145,10 @@ def main():
         from .alignment_experiment import experiment
         result=experiment(root/'execution_alignment',progress=print)
         print(json.dumps(result,ensure_ascii=False,indent=2))
+    elif args.command=='intertemporal':
+        from .intertemporal_experiment import experiment
+        experiment(root/'intertemporal_integrated',progress=print)
+        print((root/'intertemporal_integrated'/'REPORT.md').read_text(encoding='utf-8'))
     elif args.command=='recovery-options':
         from .recovery_experiment import experiment
         experiment(root/'recovery_options',progress=print)

@@ -1,0 +1,596 @@
+{
+  "format": "intertemporal-preregister-v1",
+  "integration_base": "cc36ac188209bf29ea1b2c5b493e2ca03c378930",
+  "source_hashes": {
+    "__init__.py": "0f031d0ea857b357eba4f325f4034ed4886a17ed28e1a1dc9e32a434db08f71e",
+    "adapters.py": "45a792a85158b9c26bf2ae0ed31e43c0acb936152ce15864fb0072607e636603",
+    "adaptive_reading_experiment.py": "d898638d59cb7683d0b02fc2360adab8edb8a3a4fe7dcfe520100217e85d71de",
+    "alignment.py": "249e749ab7a589ffe7e43c833ce0ee8a6750c3541758beb46b35656b8d850ee2",
+    "alignment_experiment.py": "3c9aeeb44de5a27333bced6781bdb0f4cc9db910582acebf9e617eed8634a1c5",
+    "board_models.py": "52b53761ee343a827465228fd47fe324067e1cca7fdb4137de9411a960c8a101",
+    "board_planning.py": "dcd82e738399cdaa8c27071567afa9fd52f88ac273eece79d351ee5e3f5ab374",
+    "cli.py": "fa971d23b2f1444f22aa4f3c7c95b1efd7f4ef8a8bad7ccbcc3d2d536f031072",
+    "combat.py": "0e7a764ebe19af17f52d618e756f0dd85872f4fdf8c432c19f5fdca690935877",
+    "combat_experiment.py": "22cb5889fad36dd6d66ff408bd3aef58330ac1cb429f913b3e77dc765e5df8df",
+    "combat_planning.py": "07f47aaaec5d077e8284d332c18a4042bd4bcdf808d1ea46ec7624a22869288e",
+    "congestion_experiment.py": "e6dd629520307e1099693916846e23f3c1809087b60796164b715685c38c10e3",
+    "contests.py": "80caf08f3347ad7de989ad66485b3751f1418fa6fe309400e44a716b529fc150",
+    "contests_experiment.py": "8e9dc3de5efd07e4550732be78092a4c70296c75d433d84b3b62953678669aa0",
+    "continuation_experiment.py": "e7dad0b39e2e5fdd4bc781a362588a44ba23bf032ce28f0779c9625e7cedecca",
+    "core.py": "7a347bb699fffc0481dc5b9e9e31ff2a54d38f8f46de5e190cbd4798b05c3143",
+    "cross_games.py": "3d1899d5b2a9b77673c916114e812955fdb3812fab552f227126a8d4194dc2cf",
+    "decision_loop.py": "4a416a226da2e2e439d16e90078385756a148f7aa1cb6b03a2a4c0ceaf47a370",
+    "deliberation.py": "3d7bd87e9796516d2016d2487fd32c1e75a569dd5d863feebc12f945c325be87",
+    "examples.py": "85610dc68fa527526369eb58151c6b29e01be0f5f2795873690a399829a171f8",
+    "experience.py": "ddd27d9d028af9a1b56ee27176df6106a3d070b3e53c4f34ff91d310f0033223",
+    "gambling.py": "41aa8cff4243a464b82524594fde47de6531ef7b5d11bc0bf83361f1e4d9d55f",
+    "goal_beliefs.py": "66734513ec338d5eae84d55f90918001a0bb63b24311234abe44113731d7cec2",
+    "goal_gameplay_experiment.py": "80d2c9cfd8d5b3edf4b9829ae463048ae4383afddf206bbc65d3d4039d5db76b",
+    "goal_opponent.py": "d71b645611980e723f4a288d74bc59825e5f98d8611b955866fe66f0c3cb1cad",
+    "goal_opponent_experiment.py": "716bd01de8f806f20f591a405626ff2f520c02ecdc7b386a64b51df32f04fded",
+    "goal_rollout.py": "3ff9be9c0060ba172dc817bc500f6ddf021992de2b8bf8d20651e6ee37566b92",
+    "goofspiel.py": "4864e6acc50fdf12aa5ef8da5187a9387105aacd56bd5d66a8762817a395f99d",
+    "goofspiel_beliefs.py": "f92a4ea14e147a3a101c4fd0c7bb696f1fbba92525531b3d5345a2cbf8e7af60",
+    "goofspiel_experiment.py": "1b582902eca0f9dd2b823d5cc634196c2f10fbb06f064a0bbcf8eb7d4e3385f3",
+    "goofspiel_reading.py": "a1efd5e1f0ecae6913d9c702aad71dd6f1b5b489cab821b0bb935c5e1dd0b1b2",
+    "horizon.py": "12cb784c7a21784851f641653acdf348e6bc032b80d38c0c9dcbb01dcc917aca",
+    "intertemporal.py": "c36c58e7f99471815bdb4f78fa49fdf628ee4df060c445765c3843a62855df7d",
+    "intertemporal_experiment.py": "b6336aac0d84ebe17cc8f298691a2d81aee485b4572ed8edf35dfe4e12e97c41",
+    "judgment.py": "bc8654324bdbdd4c74b2765c1092dc4a02489ec54125e61ad6a4a6024ddd2004",
+    "judgment_experiment.py": "d373b67a7255dea0ee1116775d890eb1991603c9f08f906c14931c8b99e35d61",
+    "laboratory.py": "dabd8eb5cf2acff2d03ed7659b2f86bd5eedc0012fb3b5d7c978cb8b99f0ac4c",
+    "loop_experiment.py": "25cec52da933a5388bf6bd8c45c18637cc6278f45c2cc35916a89bed514d49bf",
+    "loop_predictor.py": "4e69c8b375359dc19227cabf31bc4649f121a85c3c1e2c6b105cef1dfb99f9b3",
+    "mahjong_adapter.py": "5ae03b81d523b67a9e7a7397ba314ddbed138eb607f50c776e440da9b146dd3e",
+    "mahjong_experiment.py": "63db3b7ccaf5d425472d7b5683edd94b09274a0640660492e4895066d253e867",
+    "monte_carlo.py": "8e2e925fc429eb2aa5546bc6b835ae60ac972da269204c21de3471e38bedfdd2",
+    "monte_carlo_comparison.py": "147c4813f915f49f565c5afc2eb9aab696f0ae1b67b56547b3b77de5ee297007",
+    "observed_opponent.py": "d618062dd3d457b5bfb355b32233c173aa8e6f8289fd7665c078f0dd583d2022",
+    "observed_opponent_experiment.py": "417ec0479b7ab050a3940569e99797495c6ecfb07134395af30b788ba241fe80",
+    "opponent.py": "747bfc7c77e0edee7b05406e72996becc642aae7ca4ef4b4789688d5704bc4d5",
+    "opponent_beliefs.py": "95777a52db389112b03772237a61c2182aaa3b9c52ac01ceebf165ca38aaa435",
+    "opponent_reading_experiment.py": "60512cf56d07dc9a053f7c0e621096779d005186650b15a3eb16b17fc4b868be",
+    "persona_continuation.py": "00bfffe37dfffca62e2730c8fb5856810593e5ce6ae2049d85d2a1b8a2f6411b",
+    "planning.py": "759e374da0da012ea06dc57679c495ba1562419ad1f24a555ed49f8693af4bf6",
+    "pressure.py": "2f5840b4aab118cc0755a414c550766c1f425e45b47f6281e941a7405fa9923e",
+    "progress.py": "7fa6f1c71ea0addf25707632deb6a3870a63e929b7b58670e7f6bf0b877b060a",
+    "progress_adapters.py": "bc76af5883f5ae7caaf8599d8b4d4758b9806fbfe07d79fdd332ecdd014c1463",
+    "purpose_experiment.py": "eb1e541f14a9b2ee3e32e824911930281cb941f42d339b8be4b8e08982511543",
+    "quoridor.py": "d35e34f06c8c662ae09203b87ce558309b1148a7688b1eaf3dc3be344455a0b8",
+    "recovery_experiment.py": "a95c701866d03071fe5c59a85a81488293f7363865e071651aab2efdc6802de1",
+    "resource_experiment.py": "42704b5f0e76686844559c60fa9551bd5853bc6aa80360af1a08762c5179f0c5",
+    "resource_planning.py": "2b834c17e1ad424b8f215128ac3d38db1266f95c594825e0a9e5dead7a32433b",
+    "resource_world.py": "541d31eb487e8b5d800e5cd3895f486a1c8397883193c96115de821d2bd4adbf",
+    "reversi.py": "755dffd1c8ebcee2b309cd26bc9a00edcb0e4db857b446f257415ad3f63b76ea",
+    "rolling_plan_experiment.py": "25c818b74d615327fa20c9989d01ff725886e118a9948eaff000c5c728114ded",
+    "rolling_plans.py": "361ba57ad61d8869da35b2f5c2f4d38d899371486f7ee82679da46e8fb29aabc",
+    "rollout_boards.py": "485ba25a4deec06aff6eef66bbbd156812bf6e67b5a0e83550b2d2923c05298f",
+    "root_collision_experiment.py": "f2d7361162409fc39535194d5c0cd5df991d12893650bc4432ad8d9c3d06fad6",
+    "root_completion.py": "729cd9c94d4a0a6e0200438e4f1b1d1ce8dd04619dee1fc9eab5cb7f30082780",
+    "route_experiment.py": "7c406d1a4c2d2f9acac1ca34e3d52c1e58ebaea914bd28f8faacc85f0099cd50",
+    "routes.py": "61122363d681258529152628bee34ad89490ce2c91b68375bcd90bc650e323fb",
+    "rule_baseline.py": "9d4961388fa97adc218622f5db234a00bfd7967dec37422b393cb4404535e801",
+    "rule_baseline_experiment.py": "ffa2102bb0c53edc86618c51d5d2eba7161a33aee2aa6b3e7cebb86d9e4427f1",
+    "runtime.py": "9c8de4a3a44e64f2b7433befb7eaf2472605cc90dc719084d11301dde175ce9a",
+    "scale_experiment.py": "e0ef67c2643b8ee441e86932227c97661dc66670b6491425c51959bc37c870fd",
+    "scaling.py": "a6be8a3e180fe838e04a2052d8690923d90a4d6904b69c98e11f07d26042d33c",
+    "stability_experiment.py": "e3057edabd970dd0904e38623aaa73f9eb81b4790076271e6e7181fa5465e571",
+    "teachers.py": "7e4c69cd14eba8c84bb4c3d486d0d26d9ddaa64463f5bd754806fcc8b7817c10",
+    "training.py": "b55a220dfbcfac524bd2c9a5821cb33dcca53b8ef01538242fdd6459bbb2816f",
+    "validation_experiment.py": "7d3c035365f08af28f6b9d36c54e1fe09cf97c88b8db3595e10ce9a11a63e9d2",
+    "wait_experiment.py": "db6a076abc18883583d9fb5409d3bce9753ce265e3ad54bbd9ba9aa6e13f0e0b"
+  },
+  "core_hashes": {
+    "core.py": "7a347bb699fffc0481dc5b9e9e31ff2a54d38f8f46de5e190cbd4798b05c3143",
+    "runtime.py": "9c8de4a3a44e64f2b7433befb7eaf2472605cc90dc719084d11301dde175ce9a"
+  },
+  "specs": [
+    {
+      "genre": "resources",
+      "horizon": 1,
+      "confidence": 1.0,
+      "urgency": 0.1,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 1,
+      "confidence": 1.0,
+      "urgency": 0.1,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 1,
+      "confidence": 1.0,
+      "urgency": 0.9,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 1,
+      "confidence": 1.0,
+      "urgency": 0.9,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 1,
+      "confidence": 0.25,
+      "urgency": 0.1,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 1,
+      "confidence": 0.25,
+      "urgency": 0.1,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 1,
+      "confidence": 0.25,
+      "urgency": 0.9,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 1,
+      "confidence": 0.25,
+      "urgency": 0.9,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 4,
+      "confidence": 1.0,
+      "urgency": 0.1,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 4,
+      "confidence": 1.0,
+      "urgency": 0.1,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 4,
+      "confidence": 1.0,
+      "urgency": 0.9,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 4,
+      "confidence": 1.0,
+      "urgency": 0.9,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 4,
+      "confidence": 0.25,
+      "urgency": 0.1,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 4,
+      "confidence": 0.25,
+      "urgency": 0.1,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 4,
+      "confidence": 0.25,
+      "urgency": 0.9,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 4,
+      "confidence": 0.25,
+      "urgency": 0.9,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 8,
+      "confidence": 1.0,
+      "urgency": 0.1,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 8,
+      "confidence": 1.0,
+      "urgency": 0.1,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 8,
+      "confidence": 1.0,
+      "urgency": 0.9,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 8,
+      "confidence": 1.0,
+      "urgency": 0.9,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 8,
+      "confidence": 0.25,
+      "urgency": 0.1,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 8,
+      "confidence": 0.25,
+      "urgency": 0.1,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 8,
+      "confidence": 0.25,
+      "urgency": 0.9,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 8,
+      "confidence": 0.25,
+      "urgency": 0.9,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 12,
+      "confidence": 1.0,
+      "urgency": 0.1,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 12,
+      "confidence": 1.0,
+      "urgency": 0.1,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 12,
+      "confidence": 1.0,
+      "urgency": 0.9,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 12,
+      "confidence": 1.0,
+      "urgency": 0.9,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 12,
+      "confidence": 0.25,
+      "urgency": 0.1,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 12,
+      "confidence": 0.25,
+      "urgency": 0.1,
+      "gold": 4
+    },
+    {
+      "genre": "resources",
+      "horizon": 12,
+      "confidence": 0.25,
+      "urgency": 0.9,
+      "gold": 2
+    },
+    {
+      "genre": "resources",
+      "horizon": 12,
+      "confidence": 0.25,
+      "urgency": 0.9,
+      "gold": 4
+    },
+    {
+      "genre": "auction",
+      "horizon": 1,
+      "confidence": 1.0,
+      "urgency": 0.1
+    },
+    {
+      "genre": "auction",
+      "horizon": 1,
+      "confidence": 1.0,
+      "urgency": 0.9
+    },
+    {
+      "genre": "auction",
+      "horizon": 1,
+      "confidence": 0.25,
+      "urgency": 0.1
+    },
+    {
+      "genre": "auction",
+      "horizon": 1,
+      "confidence": 0.25,
+      "urgency": 0.9
+    },
+    {
+      "genre": "auction",
+      "horizon": 2,
+      "confidence": 1.0,
+      "urgency": 0.1
+    },
+    {
+      "genre": "auction",
+      "horizon": 2,
+      "confidence": 1.0,
+      "urgency": 0.9
+    },
+    {
+      "genre": "auction",
+      "horizon": 2,
+      "confidence": 0.25,
+      "urgency": 0.1
+    },
+    {
+      "genre": "auction",
+      "horizon": 2,
+      "confidence": 0.25,
+      "urgency": 0.9
+    },
+    {
+      "genre": "auction",
+      "horizon": 8,
+      "confidence": 1.0,
+      "urgency": 0.1
+    },
+    {
+      "genre": "auction",
+      "horizon": 8,
+      "confidence": 1.0,
+      "urgency": 0.9
+    },
+    {
+      "genre": "auction",
+      "horizon": 8,
+      "confidence": 0.25,
+      "urgency": 0.1
+    },
+    {
+      "genre": "auction",
+      "horizon": 8,
+      "confidence": 0.25,
+      "urgency": 0.9
+    },
+    {
+      "genre": "combat",
+      "horizon": 1,
+      "confidence": 1.0,
+      "urgency": 0.6666666666666667,
+      "hp": 3,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 1,
+      "confidence": 0.5,
+      "urgency": 0.6666666666666667,
+      "hp": 3,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 1,
+      "confidence": 1.0,
+      "urgency": 0.33333333333333337,
+      "hp": 6,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 1,
+      "confidence": 0.5,
+      "urgency": 0.33333333333333337,
+      "hp": 6,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 4,
+      "confidence": 1.0,
+      "urgency": 0.6666666666666667,
+      "hp": 3,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 4,
+      "confidence": 0.5,
+      "urgency": 0.6666666666666667,
+      "hp": 3,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 4,
+      "confidence": 1.0,
+      "urgency": 0.33333333333333337,
+      "hp": 6,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 4,
+      "confidence": 0.5,
+      "urgency": 0.33333333333333337,
+      "hp": 6,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 8,
+      "confidence": 1.0,
+      "urgency": 0.6666666666666667,
+      "hp": 3,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 8,
+      "confidence": 0.5,
+      "urgency": 0.6666666666666667,
+      "hp": 3,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 8,
+      "confidence": 1.0,
+      "urgency": 0.33333333333333337,
+      "hp": 6,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 8,
+      "confidence": 0.5,
+      "urgency": 0.33333333333333337,
+      "hp": 6,
+      "limit": 8
+    },
+    {
+      "genre": "combat",
+      "horizon": 8,
+      "confidence": 1.0,
+      "urgency": 0.6666666666666667,
+      "hp": 3,
+      "limit": 1
+    },
+    {
+      "genre": "combat",
+      "horizon": 8,
+      "confidence": 1.0,
+      "urgency": 0.33333333333333337,
+      "hp": 6,
+      "limit": 1
+    }
+  ],
+  "profiles": [
+    {
+      "id": "growth",
+      "name": "挑戦志向",
+      "traits": [
+        0.9,
+        0.55,
+        0.6,
+        0.4,
+        0.25
+      ],
+      "values": {
+        "achievement": 0.75,
+        "self_direction": 0.5
+      }
+    },
+    {
+      "id": "steady",
+      "name": "安定志向",
+      "traits": [
+        0.25,
+        0.9,
+        0.3,
+        0.55,
+        0.85
+      ],
+      "values": {
+        "security": 0.8,
+        "conformity": 0.4
+      }
+    },
+    {
+      "id": "care",
+      "name": "協力志向",
+      "traits": [
+        0.65,
+        0.8,
+        0.7,
+        0.95,
+        0.35
+      ],
+      "values": {
+        "benevolence": 0.85,
+        "universalism": 0.5
+      }
+    },
+    {
+      "id": "ego",
+      "name": "自己主張",
+      "traits": [
+        0.6,
+        0.35,
+        0.85,
+        0.15,
+        0.25
+      ],
+      "values": {
+        "power": 0.7,
+        "achievement": 0.45
+      }
+    },
+    {
+      "id": "patient-probe",
+      "traits": [
+        0.5,
+        0.95,
+        0.5,
+        0.5,
+        0.1
+      ],
+      "values": {}
+    },
+    {
+      "id": "impatient-probe",
+      "traits": [
+        0.5,
+        0.05,
+        0.5,
+        0.5,
+        0.9
+      ],
+      "values": {}
+    }
+  ],
+  "model_combat_seeds": [
+    800,
+    801,
+    802,
+    803,
+    804,
+    805,
+    806,
+    807
+  ],
+  "actual_combat_seeds": [
+    190,
+    191
+  ],
+  "status": "functional conditions already explored before upstream integration; not unseen strength evidence"
+}
