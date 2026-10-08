@@ -19,6 +19,7 @@ class JointForecast:
     max_regret: float=.15
     audit: dict=None
     target: str='game-purpose'
+    continuity: object=None
 
 
 def select(base,forecast,policy=None,root_allowed=None):
@@ -32,6 +33,10 @@ def select(base,forecast,policy=None,root_allowed=None):
         raise ValueError('one allowed real-root set per actor required')
     ids=set(forecast.roots)
     if not ids or set(forecast.purpose)!=ids:raise ValueError('purpose and roots must cover the same plans')
+    if forecast.continuity is not None:
+        from .plan_continuity import ArrivalPreference
+        if not isinstance(forecast.continuity,ArrivalPreference):raise ValueError('explicit arrival preference required')
+        forecast.continuity.validate(forecast)
     for key,roots in forecast.roots.items():
         if len(roots)!=len(base):raise ValueError('one root per actor per joint plan')
         for c,root in zip(base,roots):
@@ -68,6 +73,8 @@ def select(base,forecast,policy=None,root_allowed=None):
             tier_options_per_actor=d.eligible.sum(1).tolist(),**coverage)
     maxima=np.max(np.where(d.eligible,d.scores,-np.inf),axis=1)
     regret=(d.scores-maxima[:,None]).mean(0)
+    continuity=None
+    if forecast.continuity is not None:eligible,continuity=forecast.continuity.mask(names,eligible,purpose)
     j=int(np.argmax(np.where(eligible,regret,-np.inf)));key=names[j]
     records=replace(d,action=np.full(len(base),j,dtype=int)).records(b)
     decisions=[]
@@ -82,4 +89,5 @@ def select(base,forecast,policy=None,root_allowed=None):
         progress_excluded=int((~supported).sum()),
         plans=len(names),purpose_excluded=int((~allowed).sum()),tier_agreement=int(votes[j]),actors=len(base),
         subjective_regret=float(regret[j]),metadata=copy.deepcopy(forecast.audit or {}))
+    if continuity is not None:audit['continuity']=continuity
     return decisions,audit

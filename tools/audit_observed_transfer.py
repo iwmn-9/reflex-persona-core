@@ -45,7 +45,9 @@ def real_step(w,key,genre,spec,seed):
         rival=5 if spec.get('rival_shift') and w.round>=1 else max((3,)+tuple(w.last[1:]))
         bids=(int(key.split(':')[1]),)+tuple(min(rival,b,8) for b in w.budgets[1:])
         after,_=settle(w,bids)
-        return replace(after,prize=w.remaining[0],remaining=w.remaining[1:]) if w.remaining else after
+        if w.remaining:after=replace(after,prize=w.remaining[0],remaining=w.remaining[1:])
+        if spec.get('revised_prize') and after.round==1:after=replace(after,prize=3)
+        return after
     if genre=='combat':
         from reflex.combat import resolve,legal
         keys=legal(w,3);shots=[k for k in keys if k.startswith('shoot:')]

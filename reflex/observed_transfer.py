@@ -45,11 +45,14 @@ def can_finish(w):
     return any(can_finish(step(w,k)) for k in legal(w))
 
 
-def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2):
+def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False):
     watched=variant in ('watch','release','observed','verified')
     pressured=variant in ('pressure','release','observed','verified')
     if variant not in ('goal','watch','pressure','release','observed','verified'):raise ValueError('known ablation required')
+    if continuity and not search:raise ValueError('continuity requires explicit search proposals')
     p=make_probe(spec,profile);w=p.start();c=p.observe(w)
+    from .plan_continuity import PlanIntention
+    intention=PlanIntention(c) if continuity else None
     watch=PersonaProgressWatch(c['scope'],ProgressConfig(grace=2,repeat_limit=2,
         proof_margin=0. if variant=='verified' else None)) if watched else None
     pressure=NeedPressure(c['scope'],PressureConfig(grace=2)) if pressured else None
@@ -63,12 +66,15 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2):
                     feedback=lambda a,b,k:feedback(p,a,b,k,watched,pressured),
                     progress=loop.progress,pressure=loop.pressure,previous=previous)
             saved=digest(loop.record())
+            saved_intention=None if intention is None else intention.record()
             if search:
                 from .continuation_search import search_forecast
                 f=search_forecast(cs[0],w,observe=p.observe,advance=p.advance,terminal=p.terminal,
                     horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observer,
-                    width=width,depth=depth,target=p.target)
+                    width=width,depth=depth,target=p.target,
+                    retained=() if intention is None else intention.offer(cs[0],target=p.target,unit='public-turns',horizon=horizon))
                 assert digest(loop.record())==saved,'hypothetical state reached actual owner'
+                assert intention is None or intention.record()==saved_intention,'planning changed actual intention'
                 captured.update(forecast=f)
                 return f
             paths,audit=rollout(cs[0],w,observe=p.observe,advance=p.advance,terminal=p.terminal,
@@ -87,6 +93,7 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2):
         fb=feedback(p,before,w,key,watched,pressured)
         loop.abandon(result['ticket'],need_progress=fb.needs,maintained=fb.maintained,
             completed=fb.completed,purpose_feedback=fb.purpose)
+        if intention is not None:intention.remember(c,captured['forecast'],result['deliberation'].get('selected_plan'),key)
         assert not loop.memory.entries and c['personality']==loop.personality and c['values']==loop.values
         trace.append(dict(before=asdict(before),after=asdict(w),root=key,flow=row,goal=p.goal(w).record(),
             purpose=None if pr is None else asdict(pr),feedback=asdict(fb),state=copy.deepcopy(loop.state),
@@ -94,6 +101,7 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2):
             pressure=None if loop.pressure is None else loop.pressure.record(),
             persona_hash=digest([c['personality'],c['values']]),endpoints=captured['audit'][key],
             deliberation=result['deliberation']))
+        if intention is not None:trace[-1]['intention']=intention.record()
         previous=before
     reversals=0
     if p.genre=='combat':

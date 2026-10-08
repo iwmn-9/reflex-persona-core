@@ -19,7 +19,7 @@ def _forecast(c,nodes,*,horizon,unit,target,max_regret):
 
 
 def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0,),
-                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None):
+                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=()):
     """Keep a reflex baseline and <=width searched continuations per root.
 
     At each future step, expand the union of publicly legal observed action
@@ -34,7 +34,9 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
     if type(width) is not int or not 1<=width<=4 or type(depth) is not int or not 0<=depth<horizon:
         raise ValueError('bounded search width/depth required')
     roots=sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure'])
-    if len(roots)*(width+1)>MAX_ACTIONS:raise ValueError('proposal capacity exceeded; roots cannot be dropped')
+    if not isinstance(retained,(tuple,list)) or len(retained)>horizon or any(not isinstance(k,str) for k in retained):
+        raise ValueError('bounded retained action sequence required')
+    if len(roots)*(width+1)+bool(retained)>MAX_ACTIONS:raise ValueError('proposal capacity exceeded; roots cannot be dropped')
     kept={};evaluations=0;layer_counts=[]
     for ri,root in enumerate(roots):
         cache={}
@@ -69,9 +71,25 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
             layer_counts.append(dict(root=root,depth=level+1,candidates=len(candidates),retained=len(beam)))
         unique={tuple(n['schedule']):n for n in [baseline]+beam}
         for j,n in enumerate(unique.values()):kept[f'proposal-{ri:03d}-{j:02d}']=n
+    retained_status=None
+    if retained:
+        retained_status='root no longer viable'
+        if retained[0] in roots:
+            paths,audit=rollout(c,initial,observe=observe,advance=advance,terminal=terminal,assess=assess,
+                horizon=horizon,seeds=seeds,observer=observer,roots=(retained[0],),schedule=retained[1:],record_choices=True)
+            kept['proposal-retained']=dict(root=retained[0],schedule=list(retained[1:]),paths=paths[retained[0]],audit=audit[retained[0]])
+            evaluations+=1;retained_status='reevaluated'
     f=_forecast(c,kept,horizon=horizon,unit=unit,target=target,max_regret=max_regret)
     metadata=copy.deepcopy(f.audit)
     metadata['continuation_search']=dict(width=width,depth=depth,evaluated=evaluations,layers=layer_counts,
         proposals={k:dict(root=n['root'],schedule=n['schedule'],branches=n['audit']) for k,n in kept.items()},
         semantics='one shared action schedule across seeds; observed-illegal actions use persona reflex; only root executed')
-    return replace(f,audit=metadata)
+    preference=None
+    if retained:
+        from .plan_continuity import ArrivalPreference
+        incumbent=next((k for k in f.roots if f.audit['plans'][k].get('proposal')=='proposal-retained'),None)
+        if incumbent is not None:
+            preference=ArrivalPreference(incumbent,{k:tuple(g['settlement_step'] if g['status']=='success' else None
+                for g in f.audit['endpoint'][k]) for k in f.roots})
+        metadata['continuation_search']['retained_status']=retained_status if incumbent is not None else 'not in current persona tier or not viable'
+    return replace(f,audit=metadata,continuity=preference)

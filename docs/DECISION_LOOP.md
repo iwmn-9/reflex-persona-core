@@ -264,3 +264,17 @@ target=...)` は、既存の `JointForecast` を返す。通常の `Policy` と�
 これは完全な条件分岐付き戦略や最適探索ではない。未来の途中で柔軟に方針を変える計画や、beamで早期に落ちる長い準備を見落とす。反射で補った先の評価と、実際の再計画が一致する保証もない。`flow_rollout.rollout` の `schedule` は初手後の行動列、`roots` は明示的な初手部分集合で、一般のforecastへ渡す前には全初手の被覆が必要。
 
 `intertemporal.forecast` / `purpose_plan.goal_forecast` の任意 `plan_roots` は「候補ID→実初手ID」。複数候補が同じ初手を持てるが、全合法初手を少なくとも一度含める。各候補の分岐確率・効果・終点は従来と同じ契約で検査する。省略した既存呼び出しは従来どおり。
+
+## 任意の計画保持と到達時刻の比較
+
+`plan_continuity.PlanIntention(context)` は個体と固定人格に所有された有限の意図。実際に選択・実行した初手の後に `remember(context, forecast, selected_plan, actual_root)` を呼び、全モデル分岐に共通する残りの行動接頭辞だけを保存する。分岐が分かれた所で止め、都合のよい分岐の列を選ばない。最大15手で、観測結果を学習した記憶ではない。`record()` / `from_record()` で所有者付きcheckpointを保存・復元する。
+
+次の実観測では `offer(context, target=..., unit=..., horizon=...)` の列を `search_forecast(..., retained=...)` に渡す。offerは意図を変更せず、対象目的や時間単位が変われば空列を返す。同じtickの再実行や別個体・別人格への転用は拒否する。残りの初手が現在実行不能なら候補へ加えず、実行可能なら現在の盤面から全モデルseedで採点し直す。未来の途中で予定手が違法になった場合の反射への復帰は従来どおり。
+
+残りの計画が現在の主義tierに残る時だけ、`JointForecast.continuity` に `ArrivalPreference` を付ける。selectはさらに現在のprogress maskと目的許容幅を確認する。保持案が全モデル分岐で成功し、新案が目的期待値を増やさず、対応する全分岐で同時刻以降・少なくとも一つで遅く成功するなら、その新案を除外する。早い案・同時刻の案・分岐ごとに早さが逆転する案・未達や未確定の案はこの規則では除外しない。保持案が現時点の人格/進捗/目的に支持されない時も無効になる。新しい報酬係数は使わない。
+
+`ArrivalPreference.arrivals` は候補ごとに対応する同一モデル分岐順の成功stepまたはNoneを指定する。外部plannerが直接構築する場合、順序・分岐の意味の整合はそのplannerの責任。計算された成功を現実の確実な成功や校正済み確率とは扱わない。現在は1個体のforecastだけに対応し、共同計画への暗黙の適用は拒否する。
+
+これは「目的が増えない完了遅延」を一部抑える優先規則で、後回しを一律に禁止する規則ではない。既に主義tierから落ちた達成案を復活させず、選んだ列の最適性や将来の再計画との一致も保証しない。`continuity` を省略した既存forecastの選択・監査形式は従来どおり。[固定比較・得失・採否](../evidence/continuity_transfer/REPORT.md)。
+
+再現は `python -m reflex.cli continuity-transfer --output FRESH_ROOT`。既存反射継続、共有列探索、探索＋保持の3方式を比較し、既存の凍結資料を上書きしない。ローカル完全軌跡があれば `python tools/audit_search_transfer.py FRESH_ROOT/continuity_transfer` で共有列・初手選択・現在観測からの保持案再評価・実ルール・所有者のcheckpointを再生できる。監査はbeamが最適な候補を残すことの証明ではない。
