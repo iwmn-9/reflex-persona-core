@@ -31,8 +31,13 @@ def replay_episode(args):
     r,job=args;split,spec,profile,variant,seed,h=job
     assert (r['split'],r['spec'],r['profile'],r['variant'],r['seed'])==(split,spec,profile['id'],variant,seed)
     p=make_probe(spec,profile);w=p.start();c=p.observe(w)
+    if variant in ('legacy','finite-banded','finite'):
+        from reflex.finite_transfer import configuration
+        config=configuration(variant)
+    else:config=dict(principle_priority='lexicographic',max_regret=.15)
+    policy=Policy(principle_priority=config['principle_priority']);max_regret=config['max_regret']
     loop=DecisionLoop(c,progress=PersonaProgressWatch(c['scope'],ProgressConfig(grace=2,repeat_limit=2,proof_margin=0.)),
-        pressure=NeedPressure(c['scope'],PressureConfig(grace=2)))
+        pressure=NeedPressure(c['scope'],PressureConfig(grace=2)),policy=policy)
     intention=PlanIntention(c) if variant=='continuity' else None
     previous=None;models=0;proposals_count=0
     for t in r['trace']:
@@ -41,11 +46,11 @@ def replay_episode(args):
         def planner(cs,ds):
             nonlocal models,proposals_count
             cc=cs[0]
-            if variant=='verified':
+            if 'continuation_search' not in t['deliberation']['metadata']:
                 paths,audit=rollout(cc,w,observe=p.observe,advance=p.advance,terminal=p.terminal,
-                    assess=lambda s:p.goal(s).record(),horizon=h,seeds=p.seeds)
+                    assess=lambda s:p.goal(s).record(),horizon=h,seeds=p.seeds,policy=policy)
                 models+=sum(len(x['actions']) for rows in audit.values() for x in rows)
-                return goal_forecast(cc,paths,audit,horizon=h,unit='public-turns',target=p.target)
+                return goal_forecast(cc,paths,audit,horizon=h,unit='public-turns',target=p.target,policy=policy,max_regret=max_regret)
             metadata=t['deliberation']['metadata'];search=metadata['continuation_search']
             offered=() if intention is None else intention.offer(cc,target=p.target,unit='public-turns',horizon=h)
             retained=search['proposals'].get('proposal-retained')
@@ -62,7 +67,7 @@ def replay_episode(args):
                     for tick in range(h):
                         if p.terminal(state):flows.append(effect());continue
                         obs=copy.deepcopy(cc) if tick==0 else p.observe(state,memory)
-                        b=compile_batch([obs]);d=Policy().decide(b,False)
+                        b=compile_batch([obs]);d=policy.decide(b,False)
                         viable=sorted(a['id'] for a in obs['actions'] if a['legal'] and not a['known_failure']);choices.append(viable)
                         key=n['root'] if tick==0 else d.records(b)[0]['action_id']
                         if 0<tick<=len(n['schedule']):
@@ -76,7 +81,7 @@ def replay_episode(args):
                     assert p.terminal(state)==branch['terminal'] and p.goal(state).record()==branch['assessment']
                     rows.append(Branch(1/len(p.seeds),tuple(flows),(1.,)*h))
                 paths[name]=tuple(rows)
-            f=goal_forecast(cc,paths,audits,horizon=h,unit='public-turns',target=p.target,plan_roots=roots)
+            f=goal_forecast(cc,paths,audits,horizon=h,unit='public-turns',target=p.target,plan_roots=roots,policy=policy,max_regret=max_regret)
             assert f.audit=={k:v for k,v in metadata.items() if k!='continuation_search'}
             f.audit['continuation_search']=search
             incumbent=next((k for k in f.roots if f.audit['plans'][k]['proposal']=='proposal-retained'),None)
@@ -133,10 +138,15 @@ def audit(folder):
     regressions=[p for p in hold if p['goal_delta']<0 or p['survival_regression'] or p['shortages_delta']>0 or p['lost_route_delta']>0 or
         (p['baseline_status']=='success' and p['candidate_status']!='success')]
     assert regressions==ev['holdout_regressions']
-    gained=any((p['genre']=='delivery' or pre.get('candidate')=='continuity') and p['baseline_status']!='success' and p['candidate_status']=='success' for p in hold)
+    gained=any((p['genre']=='delivery' or pre.get('candidate')!='search') and p['baseline_status']!='success' and p['candidate_status']=='success' for p in hold)
     recovered=pre.get('candidate')!='continuity' or any(r['split']=='diagnostic' and r['variant']=='continuity' and
         r['spec']==dict(genre='resources',route='mixed',limit=14) and r['profile']=='ego' and r['status']=='success' for r in ev['runs'])
-    assert ev['broad_adoption_passed']==(not regressions and gained and recovered)
+    additional={}
+    if pre['format']=='finite-principle-transfer-v1':
+        additional=dict(known_search_failure_recovered=any(r['split']=='diagnostic-search' and r['variant']=='finite' and
+            r['profile']=='ego' and r['status']=='success' for r in ev['runs']))
+        assert ev['additional_requirements']==additional
+    assert ev['broad_adoption_passed']==(not regressions and gained and recovered and all(additional.values()))
     with ProcessPoolExecutor(max_workers=4) as pool:counts=list(pool.map(replay_episode,zip(rows,pre['jobs'])))
     result=dict(episodes=len(rows),actual_rule_transitions=sum(c['actual'] for c in counts),
         replayed_model_transitions=sum(c['model'] for c in counts),retained_proposals=sum(c['proposals'] for c in counts),

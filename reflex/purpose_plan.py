@@ -28,7 +28,7 @@ class Goal:
     def record(self):return asdict(self)
 
 
-def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,plan_roots=None):
+def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,plan_roots=None,policy=None):
     """Use one endpoint per coherent branch for objective and competence.
 
     Needs/values/style/cost retain their discounted flow treatment. Subjective
@@ -61,7 +61,7 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
         endpoint[a['id']]=goals
     # Preserving the tier before the purpose gate prevents a competence band
     # from silently substituting a lower-principle option for the owner.
-    b=compile_batch([fc]);d=Policy().decide(b,False)
+    b=compile_batch([fc]);d=(policy or Policy()).decide(b,False)
     retained={key for key,yes in zip(b.ids[0],d.eligible[0]) if yes}
     fc['actions']=[a for a in fc['actions'] if a['id'] in retained]
     metadata=copy.deepcopy(f.audit);metadata.update(endpoint=endpoint,original_tier_plans=sorted(retained),

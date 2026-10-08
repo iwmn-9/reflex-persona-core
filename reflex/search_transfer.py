@@ -29,7 +29,7 @@ def worker(job):
     return r
 
 
-def experiment(output,progress=None,workers=4,*,tasks=None,candidate='search',reference='verified',registration=None):
+def experiment(output,progress=None,workers=4,*,tasks=None,candidate='search',reference='verified',registration=None,runner=None,requirements=None):
     if type(workers) is not int or not 1<=workers<=8:raise ValueError('bounded workers required')
     output=Path(output);output.mkdir(parents=True,exist_ok=True)
     if any((output/n).exists() for n in ('preregister.json','evaluation.json','trajectories.jsonl')):
@@ -45,7 +45,7 @@ def experiment(output,progress=None,workers=4,*,tasks=None,candidate='search',re
     runs=[]
     with (output/'trajectories.jsonl').open('w',encoding='utf-8',newline='\n') as stream:
         with ProcessPoolExecutor(max_workers=workers) as pool:
-            for r in pool.map(worker,tasks):
+            for r in pool.map(runner or worker,tasks):
                 stream.write(json.dumps(r,ensure_ascii=False)+'\n');stream.flush()
                 runs.append({k:v for k,v in r.items() if k!='trace'})
                 if progress:progress(f'{len(runs)}/{len(tasks)} fixed-source episodes',flush=True)
@@ -62,13 +62,15 @@ def experiment(output,progress=None,workers=4,*,tasks=None,candidate='search',re
     hold=[p for p in pairs if p['split']=='holdout']
     regressions=[p for p in hold if p['goal_delta']<0 or p['survival_regression'] or p['shortages_delta']>0 or p['lost_route_delta']>0 or
         (p['baseline_status']=='success' and p['candidate_status']!='success')]
-    gained=any((p['genre']=='delivery' or candidate=='continuity') and p['baseline_status']!='success' and p['candidate_status']=='success' for p in hold)
+    gained=any((p['genre']=='delivery' or candidate!='search') and p['baseline_status']!='success' and p['candidate_status']=='success' for p in hold)
     diagnostic_recovered=candidate!='continuity' or any(r['split']=='diagnostic' and r['variant']==candidate and
         r['spec']==dict(genre='resources',route='mixed',limit=14) and r['profile']=='ego' and r['status']=='success' for r in runs)
+    extra={} if requirements is None else requirements(runs,pairs)
     result=dict(format=pre['format'],episodes=len(runs),source_hashes=fixed,preregister_digest=digest(pre),
         summary=aggregate(runs),runs=runs,pairs=pairs,holdout_regressions=regressions,
-        broad_adoption_passed=not regressions and gained and diagnostic_recovered,
+        broad_adoption_passed=not regressions and gained and diagnostic_recovered and all(extra.values()),
         diagnostic_recovered=diagnostic_recovered,default_policy_changed=False,
         coefficients_changed=False,training_performed=False,cloud_runtime_used=False)
+    if requirements is not None:result['additional_requirements']=extra
     (output/'evaluation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
     return result

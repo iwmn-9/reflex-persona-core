@@ -12,14 +12,14 @@ from .flow_rollout import rollout
 from .purpose_plan import goal_forecast
 
 
-def _forecast(c,nodes,*,horizon,unit,target,max_regret):
+def _forecast(c,nodes,*,horizon,unit,target,max_regret,policy):
     return goal_forecast(c,{k:n['paths'] for k,n in nodes.items()},
         {k:n['audit'] for k,n in nodes.items()},horizon=horizon,unit=unit,
-        target=target,max_regret=max_regret,plan_roots={k:n['root'] for k,n in nodes.items()})
+        target=target,max_regret=max_regret,plan_roots={k:n['root'] for k,n in nodes.items()},policy=policy)
 
 
 def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0,),
-                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=()):
+                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=(),policy=None):
     """Keep a reflex baseline and <=width searched continuations per root.
 
     At each future step, expand the union of publicly legal observed action
@@ -29,7 +29,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
     Prefixes are scored with a reflex completion to the full horizon, so pruning
     can miss a delayed payoff. width/depth control that approximation explicitly.
     """
-    compile_batch([c])
+    compile_batch([c]);policy=policy or Policy()
     if type(horizon) is not int or not 1<=horizon<=16:raise ValueError('bounded horizon required')
     if type(width) is not int or not 1<=width<=4 or type(depth) is not int or not 0<=depth<horizon:
         raise ValueError('bounded search width/depth required')
@@ -45,7 +45,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
             if schedule not in cache:
                 paths,audit=rollout(c,initial,observe=observe,advance=advance,terminal=terminal,
                     assess=assess,horizon=horizon,seeds=seeds,observer=observer,
-                    roots=(root,),schedule=schedule,record_choices=True)
+                    roots=(root,),schedule=schedule,record_choices=True,policy=policy)
                 cache[schedule]=dict(root=root,schedule=list(schedule),paths=paths[root],audit=audit[root])
                 evaluations+=1
             return cache[schedule]
@@ -61,8 +61,8 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
                     schedule=tuple(node['schedule'])+(key,)
                     candidates[schedule]=evaluate(schedule)
             indexed={f'candidate-{j:03d}':n for j,n in enumerate(candidates.values())}
-            f=_forecast(local,indexed,horizon=horizon,unit=unit,target=target,max_regret=max_regret)
-            b=compile_batch(f.contexts);d=Policy().decide(b,False)
+            f=_forecast(local,indexed,horizon=horizon,unit=unit,target=target,max_regret=max_regret,policy=policy)
+            b=compile_batch(f.contexts);d=policy.decide(b,False)
             best=max(f.purpose.values());rank=[]
             for j,key in enumerate(b.ids[0]):
                 proposal=f.audit['plans'][key]['proposal']
@@ -76,10 +76,10 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
         retained_status='root no longer viable'
         if retained[0] in roots:
             paths,audit=rollout(c,initial,observe=observe,advance=advance,terminal=terminal,assess=assess,
-                horizon=horizon,seeds=seeds,observer=observer,roots=(retained[0],),schedule=retained[1:],record_choices=True)
+                horizon=horizon,seeds=seeds,observer=observer,roots=(retained[0],),schedule=retained[1:],record_choices=True,policy=policy)
             kept['proposal-retained']=dict(root=retained[0],schedule=list(retained[1:]),paths=paths[retained[0]],audit=audit[retained[0]])
             evaluations+=1;retained_status='reevaluated'
-    f=_forecast(c,kept,horizon=horizon,unit=unit,target=target,max_regret=max_regret)
+    f=_forecast(c,kept,horizon=horizon,unit=unit,target=target,max_regret=max_regret,policy=policy)
     metadata=copy.deepcopy(f.audit)
     metadata['continuation_search']=dict(width=width,depth=depth,evaluated=evaluations,layers=layer_counts,
         proposals={k:dict(root=n['root'],schedule=n['schedule'],branches=n['audit']) for k,n in kept.items()},

@@ -12,7 +12,7 @@ from .examples import effect
 from .intertemporal import Branch
 
 
-def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None, observer=None, schedule=(), roots=None, record_choices=False):
+def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None, observer=None, schedule=(), roots=None, record_choices=False,policy=None):
     """Return complete root Branches and a diagnostic continuation audit.
 
     observe(state, actor_state) returns an immediate Policy context.
@@ -42,7 +42,7 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
     if not isinstance(schedule,(tuple,list)) or len(schedule)>=horizon or any(not isinstance(k,str) for k in schedule):
         raise ValueError('bounded future action schedule required')
     if schedule and continuation is not None:raise ValueError('one continuation mechanism required')
-    paths={};audit={};policy=Policy()
+    paths={};audit={};policy=policy or Policy()
     for root in roots:
         branches=[];traces=[]
         for seed in seeds:

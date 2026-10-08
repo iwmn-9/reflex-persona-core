@@ -278,3 +278,16 @@ target=...)` は、既存の `JointForecast` を返す。通常の `Policy` と�
 これは「目的が増えない完了遅延」を一部抑える優先規則で、後回しを一律に禁止する規則ではない。既に主義tierから落ちた達成案を復活させず、選んだ列の最適性や将来の再計画との一致も保証しない。`continuity` を省略した既存forecastの選択・監査形式は従来どおり。[固定比較・得失・採否](../evidence/continuity_transfer/REPORT.md)。
 
 再現は `python -m reflex.cli continuity-transfer --output FRESH_ROOT`。既存反射継続、共有列探索、探索＋保持の3方式を比較し、既存の凍結資料を上書きしない。ローカル完全軌跡があれば `python tools/audit_search_transfer.py FRESH_ROOT/continuity_transfer` で共有列・初手選択・現在観測からの保持案再評価・実ルール・所有者のcheckpointを再生できる。監査はbeamが最適な候補を残すことの証明ではない。
+
+
+## 有限の主義優先と、同じ方策の接続
+
+`Policy(principle_priority='finite')` は、既存の主義強度・mode・欲求・危険・費用・目的の採点係数を変えず、最大主義の効果が.02以内の候補だけを残す前処理を使わない。principle modeの最強主義への追加重み1.6×強度は残る。したがって小さな主義利益だけで任意の大損を拒否することはなく、大きい主義利益なら目的の損失を引き受ける選択もできる。全候補の合法性・既知失敗・乱数の近接帯は従来どおり検査する。これは数値化した主義の優先と、絶対禁止を区別する変更であり、新しい人格軸ではない。
+
+既存呼び出しの互換用に `Policy()` は `principle_priority='lexicographic'` を維持する。設定を暗黙に混ぜない。`DecisionLoop(context, policy=policy)`、`Population(contexts, policy)`、`TiledPolicy(..., principle_priority='finite')` で同じ選択規則を使う。DecisionLoopは異なる優先規則の一括判断を拒否し、finite設定をcheckpointへ保存する。設定のない旧checkpointは旧規則として復元し、異なる規則を指定した復元は拒否する。
+
+未来の採点だけを変えるのではなく、`flow_rollout.rollout(..., policy=policy)`、`purpose_plan.goal_forecast(..., policy=policy)`、`continuation_search.search_forecast(..., policy=policy)` へ同じpolicyを渡す。検索のbeam順位、未来の反射継続、forecastの主義候補、実際の初手選択が同じ規則を使う。plannerはDecisionLoopが渡した最新contextを使い、未来の結果を実経験へ保存しない。ゲーム側が初期に選んだ目標/ルートはこの変更では作り直さない。
+
+目的許容幅は別の制約。`max_regret=.15` は主義が有限でも目的の最低水準を優先し、大きな主義のための目的犠牲を除外する場合がある。`max_regret=2.` は[-1,1]の全目的結果を比較に戻し、既存の有限な主観スコアで判断する。後者は「勝てる手を必ず選ぶ」設定ではない。厳格なゲーム規則や絶対禁止まで主義の数値で代用しない。
+
+[有限優先の固定比較・得失・残る不足](../evidence/finite_transfer/REPORT.md)。`python -m reflex.cli finite-transfer --output FRESH_ROOT` は、旧規則・有限優先+.15目的幅・有限優先+全目的比較を比較する。通常の反射継続を使った4ジャンルの比較と、以前失敗した共有列探索の診断を分離する。計画の保持や新しい評価係数を追加する比較ではない。

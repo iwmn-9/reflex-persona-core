@@ -210,7 +210,9 @@ class Decisions:
 
 class Policy:
     """Stateless shared policy. Learned residual is optional and bounded; defaults zero."""
-    def __init__(self, residual=None):
+    def __init__(self, residual=None, *, principle_priority='lexicographic'):
+        if principle_priority not in ('lexicographic','finite'):raise ValueError('known principle priority required')
+        self.principle_priority=principle_priority
         self.residual = np.zeros(8) if residual is None else np.asarray(residual,dtype=float).copy()
         if self.residual.shape != (8,) or not np.isfinite(self.residual).all() or np.max(abs(self.residual)) > .08+1e-9:
             raise ValueError("residual must have eight finite coefficients bounded by .08")
@@ -264,6 +266,9 @@ class Policy:
         # values, objective, costs and needs decide within this narrow top-value tier.
         tier=np.max(np.where(viable,top_effect,-np.inf),axis=1)
         eligible=viable & ((mode==0)[:,None] | (top_effect>=tier[:,None]-.02))
+        # Finite priority keeps the same strongest-value weights and mode, but
+        # does not give a marginal value gain an unlimited veto over all costs.
+        if self.principle_priority=='finite':eligible=viable
         own=np.argmax(np.where(eligible,scores,-np.inf),axis=1)
         read_ok=(b.read_confidence>=.6)&(~b.ahead|b.threatened)
         candidate_scores=scores+b.reading*b.read_confidence[:,None]

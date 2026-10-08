@@ -1,2 +1,4 @@
 # Preserve snapshot bytes; the manifest hashes the exact exported source.
 * -text
+# This existing source uses CRLF; preserve its bytes and recognize its line ends.
+reflex/core.py whitespace=cr-at-eol

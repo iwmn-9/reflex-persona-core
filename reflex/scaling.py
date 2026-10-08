@@ -12,8 +12,8 @@ class TiledPolicy(Policy):
     State ownership remains Population's responsibility. Full input/output arrays
     still scale with NPC count; only intermediate scoring arrays are bounded.
     """
-    def __init__(self, tile_size=256, residual=None):
-        super().__init__(residual)
+    def __init__(self, tile_size=256, residual=None, *, principle_priority='lexicographic'):
+        super().__init__(residual,principle_priority=principle_priority)
         if type(tile_size) is not int or tile_size < 1:
             raise ValueError('positive integer tile_size required')
         self.tile_size = tile_size

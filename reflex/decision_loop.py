@@ -237,7 +237,7 @@ class DecisionLoop:
         if not items:return []
         if len({loop.owner for loop,_ in items})!=len(items):raise ValueError('duplicate actor owner')
         policy=items[0][0].policy
-        if any(not np.array_equal(loop.policy.residual,policy.residual) for loop,_ in items):
+        if any(not np.array_equal(loop.policy.residual,policy.residual) or loop.policy.principle_priority!=policy.principle_priority for loop,_ in items):
             raise ValueError('batch must share policy coefficients')
         stages=[]
         for loop,req in items:
@@ -523,14 +523,15 @@ class DecisionLoop:
             memory=self.memory.record(),evidence=dict(capacity=self.evidence.capacity,window=self.evidence.window,
                 min_trials=self.evidence.min_trials,margin=self.evidence.margin,
                 entries=[dict(key=k,state=e['state'],gains=list(e['gains'])) for k,e in self.evidence.entries.items()]))
+        if self.policy.principle_priority!='lexicographic':result['principle_priority']=self.policy.principle_priority
         if self.pressure is not None:result['pressure']=self.pressure.record()
         if self.progress is not None:result['progress']=self.progress.record()
         return result
 
     @classmethod
     def from_record(cls,context,record,policy=None,read_control=None,predictor=None):
-        saved_policy=Policy(record['policy_residual']);saved_control=ReadControl(**record['read_control'])
-        if policy is not None and not np.array_equal(policy.residual,saved_policy.residual):raise ValueError('checkpoint policy changed')
+        saved_policy=Policy(record['policy_residual'],principle_priority=record.get('principle_priority','lexicographic'));saved_control=ReadControl(**record['read_control'])
+        if policy is not None and (not np.array_equal(policy.residual,saved_policy.residual) or policy.principle_priority!=saved_policy.principle_priority):raise ValueError('checkpoint policy changed')
         if read_control is not None and read_control!=saved_control:raise ValueError('checkpoint reading budget changed')
         loop=cls(context,policy or saved_policy,read_control or saved_control,record['memory']['capacity'],predictor)
         if record.get('pressure') is not None:loop.pressure=NeedPressure.from_record(loop.scope,record['pressure'])
