@@ -31,7 +31,10 @@ def replay_episode(args):
     r,job,format=args;split,spec,profile,variant,seed,h=job
     assert (r['split'],r['spec'],r['profile'],r['variant'],r['seed'])==(split,spec,profile['id'],variant,seed)
     p=make_probe(spec,profile);w=p.start();c=p.observe(w)
-    if format=='competence-transfer-v1':
+    if format=='settlement-transfer-v1':
+        from reflex.settlement_transfer import configuration
+        config=configuration(variant)
+    elif format=='competence-transfer-v1':
         from reflex.competence_transfer import configuration
         config=configuration(variant,p.genre)
     elif variant in ('legacy','finite-banded','finite'):
@@ -56,7 +59,7 @@ def replay_episode(args):
                 paths,audit=rollout(cc,w,observe=p.observe,advance=p.advance,terminal=p.terminal,
                     assess=lambda s:p.goal(s).record(),horizon=h,seeds=p.seeds,policy=policy)
                 models+=sum(len(x['actions']) for rows in audit.values() for x in rows)
-                return goal_forecast(cc,paths,audit,horizon=h,unit='public-turns',target=p.target,policy=policy,max_regret=max_regret)
+                return goal_forecast(cc,paths,audit,horizon=h,unit='public-turns',target=p.target,policy=policy,max_regret=max_regret,settlement_weight=config.get('settlement_weight','discounted'))
             metadata=t['deliberation']['metadata'];search=metadata['continuation_search']
             offered=() if intention is None else intention.offer(cc,target=p.target,unit='public-turns',horizon=h)
             retained=search['proposals'].get('proposal-retained')
@@ -65,7 +68,7 @@ def replay_episode(args):
             if retained:assert (retained['root'],retained['schedule'])==(offered[0],list(offered[1:]))
             paths={};audits={};roots={};proposals_count+=len(search['proposals'])
             assert search['width']==2 and search['depth']==config.get('depth',2)
-            if variant in ('beam','shooting','hybrid','guarded','validated'):
+            if variant in ('beam','shooting','hybrid','guarded','validated','discounted','absolute'):
                 assert search.get('samples',0)==config['samples']
                 if config['samples']:
                     assert search['pilot_evaluations']==len(viable)*config['samples']
@@ -108,7 +111,7 @@ def replay_episode(args):
                     assert p.terminal(state)==branch['terminal'] and p.goal(state).record()==branch['assessment']
                     rows.append(Branch(1/len(bank or p.seeds),tuple(flows),(1.,)*h))
                 paths[name]=tuple(rows)
-            f=goal_forecast(cc,paths,audits,horizon=h,unit='public-turns',target=p.target,plan_roots=roots,policy=policy,max_regret=max_regret)
+            f=goal_forecast(cc,paths,audits,horizon=h,unit='public-turns',target=p.target,plan_roots=roots,policy=policy,max_regret=max_regret,settlement_weight=config.get('settlement_weight','discounted'))
             assert f.audit=={k:v for k,v in metadata.items() if k!='continuation_search'}
             f.audit['continuation_search']=search
             incumbent=next((k for k in f.roots if f.audit['plans'][k]['proposal']=='proposal-retained'),None)

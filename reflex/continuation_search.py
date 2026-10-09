@@ -13,15 +13,15 @@ from .flow_rollout import rollout
 from .purpose_plan import goal_forecast
 
 
-def _forecast(c,nodes,*,horizon,unit,target,max_regret,policy):
+def _forecast(c,nodes,*,horizon,unit,target,max_regret,policy,settlement_weight='discounted'):
     return goal_forecast(c,{k:n['paths'] for k,n in nodes.items()},
         {k:n['audit'] for k,n in nodes.items()},horizon=horizon,unit=unit,
-        target=target,max_regret=max_regret,plan_roots={k:n['root'] for k,n in nodes.items()},policy=policy)
+        target=target,max_regret=max_regret,plan_roots={k:n['root'] for k,n in nodes.items()},policy=policy,settlement_weight=settlement_weight)
 
 
-def _rank(c,nodes,width,horizon,unit,target,max_regret,policy):
+def _rank(c,nodes,width,horizon,unit,target,max_regret,policy,settlement_weight='discounted'):
     indexed={f'candidate-{j:03d}':n for j,n in enumerate(nodes)}
-    f=_forecast(c,indexed,horizon=horizon,unit=unit,target=target,max_regret=max_regret,policy=policy)
+    f=_forecast(c,indexed,horizon=horizon,unit=unit,target=target,max_regret=max_regret,policy=policy,settlement_weight=settlement_weight)
     b=compile_batch(f.contexts);d=policy.decide(b,False);best=max(f.purpose.values());rank=[]
     for j,key in enumerate(b.ids[0]):
         proposal=f.audit['plans'][key]['proposal']
@@ -30,7 +30,7 @@ def _rank(c,nodes,width,horizon,unit,target,max_regret,policy):
 
 
 def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0,),
-                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=(),policy=None,samples=0,validation_seeds=None):
+                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=(),policy=None,samples=0,validation_seeds=None,settlement_weight='discounted'):
     """Keep a reflex baseline and <=width searched continuations per root.
 
     At each future step, expand the union of publicly legal observed action
@@ -40,6 +40,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
     Prefixes are scored with a reflex completion to the full horizon, so pruning
     can miss a delayed payoff. width/depth control that approximation explicitly.
     """
+    if settlement_weight not in ('discounted','absolute'):raise ValueError('known settlement time weight required')
     compile_batch([c]);policy=policy or Policy()
     if type(horizon) is not int or not 1<=horizon<=16:raise ValueError('bounded horizon required')
     if type(width) is not int or not 1<=width<=4 or type(depth) is not int or not 0<=depth<horizon:
@@ -75,7 +76,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
                 for key in choices:
                     schedule=tuple(node['schedule'])+(key,)
                     candidates[schedule]=evaluate(schedule)
-            beam=_rank(local,candidates.values(),width,horizon,unit,target,max_regret,policy)
+            beam=_rank(local,candidates.values(),width,horizon,unit,target,max_regret,policy,settlement_weight)
             layer_counts.append(dict(root=root,depth=level+1,candidates=len(candidates),retained=len(beam)))
         # Random shooting completes a whole legal pilot sequence before ranking.
         # A pilot may use one MODEL branch to discover legal future actions; its
@@ -93,7 +94,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
             # Rank the full union with the same persona/purpose evaluator. The
             # baseline remains a separate proposal, even when search discards it.
             pool={tuple(n['schedule']):n for n in beam};pool.update(sampled)
-            beam=_rank(local,pool.values(),width,horizon,unit,target,max_regret,policy)
+            beam=_rank(local,pool.values(),width,horizon,unit,target,max_regret,policy,settlement_weight)
         if samples:sampling.append(dict(root=root,trials=samples,unique_schedules=len(sampled)))
         unique={tuple(n['schedule']):n for n in [baseline]+beam}
         for j,n in enumerate(unique.values()):kept[f'proposal-{ri:03d}-{j:02d}']=n
@@ -118,7 +119,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
         validation=dict(seeds=list(validation_seeds),discovery_seeds=list(seeds),
             evaluated=len(kept),discovery=discovery,
             semantics='frozen candidates rechecked on a disjoint model bank before selection; not actual future or calibrated certainty')
-    f=_forecast(c,kept,horizon=horizon,unit=unit,target=target,max_regret=max_regret,policy=policy)
+    f=_forecast(c,kept,horizon=horizon,unit=unit,target=target,max_regret=max_regret,policy=policy,settlement_weight=settlement_weight)
     metadata=copy.deepcopy(f.audit)
     metadata['continuation_search']=dict(width=width,depth=depth,evaluated=evaluations,layers=layer_counts,
         proposals={k:dict(root=n['root'],schedule=n['schedule'],branches=n['audit']) for k,n in kept.items()},

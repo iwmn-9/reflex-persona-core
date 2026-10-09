@@ -313,3 +313,14 @@ target=...)` は、既存の `JointForecast` を返す。通常の `Policy` と�
 これは独立モデル標本による候補の再点検で、信頼区間・校正された勝率・未知の相手の正しいモデルを作る機能ではない。最終選択には再評価bankを使うので、そのbankも最終性能の未使用テストではない。別の実seedと未使用条件で実行結果を比較する必要がある。仮想経験は実記憶へ学習せず、人格・実観測のcheckpointを変更しない。継続計画の再評価にも適用できるが、その併用の実対戦成績は今回の比較外。
 
 再現は `python -m reflex.cli competence-transfer --output FRESH_ROOT`。本比較では有限Policy、幅2、深さ2、サンプル12、期間6を維持し、全目的比較・.15目的制約・.15目的制約と独立bankの3方式を分離する。実行証拠がある環境では `python tools/audit_search_transfer.py FRESH_ROOT/competence_transfer`。[採否・人格差・費用・限界](../evidence/competence_transfer/REPORT.md)。
+
+
+## 終局結果の時間選好を分離する任意比較
+
+`purpose_plan.goal_forecast(..., settlement_weight='discounted')` が既定。モデル内の終局の目標値は、その決着stepに応じて既存のpatience由来の割引を掛け、一度だけ主観objectiveへ入れる。`'absolute'` はsuccess/failure/draw/scoredの終局値の時間割引だけを外す。正の結果へのconfidence、非終局runningの代理値、欲求/価値/行動style/費用の流れの時間割引は維持する。到達した報酬を残り期間の毎ターン収入にはしない。purpose corridorに使う終点評価の意味も変えない。
+
+`continuation_search.search_forecast(..., settlement_weight=...)` は、途中のbeam間引き、shooting候補の順位、保持案・独立bankの最終再評価まで同じモードを渡す。未来の反射Policyを別モードに取り替えない。省略時のcontext、採点、metadataは従来と同じ。absolute指定だけ `subjective_settlement_semantics` を監査へ追加し、未知の文字列を拒否する。モデルの仮想経験を本人の実経験へ書き戻さない。
+
+これはBig FiveやPolicy係数の変更ではないが、**終局結果への時間選好と報酬の表現を変える**。max_regret=2.を併用すれば大きな信条利益のための目的犠牲も許せる。一方、同じ勝利なら早く完了する圧力が弱まり、途中利益を得るために必要手を先送りする危険がある。資源が増えた遅い勝利を、自動的に賢さの改善と数えない。
+
+再現は `python -m reflex.cli settlement-transfer --output FRESH_ROOT`。4既知ルール系の未使用パラメータ条件と、開発に使った物流の診断を分けて比較する。48局で診断の未達は直ったが、留保戦闘の勝利と生存が悪化したため一律採用しない。[得失・不採用理由・費用・限界](../evidence/settlement_transfer/REPORT.md)。完全軌跡を生成した後の `python tools/audit_search_transfer.py FRESH_ROOT/settlement_transfer` は保持案の分岐・最終選択・実行とcheckpointを再生する。最適な候補の発見や正しい相手モデルの証明ではない。

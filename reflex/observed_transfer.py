@@ -45,7 +45,7 @@ def can_finish(w):
     return any(can_finish(step(w,k)) for k in legal(w))
 
 
-def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None):
+def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted'):
     watched=variant in ('watch','release','observed','verified')
     pressured=variant in ('pressure','release','observed','verified')
     if variant not in ('goal','watch','pressure','release','observed','verified'):raise ValueError('known ablation required')
@@ -74,7 +74,7 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
                 from .continuation_search import search_forecast
                 f=search_forecast(cs[0],w,observe=p.observe,advance=p.advance,terminal=p.terminal,
                     horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observer,
-                    width=width,depth=depth,target=p.target,policy=policy,max_regret=max_regret,samples=samples,validation_seeds=validation_seeds,
+                    width=width,depth=depth,target=p.target,policy=policy,max_regret=max_regret,samples=samples,validation_seeds=validation_seeds,settlement_weight=settlement_weight,
                     retained=() if intention is None else intention.offer(cs[0],target=p.target,unit='public-turns',horizon=horizon))
                 assert digest(loop.record())==saved,'hypothetical state reached actual owner'
                 assert intention is None or intention.record()==saved_intention,'planning changed actual intention'
@@ -84,7 +84,7 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
                 horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observer,policy=policy)
             assert digest(loop.record())==saved,'hypothetical state reached actual owner'
             captured.update(audit=audit)
-            return goal_forecast(cs[0],paths,audit,horizon=horizon,unit='public-turns',target=p.target,policy=policy,max_regret=max_regret)
+            return goal_forecast(cs[0],paths,audit,horizon=horizon,unit='public-turns',target=p.target,policy=policy,max_regret=max_regret,settlement_weight=settlement_weight)
         req=Request(c,{k:Binding(k,'public',()) for k in p.keys(w)},{k:() for k in p.keys(w)},purpose=pr)
         result=DecisionLoop.decide_batch([(loop,req)],False,planner)[0]
         key=result['decision']['action_id'];before=w;w,row=p.actual(w,key,seed)
