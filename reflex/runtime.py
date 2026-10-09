@@ -24,7 +24,7 @@ class Population:
         self.present=np.arange(self.batch.legal.shape[1])[None,:]<np.array([len(ids) for ids in self.batch.ids])[:,None]
         self.supported=np.array([[c["needs"][key]["supported"] for key in ("physiology","safety","belonging","esteem","growth")] for c in contexts])
 
-    def step(self, stochastic=True, **updates):
+    def step(self, stochastic=True, *, appraisal=None, purpose=None, max_social_regret=.15, **updates):
         """Adapter supplies normalized arrays only; output action indices/state arrays.
 
         Optional updates replace full field arrays. Changing action identity, traits,
@@ -50,7 +50,8 @@ class Population:
         if (self.ticks>=2**63-1).any(): raise ValueError("tick limit reached")
         rng=counter_rng(self.seeds,self.ticks); rng.flags.writeable=False
         b=replace(b,rng=rng,hashes=tuple(None for _ in b.ids))
-        decision=self.policy.decide(b,stochastic)
+        decision=self.policy.decide(b,stochastic) if appraisal is None and purpose is None else self.policy.decide(
+            b,stochastic,appraisal=appraisal,purpose=purpose,max_social_regret=max_social_regret)
         age=np.where(b.intent==decision.action,np.minimum(b.age+1,1000000),0)
         fields=dict(primary=decision.primary.copy(),mode=decision.mode.copy(),mode_urgency=decision.mode_urgency.copy(),intent=decision.action.copy(),age=age)
         for value in fields.values(): value.flags.writeable=False

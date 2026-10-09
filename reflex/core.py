@@ -218,7 +218,7 @@ class Policy:
             raise ValueError("residual must have eight finite coefficients bounded by .08")
         self.residual.flags.writeable=False
 
-    def decide(self, b, stochastic=True):
+    def decide(self, b, stochastic=True, *, appraisal=None, purpose=None, max_social_regret=.15):
         n,a,k,d = b.effects.shape; rows=np.arange(n)
         old=np.maximum(b.primary,0); best=b.needs.argmax(1)
         # Intent switches only for material urgency changes; no rigid Maslow ranking.
@@ -286,7 +286,12 @@ class Policy:
             chosen=np.minimum(chosen,a-1)
         else: chosen=np.argmax(np.where(eligible,scores,-np.inf),axis=1)
         request=(b.threatened|(~b.ahead&(maximum<.15)))&(b.read_confidence<.6)
-        return Decisions(chosen,primary,mode,mode_urgency,read_used,request,features,scores,eligible)
+        result=Decisions(chosen,primary,mode,mode_urgency,read_used,request,features,scores,eligible)
+        if appraisal is not None:
+            from .social import appraised
+            return appraised(b,result,appraisal,purpose,max_social_regret,stochastic)
+        if purpose is not None:raise ValueError('social purpose requires an appraisal')
+        return result
 
     def choose(self, context, stochastic=True):
         batch=compile_batch([context])

@@ -1,0 +1,41 @@
+{
+  "version": "social-ablation-v1",
+  "domains": [
+    "allocation",
+    "patrol"
+  ],
+  "schedules": [
+    "cooperative",
+    "exploitative",
+    "change_and_repair",
+    "bad_luck"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "turns": 36,
+  "phase_length": 12,
+  "settings": [
+    "prediction_only",
+    "prediction_and_appraisal"
+  ],
+  "coefficients": {
+    "capacity": 64,
+    "half_life": 24,
+    "max_social_regret": 0.15
+  },
+  "caveat": "engineered plausibility probes; not psychological or unseen-game validation",
+  "source_hashes": {
+    "social_experiment.py": "7b483da41dc5e1baf2be2e954c0b52da735e756b81a23584fb711ea5a6e24df9",
+    "social.py": "0c2128b0841eb09b70f7b4ff20860235333fc4e96d36597dab77f1ef9b604ac4",
+    "core.py": "8b900029a4aed7ccf28c12aef6b981035fd7e6ad71d9eeb33a5d6d0c51cc97f8",
+    "runtime.py": "42e31098644448975f40beedf7fd4970c61c8a949b5bf24fc5f1820fbb555094"
+  }
+}
