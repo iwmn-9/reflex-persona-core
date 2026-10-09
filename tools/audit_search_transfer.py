@@ -34,6 +34,9 @@ def replay_episode(args):
     if variant in ('legacy','finite-banded','finite'):
         from reflex.finite_transfer import configuration
         config=configuration(variant)
+    elif variant in ('beam','shooting','hybrid'):
+        from reflex.hybrid_transfer import configuration
+        config=configuration(variant)
     else:config=dict(principle_priority='lexicographic',max_regret=.15)
     policy=Policy(principle_priority=config['principle_priority']);max_regret=config['max_regret']
     loop=DecisionLoop(c,progress=PersonaProgressWatch(c['scope'],ProgressConfig(grace=2,repeat_limit=2,proof_margin=0.)),
@@ -58,7 +61,13 @@ def replay_episode(args):
             assert (retained is not None)==bool(offered and offered[0] in viable)
             if retained:assert (retained['root'],retained['schedule'])==(offered[0],list(offered[1:]))
             paths={};audits={};roots={};proposals_count+=len(search['proposals'])
-            assert search['width']==2 and search['depth']==2
+            assert search['width']==2 and search['depth']==config.get('depth',2)
+            if variant in ('beam','shooting','hybrid'):
+                assert search.get('samples',0)==config['samples']
+                if config['samples']:
+                    assert search['pilot_evaluations']==len(viable)*config['samples']
+                    assert {x['root'] for x in search['sampling']}==viable
+                    assert all(x['trials']==config['samples'] and 1<=x['unique_schedules']<=config['samples'] for x in search['sampling'])
             for name,n in search['proposals'].items():
                 rows=[];roots[name]=n['root'];audits[name]=n['branches']
                 assert [b['seed'] for b in n['branches']]==list(p.seeds)
@@ -112,6 +121,11 @@ def replay_episode(args):
     if p.genre=='delivery':
         from reflex.delivery_world import Depot
         assert r['solvable_route_lost']==sum(can_finish(Depot(**t['before'])) and not can_finish(Depot(**t['after'])) for t in r['trace'])
+    if 'search_cost' in r:
+        searches=[t['deliberation']['metadata']['continuation_search'] for t in r['trace']]
+        assert r['search_cost']==dict(shared_sequence_evaluations=sum(x['evaluated'] for x in searches),
+            single_branch_pilots=sum(x.get('pilot_evaluations',0) for x in searches),
+            model_transition_upper_bound=sum(h*len(p.seeds)*x['evaluated']+h*x.get('pilot_evaluations',0) for x in searches))
     return dict(actual=len(r['trace']),model=models,proposals=proposals_count)
 
 

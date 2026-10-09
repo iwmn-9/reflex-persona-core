@@ -12,7 +12,7 @@ from .examples import effect
 from .intertemporal import Branch
 
 
-def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None, observer=None, schedule=(), roots=None, record_choices=False,policy=None):
+def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None, observer=None, schedule=(), roots=None, record_choices=False,policy=None,schedule_sampler=None):
     """Return complete root Branches and a diagnostic continuation audit.
 
     observe(state, actor_state) returns an immediate Policy context.
@@ -42,6 +42,8 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
     if not isinstance(schedule,(tuple,list)) or len(schedule)>=horizon or any(not isinstance(k,str) for k in schedule):
         raise ValueError('bounded future action schedule required')
     if schedule and continuation is not None:raise ValueError('one continuation mechanism required')
+    if schedule_sampler is not None and (not callable(schedule_sampler) or schedule or continuation is not None or len(seeds)!=1):
+        raise ValueError('a schedule pilot requires one model branch and no competing continuation')
     paths={};audit={};policy=policy or Policy()
     for root in roots:
         branches=[];traces=[]
@@ -64,9 +66,10 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
                 d=policy.decide(replace(b,legal=legal),False)
                 key=root if tick == 0 else (d.records(b)[0]['action_id'] if continuation is None else continuation(copy.deepcopy(state),copy.deepcopy(cc)))
                 viable=[a['id'] for a in cc['actions'] if a['legal'] and not a['known_failure']]
-                if schedule or record_choices:
+                if schedule or record_choices or schedule_sampler is not None:
                     permitted=viable if allowed is None or tick==0 else [k for k in viable if k in allowed]
                     choices.append(sorted(permitted))
+                    if tick>0 and schedule_sampler is not None:key=schedule_sampler(tuple(sorted(permitted)),tick)
                     if 0<tick<=len(schedule):
                         wanted=schedule[tick-1]
                         if wanted in permitted:key=wanted
