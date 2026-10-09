@@ -28,10 +28,13 @@ from audit_observed_transfer import real_step
 
 
 def replay_episode(args):
-    r,job=args;split,spec,profile,variant,seed,h=job
+    r,job,format=args;split,spec,profile,variant,seed,h=job
     assert (r['split'],r['spec'],r['profile'],r['variant'],r['seed'])==(split,spec,profile['id'],variant,seed)
     p=make_probe(spec,profile);w=p.start();c=p.observe(w)
-    if variant in ('legacy','finite-banded','finite'):
+    if format=='competence-transfer-v1':
+        from reflex.competence_transfer import configuration
+        config=configuration(variant,p.genre)
+    elif variant in ('legacy','finite-banded','finite'):
         from reflex.finite_transfer import configuration
         config=configuration(variant)
     elif variant in ('beam','shooting','hybrid'):
@@ -62,15 +65,30 @@ def replay_episode(args):
             if retained:assert (retained['root'],retained['schedule'])==(offered[0],list(offered[1:]))
             paths={};audits={};roots={};proposals_count+=len(search['proposals'])
             assert search['width']==2 and search['depth']==config.get('depth',2)
-            if variant in ('beam','shooting','hybrid'):
+            if variant in ('beam','shooting','hybrid','guarded','validated'):
                 assert search.get('samples',0)==config['samples']
                 if config['samples']:
                     assert search['pilot_evaluations']==len(viable)*config['samples']
                     assert {x['root'] for x in search['sampling']}==viable
                     assert all(x['trials']==config['samples'] and 1<=x['unique_schedules']<=config['samples'] for x in search['sampling'])
+            validation=search.get('validation')
+            bank=config.get('validation_seeds')
+            assert bool(validation)==bool(bank)
+            if validation:
+                assert validation['seeds']==list(bank) and validation['discovery_seeds']==list(p.seeds)
+                assert not set(bank)&set(p.seeds) and seed not in bank
+                assert validation['evaluated']==len(search['proposals'])
+                assert set(validation['discovery'])==set(search['proposals'])
+                # Retained discovery paths are independently replayed below.
+                for name,n in search['proposals'].items():
+                    _,pilot=rollout(cc,w,observe=p.observe,advance=p.advance,terminal=p.terminal,
+                        assess=lambda s:p.goal(s).record(),horizon=h,seeds=p.seeds,policy=policy,
+                        roots=(n['root'],),schedule=tuple(n['schedule']),record_choices=True)
+                    assert pilot[n['root']]==validation['discovery'][name]
+                    models+=sum(len(x['actions']) for x in pilot[n['root']])
             for name,n in search['proposals'].items():
                 rows=[];roots[name]=n['root'];audits[name]=n['branches']
-                assert [b['seed'] for b in n['branches']]==list(p.seeds)
+                assert [b['seed'] for b in n['branches']]==list(bank or p.seeds)
                 for branch in n['branches']:
                     state=copy.deepcopy(w);memory=copy.deepcopy(cc['state']);flows=[];actions=[];choices=[];fallbacks=[]
                     for tick in range(h):
@@ -88,7 +106,7 @@ def replay_episode(args):
                         state,flow=p.advance(state,key,branch['seed']);flows.append(flow);actions.append(key);models+=1
                     assert actions==branch['actions'] and choices==branch['choices'] and fallbacks==branch['schedule_fallbacks']
                     assert p.terminal(state)==branch['terminal'] and p.goal(state).record()==branch['assessment']
-                    rows.append(Branch(1/len(p.seeds),tuple(flows),(1.,)*h))
+                    rows.append(Branch(1/len(bank or p.seeds),tuple(flows),(1.,)*h))
                 paths[name]=tuple(rows)
             f=goal_forecast(cc,paths,audits,horizon=h,unit='public-turns',target=p.target,plan_roots=roots,policy=policy,max_regret=max_regret)
             assert f.audit=={k:v for k,v in metadata.items() if k!='continuation_search'}
@@ -123,9 +141,12 @@ def replay_episode(args):
         assert r['solvable_route_lost']==sum(can_finish(Depot(**t['before'])) and not can_finish(Depot(**t['after'])) for t in r['trace'])
     if 'search_cost' in r:
         searches=[t['deliberation']['metadata']['continuation_search'] for t in r['trace']]
-        assert r['search_cost']==dict(shared_sequence_evaluations=sum(x['evaluated'] for x in searches),
+        expected_cost=dict(shared_sequence_evaluations=sum(x['evaluated'] for x in searches),
             single_branch_pilots=sum(x.get('pilot_evaluations',0) for x in searches),
-            model_transition_upper_bound=sum(h*len(p.seeds)*x['evaluated']+h*x.get('pilot_evaluations',0) for x in searches))
+            model_transition_upper_bound=sum(h*len(p.seeds)*x['evaluated']+h*x.get('pilot_evaluations',0)+
+                h*len(x.get('validation',{}).get('seeds',()))*x.get('validation',{}).get('evaluated',0) for x in searches))
+        if format=='competence-transfer-v1':expected_cost['validation_evaluations']=sum(x.get('validation',{}).get('evaluated',0) for x in searches)
+        assert r['search_cost']==expected_cost
     return dict(actual=len(r['trace']),model=models,proposals=proposals_count)
 
 
@@ -161,11 +182,12 @@ def audit(folder):
             r['profile']=='ego' and r['status']=='success' for r in ev['runs']))
         assert ev['additional_requirements']==additional
     assert ev['broad_adoption_passed']==(not regressions and gained and recovered and all(additional.values()))
-    with ProcessPoolExecutor(max_workers=4) as pool:counts=list(pool.map(replay_episode,zip(rows,pre['jobs'])))
+    with ProcessPoolExecutor(max_workers=4) as pool:counts=list(pool.map(replay_episode,((r,j,pre['format']) for r,j in zip(rows,pre['jobs']))))
     result=dict(episodes=len(rows),actual_rule_transitions=sum(c['actual'] for c in counts),
         replayed_model_transitions=sum(c['model'] for c in counts),retained_proposals=sum(c['proposals'] for c in counts),
         source_freeze_verified=True,shared_schedule_and_selection_replay=True,actual_checkpoints_replayed=True,
         adoption_gate_recomputed=True,intention_checkpoints_replayed=any(r['variant']=='continuity' for r in rows),
+        independent_validation_bank_replayed=any('validation' in t['deliberation']['metadata'].get('continuation_search',{}) for r in rows for t in r['trace']),
         trajectories_sha256=hashlib.sha256((folder/'trajectories.jsonl').read_bytes()).hexdigest())
     print(json.dumps(result,indent=2));return result
 

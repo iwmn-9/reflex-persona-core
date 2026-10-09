@@ -8,7 +8,7 @@ The real caller executes only the selected root and replans next observation.
 from dataclasses import replace
 import copy
 import random
-from .core import Policy,compile_batch,MAX_ACTIONS,digest
+from .core import Policy,compile_batch,MAX_ACTIONS,MAX_OUTCOMES,digest
 from .flow_rollout import rollout
 from .purpose_plan import goal_forecast
 
@@ -30,7 +30,7 @@ def _rank(c,nodes,width,horizon,unit,target,max_regret,policy):
 
 
 def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0,),
-                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=(),policy=None,samples=0):
+                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=(),policy=None,samples=0,validation_seeds=None):
     """Keep a reflex baseline and <=width searched continuations per root.
 
     At each future step, expand the union of publicly legal observed action
@@ -49,6 +49,9 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
     if not isinstance(retained,(tuple,list)) or len(retained)>horizon or any(not isinstance(k,str) for k in retained):
         raise ValueError('bounded retained action sequence required')
     if len(roots)*(width+1)+bool(retained)>MAX_ACTIONS:raise ValueError('proposal capacity exceeded; roots cannot be dropped')
+    if validation_seeds is not None:
+        if not isinstance(validation_seeds,(tuple,list)) or not 1<=len(validation_seeds)<=MAX_OUTCOMES or any(type(s) is not int for s in validation_seeds) or len(set(validation_seeds))!=len(validation_seeds) or set(seeds)&set(validation_seeds):
+            raise ValueError('distinct independent bounded validation seeds required')
     kept={};evaluations=0;layer_counts=[];sampling=[];pilot_evaluations=0
     for ri,root in enumerate(roots):
         cache={}
@@ -102,6 +105,19 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
                 horizon=horizon,seeds=seeds,observer=observer,roots=(retained[0],),schedule=retained[1:],record_choices=True,policy=policy)
             kept['proposal-retained']=dict(root=retained[0],schedule=list(retained[1:]),paths=paths[retained[0]],audit=audit[retained[0]])
             evaluations+=1;retained_status='reevaluated'
+    validation=None
+    if validation_seeds is not None:
+        # Proposal creation/pruning never sees this bank. Recheck every retained
+        # proposal, including each reflex baseline, before actual selection.
+        discovery={k:n['audit'] for k,n in kept.items()}
+        for n in kept.values():
+            paths,audit=rollout(c,initial,observe=observe,advance=advance,terminal=terminal,
+                assess=assess,horizon=horizon,seeds=validation_seeds,observer=observer,
+                roots=(n['root'],),schedule=tuple(n['schedule']),record_choices=True,policy=policy)
+            n['paths']=paths[n['root']];n['audit']=audit[n['root']]
+        validation=dict(seeds=list(validation_seeds),discovery_seeds=list(seeds),
+            evaluated=len(kept),discovery=discovery,
+            semantics='frozen candidates rechecked on a disjoint model bank before selection; not actual future or calibrated certainty')
     f=_forecast(c,kept,horizon=horizon,unit=unit,target=target,max_regret=max_regret,policy=policy)
     metadata=copy.deepcopy(f.audit)
     metadata['continuation_search']=dict(width=width,depth=depth,evaluated=evaluations,layers=layer_counts,
@@ -109,6 +125,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
         semantics='one shared action schedule across seeds; observed-illegal actions use persona reflex; only root executed')
     if samples:metadata['continuation_search'].update(samples=samples,pilot_evaluations=pilot_evaluations,sampling=sampling,
         sampling_semantics='uniform legal full-horizon model pilots; freeze sequence then evaluate across all model seeds; no learned dynamics or actual future input')
+    if validation is not None:metadata['continuation_search']['validation']=validation
     preference=None
     if retained:
         from .plan_continuity import ArrivalPreference
