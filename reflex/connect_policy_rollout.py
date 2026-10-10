@@ -12,6 +12,7 @@ from .core import Policy, digest
 from .examples import action
 from .monte_carlo import TerminalEvaluation, RolloutBudget
 from .monte_carlo_comparison import minimax2
+from .connect_objective import choose as minimax4
 from .policy_rollout import evaluate_policy
 from .goal_guard import choose_with_goal
 
@@ -29,14 +30,18 @@ def incumbent(s,p,seed,tick,episode,state,budget=SHORT):
 
 
 class OwnerPolicyModel:
-    def __init__(self,s,p,seed,tick,episode,state,d,budget=SHORT,owner_policy='incumbent'):
+    def __init__(self,s,p,seed,tick,episode,state,d,budget=SHORT,owner_policy='incumbent',rival_policy='minimax2'):
         self.initial=s;self.viewer=s.turn;self.profile=copy.deepcopy(p)
         self.seed=seed;self.tick=tick;self.episode=episode;self.state=copy.deepcopy(state)
         if owner_policy not in ('incumbent','reflex'):raise ValueError('declared owner continuation required')
         self.owner_policy=owner_policy
+        if rival_policy not in ('minimax2','minimax4','mixture'):raise ValueError('declared public rival prior required')
+        self.rival_policy=rival_policy;self.starts=0;self.trial_kinds={}
         self.decision=copy.deepcopy(d);self.budget=budget if owner_policy=='incumbent' else REFLEX;self.adapter=ConnectAdapter()
         self.calls=0;self.requests=0;self.cache={};self.committed=False
-    def begin_trial(self):self.memory=copy.deepcopy(self.decision['next_state']);self.committed=False
+    def begin_trial(self):
+        self.trial=self.starts//len(self.initial.legal());self.starts+=1
+        self.memory=copy.deepcopy(self.decision['next_state']);self.committed=False
     def terminal(self,b):return self.adapter.terminal(b.position)
     def chance(self,b):return False
     def legal(self,b):return self.adapter.legal(b.position)
@@ -46,7 +51,13 @@ class OwnerPolicyModel:
             self.memory['age']=min(self.state['age']+1,1000000) if self.state and self.state['intent_action']==b.root else 0
             self.committed=True
         s=b.position
-        if s.turn!=self.viewer:return minimax2(s,rng)
+        if s.turn!=self.viewer:
+            kind=self.rival_policy
+            if kind=='mixture':
+                latent=np.random.default_rng(int(digest([self.seed,self.tick,self.episode,'rival-strength',self.trial])[:16],16))
+                kind=('minimax2','minimax4')[int(latent.integers(2))]
+            self.trial_kinds[self.trial]=kind
+            return (minimax2 if kind=='minimax2' else minimax4)(s,rng)
         self.requests+=1;key=(s,self.tick+b.steps+1,digest(self.memory))
         if key not in self.cache:
             _,d,_=incumbent(s,self.profile,self.seed,self.tick+b.steps+1,self.episode,self.memory,self.budget)
@@ -68,15 +79,16 @@ class OwnerPolicyModel:
         return TerminalEvaluation(row,credit,won,draw,None)
 
 
-def decide(s,p,seed,tick,episode,state=None,budget=SHORT,rollout=None,owner_policy='incumbent'):
+def decide(s,p,seed,tick,episode,state=None,budget=SHORT,rollout=None,owner_policy='incumbent',rival_policy='minimax2'):
     c,d,st=incumbent(s,p,seed,tick,episode,state,budget)
     rb=RolloutBudget(samples=8,min_samples=8,max_nodes=100000,max_steps=42,rollout_policy='persona') if rollout is None else rollout
-    model=OwnerPolicyModel(s,p,seed,tick,episode,state,d,budget,owner_policy)
+    model=OwnerPolicyModel(s,p,seed,tick,episode,state,d,budget,owner_policy,rival_policy)
     roots={a:Branch(s.play(a),a) for a in s.legal()}
     packed,samples,rs=evaluate_policy(roots,model,rb,[seed,'connect-four',episode,tick,'actual-base-policy'])
     rs.update(owner_searches=model.calls,owner_requests=model.requests,cache_hits=model.requests-model.calls,
         incumbent_action=d['action_id'],owner_policy=owner_policy,
-        continuation=('actual SHORT own controller' if owner_policy=='incumbent' else 'reflex own controller approximation')+' after each hypothetical public move; minimax2 rival hypothesis')
+        rival_policy=rival_policy,trial_rival_kinds=model.trial_kinds,
+        continuation=('actual SHORT own controller' if owner_policy=='incumbent' else 'reflex own controller approximation')+'; rival prior '+rival_policy+'; public future moves')
     st=dict(st,policy_rollout=rs)
     if not rs['used']:return c,d,st
     acts=[action(a,*packed[a]) for a in s.legal()]

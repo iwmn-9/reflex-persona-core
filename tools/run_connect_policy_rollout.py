@@ -21,6 +21,7 @@ from reflex.tabletop_trials import score
 def worker(job):
     seed,profile,samples,*extra=job
     owner_policy=extra[0] if extra else 'incumbent';rival=extra[1] if len(extra)>1 else 'minimax2'
+    rival_forecast=extra[2] if len(extra)>2 else 'minimax2'
     if rival not in ('minimax2','minimax4'):raise ValueError('registered actual rival required')
     from reflex.connect_objective import choose as minimax4
     rival_controller=minimax2 if rival=='minimax2' else minimax4
@@ -39,7 +40,8 @@ def worker(job):
             if actor==seat:
                 if candidate and not used:
                     c,d,stats=decide(s,p,seed,tick,episode,state,
-                        rollout=RolloutBudget(samples=samples,min_samples=samples,max_nodes=100000,max_steps=42,rollout_policy='persona'),owner_policy=owner_policy)
+                        rollout=RolloutBudget(samples=samples,min_samples=samples,max_nodes=100000,max_steps=42,rollout_policy='persona'),
+                        owner_policy=owner_policy,rival_policy=rival_forecast)
                     used=True
                 else:c,d,stats=incumbent(s,p,seed,tick,episode,state)
                 assert c['personality']==dict(zip(TRAITS,p['traits'])) and c['values']=={k:float(p['values'].get(k,0)) for k in VALUES}

@@ -38,5 +38,13 @@ class ConnectPolicyRolloutTests(unittest.TestCase):
         c,d,st=decide(s,PROFILES[0],91,6,'public-case',rollout=RolloutBudget(samples=2,min_samples=2,max_nodes=10000,max_steps=42))
         self.assertTrue(st['policy_rollout']['used']);self.assertEqual(score(c)[0],d)
 
+    def test_latent_rival_strength_is_shared_by_all_roots_of_one_trial(self):
+        s=ConnectPosition();p=PROFILES[0];_,d,_=incumbent(s,p,91,0,'public-case',None)
+        m=OwnerPolicyModel(s,p,91,0,'public-case',None,d,rival_policy='mixture')
+        kinds=[]
+        for a in s.legal():
+            m.begin_trial();b=Branch(s.play(a),a);m.choose(b,np.random.default_rng(18),'persona');kinds.append(m.trial_kinds[0])
+        self.assertEqual(len(set(kinds)),1);self.assertEqual(m.trial,0)
+
 
 if __name__=='__main__':unittest.main()
