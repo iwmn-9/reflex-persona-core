@@ -1,0 +1,167 @@
+{
+  "registration": {
+    "kind": "prequential matched-path diagnostic",
+    "conditions": [
+      "global",
+      "supported",
+      "validated"
+    ],
+    "source_traces": {
+      "shard-0\\global\\trajectories.jsonl": "805114316d6ac01d8481f26674a373e3f6b95809006bc88c62d7908c3b220dc3",
+      "shard-1\\global\\trajectories.jsonl": "d00933537e9072d2d1d7045ed78b2485fc030f85dcbf4bab2cf12c9a73c09651",
+      "shard-2\\global\\trajectories.jsonl": "c572f89a68331ae3acc3c16f80185684dfced4083a9e4a46d58c0f32cdefd086",
+      "shard-3\\global\\trajectories.jsonl": "f15552c2f430b6e2328fc65e1c64bad73b8c01f7f5b8c786f013ac6ca85b0fcd"
+    },
+    "target": "next publicly revealed opponent action, scored before update; not terminal win prediction",
+    "weighting": "average observer copies for each public reveal, mean per episode, then mean per learning series",
+    "partitions": [
+      "future opportunity",
+      "current-card only",
+      "Goof single-bank negative control"
+    ],
+    "uncertainty": "10000 paired learning-series bootstrap samples; seed 73118; no multiplicity correction"
+  },
+  "summary": [
+    {
+      "game": "no_thanks",
+      "phase": "current_card_only",
+      "condition": "supported",
+      "public_nonforced_reveals": 424,
+      "independent_series": 16,
+      "mean_log_loss": {
+        "global": 0.5147704778870269,
+        "supported": 0.6376910324256159
+      },
+      "log_loss_improvement": -0.12292055453858892,
+      "paired_series_bootstrap_95": [
+        -0.20126039163193446,
+        -0.047586926501175596
+      ],
+      "series_improvements": [
+        -0.19320382888302234,
+        0.059778121501438575,
+        -0.3506434847056954,
+        -0.19093588757763924,
+        -0.12381505565856082,
+        -0.30986052035846656,
+        -0.2183628195379571,
+        -0.07148298332009273,
+        0.15052374409775382,
+        0.012285048163164447,
+        -0.2008502685002258,
+        0.06895256887234746,
+        -0.4445024569492223,
+        -0.01054807669433877,
+        -0.07091765073648587,
+        -0.07314532233042026
+      ]
+    },
+    {
+      "game": "no_thanks",
+      "phase": "current_card_only",
+      "condition": "validated",
+      "public_nonforced_reveals": 424,
+      "independent_series": 16,
+      "mean_log_loss": {
+        "global": 0.5147704778870269,
+        "validated": 0.6037346349246824
+      },
+      "log_loss_improvement": -0.08896415703765552,
+      "paired_series_bootstrap_95": [
+        -0.1670843062420495,
+        -0.015209293858127968
+      ],
+      "series_improvements": [
+        -0.15274054786572533,
+        0.05692615856643812,
+        -0.36159213691905356,
+        -0.2318808826012545,
+        -0.12381505565856082,
+        -0.306535487992182,
+        -0.0362998440359768,
+        -0.07255272406925828,
+        0.11976210950785804,
+        -0.0043440382661673604,
+        0.14316776179936225,
+        0.06895256887234746,
+        -0.3754364663570513,
+        -0.009020240100742483,
+        -0.08137291057668466,
+        -0.056644776905837135
+      ]
+    },
+    {
+      "game": "no_thanks",
+      "phase": "future_draws",
+      "condition": "supported",
+      "public_nonforced_reveals": 14105,
+      "independent_series": 16,
+      "mean_log_loss": {
+        "global": 0.4512721339474689,
+        "supported": 0.4514124062322164
+      },
+      "log_loss_improvement": -0.00014027228474749326,
+      "paired_series_bootstrap_95": [
+        -0.0009702357866586197,
+        0.0006982656233611188
+      ],
+      "series_improvements": [
+        -0.0006736814775975541,
+        -0.0033074571103872685,
+        0.003472644994886087,
+        -0.0008699699945921568,
+        0.0008724913022735703,
+        -0.0018870764582047395,
+        -0.0005638267936887709,
+        0.0005724706693143178,
+        0.0008967836728625556,
+        0.00041091731430425993,
+        0.0006242065053273516,
+        -0.0012083531262898073,
+        0.0004936992263421258,
+        0.0004118690858562202,
+        0.001844661487510224,
+        -0.0033337358538763073
+      ]
+    },
+    {
+      "game": "no_thanks",
+      "phase": "future_draws",
+      "condition": "validated",
+      "public_nonforced_reveals": 14105,
+      "independent_series": 16,
+      "mean_log_loss": {
+        "global": 0.4512721339474689,
+        "validated": 0.4514059710656452
+      },
+      "log_loss_improvement": -0.00013383711817627902,
+      "paired_series_bootstrap_95": [
+        -0.0009596222042973359,
+        0.000687327011681363
+      ],
+      "series_improvements": [
+        -0.0006736814775975541,
+        -0.0035985387464817498,
+        0.0034686018017664466,
+        -0.0011937760858108937,
+        0.0008724913022735703,
+        -0.0018870764582047395,
+        -0.0005638267936887709,
+        0.0005724706693143178,
+        0.001031608432169151,
+        0.00041091731430425993,
+        0.0006204245712667644,
+        -0.001655252417948172,
+        0.0002994003349615637,
+        0.0004118690858562202,
+        0.001934580410010045,
+        -0.0021916058330109234
+      ]
+    }
+  ],
+  "limitations": [
+    "matched global-policy paths, not actions from the supported controller",
+    "better response prediction does not alone prove better move selection",
+    "terminal opportunity classes require adapter knowledge"
+  ]
+}

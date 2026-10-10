@@ -1,0 +1,21 @@
+{
+  "kind": "prequential matched-path diagnostic",
+  "conditions": [
+    "global",
+    "supported"
+  ],
+  "source_traces": {
+    "shard-0\\global\\trajectories.jsonl": "4106b624a3ee1c0658f1262ed1d46447397372d29cf8b68e43a0832afb888575",
+    "shard-1\\global\\trajectories.jsonl": "27b20828cf5a2a96cdd283ab24aa9417cb86498b77058824279d471be26b90e8",
+    "shard-2\\global\\trajectories.jsonl": "8afff6723f432719b5d3ff5a5a401a628a5a9d2e6d31e48cfbe659c53c69d936",
+    "shard-3\\global\\trajectories.jsonl": "b0a05babbffbd70dbf9e96e994278839fdc22d83b387842914eb23eede722506"
+  },
+  "target": "next publicly revealed opponent action, scored before update; not terminal win prediction",
+  "weighting": "average observer copies for each public reveal, mean per episode, then mean per learning series",
+  "partitions": [
+    "future opportunity",
+    "current-card only",
+    "Goof single-bank negative control"
+  ],
+  "uncertainty": "10000 paired learning-series bootstrap samples; seed 73118; no multiplicity correction"
+}

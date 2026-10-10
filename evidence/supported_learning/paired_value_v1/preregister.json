@@ -1,0 +1,58 @@
+{
+  "train_seeds": [
+    7800,
+    7801,
+    7802,
+    7803,
+    7804,
+    7805,
+    7806,
+    7807
+  ],
+  "calibration_seeds": [
+    7808,
+    7809,
+    7810,
+    7811,
+    7812,
+    7813,
+    7814,
+    7815
+  ],
+  "test_seeds": [
+    8200,
+    8201,
+    8202,
+    8203,
+    8204,
+    8205,
+    8206,
+    8207,
+    8208,
+    8209,
+    8210,
+    8211,
+    8212,
+    8213,
+    8214,
+    8215
+  ],
+  "alpha": 10.0,
+  "error_quantile": 0.9,
+  "max_regret": 0.12,
+  "kind": "matched action ranking, not factual selected-action prediction",
+  "scope": "No Thanks current_card_only; public feature encoder version in teach_actual_alternatives",
+  "weighting": "each NPC episode has total fit weight one; all comparisons within a matched case",
+  "primary": "arbitrated root minus incumbent true simulated winner regret on held-out series",
+  "secondary": [
+    "greedy learned ranking",
+    "progress ranking",
+    "per-profile and coverage"
+  ],
+  "selector": "primary learned gain must exceed .12 plus held-out empirical pair error; no actual test labels enter choice",
+  "limitations": [
+    "empirical error quantile is not statistical coverage guarantee",
+    "changed future policy must be separately validated"
+  ],
+  "input_sha256": "d198c871482442e96a1b7e9fc85e8763e5951a7f0b713bb97c04ebf55d9ec897"
+}

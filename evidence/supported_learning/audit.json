@@ -1,0 +1,2042 @@
+{
+  "runs": [
+    {
+      "folder": "shard-0\\global",
+      "proof": {
+        "matches": 64,
+        "steps": 4028,
+        "decisions": 5276,
+        "goofspiel_objective-search_forecasts": 416,
+        "goofspiel_objective-search_multiple_roots": 384,
+        "goofspiel_objective-search_all_roots_zero_share": 50,
+        "goofspiel_objective-search_all_roots_equal_share": 68,
+        "benchmark_decisions": 1269,
+        "goofspiel_adaptive_forecasts": 1248,
+        "goofspiel_adaptive_multiple_roots": 1152,
+        "goofspiel_adaptive_all_roots_zero_share": 161,
+        "goofspiel_adaptive_all_roots_equal_share": 218,
+        "personality_selections_replayed": 4007,
+        "goofspiel_same_state_persona_probes": 1248,
+        "goofspiel_different_persona_choices": 919,
+        "learning_records_replayed": 15828,
+        "goofspiel_progress_fallbacks": 232,
+        "chip_ledger_steps": 3612,
+        "no_thanks_objective-search_forecasts": 853,
+        "no_thanks_objective-search_multiple_roots": 826,
+        "no_thanks_objective-search_all_roots_zero_share": 79,
+        "no_thanks_objective-search_all_roots_equal_share": 92,
+        "no_thanks_adaptive_forecasts": 2759,
+        "no_thanks_adaptive_multiple_roots": 2757,
+        "no_thanks_adaptive_all_roots_zero_share": 317,
+        "no_thanks_adaptive_all_roots_equal_share": 357,
+        "no_thanks_same_state_persona_probes": 2759,
+        "no_thanks_different_persona_choices": 426,
+        "no_thanks_progress_fallbacks": 317,
+        "all_finished": true,
+        "source_hashes_checked": 106,
+        "source_reference": "1847caa",
+        "immutable_modules_replayed": [
+          "reflex/goal_guard.py",
+          "reflex/goal_progress.py",
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "4106b624a3ee1c0658f1262ed1d46447397372d29cf8b68e43a0832afb888575",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.6371978721930143,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.9118176449769781,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 2304,
+            "mean_log_loss": 1.6371978721930143,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2478,
+            "mean_log_loss": 0.3955878064100819,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2757,
+            "mean_log_loss": 0.46586798851819233,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5514,
+            "mean_log_loss": 0.46586798851819233,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 416,
+            "rank_sum": 252.2445887445886,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 416,
+            "rank_sum": 52.13499278499281,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 416,
+            "rank_sum": 252.54653679653708,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 902,
+            "takes": 192,
+            "passes": 710,
+            "voluntary_costly_takes": 126
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 928,
+            "takes": 217,
+            "passes": 711,
+            "voluntary_costly_takes": 125
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 929,
+            "takes": 219,
+            "passes": 710,
+            "voluntary_costly_takes": 135
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "shard-1\\global",
+      "proof": {
+        "matches": 64,
+        "steps": 4127,
+        "decisions": 5375,
+        "goofspiel_objective-search_forecasts": 416,
+        "goofspiel_objective-search_multiple_roots": 384,
+        "goofspiel_objective-search_all_roots_zero_share": 50,
+        "goofspiel_objective-search_all_roots_equal_share": 65,
+        "benchmark_decisions": 1320,
+        "goofspiel_adaptive_forecasts": 1248,
+        "goofspiel_adaptive_multiple_roots": 1152,
+        "goofspiel_adaptive_all_roots_zero_share": 171,
+        "goofspiel_adaptive_all_roots_equal_share": 221,
+        "personality_selections_replayed": 4055,
+        "goofspiel_same_state_persona_probes": 1248,
+        "goofspiel_different_persona_choices": 928,
+        "learning_records_replayed": 16125,
+        "goofspiel_progress_fallbacks": 242,
+        "chip_ledger_steps": 3711,
+        "no_thanks_objective-search_forecasts": 904,
+        "no_thanks_objective-search_multiple_roots": 854,
+        "no_thanks_objective-search_all_roots_zero_share": 79,
+        "no_thanks_objective-search_all_roots_equal_share": 90,
+        "no_thanks_adaptive_forecasts": 2807,
+        "no_thanks_adaptive_multiple_roots": 2807,
+        "no_thanks_adaptive_all_roots_zero_share": 298,
+        "no_thanks_adaptive_all_roots_equal_share": 349,
+        "no_thanks_same_state_persona_probes": 2807,
+        "no_thanks_different_persona_choices": 400,
+        "no_thanks_progress_fallbacks": 298,
+        "all_finished": true,
+        "source_hashes_checked": 106,
+        "source_reference": "1847caa",
+        "immutable_modules_replayed": [
+          "reflex/goal_guard.py",
+          "reflex/goal_progress.py",
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "27b20828cf5a2a96cdd283ab24aa9417cb86498b77058824279d471be26b90e8",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.651209242151,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.9099659250311356,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 2304,
+            "mean_log_loss": 1.651209242151,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2562,
+            "mean_log_loss": 0.3770694420949739,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2807,
+            "mean_log_loss": 0.4533136462982032,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5614,
+            "mean_log_loss": 0.4533136462982032,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 416,
+            "rank_sum": 247.8761544011542,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 416,
+            "rank_sum": 53.69217171717172,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 416,
+            "rank_sum": 172.3211399711399,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 934,
+            "takes": 201,
+            "passes": 733,
+            "voluntary_costly_takes": 127
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 947,
+            "takes": 211,
+            "passes": 736,
+            "voluntary_costly_takes": 126
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 926,
+            "takes": 189,
+            "passes": 737,
+            "voluntary_costly_takes": 115
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "shard-1\\fixed-supported",
+      "proof": {
+        "matches": 64,
+        "steps": 4058,
+        "decisions": 5306,
+        "goofspiel_objective-search_forecasts": 416,
+        "goofspiel_objective-search_multiple_roots": 384,
+        "goofspiel_objective-search_all_roots_zero_share": 50,
+        "goofspiel_objective-search_all_roots_equal_share": 65,
+        "benchmark_decisions": 1286,
+        "goofspiel_adaptive_forecasts": 1248,
+        "goofspiel_adaptive_multiple_roots": 1152,
+        "goofspiel_adaptive_all_roots_zero_share": 171,
+        "goofspiel_adaptive_all_roots_equal_share": 221,
+        "personality_selections_replayed": 4020,
+        "goofspiel_same_state_persona_probes": 1248,
+        "goofspiel_different_persona_choices": 928,
+        "learning_records_replayed": 15918,
+        "goofspiel_progress_fallbacks": 242,
+        "chip_ledger_steps": 3642,
+        "no_thanks_objective-search_forecasts": 870,
+        "no_thanks_objective-search_multiple_roots": 820,
+        "no_thanks_objective-search_all_roots_zero_share": 80,
+        "no_thanks_objective-search_all_roots_equal_share": 86,
+        "no_thanks_adaptive_forecasts": 2772,
+        "no_thanks_adaptive_multiple_roots": 2772,
+        "no_thanks_adaptive_all_roots_zero_share": 329,
+        "no_thanks_adaptive_all_roots_equal_share": 365,
+        "no_thanks_same_state_persona_probes": 2772,
+        "no_thanks_different_persona_choices": 410,
+        "no_thanks_progress_fallbacks": 329,
+        "all_finished": true,
+        "source_hashes_checked": 106,
+        "source_reference": "1847caa",
+        "immutable_modules_replayed": [
+          "reflex/goal_guard.py",
+          "reflex/goal_progress.py",
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "e151bc5926f84301c5c85dd861ef21034c790427618b026670410d9a8a4226ef",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.651209242151,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.9099659250311356,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 2304,
+            "mean_log_loss": 1.651209242151,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2460,
+            "mean_log_loss": 0.404023874493237,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2772,
+            "mean_log_loss": 0.46103730501839146,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5544,
+            "mean_log_loss": 0.463211073535344,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 416,
+            "rank_sum": 247.8761544011542,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 416,
+            "rank_sum": 53.69217171717172,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 416,
+            "rank_sum": 172.3211399711399,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 891,
+            "takes": 170,
+            "passes": 721,
+            "voluntary_costly_takes": 111
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 942,
+            "takes": 224,
+            "passes": 718,
+            "voluntary_costly_takes": 144
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 939,
+            "takes": 225,
+            "passes": 714,
+            "voluntary_costly_takes": 134
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "shard-0\\fixed-supported",
+      "proof": {
+        "matches": 64,
+        "steps": 4356,
+        "decisions": 5604,
+        "goofspiel_objective-search_forecasts": 416,
+        "goofspiel_objective-search_multiple_roots": 384,
+        "goofspiel_objective-search_all_roots_zero_share": 50,
+        "goofspiel_objective-search_all_roots_equal_share": 68,
+        "benchmark_decisions": 1365,
+        "goofspiel_adaptive_forecasts": 1248,
+        "goofspiel_adaptive_multiple_roots": 1152,
+        "goofspiel_adaptive_all_roots_zero_share": 161,
+        "goofspiel_adaptive_all_roots_equal_share": 218,
+        "personality_selections_replayed": 4239,
+        "goofspiel_same_state_persona_probes": 1248,
+        "goofspiel_different_persona_choices": 919,
+        "learning_records_replayed": 16812,
+        "goofspiel_progress_fallbacks": 232,
+        "chip_ledger_steps": 3940,
+        "no_thanks_objective-search_forecasts": 949,
+        "no_thanks_objective-search_multiple_roots": 917,
+        "no_thanks_objective-search_all_roots_zero_share": 65,
+        "no_thanks_objective-search_all_roots_equal_share": 71,
+        "no_thanks_adaptive_forecasts": 2991,
+        "no_thanks_adaptive_multiple_roots": 2990,
+        "no_thanks_adaptive_all_roots_zero_share": 334,
+        "no_thanks_adaptive_all_roots_equal_share": 397,
+        "no_thanks_same_state_persona_probes": 2991,
+        "no_thanks_different_persona_choices": 507,
+        "no_thanks_progress_fallbacks": 335,
+        "all_finished": true,
+        "source_hashes_checked": 106,
+        "source_reference": "1847caa",
+        "immutable_modules_replayed": [
+          "reflex/goal_guard.py",
+          "reflex/goal_progress.py",
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "1e66215e83b77e78d8fd45186640215e0eed9c37500480d53666454526f5b9d5",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.6371978721930143,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.9118176449769781,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 2304,
+            "mean_log_loss": 1.6371978721930143,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2751,
+            "mean_log_loss": 0.38551687043722144,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2990,
+            "mean_log_loss": 0.4636660950956384,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5980,
+            "mean_log_loss": 0.4632958301892791,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 416,
+            "rank_sum": 252.2445887445886,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 416,
+            "rank_sum": 52.13499278499281,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 416,
+            "rank_sum": 252.54653679653708,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 1015,
+            "takes": 220,
+            "passes": 795,
+            "voluntary_costly_takes": 132
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 993,
+            "takes": 204,
+            "passes": 789,
+            "voluntary_costly_takes": 131
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 983,
+            "takes": 190,
+            "passes": 793,
+            "voluntary_costly_takes": 123
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "shard-2\\global",
+      "proof": {
+        "matches": 64,
+        "steps": 4023,
+        "decisions": 5271,
+        "goofspiel_objective-search_forecasts": 416,
+        "goofspiel_objective-search_multiple_roots": 384,
+        "goofspiel_objective-search_all_roots_zero_share": 45,
+        "goofspiel_objective-search_all_roots_equal_share": 59,
+        "benchmark_decisions": 1298,
+        "goofspiel_adaptive_forecasts": 1248,
+        "goofspiel_adaptive_multiple_roots": 1152,
+        "goofspiel_adaptive_all_roots_zero_share": 138,
+        "goofspiel_adaptive_all_roots_equal_share": 185,
+        "personality_selections_replayed": 3973,
+        "goofspiel_same_state_persona_probes": 1248,
+        "goofspiel_different_persona_choices": 947,
+        "learning_records_replayed": 15813,
+        "goofspiel_progress_fallbacks": 210,
+        "chip_ledger_steps": 3607,
+        "no_thanks_objective-search_forecasts": 882,
+        "no_thanks_objective-search_multiple_roots": 825,
+        "no_thanks_objective-search_all_roots_zero_share": 91,
+        "no_thanks_objective-search_all_roots_equal_share": 94,
+        "no_thanks_adaptive_forecasts": 2725,
+        "no_thanks_adaptive_multiple_roots": 2724,
+        "no_thanks_adaptive_all_roots_zero_share": 182,
+        "no_thanks_adaptive_all_roots_equal_share": 236,
+        "no_thanks_same_state_persona_probes": 2725,
+        "no_thanks_different_persona_choices": 348,
+        "no_thanks_progress_fallbacks": 183,
+        "all_finished": true,
+        "source_hashes_checked": 106,
+        "source_reference": "1847caa",
+        "immutable_modules_replayed": [
+          "reflex/goal_guard.py",
+          "reflex/goal_progress.py",
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "8afff6723f432719b5d3ff5a5a401a628a5a9d2e6d31e48cfbe659c53c69d936",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.6385613476254874,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.8910351401234615,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 2304,
+            "mean_log_loss": 1.6385613476254874,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2475,
+            "mean_log_loss": 0.3864647556062441,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2724,
+            "mean_log_loss": 0.4704459218299855,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5448,
+            "mean_log_loss": 0.4704459218299855,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 416,
+            "rank_sum": 43.596753246753266,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 416,
+            "rank_sum": 173.29855699855693,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 416,
+            "rank_sum": 239.07972582972596,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 903,
+            "takes": 194,
+            "passes": 709,
+            "voluntary_costly_takes": 116
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 913,
+            "takes": 204,
+            "passes": 709,
+            "voluntary_costly_takes": 114
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 909,
+            "takes": 200,
+            "passes": 709,
+            "voluntary_costly_takes": 129
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "shard-3\\global",
+      "proof": {
+        "matches": 64,
+        "steps": 4197,
+        "decisions": 5445,
+        "goofspiel_objective-search_forecasts": 416,
+        "goofspiel_objective-search_multiple_roots": 384,
+        "goofspiel_objective-search_all_roots_zero_share": 32,
+        "goofspiel_objective-search_all_roots_equal_share": 41,
+        "benchmark_decisions": 1310,
+        "goofspiel_adaptive_forecasts": 1248,
+        "goofspiel_adaptive_multiple_roots": 1152,
+        "goofspiel_adaptive_all_roots_zero_share": 89,
+        "goofspiel_adaptive_all_roots_equal_share": 109,
+        "personality_selections_replayed": 4135,
+        "goofspiel_same_state_persona_probes": 1248,
+        "goofspiel_different_persona_choices": 889,
+        "learning_records_replayed": 16335,
+        "goofspiel_progress_fallbacks": 160,
+        "chip_ledger_steps": 3781,
+        "no_thanks_objective-search_forecasts": 894,
+        "no_thanks_objective-search_multiple_roots": 856,
+        "no_thanks_objective-search_all_roots_zero_share": 71,
+        "no_thanks_objective-search_all_roots_equal_share": 82,
+        "no_thanks_adaptive_forecasts": 2887,
+        "no_thanks_adaptive_multiple_roots": 2886,
+        "no_thanks_adaptive_all_roots_zero_share": 227,
+        "no_thanks_adaptive_all_roots_equal_share": 264,
+        "no_thanks_same_state_persona_probes": 2887,
+        "no_thanks_different_persona_choices": 456,
+        "no_thanks_progress_fallbacks": 227,
+        "all_finished": true,
+        "source_hashes_checked": 106,
+        "source_reference": "1847caa",
+        "immutable_modules_replayed": [
+          "reflex/goal_guard.py",
+          "reflex/goal_progress.py",
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "b0a05babbffbd70dbf9e96e994278839fdc22d83b387842914eb23eede722506",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.8767021089287386,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.8863616243652086,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 2304,
+            "mean_log_loss": 1.8767021089287386,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2568,
+            "mean_log_loss": 0.3677108602745126,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2886,
+            "mean_log_loss": 0.4617888422586982,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5772,
+            "mean_log_loss": 0.4617888422586982,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 416,
+            "rank_sum": 193.3508658008659,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 416,
+            "rank_sum": 173.55696248196253,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 416,
+            "rank_sum": 196.1026695526695,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 961,
+            "takes": 206,
+            "passes": 755,
+            "voluntary_costly_takes": 125
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 958,
+            "takes": 205,
+            "passes": 753,
+            "voluntary_costly_takes": 128
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 968,
+            "takes": 218,
+            "passes": 750,
+            "voluntary_costly_takes": 139
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "shard-2\\fixed-supported",
+      "proof": {
+        "matches": 64,
+        "steps": 4272,
+        "decisions": 5520,
+        "goofspiel_objective-search_forecasts": 416,
+        "goofspiel_objective-search_multiple_roots": 384,
+        "goofspiel_objective-search_all_roots_zero_share": 45,
+        "goofspiel_objective-search_all_roots_equal_share": 59,
+        "benchmark_decisions": 1350,
+        "goofspiel_adaptive_forecasts": 1248,
+        "goofspiel_adaptive_multiple_roots": 1152,
+        "goofspiel_adaptive_all_roots_zero_share": 138,
+        "goofspiel_adaptive_all_roots_equal_share": 185,
+        "personality_selections_replayed": 4170,
+        "goofspiel_same_state_persona_probes": 1248,
+        "goofspiel_different_persona_choices": 947,
+        "learning_records_replayed": 16560,
+        "goofspiel_progress_fallbacks": 210,
+        "chip_ledger_steps": 3856,
+        "no_thanks_objective-search_forecasts": 934,
+        "no_thanks_objective-search_multiple_roots": 894,
+        "no_thanks_objective-search_all_roots_zero_share": 58,
+        "no_thanks_objective-search_all_roots_equal_share": 62,
+        "no_thanks_adaptive_forecasts": 2922,
+        "no_thanks_adaptive_multiple_roots": 2920,
+        "no_thanks_adaptive_all_roots_zero_share": 247,
+        "no_thanks_adaptive_all_roots_equal_share": 290,
+        "no_thanks_same_state_persona_probes": 2922,
+        "no_thanks_different_persona_choices": 362,
+        "no_thanks_progress_fallbacks": 248,
+        "all_finished": true,
+        "source_hashes_checked": 106,
+        "source_reference": "1847caa",
+        "immutable_modules_replayed": [
+          "reflex/goal_guard.py",
+          "reflex/goal_progress.py",
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "980b66933bc4b545e0076bca65760a05f23542524ff3bef17a284cbc64e4e93e",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.6385613476254874,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.8910351401234615,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 2304,
+            "mean_log_loss": 1.6385613476254874,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2682,
+            "mean_log_loss": 0.37999148206886924,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2920,
+            "mean_log_loss": 0.46710362958450846,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5840,
+            "mean_log_loss": 0.46838760132210855,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 416,
+            "rank_sum": 43.596753246753266,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 416,
+            "rank_sum": 173.29855699855693,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 416,
+            "rank_sum": 239.07972582972596,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 1012,
+            "takes": 242,
+            "passes": 770,
+            "voluntary_costly_takes": 144
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 955,
+            "takes": 184,
+            "passes": 771,
+            "voluntary_costly_takes": 119
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 955,
+            "takes": 183,
+            "passes": 772,
+            "voluntary_costly_takes": 118
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "settlement\\shard-0\\supported",
+      "proof": {
+        "matches": 32,
+        "steps": 3564,
+        "chip_ledger_steps": 3564,
+        "decisions": 3564,
+        "no_thanks_objective-search_forecasts": 846,
+        "no_thanks_objective-search_multiple_roots": 816,
+        "no_thanks_objective-search_all_roots_zero_share": 49,
+        "no_thanks_objective-search_all_roots_equal_share": 57,
+        "benchmark_decisions": 846,
+        "learning_records_replayed": 10692,
+        "no_thanks_adaptive_forecasts": 2718,
+        "no_thanks_adaptive_multiple_roots": 2717,
+        "no_thanks_adaptive_all_roots_zero_share": 275,
+        "no_thanks_adaptive_all_roots_equal_share": 310,
+        "personality_selections_replayed": 2718,
+        "no_thanks_same_state_persona_probes": 2718,
+        "no_thanks_different_persona_choices": 390,
+        "no_thanks_real_expiry_choices": 2,
+        "no_thanks_progress_fallbacks": 275,
+        "all_finished": true,
+        "source_hashes_checked": 108,
+        "source_reference": "726aa5b",
+        "immutable_modules_replayed": [
+          "reflex/loop_predictor.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "5f11105a9cffe6799a313de59f5b67bbda66b962a46a9b3335a31a39529332e0",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2448,
+            "mean_log_loss": 0.40818428074271124,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2717,
+            "mean_log_loss": 0.4729438893120622,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5434,
+            "mean_log_loss": 0.4748350117799588,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 875,
+            "takes": 177,
+            "passes": 698,
+            "voluntary_costly_takes": 114
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 908,
+            "takes": 209,
+            "passes": 699,
+            "voluntary_costly_takes": 126
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 935,
+            "takes": 238,
+            "passes": 697,
+            "voluntary_costly_takes": 142
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "shard-3\\fixed-supported",
+      "proof": {
+        "matches": 64,
+        "steps": 4228,
+        "decisions": 5476,
+        "goofspiel_objective-search_forecasts": 416,
+        "goofspiel_objective-search_multiple_roots": 384,
+        "goofspiel_objective-search_all_roots_zero_share": 32,
+        "goofspiel_objective-search_all_roots_equal_share": 41,
+        "benchmark_decisions": 1339,
+        "goofspiel_adaptive_forecasts": 1248,
+        "goofspiel_adaptive_multiple_roots": 1152,
+        "goofspiel_adaptive_all_roots_zero_share": 89,
+        "goofspiel_adaptive_all_roots_equal_share": 109,
+        "personality_selections_replayed": 4137,
+        "goofspiel_same_state_persona_probes": 1248,
+        "goofspiel_different_persona_choices": 889,
+        "learning_records_replayed": 16428,
+        "goofspiel_progress_fallbacks": 160,
+        "chip_ledger_steps": 3812,
+        "no_thanks_objective-search_forecasts": 923,
+        "no_thanks_objective-search_multiple_roots": 880,
+        "no_thanks_objective-search_all_roots_zero_share": 83,
+        "no_thanks_objective-search_all_roots_equal_share": 92,
+        "no_thanks_adaptive_forecasts": 2889,
+        "no_thanks_adaptive_multiple_roots": 2889,
+        "no_thanks_adaptive_all_roots_zero_share": 265,
+        "no_thanks_adaptive_all_roots_equal_share": 319,
+        "no_thanks_same_state_persona_probes": 2889,
+        "no_thanks_different_persona_choices": 419,
+        "no_thanks_progress_fallbacks": 265,
+        "all_finished": true,
+        "source_hashes_checked": 106,
+        "source_reference": "1847caa",
+        "immutable_modules_replayed": [
+          "reflex/goal_guard.py",
+          "reflex/goal_progress.py",
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "7edb09b16d2b01b25d20055358a73e805cb274dd80804bc44fa9bc15c2ff610b",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.8767021089287386,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 1152,
+            "mean_log_loss": 1.8863616243652086,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 2304,
+            "mean_log_loss": 1.8767021089287386,
+            "uniform_log_loss": 1.879346987760285
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2640,
+            "mean_log_loss": 0.4049766868534618,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2889,
+            "mean_log_loss": 0.45732321026532097,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5778,
+            "mean_log_loss": 0.45782936151285464,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 416,
+            "rank_sum": 193.3508658008659,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 416,
+            "rank_sum": 173.55696248196253,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "goofspiel",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 416,
+            "rank_sum": 196.1026695526695,
+            "nonforced_bids": 384
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 951,
+            "takes": 188,
+            "passes": 763,
+            "voluntary_costly_takes": 119
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 1010,
+            "takes": 253,
+            "passes": 757,
+            "voluntary_costly_takes": 148
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 928,
+            "takes": 167,
+            "passes": 761,
+            "voluntary_costly_takes": 109
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "settlement\\shard-1\\supported",
+      "proof": {
+        "matches": 32,
+        "steps": 4025,
+        "chip_ledger_steps": 4025,
+        "decisions": 4025,
+        "no_thanks_objective-search_forecasts": 981,
+        "no_thanks_objective-search_multiple_roots": 924,
+        "no_thanks_objective-search_all_roots_zero_share": 60,
+        "no_thanks_objective-search_all_roots_equal_share": 62,
+        "benchmark_decisions": 981,
+        "learning_records_replayed": 12075,
+        "no_thanks_adaptive_forecasts": 3044,
+        "no_thanks_adaptive_multiple_roots": 3042,
+        "no_thanks_adaptive_all_roots_zero_share": 245,
+        "no_thanks_adaptive_all_roots_equal_share": 294,
+        "personality_selections_replayed": 3044,
+        "no_thanks_same_state_persona_probes": 3044,
+        "no_thanks_different_persona_choices": 387,
+        "no_thanks_progress_fallbacks": 245,
+        "no_thanks_real_expiry_choices": 4,
+        "all_finished": true,
+        "source_hashes_checked": 108,
+        "source_reference": "726aa5b",
+        "immutable_modules_replayed": [
+          "reflex/loop_predictor.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "5d45dbb6f5389ae46904b8550435c5eac00f7325d22fdab18ff56f3d03c8828b",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2772,
+            "mean_log_loss": 0.36601558394739697,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 3042,
+            "mean_log_loss": 0.4786467756736307,
+            "uniform_log_loss": 0.6931471805599454
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 6084,
+            "mean_log_loss": 0.47864525961032306,
+            "uniform_log_loss": 0.6931471805599454
+          }
+        ],
+        "behavior": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 1018,
+            "takes": 204,
+            "passes": 814,
+            "voluntary_costly_takes": 135
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 1026,
+            "takes": 212,
+            "passes": 814,
+            "voluntary_costly_takes": 137
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 1000,
+            "takes": 185,
+            "passes": 815,
+            "voluntary_costly_takes": 121
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "settlement\\shard-0\\fixed-settlement",
+      "proof": {
+        "matches": 32,
+        "steps": 3686,
+        "chip_ledger_steps": 3686,
+        "decisions": 3686,
+        "no_thanks_objective-search_forecasts": 879,
+        "no_thanks_objective-search_multiple_roots": 849,
+        "no_thanks_objective-search_all_roots_zero_share": 53,
+        "no_thanks_objective-search_all_roots_equal_share": 62,
+        "benchmark_decisions": 879,
+        "learning_records_replayed": 11058,
+        "no_thanks_adaptive_forecasts": 2807,
+        "no_thanks_adaptive_multiple_roots": 2806,
+        "no_thanks_adaptive_all_roots_zero_share": 266,
+        "no_thanks_adaptive_all_roots_equal_share": 300,
+        "personality_selections_replayed": 2807,
+        "no_thanks_same_state_persona_probes": 2807,
+        "no_thanks_different_persona_choices": 399,
+        "no_thanks_real_expiry_choices": 3,
+        "finite_continuation_choices": 96,
+        "no_thanks_progress_fallbacks": 266,
+        "all_finished": true,
+        "source_hashes_checked": 108,
+        "source_reference": "726aa5b",
+        "immutable_modules_replayed": [
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "5c625c7f2a9059ef3c91a513938dd88b4d2af1d98399440b4d76dc055808e9ac",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2547,
+            "mean_log_loss": 0.40855508263778384,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2806,
+            "mean_log_loss": 0.47302788253256983,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5612,
+            "mean_log_loss": 0.47413029151424824,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 906,
+            "takes": 177,
+            "passes": 729,
+            "voluntary_costly_takes": 115
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 949,
+            "takes": 220,
+            "passes": 729,
+            "voluntary_costly_takes": 133
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 952,
+            "takes": 224,
+            "passes": 728,
+            "voluntary_costly_takes": 132
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "settlement\\shard-2\\supported",
+      "proof": {
+        "matches": 32,
+        "steps": 4002,
+        "chip_ledger_steps": 4002,
+        "decisions": 4002,
+        "no_thanks_objective-search_forecasts": 975,
+        "no_thanks_objective-search_multiple_roots": 932,
+        "no_thanks_objective-search_all_roots_zero_share": 78,
+        "no_thanks_objective-search_all_roots_equal_share": 81,
+        "benchmark_decisions": 975,
+        "learning_records_replayed": 12006,
+        "no_thanks_adaptive_forecasts": 3027,
+        "no_thanks_adaptive_multiple_roots": 3027,
+        "no_thanks_adaptive_all_roots_zero_share": 293,
+        "no_thanks_adaptive_all_roots_equal_share": 341,
+        "personality_selections_replayed": 3027,
+        "no_thanks_same_state_persona_probes": 3027,
+        "no_thanks_different_persona_choices": 484,
+        "no_thanks_progress_fallbacks": 293,
+        "no_thanks_real_expiry_choices": 6,
+        "all_finished": true,
+        "source_hashes_checked": 108,
+        "source_reference": "726aa5b",
+        "immutable_modules_replayed": [
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "65374687a7315753eef878fe28b7066f9e62a97fd3486627b2118053ca7fa017",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2796,
+            "mean_log_loss": 0.40393356295058447,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 3027,
+            "mean_log_loss": 0.44266550871824617,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 6054,
+            "mean_log_loss": 0.44315520068736564,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 988,
+            "takes": 178,
+            "passes": 810,
+            "voluntary_costly_takes": 104
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 1044,
+            "takes": 236,
+            "passes": 808,
+            "voluntary_costly_takes": 137
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 995,
+            "takes": 186,
+            "passes": 809,
+            "voluntary_costly_takes": 123
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "settlement\\shard-1\\fixed-settlement",
+      "proof": {
+        "matches": 32,
+        "steps": 3976,
+        "chip_ledger_steps": 3976,
+        "decisions": 3976,
+        "no_thanks_objective-search_forecasts": 975,
+        "no_thanks_objective-search_multiple_roots": 923,
+        "no_thanks_objective-search_all_roots_zero_share": 71,
+        "no_thanks_objective-search_all_roots_equal_share": 75,
+        "benchmark_decisions": 975,
+        "learning_records_replayed": 11928,
+        "no_thanks_adaptive_forecasts": 3001,
+        "no_thanks_adaptive_multiple_roots": 2998,
+        "no_thanks_adaptive_all_roots_zero_share": 229,
+        "no_thanks_adaptive_all_roots_equal_share": 271,
+        "personality_selections_replayed": 3001,
+        "no_thanks_same_state_persona_probes": 3001,
+        "no_thanks_different_persona_choices": 384,
+        "no_thanks_progress_fallbacks": 229,
+        "finite_continuation_choices": 94,
+        "no_thanks_real_expiry_choices": 3,
+        "all_finished": true,
+        "source_hashes_checked": 108,
+        "source_reference": "726aa5b",
+        "immutable_modules_replayed": [
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "7c4d5226c08ed8dcf486b55f0991a508aac7ed0e598ae75225b4f9032e5a7c76",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2769,
+            "mean_log_loss": 0.3971035080514077,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2998,
+            "mean_log_loss": 0.4506493887398429,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5996,
+            "mean_log_loss": 0.45225425029950195,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 1013,
+            "takes": 211,
+            "passes": 802,
+            "voluntary_costly_takes": 131
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 1014,
+            "takes": 214,
+            "passes": 800,
+            "voluntary_costly_takes": 138
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 974,
+            "takes": 171,
+            "passes": 803,
+            "voluntary_costly_takes": 103
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "settlement\\shard-2\\fixed-settlement",
+      "proof": {
+        "matches": 32,
+        "steps": 3966,
+        "chip_ledger_steps": 3966,
+        "decisions": 3966,
+        "no_thanks_objective-search_forecasts": 965,
+        "no_thanks_objective-search_multiple_roots": 927,
+        "no_thanks_objective-search_all_roots_zero_share": 83,
+        "no_thanks_objective-search_all_roots_equal_share": 92,
+        "benchmark_decisions": 965,
+        "learning_records_replayed": 11898,
+        "no_thanks_adaptive_forecasts": 3001,
+        "no_thanks_adaptive_multiple_roots": 3001,
+        "no_thanks_adaptive_all_roots_zero_share": 297,
+        "no_thanks_adaptive_all_roots_equal_share": 345,
+        "personality_selections_replayed": 3001,
+        "no_thanks_same_state_persona_probes": 3001,
+        "no_thanks_different_persona_choices": 503,
+        "no_thanks_progress_fallbacks": 297,
+        "finite_continuation_choices": 114,
+        "no_thanks_real_expiry_choices": 2,
+        "all_finished": true,
+        "source_hashes_checked": 108,
+        "source_reference": "726aa5b",
+        "immutable_modules_replayed": [
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "c84dc0c77a20eedabf634de6dc772e2fdbb2cda3942b8553b7450063488d3dfa",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2781,
+            "mean_log_loss": 0.3933028094915543,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 3001,
+            "mean_log_loss": 0.4556696690640306,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 6002,
+            "mean_log_loss": 0.45616657370778035,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 979,
+            "takes": 180,
+            "passes": 799,
+            "voluntary_costly_takes": 112
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "care",
+            "decisions": 1042,
+            "takes": 242,
+            "passes": 800,
+            "voluntary_costly_takes": 145
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 980,
+            "takes": 181,
+            "passes": 799,
+            "voluntary_costly_takes": 120
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "settlement\\shard-3\\supported",
+      "proof": {
+        "matches": 32,
+        "steps": 3634,
+        "chip_ledger_steps": 3634,
+        "decisions": 3634,
+        "no_thanks_objective-search_forecasts": 860,
+        "no_thanks_objective-search_multiple_roots": 828,
+        "no_thanks_objective-search_all_roots_zero_share": 56,
+        "no_thanks_objective-search_all_roots_equal_share": 63,
+        "benchmark_decisions": 860,
+        "learning_records_replayed": 10902,
+        "no_thanks_adaptive_forecasts": 2774,
+        "no_thanks_adaptive_multiple_roots": 2774,
+        "no_thanks_adaptive_all_roots_zero_share": 276,
+        "no_thanks_adaptive_all_roots_equal_share": 325,
+        "personality_selections_replayed": 2774,
+        "no_thanks_same_state_persona_probes": 2774,
+        "no_thanks_different_persona_choices": 416,
+        "no_thanks_progress_fallbacks": 276,
+        "no_thanks_real_expiry_choices": 2,
+        "all_finished": true,
+        "source_hashes_checked": 108,
+        "source_reference": "726aa5b",
+        "immutable_modules_replayed": [
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "dd5c96f7616db1e8489d3292eec2fdb4f566fe02da13a062e6d66621bdc7298c",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2484,
+            "mean_log_loss": 0.3850690035176229,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2774,
+            "mean_log_loss": 0.48224136471899043,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5548,
+            "mean_log_loss": 0.48645473895049773,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 914,
+            "takes": 196,
+            "passes": 718,
+            "voluntary_costly_takes": 123
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 975,
+            "takes": 263,
+            "passes": 712,
+            "voluntary_costly_takes": 156
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 885,
+            "takes": 168,
+            "passes": 717,
+            "voluntary_costly_takes": 100
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    },
+    {
+      "folder": "settlement\\shard-3\\fixed-settlement",
+      "proof": {
+        "matches": 32,
+        "steps": 3749,
+        "chip_ledger_steps": 3749,
+        "decisions": 3749,
+        "no_thanks_objective-search_forecasts": 893,
+        "no_thanks_objective-search_multiple_roots": 865,
+        "no_thanks_objective-search_all_roots_zero_share": 64,
+        "no_thanks_objective-search_all_roots_equal_share": 72,
+        "benchmark_decisions": 893,
+        "learning_records_replayed": 11247,
+        "no_thanks_adaptive_forecasts": 2856,
+        "no_thanks_adaptive_multiple_roots": 2856,
+        "no_thanks_adaptive_all_roots_zero_share": 306,
+        "no_thanks_adaptive_all_roots_equal_share": 352,
+        "personality_selections_replayed": 2856,
+        "no_thanks_same_state_persona_probes": 2856,
+        "no_thanks_different_persona_choices": 429,
+        "no_thanks_progress_fallbacks": 306,
+        "finite_continuation_choices": 94,
+        "no_thanks_real_expiry_choices": 2,
+        "all_finished": true,
+        "source_hashes_checked": 108,
+        "source_reference": "726aa5b",
+        "immutable_modules_replayed": [
+          "reflex/loop_predictor.py",
+          "reflex/strong_search.py",
+          "reflex/strong_table.py",
+          "reflex/supported_memory.py"
+        ],
+        "trajectory_sha256": "8b81d84e979bab1d4e3f0c88611a90c6d8752ac2dbe75ac5e9babf23a59064ce",
+        "exact_search_replayed_matches": 0,
+        "replay_scope": null,
+        "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+        "fixed_personality_verified": true,
+        "one_objective_cpu_verified": true,
+        "matched_worlds_verified": true,
+        "predictive_losses": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-benchmark",
+            "observations": 2595,
+            "mean_log_loss": 0.38889160083838503,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "benchmark",
+            "observations": 2856,
+            "mean_log_loss": 0.48312358541366934,
+            "uniform_log_loss": 0.6931471805599453
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "observer_kind": "npc-reads-npc",
+            "observations": 5712,
+            "mean_log_loss": 0.4871857797972949,
+            "uniform_log_loss": 0.6931471805599453
+          }
+        ],
+        "behavior": [
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "growth",
+            "decisions": 949,
+            "takes": 202,
+            "passes": 747,
+            "voluntary_costly_takes": 129
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "steady",
+            "decisions": 994,
+            "takes": 253,
+            "passes": 741,
+            "voluntary_costly_takes": 152
+          },
+          {
+            "game": "no_thanks",
+            "mode": "adaptive",
+            "profile": "ego",
+            "decisions": 913,
+            "takes": 167,
+            "passes": 746,
+            "voluntary_costly_takes": 100
+          }
+        ],
+        "enjoyment_measured": false,
+        "optimal_intelligence_proved": false
+      }
+    }
+  ],
+  "matches": 768,
+  "fixed_personality_verified": true,
+  "all_finished": true,
+  "note": "independent rules/ledger arithmetic; algorithm-reusing public learning and policy integration replay; no additional full matches"
+}

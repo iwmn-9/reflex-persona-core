@@ -1,0 +1,85 @@
+{
+  "source_ref": "2f4d0b6e7df0e73860d8e69fe97f2a9b192f7c5c",
+  "planned_matches": 384,
+  "completed_registered_conditions": [
+    {
+      "folder": "shard-0/global",
+      "matches": 32,
+      "trajectory_sha256": "e5e8b16d844830a6b3596ee9e0e9d7755e0e7ec78d60f77fe6373565114b931b"
+    },
+    {
+      "folder": "shard-0/guarded",
+      "matches": 32,
+      "trajectory_sha256": "1f1dd38792fce89969c997306cd623be78f5987c4ec32d26beefa67407eeb0fa"
+    },
+    {
+      "folder": "shard-1/global",
+      "matches": 32,
+      "trajectory_sha256": "30661175c36fbc36fd3d98340cc6c198b58474108c5570e9dce17ce06eba2664"
+    },
+    {
+      "folder": "shard-1/guarded",
+      "matches": 32,
+      "trajectory_sha256": "eafb71422195bd13fc032f71895e6801908af23e0c0b4b5f96ddeee72c0fc5fb"
+    },
+    {
+      "folder": "shard-1/integrated",
+      "matches": 32,
+      "trajectory_sha256": "46823963aa0200cdb6278f09fd4b28402881b28e89ad83e34bc0bb29078d3350"
+    },
+    {
+      "folder": "shard-2/global",
+      "matches": 32,
+      "trajectory_sha256": "d024d7d64bd69f41a70c092893e010c6f12ce1bbff1a24c00d7344a7fb53592d"
+    },
+    {
+      "folder": "shard-2/guarded",
+      "matches": 32,
+      "trajectory_sha256": "bc012567d475d64523773b0804e8f088792684e73b5bc9057b7ec3c0f70fd92d"
+    },
+    {
+      "folder": "shard-2/integrated",
+      "matches": 32,
+      "trajectory_sha256": "fd7a04885bb45bf299e981ccda0c9b61eb29569bef2b8ad3a19075eec9511fee"
+    },
+    {
+      "folder": "shard-3/global",
+      "matches": 32,
+      "trajectory_sha256": "9f81e0a042ceb74f8cd6b22d9bbb521ff22248e16408360d6f13f5ea817b9393"
+    },
+    {
+      "folder": "shard-3/guarded",
+      "matches": 32,
+      "trajectory_sha256": "5370fe956829a776eb7be0c28f627b2b7a8ca6592fb9ac681b4cf6bb55499ef2"
+    },
+    {
+      "folder": "shard-3/integrated",
+      "matches": 32,
+      "trajectory_sha256": "12be718e355b1264034f44ab78d37460ad7f34b5db7bb288c1ed4e4498606d12"
+    }
+  ],
+  "completed_condition_matches": 352,
+  "status": "excluded incomplete integrated holdout; no partial candidate winner comparisons used for revision",
+  "failure": {
+    "seed": 7600,
+    "encounter": 4,
+    "tick": 136,
+    "viewer": 1,
+    "controller": "planned counterfactual",
+    "cause": "finite progress group mass exceeded one by floating roundoff; strict core probability contract stopped runner",
+    "additional_correction": "fixed-prior planned owner must remain fixed-prior at every future opportunity",
+    "measured_probability_roundoff": {
+      "source_ref": "2f4d0b6",
+      "invalid_grouped_probabilities": [
+        1.0000000000000002
+      ],
+      "maximum_excess": 2.220446049250313e-16,
+      "phase": "planned counterfactual future owner progress"
+    },
+    "original_frozen_reproduction_sha256": "89a08fc266f6fa68bc69871455594bbe2456cb23626586455bb8a6b097f936c8",
+    "corrected_reproduction_sha256": "270c43a77442454e0dec1c8379b64bc10c62b1e770406ad5575d7f8e60e543dd"
+  },
+  "replacement": "guarded_v3, fresh seeds 7800..7815, frozen 9931804; same budgets and registered contrasts",
+  "prediction_diagnostic": "old full global matched paths preserved but not primary replacement evidence",
+  "note": "incomplete integrated prefix remains private; no estimate based on completed subset"
+}

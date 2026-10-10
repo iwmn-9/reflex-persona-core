@@ -1,0 +1,58 @@
+{
+  "train_seeds": [
+    7800,
+    7801,
+    7802,
+    7803,
+    7804,
+    7805,
+    7806,
+    7807
+  ],
+  "calibration_seeds": [
+    7808,
+    7809,
+    7810,
+    7811,
+    7812,
+    7813,
+    7814,
+    7815
+  ],
+  "test_seeds": [
+    8200,
+    8201,
+    8202,
+    8203,
+    8204,
+    8205,
+    8206,
+    8207,
+    8208,
+    8209,
+    8210,
+    8211,
+    8212,
+    8213,
+    8214,
+    8215
+  ],
+  "alpha": 10.0,
+  "error_quantile": 0.9,
+  "max_regret": 0.12,
+  "kind": "matched action ranking, not factual selected-action prediction",
+  "scope": "No Thanks first nonforced turn per NPC with 1..6 remaining; public feature encoder version in teach_actual_alternatives",
+  "weighting": "each NPC episode has total fit weight one; all comparisons within a matched case",
+  "primary": "arbitrated root minus incumbent true simulated winner regret on held-out series",
+  "secondary": [
+    "greedy learned ranking",
+    "progress ranking",
+    "per-profile and coverage"
+  ],
+  "selector": "primary learned gain must exceed .12 plus held-out empirical pair error; no actual test labels enter choice",
+  "limitations": [
+    "empirical error quantile is not statistical coverage guarantee",
+    "changed future policy must be separately validated"
+  ],
+  "input_sha256": "d520dd2c4373e8f4da230ba06db909545136b8c12bfdc34c8db6951a0dbe0a36"
+}

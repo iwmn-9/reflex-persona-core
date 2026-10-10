@@ -1,0 +1,2555 @@
+{
+  "plan": {
+    "train_seeds": [
+      7800,
+      7801,
+      7802,
+      7803,
+      7804,
+      7805,
+      7806,
+      7807
+    ],
+    "calibration_seeds": [
+      7808,
+      7809,
+      7810,
+      7811,
+      7812,
+      7813,
+      7814,
+      7815
+    ],
+    "test_seeds": [
+      8200,
+      8201,
+      8202,
+      8203,
+      8204,
+      8205,
+      8206,
+      8207,
+      8208,
+      8209,
+      8210,
+      8211,
+      8212,
+      8213,
+      8214,
+      8215
+    ],
+    "alpha": 10.0,
+    "error_quantile": 0.9,
+    "max_regret": 0.12,
+    "kind": "matched action ranking, not factual selected-action prediction",
+    "scope": "No Thanks first nonforced turn per NPC with 1..6 remaining; public feature encoder version in teach_actual_alternatives",
+    "weighting": "each NPC episode has total fit weight one; all comparisons within a matched case",
+    "primary": "arbitrated root minus incumbent true simulated winner regret on held-out series",
+    "secondary": [
+      "greedy learned ranking",
+      "progress ranking",
+      "per-profile and coverage"
+    ],
+    "selector": "primary learned gain must exceed .12 plus held-out empirical pair error; no actual test labels enter choice",
+    "limitations": [
+      "empirical error quantile is not statistical coverage guarantee",
+      "changed future policy must be separately validated"
+    ],
+    "input_sha256": "d520dd2c4373e8f4da230ba06db909545136b8c12bfdc34c8db6951a0dbe0a36"
+  },
+  "model_sha256": "a626dd1a1aab23b54c0a83cb482311b3985eb7636809ac3eab3e7e5e0cc7a160",
+  "test_teacher_sha256": "0521d0732bd2e1abdb13271e73b64a5e2b402332146409ccc642e3387918669a",
+  "cases": [
+    {
+      "seed": 8200,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "growth",
+      "tick": 98,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8200,
+      "encounter": 0,
+      "actor": 2,
+      "profile": "steady",
+      "tick": 99,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8200,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 100,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8200,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "growth",
+      "tick": 82,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.11785548746159899,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.025384362567604457,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8200,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "steady",
+      "tick": 84,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.11494278876878125,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.03480787340329983
+      }
+    },
+    {
+      "seed": 8200,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 85,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8201,
+      "encounter": 0,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 85,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8201,
+      "encounter": 0,
+      "actor": 2,
+      "profile": "steady",
+      "tick": 89,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8201,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 90,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.10891778476209729,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.06167159837708375
+      }
+    },
+    {
+      "seed": 8201,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 108,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": false,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.12517443859586325,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8201,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 109,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": false,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.21071624723523513,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.04059399096740232,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8201,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "steady",
+      "tick": 115,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": false,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8202,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "steady",
+      "tick": 70,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.05252590322531975,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.022845668205193376
+      }
+    },
+    {
+      "seed": 8202,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 76,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.08407791432757653,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8202,
+      "encounter": 0,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 78,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8202,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 97,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.11084882476251157,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8202,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "steady",
+      "tick": 98,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.012998025057110757,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.057868698787235245,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8202,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 101,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.03750681493975244,
+        "greedy_progress": 0.03750681493975244
+      }
+    },
+    {
+      "seed": 8203,
+      "encounter": 0,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 73,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.2640237440352158,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8203,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "steady",
+      "tick": 74,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.3333333333333333,
+        "arbitrated": 0.3333333333333333,
+        "greedy": 0.3333333333333333
+      },
+      "progress_regret": {
+        "incumbent": 0.04145080468958118,
+        "greedy_progress": 0.04145080468958118
+      }
+    },
+    {
+      "seed": 8203,
+      "encounter": 0,
+      "actor": 2,
+      "profile": "ego",
+      "tick": 76,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8203,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "steady",
+      "tick": 78,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.07804511178009331,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8203,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "ego",
+      "tick": 80,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.023151030167055574,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8203,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 82,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.22426432514528177,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.07797017491408217,
+        "greedy_progress": 0.07797017491408217
+      }
+    },
+    {
+      "seed": 8204,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "growth",
+      "tick": 118,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8204,
+      "encounter": 0,
+      "actor": 2,
+      "profile": "steady",
+      "tick": 119,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8204,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "care",
+      "tick": 120,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8204,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "care",
+      "tick": 104,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.026894007035676234,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8204,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "growth",
+      "tick": 107,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.05199401617855296,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8204,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "steady",
+      "tick": 108,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.3333333333333333,
+        "arbitrated": 0.3333333333333333,
+        "greedy": 0.3333333333333333
+      },
+      "progress_regret": {
+        "incumbent": 0.07477207202925179,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8205,
+      "encounter": 0,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 53,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": false,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.02721649720029562,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.011744263301574978,
+        "greedy_progress": 0.011744263301574978
+      }
+    },
+    {
+      "seed": 8205,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "care",
+      "tick": 88,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.19193968417741988,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8205,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 89,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.3333333333333333,
+        "arbitrated": 0.3333333333333333,
+        "greedy": 0.3333333333333333
+      },
+      "progress_regret": {
+        "incumbent": 0.04441419128795926,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8205,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "steady",
+      "tick": 93,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8206,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "care",
+      "tick": 64,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.011516926362934304,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0038950727773831295,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8206,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "care",
+      "tick": 78,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.01184879282630582,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.16666666666666666
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8206,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 79,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8206,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "steady",
+      "tick": 80,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8207,
+      "encounter": 0,
+      "actor": 2,
+      "profile": "care",
+      "tick": 107,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8207,
+      "encounter": 0,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 109,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.06526314318455045
+      }
+    },
+    {
+      "seed": 8207,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "steady",
+      "tick": 111,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8207,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "steady",
+      "tick": 94,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.07808582784323603
+      }
+    },
+    {
+      "seed": 8207,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "care",
+      "tick": 95,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8207,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 97,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.04101470342168207,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.11666457283913934,
+        "greedy_progress": 0.11666457283913934
+      }
+    },
+    {
+      "seed": 8208,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "steady",
+      "tick": 78,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.01845737042939244
+      }
+    },
+    {
+      "seed": 8208,
+      "encounter": 0,
+      "actor": 2,
+      "profile": "care",
+      "tick": 82,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8208,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 83,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8208,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "steady",
+      "tick": 103,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.13626846668948514,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.3333333333333333,
+        "arbitrated": 0.3333333333333333,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.04207892942459274,
+        "greedy_progress": 0.04207892942459274
+      }
+    },
+    {
+      "seed": 8208,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "care",
+      "tick": 104,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": false,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.10362498756059482,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.017220316277230724
+      }
+    },
+    {
+      "seed": 8208,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 108,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": false,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.012308173918124388,
+        "greedy_progress": 0.012308173918124388
+      }
+    },
+    {
+      "seed": 8209,
+      "encounter": 0,
+      "actor": 0,
+      "profile": "steady",
+      "tick": 85,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.0022520282805114722,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8209,
+      "encounter": 0,
+      "actor": 2,
+      "profile": "care",
+      "tick": 87,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.14835575267723028,
+        "greedy_progress": 0.14835575267723028
+      }
+    },
+    {
+      "seed": 8209,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 88,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.26705704122373186,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.030005775049567307,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8209,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 88,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8209,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "steady",
+      "tick": 89,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8209,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "care",
+      "tick": 91,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8210,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "care",
+      "tick": 126,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.031490797896253565,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.3333333333333333
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.11216929029546413
+      }
+    },
+    {
+      "seed": 8210,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 128,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8210,
+      "encounter": 0,
+      "actor": 0,
+      "profile": "steady",
+      "tick": 130,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.33333333333333337,
+        "arbitrated": 0.33333333333333337,
+        "greedy": 0.33333333333333337
+      },
+      "progress_regret": {
+        "incumbent": 0.03251790539320765,
+        "greedy_progress": 0.03251790539320765
+      }
+    },
+    {
+      "seed": 8210,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 105,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": false,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.1138289919946664
+      }
+    },
+    {
+      "seed": 8210,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "steady",
+      "tick": 107,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.14891521972948496,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8210,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "care",
+      "tick": 108,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.027983015641833787,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.3333333333333333
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8211,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "care",
+      "tick": 82,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.028075814790836685,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.00228609146177855,
+        "greedy_progress": 0.00228609146177855
+      }
+    },
+    {
+      "seed": 8211,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "care",
+      "tick": 54,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.009518672980873819,
+        "greedy_progress": 0.009518672980873819
+      }
+    },
+    {
+      "seed": 8212,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "growth",
+      "tick": 114,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8212,
+      "encounter": 0,
+      "actor": 2,
+      "profile": "care",
+      "tick": 115,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.05163438058467518,
+        "greedy_progress": 0.05163438058467518
+      }
+    },
+    {
+      "seed": 8212,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 116,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8212,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 124,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.04666861357255221,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.33333333333333337
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8212,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "growth",
+      "tick": 126,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8212,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "care",
+      "tick": 127,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.08923272882893388,
+        "greedy_progress": 0.08923272882893388
+      }
+    },
+    {
+      "seed": 8213,
+      "encounter": 0,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 101,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8213,
+      "encounter": 0,
+      "actor": 2,
+      "profile": "care",
+      "tick": 104,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8213,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 105,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8213,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 73,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": false,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.014152184159009984,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8213,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "care",
+      "tick": 77,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8213,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 78,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8214,
+      "encounter": 0,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 88,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 1,
+        "learned_gain": 0.1146219604128668,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.11079804218301675,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8214,
+      "encounter": 0,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 90,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.1710886691993319,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.3333333333333333
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8214,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "care",
+      "tick": 91,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8214,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "care",
+      "tick": 94,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8214,
+      "encounter": 4,
+      "actor": 3,
+      "profile": "ego",
+      "tick": 97,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.03395385582184583,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0510655094600852
+      }
+    },
+    {
+      "seed": 8214,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 98,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8215,
+      "encounter": 0,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 109,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.13373780725994755,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.010238653386281493,
+        "greedy_progress": 0.010238653386281493
+      }
+    },
+    {
+      "seed": 8215,
+      "encounter": 0,
+      "actor": 1,
+      "profile": "care",
+      "tick": 110,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 0,
+        "learned_gain": 0.037097798898388504,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.014612277046466504
+      }
+    },
+    {
+      "seed": 8215,
+      "encounter": 0,
+      "actor": 2,
+      "profile": "ego",
+      "tick": 111,
+      "selected": "TAKE",
+      "incumbent": "TAKE",
+      "gate": {
+        "supported": true,
+        "incumbent": 0,
+        "candidate": 0,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.126163769221991
+      }
+    },
+    {
+      "seed": 8215,
+      "encounter": 4,
+      "actor": 0,
+      "profile": "growth",
+      "tick": 121,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8215,
+      "encounter": 4,
+      "actor": 1,
+      "profile": "care",
+      "tick": 122,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0,
+        "greedy_progress": 0.0
+      }
+    },
+    {
+      "seed": 8215,
+      "encounter": 4,
+      "actor": 2,
+      "profile": "ego",
+      "tick": 123,
+      "selected": "PASS",
+      "incumbent": "PASS",
+      "gate": {
+        "supported": true,
+        "incumbent": 1,
+        "candidate": 1,
+        "learned_gain": 0.0,
+        "calibration_error": 0.44604028188504563,
+        "tolerance": 0.12,
+        "changed": false,
+        "uncertainty": "empirical paired teacher residual; not true-game guarantee"
+      },
+      "credit_regret": {
+        "incumbent": 0.0,
+        "arbitrated": 0.0,
+        "greedy": 0.0
+      },
+      "progress_regret": {
+        "incumbent": 0.0014748175682413045,
+        "greedy_progress": 0.0014748175682413045
+      }
+    }
+  ],
+  "summary": {
+    "cases": 88,
+    "independent_series": 16,
+    "supported": 80,
+    "changed": 0,
+    "mean_credit_regret": {
+      "incumbent": 0.019097222222222224,
+      "arbitrated": 0.019097222222222224,
+      "greedy": 0.03211805555555555
+    },
+    "arbitrated_credit_regret_improvement": 0.0,
+    "paired_series_bootstrap_95": [
+      0.0,
+      0.0
+    ],
+    "better": 0,
+    "worse": 0,
+    "mean_progress_regret": {
+      "incumbent": 0.012756055558467079,
+      "greedy_progress": 0.014902667012321055
+    }
+  },
+  "limitations": [
+    "late-game matched teacher labels, not full-game strength",
+    "same known game and policies",
+    "model frozen before held-out label inspection; controller future still incumbent in this diagnostic"
+  ]
+}

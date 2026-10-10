@@ -1,0 +1,169 @@
+{
+  "base": "96895587a56c3522621a012c0ea0bfe5eed3fac0",
+  "implementation_commit": "1d1f93a207fd8d151fefbfabb0f3f1828ed6fc7d",
+  "studies": [
+    {
+      "name": "strict",
+      "folder": ".",
+      "source_ref": "1847caaf74b1741ef9e696f4cd594bb8ada875d9",
+      "matches": 512,
+      "independent_learning_series": 16,
+      "completed": true,
+      "matched_worlds": true,
+      "audit_matches": 512
+    },
+    {
+      "name": "finite",
+      "folder": "settlement",
+      "source_ref": "726aa5bbea94c8b7e06e1213c865ed29318c60be",
+      "matches": 256,
+      "independent_learning_series": 16,
+      "completed": true,
+      "matched_worlds": true,
+      "audit_matches": 256
+    },
+    {
+      "name": "local_first",
+      "folder": "validated_v2",
+      "source_ref": "624466dac575841bf02a67c5379adc1c6ee96e67",
+      "matches": 256,
+      "independent_learning_series": 16,
+      "completed": true,
+      "matched_worlds": true,
+      "audit_matches": 256
+    },
+    {
+      "name": "integrated",
+      "folder": "guarded_v3",
+      "source_ref": "9931804bac8c931e2ad31ab79382c1d97649712c",
+      "matches": 384,
+      "independent_learning_series": 16,
+      "completed": true,
+      "matched_worlds": true,
+      "audit_matches": 384
+    },
+    {
+      "name": "robust",
+      "folder": "robust_v1",
+      "source_ref": "cac04c0c815cdbaf8040f0066b5103e42bd4a039",
+      "matches": 384,
+      "independent_learning_series": 16,
+      "completed": true,
+      "matched_worlds": true,
+      "audit_matches": 384
+    }
+  ],
+  "primary_full_games": 1792,
+  "provenance_duplicate_replays": 384,
+  "integrated_full_search_duplicate_replays": 48,
+  "primary_all_rules_learning_personality_policy_audited": true,
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "platform": "Windows local CPU",
+    "colab_sessions_created": 0,
+    "gpu_used": false,
+    "llm_training": false
+  },
+  "tests": {
+    "total": 740,
+    "passed": 726,
+    "optional_mahjong_skipped": 14
+  },
+  "fixed_traits": true,
+  "npc_team_objective": false,
+  "win_rate_equalization": false,
+  "new_mandatory_dependencies": false,
+  "generic_parts": [
+    "prediction_support.SupportBanks",
+    "loop_predictor.SupportedCategoricalReader",
+    "loop_predictor.ValidatedSupportedCategoricalReader",
+    "loop_predictor.GuardedSupportedCategoricalReader",
+    "finite_continuation.resolve_chain",
+    "finite_continuation.resolve_chains",
+    "robust_goal.select",
+    "goal_guard.choose_with_weighted_goal",
+    "goal_progress.choose_with_weighted_progress",
+    "paired_value.fit/predict/calibrate/arbitrate",
+    "paired_guard.ValueProposal/constrain",
+    "DecisionLoop Request.value_proposal"
+  ],
+  "adapter_requirements": [
+    "finite public opportunity classes with stable meanings",
+    "legal action hypotheses and publicly revealed outcomes",
+    "game terminal scores, purpose scales, owner selector and finite continuation when claimed complete"
+  ],
+  "essential_connection_fixes": [
+    "forced response supplies no comparative evidence",
+    "trust scoped by local/shared source and opportunity",
+    "shared rollout sampling identical before specialization",
+    "same shared rival hypothesis across opportunity changes",
+    "planned future owner remains fixed-prior, adaptive future owner learns only detached public reveals",
+    "finite progress producer corrects probability roundoff; core validation remains strict",
+    "shared personality reference retained across model families; same finite future owner choice across families"
+  ],
+  "excluded_trials": [
+    "validated/aborted.json",
+    "guarded/aborted.json",
+    "guarded_v2/aborted.json"
+  ],
+  "limitations": [
+    "no human-level or enjoyment validation",
+    "not proof of superiority over established algorithms",
+    "early-game future owner still approximate",
+    "finite continuation supports a terminating single continuation chain, not arbitrary trees",
+    "imperfect opponent models and compressed personality risk remain",
+    "generic mechanism requires adapters; rules-only automatic interpretation absent",
+    "robust second model adds NPC search work; not an equal-cost comparison",
+    "model conflicts can require unavoidable regret; tolerance does not bound true-game loss",
+    "two value models failed held-out root comparisons",
+    "teachers sample three futures per action and reuse two already studied game cohorts",
+    "terminal first training helper not fully frozen; exact original-root replay is narrower evidence",
+    "DecisionLoop guard has contract coverage; no learned model enabled in No Thanks default controller"
+  ],
+  "matched_teachers": [
+    {
+      "name": "actual_teacher_train",
+      "cases": 341,
+      "matched_alternative_branches": 2046,
+      "original_root_reference_replays": 341,
+      "independent_series": 16,
+      "informative_credit_cases": 46,
+      "informative_progress_cases": 332
+    },
+    {
+      "name": "actual_teacher_test",
+      "cases": 331,
+      "matched_alternative_branches": 1986,
+      "original_root_reference_replays": 331,
+      "independent_series": 16,
+      "informative_credit_cases": 64,
+      "informative_progress_cases": 325
+    },
+    {
+      "name": "actual_middle_train",
+      "cases": 87,
+      "matched_alternative_branches": 522,
+      "original_root_reference_replays": 87,
+      "independent_series": 16,
+      "informative_credit_cases": 25,
+      "informative_progress_cases": 87
+    },
+    {
+      "name": "actual_middle_test",
+      "cases": 88,
+      "matched_alternative_branches": 528,
+      "original_root_reference_replays": 88,
+      "independent_series": 16,
+      "informative_credit_cases": 31,
+      "informative_progress_cases": 88
+    }
+  ],
+  "teacher_total_cases": 847,
+  "matched_alternative_continuations": 5082,
+  "original_root_reference_continuations": 847,
+  "teacher_continuations_are_independent_primary_games": false,
+  "learned_value_models_default_enabled": false,
+  "robust_variant_default_enabled": false,
+  "default_safety": "existing controller retained; learned proposals optional, empirical guard is not a true-game guarantee"
+}

@@ -1,0 +1,3514 @@
+{
+  "plan": {
+    "kind": "post-hoc component intervention",
+    "targets": [
+      [
+        6802,
+        3,
+        2
+      ],
+      [
+        6805,
+        2,
+        14
+      ],
+      [
+        6805,
+        3,
+        8
+      ],
+      [
+        6808,
+        3,
+        16
+      ],
+      [
+        6810,
+        1,
+        0
+      ],
+      [
+        6810,
+        2,
+        1
+      ],
+      [
+        6810,
+        3,
+        16
+      ],
+      [
+        6811,
+        3,
+        13
+      ],
+      [
+        6813,
+        2,
+        8
+      ],
+      [
+        6813,
+        3,
+        9
+      ],
+      [
+        6814,
+        3,
+        2
+      ]
+    ],
+    "channels": [
+      "trackers",
+      "recent",
+      "coefficients"
+    ],
+    "source_diagnostic_sha256": "0888d5f0084c8fd16a7992f673637b856500a5bd53ff7692cfb4740a78d4c558",
+    "source_sha256": "010dd5ca5f192257ff82bfba77dfca7eeed13928a292fb877e4605e88ae8a633"
+  },
+  "cases": [
+    {
+      "seed": 6802,
+      "encounter": 3,
+      "tick": 2,
+      "actor": 1,
+      "public_before": {
+        "cards": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          10,
+          11,
+          11,
+          10
+        ],
+        "turn": 1,
+        "card": 8,
+        "pot": 2,
+        "seen": [
+          8
+        ],
+        "remaining": 23,
+        "payments": [
+          1,
+          0,
+          0,
+          1
+        ]
+      },
+      "old_action": "TAKE",
+      "new_action": "PASS",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5208333333333334,
+              "standard_error": 0.050716719851688165,
+              "mean_score": 27.697916666666668,
+              "goal_progress": 0.49974210885055054
+            },
+            "PASS": {
+              "win_share": 0.453125,
+              "standard_error": 0.050803912790498354,
+              "mean_score": 30.864583333333332,
+              "goal_progress": 0.4848170213237844
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.31179965033582224,
+              "PASS": 0.6882003496641778
+            },
+            "2": {
+              "TAKE": 0.20659064755313816,
+              "PASS": 0.793409352446862
+            },
+            "3": {
+              "TAKE": 0.08159206273924124,
+              "PASS": 0.918407937260759
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5729166666666666,
+              "standard_error": 0.05075048972770942,
+              "mean_score": 30.864583333333332,
+              "goal_progress": 0.503320897358166
+            },
+            "PASS": {
+              "win_share": 0.5052083333333334,
+              "standard_error": 0.0510282384771023,
+              "mean_score": 30.65625,
+              "goal_progress": 0.48118684418295454
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.2963858037404937,
+              "PASS": 0.7036141962595063
+            },
+            "2": {
+              "TAKE": 0.20659064755313816,
+              "PASS": 0.793409352446862
+            },
+            "3": {
+              "TAKE": 0.08159206273924124,
+              "PASS": 0.918407937260759
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5208333333333334,
+              "standard_error": 0.050716719851688165,
+              "mean_score": 27.697916666666668,
+              "goal_progress": 0.49974210885055054
+            },
+            "PASS": {
+              "win_share": 0.453125,
+              "standard_error": 0.050803912790498354,
+              "mean_score": 30.864583333333332,
+              "goal_progress": 0.4848170213237844
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.31179965033582224,
+              "PASS": 0.6882003496641778
+            },
+            "2": {
+              "TAKE": 0.20659064755313816,
+              "PASS": 0.793409352446862
+            },
+            "3": {
+              "TAKE": 0.08159206273924124,
+              "PASS": 0.918407937260759
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5729166666666666,
+              "standard_error": 0.05075048972770942,
+              "mean_score": 30.864583333333332,
+              "goal_progress": 0.503320897358166
+            },
+            "PASS": {
+              "win_share": 0.5052083333333334,
+              "standard_error": 0.0510282384771023,
+              "mean_score": 30.65625,
+              "goal_progress": 0.48118684418295454
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.2963858037404937,
+              "PASS": 0.7036141962595063
+            },
+            "2": {
+              "TAKE": 0.20659064755313816,
+              "PASS": 0.793409352446862
+            },
+            "3": {
+              "TAKE": 0.08159206273924124,
+              "PASS": 0.918407937260759
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5260416666666666,
+              "standard_error": 0.05042026864760913,
+              "mean_score": 25.822916666666668,
+              "goal_progress": 0.514121852200425
+            },
+            "PASS": {
+              "win_share": 0.5989583333333334,
+              "standard_error": 0.05001084951732419,
+              "mean_score": 26.083333333333332,
+              "goal_progress": 0.532010856931952
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.10578094146939668,
+              "PASS": 0.8942190585306035
+            },
+            "2": {
+              "TAKE": 0.20659064755313816,
+              "PASS": 0.793409352446862
+            },
+            "3": {
+              "TAKE": 0.08159206273924124,
+              "PASS": 0.918407937260759
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5052083333333334,
+              "standard_error": 0.0504881823863022,
+              "mean_score": 28.25,
+              "goal_progress": 0.4982017824121365
+            },
+            "PASS": {
+              "win_share": 0.5555555555555555,
+              "standard_error": 0.04964951886822927,
+              "mean_score": 25.8125,
+              "goal_progress": 0.514959396900836
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.1009090384743505,
+              "PASS": 0.8990909615256497
+            },
+            "2": {
+              "TAKE": 0.20659064755313816,
+              "PASS": 0.793409352446862
+            },
+            "3": {
+              "TAKE": 0.08159206273924124,
+              "PASS": 0.918407937260759
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5260416666666666,
+              "standard_error": 0.05042026864760913,
+              "mean_score": 25.822916666666668,
+              "goal_progress": 0.514121852200425
+            },
+            "PASS": {
+              "win_share": 0.5989583333333334,
+              "standard_error": 0.05001084951732419,
+              "mean_score": 26.083333333333332,
+              "goal_progress": 0.532010856931952
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.10578094146939668,
+              "PASS": 0.8942190585306035
+            },
+            "2": {
+              "TAKE": 0.20659064755313816,
+              "PASS": 0.793409352446862
+            },
+            "3": {
+              "TAKE": 0.08159206273924124,
+              "PASS": 0.918407937260759
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5052083333333334,
+              "standard_error": 0.0504881823863022,
+              "mean_score": 28.25,
+              "goal_progress": 0.4982017824121365
+            },
+            "PASS": {
+              "win_share": 0.5555555555555555,
+              "standard_error": 0.04964951886822927,
+              "mean_score": 25.8125,
+              "goal_progress": 0.514959396900836
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.1009090384743505,
+              "PASS": 0.8990909615256497
+            },
+            "2": {
+              "TAKE": 0.20659064755313816,
+              "PASS": 0.793409352446862
+            },
+            "3": {
+              "TAKE": 0.08159206273924124,
+              "PASS": 0.918407937260759
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6805,
+      "encounter": 2,
+      "tick": 14,
+      "actor": 3,
+      "public_before": {
+        "cards": [
+          [
+            19
+          ],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          14,
+          8,
+          7,
+          8
+        ],
+        "turn": 3,
+        "card": 30,
+        "pot": 7,
+        "seen": [
+          19,
+          30
+        ],
+        "remaining": 22,
+        "payments": [
+          3,
+          3,
+          4,
+          3
+        ]
+      },
+      "old_action": "PASS",
+      "new_action": "TAKE",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.19791666666666666,
+              "standard_error": 0.040877951813226225,
+              "mean_score": 38.21875,
+              "goal_progress": 0.38031897862064556
+            },
+            "PASS": {
+              "win_share": 0.2916666666666667,
+              "standard_error": 0.04604218762109021,
+              "mean_score": 40.572916666666664,
+              "goal_progress": 0.40540342476331154
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.18341662688636662,
+              "PASS": 0.8165833731136335
+            },
+            "1": {
+              "TAKE": 0.04788049330934413,
+              "PASS": 0.952119506690656
+            },
+            "2": {
+              "TAKE": 0.05160968434515545,
+              "PASS": 0.9483903156548447
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.328125,
+              "standard_error": 0.04788745772596558,
+              "mean_score": 37.229166666666664,
+              "goal_progress": 0.4285899243248375
+            },
+            "PASS": {
+              "win_share": 0.3229166666666667,
+              "standard_error": 0.047398996183266234,
+              "mean_score": 44.229166666666664,
+              "goal_progress": 0.4003747718852468
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.1713286044259333,
+              "PASS": 0.8286713955740668
+            },
+            "1": {
+              "TAKE": 0.04788049330934413,
+              "PASS": 0.952119506690656
+            },
+            "2": {
+              "TAKE": 0.05160968434515545,
+              "PASS": 0.9483903156548447
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.19791666666666666,
+              "standard_error": 0.040877951813226225,
+              "mean_score": 38.21875,
+              "goal_progress": 0.38031897862064556
+            },
+            "PASS": {
+              "win_share": 0.2916666666666667,
+              "standard_error": 0.04604218762109021,
+              "mean_score": 40.572916666666664,
+              "goal_progress": 0.40540342476331154
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.18341662688636662,
+              "PASS": 0.8165833731136335
+            },
+            "1": {
+              "TAKE": 0.04788049330934413,
+              "PASS": 0.952119506690656
+            },
+            "2": {
+              "TAKE": 0.05160968434515545,
+              "PASS": 0.9483903156548447
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.328125,
+              "standard_error": 0.04788745772596558,
+              "mean_score": 37.229166666666664,
+              "goal_progress": 0.4285899243248375
+            },
+            "PASS": {
+              "win_share": 0.3229166666666667,
+              "standard_error": 0.047398996183266234,
+              "mean_score": 44.229166666666664,
+              "goal_progress": 0.4003747718852468
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.1713286044259333,
+              "PASS": 0.8286713955740668
+            },
+            "1": {
+              "TAKE": 0.04788049330934413,
+              "PASS": 0.952119506690656
+            },
+            "2": {
+              "TAKE": 0.05160968434515545,
+              "PASS": 0.9483903156548447
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.22916666666666666,
+              "standard_error": 0.042481075938180964,
+              "mean_score": 38.708333333333336,
+              "goal_progress": 0.3895253452581569
+            },
+            "PASS": {
+              "win_share": 0.3333333333333333,
+              "standard_error": 0.048365083340667456,
+              "mean_score": 41.322916666666664,
+              "goal_progress": 0.40725788531361395
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.20157372762127868,
+              "PASS": 0.7984262723787214
+            },
+            "1": {
+              "TAKE": 0.04788049330934413,
+              "PASS": 0.952119506690656
+            },
+            "2": {
+              "TAKE": 0.05160968434515545,
+              "PASS": 0.9483903156548447
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.21354166666666666,
+              "standard_error": 0.04171803303094191,
+              "mean_score": 41.15625,
+              "goal_progress": 0.39215614148623684
+            },
+            "PASS": {
+              "win_share": 0.28125,
+              "standard_error": 0.04553079977411088,
+              "mean_score": 47.8125,
+              "goal_progress": 0.37300344774452493
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.19079802872329524,
+              "PASS": 0.8092019712767049
+            },
+            "1": {
+              "TAKE": 0.04788049330934413,
+              "PASS": 0.952119506690656
+            },
+            "2": {
+              "TAKE": 0.05160968434515545,
+              "PASS": 0.9483903156548447
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.22916666666666666,
+              "standard_error": 0.042481075938180964,
+              "mean_score": 38.708333333333336,
+              "goal_progress": 0.3895253452581569
+            },
+            "PASS": {
+              "win_share": 0.3333333333333333,
+              "standard_error": 0.048365083340667456,
+              "mean_score": 41.322916666666664,
+              "goal_progress": 0.40725788531361395
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.20157372762127868,
+              "PASS": 0.7984262723787214
+            },
+            "1": {
+              "TAKE": 0.04788049330934413,
+              "PASS": 0.952119506690656
+            },
+            "2": {
+              "TAKE": 0.05160968434515545,
+              "PASS": 0.9483903156548447
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.21354166666666666,
+              "standard_error": 0.04171803303094191,
+              "mean_score": 41.15625,
+              "goal_progress": 0.39215614148623684
+            },
+            "PASS": {
+              "win_share": 0.28125,
+              "standard_error": 0.04553079977411088,
+              "mean_score": 47.8125,
+              "goal_progress": 0.37300344774452493
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.19079802872329524,
+              "PASS": 0.8092019712767049
+            },
+            "1": {
+              "TAKE": 0.04788049330934413,
+              "PASS": 0.952119506690656
+            },
+            "2": {
+              "TAKE": 0.05160968434515545,
+              "PASS": 0.9483903156548447
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6805,
+      "encounter": 3,
+      "tick": 8,
+      "actor": 3,
+      "public_before": {
+        "cards": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "turn": 3,
+        "card": 23,
+        "pot": 8,
+        "seen": [
+          23
+        ],
+        "remaining": 23,
+        "payments": [
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      "old_action": "TAKE",
+      "new_action": "PASS",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3854166666666667,
+              "standard_error": 0.049381684905373244,
+              "mean_score": 32.989583333333336,
+              "goal_progress": 0.439932584893486
+            },
+            "PASS": {
+              "win_share": 0.3333333333333333,
+              "standard_error": 0.04779494455636704,
+              "mean_score": 40.947916666666664,
+              "goal_progress": 0.4037123409065988
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.06431370467813975,
+              "PASS": 0.9356862953218602
+            },
+            "1": {
+              "TAKE": 0.10508048624954441,
+              "PASS": 0.8949195137504558
+            },
+            "2": {
+              "TAKE": 0.2286195438306728,
+              "PASS": 0.7713804561693274
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.23958333333333334,
+              "standard_error": 0.043161243139612254,
+              "mean_score": 38.739583333333336,
+              "goal_progress": 0.4024000220540083
+            },
+            "PASS": {
+              "win_share": 0.3229166666666667,
+              "standard_error": 0.04797384079459134,
+              "mean_score": 43.34375,
+              "goal_progress": 0.3941373731017374
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.06353630392097734,
+              "PASS": 0.9364636960790227
+            },
+            "1": {
+              "TAKE": 0.07595371678252937,
+              "PASS": 0.9240462832174707
+            },
+            "2": {
+              "TAKE": 0.10268057910113607,
+              "PASS": 0.8973194208988641
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3333333333333333,
+              "standard_error": 0.048365083340667456,
+              "mean_score": 33.416666666666664,
+              "goal_progress": 0.4478883476660564
+            },
+            "PASS": {
+              "win_share": 0.3038194444444444,
+              "standard_error": 0.046371428740416776,
+              "mean_score": 42.145833333333336,
+              "goal_progress": 0.3889631224379923
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.06431370467813975,
+              "PASS": 0.9356862953218602
+            },
+            "1": {
+              "TAKE": 0.10508048624954441,
+              "PASS": 0.8949195137504558
+            },
+            "2": {
+              "TAKE": 0.2286195438306728,
+              "PASS": 0.7713804561693274
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.2638888888888889,
+              "standard_error": 0.044948710934629266,
+              "mean_score": 43.291666666666664,
+              "goal_progress": 0.39959532058297026
+            },
+            "PASS": {
+              "win_share": 0.2760416666666667,
+              "standard_error": 0.04556527974858984,
+              "mean_score": 48.395833333333336,
+              "goal_progress": 0.35913508110588827
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.06353630392097734,
+              "PASS": 0.9364636960790227
+            },
+            "1": {
+              "TAKE": 0.07595371678252937,
+              "PASS": 0.9240462832174707
+            },
+            "2": {
+              "TAKE": 0.10268057910113607,
+              "PASS": 0.8973194208988641
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3333333333333333,
+              "standard_error": 0.04779494455636704,
+              "mean_score": 25.333333333333332,
+              "goal_progress": 0.46398499663323456
+            },
+            "PASS": {
+              "win_share": 0.48090277777777785,
+              "standard_error": 0.05051331245138816,
+              "mean_score": 31.84375,
+              "goal_progress": 0.47939817369913723
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.057676281024223675,
+              "PASS": 0.9423237189757765
+            },
+            "1": {
+              "TAKE": 0.061432355384517884,
+              "PASS": 0.9385676446154823
+            },
+            "2": {
+              "TAKE": 0.27367151408394624,
+              "PASS": 0.7263284859160537
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.4583333333333333,
+              "standard_error": 0.05058141488890701,
+              "mean_score": 30.864583333333332,
+              "goal_progress": 0.47997473022173054
+            },
+            "PASS": {
+              "win_share": 0.5729166666666666,
+              "standard_error": 0.05020744612304863,
+              "mean_score": 27.197916666666668,
+              "goal_progress": 0.5064906253283745
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.056902087334235574,
+              "PASS": 0.9430979126657646
+            },
+            "1": {
+              "TAKE": 0.04976386715983107,
+              "PASS": 0.9502361328401691
+            },
+            "2": {
+              "TAKE": 0.06874672178505298,
+              "PASS": 0.9312532782149471
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3697916666666667,
+              "standard_error": 0.049251409091665796,
+              "mean_score": 25.5625,
+              "goal_progress": 0.46661761594772244
+            },
+            "PASS": {
+              "win_share": 0.5225694444444445,
+              "standard_error": 0.05049823591303102,
+              "mean_score": 28.125,
+              "goal_progress": 0.5017474305342399
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.057676281024223675,
+              "PASS": 0.9423237189757765
+            },
+            "1": {
+              "TAKE": 0.061432355384517884,
+              "PASS": 0.9385676446154823
+            },
+            "2": {
+              "TAKE": 0.27367151408394624,
+              "PASS": 0.7263284859160537
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.4479166666666667,
+              "standard_error": 0.05047969816570405,
+              "mean_score": 29.854166666666668,
+              "goal_progress": 0.47584147827935636
+            },
+            "PASS": {
+              "win_share": 0.5625,
+              "standard_error": 0.050896566940372215,
+              "mean_score": 25.760416666666668,
+              "goal_progress": 0.5093755960090015
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.056902087334235574,
+              "PASS": 0.9430979126657646
+            },
+            "1": {
+              "TAKE": 0.04976386715983107,
+              "PASS": 0.9502361328401691
+            },
+            "2": {
+              "TAKE": 0.06874672178505298,
+              "PASS": 0.9312532782149471
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6808,
+      "encounter": 3,
+      "tick": 16,
+      "actor": 3,
+      "public_before": {
+        "cards": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          7,
+          7,
+          7,
+          7
+        ],
+        "turn": 3,
+        "card": 30,
+        "pot": 16,
+        "seen": [
+          30
+        ],
+        "remaining": 23,
+        "payments": [
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "old_action": "PASS",
+      "new_action": "TAKE",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.46875,
+              "standard_error": 0.05066038670106807,
+              "mean_score": 29.885416666666668,
+              "goal_progress": 0.48276952508735954
+            },
+            "PASS": {
+              "win_share": 0.4947916666666667,
+              "standard_error": 0.0510282384771023,
+              "mean_score": 30.104166666666668,
+              "goal_progress": 0.48786208237449774
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.0735376722268291,
+              "PASS": 0.926462327773171
+            },
+            "1": {
+              "TAKE": 0.06824331053048849,
+              "PASS": 0.9317566894695115
+            },
+            "2": {
+              "TAKE": 0.06105641549534091,
+              "PASS": 0.9389435845046592
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5104166666666666,
+              "standard_error": 0.05020744612304863,
+              "mean_score": 28.59375,
+              "goal_progress": 0.49826174587601385
+            },
+            "PASS": {
+              "win_share": 0.4791666666666667,
+              "standard_error": 0.050716719851688165,
+              "mean_score": 28.427083333333332,
+              "goal_progress": 0.48244862176751085
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.07410206570646656,
+              "PASS": 0.9258979342935334
+            },
+            "1": {
+              "TAKE": 0.06579497605823145,
+              "PASS": 0.9342050239417685
+            },
+            "2": {
+              "TAKE": 0.06089525223106809,
+              "PASS": 0.9391047477689319
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5677083333333334,
+              "standard_error": 0.050010849517324193,
+              "mean_score": 25.614583333333332,
+              "goal_progress": 0.5215101037241261
+            },
+            "PASS": {
+              "win_share": 0.4166666666666667,
+              "standard_error": 0.050036536358547386,
+              "mean_score": 33.614583333333336,
+              "goal_progress": 0.46555476881907243
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.0735376722268291,
+              "PASS": 0.926462327773171
+            },
+            "1": {
+              "TAKE": 0.06824331053048849,
+              "PASS": 0.9317566894695115
+            },
+            "2": {
+              "TAKE": 0.06105641549534091,
+              "PASS": 0.9389435845046592
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.4739583333333333,
+              "standard_error": 0.05042026864760914,
+              "mean_score": 27.604166666666668,
+              "goal_progress": 0.4928100125046632
+            },
+            "PASS": {
+              "win_share": 0.4947916666666667,
+              "standard_error": 0.050488182386302184,
+              "mean_score": 30.208333333333332,
+              "goal_progress": 0.490171695875647
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.07410206570646656,
+              "PASS": 0.9258979342935334
+            },
+            "1": {
+              "TAKE": 0.06579497605823145,
+              "PASS": 0.9342050239417685
+            },
+            "2": {
+              "TAKE": 0.06089525223106809,
+              "PASS": 0.9391047477689319
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.390625,
+              "standard_error": 0.04810164049159297,
+              "mean_score": 29.40625,
+              "goal_progress": 0.4955042587065368
+            },
+            "PASS": {
+              "win_share": 0.4010416666666667,
+              "standard_error": 0.04945968568481744,
+              "mean_score": 33.15625,
+              "goal_progress": 0.4589005835171088
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.09264268304254558,
+              "PASS": 0.9073573169574545
+            },
+            "1": {
+              "TAKE": 0.14043445187841264,
+              "PASS": 0.8595655481215874
+            },
+            "2": {
+              "TAKE": 0.060586193029643465,
+              "PASS": 0.9394138069703569
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.453125,
+              "standard_error": 0.050261446392051365,
+              "mean_score": 30.25,
+              "goal_progress": 0.503726095685439
+            },
+            "PASS": {
+              "win_share": 0.375,
+              "standard_error": 0.049114974312875155,
+              "mean_score": 39.729166666666664,
+              "goal_progress": 0.42881484667788755
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.09356312746720237,
+              "PASS": 0.9064368725327978
+            },
+            "1": {
+              "TAKE": 0.11958483101698852,
+              "PASS": 0.8804151689830114
+            },
+            "2": {
+              "TAKE": 0.060421771226340855,
+              "PASS": 0.9395782287736596
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3697916666666667,
+              "standard_error": 0.04869164955216768,
+              "mean_score": 30.552083333333332,
+              "goal_progress": 0.4723836558821633
+            },
+            "PASS": {
+              "win_share": 0.4427083333333333,
+              "standard_error": 0.04959805085274838,
+              "mean_score": 34.333333333333336,
+              "goal_progress": 0.4651649521997007
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.09264268304254558,
+              "PASS": 0.9073573169574545
+            },
+            "1": {
+              "TAKE": 0.14043445187841264,
+              "PASS": 0.8595655481215874
+            },
+            "2": {
+              "TAKE": 0.060586193029643465,
+              "PASS": 0.9394138069703569
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.4635416666666667,
+              "standard_error": 0.04980487786269663,
+              "mean_score": 28.052083333333332,
+              "goal_progress": 0.4922046646529794
+            },
+            "PASS": {
+              "win_share": 0.3958333333333333,
+              "standard_error": 0.04962395137136505,
+              "mean_score": 37.989583333333336,
+              "goal_progress": 0.4336560547091624
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.09356312746720237,
+              "PASS": 0.9064368725327978
+            },
+            "1": {
+              "TAKE": 0.11958483101698852,
+              "PASS": 0.8804151689830114
+            },
+            "2": {
+              "TAKE": 0.060421771226340855,
+              "PASS": 0.9395782287736596
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6810,
+      "encounter": 1,
+      "tick": 0,
+      "actor": 1,
+      "public_before": {
+        "cards": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          11,
+          11,
+          11,
+          11
+        ],
+        "turn": 1,
+        "card": 5,
+        "pot": 0,
+        "seen": [
+          5
+        ],
+        "remaining": 23,
+        "payments": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "old_action": "TAKE",
+      "new_action": "PASS",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.359375,
+              "standard_error": 0.048949000603564115,
+              "mean_score": 41.760416666666664,
+              "goal_progress": 0.41334640036666953
+            },
+            "PASS": {
+              "win_share": 0.3385416666666667,
+              "standard_error": 0.04826757001402163,
+              "mean_score": 46.96875,
+              "goal_progress": 0.3756758861928313
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.3707249933303088,
+              "PASS": 0.6292750066696912
+            },
+            "2": {
+              "TAKE": 0.06751627202612832,
+              "PASS": 0.9324837279738716
+            },
+            "3": {
+              "TAKE": 0.18599234057467312,
+              "PASS": 0.8140076594253272
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.390625,
+              "standard_error": 0.04978193951819256,
+              "mean_score": 38.760416666666664,
+              "goal_progress": 0.4289465448094705
+            },
+            "PASS": {
+              "win_share": 0.3229166666666667,
+              "standard_error": 0.047973840794591334,
+              "mean_score": 41.34375,
+              "goal_progress": 0.4061285965911445
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.3683167268768346,
+              "PASS": 0.6316832731231654
+            },
+            "2": {
+              "TAKE": 0.0674021180883596,
+              "PASS": 0.9325978819116403
+            },
+            "3": {
+              "TAKE": 0.18430375097086205,
+              "PASS": 0.8156962490291382
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.359375,
+              "standard_error": 0.048949000603564115,
+              "mean_score": 41.760416666666664,
+              "goal_progress": 0.41334640036666953
+            },
+            "PASS": {
+              "win_share": 0.3385416666666667,
+              "standard_error": 0.04826757001402163,
+              "mean_score": 46.96875,
+              "goal_progress": 0.3756758861928313
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.3707249933303088,
+              "PASS": 0.6292750066696912
+            },
+            "2": {
+              "TAKE": 0.06751627202612832,
+              "PASS": 0.9324837279738716
+            },
+            "3": {
+              "TAKE": 0.18599234057467312,
+              "PASS": 0.8140076594253272
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.390625,
+              "standard_error": 0.04978193951819256,
+              "mean_score": 38.760416666666664,
+              "goal_progress": 0.4289465448094705
+            },
+            "PASS": {
+              "win_share": 0.3229166666666667,
+              "standard_error": 0.047973840794591334,
+              "mean_score": 41.34375,
+              "goal_progress": 0.4061285965911445
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.3683167268768346,
+              "PASS": 0.6316832731231654
+            },
+            "2": {
+              "TAKE": 0.0674021180883596,
+              "PASS": 0.9325978819116403
+            },
+            "3": {
+              "TAKE": 0.18430375097086205,
+              "PASS": 0.8156962490291382
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.421875,
+              "standard_error": 0.04929776882339516,
+              "mean_score": 35.802083333333336,
+              "goal_progress": 0.4383146042552844
+            },
+            "PASS": {
+              "win_share": 0.4322916666666667,
+              "standard_error": 0.050556004894057385,
+              "mean_score": 34.34375,
+              "goal_progress": 0.449944351166441
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.3599394509464916,
+              "PASS": 0.6400605490535086
+            },
+            "2": {
+              "TAKE": 0.06740641180695645,
+              "PASS": 0.9325935881930438
+            },
+            "3": {
+              "TAKE": 0.1668206994431728,
+              "PASS": 0.8331793005568272
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.4479166666666667,
+              "standard_error": 0.05101984406389433,
+              "mean_score": 34.53125,
+              "goal_progress": 0.4506684494134148
+            },
+            "PASS": {
+              "win_share": 0.4635416666666667,
+              "standard_error": 0.050893761717180484,
+              "mean_score": 32.354166666666664,
+              "goal_progress": 0.46443984117179565
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.35768263617677204,
+              "PASS": 0.6423173638232282
+            },
+            "2": {
+              "TAKE": 0.06728800376212171,
+              "PASS": 0.9327119962378786
+            },
+            "3": {
+              "TAKE": 0.1652229650933867,
+              "PASS": 0.8347770349066133
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.421875,
+              "standard_error": 0.04929776882339516,
+              "mean_score": 35.802083333333336,
+              "goal_progress": 0.4383146042552844
+            },
+            "PASS": {
+              "win_share": 0.4322916666666667,
+              "standard_error": 0.050556004894057385,
+              "mean_score": 34.34375,
+              "goal_progress": 0.449944351166441
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.3599394509464916,
+              "PASS": 0.6400605490535086
+            },
+            "2": {
+              "TAKE": 0.06740641180695645,
+              "PASS": 0.9325935881930438
+            },
+            "3": {
+              "TAKE": 0.1668206994431728,
+              "PASS": 0.8331793005568272
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.4479166666666667,
+              "standard_error": 0.05101984406389433,
+              "mean_score": 34.53125,
+              "goal_progress": 0.4506684494134148
+            },
+            "PASS": {
+              "win_share": 0.4635416666666667,
+              "standard_error": 0.050893761717180484,
+              "mean_score": 32.354166666666664,
+              "goal_progress": 0.46443984117179565
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.35768263617677204,
+              "PASS": 0.6423173638232282
+            },
+            "2": {
+              "TAKE": 0.06728800376212171,
+              "PASS": 0.9327119962378786
+            },
+            "3": {
+              "TAKE": 0.1652229650933867,
+              "PASS": 0.8347770349066133
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6810,
+      "encounter": 2,
+      "tick": 1,
+      "actor": 3,
+      "public_before": {
+        "cards": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          11,
+          11,
+          10,
+          11
+        ],
+        "turn": 3,
+        "card": 3,
+        "pot": 1,
+        "seen": [
+          3
+        ],
+        "remaining": 23,
+        "payments": [
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      "old_action": "PASS",
+      "new_action": "TAKE",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.09201388888888888,
+              "standard_error": 0.028769199842329674,
+              "mean_score": -0.4479166666666667,
+              "goal_progress": 0.4874044610098174
+            },
+            "PASS": {
+              "win_share": 0.40451388888888884,
+              "standard_error": 0.022178061704563143,
+              "mean_score": -3.0416666666666665,
+              "goal_progress": 0.48903413551594443
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.4222674737203011,
+              "PASS": 0.5777325262796988
+            },
+            "1": {
+              "TAKE": 0.8385301196906453,
+              "PASS": 0.16146988030935494
+            },
+            "2": {
+              "TAKE": 0.11684475643557835,
+              "PASS": 0.8831552435644218
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.453125,
+              "standard_error": 0.050803912790498354,
+              "mean_score": 31.510416666666668,
+              "goal_progress": 0.47524183067817055
+            },
+            "PASS": {
+              "win_share": 0.4375,
+              "standard_error": 0.0503550986982677,
+              "mean_score": 35.833333333333336,
+              "goal_progress": 0.4528157444215326
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.3839215823426996,
+              "PASS": 0.6160784176573003
+            },
+            "1": {
+              "TAKE": 0.4244412330569467,
+              "PASS": 0.5755587669430534
+            },
+            "2": {
+              "TAKE": 0.10445547096616017,
+              "PASS": 0.8955445290338399
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.06076388888888889,
+              "standard_error": 0.02343022277102941,
+              "mean_score": -1.0104166666666667,
+              "goal_progress": 0.48213130244291397
+            },
+            "PASS": {
+              "win_share": 0.3993055555555556,
+              "standard_error": 0.02411685311071104,
+              "mean_score": -2.0208333333333335,
+              "goal_progress": 0.4867907228673632
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.4222674737203011,
+              "PASS": 0.5777325262796988
+            },
+            "1": {
+              "TAKE": 0.8306092326181488,
+              "PASS": 0.16939076738185138
+            },
+            "2": {
+              "TAKE": 0.10849278799262732,
+              "PASS": 0.8915072120073727
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.4427083333333333,
+              "standard_error": 0.05069137768101032,
+              "mean_score": 28.020833333333332,
+              "goal_progress": 0.4837609995176157
+            },
+            "PASS": {
+              "win_share": 0.4479166666666667,
+              "standard_error": 0.05047969816570405,
+              "mean_score": 34.3125,
+              "goal_progress": 0.4573668412410312
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.3839215823426996,
+              "PASS": 0.6160784176573003
+            },
+            "1": {
+              "TAKE": 0.4165203459844502,
+              "PASS": 0.5834796540155499
+            },
+            "2": {
+              "TAKE": 0.09610350252320915,
+              "PASS": 0.9038964974767908
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.25347222222222227,
+              "standard_error": 0.04373375266864406,
+              "mean_score": 41.739583333333336,
+              "goal_progress": 0.383858545803605
+            },
+            "PASS": {
+              "win_share": 0.3420138888888889,
+              "standard_error": 0.04756304114498688,
+              "mean_score": 40.302083333333336,
+              "goal_progress": 0.40976241683370046
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.5587763192976896,
+              "PASS": 0.44122368070231055
+            },
+            "1": {
+              "TAKE": 0.18684918065213552,
+              "PASS": 0.8131508193478647
+            },
+            "2": {
+              "TAKE": 0.5750638440469399,
+              "PASS": 0.4249361559530603
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.375,
+              "standard_error": 0.049114974312875155,
+              "mean_score": 43.71875,
+              "goal_progress": 0.4094899761438176
+            },
+            "PASS": {
+              "win_share": 0.234375,
+              "standard_error": 0.04250459533979826,
+              "mean_score": 47.21875,
+              "goal_progress": 0.3699945118938839
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.3222625671958962,
+              "PASS": 0.6777374328041039
+            },
+            "1": {
+              "TAKE": 0.15349605831760899,
+              "PASS": 0.8465039416823912
+            },
+            "2": {
+              "TAKE": 0.5531615076643276,
+              "PASS": 0.4468384923356726
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.53125,
+              "standard_error": 0.05066038670106807,
+              "mean_score": 29.28125,
+              "goal_progress": 0.4946784014630768
+            },
+            "PASS": {
+              "win_share": 0.4791666666666667,
+              "standard_error": 0.050716719851688165,
+              "mean_score": 29.447916666666668,
+              "goal_progress": 0.4790451895882324
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.5587763192976896,
+              "PASS": 0.44122368070231055
+            },
+            "1": {
+              "TAKE": 0.17767289053544377,
+              "PASS": 0.8223271094645564
+            },
+            "2": {
+              "TAKE": 0.13869860682139246,
+              "PASS": 0.8613013931786077
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5625,
+              "standard_error": 0.050896566940372215,
+              "mean_score": 29.21875,
+              "goal_progress": 0.5014773445796131
+            },
+            "PASS": {
+              "win_share": 0.5,
+              "standard_error": 0.05129891760425771,
+              "mean_score": 29.1875,
+              "goal_progress": 0.4999359643072912
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.3222625671958962,
+              "PASS": 0.6777374328041039
+            },
+            "1": {
+              "TAKE": 0.14431976820091727,
+              "PASS": 0.8556802317990829
+            },
+            "2": {
+              "TAKE": 0.11679627043878013,
+              "PASS": 0.8832037295612201
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6810,
+      "encounter": 3,
+      "tick": 16,
+      "actor": 3,
+      "public_before": {
+        "cards": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          7,
+          7,
+          7,
+          7
+        ],
+        "turn": 3,
+        "card": 31,
+        "pot": 16,
+        "seen": [
+          31
+        ],
+        "remaining": 23,
+        "payments": [
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "old_action": "PASS",
+      "new_action": "TAKE",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3489583333333333,
+              "standard_error": 0.048054126821035506,
+              "mean_score": 31.770833333333332,
+              "goal_progress": 0.4716755678865658
+            },
+            "PASS": {
+              "win_share": 0.5,
+              "standard_error": 0.05129891760425771,
+              "mean_score": 31.8125,
+              "goal_progress": 0.48498122777459657
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.048942704041300286,
+              "PASS": 0.9510572959586999
+            },
+            "1": {
+              "TAKE": 0.054877350271975406,
+              "PASS": 0.9451226497280245
+            },
+            "2": {
+              "TAKE": 0.08710888574685749,
+              "PASS": 0.9128911142531426
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3541666666666667,
+              "standard_error": 0.04793811495560788,
+              "mean_score": 30.572916666666668,
+              "goal_progress": 0.4633103891011953
+            },
+            "PASS": {
+              "win_share": 0.3541666666666667,
+              "standard_error": 0.04850657096621636,
+              "mean_score": 36.729166666666664,
+              "goal_progress": 0.43511400214832213
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.04689005228090627,
+              "PASS": 0.953109947719094
+            },
+            "1": {
+              "TAKE": 0.051609773371040404,
+              "PASS": 0.9483902266289596
+            },
+            "2": {
+              "TAKE": 0.130563922528848,
+              "PASS": 0.869436077471152
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.4166666666666667,
+              "standard_error": 0.050036536358547386,
+              "mean_score": 32.239583333333336,
+              "goal_progress": 0.4791610566497007
+            },
+            "PASS": {
+              "win_share": 0.4583333333333333,
+              "standard_error": 0.05058141488890701,
+              "mean_score": 31.166666666666668,
+              "goal_progress": 0.4808291365686883
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.048942704041300286,
+              "PASS": 0.9510572959586999
+            },
+            "1": {
+              "TAKE": 0.054877350271975406,
+              "PASS": 0.9451226497280245
+            },
+            "2": {
+              "TAKE": 0.08710888574685749,
+              "PASS": 0.9128911142531426
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3420138888888889,
+              "standard_error": 0.04756304114498688,
+              "mean_score": 33.15625,
+              "goal_progress": 0.45439366603195896
+            },
+            "PASS": {
+              "win_share": 0.3385416666666667,
+              "standard_error": 0.04826757001402163,
+              "mean_score": 36.895833333333336,
+              "goal_progress": 0.4297180601971256
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.04689005228090627,
+              "PASS": 0.953109947719094
+            },
+            "1": {
+              "TAKE": 0.051609773371040404,
+              "PASS": 0.9483902266289596
+            },
+            "2": {
+              "TAKE": 0.130563922528848,
+              "PASS": 0.869436077471152
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5503472222222222,
+              "standard_error": 0.049982927864336724,
+              "mean_score": 30.208333333333332,
+              "goal_progress": 0.5145553622862863
+            },
+            "PASS": {
+              "win_share": 0.390625,
+              "standard_error": 0.04978193951819256,
+              "mean_score": 37.302083333333336,
+              "goal_progress": 0.46480304552823676
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.06739443691884531,
+              "PASS": 0.9326055630811548
+            },
+            "1": {
+              "TAKE": 0.1672509904001171,
+              "PASS": 0.832749009599883
+            },
+            "2": {
+              "TAKE": 0.04929530371965889,
+              "PASS": 0.9507046962803412
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5416666666666666,
+              "standard_error": 0.05058141488890701,
+              "mean_score": 32.010416666666664,
+              "goal_progress": 0.5033779819963425
+            },
+            "PASS": {
+              "win_share": 0.3541666666666667,
+              "standard_error": 0.04906844187768849,
+              "mean_score": 37.197916666666664,
+              "goal_progress": 0.4297570406870024
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.05796387394593008,
+              "PASS": 0.94203612605407
+            },
+            "1": {
+              "TAKE": 0.12804154260575737,
+              "PASS": 0.8719584573942427
+            },
+            "2": {
+              "TAKE": 0.05520401543105703,
+              "PASS": 0.944795984568943
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.453125,
+              "standard_error": 0.050261446392051365,
+              "mean_score": 33.541666666666664,
+              "goal_progress": 0.46940364529634265
+            },
+            "PASS": {
+              "win_share": 0.421875,
+              "standard_error": 0.04985072288711992,
+              "mean_score": 39.4375,
+              "goal_progress": 0.4432608491273578
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.06739443691884531,
+              "PASS": 0.9326055630811548
+            },
+            "1": {
+              "TAKE": 0.1672509904001171,
+              "PASS": 0.832749009599883
+            },
+            "2": {
+              "TAKE": 0.04929530371965889,
+              "PASS": 0.9507046962803412
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3836805555555555,
+              "standard_error": 0.04881139556651446,
+              "mean_score": 33.53125,
+              "goal_progress": 0.45898161351923256
+            },
+            "PASS": {
+              "win_share": 0.3020833333333333,
+              "standard_error": 0.046523413428896467,
+              "mean_score": 45.0,
+              "goal_progress": 0.37752491517670766
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.05796387394593008,
+              "PASS": 0.94203612605407
+            },
+            "1": {
+              "TAKE": 0.12804154260575737,
+              "PASS": 0.8719584573942427
+            },
+            "2": {
+              "TAKE": 0.05520401543105703,
+              "PASS": 0.944795984568943
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6811,
+      "encounter": 3,
+      "tick": 13,
+      "actor": 0,
+      "public_before": {
+        "cards": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          8,
+          8,
+          8,
+          7
+        ],
+        "turn": 0,
+        "card": 35,
+        "pot": 13,
+        "seen": [
+          35
+        ],
+        "remaining": 23,
+        "payments": [
+          3,
+          3,
+          3,
+          4
+        ]
+      },
+      "old_action": "TAKE",
+      "new_action": "PASS",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.2552083333333333,
+              "standard_error": 0.04380153084690265,
+              "mean_score": 39.65625,
+              "goal_progress": 0.420235870416144
+            },
+            "PASS": {
+              "win_share": 0.2708333333333333,
+              "standard_error": 0.04498822133047197,
+              "mean_score": 47.666666666666664,
+              "goal_progress": 0.3771125692585908
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.057859779064611774,
+              "PASS": 0.9421402209353883
+            },
+            "2": {
+              "TAKE": 0.10754562081941954,
+              "PASS": 0.8924543791805806
+            },
+            "3": {
+              "TAKE": 0.048239997263039666,
+              "PASS": 0.9517600027369606
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.22916666666666666,
+              "standard_error": 0.042481075938180964,
+              "mean_score": 40.40625,
+              "goal_progress": 0.4140297708447211
+            },
+            "PASS": {
+              "win_share": 0.265625,
+              "standard_error": 0.04501043068683119,
+              "mean_score": 47.03125,
+              "goal_progress": 0.3809083637504398
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.05491363240931611,
+              "PASS": 0.945086367590684
+            },
+            "2": {
+              "TAKE": 0.10754562081941954,
+              "PASS": 0.8924543791805806
+            },
+            "3": {
+              "TAKE": 0.048239997263039666,
+              "PASS": 0.9517600027369606
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.2552083333333333,
+              "standard_error": 0.04380153084690265,
+              "mean_score": 39.65625,
+              "goal_progress": 0.420235870416144
+            },
+            "PASS": {
+              "win_share": 0.2708333333333333,
+              "standard_error": 0.04498822133047197,
+              "mean_score": 47.666666666666664,
+              "goal_progress": 0.3771125692585908
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.057859779064611774,
+              "PASS": 0.9421402209353883
+            },
+            "2": {
+              "TAKE": 0.10754562081941954,
+              "PASS": 0.8924543791805806
+            },
+            "3": {
+              "TAKE": 0.048239997263039666,
+              "PASS": 0.9517600027369606
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.22916666666666666,
+              "standard_error": 0.042481075938180964,
+              "mean_score": 40.40625,
+              "goal_progress": 0.4140297708447211
+            },
+            "PASS": {
+              "win_share": 0.265625,
+              "standard_error": 0.04501043068683119,
+              "mean_score": 47.03125,
+              "goal_progress": 0.3809083637504398
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.05491363240931611,
+              "PASS": 0.945086367590684
+            },
+            "2": {
+              "TAKE": 0.10754562081941954,
+              "PASS": 0.8924543791805806
+            },
+            "3": {
+              "TAKE": 0.048239997263039666,
+              "PASS": 0.9517600027369606
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.08333333333333333,
+              "standard_error": 0.028356543640780024,
+              "mean_score": 51.989583333333336,
+              "goal_progress": 0.32111244882336115
+            },
+            "PASS": {
+              "win_share": 0.34375,
+              "standard_error": 0.04816393105204314,
+              "mean_score": 42.645833333333336,
+              "goal_progress": 0.40907757675109985
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.058866537283917275,
+              "PASS": 0.9411334627160828
+            },
+            "2": {
+              "TAKE": 0.10754562081941954,
+              "PASS": 0.8924543791805806
+            },
+            "3": {
+              "TAKE": 0.048239997263039666,
+              "PASS": 0.9517600027369606
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.09375,
+              "standard_error": 0.02990527809425515,
+              "mean_score": 52.6875,
+              "goal_progress": 0.32288675230613606
+            },
+            "PASS": {
+              "win_share": 0.3333333333333333,
+              "standard_error": 0.04779494455636704,
+              "mean_score": 42.15625,
+              "goal_progress": 0.4167218585443653
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.055482252231474904,
+              "PASS": 0.9445177477685252
+            },
+            "2": {
+              "TAKE": 0.10754562081941954,
+              "PASS": 0.8924543791805806
+            },
+            "3": {
+              "TAKE": 0.048239997263039666,
+              "PASS": 0.9517600027369606
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.08333333333333333,
+              "standard_error": 0.028356543640780024,
+              "mean_score": 51.989583333333336,
+              "goal_progress": 0.32111244882336115
+            },
+            "PASS": {
+              "win_share": 0.34375,
+              "standard_error": 0.04816393105204314,
+              "mean_score": 42.645833333333336,
+              "goal_progress": 0.40907757675109985
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.058866537283917275,
+              "PASS": 0.9411334627160828
+            },
+            "2": {
+              "TAKE": 0.10754562081941954,
+              "PASS": 0.8924543791805806
+            },
+            "3": {
+              "TAKE": 0.048239997263039666,
+              "PASS": 0.9517600027369606
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.09375,
+              "standard_error": 0.02990527809425515,
+              "mean_score": 52.6875,
+              "goal_progress": 0.32288675230613606
+            },
+            "PASS": {
+              "win_share": 0.3333333333333333,
+              "standard_error": 0.04779494455636704,
+              "mean_score": 42.15625,
+              "goal_progress": 0.4167218585443653
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.055482252231474904,
+              "PASS": 0.9445177477685252
+            },
+            "2": {
+              "TAKE": 0.10754562081941954,
+              "PASS": 0.8924543791805806
+            },
+            "3": {
+              "TAKE": 0.048239997263039666,
+              "PASS": 0.9517600027369606
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6813,
+      "encounter": 2,
+      "tick": 8,
+      "actor": 2,
+      "public_before": {
+        "cards": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "turn": 2,
+        "card": 34,
+        "pot": 8,
+        "seen": [
+          34
+        ],
+        "remaining": 23,
+        "payments": [
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      "old_action": "TAKE",
+      "new_action": "PASS",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.19270833333333334,
+              "standard_error": 0.04012712233187707,
+              "mean_score": 44.34375,
+              "goal_progress": 0.3837078045827715
+            },
+            "PASS": {
+              "win_share": 0.234375,
+              "standard_error": 0.043144700559900856,
+              "mean_score": 48.40625,
+              "goal_progress": 0.3594577302611433
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.06455845754308451,
+              "PASS": 0.9354415424569156
+            },
+            "1": {
+              "TAKE": 0.0750646277525468,
+              "PASS": 0.9249353722474531
+            },
+            "3": {
+              "TAKE": 0.04794871605878117,
+              "PASS": 0.952051283941219
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.125,
+              "standard_error": 0.03393104462691481,
+              "mean_score": 43.46875,
+              "goal_progress": 0.37021350208633647
+            },
+            "PASS": {
+              "win_share": 0.53125,
+              "standard_error": 0.05066038670106807,
+              "mean_score": 33.822916666666664,
+              "goal_progress": 0.4948063331295227
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.06564572431666973,
+              "PASS": 0.9343542756833304
+            },
+            "1": {
+              "TAKE": 0.0750595546563867,
+              "PASS": 0.9249404453436134
+            },
+            "3": {
+              "TAKE": 0.04631324373383259,
+              "PASS": 0.9536867562661675
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.21354166666666666,
+              "standard_error": 0.04171803303094191,
+              "mean_score": 42.145833333333336,
+              "goal_progress": 0.39921752660244536
+            },
+            "PASS": {
+              "win_share": 0.5190972222222222,
+              "standard_error": 0.05021092157233275,
+              "mean_score": 32.958333333333336,
+              "goal_progress": 0.4979026092155377
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.06455845754308451,
+              "PASS": 0.9354415424569156
+            },
+            "1": {
+              "TAKE": 0.0750646277525468,
+              "PASS": 0.9249353722474531
+            },
+            "3": {
+              "TAKE": 0.04794871605878117,
+              "PASS": 0.952051283941219
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.22916666666666666,
+              "standard_error": 0.043121530286725746,
+              "mean_score": 42.635416666666664,
+              "goal_progress": 0.3996812502365384
+            },
+            "PASS": {
+              "win_share": 0.6145833333333334,
+              "standard_error": 0.049381684905373244,
+              "mean_score": 31.864583333333332,
+              "goal_progress": 0.5158390865561685
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.06564572431666973,
+              "PASS": 0.9343542756833304
+            },
+            "1": {
+              "TAKE": 0.0750595546563867,
+              "PASS": 0.9249404453436134
+            },
+            "3": {
+              "TAKE": 0.04631324373383259,
+              "PASS": 0.9536867562661675
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.25,
+              "standard_error": 0.04442616583193193,
+              "mean_score": 41.802083333333336,
+              "goal_progress": 0.40829637361827004
+            },
+            "PASS": {
+              "win_share": 0.4479166666666667,
+              "standard_error": 0.050479698165704044,
+              "mean_score": 34.34375,
+              "goal_progress": 0.473262309968182
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.07463085271553202,
+              "PASS": 0.9253691472844681
+            },
+            "1": {
+              "TAKE": 0.06455877294353211,
+              "PASS": 0.935441227056468
+            },
+            "3": {
+              "TAKE": 0.04641455783226469,
+              "PASS": 0.9535854421677353
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.2604166666666667,
+              "standard_error": 0.04502628780576133,
+              "mean_score": 43.729166666666664,
+              "goal_progress": 0.39545859364686614
+            },
+            "PASS": {
+              "win_share": 0.5243055555555555,
+              "standard_error": 0.050459581722298724,
+              "mean_score": 36.0,
+              "goal_progress": 0.49062744887578047
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.07630283638316386,
+              "PASS": 0.9236971636168362
+            },
+            "1": {
+              "TAKE": 0.0645536526728307,
+              "PASS": 0.9354463473271695
+            },
+            "3": {
+              "TAKE": 0.04541013386156556,
+              "PASS": 0.9545898661384344
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.24479166666666666,
+              "standard_error": 0.04380153084690265,
+              "mean_score": 41.270833333333336,
+              "goal_progress": 0.41064558598547274
+            },
+            "PASS": {
+              "win_share": 0.5,
+              "standard_error": 0.050761741360643965,
+              "mean_score": 35.84375,
+              "goal_progress": 0.47666793605304086
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.07463085271553202,
+              "PASS": 0.9253691472844681
+            },
+            "1": {
+              "TAKE": 0.06455877294353211,
+              "PASS": 0.935441227056468
+            },
+            "3": {
+              "TAKE": 0.04641455783226469,
+              "PASS": 0.9535854421677353
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.2604166666666667,
+              "standard_error": 0.045026287805761324,
+              "mean_score": 44.489583333333336,
+              "goal_progress": 0.39127151205240374
+            },
+            "PASS": {
+              "win_share": 0.5034722222222222,
+              "standard_error": 0.050519907022114244,
+              "mean_score": 36.21875,
+              "goal_progress": 0.4885926658884266
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.07630283638316386,
+              "PASS": 0.9236971636168362
+            },
+            "1": {
+              "TAKE": 0.0645536526728307,
+              "PASS": 0.9354463473271695
+            },
+            "3": {
+              "TAKE": 0.04541013386156556,
+              "PASS": 0.9545898661384344
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6813,
+      "encounter": 3,
+      "tick": 9,
+      "actor": 0,
+      "public_before": {
+        "cards": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          9,
+          9,
+          9,
+          8
+        ],
+        "turn": 0,
+        "card": 29,
+        "pot": 9,
+        "seen": [
+          29
+        ],
+        "remaining": 23,
+        "payments": [
+          2,
+          2,
+          2,
+          3
+        ]
+      },
+      "old_action": "PASS",
+      "new_action": "TAKE",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3645833333333333,
+              "standard_error": 0.0482586953956129,
+              "mean_score": 33.520833333333336,
+              "goal_progress": 0.4440594692280762
+            },
+            "PASS": {
+              "win_share": 0.6354166666666666,
+              "standard_error": 0.0482586953956129,
+              "mean_score": 31.916666666666668,
+              "goal_progress": 0.5125018003942249
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.05093033746402516,
+              "PASS": 0.9490696625359749
+            },
+            "2": {
+              "TAKE": 0.09151843547182781,
+              "PASS": 0.9084815645281723
+            },
+            "3": {
+              "TAKE": 0.05069997372552495,
+              "PASS": 0.9493000262744751
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3072916666666667,
+              "standard_error": 0.04586509565311083,
+              "mean_score": 33.166666666666664,
+              "goal_progress": 0.43982668050065393
+            },
+            "PASS": {
+              "win_share": 0.5625,
+              "standard_error": 0.0503550986982677,
+              "mean_score": 28.53125,
+              "goal_progress": 0.5075147586594122
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.04559735967356289,
+              "PASS": 0.9544026403264372
+            },
+            "2": {
+              "TAKE": 0.09263491369169743,
+              "PASS": 0.9073650863083027
+            },
+            "3": {
+              "TAKE": 0.08540079677225024,
+              "PASS": 0.9145992032277498
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3333333333333333,
+              "standard_error": 0.046633760328105456,
+              "mean_score": 34.28125,
+              "goal_progress": 0.43977452137782685
+            },
+            "PASS": {
+              "win_share": 0.6197916666666666,
+              "standard_error": 0.04897232909320187,
+              "mean_score": 31.28125,
+              "goal_progress": 0.5174007276260841
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.05093033746402516,
+              "PASS": 0.9490696625359749
+            },
+            "2": {
+              "TAKE": 0.09151843547182781,
+              "PASS": 0.9084815645281723
+            },
+            "3": {
+              "TAKE": 0.05069997372552495,
+              "PASS": 0.9493000262744751
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3125,
+              "standard_error": 0.04638818852992343,
+              "mean_score": 33.052083333333336,
+              "goal_progress": 0.44299267055861585
+            },
+            "PASS": {
+              "win_share": 0.5260416666666666,
+              "standard_error": 0.05042026864760913,
+              "mean_score": 30.572916666666668,
+              "goal_progress": 0.4927151844922353
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.04559735967356289,
+              "PASS": 0.9544026403264372
+            },
+            "2": {
+              "TAKE": 0.09263491369169743,
+              "PASS": 0.9073650863083027
+            },
+            "3": {
+              "TAKE": 0.08540079677225024,
+              "PASS": 0.9145992032277498
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.2552083333333333,
+              "standard_error": 0.04380153084690265,
+              "mean_score": 42.0625,
+              "goal_progress": 0.3980291359643607
+            },
+            "PASS": {
+              "win_share": 0.390625,
+              "standard_error": 0.04922821285390598,
+              "mean_score": 39.53125,
+              "goal_progress": 0.43807665308226124
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.06439277866015283,
+              "PASS": 0.9356072213398473
+            },
+            "2": {
+              "TAKE": 0.06690073949403293,
+              "PASS": 0.9330992605059674
+            },
+            "3": {
+              "TAKE": 0.0929185418479894,
+              "PASS": 0.9070814581520107
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.2916666666666667,
+              "standard_error": 0.04604218762109021,
+              "mean_score": 26.5,
+              "goal_progress": 0.4441805086026594
+            },
+            "PASS": {
+              "win_share": 0.23263888888888892,
+              "standard_error": 0.04155534593170383,
+              "mean_score": 39.583333333333336,
+              "goal_progress": 0.38638757890276404
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.04800361791624047,
+              "PASS": 0.9519963820837597
+            },
+            "2": {
+              "TAKE": 0.06736803972009527,
+              "PASS": 0.932631960279905
+            },
+            "3": {
+              "TAKE": 0.34074860483382363,
+              "PASS": 0.6592513951661765
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.13020833333333334,
+              "standard_error": 0.03412823442889945,
+              "mean_score": 43.197916666666664,
+              "goal_progress": 0.3697957786812786
+            },
+            "PASS": {
+              "win_share": 0.28125,
+              "standard_error": 0.04553079977411088,
+              "mean_score": 41.90625,
+              "goal_progress": 0.4063543085572852
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.06439277866015283,
+              "PASS": 0.9356072213398473
+            },
+            "2": {
+              "TAKE": 0.06690073949403293,
+              "PASS": 0.9330992605059674
+            },
+            "3": {
+              "TAKE": 0.0929185418479894,
+              "PASS": 0.9070814581520107
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.3263888888888889,
+              "standard_error": 0.047277014995117904,
+              "mean_score": 27.09375,
+              "goal_progress": 0.4482443335410553
+            },
+            "PASS": {
+              "win_share": 0.34722222222222227,
+              "standard_error": 0.048595444426132776,
+              "mean_score": 39.979166666666664,
+              "goal_progress": 0.41456894124758326
+            }
+          },
+          "public_prediction": {
+            "1": {
+              "TAKE": 0.04800361791624047,
+              "PASS": 0.9519963820837597
+            },
+            "2": {
+              "TAKE": 0.06736803972009527,
+              "PASS": 0.932631960279905
+            },
+            "3": {
+              "TAKE": 0.34074860483382363,
+              "PASS": 0.6592513951661765
+            }
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6814,
+      "encounter": 3,
+      "tick": 2,
+      "actor": 1,
+      "public_before": {
+        "cards": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "chips": [
+          10,
+          11,
+          11,
+          10
+        ],
+        "turn": 1,
+        "card": 7,
+        "pot": 2,
+        "seen": [
+          7
+        ],
+        "remaining": 23,
+        "payments": [
+          1,
+          0,
+          0,
+          1
+        ]
+      },
+      "old_action": "PASS",
+      "new_action": "TAKE",
+      "interventions": [
+        {
+          "changed_channels": [],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5572916666666666,
+              "standard_error": 0.04959805085274838,
+              "mean_score": 18.583333333333332,
+              "goal_progress": 0.5262041038213301
+            },
+            "PASS": {
+              "win_share": 0.7395833333333334,
+              "standard_error": 0.04441330917826032,
+              "mean_score": 14.239583333333334,
+              "goal_progress": 0.5886199094460535
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.4532662952246159,
+              "PASS": 0.5467337047753843
+            },
+            "2": {
+              "TAKE": 0.18088794157026578,
+              "PASS": 0.8191120584297343
+            },
+            "3": {
+              "TAKE": 0.06303266291989242,
+              "PASS": 0.9369673370801079
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.53125,
+              "standard_error": 0.05011636678070594,
+              "mean_score": 21.21875,
+              "goal_progress": 0.5116952040567915
+            },
+            "PASS": {
+              "win_share": 0.5104166666666666,
+              "standard_error": 0.050750489727709416,
+              "mean_score": 22.979166666666668,
+              "goal_progress": 0.4938663181657585
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.44624265110937167,
+              "PASS": 0.5537573488906286
+            },
+            "2": {
+              "TAKE": 0.19196425488745497,
+              "PASS": 0.8080357451125452
+            },
+            "3": {
+              "TAKE": 0.06189600129206768,
+              "PASS": 0.9381039987079326
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.5572916666666666,
+              "standard_error": 0.04959805085274838,
+              "mean_score": 18.583333333333332,
+              "goal_progress": 0.5262041038213301
+            },
+            "PASS": {
+              "win_share": 0.7395833333333334,
+              "standard_error": 0.04441330917826032,
+              "mean_score": 14.239583333333334,
+              "goal_progress": 0.5886199094460535
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.4532662952246159,
+              "PASS": 0.5467337047753843
+            },
+            "2": {
+              "TAKE": 0.18088794157026578,
+              "PASS": 0.8191120584297343
+            },
+            "3": {
+              "TAKE": 0.06303266291989242,
+              "PASS": 0.9369673370801079
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.53125,
+              "standard_error": 0.05011636678070594,
+              "mean_score": 21.21875,
+              "goal_progress": 0.5116952040567915
+            },
+            "PASS": {
+              "win_share": 0.5104166666666666,
+              "standard_error": 0.050750489727709416,
+              "mean_score": 22.979166666666668,
+              "goal_progress": 0.4938663181657585
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.44624265110937167,
+              "PASS": 0.5537573488906286
+            },
+            "2": {
+              "TAKE": 0.19196425488745497,
+              "PASS": 0.8080357451125452
+            },
+            "3": {
+              "TAKE": 0.06189600129206768,
+              "PASS": 0.9381039987079326
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.640625,
+              "standard_error": 0.048949000603564115,
+              "mean_score": 20.59375,
+              "goal_progress": 0.5464146653521543
+            },
+            "PASS": {
+              "win_share": 0.703125,
+              "standard_error": 0.04658168464427028,
+              "mean_score": 19.270833333333332,
+              "goal_progress": 0.5565616860737711
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.2282300615230801,
+              "PASS": 0.7717699384769202
+            },
+            "2": {
+              "TAKE": 0.2163797753328653,
+              "PASS": 0.7836202246671349
+            },
+            "3": {
+              "TAKE": 0.06079639050121051,
+              "PASS": 0.9392036094987894
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.65625,
+              "standard_error": 0.04816393105204314,
+              "mean_score": 20.135416666666668,
+              "goal_progress": 0.5546015119463714
+            },
+            "PASS": {
+              "win_share": 0.6770833333333334,
+              "standard_error": 0.04797384079459134,
+              "mean_score": 21.75,
+              "goal_progress": 0.546444045166119
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.22202195388001109,
+              "PASS": 0.7779780461199892
+            },
+            "2": {
+              "TAKE": 0.22816825825819873,
+              "PASS": 0.7718317417418015
+            },
+            "3": {
+              "TAKE": 0.05987691567702823,
+              "PASS": 0.9401230843229718
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent"
+          ],
+          "action": "PASS",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.640625,
+              "standard_error": 0.048949000603564115,
+              "mean_score": 20.59375,
+              "goal_progress": 0.5464146653521543
+            },
+            "PASS": {
+              "win_share": 0.703125,
+              "standard_error": 0.04658168464427028,
+              "mean_score": 19.270833333333332,
+              "goal_progress": 0.5565616860737711
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.2282300615230801,
+              "PASS": 0.7717699384769202
+            },
+            "2": {
+              "TAKE": 0.2163797753328653,
+              "PASS": 0.7836202246671349
+            },
+            "3": {
+              "TAKE": 0.06079639050121051,
+              "PASS": 0.9392036094987894
+            }
+          }
+        },
+        {
+          "changed_channels": [
+            "trackers",
+            "recent",
+            "coefficients"
+          ],
+          "action": "TAKE",
+          "predicted_actions": {
+            "TAKE": {
+              "win_share": 0.65625,
+              "standard_error": 0.04816393105204314,
+              "mean_score": 20.135416666666668,
+              "goal_progress": 0.5546015119463714
+            },
+            "PASS": {
+              "win_share": 0.6770833333333334,
+              "standard_error": 0.04797384079459134,
+              "mean_score": 21.75,
+              "goal_progress": 0.546444045166119
+            }
+          },
+          "public_prediction": {
+            "0": {
+              "TAKE": 0.22202195388001109,
+              "PASS": 0.7779780461199892
+            },
+            "2": {
+              "TAKE": 0.22816825825819873,
+              "PASS": 0.7718317417418015
+            },
+            "3": {
+              "TAKE": 0.05987691567702823,
+              "PASS": 0.9401230843229718
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "single_channel_changed_choices": {
+    "trackers": 6,
+    "recent": 2,
+    "coefficients": 8
+  },
+  "limitations": [
+    "post-hoc sampled search interventions, not additive attribution or causal win effects"
+  ]
+}
