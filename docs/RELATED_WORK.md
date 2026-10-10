@@ -16,3 +16,9 @@
 [Chuaほか、PETS論文の第5節](https://proceedings.neurips.cc/paper/7725-deep-reinforcement-learning-in-a-handful-of-trials-using-probabilistic-dynamics-models.pdf) は、行動列のモデル予測制御、ランダムシューティング、CEM、モデル不確実性の区別を説明する。本プロジェクトでは、行動列をサンプリングして最初の一手だけ実行し再計画する考え方を、有限の離散候補へ接続した。
 
 PETSのニューラル力学モデル・CEM・学習手順・ライブラリを導入したわけではない。公開ルールの遷移モデルと既存の人格採点を使う独自実装。サンプリングした候補とビーム候補を共通に比較し、実対戦での改善と追加費用を別に測る。元論文の連続制御での性能は、本プロジェクトの人格・ゲーム知能の証拠へ流用しない。
+
+## 同時入札と目的特化CPU（2026-10-10）
+
+[LanctotほかのSM-MCTS論文](https://mlanctot.info/files/papers/wcg13-smmcts.pdf) はGoofspielを含む同時手ゲームの探索を扱う。同時手を逐次公開して相手の現在手を知ったように探索しない境界を参考にした。今回の実装は共有の入札列をエリート保持・置換で探索し、新しい相手標本で検証する独自の有限探索で、SM-MCTS・CEMの実装でも均衡保証でもない。4人対戦へ二人定和の結果を流用しない。
+
+[OpenSpielのGoofspiel実装](https://github.com/google-deepmind/open_spiel/blob/master/open_spiel/games/goofspiel/goofspiel.cc) には賞品順の昇順・降順・ランダム設定がある。本試験の13賞品のシャッフル順を最初から全員へ公開する設定は検証用の拡張で、同実装の未知ランダム順そのものではない。市販の「ハゲタカのえじき」の負の札・同額持越しも含まない。Goofspiel型の公開順入札とNo Thanks!の基本ルールを使った二ゲーム検証として報告する。外部ゲームライブラリやコードを取り込まず、NumPy依存は増やしていない。

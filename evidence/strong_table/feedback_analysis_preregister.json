@@ -1,0 +1,37 @@
+{
+  "version": "forecast-feedback-coupling-paired-v1",
+  "old_source_ref": "8d1b0e5",
+  "seeds": [
+    6400,
+    6405,
+    6410,
+    6415
+  ],
+  "encounters": 8,
+  "games": [
+    "goofspiel",
+    "no_thanks"
+  ],
+  "mode": "adaptive",
+  "matches_per_version": 64,
+  "total_matches": 128,
+  "strong": {
+    "train": 128,
+    "validate": 256,
+    "plans": 192,
+    "generations": 5
+  },
+  "persona": {
+    "train": 32,
+    "validate": 96,
+    "plans": 64,
+    "generations": 3
+  },
+  "changes": [
+    "use actual planning forecast for surprise/forgetting",
+    "use learned recent No Thanks threshold in future scenarios"
+  ],
+  "primary": "paired three-NPC winner credit; both CPU and NPCs receive correction",
+  "secondary": "same-forecast invariant and root/future recent threshold agreement",
+  "interpretation": "4 independent encounter series; integration correction, not globally beneficial learning proof"
+}

@@ -1,0 +1,353 @@
+{
+  "matches": 1152,
+  "steps": 73010,
+  "decisions": 95474,
+  "goofspiel_objective-search_forecasts": 7488,
+  "goofspiel_objective-search_multiple_roots": 6912,
+  "goofspiel_objective-search_all_roots_zero_share": 390,
+  "goofspiel_objective-search_all_roots_equal_share": 1722,
+  "benchmark_decisions": 23083,
+  "personality_selections_replayed": 72391,
+  "learning_records_replayed": 142186,
+  "goofspiel_planned_forecasts": 7488,
+  "goofspiel_planned_multiple_roots": 6912,
+  "goofspiel_planned_all_roots_zero_share": 1687,
+  "goofspiel_planned_all_roots_equal_share": 1715,
+  "goofspiel_adaptive_forecasts": 7488,
+  "goofspiel_adaptive_multiple_roots": 6912,
+  "goofspiel_adaptive_all_roots_zero_share": 868,
+  "goofspiel_adaptive_all_roots_equal_share": 1169,
+  "goofspiel_same_state_persona_probes": 7488,
+  "goofspiel_different_persona_choices": 5545,
+  "chip_ledger_steps": 65522,
+  "no_thanks_objective-search_forecasts": 15595,
+  "no_thanks_objective-search_multiple_roots": 15365,
+  "no_thanks_objective-search_all_roots_zero_share": 515,
+  "no_thanks_objective-search_all_roots_equal_share": 898,
+  "no_thanks_planned_forecasts": 15620,
+  "no_thanks_planned_multiple_roots": 15614,
+  "no_thanks_planned_all_roots_zero_share": 1700,
+  "no_thanks_planned_all_roots_equal_share": 1916,
+  "no_thanks_adaptive_forecasts": 16260,
+  "no_thanks_adaptive_multiple_roots": 16252,
+  "no_thanks_adaptive_all_roots_zero_share": 1412,
+  "no_thanks_adaptive_all_roots_equal_share": 1693,
+  "no_thanks_same_state_persona_probes": 16260,
+  "no_thanks_different_persona_choices": 2266,
+  "all_finished": true,
+  "source_hashes_checked": 104,
+  "source_reference": "93e35b03",
+  "immutable_modules_replayed": [
+    "reflex/opponent_beliefs.py",
+    "reflex/strong_search.py",
+    "reflex/strong_table.py"
+  ],
+  "trajectory_sha256": "8fd3f7da710938d70a913c04fade277a1f5d50bdf6877bdb27eef6a0716b99db",
+  "exact_search_replayed_matches": 36,
+  "replay_scope": {
+    "series": 6100,
+    "games": [
+      "no_thanks"
+    ],
+    "modes": [
+      "reflex",
+      "planned",
+      "adaptive"
+    ],
+    "encounters": 12
+  },
+  "learning_replay": "same algorithm from past public acts; clock/isolation integration check",
+  "fixed_personality_verified": true,
+  "one_objective_cpu_verified": true,
+  "matched_worlds_verified": true,
+  "predictive_losses": [
+    {
+      "game": "goofspiel",
+      "mode": "reflex",
+      "observer_kind": "benchmark",
+      "observations": 6912,
+      "mean_log_loss": 0.2563217993865144,
+      "uniform_log_loss": 1.879346987760285
+    },
+    {
+      "game": "goofspiel",
+      "mode": "planned",
+      "observer_kind": "benchmark",
+      "observations": 6912,
+      "mean_log_loss": 1.666412740992601,
+      "uniform_log_loss": 1.879346987760285
+    },
+    {
+      "game": "goofspiel",
+      "mode": "adaptive",
+      "observer_kind": "benchmark",
+      "observations": 6912,
+      "mean_log_loss": 1.667906308504853,
+      "uniform_log_loss": 1.879346987760285
+    },
+    {
+      "game": "goofspiel",
+      "mode": "adaptive",
+      "observer_kind": "npc-reads-benchmark",
+      "observations": 6912,
+      "mean_log_loss": 1.880855455596087,
+      "uniform_log_loss": 1.879346987760285
+    },
+    {
+      "game": "goofspiel",
+      "mode": "adaptive",
+      "observer_kind": "npc-reads-npc",
+      "observations": 13824,
+      "mean_log_loss": 1.667906308504853,
+      "uniform_log_loss": 1.879346987760285
+    },
+    {
+      "game": "no_thanks",
+      "mode": "reflex",
+      "observer_kind": "benchmark",
+      "observations": 17787,
+      "mean_log_loss": 0.19898333315956382,
+      "uniform_log_loss": 0.6931471805599453
+    },
+    {
+      "game": "no_thanks",
+      "mode": "planned",
+      "observer_kind": "benchmark",
+      "observations": 15614,
+      "mean_log_loss": 0.4390027937884277,
+      "uniform_log_loss": 0.6931471805599453
+    },
+    {
+      "game": "no_thanks",
+      "mode": "adaptive",
+      "observer_kind": "npc-reads-benchmark",
+      "observations": 14427,
+      "mean_log_loss": 0.37347262364034695,
+      "uniform_log_loss": 0.6931471805599452
+    },
+    {
+      "game": "no_thanks",
+      "mode": "adaptive",
+      "observer_kind": "benchmark",
+      "observations": 16252,
+      "mean_log_loss": 0.4685913751195389,
+      "uniform_log_loss": 0.6931471805599453
+    },
+    {
+      "game": "no_thanks",
+      "mode": "adaptive",
+      "observer_kind": "npc-reads-npc",
+      "observations": 32504,
+      "mean_log_loss": 0.4685913751195389,
+      "uniform_log_loss": 0.6931471805599453
+    }
+  ],
+  "behavior": [
+    {
+      "game": "goofspiel",
+      "mode": "reflex",
+      "profile": "growth",
+      "decisions": 1872,
+      "rank_sum": 1728.0,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "goofspiel",
+      "mode": "reflex",
+      "profile": "care",
+      "decisions": 1872,
+      "rank_sum": 1127.0,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "goofspiel",
+      "mode": "reflex",
+      "profile": "ego",
+      "decisions": 1872,
+      "rank_sum": 1728.0,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "goofspiel",
+      "mode": "planned",
+      "profile": "growth",
+      "decisions": 1872,
+      "rank_sum": 717.9886002885996,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "goofspiel",
+      "mode": "planned",
+      "profile": "care",
+      "decisions": 1872,
+      "rank_sum": 506.8187950937948,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "goofspiel",
+      "mode": "planned",
+      "profile": "ego",
+      "decisions": 1872,
+      "rank_sum": 668.3409090909099,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "goofspiel",
+      "mode": "adaptive",
+      "profile": "growth",
+      "decisions": 1872,
+      "rank_sum": 1088.7228715728697,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "goofspiel",
+      "mode": "adaptive",
+      "profile": "care",
+      "decisions": 1872,
+      "rank_sum": 793.1564213564222,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "goofspiel",
+      "mode": "adaptive",
+      "profile": "ego",
+      "decisions": 1872,
+      "rank_sum": 1071.6469336219316,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "no_thanks",
+      "mode": "reflex",
+      "profile": "growth",
+      "decisions": 4467,
+      "takes": 846,
+      "passes": 3621,
+      "voluntary_costly_takes": 309
+    },
+    {
+      "game": "no_thanks",
+      "mode": "reflex",
+      "profile": "care",
+      "decisions": 4498,
+      "takes": 933,
+      "passes": 3565,
+      "voluntary_costly_takes": 459
+    },
+    {
+      "game": "no_thanks",
+      "mode": "reflex",
+      "profile": "ego",
+      "decisions": 4531,
+      "takes": 845,
+      "passes": 3686,
+      "voluntary_costly_takes": 330
+    },
+    {
+      "game": "no_thanks",
+      "mode": "planned",
+      "profile": "growth",
+      "decisions": 3850,
+      "takes": 1001,
+      "passes": 2849,
+      "voluntary_costly_takes": 654
+    },
+    {
+      "game": "no_thanks",
+      "mode": "planned",
+      "profile": "care",
+      "decisions": 3933,
+      "takes": 1080,
+      "passes": 2853,
+      "voluntary_costly_takes": 690
+    },
+    {
+      "game": "no_thanks",
+      "mode": "planned",
+      "profile": "ego",
+      "decisions": 3910,
+      "takes": 879,
+      "passes": 3031,
+      "voluntary_costly_takes": 581
+    },
+    {
+      "game": "no_thanks",
+      "mode": "adaptive",
+      "profile": "growth",
+      "decisions": 4100,
+      "takes": 970,
+      "passes": 3130,
+      "voluntary_costly_takes": 603
+    },
+    {
+      "game": "no_thanks",
+      "mode": "adaptive",
+      "profile": "care",
+      "decisions": 4096,
+      "takes": 1038,
+      "passes": 3058,
+      "voluntary_costly_takes": 669
+    },
+    {
+      "game": "no_thanks",
+      "mode": "adaptive",
+      "profile": "ego",
+      "decisions": 3998,
+      "takes": 835,
+      "passes": 3163,
+      "voluntary_costly_takes": 549
+    },
+    {
+      "game": "goofspiel",
+      "mode": "reflex",
+      "profile": "steady",
+      "decisions": 1872,
+      "rank_sum": 358.3178571428571,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "goofspiel",
+      "mode": "planned",
+      "profile": "steady",
+      "decisions": 1872,
+      "rank_sum": 93.00277777777785,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "goofspiel",
+      "mode": "adaptive",
+      "profile": "steady",
+      "decisions": 1872,
+      "rank_sum": 215.54098124098135,
+      "nonforced_bids": 1728
+    },
+    {
+      "game": "no_thanks",
+      "mode": "reflex",
+      "profile": "steady",
+      "decisions": 4551,
+      "takes": 840,
+      "passes": 3711,
+      "voluntary_costly_takes": 423
+    },
+    {
+      "game": "no_thanks",
+      "mode": "planned",
+      "profile": "steady",
+      "decisions": 3927,
+      "takes": 926,
+      "passes": 3001,
+      "voluntary_costly_takes": 620
+    },
+    {
+      "game": "no_thanks",
+      "mode": "adaptive",
+      "profile": "steady",
+      "decisions": 4066,
+      "takes": 997,
+      "passes": 3069,
+      "voluntary_costly_takes": 630
+    }
+  ],
+  "enjoyment_measured": false,
+  "optimal_intelligence_proved": false
+}

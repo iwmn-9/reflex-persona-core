@@ -22,6 +22,8 @@ python -m reflex.social_experiment --output FRESH_SOCIAL
 
 ## 判断を見て確認する
 
+今回の基線は**勝利だけを狙う高予算CPU一人と、別々に相手を学習する人格NPC三人**。16系列×12再対戦×3方式×2ゲームの1,152試合では、入札の相手学習が三人の対応を改善し、No Thanks!では先読みの利益が大きかった。一方、No Thanks!の学習追加には上積みがなく、探索量を増やしても強敵の強さは改善しなかった。最適CPUの完成や人間らしさの実証とは扱わない。[構成・修正前後・実行例・得たものと捨てたもの](evidence/strong_table/REPORT.md)。通常の高速経路は維持し、`python -m reflex.strong_table --root FRESH_ROOT` は任意の研究経路を実行する。現行コードは旧試験の接続不具合を修正済みで、保存済み主試験と同じ数値の再現には報告書に記した固定commitを使う。
+
 既存ルールのGoofspiel/No Thanks!を4人で192試合実行した。`python -m reflex.tabletop_trials --output FRESH_ROOT` は、対象一人への反射/終局MC/公開相手予測追加を比較し、他三人も固定人格の共通Policyで動く。Goofspielの勝利持分は8→16.5→18.5/32、No Thanks!は9→6→10.5/32だが平均失点は反射より悪化。先読みを足しても賢さは安定していないため既定を切り替えない。競争利得を慈善や裏切りと読み替えず、未知山札と現在の伏せ手を渡さない。[候補・実対戦・人格の得失・見つかった不足](evidence/tabletop_trials/REPORT.md)。
 
 [evidence/persona_review/review.html](evidence/persona_review/review.html) を保存してブラウザで開く。同じ状況の四人格、四人同時の暮らし、資源の準備、物流の修正、戦闘の失敗を手ごとに確認する。採点・選択・実結果と、後で変わった継続計画を分けて表示する。評価メモはブラウザ内保存とJSON書き出しに対応し、自動学習には使わない。[範囲・得失・出所・再構築方法](evidence/persona_review/REPORT.md)。
