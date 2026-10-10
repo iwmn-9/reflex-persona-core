@@ -124,6 +124,7 @@ class SupportedCategoricalReader:
 
 class ValidatedSupportedCategoricalReader(SupportedCategoricalReader):
     """Keep local evidence intact; validate and revoke cross-support borrowing."""
+    record_version='loop-validated-supported-predictor-v1'
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.shared=copy.deepcopy(self.support.select(self.support.classes[0]))
@@ -133,12 +134,17 @@ class ValidatedSupportedCategoricalReader(SupportedCategoricalReader):
         opportunity=self._class(context)
         return self.shared if self.transfer.accepted(opportunity) else self.support.select(opportunity)
 
+    def comparison(self,local_forecast,shared_forecast):return local_forecast,shared_forecast
+
+    def reading_key(self,opportunity,selected):
+        return self.support.select(opportunity).key+(':validated-transfer' if selected is self.shared else ':local')
+
     def forecasts(self,context):return self.selected(context).forecasts(context)
 
     def __call__(self,context,cap):
         opportunity=self._class(context);selected=self.selected(context);reading=selected(context,cap)
         if reading is None:return None
-        key=self.support.select(opportunity).key+(':validated-transfer' if selected is self.shared else ':local')
+        key=self.reading_key(opportunity,selected)
         reading.context['facts']['prediction_support']=self.support_key+':'+opportunity
         return Reading(reading.context,reading.nodes,key,reading.target,reading.responses,reading.known_conditionals,reading.response_candidate)
 
@@ -148,7 +154,8 @@ class ValidatedSupportedCategoricalReader(SupportedCategoricalReader):
         index=0 if local.known_conditionals else 1
         local_forecast=local.forecasts(context)[index];shared_forecast=self.shared.forecasts(context)[index]
         new=copy.deepcopy(self)
-        transfer=(new.transfer.categorical(opportunity,local_forecast,shared_forecast,event['revealed_action'])
+        prior,candidate=self.comparison(local_forecast,shared_forecast)
+        transfer=(new.transfer.categorical(opportunity,prior,candidate,event['revealed_action'])
                   if len(local_forecast)>1 else dict(scored=False,reason='forced public response supplies no transfer evidence'))
         child,update=local.updated(context,observed,event,ticket)
         new.support._banks[opportunity]=child
@@ -156,11 +163,11 @@ class ValidatedSupportedCategoricalReader(SupportedCategoricalReader):
         return new,dict(update,opportunity_class=opportunity,support_key=self.support_key,transfer=transfer)
 
     def record(self):
-        record=super().record();record.update(version='loop-validated-supported-predictor-v1',shared=self.shared.record(),transfer=gate_record(self.transfer))
+        record=super().record();record.update(version=self.record_version,shared=self.shared.record(),transfer=gate_record(self.transfer))
         return record
 
     def restored(self,record):
-        if record['version']!='loop-validated-supported-predictor-v1':raise ValueError('validated support checkpoint mismatch')
+        if record['version']!=self.record_version:raise ValueError('validated support checkpoint mismatch')
         if any(record['transfer'][k]!=getattr(self.transfer,k) for k in ('capacity','window','min_trials','margin')):
             raise ValueError('transfer checkpoint validation controls changed')
         local=copy.deepcopy(record);local['version']='loop-supported-predictor-v1'
@@ -168,3 +175,17 @@ class ValidatedSupportedCategoricalReader(SupportedCategoricalReader):
         new.shared=self.shared.restored(record['shared']);new.transfer=restored_gate(record['transfer'])
         if set(new.transfer.entries)-set(self.support.classes):raise ValueError('undeclared transfer opportunity')
         return new
+
+
+class GuardedSupportedCategoricalReader(ValidatedSupportedCategoricalReader):
+    """An established shared fallback, with locally validated specialization."""
+    record_version='loop-guarded-supported-predictor-v1'
+
+    def selected(self,context):
+        opportunity=self._class(context)
+        return self.support.select(opportunity) if self.transfer.accepted(opportunity) else self.shared
+
+    def comparison(self,local_forecast,shared_forecast):return shared_forecast,local_forecast
+
+    def reading_key(self,opportunity,selected):
+        return self.support.select(opportunity).key+(':shared-fallback' if selected is self.shared else ':validated-local')

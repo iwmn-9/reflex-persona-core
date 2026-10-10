@@ -13,15 +13,16 @@ import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np
 from reflex.strong_search import PublicMemory
-from reflex.supported_memory import SupportedPublicMemory,ValidatedPublicMemory
+from reflex.supported_memory import SupportedPublicMemory,ValidatedPublicMemory,GuardedPublicMemory
 from tools.intervene_goal_progress import position
 
 
 def run(root,conditions=('global','supported')):
-    factories={'global':PublicMemory,'supported':SupportedPublicMemory,'validated':ValidatedPublicMemory}
+    factories={'global':PublicMemory,'supported':SupportedPublicMemory,'validated':ValidatedPublicMemory,'guarded':GuardedPublicMemory}
     if len(set(conditions))!=len(conditions) or 'global' not in conditions or len(conditions)<2 or set(conditions)-set(factories):raise ValueError('registered prediction comparison conditions required')
     root=Path(root);files=[root/f'shard-{i}'/'global'/'trajectories.jsonl' for i in range(4)]
     record=dict(kind='prequential matched-path diagnostic',conditions=list(conditions),
+        sources={p.relative_to(Path(__file__).resolve().parents[1]).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((Path(__file__).resolve().parents[1]/'reflex').glob('*.py'))},
         source_traces={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in files},
         target='next publicly revealed opponent action, scored before update; not terminal win prediction',
         weighting='average observer copies for each public reveal, mean per episode, then mean per learning series',

@@ -2,7 +2,7 @@ import copy
 import json
 import unittest
 from reflex.decision_loop import DecisionLoop
-from reflex.loop_predictor import SupportedCategoricalReader,ValidatedSupportedCategoricalReader
+from reflex.loop_predictor import SupportedCategoricalReader,ValidatedSupportedCategoricalReader,GuardedSupportedCategoricalReader
 from reflex.examples import effect
 from reflex.planning import vector
 from tests.test_decision_loop import fixture,request
@@ -17,7 +17,8 @@ def reader(c,support_key='resource-opportunity-v1',cls=SupportedCategoricalReade
 
 class SupportedReaderTests(unittest.TestCase):
     def test_observed_lifecycle_batch_and_checkpoint_keep_support_local(self):
-        # Different application domains use the same reader and lifecycle.
+        # Two independently named owners use the same reader and lifecycle;
+        # these fixtures are not complete game strength comparisons.
         contexts=[fixture('combat-agent',negative=True),fixture('auction-agent',negative=True)]
         for c in contexts:c['facts']['opportunity']='settling'
         originals=[reader(c) for c in contexts];loops=[DecisionLoop(c,predictor=r) for c,r in zip(contexts,originals)]
@@ -82,6 +83,22 @@ class SupportedReaderTests(unittest.TestCase):
         before=r.record();bad=copy.deepcopy(before);bad['transfer']['entries'][0]['gains']=[float('nan')]
         with self.assertRaises(ValueError):r.restored(bad)
         self.assertEqual(r.record(),before)
+
+    def test_guarded_specialization_is_locally_earned_and_checkpoint_preserves_incumbent(self):
+        c=fixture(negative=True);c['facts']['opportunity']='continuing'
+        template=reader(c,cls=GuardedSupportedCategoricalReader);loop=DecisionLoop(c,predictor=template)
+        self.assertIs(template.selected(c),template.shared)
+        for tick in range(24):
+            c['tick']=tick;c['facts']['opportunity']='continuing' if tick<8 or tick%2 else 'settling'
+            reveal='x' if c['facts']['opportunity']=='continuing' else 'y';r=loop.decide(request(c,threatened=True),False)
+            loop.observe(r['ticket'],vector(effect(.8 if reveal=='x' else -.8)),{'revealed_action':reveal})
+        self.assertTrue(loop.predictor.transfer.accepted('settling'))
+        c['facts']['opportunity']='settling'
+        self.assertIs(loop.predictor.selected(c),loop.predictor.support.select('settling'))
+        saved=json.loads(json.dumps(loop.record()));restored=DecisionLoop.from_record(c,saved,predictor=template)
+        with self.assertRaises(ValueError):reader(c,cls=ValidatedSupportedCategoricalReader).restored(saved['predictor'])
+        c['tick']=24
+        self.assertEqual(loop.decide(request(c,threatened=True),False),restored.decide(request(c,threatened=True),False))
 
 
 if __name__=='__main__':unittest.main()

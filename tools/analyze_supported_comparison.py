@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+from itertools import combinations
 from pathlib import Path
 import numpy as np
 
@@ -24,7 +25,7 @@ def analyze(root):
             assert p['seeds']==plan['seeds'] and p['encounters']==plan['encounters']
             assert p['strong']==plan['strong'] and p['persona']==plan['persona'] and p['sources']==plan['sources']
             assert p['variant']==plan.get('controller_variants',{}).get(variant,plan.get('controller_variant','progress'))
-            assert p['memory_kind']==('global' if variant=='global' else 'validated' if variant=='validated' else 'supported')
+            assert p['memory_kind']==plan.get('memory_kinds',{}).get(variant,('global' if variant=='global' else variant if variant in ('validated','guarded') else 'supported'))
             runs.append(dict(folder=str(file.parent.relative_to(root)).replace('\\','/'),variant=variant,matches=len(e['matches']),
                 evaluation_sha256=hashlib.sha256(file.read_bytes()).hexdigest(),trajectory_sha256=e['trajectory_sha256']))
             matches.extend(dict(**{k:v for k,v in r.items() if k!='beliefs'},condition=variant) for r in e['matches'])
@@ -58,22 +59,23 @@ def analyze(root):
             summary.append(dict(game=game,condition=variant,matches=len(rows),profiles=profiles,
                 cpu_credit=sum(r['credits'][r['benchmark']] for r in rows),npc_sum_credit=sum(1-r['credits'][r['benchmark']] for r in rows),
                 npc_failures=sum(sum(r['failures'])-r['failures'][r['benchmark']] for r in rows)))
-        for profile in ('each_npc_mean','growth','steady','care','ego'):
-            series=[];better=same=worse=0;score_series=[]
-            for seed in seeds:
-                diffs=[];scores=[]
-                for enc in range(encounters):
-                    a=index[variants[0],game,seed,enc];b=index[variants[1],game,seed,enc]
-                    actors=[int(actor) for actor,p in a['profiles'].items() if p!='benchmark' and (profile=='each_npc_mean' or p==profile)]
-                    if not actors:continue
-                    delta=np.mean([b['credits'][actor]-a['credits'][actor] for actor in actors]);diffs.append(delta)
-                    scores.append(float(np.mean([sign*(b['scores'][actor]-a['scores'][actor]) for actor in actors])))
-                    better+=delta>0;same+=delta==0;worse+=delta<0
-                if diffs:series.append(float(np.mean(diffs)));score_series.append(float(np.mean(scores)))
-            values=np.array(series);sample=values[rng.integers(len(values),size=(10000,len(values)))].mean(1)
-            contrasts.append(dict(game=game,profile=profile,independent_series=len(series),mean_credit_difference=float(values.mean()),
-                paired_series_bootstrap_95=list(map(float,np.quantile(sample,[.025,.975]))),series_differences=series,
-                mean_signed_score_difference=float(np.mean(score_series)),better=better,same=same,worse=worse))
+        for reference,candidate in combinations(variants,2):
+            for profile in ('each_npc_mean','growth','steady','care','ego'):
+                series=[];better=same=worse=0;score_series=[]
+                for seed in seeds:
+                    diffs=[];scores=[]
+                    for enc in range(encounters):
+                        a=index[reference,game,seed,enc];b=index[candidate,game,seed,enc]
+                        actors=[int(actor) for actor,p in a['profiles'].items() if p!='benchmark' and (profile=='each_npc_mean' or p==profile)]
+                        if not actors:continue
+                        delta=np.mean([b['credits'][actor]-a['credits'][actor] for actor in actors]);diffs.append(delta)
+                        scores.append(float(np.mean([sign*(b['scores'][actor]-a['scores'][actor]) for actor in actors])))
+                        better+=int(delta>0);same+=int(delta==0);worse+=int(delta<0)
+                    if diffs:series.append(float(np.mean(diffs)));score_series.append(float(np.mean(scores)))
+                values=np.array(series);sample=values[rng.integers(len(values),size=(10000,len(values)))].mean(1)
+                contrasts.append(dict(game=game,reference=reference,candidate=candidate,profile=profile,independent_series=len(series),mean_credit_difference=float(values.mean()),
+                    paired_series_bootstrap_95=list(map(float,np.quantile(sample,[.025,.975]))),series_differences=series,
+                    mean_signed_score_difference=float(np.mean(score_series)),better=better,same=same,worse=worse))
     result=dict(shard_plans=plans,runs=runs,matches=matches,summary=summary,contrasts=contrasts,goof_negative_control_exact_pairs=negative,
         limitations=['independent units are learning series, not turns or all games','bootstrap intervals have no multiplicity correction',
             'fixed high-budget CPU, not proved optimal or human-calibrated','NPC summed credit descriptive; each NPC optimizes own purposes'])

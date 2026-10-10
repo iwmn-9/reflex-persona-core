@@ -19,7 +19,7 @@ from reflex.goofspiel import Position
 from reflex.board_models import ThanksPosition
 from reflex.strong_search import PublicMemory, SearchBudget
 from reflex.strong_table import play, summarize
-from reflex.supported_memory import SupportedPublicMemory,ValidatedPublicMemory
+from reflex.supported_memory import SupportedPublicMemory,ValidatedPublicMemory,GuardedPublicMemory
 from reflex.tabletop_trials import score
 
 
@@ -35,7 +35,7 @@ def card_score(cards,chips):
 
 
 def audit(root,replay=False,source_ref=None,replay_games=None):
-    global PublicMemory,SupportedPublicMemory,ValidatedPublicMemory,SearchBudget,play,summarize
+    global PublicMemory,SupportedPublicMemory,ValidatedPublicMemory,GuardedPublicMemory,SearchBudget,play,summarize
     root=Path(root);evaluation=json.loads((root/'evaluation.json').read_text(encoding='utf-8'))
     plan=json.loads((root/'preregister.json').read_text(encoding='utf-8'));assert plan==evaluation['plan']
     base=Path(__file__).resolve().parents[1]
@@ -62,10 +62,11 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
         if 'reflex/supported_memory.py' in registered_names:
             memory_module=sys.modules['reflex.supported_memory'];SupportedPublicMemory=memory_module.SupportedPublicMemory
             if hasattr(memory_module,'ValidatedPublicMemory'):ValidatedPublicMemory=memory_module.ValidatedPublicMemory
+            if hasattr(memory_module,'GuardedPublicMemory'):GuardedPublicMemory=memory_module.GuardedPublicMemory
         play=sys.modules['reflex.strong_table'].play;summarize=sys.modules['reflex.strong_table'].summarize
     trace=root/'trajectories.jsonl';assert hashlib.sha256(trace.read_bytes()).hexdigest()==evaluation['trajectory_sha256']
     def new_memories(game,bench):
-        factory={'global':PublicMemory,'supported':SupportedPublicMemory,'validated':ValidatedPublicMemory}[plan.get('memory_kind','global')]
+        factory={'global':PublicMemory,'supported':SupportedPublicMemory,'validated':ValidatedPublicMemory,'guarded':GuardedPublicMemory}[plan.get('memory_kind','global')]
         return [(factory if a!=bench else PublicMemory)(game,a) for a in range(4)]
     indexed={(r['game'],r['seed'],r['mode'],r['encounter']):r for r in evaluation['matches']}
     assert len(indexed)==len(plan['games'])*len(plan['seeds'])*len(plan['modes'])*plan['encounters']

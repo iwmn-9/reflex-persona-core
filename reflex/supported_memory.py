@@ -76,6 +76,8 @@ class ValidatedPublicMemory(SupportedPublicMemory):
     def selected_bank(self,opportunity,actor):
         return self.shared if self.transfer.accepted(self._key(opportunity,actor)) else self.support.select(opportunity)
 
+    def comparison(self,local_prediction,shared_prediction):return local_prediction,shared_prediction
+
     def models(self,s,actor,use_history=True):return self.selected_bank(self.opportunity(s),actor).models(s,actor,use_history)
     def predict(self,s,actor,adaptive=True,models=None):return self.selected_bank(self.opportunity(s),actor).predict(s,actor,adaptive,models)
     def forecast_weights(self,s,actor,adaptive=True):return self.selected_bank(self.opportunity(s),actor).weights(actor,adaptive)
@@ -97,7 +99,8 @@ class ValidatedPublicMemory(SupportedPublicMemory):
         updated=copy.deepcopy(self)
         local_prediction=local.predict(s,actor);shared_prediction=self.shared.predict(s,actor)
         actual_prediction=self.predict(s,actor)
-        transfer=(updated.transfer.categorical(self._key(opportunity,actor),local_prediction,shared_prediction,revealed)
+        prior,candidate=self.comparison(local_prediction,shared_prediction)
+        transfer=(updated.transfer.categorical(self._key(opportunity,actor),prior,candidate,revealed)
                   if len(local_prediction)>1 else dict(scored=False,reason='forced public response supplies no transfer evidence'))
         record=SupportedPublicMemory.observe(updated,s,actor,revealed,observation_id)
         updated.shared.observe(s,actor,revealed,observation_id)
@@ -112,3 +115,26 @@ class ValidatedPublicMemory(SupportedPublicMemory):
         local=super().record();shared=self.shared.record()
         return [dict(local=local[a],shared=shared[a],transfer={k:self.transfer.status(k) for k in self.transfer.entries if k.endswith(':'+str(a))},
                      transfer_version='supported-prequential-transfer-v1') for a in range(self.players)]
+
+
+class GuardedPublicMemory(ValidatedPublicMemory):
+    """Keep the established shared forecast until local evidence earns adoption.
+
+    This reverses the incumbent/challenger ownership, not the evidence controls.
+    Both banks learn only real public acts. A local improvement is restricted to
+    its rival/opportunity and can be revoked without erasing either bank.
+    """
+    def selected_bank(self,opportunity,actor):
+        return self.support.select(opportunity) if self.transfer.accepted(self._key(opportunity,actor)) else self.shared
+
+    def comparison(self,local_prediction,shared_prediction):return shared_prediction,local_prediction
+
+    def observe(self,*args,**kwargs):
+        record=super().observe(*args,**kwargs)
+        if record is not None:
+            record['shared_baseline_probability']=record.pop('shared_candidate_probability')
+            record['local_candidate_probability']=record['local_training_probability']
+        return record
+
+    def record(self):
+        return [dict(row,transfer_version='supported-champion-challenger-v1',incumbent='shared',challenger='local') for row in super().record()]

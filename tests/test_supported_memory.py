@@ -5,7 +5,7 @@ import numpy as np
 from reflex.board_models import ThanksPosition
 from reflex.goofspiel import Position
 from reflex.strong_search import PublicMemory, _thanks_simulate
-from reflex.supported_memory import SupportBanks, SupportedPublicMemory,ValidatedPublicMemory
+from reflex.supported_memory import SupportBanks, SupportedPublicMemory,ValidatedPublicMemory,GuardedPublicMemory
 
 
 class SupportedMemoryTests(unittest.TestCase):
@@ -52,11 +52,12 @@ class SupportedMemoryTests(unittest.TestCase):
         self.assertLessEqual(len(m.ids[0]),64)
 
     def test_goof_single_bank_preserves_existing_predictions_and_learning(self):
-        s=Position.start(4,3);old=PublicMemory('goofspiel',0);new=SupportedPublicMemory('goofspiel',0)
-        for i in range(6):
-            self.assertEqual(old.predict(s,1),new.predict(s,1))
-            old.observe(s,1,'BID:3',str(i));new.observe(s,1,'BID:3',str(i))
-        np.testing.assert_equal(old.rollout_banks(),new.rollout_banks())
+        for factory in (SupportedPublicMemory,GuardedPublicMemory):
+            s=Position.start(4,3);old=PublicMemory('goofspiel',0);new=factory('goofspiel',0)
+            for i in range(6):
+                self.assertEqual(old.predict(s,1),new.predict(s,1))
+                old.observe(s,1,'BID:3',str(i));new.observe(s,1,'BID:3',str(i))
+            np.testing.assert_equal(old.rollout_banks(),new.rollout_banks())
 
     def test_virtual_future_uses_the_future_support_without_training_actual_memory(self):
         s=replace(ThanksPosition.start(4,5),remaining=0,chips=(22,22,0,0))
@@ -101,6 +102,30 @@ class SupportedMemoryTests(unittest.TestCase):
             record=m.observe(s,0,'TAKE',f'forced-{i}')
             self.assertFalse(record['transfer']['scored'])
         self.assertEqual(m.transfer.entries,{})
+
+    def test_guarded_specialization_keeps_incumbent_until_local_proof_and_revokes(self):
+        s=replace(ThanksPosition.start(4,35),remaining=0);m=GuardedPublicMemory('no_thanks',1)
+        local=m.support.select('current_card_only');key=m._key('current_card_only',0)
+        self.assertIs(m.selected_bank('current_card_only',0),m.shared)
+        for _ in range(4):m.transfer.categorical(key,{'TAKE':.5,'PASS':.5},{'TAKE':.9,'PASS':.1},'TAKE')
+        self.assertIs(m.selected_bank('current_card_only',0),local)
+        self.assertIs(m.selected_bank('future_draws',0),m.shared)
+        for _ in range(4):m.transfer.categorical(key,{'TAKE':.5,'PASS':.5},{'TAKE':.9,'PASS':.1},'PASS')
+        self.assertIs(m.selected_bank('current_card_only',0),m.shared)
+        self.assertEqual(m.comparison({'TAKE':.1},{'TAKE':.9}),({'TAKE':.9},{'TAKE':.1}))
+
+    def test_guarded_observations_score_shared_against_local_before_update(self):
+        s=ThanksPosition.start(4,35);late=replace(s,remaining=0);m=GuardedPublicMemory('no_thanks',1)
+        for i in range(8):m.observe(s,0,'PASS',f'early-{i}')
+        local_before=copy.deepcopy(m.support.select('future_draws').record())
+        for i in range(8):
+            shared=m.shared.predict(late,0);local=m.support.select('current_card_only').predict(late,0)
+            record=m.observe(late,0,'TAKE',f'late-{i}')
+            self.assertEqual(record['shared_baseline_probability'],shared['TAKE'])
+            if record['transfer']['scored']:
+                loss=lambda f:float(np.mean([(v-(k=='TAKE'))**2 for k,v in f.items()]))
+                self.assertAlmostEqual(record['transfer']['gain'],loss(shared)-loss(local))
+        self.assertEqual(m.support.select('future_draws').record(),local_before)
 
 
 if __name__=='__main__':unittest.main()
