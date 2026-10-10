@@ -13,13 +13,15 @@ import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np
 from reflex.strong_search import PublicMemory
-from reflex.supported_memory import SupportedPublicMemory
+from reflex.supported_memory import SupportedPublicMemory,ValidatedPublicMemory
 from tools.intervene_goal_progress import position
 
 
-def run(root):
+def run(root,conditions=('global','supported')):
+    factories={'global':PublicMemory,'supported':SupportedPublicMemory,'validated':ValidatedPublicMemory}
+    if len(set(conditions))!=len(conditions) or 'global' not in conditions or len(conditions)<2 or set(conditions)-set(factories):raise ValueError('registered prediction comparison conditions required')
     root=Path(root);files=[root/f'shard-{i}'/'global'/'trajectories.jsonl' for i in range(4)]
-    record=dict(kind='prequential matched-path diagnostic',conditions=['global','supported'],
+    record=dict(kind='prequential matched-path diagnostic',conditions=list(conditions),
         source_traces={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in files},
         target='next publicly revealed opponent action, scored before update; not terminal win prediction',
         weighting='average observer copies for each public reveal, mean per episode, then mean per learning series',
@@ -33,7 +35,7 @@ def run(root):
             for line in f:
                 t=json.loads(line);game=t['game'];seed=t['seed'];enc=t['encounter'];bench=t['benchmark']
                 if series!=(game,seed):
-                    series=(game,seed);memories={kind:[cls(game,a) for a in range(4)] for kind,cls in (('global',PublicMemory),('supported',SupportedPublicMemory))}
+                    series=(game,seed);memories={kind:[factories[kind](game,a) for a in range(4)] for kind in conditions}
                 s=position(game,t['before']);actors=range(4) if game=='goofspiel' else (s.turn,)
                 phase='bidding' if game=='goofspiel' else ('future_draws' if s.remaining>0 else 'current_card_only')
                 for actor in actors:
@@ -41,7 +43,7 @@ def run(root):
                     for observer in range(4):
                         if observer==actor:continue
                         forecasts={kind:memories[kind][observer].predict(s,actor) for kind in memories}
-                        if game=='goofspiel':assert forecasts['global']==forecasts['supported']
+                        if game=='goofspiel':assert all(forecasts['global']==v for v in forecasts.values())
                         for kind in memories:
                             forecast=forecasts[kind]
                             if len(forecast)>1 and observer!=bench:losses[kind].append(-math.log(forecast[revealed]))
@@ -54,15 +56,17 @@ def run(root):
         per_kind={kind:{seed:[] for seed,enc in groups[game,phase,kind]} for kind in memories}
         for kind in memories:
             for (seed,enc),values in groups[game,phase,kind].items():per_kind[kind][seed].append(float(np.mean(values)))
-        seeds=sorted(per_kind['global']);baseline=np.array([np.mean(per_kind['global'][s]) for s in seeds]);candidate=np.array([np.mean(per_kind['supported'][s]) for s in seeds])
-        diff=baseline-candidate;sample=diff[rng.integers(len(diff),size=(10000,len(diff)))].mean(1)
-        summary.append(dict(game=game,phase=phase,public_nonforced_reveals=count[game,phase],independent_series=len(seeds),
-            mean_log_loss={'global':float(baseline.mean()),'supported':float(candidate.mean())},
-            log_loss_improvement=float(diff.mean()),paired_series_bootstrap_95=list(map(float,np.quantile(sample,[.025,.975]))),series_improvements=diff.tolist()))
+        for kind in conditions:
+            if kind=='global':continue
+            seeds=sorted(per_kind['global']);baseline=np.array([np.mean(per_kind['global'][s]) for s in seeds]);candidate=np.array([np.mean(per_kind[kind][s]) for s in seeds])
+            diff=baseline-candidate;sample=diff[rng.integers(len(diff),size=(10000,len(diff)))].mean(1)
+            summary.append(dict(game=game,phase=phase,condition=kind,public_nonforced_reveals=count[game,phase],independent_series=len(seeds),
+                mean_log_loss={'global':float(baseline.mean()),kind:float(candidate.mean())},
+                log_loss_improvement=float(diff.mean()),paired_series_bootstrap_95=list(map(float,np.quantile(sample,[.025,.975]))),series_improvements=diff.tolist()))
     result=dict(registration=record,summary=summary,limitations=['matched global-policy paths, not actions from the supported controller',
         'better response prediction does not alone prove better move selection','terminal opportunity classes require adapter knowledge'])
     (root/'prediction_diagnostic.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(summary,indent=2));return result
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--root',required=True);a=p.parse_args();run(a.root)
+    p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--conditions',nargs='+',default=['global','supported']);a=p.parse_args();run(a.root,a.conditions)

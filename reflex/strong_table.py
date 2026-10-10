@@ -247,7 +247,8 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--root',required=True);parser.add_argument('--start',type=int,default=6100)
     parser.add_argument('--seeds',type=int,default=16);parser.add_argument('--encounters',type=int,default=12)
     parser.add_argument('--quick',action='store_true');parser.add_argument('--variant',default='baseline',choices=VARIANTS)
+    parser.add_argument('--memory-kind',default='global',choices=('global','supported','validated'))
     args=parser.parse_args()
     budget=SearchBudget(16,32,32,2) if args.quick else STRONG
     npc=SearchBudget(8,16,16,1) if args.quick else PERSONA
-    experiment(args.root,range(args.start,args.start+args.seeds),args.encounters,strong=budget,persona=npc,variant=args.variant)
+    experiment(args.root,range(args.start,args.start+args.seeds),args.encounters,strong=budget,persona=npc,variant=args.variant,memory_kind=args.memory_kind)
