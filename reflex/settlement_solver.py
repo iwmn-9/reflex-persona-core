@@ -35,6 +35,7 @@ def _context(s,viewer,p,seed,tick,episode,state,names,finals,shares,weights):
 
 def solve(s,viewer,p,seed,encounter,tick,memory,state):
     if s.remaining!=0 or s.card is None or s.turn!=viewer:raise ValueError('public final-card owner opportunity required')
+    if (memory.game,memory.viewer,memory.players)!=('no_thanks',viewer,len(s.chips)):raise ValueError('game/observer support mismatch')
     episode=f'series-{seed}-encounter-{encounter}'
     # A single path of hypothetical PASS observations reaches every possible
     # later opportunity; TAKE ends a branch immediately. Real memory is detached.

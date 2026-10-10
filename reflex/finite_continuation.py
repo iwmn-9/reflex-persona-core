@@ -16,8 +16,9 @@ def resolve_chain(nodes,owner,choose):
     numeric data; the adapter determines what success and progress mean.
     """
     if not nodes or len(nodes)>256:raise ValueError('1..256 complete public chain nodes required')
+    size=len(nodes[0]['terminal'])
     for i,node in enumerate(nodes):
-        if len(node['terminal'])<2 or any(not math.isfinite(v) for v in node['terminal']):raise ValueError('finite terminal participant vector required')
+        if len(node['terminal'])!=size or size<2 or any(not math.isfinite(v) for v in node['terminal']):raise ValueError('matching finite terminal participant vectors required')
         names=tuple(node['forecast'])
         required=(node['settle'],) if i==len(nodes)-1 else (node['settle'],node['continue'])
         if set(names)!=set(required) or any(not isinstance(n,str) or not n for n in required) or len(set(required))!=len(required):raise ValueError('complete legal chain actions required')
