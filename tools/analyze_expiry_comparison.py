@@ -14,7 +14,8 @@ def analyze(root):
     root=Path(root);matches=[];runs=[];plans=[];exposure=[];worlds={}
     for shard in range(4):
         folder=root/f'shard-{shard}';plan=load(folder/'analysis_preregister.json');plans.append(plan)
-        assert plan['seeds']==list(range(6800+4*shard,6804+4*shard))
+        base=plans[0]['seeds'][0]
+        assert plan['seeds']==list(range(base+4*shard,base+4*shard+4))
         for variant in plan['variants']:
             run=folder/variant;e=load(run/'evaluation.json');p=e['plan']
             assert p==load(run/'preregister.json')
@@ -35,7 +36,8 @@ def analyze(root):
                         if int(a)==t['benchmark']:continue
                         count+=1;facts=d['context']['facts']
                         if 'expired_proxies' in facts:
-                            assert variant=='horizon_progress' and b['remaining']==0
+                            assert variant==plan['variants'][1] and b['remaining']==0
+                            if variant=='certified_expiry':assert b['chips'][(int(a)+1)%4]==0 and 'expiry_certificate' in facts
                             expiry+=1;changed+=d['action']!=d['search']['frozen_action']
             for key,deck in ordered.items():
                 assert len(deck)==len(set(deck))==24
@@ -57,15 +59,16 @@ def analyze(root):
             npc_credit=sum(1-r['credits'][r['benchmark']] for r in rows),profiles=profiles,
             npc_failures=sum(sum(r['failures'])-r['failures'][r['benchmark']] for r in rows)))
     series=[];better=same=worse=0
-    for seed in range(6800,6816):
+    after=plans[0]['variants'][1]
+    for seed in range(base,base+16):
         delta=[]
         for enc in range(4):
-            a=index['progress',seed,enc];b=index['horizon_progress',seed,enc]
+            a=index['progress',seed,enc];b=index[after,seed,enc]
             assert a['profiles']==b['profiles'] and a['benchmark']==b['benchmark']
             d=a['credits'][a['benchmark']]-b['credits'][b['benchmark']]
             delta.append(d);better+=d>0;same+=d==0;worse+=d<0
         series.append(float(np.mean(delta)))
-    v=np.array(series);rng=np.random.default_rng(90213);boot=v[rng.integers(16,size=(10000,16))].mean(1)
+    v=np.array(series);rng=np.random.default_rng(plans[0].get('bootstrap_seed',90213));boot=v[rng.integers(16,size=(10000,16))].mean(1)
     result=dict(plans=plans,runs=runs,matches=matches,summary=summary,exposure=exposure,
         ordered_worlds_checked=len(worlds),contrast=dict(npc_credit_rate_difference=float(v.mean()),
         paired_series_bootstrap_95=list(map(float,np.quantile(boot,[.025,.975]))),series_differences=series,
