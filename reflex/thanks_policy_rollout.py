@@ -5,6 +5,7 @@ is accepted. Future owner searches use the SAME incumbent budget and policy;
 the improved root selector itself is not recursively called in its own model.
 """
 import copy
+import pickle
 from dataclasses import dataclass, replace
 import numpy as np
 from .board_models import ThanksAdapter, thanks_referee_score
@@ -31,6 +32,7 @@ class OwnerPolicyModel:
         self.root_decision=copy.deepcopy(root_decision)
         self.seed=seed;self.encounter=encounter;self.tick=tick;self.mode=mode
         self.budget=budget;self.base=decide if base is None else base
+        self.cache={} if base is None else None;self.policy_requests=0
         if future_seed not in ('same_owner','resampled'):raise ValueError('declared future owner seed required')
         if viewer!=position.turn or len(position.chips)!=4 or sum(position.chips)+position.pot!=44:
             raise ValueError('active owner in the four-player public chip ledger required')
@@ -83,10 +85,18 @@ class OwnerPolicyModel:
             # retains the actor/episode identity and future search/tie streams.
             # Resampled future streams are an explicit diagnostic alternative.
             owner_seed=self.seed if self.future_seed=='same_owner' else self.nonce
-            _,d,_=self.base('no_thanks',s,self.viewer,self.profile,owner_seed,
-                self.encounter,self.tick+b.steps+1,self.memory,self.owner_state,
-                self.mode,self.budget,variant='certified_expiry')
-            self.owner_state=copy.deepcopy(d['next_state']);self.policy_calls+=1
+            self.policy_requests+=1
+            key=(s,owner_seed,self.tick+b.steps+1,pickle.dumps((self.memory,self.owner_state),protocol=5))
+            if self.cache is None or key not in self.cache:
+                _,d,_=self.base('no_thanks',s,self.viewer,self.profile,owner_seed,
+                    self.encounter,self.tick+b.steps+1,self.memory,self.owner_state,
+                    self.mode,self.budget,variant='certified_expiry')
+                self.policy_calls+=1
+                if self.cache is not None:
+                    if len(self.cache)>=4096:self.cache.pop(next(iter(self.cache)))
+                    self.cache[key]=copy.deepcopy(d)
+            else:d=self.cache[key]
+            self.owner_state=copy.deepcopy(d['next_state'])
             return d['action_id']
         if len(legal)==1:return legal[0]
         probs=self.memory.models(s,s.turn,self.mode=='adaptive')[self.kinds[s.turn]]
@@ -120,12 +130,13 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
     from .strong_table import decide as incumbent
     c,d,stats=incumbent(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget,variant=variant)
     if selection not in ('direct','paired_guard'):raise ValueError('registered rollout selection required')
-    if game!='no_thanks' or mode=='reflex' or len(s.legal())<2:return c,d,stats
+    if game!='no_thanks' or mode=='reflex' or variant!='certified_expiry' or len(s.legal())<2:return c,d,stats
     rollout=RolloutBudget(samples=8,min_samples=8,max_nodes=100000,max_steps=2048,rollout_policy='persona') if rollout is None else rollout
     model=OwnerPolicyModel(s,viewer,p,memory,state,d,seed,encounter,tick,mode,budget,future_seed=future_seed)
     roots={a:Branch(s.play(a),a) for a in s.legal()}
     _,samples,rs=evaluate_policy(roots,model,rollout,[seed,game,encounter,tick,viewer,'actual-base-policy'])
-    rs.update(owner_searches=model.policy_calls,owner_budget=vars(budget),future_seed=future_seed,
+    rs.update(owner_searches=model.policy_calls,owner_requests=model.policy_requests,
+        cache_hits=model.policy_requests-model.policy_calls,owner_budget=vars(budget),future_seed=future_seed,
         continuation='actual certified_expiry base controller re-searches after every future owner turn; public rival hypotheses; NOT recursively improved controller')
     stats=dict(stats,policy_rollout=rs,incumbent_action=d['action_id'])
     if not rs['used']:return c,d,stats
@@ -136,6 +147,8 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
     rc=persona_context(game,s,viewer,p,seed,tick,f'series-{seed}-encounter-{encounter}',state,names,scores,shares)
     if s.remaining==0 and s.chips[(viewer+1)%4]==0:
         rc=omit_expired_proxies(rc,needs=('safety',),values=('security',),style=('neuroticism',))
+        rc['facts']['expiry_certificate']=c['facts']['expiry_certificate']
+    rc['facts']['forecast']=rs['continuation'];rc['facts']['continuation']=rs['continuation']
     progress=relative_progress(scores,viewer,direction=-1,scale=35)
     rc,rd,guard=choose_with_progress(rc,names,shares,progress)
     rs['suggested_action']=rd['action_id'];rs['guard']=guard
@@ -147,8 +160,6 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
     accepted=not changed or selection=='direct' or gain>.12+1.96*se
     rs.update(selection=selection,changed=changed and accepted,accepted=accepted)
     if not accepted:return c,d,stats
-    rc['facts']['forecast']=rs['continuation']
-    rc['facts']['continuation']=rs['continuation']
     stats.update(action=rd['action_id'],guard=guard,incumbent_search={k:v for k,v in stats.items() if k not in ('policy_rollout','incumbent_action')},
         sample_count=n,actions={a:dict(win_share=float(shares[i].mean()),
             standard_error=float(shares[i].std(ddof=1)/np.sqrt(n)) if n>1 else 0.,

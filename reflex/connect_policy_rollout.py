@@ -33,7 +33,7 @@ class OwnerPolicyModel:
         self.initial=s;self.viewer=s.turn;self.profile=copy.deepcopy(p)
         self.seed=seed;self.tick=tick;self.episode=episode;self.state=copy.deepcopy(state)
         self.decision=copy.deepcopy(d);self.budget=budget;self.adapter=ConnectAdapter()
-        self.calls=0;self.committed=False
+        self.calls=0;self.requests=0;self.cache={};self.committed=False
     def begin_trial(self):self.memory=copy.deepcopy(self.decision['next_state']);self.committed=False
     def terminal(self,b):return self.adapter.terminal(b.position)
     def chance(self,b):return False
@@ -45,8 +45,13 @@ class OwnerPolicyModel:
             self.committed=True
         s=b.position
         if s.turn!=self.viewer:return minimax2(s,rng)
-        _,d,_=incumbent(s,self.profile,self.seed,self.tick+b.steps+1,self.episode,self.memory,self.budget)
-        self.memory=copy.deepcopy(d['next_state']);self.calls+=1
+        self.requests+=1;key=(s,self.tick+b.steps+1,digest(self.memory))
+        if key not in self.cache:
+            _,d,_=incumbent(s,self.profile,self.seed,self.tick+b.steps+1,self.episode,self.memory,self.budget)
+            if len(self.cache)>=4096:self.cache.pop(next(iter(self.cache)))
+            self.cache[key]=copy.deepcopy(d);self.calls+=1
+        d=self.cache[key]
+        self.memory=copy.deepcopy(d['next_state'])
         return d['action_id']
     def step(self,b,a):
         before=b.position;after=before.play(a)
@@ -67,15 +72,16 @@ def decide(s,p,seed,tick,episode,state=None,budget=SHORT,rollout=None):
     model=OwnerPolicyModel(s,p,seed,tick,episode,state,d,budget)
     roots={a:Branch(s.play(a),a) for a in s.legal()}
     packed,samples,rs=evaluate_policy(roots,model,rb,[seed,'connect-four',episode,tick,'actual-base-policy'])
-    rs.update(owner_searches=model.calls,incumbent_action=d['action_id'],continuation='actual SHORT own controller after each hypothetical public move; minimax2 rival hypothesis')
+    rs.update(owner_searches=model.calls,owner_requests=model.requests,cache_hits=model.requests-model.calls,
+        incumbent_action=d['action_id'],continuation='actual SHORT own controller after each hypothetical public move; minimax2 rival hypothesis')
     st=dict(st,policy_rollout=rs)
     if not rs['used']:return c,d,st
     acts=[action(a,*packed[a]) for a in s.legal()]
     for a in acts:a['target']=ConnectAdapter().target(s,a['id'])
     rc=ConnectAdapter().context(s,p,seed,tick,episode,acts,state)
+    rc['facts']['continuation']=rs['continuation']
     names=s.legal();shares=np.array([[v.win_share for v in samples[a]] for a in names])
     rd,guard=choose_with_goal(rc,names,shares)
     rc['actions']=[a for a in rc['actions'] if a['id'] in guard['allowed']]
     rs.update(changed=rd['action_id']!=d['action_id'],guard=guard,action=rd['action_id'])
-    rc['facts']['continuation']=rs['continuation']
     return rc,rd,st

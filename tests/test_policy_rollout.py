@@ -97,5 +97,21 @@ class PolicyRolloutTests(unittest.TestCase):
             model.choose(branch,np.random.default_rng(2),'persona')
         self.assertEqual(nonces[0],123);self.assertNotEqual(nonces[1],123)
 
+    def test_identical_owned_public_inputs_share_only_pure_decision_results(self):
+        s,m,p,c,d=self.setup_model();model=OwnerPolicyModel(s,0,p,m,None,d,123,0,0,'adaptive');records=[]
+        for _ in range(2):
+            model.begin_trial();branch=model.sample(Branch(s.play('TAKE'),'TAKE'),np.random.default_rng(1))
+            records.append((model.choose(branch,np.random.default_rng(2),'persona'),copy.deepcopy(model.owner_state)))
+        self.assertEqual(records[0],records[1]);self.assertEqual(model.policy_requests,2);self.assertEqual(model.policy_calls,1)
+
+    def test_selected_rollout_context_and_forecast_receipt_are_coherent(self):
+        from reflex.tabletop_trials import score
+        s,m,p,c,d=self.setup_model()
+        rc,rd,st=decide('no_thanks',s,0,p,123,0,0,m,None,'adaptive',PERSONA,
+            rollout=RolloutBudget(samples=2,min_samples=2,max_nodes=10000))
+        filtered=copy.deepcopy(rc);filtered['actions']=[a for a in rc['actions'] if a['id'] in st['guard']['allowed']]
+        self.assertEqual(score(filtered)[0],rd);self.assertEqual(st['sample_count'],2)
+        self.assertTrue(all(v['win_share']==st['policy_rollout']['actions'][a]['win_share'] for a,v in st['actions'].items()))
+
 
 if __name__=='__main__':unittest.main()

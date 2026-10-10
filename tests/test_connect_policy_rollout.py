@@ -22,5 +22,21 @@ class ConnectPolicyRolloutTests(unittest.TestCase):
         rc,rd,st=decide(s,p,91,0,'public-case',rollout=RolloutBudget(max_nodes=0))
         self.assertEqual(c,rc);self.assertEqual(d,rd);self.assertFalse(st['policy_rollout']['used'])
 
+    def test_exact_public_state_cache_retains_private_owner_state(self):
+        s=ConnectPosition();p=PROFILES[0];_,d,_=incumbent(s,p,91,0,'public-case',None)
+        m=OwnerPolicyModel(s,p,91,0,'public-case',None,d);records=[]
+        for _ in range(2):
+            m.begin_trial();b=Branch(s.play('DROP:2'),'DROP:2');r=np.random.default_rng(18)
+            b=m.step(b,m.choose(b,r,'persona'))
+            records.append((m.choose(b,r,'persona'),copy.deepcopy(m.memory)))
+        self.assertEqual(records[0],records[1]);self.assertEqual(m.requests,2);self.assertEqual(m.calls,1)
+
+    def test_rollout_record_matches_the_complete_effective_context(self):
+        from reflex.tabletop_trials import score
+        s=ConnectPosition()
+        for a in ('DROP:0','DROP:6','DROP:1','DROP:6','DROP:2','DROP:5'):s=s.play(a)
+        c,d,st=decide(s,PROFILES[0],91,6,'public-case',rollout=RolloutBudget(samples=2,min_samples=2,max_nodes=10000,max_steps=42))
+        self.assertTrue(st['policy_rollout']['used']);self.assertEqual(score(c)[0],d)
+
 
 if __name__=='__main__':unittest.main()
