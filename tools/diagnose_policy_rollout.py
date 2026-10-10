@@ -5,13 +5,14 @@ and its alternative under the actual incumbent future controllers and world.
 True rival profiles/future cards belong only to this evaluator.
 """
 import argparse
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, wait, FIRST_COMPLETED
 import copy
 from dataclasses import asdict
 import hashlib
 import json
 from pathlib import Path
 import sys
+import time
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np
 from reflex.board_models import ThanksPosition
@@ -61,10 +62,12 @@ def resolve(c):
         incumbent_credit_regret=best-results[c['incumbent']]['credit'],original_root_exact_replay=True)
 
 
-def run(root,source,seeds,workers):
+def run(root,source,seeds,workers,wait_source=False):
     root=Path(root);root.mkdir(parents=True,exist_ok=True);source=Path(source).resolve();base=Path(__file__).resolve().parents[1]
     plan=dict(version='actual-base-policy-oracle-diagnostic-v1',source=str(source),seeds=seeds,encounters=[0],workers=workers,
         selection='every first-encounter intervention in all predeclared bands for fixed seeds; no winner/action/result filtering',
+        wait_for_registered_source_files=wait_source,
+        source_registration_sha256=hashlib.sha256((source/'preregister.json').read_bytes()).hexdigest(),
         scope='post hoc deterministic actual-world oracle; future deck/rival private profiles never enter the controller; not expected action values',
         reference='chosen-root replay must exactly match complete scores, winner credits, final world and every public memory',
         limitations=['one actual future per state, not expected return','reuses primary games; no extra independent strength games','known opponent families only'],
@@ -72,11 +75,26 @@ def run(root,source,seeds,workers):
     path=root/'preregister.json'
     if path.exists():raise FileExistsError('fresh diagnostic required')
     path.write_text(json.dumps(plan,indent=2)+'\n',encoding='utf-8')
-    cases=collect(source,seeds);rows=[]
+    rows=[];pending=set(seeds);futures=set();queued=0
     with ProcessPoolExecutor(max_workers=workers) as pool:
-        for i,row in enumerate(pool.map(resolve,cases),1):
-            rows.append(row)
-            if i%8==0:print('actual oracle cases',i,'/',len(cases),flush=True)
+        while pending or futures:
+            for seed in sorted(pending):
+                path=source/f'{seed}.json'
+                if not path.is_file():
+                    if wait_source:continue
+                    raise FileNotFoundError(path)
+                try:json.loads(path.read_text(encoding='utf-8'))
+                except json.JSONDecodeError:
+                    if wait_source:continue
+                    raise
+                cases=collect(source,[seed]);pending.remove(seed);queued+=len(cases)
+                futures.update(pool.submit(resolve,c) for c in cases)
+            done,_=wait(futures,timeout=2,return_when=FIRST_COMPLETED) if futures else (set(),set())
+            for future in done:
+                rows.append(future.result());futures.remove(future)
+                if len(rows)%8==0:print('actual oracle cases',len(rows),'queued',queued,'source seeds pending',len(pending),flush=True)
+            if not futures and pending:time.sleep(2)
+    rows.sort(key=lambda r:(r['seed'],r['band']))
     summary=[]
     for band in sorted({r['band'] for r in rows}):
         rr=[r for r in rows if r['band']==band]
@@ -92,8 +110,8 @@ def run(root,source,seeds,workers):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--source',required=True)
     p.add_argument('--start',type=int,required=True);p.add_argument('--seeds',type=int,default=24);p.add_argument('--workers',type=int,default=4)
-    p.add_argument('--frozen',action='store_true');a=p.parse_args()
-    if a.frozen:run(a.root,a.source,list(range(a.start,a.start+a.seeds)),a.workers)
+    p.add_argument('--frozen',action='store_true');p.add_argument('--wait-source',action='store_true');a=p.parse_args()
+    if a.frozen:run(a.root,a.source,list(range(a.start,a.start+a.seeds)),a.workers,a.wait_source)
     else:
         from tools.freeze_experiment import dispatch
-        dispatch(a.root,Path(__file__).name,['--source',str(Path(a.source).resolve()),'--start',str(a.start),'--seeds',str(a.seeds),'--workers',str(a.workers)])
+        dispatch(a.root,Path(__file__).name,['--source',str(Path(a.source).resolve()),'--start',str(a.start),'--seeds',str(a.seeds),'--workers',str(a.workers),*(['--wait-source'] if a.wait_source else [])])
