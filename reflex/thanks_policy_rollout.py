@@ -178,8 +178,8 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
         cache_hits=model.policy_requests-model.policy_calls,owner_budget=asdict(budget),future_seed=future_seed,
         rival_policy=rival_policy,rival_requests=model.rival_requests,rival_searches=model.rival_searches,rival_budget=asdict(budget),
         rival_initial_state='unknown private rival state/memory represented by a fresh fictional public-history observer; no real rival state copied' if rival_policy=='searched' else 'owner-observed reactive model mixture',
-        continuation='actual certified_expiry base controller re-searches after every future owner turn; '+
-            ('unlearned five searched public rival hypotheses' if rival_policy=='searched' else 'owner-learned reactive public rival hypotheses')+'; NOT recursively improved controller')
+        continuation='Incumbent owner replans each public turn; '+
+            ('five unlearned searched rival priors' if rival_policy=='searched' else 'owner-learned reactive rival mixture')+'; no recursive improved controller')
     stats=dict(stats,policy_rollout=rs,incumbent_action=d['action_id'])
     if not rs['used']:return c,d,stats
     names=s.legal();n=rs['completed_samples']
