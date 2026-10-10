@@ -69,5 +69,15 @@ class PolicyRolloutTests(unittest.TestCase):
             rollout=RolloutBudget(samples=2,min_samples=2,max_nodes=0))
         self.assertEqual(rc,c);self.assertEqual(rd,d);self.assertFalse(stats['policy_rollout']['used'])
 
+    def test_card_reveal_keeps_the_actual_controller_decision_clock(self):
+        s,m,p,c,d=self.setup_model();ticks=[]
+        def owner(game,pos,viewer,profile,seed,enc,tick,memory,state,mode,budget,**kw):
+            ticks.append(tick);return c,d,{}
+        model=OwnerPolicyModel(s,0,p,m,None,d,123,0,17,'adaptive',base=owner)
+        model.begin_trial();branch=model.sample(Branch(s.play('TAKE'),'TAKE'),np.random.default_rng(1))
+        self.assertEqual(branch.steps,0)
+        model.choose(branch,np.random.default_rng(2),'persona')
+        self.assertEqual(ticks,[18])
+
 
 if __name__=='__main__':unittest.main()

@@ -67,7 +67,8 @@ class OwnerPolicyModel:
     def sample(self,b,rng):
         self._initialize(rng);self._commit_root(b)
         self.transitions+=1
-        return replace(b,position=b.position.draw(self.deck.pop(0)),steps=b.steps+1)
+        # Actual play advances its decision clock on actions, not card reveals.
+        return replace(b,position=b.position.draw(self.deck.pop(0)))
 
     def choose(self,b,rng,policy):
         self._initialize(rng);self._commit_root(b)
