@@ -136,12 +136,27 @@ def analyze(root):
             credit=float(np.mean([r['credits'][r['target']] for r in rows])),
             score=float(np.mean([r['scores'][r['target']] for r in rows])),
             owner_searches=sum(r['intervention']['stats']['owner_searches'] for r in rows if r['intervention'])))
+    comparisons=[(arm,'baseline') for arm in arms]
+    # These component comparisons were declared by the experiment producer;
+    # neither selectors nor bands are selected after observing winners.
+    if plan.get('future_seeds')==['same_owner','resampled']:
+        for arm in arms:
+            if arm['future_seed']=='same_owner':
+                other=next(a for a in arms if a['band']==arm['band'] and a['future_seed']=='resampled')
+                comparisons.append((arm,other['label']))
+    if {a.get('rival_policy') for a in arms}=={'reactive','searched'}:
+        for arm in arms:
+            if arm['rival_policy']=='searched':
+                other=next(a for a in arms if a['band']==arm['band'] and a['future_seed']==arm['future_seed'] and a['rival_policy']=='reactive')
+                comparisons.append((arm,other['label']))
+    for arm,reference in comparisons:
+        label=arm['label']
         for profile in ('each_target','growth','steady','care','ego'):
             series=[];score_series=[];better=same=worse=0
             for seed in plan['seeds']:
                 delta=[];sd=[]
                 for enc in range(plan['encounters']):
-                    a=index[seed,'baseline',enc];b=index[seed,label,enc];target=a['target']
+                    a=index[seed,reference,enc];b=index[seed,label,enc];target=a['target']
                     assert a['profiles']==b['profiles'] and a['benchmark']==b['benchmark'] and a['target']==b['target']
                     if profile!='each_target' and a['target_profile']!=profile:continue
                     v=b['credits'][target]-a['credits'][target];delta.append(v);sd.append(a['scores'][target]-b['scores'][target])
@@ -150,7 +165,7 @@ def analyze(root):
             if not series:continue
             values=np.array(series);rng=np.random.default_rng(910071)
             boot=values[rng.integers(len(values),size=(10000,len(values)))].mean(1)
-            contrasts.append(dict(**arm,reference='baseline',profile=profile,series=len(values),mean_credit_difference=float(values.mean()),
+            contrasts.append(dict(**arm,reference=reference,profile=profile,series=len(values),mean_credit_difference=float(values.mean()),
                 paired_series_bootstrap95=np.quantile(boot,[.025,.975]).tolist(),mean_own_score_improvement=float(np.mean(score_series)),
                 better=int(better),same=int(same),worse=int(worse),series_differences=series))
     result=dict(audit=proof,summary=summary,contrasts=contrasts,
