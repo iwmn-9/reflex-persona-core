@@ -51,7 +51,9 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
     # their actual immutable implementation, with every shared dependency still
     # checked against the registration. No changes to the working tree.
     if frozen:
+        registered_names={name.replace('\\','/') for name in plan['sources']}
         for name in ('reflex/opponent_beliefs.py','reflex/goal_progress.py','reflex/strong_search.py','reflex/strong_table.py'):
+            if name not in registered_names:continue
             data=frozen.get(name,(base/name).read_bytes());module_name=name[:-3].replace('/','.')
             module=types.ModuleType(module_name);module.__package__='reflex';module.__file__=str(base/name)
             sys.modules[module_name]=module;exec(compile(data,str(base/name),'exec'),module.__dict__)
@@ -170,6 +172,18 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
                     for j,h in enumerate(b['hands']):assert c['facts'][f'public_hand_{j}']==str(h)
                 else:
                     assert c['facts']['public_counter_ledger']==str(tuple(b['chips']));assert c['facts']['seen']==str(tuple(b['seen']))
+                    expires=(b['remaining']==0 and (plan.get('variant')=='horizon_progress' or
+                        plan.get('variant')=='certified_expiry' and b['chips'][(actor+1)%4]==0))
+                    if expires:
+                        assert 'expired_proxies' in c['facts']
+                        assert c['needs']['safety']['enabled'] is False and c['needs']['safety']['deficit'] is None
+                        assert c['state']['primary_need']!='safety'
+                        for act in c['actions']:
+                            for outcome in act['outcomes']:
+                                assert outcome['needs']['safety']==outcome['values']['security']==outcome['style']['neuroticism']==0
+                        counts['no_thanks_real_expiry_choices']+=1
+                        if plan.get('variant')=='certified_expiry':assert 'expiry_certificate' in c['facts']
+                    else:assert 'expired_proxies' not in c['facts']
                 filtered=normalized(c)
                 if d['method']!='reflex':
                     guard=st['guard'];assert chosen in guard['allowed'];running['guards']+=guard['guard_changed']

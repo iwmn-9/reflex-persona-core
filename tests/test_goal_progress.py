@@ -78,6 +78,15 @@ class GoalProgressTests(unittest.TestCase):
             self.assertEqual(st['actions']['TAKE']['mean_score'],59)
             self.assertEqual(st['actions']['PASS']['mean_score'],42)
             self.assertFalse(c['needs']['safety']['enabled'])
+            _,certified,details=decide('no_thanks',s,0,p,8880,0,100,m,None,'adaptive',budget,variant='certified_expiry')
+            self.assertEqual(certified['action_id'],'PASS')
+
+    def test_last_card_alone_does_not_certify_expiry_of_current_negotiation(self):
+        s=replace(ThanksPosition.start(4,30),remaining=0);p=PROFILES[1];m=PublicMemory('no_thanks',0)
+        budget=SearchBudget(8,16,16,1)
+        a=decide('no_thanks',s,0,p,8001,0,0,m,None,'adaptive',budget,variant='progress')
+        b=decide('no_thanks',s,0,p,8001,0,0,m,None,'adaptive',budget,variant='certified_expiry')
+        self.assertEqual(a[:2],b[:2]);self.assertNotIn('expired_proxies',b[0]['facts'])
 
     def test_owner_reflex_continuation_matches_forced_single_card_rules(self):
         s=replace(ThanksPosition.start(4,35),remaining=0,chips=(11,0,11,11))

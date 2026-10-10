@@ -18,7 +18,7 @@ from .goal_progress import relative_progress, choose_with_progress, omit_expired
 from .strong_search import _thanks_simulate
 
 MODES=('reflex','planned','adaptive')
-VARIANTS=('baseline','progress','continuation','combined','horizon_progress')
+VARIANTS=('baseline','progress','continuation','combined','horizon_progress','certified_expiry')
 
 
 @dataclass(frozen=True)
@@ -67,12 +67,18 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
                 mean_score=float(scores[i,:,viewer].mean())) for i,name in enumerate(names)})
     else:names,scores,shares,stats=search(game,s,viewer,memory,adaptive,budget,rng)
     c=persona_context(game,s,viewer,p,seed,tick,episode,state,names,scores,shares)
-    if variant=='horizon_progress' and game=='no_thanks' and s.remaining==0:
+    certified=(game=='no_thanks' and s.remaining==0 and s.chips[(viewer+1)%4]==0)
+    if game=='no_thanks' and (variant=='horizon_progress' and s.remaining==0 or variant=='certified_expiry' and certified):
         # All current-card payments/forced takes remain in the full terminal
         # goal forecasts. There are no later cards needing bidding flexibility.
         # This is an actual rule boundary, not the planner running out of depth.
         c=omit_expired_proxies(c,needs=('safety',),values=('security',),style=('neuroticism',))
-    if variant in ('progress','combined','horizon_progress'):
+        if variant=='certified_expiry':
+            # TAKE settles now. PASS, if legal, settles on the next player's
+            # rule-forced TAKE. No owner can return to another bidding choice;
+            # this is a complete rule support proof, not sampled MC confidence.
+            c['facts']['expiry_certificate']='TAKEは終局、PASSは次席のチップ0による強制TAKEで終局。本人の再判断は全合法根で不存在'
+    if variant in ('progress','combined','horizon_progress','certified_expiry'):
         progress=relative_progress(scores,viewer,direction=1 if game=='goofspiel' else -1,
                                    scale=max(s.prizes) if game=='goofspiel' else 35)
         c,d,guard=choose_with_progress(c,names,shares,progress)
