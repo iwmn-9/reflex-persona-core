@@ -14,10 +14,11 @@ def save(path,value):Path(path).write_text(json.dumps(value,indent=2)+'\n',encod
 
 def train(data,root):
     data=Path(data);root=Path(root);root.mkdir(parents=True,exist_ok=True)
+    dataset=load(data);remaining=dataset['plan'].get('remaining',0)
     plan=dict(train_seeds=list(range(7800,7808)),calibration_seeds=list(range(7808,7816)),test_seeds=list(range(8200,8216)),
         alpha=10.,error_quantile=.9,max_regret=.12,
         kind='matched action ranking, not factual selected-action prediction',
-        scope='No Thanks current_card_only; public feature encoder version in teach_actual_alternatives',
+        scope=('No Thanks current_card_only' if not remaining else 'No Thanks first nonforced turn per NPC with 1..'+str(remaining)+' remaining')+'; public feature encoder version in teach_actual_alternatives',
         weighting='each NPC episode has total fit weight one; all comparisons within a matched case',
         primary='arbitrated root minus incumbent true simulated winner regret on held-out series',
         secondary=['greedy learned ranking','progress ranking','per-profile and coverage'],
@@ -30,12 +31,12 @@ def train(data,root):
             normalization='expand each packet to supported, enabled and deficit; None deficit encodes zero with the explicit support flags',
             target_or_rollout_changes=0,fit_hyperparameters_changed=False,test_case_labels_inspected=False))
     else:save(root/'preregister.json',plan)
-    rows=load(data)['cases'];train=[r for r in rows if r['seed'] in plan['train_seeds']];cal=[r for r in rows if r['seed'] in plan['calibration_seeds']]
+    rows=dataset['cases'];train=[r for r in rows if r['seed'] in plan['train_seeds']];cal=[r for r in rows if r['seed'] in plan['calibration_seeds']]
     counts=Counter((r['seed'],r['encounter'],r['actor']) for r in train)
     cases=lambda rs:[(numeric_features(r['features']),r['targets']) for r in rs]
     model=fit(cases(train),alpha=plan['alpha'],case_weights=[1/counts[r['seed'],r['encounter'],r['actor']] for r in train])
     errors=calibrate(model,cases(cal),quantile=plan['error_quantile'])
-    fitted=dict(model=model,errors=errors,scope='current_card_only',feature_encoder='teach_actual_alternatives.public_features',max_regret=.12)
+    fitted=dict(model=model,errors=errors,scope='current_card_only' if not remaining else 'last_six_cards',feature_encoder='teach_actual_alternatives.public_features',max_regret=.12)
     save(root/'model.json',fitted)
     save(root/'freeze.json',dict(training_cases=len(train),calibration_cases=len(cal),errors=errors,
         model_sha256=hashlib.sha256((root/'model.json').read_bytes()).hexdigest(),test_labels_accessed=False))
@@ -60,6 +61,9 @@ def evaluate(data,root):
     series=defaultdict(list)
     for (seed,_,_),rs in groups.items():series[seed].append({k:float(np.mean([r['credit_regret'][k] for r in rs])) for k in ('incumbent','arbitrated','greedy')})
     means={seed:{k:float(np.mean([r[k] for r in rs])) for k in ('incumbent','arbitrated','greedy')} for seed,rs in series.items()}
+    progress_series=defaultdict(list)
+    for (seed,_,_),rs in groups.items():progress_series[seed].append({k:float(np.mean([r['progress_regret'][k] for r in rs])) for k in ('incumbent','greedy_progress')})
+    progress_means={seed:{k:float(np.mean([r[k] for r in rs])) for k in ('incumbent','greedy_progress')} for seed,rs in progress_series.items()}
     improvements=np.array([r['incumbent']-r['arbitrated'] for r in means.values()]);rng=np.random.default_rng(82997)
     interval=np.quantile(improvements[rng.integers(len(means),size=(10000,len(means)))].mean(1),[.025,.975]).tolist()
     result=dict(plan=plan,model_sha256=freeze['model_sha256'],test_teacher_sha256=hashlib.sha256(data.read_bytes()).hexdigest(),cases=outcomes,
@@ -67,7 +71,8 @@ def evaluate(data,root):
             changed=sum(r['gate']['changed'] for r in outcomes),mean_credit_regret={k:float(np.mean([r[k] for r in means.values()])) for k in ('incumbent','arbitrated','greedy')},
             arbitrated_credit_regret_improvement=float(improvements.mean()),paired_series_bootstrap_95=interval,
             better=sum(r['credit_regret']['arbitrated']<r['credit_regret']['incumbent']-1e-12 for r in outcomes),
-            worse=sum(r['credit_regret']['arbitrated']>r['credit_regret']['incumbent']+1e-12 for r in outcomes)),
+            worse=sum(r['credit_regret']['arbitrated']>r['credit_regret']['incumbent']+1e-12 for r in outcomes),
+            mean_progress_regret={k:float(np.mean([r[k] for r in progress_means.values()])) for k in ('incumbent','greedy_progress')}),
         limitations=['late-game matched teacher labels, not full-game strength','same known game and policies',
                      'model frozen before held-out label inspection; controller future still incumbent in this diagnostic'])
     save(root/'evaluation.json',result);print(json.dumps(result['summary'],indent=2),flush=True)

@@ -108,6 +108,7 @@ class Request:
     outcome_target: str='immediate'
     invalidate: tuple=()
     purpose: object=None
+    value_proposal: object=None
 
 
 @dataclass(frozen=True)
@@ -409,6 +410,12 @@ class DecisionLoop:
                 [set((s['progress_audit'] or {}).get('blocked',{})) for s in stages])
             for s,d in zip(stages,completed):
                 s['decision']=d;s['root_completion']=copy.deepcopy(completion_audit)
+        for s in stages:
+            proposal=s['request'].value_proposal
+            if proposal is not None:
+                from .paired_guard import constrain
+                s['decision'],s['value_guard']=constrain(s['effective'],s['decision'],proposal,
+                    policy,s['progress_allowed'],s['exact'])
         # All validation/scoring, including every reader, completes BEFORE any
         # actor advances. Exceptions leave every original actor untouched.
         results=[]
@@ -433,6 +440,7 @@ class DecisionLoop:
                 learning=s['learning'],reading=s['read_audit'],strategy=s['route'],waste_removed=s['guard'])
             if 'deliberation' in s:result['deliberation']=s['deliberation']
             if 'root_completion' in s:result['root_completion']=s['root_completion']
+            if 'value_guard' in s:result['value_guard']=s['value_guard']
             if s['progress_audit'] is not None:result['progress']=s['progress_audit']
             results.append(result)
         return results

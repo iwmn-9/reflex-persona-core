@@ -364,3 +364,11 @@ target=...)` は、既存の `JointForecast` を返す。通常の `Policy` と�
 これはBig FiveやPolicy係数の変更ではないが、**終局結果への時間選好と報酬の表現を変える**。max_regret=2.を併用すれば大きな信条利益のための目的犠牲も許せる。一方、同じ勝利なら早く完了する圧力が弱まり、途中利益を得るために必要手を先送りする危険がある。資源が増えた遅い勝利を、自動的に賢さの改善と数えない。
 
 再現は `python -m reflex.cli settlement-transfer --output FRESH_ROOT`。4既知ルール系の未使用パラメータ条件と、開発に使った物流の診断を分けて比較する。48局で診断の未達は直ったが、留保戦闘の勝利と生存が悪化したため一律採用しない。[得失・不採用理由・費用・限界](../evidence/settlement_transfer/REPORT.md)。完全軌跡を生成した後の `python tools/audit_search_transfer.py FRESH_ROOT/settlement_transfer` は保持案の分岐・最終選択・実行とcheckpointを再生する。最適な候補の発見や正しい相手モデルの証明ではない。
+
+## Optional matched purpose learning
+
+`Request.value_proposal` accepts `paired_guard.ValueProposal(model, errors, features, scope, target, max_regret=.12)`. Features map **all viable real action IDs** to public numeric vectors. Models are trained on matched alternatives by `paired_value.fit`, not chosen-action factual labels. Stable feature meaning and purpose/scope identity are adapter responsibilities. No model is enabled by default.
+
+After readers and planning, and before any batch actor commits, the guard considers only the existing immediate Policy tier after legality, known-failure, waste and progress masks. A supported primary-purpose gain must exceed tolerance plus held-out empirical pair error. It never replaces immediate outcomes with terminal estimates or trains fixed preferences. Rejected proposals preserve the incumbent decision and next state. Invalid proposals roll back the whole batch. If a planner incumbent is outside the immediate tier, the guard abstains. The empirical error quantile is not a coverage or true-game safety guarantee.
+
+The two No Thanks models in `evidence/supported_learning/paired_value_v1` and `paired_value_v2` failed to improve held-out rankings and are diagnostic artifacts, not default controllers. Tests cover real commits, immediate feedback, independent-owner batching, constraints and atomic failure; they do not demonstrate game strength.
