@@ -117,7 +117,7 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
     return c,d,stats
 
 
-def play(game,seed,encounter,bench_seat,roster,mode,memories,*,strong=STRONG,persona=PERSONA,emit=None,variant='baseline',start=None,forced_root=None):
+def play(game,seed,encounter,bench_seat,roster,mode,memories,*,strong=STRONG,persona=PERSONA,emit=None,variant='baseline',start=None,forced_root=None,controller=None):
     if game not in ('goofspiel','no_thanks') or mode not in MODES or variant not in VARIANTS:
         raise ValueError('supported game, mode and variant required')
     if start is None:
@@ -152,12 +152,13 @@ def play(game,seed,encounter,bench_seat,roster,mode,memories,*,strong=STRONG,per
                 details[actor]=dict(method='objective-search',action=chosen,search=stats)
             else:
                 previous_state=states[actor]
-                c,d,stats=decide(game,s,actor,roster[actor],seed,encounter,tick,memories[actor],previous_state,mode,persona,variant=variant)
+                npc_controller=decide if controller is None else controller
+                c,d,stats=npc_controller(game,s,actor,roster[actor],seed,encounter,tick,memories[actor],previous_state,mode,persona,variant=variant)
                 chosen=d['action_id'];states[actor]=d['next_state'];guards[actor]+=int(stats.get('guard',{}).get('guard_changed',False))
                 # Counterfactual on the SAME present public state, same personality
                 # and search random stream; compare read vs fixed-prior planning.
                 if mode=='adaptive':
-                    _,fd,fs=decide(game,s,actor,roster[actor],seed,encounter,tick,memories[actor],previous_state,'planned',persona,variant=variant)
+                    _,fd,fs=npc_controller(game,s,actor,roster[actor],seed,encounter,tick,memories[actor],previous_state,'planned',persona,variant=variant)
                     changes[actor]+=int(fd['action_id']!=chosen)
                     stats['frozen_action']=fd['action_id'];stats['frozen_search']=fs
                 details[actor]=dict(method=mode,action=chosen,search=stats,context=c,next_state=states[actor])
