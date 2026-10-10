@@ -4,6 +4,7 @@ from collections import deque,Counter
 from .core import digest
 from .opponent_beliefs import HypothesisTracker,distributions
 from .decision_loop import Reading
+from .prediction_support import SupportBanks
 
 
 class CategoricalReader:
@@ -75,3 +76,47 @@ class CategoricalReader:
         if not isinstance(record['recent'],list) or len(record['recent'])>4 or any(not isinstance(k,str) or not k for k in record['recent']):raise ValueError('invalid recent response checkpoint')
         new.recent=deque(record['recent'],maxlen=4)
         t.observations=record['observations'];t.surprise=record['surprise'];return new
+
+
+class SupportedCategoricalReader:
+    """DecisionLoop reader with finite public support and separate trust keys.
+
+    ``opportunity_for`` reads the pre-action PUBLIC context. ``support_key`` is
+    the adapter's versioned meaning of those classes; checkpoint restore cannot
+    silently change it. Branch evaluations retain the ordinary node accounting.
+    """
+    def __init__(self,scope,names,models_for,outcome_for,*,classes,opportunity_for,support_key,key='categorical-response',known_conditionals=False):
+        if not isinstance(support_key,str) or not 0<len(support_key)<=128:raise ValueError('versioned bounded support contract required')
+        self.owner=digest(scope);self.key=key;self.support_key=support_key;self.opportunity_for=opportunity_for
+        self.support=SupportBanks(classes,lambda:CategoricalReader(scope,names,models_for,outcome_for,key,known_conditionals))
+        for opportunity in self.support.classes:
+            self.support.select(opportunity).key=key+':'+digest([support_key,opportunity])
+
+    def _class(self,context):
+        if digest(context['scope'])!=self.owner:raise ValueError('predictor owner mismatch')
+        opportunity=self.opportunity_for(copy.deepcopy(context));self.support.select(opportunity)
+        return opportunity
+
+    def forecasts(self,context):return self.support.select(self._class(context)).forecasts(context)
+
+    def __call__(self,context,cap):
+        opportunity=self._class(context);reading=self.support.select(opportunity)(context,cap)
+        if reading is not None:reading.context['facts']['prediction_support']=self.support_key+':'+opportunity
+        return reading
+
+    def updated(self,context,observed,event,ticket):
+        opportunity=self._class(context)
+        child,update=self.support.select(opportunity).updated(context,observed,event,ticket)
+        new=copy.deepcopy(self);new.support._banks[opportunity]=child
+        return new,dict(update,opportunity_class=opportunity,support_key=self.support_key)
+
+    def record(self):
+        return dict(version='loop-supported-predictor-v1',owner=self.owner,key=self.key,support_key=self.support_key,
+            classes=list(self.support.classes),banks={k:self.support.select(k).record() for k in self.support.classes})
+
+    def restored(self,record):
+        if record['version']!='loop-supported-predictor-v1' or record['owner']!=self.owner or record['key']!=self.key or record['support_key']!=self.support_key or tuple(record['classes'])!=self.support.classes or set(record['banks'])!=set(self.support.classes):
+            raise ValueError('supported predictor checkpoint contract mismatch')
+        new=copy.deepcopy(self)
+        for k in self.support.classes:new.support._banks[k]=self.support.select(k).restored(record['banks'][k])
+        return new

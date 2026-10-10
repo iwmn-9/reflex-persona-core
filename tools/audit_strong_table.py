@@ -45,7 +45,7 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
         if hashlib.sha256(data).hexdigest()!=sha:
             assert source_ref is not None,'use --source-ref for the registered implementation: '+name
             data=subprocess.check_output(['git','show',f'{source_ref}:{normalized_name}'],cwd=base)
-            assert normalized_name in ('reflex/opponent_beliefs.py','reflex/goal_guard.py','reflex/goal_progress.py','reflex/strong_search.py','reflex/supported_memory.py','reflex/finite_continuation.py','reflex/settlement_solver.py','reflex/strong_table.py'),'unexpected runtime dependency change'
+            assert normalized_name in ('reflex/opponent_beliefs.py','reflex/goal_guard.py','reflex/goal_progress.py','reflex/strong_search.py','reflex/prediction_support.py','reflex/supported_memory.py','reflex/loop_predictor.py','reflex/finite_continuation.py','reflex/settlement_solver.py','reflex/strong_table.py'),'unexpected runtime dependency change'
             frozen[normalized_name]=data
         assert hashlib.sha256(data).hexdigest()==sha,name
     # The experiment modules and feedback learner may later fix connections. Replay
@@ -53,7 +53,7 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
     # checked against the registration. No changes to the working tree.
     if frozen:
         registered_names={name.replace('\\','/') for name in plan['sources']}
-        for name in ('reflex/opponent_beliefs.py','reflex/goal_guard.py','reflex/goal_progress.py','reflex/strong_search.py','reflex/supported_memory.py','reflex/finite_continuation.py','reflex/settlement_solver.py','reflex/strong_table.py'):
+        for name in ('reflex/opponent_beliefs.py','reflex/goal_guard.py','reflex/goal_progress.py','reflex/strong_search.py','reflex/prediction_support.py','reflex/supported_memory.py','reflex/loop_predictor.py','reflex/finite_continuation.py','reflex/settlement_solver.py','reflex/strong_table.py'):
             if name not in registered_names:continue
             data=frozen.get(name,(base/name).read_bytes());module_name=name[:-3].replace('/','.')
             module=types.ModuleType(module_name);module.__package__='reflex';module.__file__=str(base/name)
