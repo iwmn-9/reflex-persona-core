@@ -14,8 +14,13 @@ def analyze(root):
     for folder in sorted(root.glob('shard-*')):
         plan=load(folder/'analysis_preregister.json');plans.append(plan)
         for variant in plan['variants']:
-            file=folder/variant/'evaluation.json';e=load(file);p=e['plan']
-            assert e['plan']==load(folder/variant/'preregister.json')
+            replay=load(folder/'source_replay_registration.json') if (folder/'source_replay_registration.json').exists() else None
+            condition_folder=replay['primary_condition_folder'] if replay and replay['condition']==variant else variant
+            file=folder/condition_folder/'evaluation.json';e=load(file);p=e['plan']
+            assert e['plan']==load(file.parent/'preregister.json')
+            if replay and replay['condition']==variant:
+                proof=load(folder/'source_replay.json');assert proof['complete_trajectory_equal'] and proof['matches']==len(e['matches'])
+                assert proof['trajectory_sha256']==e['trajectory_sha256']
             assert p['seeds']==plan['seeds'] and p['encounters']==plan['encounters']
             assert p['strong']==plan['strong'] and p['persona']==plan['persona'] and p['sources']==plan['sources']
             assert p['variant']==plan.get('controller_variants',{}).get(variant,plan.get('controller_variant','progress'))

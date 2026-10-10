@@ -32,4 +32,9 @@ def run(root,seeds,encounters=8):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--start',type=int,required=True)
     p.add_argument('--seeds',type=int,default=4);p.add_argument('--encounters',type=int,default=8)
-    a=p.parse_args();run(a.root,range(a.start,a.start+a.seeds),a.encounters)
+    p.add_argument('--frozen',action='store_true')
+    a=p.parse_args()
+    if a.frozen:run(a.root,range(a.start,a.start+a.seeds),a.encounters)
+    else:
+        from tools.freeze_experiment import dispatch
+        dispatch(a.root,Path(__file__).name,['--start',str(a.start),'--seeds',str(a.seeds),'--encounters',str(a.encounters)])
