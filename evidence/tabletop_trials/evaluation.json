@@ -1,0 +1,8049 @@
+{
+  "plan": {
+    "version": "existing-tabletop-v1",
+    "seeds": [
+      5008,
+      5009,
+      5010,
+      5011,
+      5012,
+      5013,
+      5014,
+      5015
+    ],
+    "development_seed": 5000,
+    "games": [
+      "goofspiel",
+      "no_thanks"
+    ],
+    "profiles": [
+      "growth",
+      "steady",
+      "care",
+      "ego"
+    ],
+    "modes": [
+      "reflex",
+      "mc",
+      "learned"
+    ],
+    "players": 4,
+    "controlled_seat": "seed modulo 4",
+    "rivals": "three fixed-persona finite-policy reflex NPCs",
+    "goal": "terminal fractional winner credit; raw scores reported separately",
+    "budget": {
+      "samples": 16,
+      "max_nodes": 50000,
+      "max_steps": 512,
+      "min_samples": 8,
+      "rollout_policy": "random"
+    },
+    "goofspiel": "13 cards, ascending on even seeds / descending on odd; unique high wins; highest tie discards",
+    "no_thanks": "3..35, nine unseen removals, 24 drawn cards, 11 initial chips; taker starts next card",
+    "needs": "existing adapter resource/esteem/safety proxies; not all five needs supported",
+    "social": "not connected: competitive outcomes alone are not benevolent/hostile social events",
+    "continuation": "uniform own future and uniform/unobserved or frozen learned rival mixture; real NPCs redecide",
+    "learning": "finite existing HypothesisTracker; actual revealed actions only; reset each match",
+    "adoption": "diagnostic comparison only; no default policy promotion or result-dependent tuning",
+    "source_hashes": {
+      "tabletop_trials.py": "54056acd644b868a0177a6b6c7e39c5994c0b7228289f4202d937fcd3b17a3e8",
+      "core.py": "04249566014102d63f3e308d61e01f1114afb1541569cdb1937c0c651de59b5a",
+      "goofspiel.py": "4864e6acc50fdf12aa5ef8da5187a9387105aacd56bd5d66a8762817a395f99d",
+      "goofspiel_beliefs.py": "f92a4ea14e147a3a101c4fd0c7bb696f1fbba92525531b3d5345a2cbf8e7af60",
+      "opponent_beliefs.py": "95777a52db389112b03772237a61c2182aaa3b9c52ac01ceebf165ca38aaa435",
+      "board_models.py": "52b53761ee343a827465228fd47fe324067e1cca7fdb4137de9411a960c8a101",
+      "rollout_boards.py": "485ba25a4deec06aff6eef66bbbd156812bf6e67b5a0e83550b2d2923c05298f",
+      "monte_carlo.py": "8e2e925fc429eb2aa5546bc6b835ae60ac972da269204c21de3471e38bedfdd2",
+      "planning.py": "759e374da0da012ea06dc57679c495ba1562419ad1f24a555ed49f8693af4bf6",
+      "laboratory.py": "dabd8eb5cf2acff2d03ed7659b2f86bd5eedc0012fb3b5d7c978cb8b99f0ac4c",
+      "examples.py": "85610dc68fa527526369eb58151c6b29e01be0f5f2795873690a399829a171f8",
+      "rule_baseline.py": "9d4961388fa97adc218622f5db234a00bfd7967dec37422b393cb4404535e801",
+      "rule_baseline_experiment.py": "ffa2102bb0c53edc86618c51d5d2eba7161a33aee2aa6b3e7cebb86d9e4427f1"
+    }
+  },
+  "runs": [
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        76,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        24,
+        49,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 24,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 12,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        21,
+        42,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 21,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 12,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 2,
+        "additional_nodes": 19264,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        63,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 63,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        63,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 63,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        63,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 63,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 13,
+        "model_evaluated": 8,
+        "reading_changed": 0,
+        "additional_nodes": 19184,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        63
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        22,
+        0,
+        0,
+        41
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 22,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 10,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        40,
+        0,
+        0,
+        23
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 40,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 9,
+        "focal_decisions": 13,
+        "changed_from_reflex": 12,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 2,
+        "additional_nodes": 19264,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        76,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        36,
+        0,
+        27,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 36,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 9,
+        "focal_decisions": 13,
+        "changed_from_reflex": 10,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5008,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        35,
+        0,
+        28,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 35,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 11,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 1,
+        "additional_nodes": 19264,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        78,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 1
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        48,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 3,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        2,
+        39,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 2,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 4,
+        "mc_used": 13,
+        "model_evaluated": 9,
+        "reading_changed": 2,
+        "additional_nodes": 17664,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        78,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 78,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 1,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 1
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        19,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 19,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 8,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 9
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        19,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 19,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 8,
+        "mc_used": 13,
+        "model_evaluated": 4,
+        "reading_changed": 0,
+        "additional_nodes": 16784,
+        "tied_prizes": 9
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        36,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        28,
+        41,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 41,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 4,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 2
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        28,
+        41,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 41,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 4,
+        "mc_used": 13,
+        "model_evaluated": 3,
+        "reading_changed": 0,
+        "additional_nodes": 17024,
+        "tied_prizes": 2
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        36
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        10,
+        0,
+        15
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 10,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5009,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        10,
+        0,
+        21
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 10,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 1,
+        "additional_nodes": 19264,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        63
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        21,
+        30
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 21,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 9,
+        "focal_decisions": 13,
+        "changed_from_reflex": 12,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 8
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        27,
+        24
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 27,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 11,
+        "mc_used": 13,
+        "model_evaluated": 9,
+        "reading_changed": 3,
+        "additional_nodes": 19248,
+        "tied_prizes": 8
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        76,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 76,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        63,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 63,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 9,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        63,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 63,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 8,
+        "reading_changed": 0,
+        "additional_nodes": 19184,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        63,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        32,
+        32,
+        0
+      ],
+      "winner_seats": [
+        1,
+        2
+      ],
+      "win_share": 0.5,
+      "focal_score": 32,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 11,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        32,
+        32,
+        0
+      ],
+      "winner_seats": [
+        1,
+        2
+      ],
+      "win_share": 0.5,
+      "focal_score": 32,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 11,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 0,
+        "additional_nodes": 19264,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        63,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        21,
+        0,
+        49,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 49,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 11,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5010,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        21,
+        0,
+        49,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 49,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 11,
+        "mc_used": 13,
+        "model_evaluated": 9,
+        "reading_changed": 0,
+        "additional_nodes": 19248,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        36,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        21,
+        0,
+        0,
+        8
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 8,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 4,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        21,
+        0,
+        0,
+        18
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 18,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 3,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 1,
+        "additional_nodes": 19264,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        36
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 36,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        21
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 21,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        21
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 21,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 5,
+        "reading_changed": 0,
+        "additional_nodes": 17184,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        78,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 1
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        33,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 4,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 8
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        34,
+        2
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 2,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 4,
+        "mc_used": 13,
+        "model_evaluated": 9,
+        "reading_changed": 1,
+        "additional_nodes": 17664,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        36,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        36,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5011,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        28,
+        0,
+        17
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 17,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 9,
+        "focal_decisions": 13,
+        "changed_from_reflex": 1,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 1,
+        "additional_nodes": 19264,
+        "tied_prizes": 4
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        63,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        24,
+        27,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 24,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 8,
+        "focal_decisions": 13,
+        "changed_from_reflex": 11,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 8
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        40,
+        23,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 40,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 12,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 1,
+        "additional_nodes": 19264,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        76,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 76,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        63,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 63,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 8,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        63,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 63,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 9,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 8,
+        "reading_changed": 0,
+        "additional_nodes": 19184,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        76
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        46,
+        0,
+        0,
+        24
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 46,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 6,
+        "focal_decisions": 13,
+        "changed_from_reflex": 10,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        46,
+        0,
+        0,
+        24
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 46,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 6,
+        "focal_decisions": 13,
+        "changed_from_reflex": 10,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 0,
+        "additional_nodes": 19264,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        63,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        20,
+        0,
+        30,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 20,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 12,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 8
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5012,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        28,
+        0,
+        42,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 28,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 9,
+        "focal_decisions": 13,
+        "changed_from_reflex": 12,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 2,
+        "additional_nodes": 19264,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        78,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 1
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        8,
+        51,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 8,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 6,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 4
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        8,
+        49,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 8,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 7,
+        "mc_used": 13,
+        "model_evaluated": 9,
+        "reading_changed": 1,
+        "additional_nodes": 17664,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        36,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 36,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        21,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 21,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        21,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 21,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 5,
+        "reading_changed": 0,
+        "additional_nodes": 17184,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        36,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        21,
+        17,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 17,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        21,
+        17,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 17,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 0,
+        "additional_nodes": 19264,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        78
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 1
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        78
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 1
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5013,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        60
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 9,
+        "reading_changed": 2,
+        "additional_nodes": 17664,
+        "tied_prizes": 6
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        63
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        9,
+        31
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 9,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 9,
+        "focal_decisions": 13,
+        "changed_from_reflex": 10,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 9
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        30,
+        33
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 30,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 9,
+        "focal_decisions": 13,
+        "changed_from_reflex": 12,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 1,
+        "additional_nodes": 19264,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        63,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 63,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        63,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 63,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        63,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 63,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 13,
+        "model_evaluated": 8,
+        "reading_changed": 0,
+        "additional_nodes": 19184,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        63,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        21,
+        22,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 22,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 6,
+        "focal_decisions": 13,
+        "changed_from_reflex": 12,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 9
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        33,
+        22,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 22,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 5,
+        "focal_decisions": 13,
+        "changed_from_reflex": 12,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 1,
+        "additional_nodes": 19264,
+        "tied_prizes": 8
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        63,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        29,
+        0,
+        25,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 25,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 9,
+        "focal_decisions": 13,
+        "changed_from_reflex": 11,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 8
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5014,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        30,
+        0,
+        33,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 33,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 8,
+        "focal_decisions": 13,
+        "changed_from_reflex": 11,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 2,
+        "additional_nodes": 19264,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        36,
+        0,
+        0,
+        0
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        15,
+        0,
+        0,
+        24
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 24,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 5,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        15,
+        0,
+        0,
+        24
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 24,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 8,
+        "focal_decisions": 13,
+        "changed_from_reflex": 5,
+        "mc_used": 13,
+        "model_evaluated": 5,
+        "reading_changed": 0,
+        "additional_nodes": 18384,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        36
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 36,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        21
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 21,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        0,
+        0,
+        0,
+        21
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 21,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 2,
+        "mc_used": 13,
+        "model_evaluated": 5,
+        "reading_changed": 0,
+        "additional_nodes": 17184,
+        "tied_prizes": 7
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        36,
+        0
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        15,
+        23
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 23,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 4,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        0,
+        0,
+        21,
+        25
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 25,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 4,
+        "mc_used": 13,
+        "model_evaluated": 4,
+        "reading_changed": 1,
+        "additional_nodes": 17808,
+        "tied_prizes": 4
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        36,
+        0,
+        0
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 0,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 12,
+        "focal_decisions": 13,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "tied_prizes": 5
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        22,
+        0,
+        27
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 27,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 11,
+        "focal_decisions": 13,
+        "changed_from_reflex": 4,
+        "mc_used": 13,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 13104,
+        "tied_prizes": 4
+      }
+    },
+    {
+      "game": "goofspiel",
+      "seed": 5015,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        0,
+        28,
+        0,
+        27
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 27,
+      "turns": 13,
+      "finished": true,
+      "counts": {
+        "decisions": 52,
+        "persona_difference_states": 10,
+        "focal_decisions": 13,
+        "changed_from_reflex": 3,
+        "mc_used": 13,
+        "model_evaluated": 10,
+        "reading_changed": 1,
+        "additional_nodes": 19264,
+        "tied_prizes": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        33,
+        33,
+        44,
+        20
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 33,
+      "turns": 155,
+      "finished": true,
+      "counts": {
+        "decisions": 155,
+        "persona_difference_states": 6,
+        "focal_decisions": 40,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 33,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        35,
+        35,
+        42,
+        22
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 35,
+      "turns": 148,
+      "finished": true,
+      "counts": {
+        "decisions": 148,
+        "persona_difference_states": 4,
+        "focal_decisions": 37,
+        "changed_from_reflex": 7,
+        "mc_used": 37,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 52697,
+        "forced_take": 0,
+        "passes": 31,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        30,
+        29,
+        58,
+        27
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 30,
+      "turns": 135,
+      "finished": true,
+      "counts": {
+        "decisions": 135,
+        "persona_difference_states": 3,
+        "focal_decisions": 35,
+        "changed_from_reflex": 7,
+        "mc_used": 35,
+        "model_evaluated": 29,
+        "reading_changed": 3,
+        "additional_nodes": 85677,
+        "forced_take": 0,
+        "passes": 28,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        29,
+        48,
+        48,
+        38
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 29,
+      "turns": 147,
+      "finished": true,
+      "counts": {
+        "decisions": 147,
+        "persona_difference_states": 1,
+        "focal_decisions": 36,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 31,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        64,
+        56,
+        47,
+        31
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 64,
+      "turns": 99,
+      "finished": true,
+      "counts": {
+        "decisions": 99,
+        "persona_difference_states": 2,
+        "focal_decisions": 24,
+        "changed_from_reflex": 6,
+        "mc_used": 24,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 38722,
+        "forced_take": 0,
+        "passes": 19,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        36,
+        27,
+        61,
+        21
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 36,
+      "turns": 153,
+      "finished": true,
+      "counts": {
+        "decisions": 153,
+        "persona_difference_states": 1,
+        "focal_decisions": 41,
+        "changed_from_reflex": 9,
+        "mc_used": 41,
+        "model_evaluated": 32,
+        "reading_changed": 8,
+        "additional_nodes": 92647,
+        "forced_take": 0,
+        "passes": 33,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        12,
+        32,
+        37,
+        29
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 12,
+      "turns": 121,
+      "finished": true,
+      "counts": {
+        "decisions": 121,
+        "persona_difference_states": 1,
+        "focal_decisions": 29,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 25,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        55,
+        34,
+        44,
+        36
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 55,
+      "turns": 128,
+      "finished": true,
+      "counts": {
+        "decisions": 128,
+        "persona_difference_states": 1,
+        "focal_decisions": 32,
+        "changed_from_reflex": 10,
+        "mc_used": 32,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 45624,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        17,
+        65,
+        44,
+        44
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 17,
+      "turns": 118,
+      "finished": true,
+      "counts": {
+        "decisions": 118,
+        "persona_difference_states": 0,
+        "focal_decisions": 27,
+        "changed_from_reflex": 5,
+        "mc_used": 27,
+        "model_evaluated": 24,
+        "reading_changed": 1,
+        "additional_nodes": 77661,
+        "forced_take": 0,
+        "passes": 24,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        50,
+        60,
+        13,
+        14
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 50,
+      "turns": 129,
+      "finished": true,
+      "counts": {
+        "decisions": 129,
+        "persona_difference_states": 4,
+        "focal_decisions": 36,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 27,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        43,
+        53,
+        40,
+        69
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 43,
+      "turns": 134,
+      "finished": true,
+      "counts": {
+        "decisions": 134,
+        "persona_difference_states": 5,
+        "focal_decisions": 38,
+        "changed_from_reflex": 16,
+        "mc_used": 38,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 48983,
+        "forced_take": 0,
+        "passes": 28,
+        "voluntary_costly_take": 6
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5008,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        64,
+        35,
+        26,
+        75
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 64,
+      "turns": 118,
+      "finished": true,
+      "counts": {
+        "decisions": 118,
+        "persona_difference_states": 3,
+        "focal_decisions": 33,
+        "changed_from_reflex": 14,
+        "mc_used": 33,
+        "model_evaluated": 23,
+        "reading_changed": 4,
+        "additional_nodes": 76084,
+        "forced_take": 0,
+        "passes": 24,
+        "voluntary_costly_take": 7
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        18,
+        46,
+        19,
+        17
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 46,
+      "turns": 142,
+      "finished": true,
+      "counts": {
+        "decisions": 142,
+        "persona_difference_states": 8,
+        "focal_decisions": 35,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 30,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        25,
+        45,
+        11,
+        28
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 45,
+      "turns": 129,
+      "finished": true,
+      "counts": {
+        "decisions": 129,
+        "persona_difference_states": 9,
+        "focal_decisions": 32,
+        "changed_from_reflex": 3,
+        "mc_used": 32,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 45697,
+        "forced_take": 0,
+        "passes": 27,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        31,
+        14,
+        14,
+        57
+      ],
+      "winner_seats": [
+        1,
+        2
+      ],
+      "win_share": 0.5,
+      "focal_score": 14,
+      "turns": 138,
+      "finished": true,
+      "counts": {
+        "decisions": 138,
+        "persona_difference_states": 5,
+        "focal_decisions": 32,
+        "changed_from_reflex": 2,
+        "mc_used": 32,
+        "model_evaluated": 27,
+        "reading_changed": 3,
+        "additional_nodes": 86326,
+        "forced_take": 0,
+        "passes": 29,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        20,
+        31,
+        40,
+        55
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 31,
+      "turns": 127,
+      "finished": true,
+      "counts": {
+        "decisions": 127,
+        "persona_difference_states": 2,
+        "focal_decisions": 31,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        40,
+        22,
+        51,
+        64
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 22,
+      "turns": 134,
+      "finished": true,
+      "counts": {
+        "decisions": 134,
+        "persona_difference_states": 2,
+        "focal_decisions": 35,
+        "changed_from_reflex": 10,
+        "mc_used": 35,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 48644,
+        "forced_take": 0,
+        "passes": 28,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        90,
+        25,
+        20,
+        45
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 25,
+      "turns": 125,
+      "finished": true,
+      "counts": {
+        "decisions": 125,
+        "persona_difference_states": 0,
+        "focal_decisions": 32,
+        "changed_from_reflex": 7,
+        "mc_used": 32,
+        "model_evaluated": 26,
+        "reading_changed": 2,
+        "additional_nodes": 83068,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        25,
+        21,
+        45,
+        20
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 21,
+      "turns": 146,
+      "finished": true,
+      "counts": {
+        "decisions": 146,
+        "persona_difference_states": 4,
+        "focal_decisions": 38,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 31,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        22,
+        52,
+        22,
+        34
+      ],
+      "winner_seats": [
+        0,
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 52,
+      "turns": 132,
+      "finished": true,
+      "counts": {
+        "decisions": 132,
+        "persona_difference_states": 8,
+        "focal_decisions": 33,
+        "changed_from_reflex": 7,
+        "mc_used": 33,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 46536,
+        "forced_take": 1,
+        "passes": 27,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        25,
+        28,
+        84,
+        31
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 28,
+      "turns": 127,
+      "finished": true,
+      "counts": {
+        "decisions": 127,
+        "persona_difference_states": 4,
+        "focal_decisions": 31,
+        "changed_from_reflex": 5,
+        "mc_used": 31,
+        "model_evaluated": 20,
+        "reading_changed": 2,
+        "additional_nodes": 73032,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        20,
+        49,
+        55,
+        21
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 49,
+      "turns": 139,
+      "finished": true,
+      "counts": {
+        "decisions": 139,
+        "persona_difference_states": 11,
+        "focal_decisions": 33,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 2,
+        "passes": 29,
+        "voluntary_costly_take": 0
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        23,
+        25,
+        42,
+        43
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 25,
+      "turns": 147,
+      "finished": true,
+      "counts": {
+        "decisions": 147,
+        "persona_difference_states": 2,
+        "focal_decisions": 35,
+        "changed_from_reflex": 6,
+        "mc_used": 35,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 50397,
+        "forced_take": 0,
+        "passes": 31,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5009,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        28,
+        28,
+        41,
+        36
+      ],
+      "winner_seats": [
+        0,
+        1
+      ],
+      "win_share": 0.5,
+      "focal_score": 28,
+      "turns": 143,
+      "finished": true,
+      "counts": {
+        "decisions": 143,
+        "persona_difference_states": 0,
+        "focal_decisions": 36,
+        "changed_from_reflex": 7,
+        "mc_used": 36,
+        "model_evaluated": 29,
+        "reading_changed": 2,
+        "additional_nodes": 89730,
+        "forced_take": 0,
+        "passes": 30,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        81,
+        40,
+        32,
+        35
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 32,
+      "turns": 120,
+      "finished": true,
+      "counts": {
+        "decisions": 120,
+        "persona_difference_states": 1,
+        "focal_decisions": 36,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 24,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        24,
+        44,
+        46,
+        46
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 46,
+      "turns": 118,
+      "finished": true,
+      "counts": {
+        "decisions": 118,
+        "persona_difference_states": 4,
+        "focal_decisions": 34,
+        "changed_from_reflex": 8,
+        "mc_used": 34,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 44556,
+        "forced_take": 0,
+        "passes": 24,
+        "voluntary_costly_take": 5
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        65,
+        46,
+        40,
+        35
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 40,
+      "turns": 125,
+      "finished": true,
+      "counts": {
+        "decisions": 125,
+        "persona_difference_states": 5,
+        "focal_decisions": 33,
+        "changed_from_reflex": 4,
+        "mc_used": 33,
+        "model_evaluated": 26,
+        "reading_changed": 6,
+        "additional_nodes": 72174,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        54,
+        69,
+        30,
+        16
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 30,
+      "turns": 133,
+      "finished": true,
+      "counts": {
+        "decisions": 133,
+        "persona_difference_states": 2,
+        "focal_decisions": 32,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 28,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        51,
+        40,
+        37,
+        55
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 37,
+      "turns": 128,
+      "finished": true,
+      "counts": {
+        "decisions": 128,
+        "persona_difference_states": 1,
+        "focal_decisions": 33,
+        "changed_from_reflex": 5,
+        "mc_used": 33,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 44023,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        51,
+        32,
+        22,
+        79
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 22,
+      "turns": 116,
+      "finished": true,
+      "counts": {
+        "decisions": 116,
+        "persona_difference_states": 1,
+        "focal_decisions": 29,
+        "changed_from_reflex": 5,
+        "mc_used": 29,
+        "model_evaluated": 19,
+        "reading_changed": 2,
+        "additional_nodes": 60505,
+        "forced_take": 0,
+        "passes": 23,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        61,
+        25,
+        23,
+        55
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 23,
+      "turns": 159,
+      "finished": true,
+      "counts": {
+        "decisions": 159,
+        "persona_difference_states": 4,
+        "focal_decisions": 39,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 34,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        34,
+        22,
+        66,
+        80
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 66,
+      "turns": 143,
+      "finished": true,
+      "counts": {
+        "decisions": 143,
+        "persona_difference_states": 7,
+        "focal_decisions": 37,
+        "changed_from_reflex": 9,
+        "mc_used": 37,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 49785,
+        "forced_take": 0,
+        "passes": 30,
+        "voluntary_costly_take": 5
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        54,
+        17,
+        18,
+        53
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 18,
+      "turns": 147,
+      "finished": true,
+      "counts": {
+        "decisions": 147,
+        "persona_difference_states": 5,
+        "focal_decisions": 40,
+        "changed_from_reflex": 8,
+        "mc_used": 40,
+        "model_evaluated": 31,
+        "reading_changed": 4,
+        "additional_nodes": 83683,
+        "forced_take": 0,
+        "passes": 31,
+        "voluntary_costly_take": 5
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        29,
+        57,
+        53,
+        21
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 53,
+      "turns": 150,
+      "finished": true,
+      "counts": {
+        "decisions": 150,
+        "persona_difference_states": 2,
+        "focal_decisions": 38,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 32,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        28,
+        62,
+        51,
+        58
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 51,
+      "turns": 130,
+      "finished": true,
+      "counts": {
+        "decisions": 130,
+        "persona_difference_states": 0,
+        "focal_decisions": 31,
+        "changed_from_reflex": 6,
+        "mc_used": 31,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 45163,
+        "forced_take": 0,
+        "passes": 27,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5010,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        49,
+        59,
+        52,
+        46
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 52,
+      "turns": 153,
+      "finished": true,
+      "counts": {
+        "decisions": 153,
+        "persona_difference_states": 0,
+        "focal_decisions": 37,
+        "changed_from_reflex": 3,
+        "mc_used": 37,
+        "model_evaluated": 31,
+        "reading_changed": 3,
+        "additional_nodes": 90402,
+        "forced_take": 0,
+        "passes": 33,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        24,
+        21,
+        33,
+        26
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 26,
+      "turns": 134,
+      "finished": true,
+      "counts": {
+        "decisions": 134,
+        "persona_difference_states": 1,
+        "focal_decisions": 36,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 28,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        17,
+        7,
+        46,
+        74
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 74,
+      "turns": 106,
+      "finished": true,
+      "counts": {
+        "decisions": 106,
+        "persona_difference_states": 7,
+        "focal_decisions": 30,
+        "changed_from_reflex": 10,
+        "mc_used": 30,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 41137,
+        "forced_take": 0,
+        "passes": 21,
+        "voluntary_costly_take": 7
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        17,
+        5,
+        45,
+        54
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 54,
+      "turns": 110,
+      "finished": true,
+      "counts": {
+        "decisions": 110,
+        "persona_difference_states": 2,
+        "focal_decisions": 29,
+        "changed_from_reflex": 6,
+        "mc_used": 29,
+        "model_evaluated": 19,
+        "reading_changed": 2,
+        "additional_nodes": 60877,
+        "forced_take": 0,
+        "passes": 22,
+        "voluntary_costly_take": 5
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        32,
+        70,
+        17,
+        13
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 13,
+      "turns": 115,
+      "finished": true,
+      "counts": {
+        "decisions": 115,
+        "persona_difference_states": 1,
+        "focal_decisions": 30,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 23,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        34,
+        34,
+        97,
+        41
+      ],
+      "winner_seats": [
+        0,
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 41,
+      "turns": 129,
+      "finished": true,
+      "counts": {
+        "decisions": 129,
+        "persona_difference_states": 1,
+        "focal_decisions": 34,
+        "changed_from_reflex": 12,
+        "mc_used": 34,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 43484,
+        "forced_take": 0,
+        "passes": 27,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        49,
+        12,
+        52,
+        35
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 35,
+      "turns": 138,
+      "finished": true,
+      "counts": {
+        "decisions": 138,
+        "persona_difference_states": 1,
+        "focal_decisions": 34,
+        "changed_from_reflex": 7,
+        "mc_used": 34,
+        "model_evaluated": 26,
+        "reading_changed": 2,
+        "additional_nodes": 78194,
+        "forced_take": 0,
+        "passes": 29,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        74,
+        13,
+        13,
+        32
+      ],
+      "winner_seats": [
+        1,
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 32,
+      "turns": 114,
+      "finished": true,
+      "counts": {
+        "decisions": 114,
+        "persona_difference_states": 6,
+        "focal_decisions": 28,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 23,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        46,
+        56,
+        29,
+        34
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 34,
+      "turns": 95,
+      "finished": true,
+      "counts": {
+        "decisions": 95,
+        "persona_difference_states": 1,
+        "focal_decisions": 24,
+        "changed_from_reflex": 8,
+        "mc_used": 24,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 38730,
+        "forced_take": 0,
+        "passes": 18,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        36,
+        85,
+        27,
+        27
+      ],
+      "winner_seats": [
+        2,
+        3
+      ],
+      "win_share": 0.5,
+      "focal_score": 27,
+      "turns": 83,
+      "finished": true,
+      "counts": {
+        "decisions": 83,
+        "persona_difference_states": 1,
+        "focal_decisions": 23,
+        "changed_from_reflex": 8,
+        "mc_used": 23,
+        "model_evaluated": 10,
+        "reading_changed": 2,
+        "additional_nodes": 49623,
+        "forced_take": 0,
+        "passes": 15,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        20,
+        17,
+        19,
+        55
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 55,
+      "turns": 122,
+      "finished": true,
+      "counts": {
+        "decisions": 122,
+        "persona_difference_states": 4,
+        "focal_decisions": 29,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 25,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        68,
+        7,
+        42,
+        55
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 55,
+      "turns": 106,
+      "finished": true,
+      "counts": {
+        "decisions": 106,
+        "persona_difference_states": 2,
+        "focal_decisions": 25,
+        "changed_from_reflex": 8,
+        "mc_used": 25,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 39219,
+        "forced_take": 0,
+        "passes": 21,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5011,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        66,
+        4,
+        60,
+        62
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 62,
+      "turns": 102,
+      "finished": true,
+      "counts": {
+        "decisions": 102,
+        "persona_difference_states": 1,
+        "focal_decisions": 26,
+        "changed_from_reflex": 9,
+        "mc_used": 26,
+        "model_evaluated": 19,
+        "reading_changed": 2,
+        "additional_nodes": 67401,
+        "forced_take": 0,
+        "passes": 20,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        24,
+        11,
+        32,
+        51
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 24,
+      "turns": 123,
+      "finished": true,
+      "counts": {
+        "decisions": 123,
+        "persona_difference_states": 3,
+        "focal_decisions": 27,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 25,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        47,
+        51,
+        51,
+        57
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 47,
+      "turns": 121,
+      "finished": true,
+      "counts": {
+        "decisions": 121,
+        "persona_difference_states": 3,
+        "focal_decisions": 33,
+        "changed_from_reflex": 7,
+        "mc_used": 33,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 45169,
+        "forced_take": 0,
+        "passes": 25,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        37,
+        20,
+        17,
+        52
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 37,
+      "turns": 106,
+      "finished": true,
+      "counts": {
+        "decisions": 106,
+        "persona_difference_states": 1,
+        "focal_decisions": 26,
+        "changed_from_reflex": 6,
+        "mc_used": 26,
+        "model_evaluated": 15,
+        "reading_changed": 2,
+        "additional_nodes": 56989,
+        "forced_take": 0,
+        "passes": 21,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        21,
+        21,
+        38,
+        35
+      ],
+      "winner_seats": [
+        0,
+        1
+      ],
+      "win_share": 0.5,
+      "focal_score": 21,
+      "turns": 124,
+      "finished": true,
+      "counts": {
+        "decisions": 124,
+        "persona_difference_states": 2,
+        "focal_decisions": 34,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 25,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        43,
+        26,
+        48,
+        40
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 43,
+      "turns": 117,
+      "finished": true,
+      "counts": {
+        "decisions": 117,
+        "persona_difference_states": 2,
+        "focal_decisions": 31,
+        "changed_from_reflex": 11,
+        "mc_used": 31,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 44725,
+        "forced_take": 0,
+        "passes": 24,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        31,
+        24,
+        55,
+        30
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 31,
+      "turns": 109,
+      "finished": true,
+      "counts": {
+        "decisions": 109,
+        "persona_difference_states": 2,
+        "focal_decisions": 32,
+        "changed_from_reflex": 10,
+        "mc_used": 32,
+        "model_evaluated": 17,
+        "reading_changed": 3,
+        "additional_nodes": 57196,
+        "forced_take": 0,
+        "passes": 22,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        26,
+        38,
+        9,
+        11
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 26,
+      "turns": 126,
+      "finished": true,
+      "counts": {
+        "decisions": 126,
+        "persona_difference_states": 3,
+        "focal_decisions": 28,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        69,
+        79,
+        31,
+        29
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 69,
+      "turns": 120,
+      "finished": true,
+      "counts": {
+        "decisions": 120,
+        "persona_difference_states": 2,
+        "focal_decisions": 35,
+        "changed_from_reflex": 12,
+        "mc_used": 35,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 49419,
+        "forced_take": 0,
+        "passes": 24,
+        "voluntary_costly_take": 5
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        50,
+        48,
+        26,
+        31
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 50,
+      "turns": 122,
+      "finished": true,
+      "counts": {
+        "decisions": 122,
+        "persona_difference_states": 0,
+        "focal_decisions": 34,
+        "changed_from_reflex": 11,
+        "mc_used": 34,
+        "model_evaluated": 23,
+        "reading_changed": 5,
+        "additional_nodes": 74414,
+        "forced_take": 0,
+        "passes": 25,
+        "voluntary_costly_take": 5
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        3,
+        18,
+        50,
+        52
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 3,
+      "turns": 99,
+      "finished": true,
+      "counts": {
+        "decisions": 99,
+        "persona_difference_states": 0,
+        "focal_decisions": 24,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 19,
+        "voluntary_costly_take": 0
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        21,
+        17,
+        28,
+        57
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 21,
+      "turns": 102,
+      "finished": true,
+      "counts": {
+        "decisions": 102,
+        "persona_difference_states": 0,
+        "focal_decisions": 26,
+        "changed_from_reflex": 3,
+        "mc_used": 26,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 37743,
+        "forced_take": 0,
+        "passes": 20,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5012,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 0,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        24,
+        79,
+        61,
+        59
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 1.0,
+      "focal_score": 24,
+      "turns": 101,
+      "finished": true,
+      "counts": {
+        "decisions": 101,
+        "persona_difference_states": 0,
+        "focal_decisions": 22,
+        "changed_from_reflex": 4,
+        "mc_used": 22,
+        "model_evaluated": 16,
+        "reading_changed": 1,
+        "additional_nodes": 54562,
+        "forced_take": 0,
+        "passes": 20,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        -3,
+        49,
+        31,
+        41
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 49,
+      "turns": 131,
+      "finished": true,
+      "counts": {
+        "decisions": 131,
+        "persona_difference_states": 4,
+        "focal_decisions": 33,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 27,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        53,
+        52,
+        39,
+        51
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 52,
+      "turns": 149,
+      "finished": true,
+      "counts": {
+        "decisions": 149,
+        "persona_difference_states": 2,
+        "focal_decisions": 37,
+        "changed_from_reflex": 7,
+        "mc_used": 37,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 54926,
+        "forced_take": 0,
+        "passes": 32,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        55,
+        24,
+        51,
+        21
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 24,
+      "turns": 146,
+      "finished": true,
+      "counts": {
+        "decisions": 146,
+        "persona_difference_states": 3,
+        "focal_decisions": 40,
+        "changed_from_reflex": 13,
+        "mc_used": 40,
+        "model_evaluated": 30,
+        "reading_changed": 4,
+        "additional_nodes": 87833,
+        "forced_take": 0,
+        "passes": 31,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        10,
+        24,
+        50,
+        33
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 24,
+      "turns": 119,
+      "finished": true,
+      "counts": {
+        "decisions": 119,
+        "persona_difference_states": 1,
+        "focal_decisions": 25,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 24,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        61,
+        83,
+        36,
+        50
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 83,
+      "turns": 133,
+      "finished": true,
+      "counts": {
+        "decisions": 133,
+        "persona_difference_states": 3,
+        "focal_decisions": 36,
+        "changed_from_reflex": 12,
+        "mc_used": 36,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 53179,
+        "forced_take": 0,
+        "passes": 28,
+        "voluntary_costly_take": 5
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        66,
+        68,
+        55,
+        61
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 0.0,
+      "focal_score": 68,
+      "turns": 129,
+      "finished": true,
+      "counts": {
+        "decisions": 129,
+        "persona_difference_states": 1,
+        "focal_decisions": 33,
+        "changed_from_reflex": 9,
+        "mc_used": 33,
+        "model_evaluated": 26,
+        "reading_changed": 4,
+        "additional_nodes": 78278,
+        "forced_take": 0,
+        "passes": 27,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        16,
+        55,
+        59,
+        10
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 55,
+      "turns": 118,
+      "finished": true,
+      "counts": {
+        "decisions": 118,
+        "persona_difference_states": 8,
+        "focal_decisions": 32,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 24,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        68,
+        87,
+        39,
+        39
+      ],
+      "winner_seats": [
+        2,
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 87,
+      "turns": 122,
+      "finished": true,
+      "counts": {
+        "decisions": 122,
+        "persona_difference_states": 0,
+        "focal_decisions": 29,
+        "changed_from_reflex": 6,
+        "mc_used": 29,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 46043,
+        "forced_take": 0,
+        "passes": 25,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        40,
+        37,
+        43,
+        42
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 37,
+      "turns": 140,
+      "finished": true,
+      "counts": {
+        "decisions": 140,
+        "persona_difference_states": 0,
+        "focal_decisions": 36,
+        "changed_from_reflex": 10,
+        "mc_used": 36,
+        "model_evaluated": 26,
+        "reading_changed": 5,
+        "additional_nodes": 81408,
+        "forced_take": 0,
+        "passes": 29,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        26,
+        45,
+        37,
+        20
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 45,
+      "turns": 106,
+      "finished": true,
+      "counts": {
+        "decisions": 106,
+        "persona_difference_states": 7,
+        "focal_decisions": 28,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 21,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        36,
+        72,
+        60,
+        57
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 72,
+      "turns": 98,
+      "finished": true,
+      "counts": {
+        "decisions": 98,
+        "persona_difference_states": 1,
+        "focal_decisions": 24,
+        "changed_from_reflex": 8,
+        "mc_used": 24,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 37405,
+        "forced_take": 0,
+        "passes": 19,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5013,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 1,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        35,
+        19,
+        43,
+        64
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 1.0,
+      "focal_score": 19,
+      "turns": 108,
+      "finished": true,
+      "counts": {
+        "decisions": 108,
+        "persona_difference_states": 2,
+        "focal_decisions": 29,
+        "changed_from_reflex": 6,
+        "mc_used": 29,
+        "model_evaluated": 20,
+        "reading_changed": 3,
+        "additional_nodes": 64018,
+        "forced_take": 0,
+        "passes": 21,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        42,
+        47,
+        25,
+        7
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 25,
+      "turns": 144,
+      "finished": true,
+      "counts": {
+        "decisions": 144,
+        "persona_difference_states": 6,
+        "focal_decisions": 32,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 1,
+        "passes": 30,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        37,
+        46,
+        33,
+        40
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 33,
+      "turns": 128,
+      "finished": true,
+      "counts": {
+        "decisions": 128,
+        "persona_difference_states": 1,
+        "focal_decisions": 33,
+        "changed_from_reflex": 7,
+        "mc_used": 33,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 49137,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        37,
+        46,
+        28,
+        32
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 28,
+      "turns": 128,
+      "finished": true,
+      "counts": {
+        "decisions": 128,
+        "persona_difference_states": 1,
+        "focal_decisions": 32,
+        "changed_from_reflex": 5,
+        "mc_used": 32,
+        "model_evaluated": 20,
+        "reading_changed": 1,
+        "additional_nodes": 72525,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        42,
+        39,
+        49,
+        47
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 49,
+      "turns": 143,
+      "finished": true,
+      "counts": {
+        "decisions": 143,
+        "persona_difference_states": 3,
+        "focal_decisions": 36,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 30,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        32,
+        57,
+        34,
+        32
+      ],
+      "winner_seats": [
+        0,
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 34,
+      "turns": 104,
+      "finished": true,
+      "counts": {
+        "decisions": 104,
+        "persona_difference_states": 2,
+        "focal_decisions": 25,
+        "changed_from_reflex": 4,
+        "mc_used": 25,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 40023,
+        "forced_take": 0,
+        "passes": 20,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        34,
+        54,
+        25,
+        36
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 25,
+      "turns": 108,
+      "finished": true,
+      "counts": {
+        "decisions": 108,
+        "persona_difference_states": 1,
+        "focal_decisions": 25,
+        "changed_from_reflex": 2,
+        "mc_used": 25,
+        "model_evaluated": 13,
+        "reading_changed": 1,
+        "additional_nodes": 55579,
+        "forced_take": 0,
+        "passes": 21,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        36,
+        23,
+        21,
+        50
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 21,
+      "turns": 136,
+      "finished": true,
+      "counts": {
+        "decisions": 136,
+        "persona_difference_states": 3,
+        "focal_decisions": 30,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 28,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        46,
+        22,
+        45,
+        56
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 45,
+      "turns": 132,
+      "finished": true,
+      "counts": {
+        "decisions": 132,
+        "persona_difference_states": 4,
+        "focal_decisions": 31,
+        "changed_from_reflex": 6,
+        "mc_used": 31,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 47714,
+        "forced_take": 0,
+        "passes": 27,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        44,
+        54,
+        41,
+        54
+      ],
+      "winner_seats": [
+        2
+      ],
+      "win_share": 1.0,
+      "focal_score": 41,
+      "turns": 132,
+      "finished": true,
+      "counts": {
+        "decisions": 132,
+        "persona_difference_states": 4,
+        "focal_decisions": 32,
+        "changed_from_reflex": 5,
+        "mc_used": 32,
+        "model_evaluated": 21,
+        "reading_changed": 2,
+        "additional_nodes": 73605,
+        "forced_take": 0,
+        "passes": 27,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        39,
+        54,
+        40,
+        39
+      ],
+      "winner_seats": [
+        0,
+        3
+      ],
+      "win_share": 0.0,
+      "focal_score": 40,
+      "turns": 142,
+      "finished": true,
+      "counts": {
+        "decisions": 142,
+        "persona_difference_states": 4,
+        "focal_decisions": 33,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 30,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        17,
+        32,
+        49,
+        53
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 49,
+      "turns": 136,
+      "finished": true,
+      "counts": {
+        "decisions": 136,
+        "persona_difference_states": 6,
+        "focal_decisions": 36,
+        "changed_from_reflex": 10,
+        "mc_used": 36,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 47782,
+        "forced_take": 0,
+        "passes": 28,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5014,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 2,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        29,
+        53,
+        49,
+        54
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 49,
+      "turns": 130,
+      "finished": true,
+      "counts": {
+        "decisions": 130,
+        "persona_difference_states": 5,
+        "focal_decisions": 31,
+        "changed_from_reflex": 5,
+        "mc_used": 31,
+        "model_evaluated": 26,
+        "reading_changed": 2,
+        "additional_nodes": 77093,
+        "forced_take": 0,
+        "passes": 27,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        31,
+        38,
+        29,
+        17
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 17,
+      "turns": 148,
+      "finished": true,
+      "counts": {
+        "decisions": 148,
+        "persona_difference_states": 7,
+        "focal_decisions": 35,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 31,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        55,
+        65,
+        65,
+        65
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 65,
+      "turns": 125,
+      "finished": true,
+      "counts": {
+        "decisions": 125,
+        "persona_difference_states": 1,
+        "focal_decisions": 31,
+        "changed_from_reflex": 12,
+        "mc_used": 31,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 47168,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 4
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "growth",
+      "profile_index": 0,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "steady",
+        "care",
+        "ego",
+        "growth"
+      ],
+      "scores": [
+        54,
+        34,
+        65,
+        93
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 93,
+      "turns": 122,
+      "finished": true,
+      "counts": {
+        "decisions": 122,
+        "persona_difference_states": 3,
+        "focal_decisions": 32,
+        "changed_from_reflex": 13,
+        "mc_used": 32,
+        "model_evaluated": 21,
+        "reading_changed": 4,
+        "additional_nodes": 73435,
+        "forced_take": 0,
+        "passes": 25,
+        "voluntary_costly_take": 5
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        41,
+        24,
+        42,
+        25
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 25,
+      "turns": 126,
+      "finished": true,
+      "counts": {
+        "decisions": 126,
+        "persona_difference_states": 1,
+        "focal_decisions": 32,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        86,
+        21,
+        38,
+        50
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 50,
+      "turns": 142,
+      "finished": true,
+      "counts": {
+        "decisions": 142,
+        "persona_difference_states": 3,
+        "focal_decisions": 36,
+        "changed_from_reflex": 8,
+        "mc_used": 36,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 49328,
+        "forced_take": 0,
+        "passes": 30,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "steady",
+      "profile_index": 1,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "care",
+        "ego",
+        "growth",
+        "steady"
+      ],
+      "scores": [
+        50,
+        40,
+        50,
+        55
+      ],
+      "winner_seats": [
+        1
+      ],
+      "win_share": 0.0,
+      "focal_score": 55,
+      "turns": 130,
+      "finished": true,
+      "counts": {
+        "decisions": 130,
+        "persona_difference_states": 2,
+        "focal_decisions": 34,
+        "changed_from_reflex": 11,
+        "mc_used": 34,
+        "model_evaluated": 27,
+        "reading_changed": 7,
+        "additional_nodes": 78426,
+        "forced_take": 0,
+        "passes": 27,
+        "voluntary_costly_take": 3
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        42,
+        37,
+        20,
+        20
+      ],
+      "winner_seats": [
+        2,
+        3
+      ],
+      "win_share": 0.5,
+      "focal_score": 20,
+      "turns": 135,
+      "finished": true,
+      "counts": {
+        "decisions": 135,
+        "persona_difference_states": 10,
+        "focal_decisions": 34,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 28,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        39,
+        51,
+        73,
+        18
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 18,
+      "turns": 128,
+      "finished": true,
+      "counts": {
+        "decisions": 128,
+        "persona_difference_states": 0,
+        "focal_decisions": 31,
+        "changed_from_reflex": 11,
+        "mc_used": 31,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 43864,
+        "forced_take": 0,
+        "passes": 26,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "care",
+      "profile_index": 2,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "ego",
+        "growth",
+        "steady",
+        "care"
+      ],
+      "scores": [
+        52,
+        58,
+        73,
+        18
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 18,
+      "turns": 136,
+      "finished": true,
+      "counts": {
+        "decisions": 136,
+        "persona_difference_states": 0,
+        "focal_decisions": 31,
+        "changed_from_reflex": 12,
+        "mc_used": 31,
+        "model_evaluated": 19,
+        "reading_changed": 1,
+        "additional_nodes": 62467,
+        "forced_take": 0,
+        "passes": 28,
+        "voluntary_costly_take": 1
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "reflex",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        17,
+        30,
+        40,
+        36
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 36,
+      "turns": 149,
+      "finished": true,
+      "counts": {
+        "decisions": 149,
+        "persona_difference_states": 4,
+        "focal_decisions": 39,
+        "changed_from_reflex": 0,
+        "mc_used": 0,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 0,
+        "forced_take": 0,
+        "passes": 32,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "mc",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        37,
+        46,
+        52,
+        34
+      ],
+      "winner_seats": [
+        3
+      ],
+      "win_share": 1.0,
+      "focal_score": 34,
+      "turns": 118,
+      "finished": true,
+      "counts": {
+        "decisions": 118,
+        "persona_difference_states": 2,
+        "focal_decisions": 30,
+        "changed_from_reflex": 7,
+        "mc_used": 30,
+        "model_evaluated": 0,
+        "reading_changed": 0,
+        "additional_nodes": 42088,
+        "forced_take": 0,
+        "passes": 24,
+        "voluntary_costly_take": 2
+      }
+    },
+    {
+      "game": "no_thanks",
+      "seed": 5015,
+      "profile": "ego",
+      "profile_index": 3,
+      "mode": "learned",
+      "seat": 3,
+      "roster": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "scores": [
+        53,
+        69,
+        80,
+        61
+      ],
+      "winner_seats": [
+        0
+      ],
+      "win_share": 0.0,
+      "focal_score": 61,
+      "turns": 121,
+      "finished": true,
+      "counts": {
+        "decisions": 121,
+        "persona_difference_states": 2,
+        "focal_decisions": 30,
+        "changed_from_reflex": 10,
+        "mc_used": 30,
+        "model_evaluated": 17,
+        "reading_changed": 3,
+        "additional_nodes": 56849,
+        "forced_take": 0,
+        "passes": 25,
+        "voluntary_costly_take": 3
+      }
+    }
+  ],
+  "summary": {
+    "groups": [
+      {
+        "game": "goofspiel",
+        "profile": "growth",
+        "modes": {
+          "reflex": {
+            "matches": 8,
+            "winner_credit": 0.0,
+            "mean_score": 0.0,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 92,
+              "focal_decisions": 104,
+              "tied_prizes": 38
+            }
+          },
+          "mc": {
+            "matches": 8,
+            "winner_credit": 1.0,
+            "mean_score": 14.75,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 82,
+              "focal_decisions": 104,
+              "changed_from_reflex": 63,
+              "mc_used": 104,
+              "additional_nodes": 104832,
+              "tied_prizes": 50
+            }
+          },
+          "learned": {
+            "matches": 8,
+            "winner_credit": 3.0,
+            "mean_score": 21.25,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 85,
+              "focal_decisions": 104,
+              "changed_from_reflex": 66,
+              "mc_used": 104,
+              "model_evaluated": 72,
+              "reading_changed": 11,
+              "additional_nodes": 150016,
+              "tied_prizes": 50
+            }
+          }
+        }
+      },
+      {
+        "game": "goofspiel",
+        "profile": "steady",
+        "modes": {
+          "reflex": {
+            "matches": 8,
+            "winner_credit": 8.0,
+            "mean_score": 58.0,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 85,
+              "focal_decisions": 104,
+              "tied_prizes": 40
+            }
+          },
+          "mc": {
+            "matches": 8,
+            "winner_credit": 8.0,
+            "mean_score": 41.75,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 84,
+              "focal_decisions": 104,
+              "mc_used": 104,
+              "additional_nodes": 104832,
+              "tied_prizes": 58,
+              "changed_from_reflex": 18
+            }
+          },
+          "learned": {
+            "matches": 8,
+            "winner_credit": 8.0,
+            "mean_score": 41.75,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 87,
+              "focal_decisions": 104,
+              "mc_used": 104,
+              "model_evaluated": 51,
+              "additional_nodes": 145072,
+              "tied_prizes": 58,
+              "changed_from_reflex": 18
+            }
+          }
+        }
+      },
+      {
+        "game": "goofspiel",
+        "profile": "care",
+        "modes": {
+          "reflex": {
+            "matches": 8,
+            "winner_credit": 0.0,
+            "mean_score": 0.0,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 94,
+              "focal_decisions": 104,
+              "tied_prizes": 42
+            }
+          },
+          "mc": {
+            "matches": 8,
+            "winner_credit": 4.5,
+            "mean_score": 25.375,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 83,
+              "focal_decisions": 104,
+              "changed_from_reflex": 57,
+              "mc_used": 104,
+              "additional_nodes": 104832,
+              "tied_prizes": 48
+            }
+          },
+          "learned": {
+            "matches": 8,
+            "winner_credit": 4.5,
+            "mean_score": 28.125,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 76,
+              "focal_decisions": 104,
+              "changed_from_reflex": 59,
+              "mc_used": 104,
+              "model_evaluated": 66,
+              "reading_changed": 5,
+              "additional_nodes": 148816,
+              "tied_prizes": 45
+            }
+          }
+        }
+      },
+      {
+        "game": "goofspiel",
+        "profile": "ego",
+        "modes": {
+          "reflex": {
+            "matches": 8,
+            "winner_credit": 0.0,
+            "mean_score": 0.0,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 94,
+              "focal_decisions": 104,
+              "tied_prizes": 42
+            }
+          },
+          "mc": {
+            "matches": 8,
+            "winner_credit": 3.0,
+            "mean_score": 20.875,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 83,
+              "focal_decisions": 104,
+              "changed_from_reflex": 50,
+              "mc_used": 104,
+              "additional_nodes": 104832,
+              "tied_prizes": 46
+            }
+          },
+          "learned": {
+            "matches": 8,
+            "winner_credit": 3.0,
+            "mean_score": 24.875,
+            "counts": {
+              "decisions": 416,
+              "persona_difference_states": 80,
+              "focal_decisions": 104,
+              "changed_from_reflex": 53,
+              "mc_used": 104,
+              "model_evaluated": 78,
+              "reading_changed": 10,
+              "additional_nodes": 152496,
+              "tied_prizes": 45
+            }
+          }
+        }
+      },
+      {
+        "game": "no_thanks",
+        "profile": "growth",
+        "modes": {
+          "reflex": {
+            "matches": 8,
+            "winner_credit": 2.0,
+            "mean_score": 31.5,
+            "counts": {
+              "decisions": 1097,
+              "persona_difference_states": 36,
+              "focal_decisions": 274,
+              "passes": 228,
+              "voluntary_costly_take": 13,
+              "forced_take": 1
+            }
+          },
+          "mc": {
+            "matches": 8,
+            "winner_credit": 2.0,
+            "mean_score": 49.625,
+            "counts": {
+              "decisions": 1024,
+              "persona_difference_states": 31,
+              "focal_decisions": 267,
+              "changed_from_reflex": 61,
+              "mc_used": 267,
+              "additional_nodes": 380487,
+              "passes": 212,
+              "voluntary_costly_take": 34
+            }
+          },
+          "learned": {
+            "matches": 8,
+            "winner_credit": 1.5,
+            "mean_score": 40.0,
+            "counts": {
+              "decisions": 1010,
+              "persona_difference_states": 23,
+              "focal_decisions": 259,
+              "changed_from_reflex": 56,
+              "mc_used": 259,
+              "model_evaluated": 187,
+              "reading_changed": 25,
+              "additional_nodes": 595836,
+              "passes": 208,
+              "voluntary_costly_take": 28
+            }
+          }
+        }
+      },
+      {
+        "game": "no_thanks",
+        "profile": "steady",
+        "modes": {
+          "reflex": {
+            "matches": 8,
+            "winner_credit": 2.5,
+            "mean_score": 27.75,
+            "counts": {
+              "decisions": 1034,
+              "persona_difference_states": 13,
+              "focal_decisions": 256,
+              "passes": 213,
+              "voluntary_costly_take": 15
+            }
+          },
+          "mc": {
+            "matches": 8,
+            "winner_credit": 2.0,
+            "mean_score": 46.75,
+            "counts": {
+              "decisions": 986,
+              "persona_difference_states": 16,
+              "focal_decisions": 254,
+              "changed_from_reflex": 68,
+              "mc_used": 254,
+              "additional_nodes": 362128,
+              "passes": 202,
+              "voluntary_costly_take": 28
+            }
+          },
+          "learned": {
+            "matches": 8,
+            "winner_credit": 2.0,
+            "mean_score": 37.125,
+            "counts": {
+              "decisions": 1008,
+              "persona_difference_states": 9,
+              "focal_decisions": 260,
+              "changed_from_reflex": 60,
+              "mc_used": 260,
+              "model_evaluated": 186,
+              "reading_changed": 29,
+              "additional_nodes": 583893,
+              "passes": 208,
+              "voluntary_costly_take": 23
+            }
+          }
+        }
+      },
+      {
+        "game": "no_thanks",
+        "profile": "care",
+        "modes": {
+          "reflex": {
+            "matches": 8,
+            "winner_credit": 3.5,
+            "mean_score": 26.25,
+            "counts": {
+              "decisions": 1055,
+              "persona_difference_states": 39,
+              "focal_decisions": 258,
+              "passes": 219,
+              "voluntary_costly_take": 12
+            }
+          },
+          "mc": {
+            "matches": 8,
+            "winner_credit": 1.0,
+            "mean_score": 53.25,
+            "counts": {
+              "decisions": 1000,
+              "persona_difference_states": 23,
+              "focal_decisions": 252,
+              "changed_from_reflex": 69,
+              "mc_used": 252,
+              "additional_nodes": 367715,
+              "passes": 203,
+              "voluntary_costly_take": 30,
+              "forced_take": 1
+            }
+          },
+          "learned": {
+            "matches": 8,
+            "winner_credit": 4.5,
+            "mean_score": 29.5,
+            "counts": {
+              "decisions": 1005,
+              "focal_decisions": 254,
+              "changed_from_reflex": 64,
+              "mc_used": 254,
+              "model_evaluated": 174,
+              "reading_changed": 22,
+              "additional_nodes": 575893,
+              "passes": 205,
+              "voluntary_costly_take": 24,
+              "persona_difference_states": 14
+            }
+          }
+        }
+      },
+      {
+        "game": "no_thanks",
+        "profile": "ego",
+        "modes": {
+          "reflex": {
+            "matches": 8,
+            "winner_credit": 1.0,
+            "mean_score": 41.375,
+            "counts": {
+              "decisions": 1036,
+              "persona_difference_states": 36,
+              "focal_decisions": 260,
+              "passes": 215,
+              "voluntary_costly_take": 17,
+              "forced_take": 2
+            }
+          },
+          "mc": {
+            "matches": 8,
+            "winner_credit": 1.0,
+            "mean_score": 43.75,
+            "counts": {
+              "decisions": 971,
+              "persona_difference_states": 18,
+              "focal_decisions": 245,
+              "changed_from_reflex": 64,
+              "mc_used": 245,
+              "additional_nodes": 348780,
+              "passes": 198,
+              "voluntary_costly_take": 26
+            }
+          },
+          "learned": {
+            "matches": 8,
+            "winner_credit": 2.5,
+            "mean_score": 44.875,
+            "counts": {
+              "decisions": 976,
+              "persona_difference_states": 13,
+              "focal_decisions": 244,
+              "changed_from_reflex": 58,
+              "mc_used": 244,
+              "model_evaluated": 181,
+              "reading_changed": 20,
+              "additional_nodes": 576139,
+              "passes": 200,
+              "voluntary_costly_take": 28
+            }
+          }
+        }
+      }
+    ],
+    "paired": {
+      "goofspiel": {
+        "mc_against_reflex": {
+          "win_same": 23,
+          "score_better": 20,
+          "score_same": 6,
+          "win_better": 9,
+          "score_worse": 6
+        },
+        "learned_against_mc": {
+          "win_same": 26,
+          "score_worse": 2,
+          "score_same": 19,
+          "win_better": 4,
+          "score_better": 11,
+          "win_worse": 2
+        }
+      },
+      "no_thanks": {
+        "mc_against_reflex": {
+          "win_same": 17,
+          "score_worse": 23,
+          "win_worse": 9,
+          "score_better": 8,
+          "win_better": 6,
+          "score_same": 1
+        },
+        "learned_against_mc": {
+          "win_same": 20,
+          "score_better": 21,
+          "win_better": 9,
+          "score_worse": 9,
+          "win_worse": 3,
+          "score_same": 2
+        }
+      }
+    },
+    "prediction": [
+      {
+        "game": "goofspiel",
+        "mode": "reflex",
+        "observations": 1152,
+        "mean_log_loss": 1.3204069205480247,
+        "uniform_log_loss": 1.879346987760285
+      },
+      {
+        "game": "goofspiel",
+        "mode": "mc",
+        "observations": 1152,
+        "mean_log_loss": 1.3298340780946454,
+        "uniform_log_loss": 1.879346987760285
+      },
+      {
+        "game": "goofspiel",
+        "mode": "learned",
+        "observations": 1152,
+        "mean_log_loss": 1.3240244771722385,
+        "uniform_log_loss": 1.879346987760285
+      },
+      {
+        "game": "no_thanks",
+        "mode": "reflex",
+        "observations": 3146,
+        "mean_log_loss": 0.522201675862715,
+        "uniform_log_loss": 0.6931471805599451
+      },
+      {
+        "game": "no_thanks",
+        "mode": "mc",
+        "observations": 2939,
+        "mean_log_loss": 0.5352148812562808,
+        "uniform_log_loss": 0.6931471805599453
+      },
+      {
+        "game": "no_thanks",
+        "mode": "learned",
+        "observations": 2947,
+        "mean_log_loss": 0.5378317550695764,
+        "uniform_log_loss": 0.6931471805599453
+      }
+    ]
+  },
+  "matches": 192,
+  "actual_decisions": 17194,
+  "trace_sha256": "fbb6cbba28c26b8641907f4364ea29031ea02b466328476035aab468670ab610",
+  "all_finished": true,
+  "enjoyment_measured": false,
+  "training": false,
+  "default_promoted": false
+}

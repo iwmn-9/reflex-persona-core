@@ -1,0 +1,62 @@
+{
+  "version": "existing-tabletop-v1",
+  "seeds": [
+    5008,
+    5009,
+    5010,
+    5011,
+    5012,
+    5013,
+    5014,
+    5015
+  ],
+  "development_seed": 5000,
+  "games": [
+    "goofspiel",
+    "no_thanks"
+  ],
+  "profiles": [
+    "growth",
+    "steady",
+    "care",
+    "ego"
+  ],
+  "modes": [
+    "reflex",
+    "mc",
+    "learned"
+  ],
+  "players": 4,
+  "controlled_seat": "seed modulo 4",
+  "rivals": "three fixed-persona finite-policy reflex NPCs",
+  "goal": "terminal fractional winner credit; raw scores reported separately",
+  "budget": {
+    "samples": 16,
+    "max_nodes": 50000,
+    "max_steps": 512,
+    "min_samples": 8,
+    "rollout_policy": "random"
+  },
+  "goofspiel": "13 cards, ascending on even seeds / descending on odd; unique high wins; highest tie discards",
+  "no_thanks": "3..35, nine unseen removals, 24 drawn cards, 11 initial chips; taker starts next card",
+  "needs": "existing adapter resource/esteem/safety proxies; not all five needs supported",
+  "social": "not connected: competitive outcomes alone are not benevolent/hostile social events",
+  "continuation": "uniform own future and uniform/unobserved or frozen learned rival mixture; real NPCs redecide",
+  "learning": "finite existing HypothesisTracker; actual revealed actions only; reset each match",
+  "adoption": "diagnostic comparison only; no default policy promotion or result-dependent tuning",
+  "source_hashes": {
+    "tabletop_trials.py": "54056acd644b868a0177a6b6c7e39c5994c0b7228289f4202d937fcd3b17a3e8",
+    "core.py": "04249566014102d63f3e308d61e01f1114afb1541569cdb1937c0c651de59b5a",
+    "goofspiel.py": "4864e6acc50fdf12aa5ef8da5187a9387105aacd56bd5d66a8762817a395f99d",
+    "goofspiel_beliefs.py": "f92a4ea14e147a3a101c4fd0c7bb696f1fbba92525531b3d5345a2cbf8e7af60",
+    "opponent_beliefs.py": "95777a52db389112b03772237a61c2182aaa3b9c52ac01ceebf165ca38aaa435",
+    "board_models.py": "52b53761ee343a827465228fd47fe324067e1cca7fdb4137de9411a960c8a101",
+    "rollout_boards.py": "485ba25a4deec06aff6eef66bbbd156812bf6e67b5a0e83550b2d2923c05298f",
+    "monte_carlo.py": "8e2e925fc429eb2aa5546bc6b835ae60ac972da269204c21de3471e38bedfdd2",
+    "planning.py": "759e374da0da012ea06dc57679c495ba1562419ad1f24a555ed49f8693af4bf6",
+    "laboratory.py": "dabd8eb5cf2acff2d03ed7659b2f86bd5eedc0012fb3b5d7c978cb8b99f0ac4c",
+    "examples.py": "85610dc68fa527526369eb58151c6b29e01be0f5f2795873690a399829a171f8",
+    "rule_baseline.py": "9d4961388fa97adc218622f5db234a00bfd7967dec37422b393cb4404535e801",
+    "rule_baseline_experiment.py": "ffa2102bb0c53edc86618c51d5d2eba7161a33aee2aa6b3e7cebb86d9e4427f1"
+  }
+}

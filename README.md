@@ -22,6 +22,8 @@ python -m reflex.social_experiment --output FRESH_SOCIAL
 
 ## 判断を見て確認する
 
+既存ルールのGoofspiel/No Thanks!を4人で192試合実行した。`python -m reflex.tabletop_trials --output FRESH_ROOT` は、対象一人への反射/終局MC/公開相手予測追加を比較し、他三人も固定人格の共通Policyで動く。Goofspielの勝利持分は8→16.5→18.5/32、No Thanks!は9→6→10.5/32だが平均失点は反射より悪化。先読みを足しても賢さは安定していないため既定を切り替えない。競争利得を慈善や裏切りと読み替えず、未知山札と現在の伏せ手を渡さない。[候補・実対戦・人格の得失・見つかった不足](evidence/tabletop_trials/REPORT.md)。
+
 [evidence/persona_review/review.html](evidence/persona_review/review.html) を保存してブラウザで開く。同じ状況の四人格、四人同時の暮らし、資源の準備、物流の修正、戦闘の失敗を手ごとに確認する。採点・選択・実結果と、後で変わった継続計画を分けて表示する。評価メモはブラウザ内保存とJSON書き出しに対応し、自動学習には使わない。[範囲・得失・出所・再構築方法](evidence/persona_review/REPORT.md)。
 
 ## 人格と複数の探索手法
