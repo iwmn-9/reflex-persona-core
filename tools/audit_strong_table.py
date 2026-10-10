@@ -10,6 +10,8 @@ import json
 import math
 from pathlib import Path
 import sys
+import subprocess
+import types
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from reflex.core import digest, TRAITS, VALUES
 from reflex.laboratory import PROFILES
@@ -31,11 +33,30 @@ def card_score(cards,chips):
     return total-chips
 
 
-def audit(root,replay=False):
+def audit(root,replay=False,source_ref=None):
+    global PublicMemory,SearchBudget,play,summarize
     root=Path(root);evaluation=json.loads((root/'evaluation.json').read_text(encoding='utf-8'))
     plan=json.loads((root/'preregister.json').read_text(encoding='utf-8'));assert plan==evaluation['plan']
     base=Path(__file__).resolve().parents[1]
-    for name,sha in plan['sources'].items():assert hashlib.sha256((base/Path(name.replace('\\','/'))).read_bytes()).hexdigest()==sha,name
+    frozen={}
+    for name,sha in plan['sources'].items():
+        normalized_name=name.replace('\\','/');data=(base/normalized_name).read_bytes()
+        if hashlib.sha256(data).hexdigest()!=sha:
+            assert source_ref is not None,'use --source-ref for the registered implementation: '+name
+            data=subprocess.check_output(['git','show',f'{source_ref}:{normalized_name}'],cwd=base)
+            assert normalized_name in ('reflex/strong_search.py','reflex/strong_table.py'),'unexpected runtime dependency change'
+            frozen[normalized_name]=data
+        assert hashlib.sha256(data).hexdigest()==sha,name
+    # The two experiment modules may later fix presentation/aggregation. Replay
+    # their actual immutable implementation, with every shared dependency still
+    # checked against the registration. No changes to the working tree.
+    if frozen:
+        for name in ('reflex/strong_search.py','reflex/strong_table.py'):
+            data=frozen.get(name,(base/name).read_bytes());module_name=name[:-3].replace('/','.')
+            module=types.ModuleType(module_name);module.__package__='reflex';module.__file__=str(base/name)
+            sys.modules[module_name]=module;exec(compile(data,str(base/name),'exec'),module.__dict__)
+        PublicMemory=sys.modules['reflex.strong_search'].PublicMemory;SearchBudget=sys.modules['reflex.strong_search'].SearchBudget
+        play=sys.modules['reflex.strong_table'].play;summarize=sys.modules['reflex.strong_table'].summarize
     trace=root/'trajectories.jsonl';assert hashlib.sha256(trace.read_bytes()).hexdigest()==evaluation['trajectory_sha256']
     indexed={(r['game'],r['seed'],r['mode'],r['encounter']):r for r in evaluation['matches']}
     assert len(indexed)==len(plan['games'])*len(plan['seeds'])*len(plan['modes'])*plan['encounters']
@@ -204,6 +225,7 @@ def audit(root,replay=False):
                     key=(game,seed,mode,encounter);assert normalized(actual)==indexed[key]
                     assert h.hexdigest()==row_hashes[key];replayed+=1
     proof=dict(matches=len(indexed),**counts,all_finished=True,source_hashes_checked=len(plan['sources']),
+        source_reference=source_ref,immutable_modules_replayed=sorted(frozen),
         trajectory_sha256=evaluation['trajectory_sha256'],exact_search_replayed_matches=replayed,
         replay_scope='first registered series, both games, every mode and every encounter' if replay else None,
         learning_replay='same algorithm from past public acts; clock/isolation integration check',
@@ -216,5 +238,6 @@ def audit(root,replay=False):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--replay',action='store_true');args=p.parse_args()
-    print(json.dumps(audit(args.root,args.replay),ensure_ascii=False,indent=2))
+    p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--replay',action='store_true')
+    p.add_argument('--source-ref');args=p.parse_args()
+    print(json.dumps(audit(args.root,args.replay,args.source_ref),ensure_ascii=False,indent=2))

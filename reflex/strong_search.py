@@ -479,6 +479,9 @@ def persona_context(game,s,viewer,p,seed,tick,episode,state,names,scores,shares)
         packed[name]=compress_outcomes(rows)
     if game=='goofspiel':c=make_context(s,viewer,p,'win_share',seed,tick,episode,state,packed)
     else:c=ThanksAdapter().context(s,p,seed,tick,episode,[action(a,*packed[a]) for a in names],state)
+    c['facts']['forecast']=f'終局までのモデル予測。各候補{scores.shape[1]}検証標本。相手は宣言した公開情報の仮説。実際の未来の再計画と同一ではない'
+    c['facts']['continuation']='根ごとに全標本へ共通の本人の計画/方策。実際の他者の内部状態と未知山札は入力しない'
+    if game=='no_thanks':c['facts']['estimate']=c['facts']['forecast']
     return competitive(c)
 
 

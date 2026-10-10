@@ -144,7 +144,7 @@ def summarize(results,encounters):
                 reading_changes=sum(sum(r['reading_changes']) for r in rows),guard_changes=sum(sum(r['guards']) for r in rows))
             for stage in ('early','late'):
                 part=[r for r in rows if (r['encounter']<encounters//2)==(stage=='early')]
-                d[stage]=dict(matches=len(part),benchmark_rate=sum(r['credits'][r['benchmark']] for r in part)/len(part))
+                d[stage]=dict(matches=len(part),benchmark_rate=(sum(r['credits'][r['benchmark']] for r in part)/len(part) if part else None))
             d['profiles']={p['id']:dict(appearances=sum(p['id'] in r['profiles'].values() for r in rows),
                 credit=sum(sum(r['credits'][int(a)] for a,pid in r['profiles'].items() if pid==p['id']) for r in rows),
                 failures=sum(sum(r['failures'][int(a)] for a,pid in r['profiles'].items() if pid==p['id']) for r in rows)) for p in PROFILES}

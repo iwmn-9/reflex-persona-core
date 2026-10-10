@@ -9,6 +9,7 @@ from reflex.laboratory import PROFILES
 from reflex.strong_search import (PublicMemory, SearchBudget, _goof_returns,
     _goof_scenarios, _thanks_simulate, _thanks_persona_take, search, reasonable_persona)
 from reflex.strong_search import _thanks_persona_take_reference
+from reflex.strong_search import persona_context
 from reflex.tabletop_trials import competitive, thanks_observe, score
 from reflex.goal_guard import choose_with_goal
 from reflex.examples import context, action, effect
@@ -133,6 +134,20 @@ class StrongTableTests(unittest.TestCase):
         other=state.copy();a=_thanks_persona_take(np.arange(n),turn,card,pot,chips,points,cards,kinds,remaining,state)
         b=_thanks_persona_take_reference(np.arange(n),turn,card,pot,chips,points,cards,kinds,remaining,other)
         np.testing.assert_array_equal(a[0],b[0]);np.testing.assert_array_equal(a[1],b[1]);np.testing.assert_array_equal(state,other)
+
+    def test_single_encounter_summary_has_no_fabricated_empty_window_rate(self):
+        from reflex.strong_table import summarize
+        r=dict(game='goofspiel',mode='reflex',encounter=0,benchmark=0,credits=[1,0,0,0],
+            failures=[0]*4,reading_changes=[0]*4,guards=[0]*4,profiles={'0':'benchmark','1':'growth','2':'care','3':'ego'})
+        result=summarize([r],1)['goofspiel']['reflex']
+        self.assertEqual(result['early'],dict(matches=0,benchmark_rate=None));self.assertEqual(result['late']['benchmark_rate'],1)
+
+    def test_model_context_labels_terminal_evidence_and_root_commitment_truthfully(self):
+        for game,s in (('goofspiel',Position.start(4,3)),('no_thanks',replace(ThanksPosition.start(4,30),remaining=1))):
+            names,scores,shares,_=search(game,s,0,PublicMemory(game,0),False,SearchBudget(8,16,16,1),np.random.default_rng(5))
+            c=persona_context(game,s,0,PROFILES[0],5,0,'metadata',None,names,scores,shares)
+            self.assertIn('終局',c['facts']['forecast']);self.assertIn('16',c['facts']['forecast'])
+            self.assertIn('根ごと',c['facts']['continuation'])
 
 
 if __name__=='__main__':unittest.main()
