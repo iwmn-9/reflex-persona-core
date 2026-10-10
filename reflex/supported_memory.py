@@ -44,7 +44,7 @@ Opponent IDs and actual private personality/controller state never enter keys.
         return bank.coefficients[actor] if adaptive else bank.initial_coefficients
 
     def rollout_banks(self,adaptive=True):return [self.support.select(k).rollout_banks(adaptive)[0] for k in self.support.classes]
-    def rollout_bank_indices(self,remaining):return (remaining==0).astype(int) if self.game=='no_thanks' else remaining*0
+    def rollout_bank_indices(self,remaining,adaptive=True):return (remaining==0).astype(int) if self.game=='no_thanks' else remaining*0
 
     def observe(self,s,actor,revealed,observation_id):
         if actor!=self.viewer and observation_id in self.ids[actor]:raise ValueError('duplicate public observation across support banks')
@@ -128,6 +128,21 @@ class GuardedPublicMemory(ValidatedPublicMemory):
         return self.support.select(opportunity) if self.transfer.accepted(self._key(opportunity,actor)) else self.shared
 
     def comparison(self,local_prediction,shared_prediction):return shared_prediction,local_prediction
+
+    def _specialized(self,adaptive):return adaptive and any(self.transfer.accepted(k) for k in self.transfer.entries)
+
+    def rollout_banks(self,adaptive=True):
+        if not self._specialized(adaptive):return self.shared.rollout_banks(adaptive)
+        banks=super().rollout_banks(adaptive)
+        for i,opportunity in enumerate(self.support.classes):
+            # A shared rival hypothesis denotes the same hypothetical rival
+            # through both phases. Do not resample its type on a phase change.
+            banks[i]['reuse_from']=[next((j for j in range(i) if
+                self.selected_bank(self.support.classes[j],a) is self.selected_bank(opportunity,a)),-1) for a in range(self.players)]
+        return banks
+
+    def rollout_bank_indices(self,remaining,adaptive=True):
+        return super().rollout_bank_indices(remaining,adaptive) if self._specialized(adaptive) else remaining*0
 
     def observe(self,*args,**kwargs):
         record=super().observe(*args,**kwargs)

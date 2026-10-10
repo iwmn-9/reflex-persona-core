@@ -150,7 +150,7 @@ class PublicMemory:
                      thresholds=np.array([self.recent_threshold(a,adaptive) for a in range(self.players)]),
                      coefficients=np.array([self.forecast_coefficients(None,a,adaptive) for a in range(self.players)]))]
 
-    def rollout_bank_indices(self,remaining):return np.zeros_like(remaining,dtype=int)
+    def rollout_bank_indices(self,remaining,adaptive=True):return np.zeros_like(remaining,dtype=int)
 
 
 @dataclass(frozen=True)
@@ -392,7 +392,9 @@ def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng,*,own_profi
     bank_kinds=np.empty((len(banks),n,players),int)
     for bank_index,bank in enumerate(banks):
         for actor in range(players):
-            bank_kinds[bank_index,:,actor]=np.tile(rng.choice(len(NAMES),count,p=bank['weights'][actor]),len(roots))
+            previous=bank.get('reuse_from',[-1]*players)[actor]
+            bank_kinds[bank_index,:,actor]=(bank_kinds[previous,:,actor] if previous>=0 else
+                np.tile(rng.choice(len(NAMES),count,p=bank['weights'][actor]),len(roots)))
     own_style=np.repeat(styles,count);root=np.repeat(roots,count)
     model_states=np.zeros((n,players,3));model_states[:,:,:2]=-1
     if own_profile is not None:
@@ -406,7 +408,7 @@ def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng,*,own_profi
     for step in range(2048):
         active=np.flatnonzero(~done)
         if not len(active):break
-        bank_indices=memory.rollout_bank_indices(s.remaining-drawn)
+        bank_indices=memory.rollout_bank_indices(s.remaining-drawn,adaptive)
         kinds=bank_kinds[bank_indices,rows]
         a=turn[active];c=card[active]
         added=np.where(cards[active,a,c-1],0,c)-np.where(cards[active,a,c+1],c+1,0)

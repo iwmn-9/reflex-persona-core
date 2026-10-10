@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 from reflex.board_models import ThanksPosition
 from reflex.goofspiel import Position
-from reflex.strong_search import PublicMemory, _thanks_simulate
+from reflex.strong_search import PublicMemory, _thanks_simulate, search,PERSONA
 from reflex.supported_memory import SupportBanks, SupportedPublicMemory,ValidatedPublicMemory,GuardedPublicMemory
 
 
@@ -126,6 +126,28 @@ class SupportedMemoryTests(unittest.TestCase):
                 loss=lambda f:float(np.mean([(v-(k=='TAKE'))**2 for k,v in f.items()]))
                 self.assertAlmostEqual(record['transfer']['gain'],loss(shared)-loss(local))
         self.assertEqual(m.support.select('future_draws').record(),local_before)
+
+    def test_unearned_specialization_preserves_entire_incumbent_rollout_and_search(self):
+        for remaining in (1,0):
+            s=replace(ThanksPosition.start(4,35),remaining=remaining,turn=1)
+            old=PublicMemory('no_thanks',1);new=GuardedPublicMemory('no_thanks',1)
+            for i in range(6):
+                early=replace(s,remaining=8,turn=0)
+                old.observe(early,0,'PASS',str(i));new.observe(early,0,'PASS',str(i))
+            self.assertFalse(new._specialized(True));before=copy.deepcopy(new.record())
+            for adaptive in (True,False):
+                a=search('no_thanks',s,1,old,adaptive,PERSONA,np.random.default_rng(19))
+                b=search('no_thanks',s,1,new,adaptive,PERSONA,np.random.default_rng(19))
+                self.assertEqual(a[0],b[0]);np.testing.assert_array_equal(a[1],b[1]);np.testing.assert_array_equal(a[2],b[2])
+                self.assertEqual(a[3],b[3])
+            self.assertEqual(new.record(),before)
+
+    def test_specialization_reuses_shared_hypotheses_for_other_rivals_across_phases(self):
+        m=GuardedPublicMemory('no_thanks',1)
+        for _ in range(4):m.transfer.categorical(m._key('current_card_only',0),{'TAKE':.5,'PASS':.5},{'TAKE':.9,'PASS':.1},'TAKE')
+        banks=m.rollout_banks();self.assertEqual(banks[1]['reuse_from'],[-1,0,0,0])
+        self.assertEqual(len(m.rollout_banks(False)),1)
+        np.testing.assert_array_equal(m.rollout_bank_indices(np.array([0,1]),False),[0,0])
 
 
 if __name__=='__main__':unittest.main()
