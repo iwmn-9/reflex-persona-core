@@ -54,3 +54,18 @@ def calibrate(model,cases,*,quantile=.9):
         if y.shape!=p.shape or not np.isfinite(y).all() or np.any((y<0)|(y>1)):raise ValueError('bounded matched calibration targets required')
         i,j=np.triu_indices(len(y),1);errors.extend(np.abs((p[i]-p[j])-(y[i]-y[j])))
     return np.quantile(np.asarray(errors),quantile,axis=0,method='higher').tolist()
+
+
+def arbitrate(model,features,incumbent,errors,*,max_regret=.12):
+    """Retain incumbent unless supported learned PURPOSE gain clears error.
+
+    Errors are empirical held-out diagnostics, not true-game confidence bounds.
+    Purpose 0 is primary. Secondary heads never fabricate a primary zero event.
+    """
+    values,supported=predict(model,features);errors=np.asarray(errors,float)
+    if type(incumbent) is not int or not 0<=incumbent<len(values) or errors.shape!=(values.shape[1],) or not np.isfinite(errors).all() or np.any(errors<0) or not np.isfinite(max_regret) or not 0<=max_regret<=1:
+        raise ValueError('valid incumbent, empirical errors and bounded purpose tolerance required')
+    best=int(values[:,0].argmax());gain=float(values[best,0]-values[incumbent,0]);changed=bool(supported and gain>max_regret+errors[0])
+    return (best if changed else incumbent),dict(supported=supported,incumbent=incumbent,candidate=best,
+        learned_gain=gain,calibration_error=float(errors[0]),tolerance=max_regret,changed=changed,
+        uncertainty='empirical paired teacher residual; not true-game guarantee')

@@ -1,6 +1,6 @@
 import copy,json,unittest
 import numpy as np
-from reflex.paired_value import fit,predict,calibrate
+from reflex.paired_value import fit,predict,calibrate,arbitrate
 
 
 class PairedValueTests(unittest.TestCase):
@@ -42,6 +42,22 @@ class PairedValueTests(unittest.TestCase):
         bound=calibrate(model,self.cases());self.assertEqual(model,before)
         self.assertEqual(len(bound),2);self.assertTrue(all(0<=b<.02 for b in bound))
         with self.assertRaises(ValueError):calibrate(model,[])
+
+    def test_incumbent_changes_only_for_supported_clear_purpose_gain(self):
+        model=fit(self.cases(),alpha=.01)
+        chosen,g=arbitrate(model,[[.8,0],[.8,1]],0,[0.,0.],max_regret=0)
+        self.assertEqual(chosen,1);json.dumps(g)
+        chosen,g=arbitrate(model,[[.8,0],[.8,1]],0,[1.,0.],max_regret=0)
+        self.assertEqual(chosen,0)
+        chosen,g=arbitrate(model,[[100,0],[100,1]],0,[0.,0.],max_regret=0)
+        self.assertEqual(chosen,0);self.assertFalse(g['supported'])
+
+    def test_weights_and_incumbent_contract(self):
+        for weights in ([1],[-1]*4,[np.nan]*4):
+            with self.assertRaises(ValueError):fit(self.cases(),case_weights=weights)
+        model=fit(self.cases())
+        for index,errors in ((-1,[0.,0.]),(0,[-1.,0.]),(0,[0.])):
+            with self.assertRaises(ValueError):arbitrate(model,[[.8,0],[.8,1]],index,errors)
 
 
 if __name__=='__main__':unittest.main()
