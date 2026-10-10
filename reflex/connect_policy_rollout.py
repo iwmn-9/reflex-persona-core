@@ -7,7 +7,7 @@ import copy
 from dataclasses import dataclass, replace
 import numpy as np
 from .board_models import ConnectAdapter, observe, connect_referee
-from .board_planning import SHORT
+from .board_planning import SHORT, REFLEX
 from .core import Policy, digest
 from .examples import action
 from .monte_carlo import TerminalEvaluation, RolloutBudget
@@ -29,10 +29,12 @@ def incumbent(s,p,seed,tick,episode,state,budget=SHORT):
 
 
 class OwnerPolicyModel:
-    def __init__(self,s,p,seed,tick,episode,state,d,budget=SHORT):
+    def __init__(self,s,p,seed,tick,episode,state,d,budget=SHORT,owner_policy='incumbent'):
         self.initial=s;self.viewer=s.turn;self.profile=copy.deepcopy(p)
         self.seed=seed;self.tick=tick;self.episode=episode;self.state=copy.deepcopy(state)
-        self.decision=copy.deepcopy(d);self.budget=budget;self.adapter=ConnectAdapter()
+        if owner_policy not in ('incumbent','reflex'):raise ValueError('declared owner continuation required')
+        self.owner_policy=owner_policy
+        self.decision=copy.deepcopy(d);self.budget=budget if owner_policy=='incumbent' else REFLEX;self.adapter=ConnectAdapter()
         self.calls=0;self.requests=0;self.cache={};self.committed=False
     def begin_trial(self):self.memory=copy.deepcopy(self.decision['next_state']);self.committed=False
     def terminal(self,b):return self.adapter.terminal(b.position)
@@ -66,14 +68,15 @@ class OwnerPolicyModel:
         return TerminalEvaluation(row,credit,won,draw,None)
 
 
-def decide(s,p,seed,tick,episode,state=None,budget=SHORT,rollout=None):
+def decide(s,p,seed,tick,episode,state=None,budget=SHORT,rollout=None,owner_policy='incumbent'):
     c,d,st=incumbent(s,p,seed,tick,episode,state,budget)
     rb=RolloutBudget(samples=8,min_samples=8,max_nodes=100000,max_steps=42,rollout_policy='persona') if rollout is None else rollout
-    model=OwnerPolicyModel(s,p,seed,tick,episode,state,d,budget)
+    model=OwnerPolicyModel(s,p,seed,tick,episode,state,d,budget,owner_policy)
     roots={a:Branch(s.play(a),a) for a in s.legal()}
     packed,samples,rs=evaluate_policy(roots,model,rb,[seed,'connect-four',episode,tick,'actual-base-policy'])
     rs.update(owner_searches=model.calls,owner_requests=model.requests,cache_hits=model.requests-model.calls,
-        incumbent_action=d['action_id'],continuation='actual SHORT own controller after each hypothetical public move; minimax2 rival hypothesis')
+        incumbent_action=d['action_id'],owner_policy=owner_policy,
+        continuation=('actual SHORT own controller' if owner_policy=='incumbent' else 'reflex own controller approximation')+' after each hypothetical public move; minimax2 rival hypothesis')
     st=dict(st,policy_rollout=rs)
     if not rs['used']:return c,d,st
     acts=[action(a,*packed[a]) for a in s.legal()]

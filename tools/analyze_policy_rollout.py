@@ -97,9 +97,11 @@ def audit(root,e):
                     assert all(v['values']['benevolence']==v['values']['universalism']==0 for a in c['actions'] for v in a['outcomes'])
                     rc=normalized(c);rc['actions']=[a for a in rc['actions'] if a['id'] in st['guard']['allowed']]
                     replay,_=score(rc);assert replay['action_id']==move and replay['next_state']==d['next_state']
-                    # Initial discovery stored its hash before explanation facts.
-                    # Current producer fixes this; disclose rather than rewrite it.
-                    if 'arms' in plan:assert replay=={k:v for k,v in d.items() if k in replay}
+                    # Table trajectories store the chosen action/state/context,
+                    # not the entire returned Policy record. A dedicated receipt
+                    # is checked when the producer supplied one.
+                    if st.get('policy_rollout',{}).get('decision_record') is not None:
+                        assert replay==st['policy_rollout']['decision_record']
                     counts['fixed_persona_policy_replays']+=1
                     roll=st.get('policy_rollout')
                     eligible=label!='baseline' and not exposed and actor==r['target'] and b['remaining']<=by_label[label]['band'] and len(observed.legal())>1

@@ -19,7 +19,12 @@ from reflex.tabletop_trials import score
 
 
 def worker(job):
-    seed,profile,samples=job;p=PROFILES[profile];start=ConnectPosition()
+    seed,profile,samples,*extra=job
+    owner_policy=extra[0] if extra else 'incumbent';rival=extra[1] if len(extra)>1 else 'minimax2'
+    if rival not in ('minimax2','minimax4'):raise ValueError('registered actual rival required')
+    from reflex.connect_objective import choose as minimax4
+    rival_controller=minimax2 if rival=='minimax2' else minimax4
+    p=PROFILES[profile];start=ConnectPosition()
     rng=np.random.default_rng(seed+331071)
     for _ in range(6):
         if start.winner() is not None:break
@@ -34,13 +39,13 @@ def worker(job):
             if actor==seat:
                 if candidate and not used:
                     c,d,stats=decide(s,p,seed,tick,episode,state,
-                        rollout=RolloutBudget(samples=samples,min_samples=samples,max_nodes=100000,max_steps=42,rollout_policy='persona'))
+                        rollout=RolloutBudget(samples=samples,min_samples=samples,max_nodes=100000,max_steps=42,rollout_policy='persona'),owner_policy=owner_policy)
                     used=True
                 else:c,d,stats=incumbent(s,p,seed,tick,episode,state)
                 assert c['personality']==dict(zip(TRAITS,p['traits'])) and c['values']=={k:float(p['values'].get(k,0)) for k in VALUES}
                 replay,_=score(c);assert replay==d
                 move=d['action_id'];state=d['next_state']
-            else:move=minimax2(s,rival_rng)
+            else:move=rival_controller(s,rival_rng)
             w,legal,_=connect_referee(s);assert w==s.winner() and move in legal
             after=s.play(move);w,legal,_=connect_referee(after);assert w==after.winner() and legal==after.legal()
             trace.append(dict(tick=tick,actor=actor,before=asdict(s),after=asdict(after),action=move,stats=stats));s=after
