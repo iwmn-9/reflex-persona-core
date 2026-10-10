@@ -18,7 +18,7 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 def analyze(root):
     root=Path(root);plan=load(root/'analysis_preregister.json');matches=[];runs=[]
-    for shard in plan['shards']:
+    for shard in plan.get('shards',[dict(folder='.',seeds=plan['seeds'])]):
         for variant in VARIANTS:
             folder=root/shard['folder']/variant;e=load(folder/'evaluation.json');p=e['plan']
             assert p==load(folder/'preregister.json')
@@ -88,7 +88,7 @@ def analyze(root):
     result=dict(plan=plan,analysis_registration_sha256=sha(root/'analysis_preregister.json'),
                 matches=matches,runs=runs,summary=summary,contrasts=contrasts,
                 goof_continuation_negative_control_exact=True,
-                limitations=plan['limitations']+['no multiplicity correction; 16 learning series, not 1024 independent samples'])
+                limitations=plan['limitations']+[f'no multiplicity correction; {len(plan["seeds"])} learning series, not {len(matches)} independent samples'])
     (root/'evaluation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(dict(summary=summary,contrasts=contrasts),ensure_ascii=False,indent=2))
     return result

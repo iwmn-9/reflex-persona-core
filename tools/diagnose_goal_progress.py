@@ -9,7 +9,7 @@ from pathlib import Path
 def diagnose(root):
     root=Path(root);registration=json.loads((root/'analysis_preregister.json').read_text(encoding='utf-8'))
     counts=defaultdict(Counter);forecasts=defaultdict(lambda:dict(n=0,predicted=0.,actual=0.));worlds={};cases=[];case_keys=set()
-    for shard in registration['shards']:
+    for shard in registration.get('shards',[dict(folder='.',seeds=registration['seeds'])]):
         for variant in registration['variants']:
             folder=root/shard['folder']/variant;e=json.loads((folder/'evaluation.json').read_text(encoding='utf-8'))
             outcomes={(r['game'],r['seed'],r['encounter']):r for r in e['matches']}

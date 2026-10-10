@@ -18,6 +18,7 @@ VARIANTS=('baseline','progress','continuation','combined')
 
 
 def run(root,seeds,encounters=8,variants=VARIANTS):
+    seeds=list(seeds)
     root=Path(root);root.mkdir(parents=True,exist_ok=True)
     plan=dict(version='goal-progress-component-comparison-v1',seeds=list(seeds),encounters=encounters,
         variants=list(variants),games=['goofspiel','no_thanks'],mode='adaptive',
@@ -36,7 +37,13 @@ def run(root,seeds,encounters=8,variants=VARIANTS):
                  for p in sorted((Path(__file__).resolve().parents[1]/'reflex').glob('*.py'))})
     registered=root/'analysis_preregister.json'
     if registered.exists():raise FileExistsError('use a new root for each registered comparison')
+    if len(seeds)>4:
+        if len(seeds)%4:raise ValueError('whole four-series shards required')
+        plan['shards']=[dict(folder=f'shard-{i//4}',seeds=seeds[i:i+4]) for i in range(0,len(seeds),4)]
     registered.write_text(json.dumps(plan,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    if 'shards' in plan:
+        for shard in plan['shards']:run(root/shard['folder'],shard['seeds'],encounters,variants)
+        return plan
     for variant in variants:
         experiment(root/variant,seeds,encounters,modes=('adaptive',),variant=variant)
     return plan

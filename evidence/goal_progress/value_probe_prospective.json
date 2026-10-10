@@ -1,0 +1,192 @@
+{
+  "training_registration": {
+    "version": "factual-public-value-probe-v2",
+    "source_trace_sha256": "8fd3f7da710938d70a913c04fade277a1f5d50bdf6877bdb27eef6a0716b99db",
+    "implementation_sha256": "6468d2f9490589c46977e84d12b67e6de01c44cd14310b76b6f0b28692fdeb59",
+    "development_train_seeds": [
+      6100,
+      6101,
+      6102,
+      6103,
+      6104,
+      6105,
+      6106,
+      6107
+    ],
+    "development_test_seeds": [
+      6108,
+      6109,
+      6110,
+      6111,
+      6112,
+      6113,
+      6114,
+      6115
+    ],
+    "mode": "adaptive",
+    "actors": "NPC only; own traits allowed, no rival identities or hidden future",
+    "learner": "quadratic ridge, fixed alpha 10, standardized public features, output clipped [.02,.98]",
+    "weighting": "each NPC episode has total weight one, so long matches do not get more training importance",
+    "target": "observed terminal winner credit under the actual behaviour policy",
+    "prospective": "after model freeze, baseline series 6700..6715 only, not used for fitting",
+    "caveats": [
+      "historical development split was previously inspected for other diagnostics",
+      "factual chosen-action forecasts cannot establish counterfactual action quality",
+      "this tool never changes runtime policy"
+    ]
+  },
+  "prospective_seeds": [
+    6700,
+    6701,
+    6702,
+    6703,
+    6704,
+    6705,
+    6706,
+    6707,
+    6708,
+    6709,
+    6710,
+    6711,
+    6712,
+    6713,
+    6714,
+    6715
+  ],
+  "reports": [
+    {
+      "game": "goofspiel",
+      "model_sha256": "15c19f1d9a145b0776c5e4a1605c9886e233d80b9d269bbb24e610f230fb5f8f",
+      "scopes": {
+        "all_weighted_choices": {
+          "ridge": {
+            "observations": 4992,
+            "weighted_brier": 0.12109389170557681,
+            "weighted_log_loss": 0.4110219996911582,
+            "weighted_prediction": 0.2592909149286544,
+            "weighted_actual": 0.23828125
+          },
+          "mc": {
+            "observations": 4992,
+            "weighted_brier": 0.2085344079703838,
+            "weighted_log_loss": 0.6123400990480289,
+            "weighted_prediction": 0.4872445217904202,
+            "weighted_actual": 0.23828125
+          },
+          "constant": {
+            "observations": 4992,
+            "weighted_brier": 0.171875,
+            "weighted_log_loss": 0.549460781860979,
+            "weighted_prediction": 0.25,
+            "weighted_actual": 0.23828125
+          },
+          "brier_improvement": 0.087440516264807,
+          "paired_series_bootstrap_95": [
+            0.07413671450678812,
+            0.10240804550065437
+          ],
+          "independent_series": 16
+        },
+        "first_choice_per_npc_episode": {
+          "ridge": {
+            "observations": 384,
+            "weighted_brier": 0.17285502290098786,
+            "weighted_log_loss": 0.5523050786757787,
+            "weighted_prediction": 0.2564394698207058,
+            "weighted_actual": 0.23828125
+          },
+          "mc": {
+            "observations": 384,
+            "weighted_brier": 0.4072189978611322,
+            "weighted_log_loss": 1.0974637802356457,
+            "weighted_prediction": 0.7183046694155092,
+            "weighted_actual": 0.23828125
+          },
+          "constant": {
+            "observations": 384,
+            "weighted_brier": 0.171875,
+            "weighted_log_loss": 0.5494607818609789,
+            "weighted_prediction": 0.25,
+            "weighted_actual": 0.23828125
+          },
+          "brier_improvement": 0.23436397496014433,
+          "paired_series_bootstrap_95": [
+            0.205995029732538,
+            0.2641016040899888
+          ],
+          "independent_series": 16
+        }
+      }
+    },
+    {
+      "game": "no_thanks",
+      "model_sha256": "73a987f16940bd1e52b835b910703077bebff9d42673eb5f2bf632a0d0bd2885",
+      "scopes": {
+        "all_weighted_choices": {
+          "ridge": {
+            "observations": 10678,
+            "weighted_brier": 0.15067005719557475,
+            "weighted_log_loss": 0.4799661517189517,
+            "weighted_prediction": 0.24303232625344143,
+            "weighted_actual": 0.23177083333333334
+          },
+          "mc": {
+            "observations": 10678,
+            "weighted_brier": 0.16293530706362544,
+            "weighted_log_loss": 0.5011200137989965,
+            "weighted_prediction": 0.334787380486143,
+            "weighted_actual": 0.23177083333333334
+          },
+          "constant": {
+            "observations": 10678,
+            "weighted_brier": 0.17317708333333334,
+            "weighted_log_loss": 0.5423083581066293,
+            "weighted_prediction": 0.25,
+            "weighted_actual": 0.23177083333333334
+          },
+          "brier_improvement": 0.012265249868050698,
+          "paired_series_bootstrap_95": [
+            0.0031869300946825944,
+            0.02212280329188503
+          ],
+          "independent_series": 16
+        },
+        "first_choice_per_npc_episode": {
+          "ridge": {
+            "observations": 384,
+            "weighted_brier": 0.17294483635971117,
+            "weighted_log_loss": 0.5416140257059837,
+            "weighted_prediction": 0.2289921048688219,
+            "weighted_actual": 0.23177083333333334
+          },
+          "mc": {
+            "observations": 384,
+            "weighted_brier": 0.22778451393661184,
+            "weighted_log_loss": 0.6582647030366953,
+            "weighted_prediction": 0.4450909649884259,
+            "weighted_actual": 0.23177083333333334
+          },
+          "constant": {
+            "observations": 384,
+            "weighted_brier": 0.17317708333333334,
+            "weighted_log_loss": 0.5423083581066291,
+            "weighted_prediction": 0.25,
+            "weighted_actual": 0.23177083333333334
+          },
+          "brier_improvement": 0.05483967757690064,
+          "paired_series_bootstrap_95": [
+            0.03623986385164612,
+            0.071475232114047
+          ],
+          "independent_series": 16
+        }
+      }
+    }
+  ],
+  "adopted_as_controller": false,
+  "limitations": [
+    "factual selected-action prediction; no support test or counterfactual action guarantee",
+    "different future continuation targets: MC models a plan, ridge actual historical behaviour",
+    "baseline only; same known games/profiles, new seeds, not unknown-game generalization"
+  ]
+}

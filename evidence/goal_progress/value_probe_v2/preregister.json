@@ -1,0 +1,36 @@
+{
+  "version": "factual-public-value-probe-v2",
+  "source_trace_sha256": "8fd3f7da710938d70a913c04fade277a1f5d50bdf6877bdb27eef6a0716b99db",
+  "implementation_sha256": "6468d2f9490589c46977e84d12b67e6de01c44cd14310b76b6f0b28692fdeb59",
+  "development_train_seeds": [
+    6100,
+    6101,
+    6102,
+    6103,
+    6104,
+    6105,
+    6106,
+    6107
+  ],
+  "development_test_seeds": [
+    6108,
+    6109,
+    6110,
+    6111,
+    6112,
+    6113,
+    6114,
+    6115
+  ],
+  "mode": "adaptive",
+  "actors": "NPC only; own traits allowed, no rival identities or hidden future",
+  "learner": "quadratic ridge, fixed alpha 10, standardized public features, output clipped [.02,.98]",
+  "weighting": "each NPC episode has total weight one, so long matches do not get more training importance",
+  "target": "observed terminal winner credit under the actual behaviour policy",
+  "prospective": "after model freeze, baseline series 6700..6715 only, not used for fitting",
+  "caveats": [
+    "historical development split was previously inspected for other diagnostics",
+    "factual chosen-action forecasts cannot establish counterfactual action quality",
+    "this tool never changes runtime policy"
+  ]
+}

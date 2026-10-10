@@ -22,7 +22,9 @@ python -m reflex.social_experiment --output FRESH_SOCIAL
 
 ## 判断を見て確認する
 
-今回の基線は**勝利だけを狙う高予算CPU一人と、別々に相手を学習する人格NPC三人**。16系列×12再対戦×3方式×2ゲームの1,152試合では、入札の相手学習が三人の対応を改善し、No Thanks!では先読みの利益が大きかった。一方、No Thanks!の学習追加には上積みがなく、探索量を増やしても強敵の強さは改善しなかった。最適CPUの完成や人間らしさの実証とは扱わない。[構成・修正前後・実行例・得たものと捨てたもの](evidence/strong_table/REPORT.md)。通常の高速経路は維持し、`python -m reflex.strong_table --root FRESH_ROOT` は任意の研究経路を実行する。現行コードは旧試験の接続不具合を修正済みで、保存済み主試験と同じ数値の再現には報告書に記した固定commitを使う。
+基線は**勝利だけを狙う高予算CPU一人と、別々に相手を学習する人格NPC三人**。今回の1,280試合と64局面・288分岐では、勝利0時の進捗比較、本人の継続モデル、期限切れの資源評価を切り分けた。明確な17点の損を四人格とも回避する部品を作ったが、山札0の全局面へ広げると再対戦が悪化したため、その広い条件は削除した。現在は全根で本人の次の判断が来ないとルール上確定する `certified_expiry` の任意経路を残す。予測誤差が下がった回帰器も、実際に手を選ばせると取り逃しが増えたので判断には接続しない。[得たもの・捨てた条件・個人の目的・学習の引き継ぎ・限界](evidence/goal_progress/REPORT.md)。通常の高速経路と他ゲームの既定は維持する。
+
+このCPU相手のbaselineでは個別NPCの勝利持分が約19〜27%。人間水準や楽しさを実証した数字ではなく、三人合計の勝率も個々のNPCの目的にしない。保存済み比較は実装commitとSHAを固定し、現行版の再現用研究経路は `python -m reflex.strong_table --root FRESH_ROOT --variant certified_expiry`。[前回の主試験・探索量・接続修正](evidence/strong_table/REPORT.md)は歴史的な比較として残す。
 
 既存ルールのGoofspiel/No Thanks!を4人で192試合実行した。`python -m reflex.tabletop_trials --output FRESH_ROOT` は、対象一人への反射/終局MC/公開相手予測追加を比較し、他三人も固定人格の共通Policyで動く。Goofspielの勝利持分は8→16.5→18.5/32、No Thanks!は9→6→10.5/32だが平均失点は反射より悪化。先読みを足しても賢さは安定していないため既定を切り替えない。競争利得を慈善や裏切りと読み替えず、未知山札と現在の伏せ手を渡さない。[候補・実対戦・人格の得失・見つかった不足](evidence/tabletop_trials/REPORT.md)。
 

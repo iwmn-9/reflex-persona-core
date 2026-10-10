@@ -26,7 +26,7 @@ def analyze(root):
                 trajectory_sha256=e['trajectory_sha256']))
             for r in e['matches']:
                 r={k:v for k,v in r.items() if k!='beliefs'};r['variant']=variant;matches.append(r)
-            count=changed=expiry=0;ordered={};previous={}
+            count=changed=expiry=nonforced_expiry=0;ordered={};previous={}
             with (run/'trajectories.jsonl').open(encoding='utf-8') as f:
                 for line in f:
                     t=json.loads(line);key=(t['seed'],t['encounter']);b=t['before']
@@ -39,11 +39,13 @@ def analyze(root):
                             assert variant==plan['variants'][1] and b['remaining']==0
                             if variant=='certified_expiry':assert b['chips'][(int(a)+1)%4]==0 and 'expiry_certificate' in facts
                             expiry+=1;changed+=d['action']!=d['search']['frozen_action']
+                            nonforced_expiry+=len(d['search']['actions'])>1
             for key,deck in ordered.items():
                 assert len(deck)==len(set(deck))==24
                 if key in worlds:assert deck==worlds[key]
                 else:worlds[key]=deck
             exposure.append(dict(shard=shard,variant=variant,npc_choices=count,expired_proxy_choices=expiry,
+                expired_nonforced_choices=nonforced_expiry,
                 expiry_choices_different_from_unread_reflex=changed))
     assert all(p['sources']==plans[0]['sources'] for p in plans)
     index={(r['variant'],r['seed'],r['encounter']):r for r in matches};assert len(index)==len(matches)==128
