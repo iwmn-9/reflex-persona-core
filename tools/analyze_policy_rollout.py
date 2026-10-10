@@ -27,7 +27,8 @@ def audit(root,e):
         assert hashlib.sha256((root/'_source'/name).read_bytes()).hexdigest()==sha,name
     assert hashlib.sha256((root/'_source/tools/run_policy_rollout.py').read_bytes()).hexdigest()==plan['script_sha256']
     index={(r['seed'],r['condition'],r['encounter']):r for r in e['matches']}
-    labels=['baseline',*[str(b) for b in plan['bands']]]
+    arms=plan.get('arms',[dict(label=str(b),band=b,future_seed='resampled') for b in plan['bands']])
+    labels=['baseline',*[a['label'] for a in arms]];by_label={a['label']:a for a in arms}
     assert len(index)==len(e['matches'])==len(plan['seeds'])*len(labels)*plan['encounters']
     profiles={p['id']:p for p in PROFILES}
     for seed in plan['seeds']:
@@ -96,9 +97,12 @@ def audit(root,e):
                     assert all(v['values']['benevolence']==v['values']['universalism']==0 for a in c['actions'] for v in a['outcomes'])
                     rc=normalized(c);rc['actions']=[a for a in rc['actions'] if a['id'] in st['guard']['allowed']]
                     replay,_=score(rc);assert replay['action_id']==move and replay['next_state']==d['next_state']
+                    # Initial discovery stored its hash before explanation facts.
+                    # Current producer fixes this; disclose rather than rewrite it.
+                    if 'arms' in plan:assert replay=={k:v for k,v in d.items() if k in replay}
                     counts['fixed_persona_policy_replays']+=1
                     roll=st.get('policy_rollout')
-                    eligible=label!='baseline' and not exposed and actor==r['target'] and b['remaining']<=int(label) and len(observed.legal())>1
+                    eligible=label!='baseline' and not exposed and actor==r['target'] and b['remaining']<=by_label[label]['band'] and len(observed.legal())>1
                     if eligible:
                         assert roll is not None;exposed=True
                         v=r['intervention'];assert v['tick']==t['tick'] and v['remaining']==b['remaining'] and v['public_state']==b
@@ -122,9 +126,10 @@ def analyze(root):
     assert plan==json.loads((root/'preregister.json').read_text(encoding='utf-8'))
     proof=audit(root,e);index={(r['seed'],r['condition'],r['encounter']):r for r in e['matches']}
     summary=[];contrasts=[]
-    for band in plan['bands']:
-        label=str(band);rows=[r for r in e['matches'] if r['condition']==label]
-        summary.append(dict(band=band,interventions=sum(r['intervention'] is not None for r in rows),
+    arms=plan.get('arms',[dict(label=str(b),band=b,future_seed='resampled') for b in plan['bands']])
+    for arm in arms:
+        label=arm['label'];band=arm['band'];rows=[r for r in e['matches'] if r['condition']==label]
+        summary.append(dict(**arm,interventions=sum(r['intervention'] is not None for r in rows),
             changed=sum(r['intervention'] is not None and r['intervention']['stats']['changed'] for r in rows),
             credit=float(np.mean([r['credits'][r['target']] for r in rows])),
             score=float(np.mean([r['scores'][r['target']] for r in rows])),
@@ -143,7 +148,7 @@ def analyze(root):
             if not series:continue
             values=np.array(series);rng=np.random.default_rng(910071)
             boot=values[rng.integers(len(values),size=(10000,len(values)))].mean(1)
-            contrasts.append(dict(band=band,profile=profile,series=len(values),mean_credit_difference=float(values.mean()),
+            contrasts.append(dict(**arm,reference='baseline',profile=profile,series=len(values),mean_credit_difference=float(values.mean()),
                 paired_series_bootstrap95=np.quantile(boot,[.025,.975]).tolist(),mean_own_score_improvement=float(np.mean(score_series)),
                 better=int(better),same=int(same),worse=int(worse),series_differences=series))
     result=dict(audit=proof,summary=summary,contrasts=contrasts,
