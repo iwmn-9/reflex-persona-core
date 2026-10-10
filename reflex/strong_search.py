@@ -140,6 +140,18 @@ class PublicMemory:
 
     def record(self):return [dict(t.snapshot().record(),conditional_coefficients=list(map(float,self.coefficients[i]))) for i,t in enumerate(self.trackers)]
 
+    def forecast_weights(self,s,actor,adaptive=True):return self.weights(actor,adaptive)
+
+    def forecast_coefficients(self,s,actor,adaptive=True):
+        return self.coefficients[actor] if adaptive else self.initial_coefficients
+
+    def rollout_banks(self,adaptive=True):
+        return [dict(weights=np.array([self.weights(a,adaptive) for a in range(self.players)]),
+                     thresholds=np.array([self.recent_threshold(a,adaptive) for a in range(self.players)]),
+                     coefficients=np.array([self.forecast_coefficients(None,a,adaptive) for a in range(self.players)]))]
+
+    def rollout_bank_indices(self,remaining):return np.zeros_like(remaining,dtype=int)
+
 
 @dataclass(frozen=True)
 class SearchBudget:
@@ -166,7 +178,7 @@ def _goof_scenarios(s,viewer,memory,adaptive,count,rng):
     remaining=len(s.hands[viewer]);result=np.zeros((count,len(s.hands),remaining),int)
     for actor,h in enumerate(s.hands):
         if actor==viewer:continue
-        models=memory.models(s,actor,adaptive);weights=memory.weights(actor,adaptive)
+        models=memory.models(s,actor,adaptive);weights=memory.forecast_weights(s,actor,adaptive)
         kinds=rng.choice(len(NAMES),count,p=weights)
         values=np.asarray(h);rows=np.arange(count);available=np.ones((count,len(h)),bool)
         root_probs=np.array([[.92*models[name][f'BID:{b}']+.08/len(h) for b in h] for name in NAMES])
@@ -179,7 +191,7 @@ def _goof_scenarios(s,viewer,memory,adaptive,count,rng):
             chosen=np.where(available,abs(values[None,:]-target[:,None]),1000).argmin(1)
             desired=np.clip(np.rint(ranks[kinds]*(left-1)),0,left-1).astype(int)
             features=memory.features(s,actor).copy();features[1]=prize/max(s.prizes)-.5;features[3]=(s.round+r)/len(s.prizes)
-            coefficients=memory.coefficients[actor] if adaptive else memory.initial_coefficients
+            coefficients=memory.forecast_coefficients(s,actor,adaptive)
             conditional_rank=float(np.clip(coefficients@features,0,1))
             desired=np.where(kinds==11,round(conditional_rank*(left-1)),desired)
             desired=np.where(kinds==0,rng.integers(left,size=count),desired)
@@ -376,14 +388,15 @@ def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng,*,own_profi
     unseen=np.array([c for c in range(3,36) if c not in s.seen])
     decks=np.array([rng.permutation(unseen)[:s.remaining] for _ in range(count)])
     decks=np.tile(decks,(len(roots),1));drawn=np.zeros(n,int);done=np.zeros(n,bool)
-    kinds=np.empty((n,players),int)
-    for actor in range(players):
-        kinds[:,actor]=np.tile(rng.choice(len(NAMES),count,p=memory.weights(actor,adaptive)),len(roots))
+    banks=memory.rollout_banks(adaptive)
+    bank_kinds=np.empty((len(banks),n,players),int)
+    for bank_index,bank in enumerate(banks):
+        for actor in range(players):
+            bank_kinds[bank_index,:,actor]=np.tile(rng.choice(len(NAMES),count,p=bank['weights'][actor]),len(roots))
     own_style=np.repeat(styles,count);root=np.repeat(roots,count)
-    recent_thresholds=np.array([memory.recent_threshold(actor,adaptive) for actor in range(players)])
     model_states=np.zeros((n,players,3));model_states[:,:,:2]=-1
     if own_profile is not None:
-        kinds[:,viewer]=6+next(i for i,p in enumerate(PROFILES) if p['id']==own_profile['id'])
+        bank_kinds[:,:,viewer]=6+next(i for i,p in enumerate(PROFILES) if p['id']==own_profile['id'])
         if own_state is not None:
             # Same supported state representation used by compile_batch; the
             # actual owner's state is allowed, rival private states never are.
@@ -393,11 +406,14 @@ def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng,*,own_profi
     for step in range(2048):
         active=np.flatnonzero(~done)
         if not len(active):break
+        bank_indices=memory.rollout_bank_indices(s.remaining-drawn)
+        kinds=bank_kinds[bank_indices,rows]
         a=turn[active];c=card[active]
         added=np.where(cards[active,a,c-1],0,c)-np.where(cards[active,a,c+1],c+1,0)
         typ=kinds[active,a]
         margins=np.array([0,0,9,-2,4,0,4,0,1,7,0,0])[typ]
-        margins=np.where(typ==10,recent_thresholds[a],margins)
+        thresholds=np.array([bank['thresholds'] for bank in banks])
+        margins=np.where(typ==10,thresholds[bank_indices[active],a],margins)
         reserves=np.array([0,2,0,0,0,0,0,3,1,0,0,0])[typ]
         # Own continuation is one shared threshold policy per candidate, chosen
         # on training returns then evaluated on fresh decks, never per deck.
@@ -415,7 +431,8 @@ def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng,*,own_profi
             current=points[active]-chips[active];other=current.astype(float);other[np.arange(len(active)),a]=np.inf
             feature=np.stack((np.ones(len(active)),(added-pot[active])/20,chips[active,a]/11,
                 (current[np.arange(len(active)),a]-other.min(1))/60,(s.remaining-drawn[active])/24,pot[active]/10),axis=1)
-            w=np.array(memory.coefficients)[a] if adaptive else np.tile(memory.initial_coefficients,(len(a),1))
+            coefficients=np.array([bank['coefficients'] for bank in banks])
+            w=coefficients[bank_indices[active],a]
             prob=1/(1+np.exp(-np.clip((feature*w).sum(1),-12,12)))
             take=np.where(conditional,rng.random(len(active))<prob,take)
         if step==0:take=root[active]=='TAKE'
