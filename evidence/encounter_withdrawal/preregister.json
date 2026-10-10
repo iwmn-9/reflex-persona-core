@@ -1,0 +1,158 @@
+{
+  "version": "npc-withdrawal-v1",
+  "domains": [
+    "exchange",
+    "watch"
+  ],
+  "layouts": [
+    "balanced4",
+    "balanced8",
+    "social4"
+  ],
+  "contacts": [
+    "free",
+    "public"
+  ],
+  "settings": [
+    "prediction",
+    "continuous",
+    "coarse",
+    "withdrawal"
+  ],
+  "seeds": [
+    4020,
+    4021,
+    4022,
+    4023,
+    4024,
+    4025,
+    4026,
+    4027
+  ],
+  "development_seed": 4000,
+  "turns": 48,
+  "contact_slot_turns": 4,
+  "public_history_window": 8,
+  "rules": {
+    "exchange": {
+      "cc": [
+        0.55,
+        0.12
+      ],
+      "ct": [
+        -0.15,
+        -0.1
+      ],
+      "tc": [
+        0.8,
+        0.08
+      ],
+      "tt": [
+        0.05,
+        -0.02
+      ],
+      "alone": [
+        0.3,
+        0.06
+      ],
+      "unmatched": [
+        0.12,
+        0
+      ],
+      "rest": [
+        0.08,
+        0
+      ],
+      "upkeep": 0.04
+    },
+    "watch": {
+      "cc": [
+        0.5,
+        0.3
+      ],
+      "ct": [
+        -0.4,
+        -0.5
+      ],
+      "tc": [
+        0.6,
+        0.1
+      ],
+      "tt": [
+        -0.25,
+        -0.3
+      ],
+      "alone": [
+        0.32,
+        0.05
+      ],
+      "unmatched": [
+        0.1,
+        0
+      ],
+      "rest": [
+        0.08,
+        0
+      ],
+      "upkeep": 0.1
+    }
+  },
+  "profile_layouts": {
+    "balanced4": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "balanced8": [
+      0,
+      1,
+      2,
+      3,
+      0,
+      1,
+      2,
+      3
+    ],
+    "social4": [
+      2,
+      2,
+      0,
+      3
+    ]
+  },
+  "comparisons": "matched worlds within contact regime; contact regimes have distinct owner RNG scopes",
+  "acceptance": "executable generic-core connection, fair observations, fixed axes, exact replay; no blanket performance promotion",
+  "caveat": "two engineered worlds; not human playtesting, negotiation language or learned universal game evaluation",
+  "diagnostic_seeds": [
+    4010,
+    4011,
+    4012,
+    4013,
+    4014,
+    4015,
+    4016,
+    4017
+  ],
+  "diagnostic_source_commit": "d694a55b73133e468791fe9eda0bfb3d7489b8ce",
+  "intervention": "omit positive grudge adjustment for negative-support actions; same memory and three stances",
+  "adoption_gate": {
+    "score_better_at_least_worse": true,
+    "no_new_deaths": true,
+    "mutual_claim_pairs_lower": true,
+    "cooperation_pairs_not_lower": true,
+    "max_care_group_mean_drop": 0.25,
+    "automatic_grudge_harm_bonus_zero": true
+  },
+  "source_hashes": {
+    "encounter_experiment.py": "b10dd0dcc8612e496c3d49b2e41834dce21057544eb5f1ede2b7b738b609626d",
+    "encounters.py": "75b11c56cb2a560e9624d1e8cf076ffaa86a92e01cb468b93418e74e11ba7d83",
+    "social_projection.py": "bb86fe8afb6604a1da0bab6a1eb237b68f3e949353b5c42ac016259d215478db",
+    "social.py": "6193cf474910c66e00aa9d19e2324a6a19c7e0261c135c842677027b8f9d0729",
+    "core.py": "8b900029a4aed7ccf28c12aef6b981035fd7e6ad71d9eeb33a5d6d0c51cc97f8",
+    "runtime.py": "42e31098644448975f40beedf7fd4970c61c8a949b5bf24fc5f1820fbb555094",
+    "laboratory.py": "788c0b3a047372fda6a40cf2cb4a737522eed19545d68e418470543c103abeee",
+    "social_withdrawal.py": "411c11325725fad6bcc8d02be393f29880c18ec03e81ff2a7e19ce635e09e639",
+    "encounter_withdrawal_experiment.py": "8244a2e7e8389e73fc0f9048076d2b5322ff97a62b0b0a79d29d933d16efe651"
+  }
+}

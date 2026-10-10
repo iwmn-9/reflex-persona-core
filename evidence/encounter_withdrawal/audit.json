@@ -1,0 +1,68 @@
+{
+  "source_identity": true,
+  "all_worlds_replayed": 384,
+  "all_actual_choices": 98304,
+  "terminal_slots": 0,
+  "personality_axes_fixed": true,
+  "scripted_responses": false,
+  "trajectory_sha256": "6ff173d28c96fa4e775db350b7b02fffe7b566141457c1d64eaa4797d6bc988c",
+  "human_validation": false,
+  "enjoyment_measured": false,
+  "disliked_harm_actions_without_bonus": 2466,
+  "adoption": {
+    "passed": true,
+    "checks": {
+      "score_better_at_least_worse": true,
+      "no_new_deaths": true,
+      "mutual_claim_pairs_lower": true,
+      "cooperation_pairs_not_lower": true,
+      "care_group_mean_drop_within_limit": true
+    },
+    "paired_counts": {
+      "same": 299,
+      "new_deaths": 0,
+      "better": 182,
+      "coarse_mutual_claim_pairs": 514,
+      "coarse_cooperation_pairs": 685,
+      "withdrawal_mutual_claim_pairs": 84,
+      "withdrawal_cooperation_pairs": 757,
+      "worse": 31
+    },
+    "care_group_regressions": []
+  },
+  "independent_rule_transitions": 98304,
+  "independent_terminal_slots": 0,
+  "public_history_forecasts_checked": 491520,
+  "forecast_and_mean_absolute_tolerance": 1e-12,
+  "current_intent_not_used_in_forecast": true,
+  "cooperation_after_harm_worlds": 1,
+  "illustrative_repair_worlds": [
+    {
+      "seed": 4023,
+      "domain": "exchange",
+      "layout": "balanced4",
+      "contact": "free",
+      "setting": "withdrawal",
+      "examples": [
+        {
+          "tick": 33,
+          "npc": "npc-1",
+          "target": "npc-2",
+          "profile": "care"
+        },
+        {
+          "tick": 35,
+          "npc": "npc-1",
+          "target": "npc-2",
+          "profile": "care"
+        },
+        {
+          "tick": 38,
+          "npc": "npc-1",
+          "target": "npc-2",
+          "profile": "care"
+        }
+      ]
+    }
+  ]
+}

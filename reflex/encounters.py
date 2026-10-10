@@ -169,11 +169,11 @@ class EncounterWorld:
         return dict(energy=float(self.energy[own]),health=float(self.health[own]),stock=float(self.stock[own]),score=float(self.score[own]))
 
 
-def run(seed,domain,layout,setting,turns=48,*,contact='free'):
+def run(seed,domain,layout,setting,turns=48,*,contact='free',population_factory=None):
     if setting not in ('prediction','continuous','coarse'):raise ValueError('known encounter setting required')
     world=EncounterWorld(seed,domain,layout,contact);initial,bindings=world.contexts()
     cls=CoarseSocialPopulation if setting=='coarse' else SocialPopulation
-    pop=cls(initial,Policy(principle_priority='finite'));trace=[]
+    pop=(population_factory or cls)(initial,Policy(principle_priority='finite'));trace=[]
     for tick in range(turns):
         cs,bindings=world.contexts();b=compile_batch(cs)
         forecasts={a:{target:list(world.forecast(a,target)) for target in world.actors if target!=a} for a in world.actors}

@@ -42,14 +42,14 @@ def interaction_counts(trace,contact):
     return dict(counts),examples
 
 
-def summarize(runs):
-    groups=[];pairs={s:Counter() for s in ('continuous','coarse')}
+def summarize(runs,plan=PLAN):
+    groups=[];pairs={s:Counter() for s in plan['settings'] if s!='prediction'}
     lookup={tuple(r[k] for k in ('domain','layout','contact','seed','setting')):r for r in runs}
-    for domain in PLAN['domains']:
-        for layout in PLAN['layouts']:
-            for contact in PLAN['contacts']:
+    for domain in plan['domains']:
+        for layout in plan['layouts']:
+            for contact in plan['contacts']:
                 settings={}
-                for setting in PLAN['settings']:
+                for setting in plan['settings']:
                     rows=[r for r in runs if (r['domain'],r['layout'],r['contact'],r['setting'])==(domain,layout,contact,setting)]
                     role=defaultdict(list)
                     for r in rows:
@@ -73,33 +73,33 @@ def summarize(runs):
     return dict(groups=groups,paired_actor_scores_against_prediction={k:dict(v) for k,v in pairs.items()})
 
 
-def experiment(output):
+def experiment(output,*,plan=PLAN,executor=run,extra_sources=()):
     root=Path(output);root.mkdir(parents=True,exist_ok=True)
-    registration=dict(PLAN,source_hashes={name:digest(Path(__file__).with_name(name).read_text(encoding='utf-8'))
-        for name in ('encounter_experiment.py','encounters.py','social_projection.py','social.py','core.py','runtime.py','laboratory.py')})
+    names=('encounter_experiment.py','encounters.py','social_projection.py','social.py','core.py','runtime.py','laboratory.py')+tuple(extra_sources)
+    registration=dict(plan,source_hashes={name:digest(Path(__file__).with_name(name).read_text(encoding='utf-8')) for name in names})
     path=root/'preregister.json'
     if path.exists():raise FileExistsError('fresh output required; no overwritten registration')
     path.write_text(json.dumps(registration,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     runs=[];tracepath=root/'trajectories.jsonl';checks=Counter()
     with tracepath.open('w',encoding='utf-8') as f:
-        for domain in PLAN['domains']:
-            for layout in PLAN['layouts']:
-                for contact in PLAN['contacts']:
-                    for seed in PLAN['seeds']:
-                        for setting in PLAN['settings']:
-                            r,trace=run(seed,domain,layout,setting,PLAN['turns'],contact=contact)
+        for domain in plan['domains']:
+            for layout in plan['layouts']:
+                for contact in plan['contacts']:
+                    for seed in plan['seeds']:
+                        for setting in plan['settings']:
+                            r,trace=executor(seed,domain,layout,setting,plan['turns'],contact=contact)
                             counts,examples=interaction_counts(trace,contact);r.update(interaction=counts,repair_examples=examples)
                             runs.append(r);checks.update(counts)
                             f.write(json.dumps(dict(run=r,trace=trace),ensure_ascii=False)+'\n')
                     print(f'completed {domain}/{layout}/{contact}',flush=True)
-    result=dict(plan=registration,runs=runs,summary=summarize(runs),checks=dict(checks),world_runs=len(runs),
+    result=dict(plan=registration,runs=runs,summary=summarize(runs,plan),checks=dict(checks),world_runs=len(runs),
         npc_episodes=sum(len(r['actors']) for r in runs),trajectory_sha256=hashlib.sha256(tracepath.read_bytes()).hexdigest(),
         human_validation=False,enjoyment_measured=False,scripted_responses=False,training_performed=False)
     (root/'evaluation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     return result
 
 
-def audit(output):
+def audit(output,*,executor=run):
     root=Path(output);r=json.loads((root/'evaluation.json').read_text(encoding='utf-8'))
     registration=json.loads((root/'preregister.json').read_text(encoding='utf-8'));assert registration==r['plan']
     for name,expected in registration['source_hashes'].items():
@@ -109,10 +109,10 @@ def audit(output):
     with path.open(encoding='utf-8') as f:
         for line in f:
             saved=json.loads(line);s=saved['run']
-            generated,trace=run(s['seed'],s['domain'],s['layout'],s['setting'],s['turns'],contact=s['contact'])
+            generated,trace=executor(s['seed'],s['domain'],s['layout'],s['setting'],s['turns'],contact=s['contact'])
             c,examples=interaction_counts(trace,s['contact']);generated.update(interaction=c,repair_examples=examples)
             assert generated==s and trace==saved['trace'];runs.append(s);counts.update(c)
-    assert runs==r['runs'] and summarize(runs)==r['summary'] and dict(counts)==r['checks']
+    assert runs==r['runs'] and summarize(runs,registration)==r['summary'] and dict(counts)==r['checks']
     proof=dict(source_identity=True,all_worlds_replayed=len(runs),all_actual_choices=counts['actual_choices'],
         terminal_slots=counts['terminal_slots'],personality_axes_fixed=True,scripted_responses=False,
         trajectory_sha256=r['trajectory_sha256'],human_validation=False,enjoyment_measured=False)
