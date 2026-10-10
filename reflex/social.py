@@ -77,6 +77,9 @@ class SocialMemory:
         evidence=e['evidence']*decay
         return dict(attitude=float(e['attitude']*decay),confidence=float(evidence/(evidence+3)),evidence=float(evidence))
 
+    def relationship_adjustment(self,status,weight):
+        return weight*status['attitude']*status['confidence']
+
     def scores(self,ids,targets,bindings,tick):
         if not isinstance(bindings,dict) or set(bindings)-set(ids):raise ValueError('bindings must belong to available roots')
         score=np.zeros(len(ids));audit={}
@@ -90,7 +93,7 @@ class SocialMemory:
             # Universal concern reduces the effect of a grudge when its recipient
             # is in distress. It does not make all help costless or obligatory.
             concern=1-b.distress*v['universalism'] if e['attitude']<0 and b.support>0 else 1.
-            score[j]=np.clip(weight*e['attitude']*e['confidence']*b.support*concern,-1.5,1.5)
+            score[j]=np.clip(self.relationship_adjustment(e,weight)*b.support*concern,-1.5,1.5)
             audit[key]=dict(target=b.target,**e,adjustment=float(score[j]))
         return score,audit
 

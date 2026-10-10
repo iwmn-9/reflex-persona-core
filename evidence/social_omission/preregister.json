@@ -1,0 +1,79 @@
+{
+  "version": "social-omission-v1",
+  "domains": [
+    "allocation",
+    "patrol"
+  ],
+  "schedules": [
+    "cooperative",
+    "exploitative",
+    "change_and_repair",
+    "bad_luck"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "previously_used_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "new_stream_seeds": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "settings": [
+    "prediction_only",
+    "continuous",
+    "coarse"
+  ],
+  "turns": 36,
+  "projection": {
+    "neutral_below": 0.15,
+    "nonneutral_magnitude": 0.5,
+    "levels": 3
+  },
+  "adoption_gate": {
+    "no_new_deaths": true,
+    "no_retaliation": true,
+    "fixed_personality": true,
+    "care_exploit_aid_below_prediction": true,
+    "care_repair_aid_above_exploitation": true,
+    "max_group_mean_purpose_drop": 0.4
+  },
+  "caveat": "engineered game-behavior comparison, not measured enjoyment or psychological calibration",
+  "source_hashes": {
+    "social_omission_experiment.py": "8c639ceaccaac25539e2b0bfe420263ce7b30d492efb009ea21ed2d3d1928420",
+    "social_projection.py": "bb86fe8afb6604a1da0bab6a1eb237b68f3e949353b5c42ac016259d215478db",
+    "social_experiment.py": "2fdc097478927b2bcc1cd2367e284ae27f1170c4c3f204cd54b3615c9aca061c",
+    "social.py": "6193cf474910c66e00aa9d19e2324a6a19c7e0261c135c842677027b8f9d0729",
+    "core.py": "8b900029a4aed7ccf28c12aef6b981035fd7e6ad71d9eeb33a5d6d0c51cc97f8",
+    "runtime.py": "42e31098644448975f40beedf7fd4970c61c8a949b5bf24fc5f1820fbb555094"
+  }
+}

@@ -49,11 +49,11 @@ def contexts(seed,domain,energy,reserve,health,history,tick):
     return result
 
 
-def run(seed,domain,schedule,enabled,turns=36):
+def run(seed,domain,schedule,enabled,turns=36,*,population_factory=SocialPopulation):
     energy=np.full(4,.8);reserve=np.full(4,3.);health=np.full(4,8.);score=np.zeros(4)
     history=[[] for _ in range(4)];trace=[];rng=np.random.default_rng(seed)
     initial=contexts(seed,domain,energy,reserve,health,history,0)
-    pop=SocialPopulation(initial,Policy(principle_priority='finite'))
+    pop=population_factory(initial,Policy(principle_priority='finite'))
     binding=[{'aid':SocialBinding('counterpart',1),'retaliate':SocialBinding('counterpart',-1)} for _ in range(4)]
     for tick in range(turns):
         cs=contexts(seed,domain,energy,reserve,health,history,tick);b=compile_batch(cs)
