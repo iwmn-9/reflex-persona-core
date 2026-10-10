@@ -73,13 +73,11 @@ class GoalProgressTests(unittest.TestCase):
         for p in PROFILES:
             m=PublicMemory('no_thanks',0)
             _,old,_=decide('no_thanks',s,0,p,8880,0,100,m,None,'adaptive',budget,variant='progress')
-            c,new,st=decide('no_thanks',s,0,p,8880,0,100,m,None,'adaptive',budget,variant='horizon_progress')
+            c,new,st=decide('no_thanks',s,0,p,8880,0,100,m,None,'adaptive',budget,variant='certified_expiry')
             self.assertEqual(old['action_id'],'TAKE');self.assertEqual(new['action_id'],'PASS')
             self.assertEqual(st['actions']['TAKE']['mean_score'],59)
             self.assertEqual(st['actions']['PASS']['mean_score'],42)
             self.assertFalse(c['needs']['safety']['enabled'])
-            _,certified,details=decide('no_thanks',s,0,p,8880,0,100,m,None,'adaptive',budget,variant='certified_expiry')
-            self.assertEqual(certified['action_id'],'PASS')
 
     def test_last_card_alone_does_not_certify_expiry_of_current_negotiation(self):
         s=replace(ThanksPosition.start(4,30),remaining=0);p=PROFILES[1];m=PublicMemory('no_thanks',0)

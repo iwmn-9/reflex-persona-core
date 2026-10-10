@@ -6,7 +6,7 @@
 
 返り値は調整済みcontext・選択・guardの三つ。人格・主義・欲求・根の費用を保持し、定数だったobjective/achievementの結果だけを進捗へ置換する。元の他軸の結果分布と進捗標本の積を作るため、入力の一行目だけで他の分岐を置き換えない。ただし両者の相関は未供給なので独立近似となる。最大8結果への圧縮は平均と最悪objectiveを保持するが、区間内の主観的リスクは近似。guardの`signal`は目的持分か進捗かを明記し、許容幅と標本誤差の意味を混ぜない。モデルが間違っていれば進捗比較も間違う。通常の`Policy`・バッチ反射や他ゲームへ自動適用しない。
 
-`goal_progress.omit_expired_proxies(context, needs=(...), values=(...), style=(...))` は、ゲームが実際の期限切れを確認した資源・欲求の代理評価だけ外す共通部品。固定性格、主義の強度、物理費用、他の有効な欲求は保持する。無効になった主欲求への執着は解除する。探索の深さを使い切ったことを期限切れと呼ばない。No Thanks! adapterの `horizon_progress` は残り山札0に限り、次のカードに備える安全欲求・security・neuroticismの結果proxyを外す。現在のカードを拒否する支払いと強制取得は、引き続き終局シミュレーションで評価する。終盤の実証と採否は [goal_progress](../evidence/goal_progress/REPORT.md) が正本。
+`goal_progress.omit_expired_proxies(context, needs=(...), values=(...), style=(...))` は、ゲームが実際の期限切れを確認した資源・欲求の代理評価だけ外す共通部品。固定性格、主義の強度、物理費用、他の有効な欲求は保持する。無効になった主欲求への執着は解除する。探索の深さを使い切ったことを期限切れと呼ばない。No Thanks! adapterの `certified_expiry` は残り山札0かつ次席チップ0で、TAKEは即終局・PASSも次席の強制TAKEで終局することが確認できた場合のみ、安全欲求・security・neuroticismの結果proxyを外す。現在のカードを拒否する支払いと強制取得は、引き続き終局の物理評価に残す。山札0だけの広い条件は実比較で悪化し、現行の選択肢から削除した。終盤の実証と採否は [goal_progress](../evidence/goal_progress/REPORT.md) が正本。
 
 `strong_table.PlaybackStart` と `play(..., start=..., forced_root=(actor, action))` は開発用の分岐教師生成。現在の公開状態、本人別stateと複製した記憶から、一人の合法な根だけを置き換え、将来の全員の実際の再判断・公開学習を回す。山札は評価器の世界解決に属し、NPCの入力ではない。同時入札は全員の選択後にだけ公開する。シミュレーション教師を実際の観測記憶に混ぜない。小数の仮想世界から最良だった手を選んでも、真の期待最適性を証明したことにはならない。
 
