@@ -1,10 +1,11 @@
 """One objective-focused CPU, three independently learning personality NPCs."""
-from dataclasses import asdict, replace
+from dataclasses import asdict, replace, dataclass
 from pathlib import Path
 import argparse
 import hashlib
 import json
 import time
+import copy
 import numpy as np
 from .core import digest
 from .laboratory import PROFILES
@@ -13,14 +14,42 @@ from .board_models import ThanksPosition, thanks_referee_score
 from .tabletop_trials import competitive, score, thanks_observe
 from .strong_search import (PublicMemory, STRONG, PERSONA, search, objective_choice,
     persona_context, reasonable_persona, random_stream, SearchBudget)
-from .goal_progress import relative_progress, choose_with_progress
+from .goal_progress import relative_progress, choose_with_progress, omit_expired_proxies
 from .strong_search import _thanks_simulate
 
 MODES=('reflex','planned','adaptive')
+VARIANTS=('baseline','progress','continuation','combined','horizon_progress')
+
+
+@dataclass(frozen=True)
+class PlaybackStart:
+    """Evaluator snapshot; hidden deck belongs ONLY to the world resolver.
+
+    Each controller receives the ordinary public position and its own state.
+    Callers must clone memories when branching: simulated observations must not
+    update the real encounter's learner. Owner states are copied by play().
+    """
+    position: object
+    remaining_deck: tuple
+    owner_states: tuple
+    tick: int
+
+    def __post_init__(self):
+        if type(self.tick) is not int or self.tick<0 or len(self.owner_states)!=4:
+            raise ValueError('valid playback clock and four owner states required')
+        if isinstance(self.position,Position):
+            if len(self.position.hands)!=4 or self.remaining_deck:raise ValueError('invalid Goof playback')
+        elif isinstance(self.position,ThanksPosition):
+            deck=self.remaining_deck
+            if len(self.position.chips)!=4 or len(deck)!=self.position.remaining or len(set(deck))!=len(deck):
+                raise ValueError('exact remaining world deck required')
+            if any(type(c) is not int or c not in range(3,36) or c in self.position.seen for c in deck):
+                raise ValueError('unseen legal world cards required')
+        else:raise ValueError('supported public position required')
 
 
 def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,*,variant='baseline'):
-    if variant not in ('baseline','progress','continuation','combined'):raise ValueError('unknown controller variant')
+    if variant not in VARIANTS:raise ValueError('unknown controller variant')
     episode=f'series-{seed}-encounter-{encounter}'
     if mode=='reflex':
         if game=='goofspiel':c=competitive(make_context(s,viewer,p,'win_share',seed,tick,episode,state))
@@ -32,13 +61,18 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
         scores,shares=_thanks_simulate(s,viewer,memory,adaptive,names,(0,)*len(names),budget.validate,rng,
                                       own_profile=p,own_state=state)
         stats=dict(sample_count=budget.validate,training_scenarios=0,validation_scenarios=budget.validate,
-            continuation='owner finite reflex Policy with owner state; public rival hypotheses; NOT future root-search replanning',
+            continuation='owner traits/state in the fixed-seed finite hypothesis kernel; public rival hypotheses; NOT future root-search replanning',
             actions={name:dict(win_share=float(shares[i].mean()),
                 standard_error=float(shares[i].std(ddof=1)/np.sqrt(budget.validate)),
                 mean_score=float(scores[i,:,viewer].mean())) for i,name in enumerate(names)})
     else:names,scores,shares,stats=search(game,s,viewer,memory,adaptive,budget,rng)
     c=persona_context(game,s,viewer,p,seed,tick,episode,state,names,scores,shares)
-    if variant in ('progress','combined'):
+    if variant=='horizon_progress' and game=='no_thanks' and s.remaining==0:
+        # All current-card payments/forced takes remain in the full terminal
+        # goal forecasts. There are no later cards needing bidding flexibility.
+        # This is an actual rule boundary, not the planner running out of depth.
+        c=omit_expired_proxies(c,needs=('safety',),values=('security',),style=('neuroticism',))
+    if variant in ('progress','combined','horizon_progress'):
         progress=relative_progress(scores,viewer,direction=1 if game=='goofspiel' else -1,
                                    scale=max(s.prizes) if game=='goofspiel' else 35)
         c,d,guard=choose_with_progress(c,names,shares,progress)
@@ -50,15 +84,30 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
     return c,d,stats
 
 
-def play(game,seed,encounter,bench_seat,roster,mode,memories,*,strong=STRONG,persona=PERSONA,emit=None,variant='baseline'):
-    rng=random_stream(seed,game,encounter,0,0,'world')
-    if game=='goofspiel':
-        s=Position.start(4,13,'ascending');order=tuple(map(int,rng.permutation(np.arange(1,14))))
-        # Mixed known prize orders are public; unlike the previous two-order test.
-        s=replace(s,prizes=order)
+def play(game,seed,encounter,bench_seat,roster,mode,memories,*,strong=STRONG,persona=PERSONA,emit=None,variant='baseline',start=None,forced_root=None):
+    if game not in ('goofspiel','no_thanks') or mode not in MODES or variant not in VARIANTS:
+        raise ValueError('supported game, mode and variant required')
+    if start is None:
+        rng=random_stream(seed,game,encounter,0,0,'world')
+        if game=='goofspiel':
+            s=Position.start(4,13,'ascending');order=tuple(map(int,rng.permutation(np.arange(1,14))))
+            # Mixed known prize orders are public; unlike the previous two-order test.
+            s=replace(s,prizes=order)
+        else:
+            deck=list(map(int,rng.permutation(np.arange(3,36))[:24]));s=ThanksPosition.start(4,deck.pop(0),encounter%4)
+        states=[None]*4;tick=0
     else:
-        deck=list(map(int,rng.permutation(np.arange(3,36))[:24]));s=ThanksPosition.start(4,deck.pop(0),encounter%4)
-    states=[None]*4;tick=0;rows=[];failed=[0]*4;changes=[0]*4;guards=[0]*4
+        if not isinstance(start,PlaybackStart):raise ValueError('typed evaluator snapshot required')
+        s=start.position;deck=list(start.remaining_deck);states=copy.deepcopy(list(start.owner_states));tick=start.tick
+        if (game=='goofspiel')!=isinstance(s,Position):raise ValueError('snapshot game mismatch')
+    first_tick=tick
+    if forced_root is not None:
+        if start is None or len(forced_root)!=2:raise ValueError('root intervention needs an evaluator snapshot')
+        actor,move=forced_root
+        if type(actor) is not int or actor==bench_seat or actor not in roster:raise ValueError('intervene on one personality NPC')
+        legal=tuple(f'BID:{b}' for b in s.hands[actor]) if game=='goofspiel' else s.legal()
+        if move not in legal or (game!='goofspiel' and actor!=s.turn):raise ValueError('intervention must be a legal active root')
+    rows=[];failed=[0]*4;changes=[0]*4;guards=[0]*4
     while not (s.terminal if game=='goofspiel' else s.card is None and s.remaining==0):
         if game!='goofspiel' and s.card is None:s=s.draw(deck.pop(0));continue
         actors=range(4) if game=='goofspiel' else (s.turn,);moves={};details={}
@@ -79,6 +128,13 @@ def play(game,seed,encounter,bench_seat,roster,mode,memories,*,strong=STRONG,per
                     changes[actor]+=int(fd['action_id']!=chosen)
                     stats['frozen_action']=fd['action_id'];stats['frozen_search']=fs
                 details[actor]=dict(method=mode,action=chosen,search=stats,context=c,next_state=states[actor])
+            if forced_root is not None and tick==first_tick and actor==forced_root[0]:
+                original=chosen;chosen=forced_root[1]
+                next_state=states[actor].copy();next_state['intent_action']=chosen
+                next_state['age']=min(previous_state['age']+1,1000000) if previous_state and previous_state['intent_action']==chosen else 0
+                states[actor]=next_state;details[actor]['action']=chosen;details[actor]['next_state']=next_state
+                details[actor]['search']['action']=chosen
+                details[actor]['intervention']=dict(controller_action=original,forced_root=chosen,labels_are_simulated=True)
             moves[actor]=chosen
         # Every simultaneous decision has finished before any public reveal or
         # memory update. Neither player sees an already selected current bid.
@@ -117,10 +173,11 @@ def play(game,seed,encounter,bench_seat,roster,mode,memories,*,strong=STRONG,per
         final=asdict(s),beliefs=[m.record() for m in memories]),rows
 
 
-def experiment(root,seeds,encounters=12,modes=MODES,strong=STRONG,persona=PERSONA,*,variant='baseline'):
+def experiment(root,seeds,encounters=12,modes=MODES,strong=STRONG,persona=PERSONA,*,variant='baseline',games=('goofspiel','no_thanks')):
+    if not games or len(set(games))!=len(games) or any(g not in ('goofspiel','no_thanks') for g in games):raise ValueError('distinct supported games required')
     root=Path(root);root.mkdir(parents=True,exist_ok=True)
     plan=dict(version='one-strong-three-personas-v3',variant=variant,seeds=list(seeds),encounters=encounters,
-        games=['goofspiel','no_thanks'],modes=list(modes),strong=asdict(strong),persona=asdict(persona),
+        games=list(games),modes=list(modes),strong=asdict(strong),persona=asdict(persona),
         benchmark='exactly one objective-focused public-information planner; not an optimal CPU claim',
         roster='seed rotates benchmark seat and missing profile; remaining 3 fixed personality axes',
         learning='persistent per observer/rival across encounters; public revealed actions only',
@@ -174,7 +231,8 @@ def summarize(results,encounters):
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--root',required=True);parser.add_argument('--start',type=int,default=6100)
     parser.add_argument('--seeds',type=int,default=16);parser.add_argument('--encounters',type=int,default=12)
-    parser.add_argument('--quick',action='store_true');args=parser.parse_args()
+    parser.add_argument('--quick',action='store_true');parser.add_argument('--variant',default='baseline',choices=VARIANTS)
+    args=parser.parse_args()
     budget=SearchBudget(16,32,32,2) if args.quick else STRONG
     npc=SearchBudget(8,16,16,1) if args.quick else PERSONA
-    experiment(args.root,range(args.start,args.start+args.seeds),args.encounters,strong=budget,persona=npc)
+    experiment(args.root,range(args.start,args.start+args.seeds),args.encounters,strong=budget,persona=npc,variant=args.variant)

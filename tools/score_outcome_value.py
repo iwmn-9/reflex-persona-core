@@ -23,7 +23,7 @@ def score(root,models):
         for i in range(4):pieces.append(extract(root/f'shard-{i}'/'baseline')[game])
         d={k:np.concatenate([p[k] for p in pieces]) for k in pieces[0]}
         assert sorted(set(d['key'][:,0]))==list(range(6700,6716))
-        p=predict(model,d['x']);mc=np.clip(d['mc'],.02,.98);y=d['y'];w=d['weights']
+        p=predict(model,d['x']);mc=d['mc'];y=d['y'];w=d['weights']
         unique,first=np.unique(d['key'],axis=0,return_index=True)
         scopes={}
         for label,ids in (('all_weighted_choices',np.arange(len(y))),('first_choice_per_npc_episode',first)):

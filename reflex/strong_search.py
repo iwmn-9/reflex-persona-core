@@ -366,6 +366,8 @@ def _thanks_persona_take(active,turn,card,pot,chips,points,cards,kinds,remaining
 
 def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng,*,own_profile=None,own_state=None):
     """Vectorized exact transitions; unknown deck samples only PUBLIC unseen set."""
+    if own_profile is not None and own_profile not in PROFILES:
+        raise ValueError('the fixed continuation kernel supports exactly the four declared experiment profiles')
     n=len(roots)*count;players=len(s.chips);rows=np.arange(n)
     chips=np.tile(s.chips,(n,1));points=np.tile([card_points(c) for c in s.cards],(n,1))
     cards=np.zeros((n,players,37),bool)

@@ -9,6 +9,27 @@ import numpy as np
 from .goal_guard import choose_with_goal
 
 
+def omit_expired_proxies(context,*,needs=(),values=(),style=()):
+    """Game-declared real expiry, never inferred from a search horizon cutoff.
+
+    Fixed traits/value strengths and physical action costs remain unchanged.
+    Only obsolete outcome proxies and their temporarily inactive needs vanish.
+    A disabled old primary must also be released for the common state contract.
+    """
+    if any(k not in context['needs'] for k in needs) or any(k not in context['values'] for k in values) or any(k not in context['personality'] for k in style):
+        raise ValueError('only declared common axes can expire')
+    c=copy.deepcopy(context)
+    for k in needs:c['needs'][k].update(enabled=False,deficit=None)
+    if c['state']['primary_need'] in needs:c['state']['primary_need']=None
+    for act in c['actions']:
+        for row in act['outcomes']:
+            for k in needs:row['needs'][k]=0.
+            for k in values:row['values'][k]=0.
+            for k in style:row['style'][k]=0.
+    c['facts']['expired_proxies']='ゲームが実際の期限切れを指定: needs='+','.join(needs)+'; values='+','.join(values)+'; style='+','.join(style)
+    return c
+
+
 def relative_progress(scores,viewer,*,direction,scale):
     """Bounded distance from the leading rival; units come from the adapter.
 
@@ -35,19 +56,23 @@ def progress_context(context,names,progress):
     result=copy.deepcopy(context);lookup={name:i for i,name in enumerate(names)}
     for act in result['actions']:
         samples=progress[lookup[act['id']]]
-        # A constant terminal goal means all samples have the same winner credit;
-        # the adapter therefore packed one row. Expand that row with progress.
+        # Preserve each existing marginal outcome. The caller did not supply an
+        # alignment between compressed context rows and progress samples, so
+        # their product is an explicit independence approximation, not a claim
+        # to preserve cross-axis correlations.
         rows=[]
-        for value in np.unique(samples):
-            row=copy.deepcopy(act['outcomes'][0]);row['p']=float((samples==value).mean())
-            row['objective']=2*float(value)-1;row['values']['achievement']=row['objective'];rows.append(row)
+        for base in act['outcomes']:
+            for value in np.unique(samples):
+                row=copy.deepcopy(base);row['p']=base['p']*float((samples==value).mean())
+                row['objective']=2*float(value)-1;row['values']['achievement']=row['objective'];rows.append(row)
         act['outcomes']=compress_outcomes(rows)
     result['facts']['goal_signal']='勝利予測が全候補・全標本で同じ定数のため、ゲームが供給した首位との差の進捗値で比較'
+    result['facts']['progress_alignment']='既存の他軸の結果分布と進捗標本の積を近似。両者の相関は未供給、圧縮後のリスクも近似'
     return result
 
 
 def choose_with_progress(context,names,success,progress,*,max_regret=.12):
-    """Secondary evidence is used only on a wholly constant primary plateau.
+    """Secondary evidence is used only when every success sample is zero.
 
     Both arrays are independently validated, even if the primary is informative.
     Exactly tied *means* alone do not establish a plateau: different stochastic
