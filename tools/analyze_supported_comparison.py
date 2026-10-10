@@ -24,7 +24,7 @@ def analyze(root):
             assert p['seeds']==plan['seeds'] and p['encounters']==plan['encounters']
             assert p['strong']==plan['strong'] and p['persona']==plan['persona'] and p['sources']==plan['sources']
             assert p['variant']==plan.get('controller_variants',{}).get(variant,plan.get('controller_variant','progress'))
-            assert p['memory_kind']==('global' if variant=='global' else 'supported')
+            assert p['memory_kind']==('global' if variant=='global' else 'validated' if variant=='validated' else 'supported')
             runs.append(dict(folder=str(file.parent.relative_to(root)).replace('\\','/'),variant=variant,matches=len(e['matches']),
                 evaluation_sha256=hashlib.sha256(file.read_bytes()).hexdigest(),trajectory_sha256=e['trajectory_sha256']))
             matches.extend(dict(**{k:v for k,v in r.items() if k!='beliefs'},condition=variant) for r in e['matches'])

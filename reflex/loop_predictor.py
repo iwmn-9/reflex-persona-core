@@ -3,8 +3,8 @@ import copy
 from collections import deque,Counter
 from .core import digest
 from .opponent_beliefs import HypothesisTracker,distributions
-from .decision_loop import Reading
-from .prediction_support import SupportBanks
+from .decision_loop import Reading,EvidenceGate
+from .prediction_support import SupportBanks,gate_record,restored_gate
 
 
 class CategoricalReader:
@@ -119,4 +119,51 @@ class SupportedCategoricalReader:
             raise ValueError('supported predictor checkpoint contract mismatch')
         new=copy.deepcopy(self)
         for k in self.support.classes:new.support._banks[k]=self.support.select(k).restored(record['banks'][k])
+        return new
+
+
+class ValidatedSupportedCategoricalReader(SupportedCategoricalReader):
+    """Keep local evidence intact; validate and revoke cross-support borrowing."""
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.shared=copy.deepcopy(self.support.select(self.support.classes[0]))
+        self.shared.key=self.key+':shared-candidate';self.transfer=EvidenceGate()
+
+    def selected(self,context):
+        opportunity=self._class(context)
+        return self.shared if self.transfer.accepted(opportunity) else self.support.select(opportunity)
+
+    def forecasts(self,context):return self.selected(context).forecasts(context)
+
+    def __call__(self,context,cap):
+        opportunity=self._class(context);selected=self.selected(context);reading=selected(context,cap)
+        if reading is None:return None
+        key=self.support.select(opportunity).key+(':validated-transfer' if selected is self.shared else ':local')
+        reading.context['facts']['prediction_support']=self.support_key+':'+opportunity
+        return Reading(reading.context,reading.nodes,key,reading.target,reading.responses,reading.known_conditionals,reading.response_candidate)
+
+    def updated(self,context,observed,event,ticket):
+        opportunity=self._class(context);local=self.support.select(opportunity)
+        if not isinstance(event,dict) or set(event)!={'revealed_action'}:raise ValueError('one actual revealed action required')
+        index=0 if local.known_conditionals else 1
+        local_forecast=local.forecasts(context)[index];shared_forecast=self.shared.forecasts(context)[index]
+        new=copy.deepcopy(self)
+        transfer=new.transfer.categorical(opportunity,local_forecast,shared_forecast,event['revealed_action'])
+        child,update=local.updated(context,observed,event,ticket)
+        new.support._banks[opportunity]=child
+        new.shared,_=self.shared.updated(context,observed,event,ticket)
+        return new,dict(update,opportunity_class=opportunity,support_key=self.support_key,transfer=transfer)
+
+    def record(self):
+        record=super().record();record.update(version='loop-validated-supported-predictor-v1',shared=self.shared.record(),transfer=gate_record(self.transfer))
+        return record
+
+    def restored(self,record):
+        if record['version']!='loop-validated-supported-predictor-v1':raise ValueError('validated support checkpoint mismatch')
+        if any(record['transfer'][k]!=getattr(self.transfer,k) for k in ('capacity','window','min_trials','margin')):
+            raise ValueError('transfer checkpoint validation controls changed')
+        local=copy.deepcopy(record);local['version']='loop-supported-predictor-v1'
+        new=super().restored(local)
+        new.shared=self.shared.restored(record['shared']);new.transfer=restored_gate(record['transfer'])
+        if set(new.transfer.entries)-set(self.support.classes):raise ValueError('undeclared transfer opportunity')
         return new

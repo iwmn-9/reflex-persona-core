@@ -186,8 +186,8 @@ def play(game,seed,encounter,bench_seat,roster,mode,memories,*,strong=STRONG,per
 
 
 def experiment(root,seeds,encounters=12,modes=MODES,strong=STRONG,persona=PERSONA,*,variant='baseline',games=('goofspiel','no_thanks'),memory_kind='global'):
-    if memory_kind not in ('global','supported'):raise ValueError('registered memory kind required')
-    from .supported_memory import SupportedPublicMemory
+    if memory_kind not in ('global','supported','validated'):raise ValueError('registered memory kind required')
+    from .supported_memory import SupportedPublicMemory,ValidatedPublicMemory
     if not games or len(set(games))!=len(games) or any(g not in ('goofspiel','no_thanks') for g in games):raise ValueError('distinct supported games required')
     root=Path(root);root.mkdir(parents=True,exist_ok=True)
     plan=dict(version='one-strong-three-personas-v3',variant=variant,memory_kind=memory_kind,seeds=list(seeds),encounters=encounters,
@@ -209,7 +209,8 @@ def experiment(root,seeds,encounters=12,modes=MODES,strong=STRONG,persona=PERSON
                 bench=seed%4;others=[p for i,p in enumerate(PROFILES) if i!=(seed//4)%4]
                 roster={a:p for a,p in zip([a for a in range(4) if a!=bench],others)}
                 for mode in modes:
-                    memories=[(SupportedPublicMemory if memory_kind=='supported' and a!=bench else PublicMemory)(game,a) for a in range(4)]
+                    factory={'global':PublicMemory,'supported':SupportedPublicMemory,'validated':ValidatedPublicMemory}[memory_kind]
+                    memories=[(factory if a!=bench else PublicMemory)(game,a) for a in range(4)]
                     for encounter in range(encounters):
                         result,_=play(game,seed,encounter,bench,roster,mode,memories,strong=strong,persona=persona,emit=emit,variant=variant)
                         results.append(result)

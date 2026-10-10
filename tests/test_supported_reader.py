@@ -2,14 +2,14 @@ import copy
 import json
 import unittest
 from reflex.decision_loop import DecisionLoop
-from reflex.loop_predictor import SupportedCategoricalReader
+from reflex.loop_predictor import SupportedCategoricalReader,ValidatedSupportedCategoricalReader
 from reflex.examples import effect
 from reflex.planning import vector
 from tests.test_decision_loop import fixture,request
 
 
-def reader(c,support_key='resource-opportunity-v1'):
-    return SupportedCategoricalReader(c['scope'],('x-model','y-model'),
+def reader(c,support_key='resource-opportunity-v1',cls=SupportedCategoricalReader):
+    return cls(c['scope'],('x-model','y-model'),
         lambda c:{'x-model':{'x':.95,'y':.05},'y-model':{'x':.05,'y':.95}},
         lambda c,a,r:effect(.8 if r=='x' else -.8),
         classes=('continuing','settling'),opportunity_for=lambda c:c['facts']['opportunity'],support_key=support_key)
@@ -55,6 +55,31 @@ class SupportedReaderTests(unittest.TestCase):
         c=fixture();r=reader(c);before=r.record()
         with self.assertRaises(ValueError):reader(c,'changed-v2').restored(before)
         bad=copy.deepcopy(before);bad['banks']['settling']['logs']=[float('nan')]*2
+        with self.assertRaises(ValueError):r.restored(bad)
+        self.assertEqual(r.record(),before)
+
+    def test_validated_reader_borrows_only_with_local_proof_and_replays_real_lifecycle(self):
+        c=fixture(negative=True);c['facts']['opportunity']='continuing'
+        template=reader(c,cls=ValidatedSupportedCategoricalReader);loop=DecisionLoop(c,predictor=template)
+        for tick in range(12):
+            c['tick']=tick;c['facts']['opportunity']='continuing' if tick<8 else 'settling'
+            r=loop.decide(request(c,threatened=True),False)
+            loop.observe(r['ticket'],vector(effect(.8)),{'revealed_action':'x'})
+        local=loop.predictor.support.select('settling');self.assertEqual(local.tracker.observations,4)
+        self.assertEqual(loop.predictor.shared.tracker.observations,12)
+        saved=json.loads(json.dumps(loop.record()));restored=DecisionLoop.from_record(c,saved,predictor=template)
+        c['tick']=12
+        self.assertEqual(loop.decide(request(c,threatened=True),False),restored.decide(request(c,threatened=True),False))
+        self.assertEqual(template.shared.tracker.observations,0)
+
+    def test_transfer_revocation_and_checkpoint_cannot_authorize_a_different_class(self):
+        c=fixture();c['facts']['opportunity']='continuing';r=reader(c,cls=ValidatedSupportedCategoricalReader)
+        for _ in range(4):r.transfer.categorical('continuing',{'x':.5,'y':.5},{'x':.9,'y':.1},'x')
+        self.assertIs(r.selected(c),r.shared)
+        c['facts']['opportunity']='settling';self.assertIs(r.selected(c),r.support.select('settling'))
+        for _ in range(4):r.transfer.categorical('continuing',{'x':.5,'y':.5},{'x':.9,'y':.1},'y')
+        c['facts']['opportunity']='continuing';self.assertIs(r.selected(c),r.support.select('continuing'))
+        before=r.record();bad=copy.deepcopy(before);bad['transfer']['entries'][0]['gains']=[float('nan')]
         with self.assertRaises(ValueError):r.restored(bad)
         self.assertEqual(r.record(),before)
 
