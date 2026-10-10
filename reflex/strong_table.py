@@ -18,7 +18,7 @@ from .goal_progress import relative_progress, choose_with_progress, omit_expired
 from .strong_search import _thanks_simulate
 
 MODES=('reflex','planned','adaptive')
-VARIANTS=('baseline','progress','continuation','combined','certified_expiry')
+VARIANTS=('baseline','progress','continuation','combined','certified_expiry','settlement')
 
 
 @dataclass(frozen=True)
@@ -55,6 +55,13 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
         if game=='goofspiel':c=competitive(make_context(s,viewer,p,'win_share',seed,tick,episode,state))
         else:c,_=thanks_observe(s,p,seed,tick,episode,state)
         d,_=score(c);return c,d,dict(method='reflex',action=d['action_id'])
+    if game=='no_thanks' and variant=='settlement' and s.remaining==0:
+        from .settlement_solver import solve
+        if mode=='planned':
+            memory=PublicMemory(game,viewer)
+        c,d,stats=solve(s,viewer,p,seed,encounter,tick,memory,state)
+        stats['method']=mode
+        return c,d,stats
     adaptive=mode=='adaptive';rng=random_stream(seed,game,encounter,tick,viewer,'npc-search')
     if game=='no_thanks' and variant in ('continuation','combined'):
         names=s.legal()
@@ -68,7 +75,7 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
     else:names,scores,shares,stats=search(game,s,viewer,memory,adaptive,budget,rng)
     c=persona_context(game,s,viewer,p,seed,tick,episode,state,names,scores,shares)
     certified=(game=='no_thanks' and s.remaining==0 and s.chips[(viewer+1)%4]==0)
-    if variant=='certified_expiry' and certified:
+    if variant in ('certified_expiry','settlement') and certified:
         # All current-card payments/forced takes remain in the full terminal
         # goal forecasts. There are no later cards needing bidding flexibility.
         # This is an actual rule boundary, not the planner running out of depth.
@@ -77,7 +84,7 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
         # rule-forced TAKE. No owner can return to another bidding choice;
         # this is a complete rule support proof, not sampled MC confidence.
         c['facts']['expiry_certificate']='TAKEは終局、PASSは次席のチップ0による強制TAKEで終局。本人の再判断は全合法根で不存在'
-    if variant in ('progress','combined','certified_expiry'):
+    if variant in ('progress','combined','certified_expiry','settlement'):
         progress=relative_progress(scores,viewer,direction=1 if game=='goofspiel' else -1,
                                    scale=max(s.prizes) if game=='goofspiel' else 35)
         c,d,guard=choose_with_progress(c,names,shares,progress)

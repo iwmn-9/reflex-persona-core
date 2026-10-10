@@ -46,7 +46,7 @@ def relative_progress(scores,viewer,*,direction,scale):
     return .5+np.arctan(margin/scale)/np.pi
 
 
-def progress_context(context,names,progress):
+def progress_context(context,names,progress,*,weights=None):
     """Replace the constant success signal while retaining all personality axes.
 
     The same bounded outcome compression as the adapter is used. Root effects
@@ -56,6 +56,7 @@ def progress_context(context,names,progress):
     result=copy.deepcopy(context);lookup={name:i for i,name in enumerate(names)}
     for act in result['actions']:
         samples=progress[lookup[act['id']]]
+        mass=np.full(len(samples),1/len(samples)) if weights is None else weights[lookup[act['id']]]
         # Preserve each existing marginal outcome. The caller did not supply an
         # alignment between compressed context rows and progress samples, so
         # their product is an explicit independence approximation, not a claim
@@ -63,7 +64,9 @@ def progress_context(context,names,progress):
         rows=[]
         for base in act['outcomes']:
             for value in np.unique(samples):
-                row=copy.deepcopy(base);row['p']=base['p']*float((samples==value).mean())
+                probability=float(mass[samples==value].sum())
+                if probability==0:continue
+                row=copy.deepcopy(base);row['p']=base['p']*probability
                 row['objective']=2*float(value)-1;row['values']['achievement']=row['objective'];rows.append(row)
         act['outcomes']=compress_outcomes(rows)
     result['facts']['goal_signal']='勝利予測が全候補・全標本で同じ定数のため、ゲームが供給した首位との差の進捗値で比較'
@@ -91,3 +94,17 @@ def choose_with_progress(context,names,success,progress,*,max_regret=.12):
     guard.update(signal='goal_progress_on_constant_success',primary_constant=float(success.flat[0]),
                  original_success_personality_action=original['action_id'])
     return adjusted,result,guard
+
+
+def choose_with_weighted_progress(context,names,success,progress,weights,*,max_regret=.12):
+    from .goal_guard import choose_with_weighted_goal
+    success=np.asarray(success,dtype=float);progress=np.asarray(progress,dtype=float);weights=np.asarray(weights,dtype=float)
+    if success.shape!=progress.shape or not np.isfinite(progress).all() or np.any((progress<0)|(progress>1)):
+        raise ValueError('matched finite bounded weighted progress required')
+    decision,guard=choose_with_weighted_goal(context,names,success,weights,max_regret=max_regret)
+    if np.any(success[weights>0]!=0):
+        guard['signal']='terminal_success';return context,decision,guard
+    adjusted=progress_context(context,names,progress,weights=weights)
+    result,secondary=choose_with_weighted_goal(adjusted,names,progress,weights,max_regret=max_regret)
+    secondary.update(signal='goal_progress_on_constant_success',primary_constant=0.,original_success_personality_action=decision['action_id'])
+    return adjusted,result,secondary

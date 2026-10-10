@@ -19,6 +19,7 @@ from reflex.goofspiel import Position
 from reflex.board_models import ThanksPosition
 from reflex.strong_search import PublicMemory, SearchBudget
 from reflex.strong_table import play, summarize
+from reflex.supported_memory import SupportedPublicMemory
 from reflex.tabletop_trials import score
 
 
@@ -34,7 +35,7 @@ def card_score(cards,chips):
 
 
 def audit(root,replay=False,source_ref=None,replay_games=None):
-    global PublicMemory,SearchBudget,play,summarize
+    global PublicMemory,SupportedPublicMemory,SearchBudget,play,summarize
     root=Path(root);evaluation=json.loads((root/'evaluation.json').read_text(encoding='utf-8'))
     plan=json.loads((root/'preregister.json').read_text(encoding='utf-8'));assert plan==evaluation['plan']
     base=Path(__file__).resolve().parents[1]
@@ -44,7 +45,7 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
         if hashlib.sha256(data).hexdigest()!=sha:
             assert source_ref is not None,'use --source-ref for the registered implementation: '+name
             data=subprocess.check_output(['git','show',f'{source_ref}:{normalized_name}'],cwd=base)
-            assert normalized_name in ('reflex/opponent_beliefs.py','reflex/goal_progress.py','reflex/strong_search.py','reflex/strong_table.py'),'unexpected runtime dependency change'
+            assert normalized_name in ('reflex/opponent_beliefs.py','reflex/goal_guard.py','reflex/goal_progress.py','reflex/strong_search.py','reflex/supported_memory.py','reflex/finite_continuation.py','reflex/settlement_solver.py','reflex/strong_table.py'),'unexpected runtime dependency change'
             frozen[normalized_name]=data
         assert hashlib.sha256(data).hexdigest()==sha,name
     # The experiment modules and feedback learner may later fix connections. Replay
@@ -52,14 +53,17 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
     # checked against the registration. No changes to the working tree.
     if frozen:
         registered_names={name.replace('\\','/') for name in plan['sources']}
-        for name in ('reflex/opponent_beliefs.py','reflex/goal_progress.py','reflex/strong_search.py','reflex/strong_table.py'):
+        for name in ('reflex/opponent_beliefs.py','reflex/goal_guard.py','reflex/goal_progress.py','reflex/strong_search.py','reflex/supported_memory.py','reflex/finite_continuation.py','reflex/settlement_solver.py','reflex/strong_table.py'):
             if name not in registered_names:continue
             data=frozen.get(name,(base/name).read_bytes());module_name=name[:-3].replace('/','.')
             module=types.ModuleType(module_name);module.__package__='reflex';module.__file__=str(base/name)
             sys.modules[module_name]=module;exec(compile(data,str(base/name),'exec'),module.__dict__)
         PublicMemory=sys.modules['reflex.strong_search'].PublicMemory;SearchBudget=sys.modules['reflex.strong_search'].SearchBudget
+        if 'reflex/supported_memory.py' in registered_names:SupportedPublicMemory=sys.modules['reflex.supported_memory'].SupportedPublicMemory
         play=sys.modules['reflex.strong_table'].play;summarize=sys.modules['reflex.strong_table'].summarize
     trace=root/'trajectories.jsonl';assert hashlib.sha256(trace.read_bytes()).hexdigest()==evaluation['trajectory_sha256']
+    def new_memories(game,bench):
+        return [(SupportedPublicMemory if plan.get('memory_kind')=='supported' and a!=bench else PublicMemory)(game,a) for a in range(4)]
     indexed={(r['game'],r['seed'],r['mode'],r['encounter']):r for r in evaluation['matches']}
     assert len(indexed)==len(plan['games'])*len(plan['seeds'])*len(plan['modes'])*plan['encounters']
     counts=Counter();seen=set();previous=None;current=None;memories=None;running=Counter();failures=[0]*4
@@ -91,7 +95,7 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
             if key!=current:
                 old=current;finish();current=key;previous=None;running=Counter();failures=[0]*4;deck=[]
                 assert key not in seen
-                if old is None or key[:3]!=old[:3]:memories=[PublicMemory(key[0],a) for a in range(4)]
+                if old is None or key[:3]!=old[:3]:memories=new_memories(key[0],indexed[key]['benchmark'])
                 hasher=hashlib.sha256()
             hasher.update((digest(t)+'\n').encode());r=indexed[key];b=t['before'];a=t['after'];game=key[0]
             assert t['benchmark']==r['benchmark'];assert t['tick']==running['steps'];running['steps']+=1;counts['steps']+=1
@@ -173,7 +177,7 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
                 else:
                     assert c['facts']['public_counter_ledger']==str(tuple(b['chips']));assert c['facts']['seen']==str(tuple(b['seen']))
                     expires=(b['remaining']==0 and (plan.get('variant')=='horizon_progress' or
-                        plan.get('variant')=='certified_expiry' and b['chips'][(actor+1)%4]==0))
+                        plan.get('variant') in ('certified_expiry','settlement') and b['chips'][(actor+1)%4]==0))
                     if expires:
                         assert 'expired_proxies' in c['facts']
                         assert c['needs']['safety']['enabled'] is False and c['needs']['safety']['deficit'] is None
@@ -182,12 +186,16 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
                             for outcome in act['outcomes']:
                                 assert outcome['needs']['safety']==outcome['values']['security']==outcome['style']['neuroticism']==0
                         counts['no_thanks_real_expiry_choices']+=1
-                        if plan.get('variant')=='certified_expiry':assert 'expiry_certificate' in c['facts']
+                        if plan.get('variant') in ('certified_expiry','settlement'):assert 'expiry_certificate' in c['facts']
                     else:assert 'expired_proxies' not in c['facts']
                 filtered=normalized(c)
                 if d['method']!='reflex':
                     guard=st['guard'];assert chosen in guard['allowed'];running['guards']+=guard['guard_changed']
-                    assert st['sample_count']==plan['persona']['validate']
+                    finite=game=='no_thanks' and plan.get('variant')=='settlement' and b['remaining']==0
+                    assert st['sample_count']==(0 if finite else plan['persona']['validate'])
+                    if finite:
+                        assert st['finite_chain_nodes']<=45 and all(q['standard_error']==0 for q in st['actions'].values())
+                        counts['finite_continuation_choices']+=1
                     filtered['actions']=[act for act in filtered['actions'] if act['id'] in guard['allowed']]
                     signal=guard.get('signal','terminal_success')
                     if signal=='goal_progress_on_constant_success':
@@ -202,7 +210,7 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
                     for name,bound in guard['bounds'].items():
                         assert math.isclose(best-means[name],bound['estimated_regret'],abs_tol=1e-12)
                         assert math.isclose(bound['lower_bound'],bound['estimated_regret']-2*bound['sampling_error'],abs_tol=1e-12)
-                        assert (bound['lower_bound']<=.12)==(name in guard['allowed'])
+                        assert (bound['lower_bound']<=.12+(1e-12 if finite else 0))==(name in guard['allowed'])
                     if d['method']=='adaptive':running['changes']+=st['frozen_action']!=chosen
                 expected=score(filtered)[0];assert expected['action_id']==chosen and expected['next_state']==d['next_state']
                 counts['personality_selections_replayed']+=1
@@ -240,7 +248,7 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
         for game in plan['games']:
             if replay_games is not None and game not in replay_games:continue
             for mode in plan['modes']:
-                memories=[PublicMemory(game,a) for a in range(4)]
+                memories=new_memories(game,bench)
                 for encounter in range(plan['encounters']):
                     h=hashlib.sha256()
                     def emit(row):h.update((digest(normalized(row))+'\n').encode())

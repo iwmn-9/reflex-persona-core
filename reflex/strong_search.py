@@ -479,7 +479,11 @@ def objective_choice(game,names,scores,shares,viewer):
     return max(range(len(names)),key=lambda i:(means[i],sign*raw[i],-i))
 
 
-def persona_context(game,s,viewer,p,seed,tick,episode,state,names,scores,shares):
+def persona_context(game,s,viewer,p,seed,tick,episode,state,names,scores,shares,*,sample_weights=None):
+    weights=np.full(shares.shape,1/shares.shape[1]) if sample_weights is None else np.asarray(sample_weights,dtype=float)
+    if weights.shape!=shares.shape or not np.isfinite(weights).all() or np.any(weights<0) or not np.allclose(weights.sum(1),1):
+        raise ValueError('one normalized finite nonnegative outcome mass per root required')
+    if sample_weights is not None:weights=weights/weights.sum(1,keepdims=True)
     packed={}
     for i,name in enumerate(names):
         rows=[]
@@ -487,14 +491,17 @@ def persona_context(game,s,viewer,p,seed,tick,episode,state,names,scores,shares)
         # moments inside each winner group. Within-group subjective downside is
         # approximate, as in the existing eight-outcome compression contract.
         for share in np.unique(shares[i]):
-            selected=shares[i]==share;finals=scores[i,selected];others=[a for a in range(len(s.hands if game=='goofspiel' else s.chips)) if a!=viewer]
+            selected=shares[i]==share;mass=weights[i,selected]
+            if mass.sum()==0:continue
+            finals=scores[i,selected];others=[a for a in range(len(s.hands if game=='goofspiel' else s.chips)) if a!=viewer]
+            average=lambda values:float(values.mean()) if sample_weights is None else float(np.average(values,weights=mass))
             if game=='goofspiel':
                 remaining=max(1,sum(s.prizes[s.round:]));bid=int(name.split(':')[1])
                 commitment=bid/max(s.prizes)*sum(s.prizes[s.round+1:])/remaining
                 margin=((finals[:,viewer]-finals[:,others].max(1))-(s.scores[viewer]-max(s.scores[a] for a in others)))/remaining
                 delta=(finals[:,viewer]-s.scores[viewer])/remaining
-                row=effect(2*float(share)-1,needs={'esteem':float(delta.mean()),'safety':-.15*commitment},
-                    values={'achievement':2*float(share)-1,'power':float(margin.mean()),'security':-commitment},
+                row=effect(2*float(share)-1,needs={'esteem':average(delta),'safety':-.15*commitment},
+                    values={'achievement':2*float(share)-1,'power':average(margin),'security':-commitment},
                     style={'openness':.2*commitment,'conscientiousness':-.2*commitment})
             else:
                 # Separate root commitment from whole-game payments. Counting
@@ -504,9 +511,9 @@ def persona_context(game,s,viewer,p,seed,tick,episode,state,names,scores,shares)
                 row['objective']=2*float(share)-1
                 row['values']['achievement']=row['objective']
                 margin=(finals[:,others].min(1)-finals[:,viewer])/35
-                row['values']['power']=float(np.clip(margin,-1,1).mean())
-                row['needs']['esteem']=float(np.clip(margin,-1,1).mean())
-            row['p']=float(selected.mean());rows.append(row)
+                row['values']['power']=average(np.clip(margin,-1,1))
+                row['needs']['esteem']=average(np.clip(margin,-1,1))
+            row['p']=float(selected.mean()) if sample_weights is None else float(np.clip(mass.sum(),0,1));rows.append(row)
         packed[name]=compress_outcomes(rows)
     if game=='goofspiel':c=make_context(s,viewer,p,'win_share',seed,tick,episode,state,packed)
     else:c=ThanksAdapter().context(s,p,seed,tick,episode,[action(a,*packed[a]) for a in names],state)
