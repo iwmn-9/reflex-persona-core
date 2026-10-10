@@ -13,17 +13,19 @@ def _basis(x,mean,scale):
     return np.column_stack((z,z[:,i]*z[:,j]))
 
 
-def fit(cases,*,alpha=10.):
+def fit(cases,*,alpha=10.,case_weights=None):
     """Each case: features[actions, dimensions], targets[actions, purposes]."""
     if not cases or not np.isfinite(alpha) or alpha<=0:raise ValueError('matched cases and positive regularization required')
     xs=[];ys=[]
     for x,y in cases:
         x=np.asarray(x,float);y=np.asarray(y,float)
-        if x.ndim!=2 or y.ndim!=2 or len(x)<2 or len(x)!=len(y) or not np.isfinite(x).all() or not np.isfinite(y).all() or np.any((y<0)|(y>1)):
+        if x.ndim!=2 or y.ndim!=2 or len(x)<2 or len(x)!=len(y) or not 1<=x.shape[1]<=64 or not 1<=y.shape[1]<=16 or not np.isfinite(x).all() or np.any(np.abs(x)>1e6) or not np.isfinite(y).all() or np.any((y<0)|(y>1)):
             raise ValueError('two or more matched alternatives with bounded purpose targets required')
         if xs and (x.shape[1]!=xs[0].shape[1] or y.shape[1]!=ys[0].shape[1]):raise ValueError('stable feature and purpose meanings required')
         xs.append(x);ys.append(y)
-    x=np.concatenate(xs);weights=np.concatenate([np.full(len(a),1/len(a)) for a in xs])
+    case_weights=np.ones(len(cases)) if case_weights is None else np.asarray(case_weights,float)
+    if case_weights.shape!=(len(cases),) or not np.isfinite(case_weights).all() or np.any(case_weights<=0):raise ValueError('one positive finite case weight required')
+    x=np.concatenate(xs);weights=np.concatenate([np.full(len(a),w/len(a)) for a,w in zip(xs,case_weights)])
     mean=np.average(x,axis=0,weights=weights);scale=np.maximum(np.sqrt(np.average((x-mean)**2,axis=0,weights=weights)),.05)
     design=[];targets=[]
     for x,y in zip(xs,ys):
@@ -36,7 +38,8 @@ def fit(cases,*,alpha=10.):
 
 def predict(model,features):
     x=np.asarray(features,float);mean=np.asarray(model['mean'],float);scale=np.asarray(model['scale'],float);coef=np.asarray(model['coef'],float)
-    if x.ndim!=2 or len(x)<2 or x.shape[1]!=len(mean) or not np.isfinite(x).all():raise ValueError('matched finite candidate features required')
+    if model.get('version')!='matched-action-differences-v1' or mean.ndim!=1 or not 1<=len(mean)<=64 or scale.shape!=mean.shape or coef.ndim!=2 or coef.shape[0]!=len(mean)+len(mean)*(len(mean)+1)//2 or not 1<=coef.shape[1]<=16 or not np.isfinite(mean).all() or not np.isfinite(scale).all() or np.any(scale<=0) or not np.isfinite(coef).all():raise ValueError('valid bounded fitted model required')
+    if x.ndim!=2 or len(x)<2 or x.shape[1]!=len(mean) or not np.isfinite(x).all() or np.any(np.abs(x)>1e6):raise ValueError('matched finite candidate features required')
     b=_basis(x,mean,scale);values=(b-b.mean(0))@coef
     supported=bool(np.all(np.abs((x-mean)/scale)<=4))
     return values,supported
