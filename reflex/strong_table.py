@@ -59,7 +59,7 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
         from .settlement_solver import solve
         if mode=='planned':
             memory=PublicMemory(game,viewer)
-        c,d,stats=solve(s,viewer,p,seed,encounter,tick,memory,state)
+        c,d,stats=solve(s,viewer,p,seed,encounter,tick,memory,state,adaptive=mode=='adaptive')
         stats['method']=mode
         return c,d,stats
     adaptive=mode=='adaptive';rng=random_stream(seed,game,encounter,tick,viewer,'npc-search')

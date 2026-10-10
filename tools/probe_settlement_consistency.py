@@ -24,7 +24,7 @@ def points(cards,chips):
     hand=sorted(cards);return sum(c for i,c in enumerate(hand) if i==0 or hand[i-1]!=c-1)-chips
 
 
-def evaluate(s,viewer,p,seed,memory,state,root,variant,root_decision):
+def evaluate(s,viewer,p,seed,memory,state,root,variant,root_decision,*,mode='adaptive'):
     m=copy.deepcopy(memory);st=copy.deepcopy(root_decision['next_state']);st['intent_action']=root
     st['age']=min(state['age']+1,1000000) if state and state['intent_action']==root else 0
     current=s;probability=1.;leaves=[];clock=0;returns=0
@@ -32,9 +32,9 @@ def evaluate(s,viewer,p,seed,memory,state,root,variant,root_decision):
         actor=current.turn
         if clock==0:take=float(root=='TAKE')
         elif actor==viewer:
-            _,d,_=decide('no_thanks',current,viewer,p,seed,0,clock,m,st,'adaptive',PERSONA,variant=variant)
+            _,d,_=decide('no_thanks',current,viewer,p,seed,0,clock,m,st,mode,PERSONA,variant=variant)
             take=float(d['action_id']=='TAKE');st=d['next_state'];returns+=1
-        else:take=1. if len(current.legal())==1 else m.predict(current,actor)['TAKE']
+        else:take=1. if len(current.legal())==1 else m.predict(current,actor,adaptive=mode=='adaptive')['TAKE']
         if take:
             cards=[list(c) for c in current.cards];chips=list(current.chips)
             cards[actor].append(current.card);chips[actor]+=current.pot
@@ -42,7 +42,7 @@ def evaluate(s,viewer,p,seed,memory,state,root,variant,root_decision):
         probability*=1-take
         if probability==0:break
         assert 'PASS' in current.legal()
-        if actor!=viewer:m.observe(current,actor,'PASS',f'encounter-0-tick-{clock}-actor-{actor}')
+        if actor!=viewer and mode=='adaptive':m.observe(current,actor,'PASS',f'encounter-0-tick-{clock}-actor-{actor}')
         current=current.play('PASS');clock+=1
         assert clock<=44
     assert abs(sum(q for q,_ in leaves)-1)<1e-10
@@ -52,9 +52,10 @@ def evaluate(s,viewer,p,seed,memory,state,root,variant,root_decision):
     return dict(credit=credit,score=score,progress=float(progress),owner_returns=returns,leaf_count=len(leaves))
 
 
-def run(root,states=64):
+def run(root,states=64,mode='adaptive'):
+    if mode not in ('adaptive','planned'):raise ValueError('supported controller mode required')
     root=Path(root);root.mkdir(parents=True,exist_ok=True)
-    plan=dict(version='policy-consistent-settlement-exposure-v1',states=states,seed=72419,
+    plan=dict(version='policy-consistent-settlement-exposure-v2',states=states,seed=72419,mode=mode,
         variants=['certified_expiry','settlement'],profiles=[p['id'] for p in PROFILES],budget=asdict(PERSONA),
         construction='23 held plus one current card; total chip/pot ledger 44; each owner and next seat >=1, no immediate forced terminal certificate',
         primary='forecast must equal separate forward execution of the SAME future owner controller on every public branch',
@@ -73,9 +74,9 @@ def run(root,states=64):
         for p in PROFILES:
             memory=SupportedPublicMemory('no_thanks',viewer);records=[]
             for variant in plan['variants']:
-                before=memory.record();c,d,stats=decide('no_thanks',s,viewer,p,7300+case,0,0,memory,None,'adaptive',PERSONA,variant=variant)
+                before=memory.record();c,d,stats=decide('no_thanks',s,viewer,p,7300+case,0,0,memory,None,mode,PERSONA,variant=variant)
                 assert before==memory.record();assert c['personality']==dict(zip(('openness','conscientiousness','extraversion','agreeableness','neuroticism'),p['traits']))
-                actual={a:evaluate(s,viewer,p,7300+case,memory,None,a,variant,d) for a in s.legal()}
+                actual={a:evaluate(s,viewer,p,7300+case,memory,None,a,variant,d,mode=mode) for a in s.legal()}
                 predictions=stats['actions'];error={a:{k:float(predictions[a][field]-actual[a][k]) for k,field in (('credit','win_share'),('score','mean_score'),('progress','goal_progress'))} for a in s.legal()}
                 if variant=='settlement':assert all(abs(v)<1e-10 for e in error.values() for v in e.values()),error
                 chosen=d['action_id'];regret=max(v['credit'] for v in actual.values())-actual[chosen]['credit']
@@ -96,4 +97,5 @@ def run(root,states=64):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--states',type=int,default=64);a=p.parse_args();run(a.root,a.states)
+    p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--states',type=int,default=64)
+    p.add_argument('--mode',choices=('adaptive','planned'),default='adaptive');a=p.parse_args();run(a.root,a.states,a.mode)

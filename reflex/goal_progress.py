@@ -65,6 +65,10 @@ def progress_context(context,names,progress,*,weights=None):
         for base in act['outcomes']:
             for value in np.unique(samples):
                 probability=float(mass[samples==value].sum())
+                # Complete finite branch products can accumulate one ULP above
+                # one even when the ledger mass is valid. Fix only this producer
+                # roundoff; the core still rejects materially invalid probabilities.
+                if 1 < probability <= 1+1e-12:probability=1.
                 if probability==0:continue
                 row=copy.deepcopy(base);row['p']=base['p']*probability
                 row['objective']=2*float(value)-1;row['values']['achievement']=row['objective'];rows.append(row)

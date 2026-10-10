@@ -13,6 +13,20 @@ from reflex.examples import context, action, effect
 
 
 class SettlementTests(unittest.TestCase):
+    def test_planned_future_owner_uses_fixed_prior_not_virtual_learning(self):
+        from tools.probe_settlement_consistency import evaluate
+        from reflex.strong_table import decide
+        held=((3,10,11,32,33),(7,8,16,17,34,35),(13,14,19,20,21,23),(5,24,25,28,29,31))
+        s=ThanksPosition(held,(4,11,15,8),1,26,6,tuple(sorted([26]+[x for h in held for x in h])),0,(29,28,28,28))
+        for p in PROFILES:
+            m=SupportedPublicMemory('no_thanks',1);before=copy.deepcopy(m.record())
+            c,d,stats=decide('no_thanks',s,1,p,7600,0,0,m,None,'planned',variant='settlement')
+            for root in s.legal():
+                actual=evaluate(s,1,p,7600,m,None,root,'settlement',d,mode='planned')
+                for k,field in (('credit','win_share'),('score','mean_score'),('progress','goal_progress')):
+                    self.assertAlmostEqual(actual[k],stats['actions'][root][field],places=10)
+            self.assertEqual(m.record(),before)
+
     def test_generic_chain_resolves_owner_policy_instead_of_an_optimistic_plan(self):
         nodes=[dict(actor=0,settle='now',terminal=(1.,0.),forecast={'now':.5,'later':.5},**{'continue':'later'}),
                dict(actor=1,settle='now',terminal=(0.,1.),forecast={'now':.25,'later':.75},**{'continue':'later'}),

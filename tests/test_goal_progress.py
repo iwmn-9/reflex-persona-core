@@ -2,7 +2,7 @@ import copy
 from dataclasses import replace
 import unittest
 import numpy as np
-from reflex.goal_progress import relative_progress, choose_with_progress, omit_expired_proxies
+from reflex.goal_progress import relative_progress, choose_with_progress, choose_with_weighted_progress, omit_expired_proxies
 from reflex.examples import context, action, effect
 from reflex.board_models import ThanksPosition
 from reflex.laboratory import PROFILES
@@ -12,6 +12,14 @@ from reflex.strong_search import SearchBudget
 
 
 class GoalProgressTests(unittest.TestCase):
+    def test_finite_plateau_group_roundoff_keeps_strict_core_probability_contract(self):
+        c=context('weighted-roundoff',[action('A',effect(0)),action('B',effect(0))])
+        weights=np.array([[.5,.5+np.spacing(1.)],[.5,.5]])
+        adjusted,d,g=choose_with_weighted_progress(c,('A','B'),np.zeros((2,2)),np.array([[.4,.4],[.6,.6]]),weights)
+        self.assertTrue(all(0<=r['p']<=1 for a in adjusted['actions'] for r in a['outcomes']))
+        with self.assertRaises(ValueError):
+            choose_with_weighted_progress(c,('A','B'),np.zeros((2,2)),np.full((2,2),.4),weights*1.01)
+
     def test_progress_is_invariant_to_score_units_translation_and_participant_order(self):
         scores=np.array([[[20,30,40,25],[2,4,3,5]],[[25,30,40,25],[3,4,3,5]]])
         a=relative_progress(scores,0,direction=-1,scale=35)

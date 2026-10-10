@@ -33,7 +33,8 @@ def _context(s,viewer,p,seed,tick,episode,state,names,finals,shares,weights):
     return c
 
 
-def solve(s,viewer,p,seed,encounter,tick,memory,state):
+def solve(s,viewer,p,seed,encounter,tick,memory,state,*,adaptive=True):
+    if type(adaptive) is not bool:raise ValueError('explicit boolean learning control required')
     if s.remaining!=0 or s.card is None or s.turn!=viewer:raise ValueError('public final-card owner opportunity required')
     if (memory.game,memory.viewer,memory.players)!=('no_thanks',viewer,len(s.chips)):raise ValueError('game/observer support mismatch')
     episode=f'series-{seed}-encounter-{encounter}'
@@ -43,7 +44,7 @@ def solve(s,viewer,p,seed,encounter,tick,memory,state):
     snapshots=[];forced_pass_states={}
     while True:
         i=len(nodes);actor=current.turn;legal=current.legal();settled=current.play('TAKE')
-        prediction=virtual.predict(current,actor) if actor!=viewer else {a:1/len(legal) for a in legal}
+        prediction=virtual.predict(current,actor,adaptive=adaptive) if actor!=viewer else {a:1/len(legal) for a in legal}
         nodes.append({'actor':actor,'settle':'TAKE','continue':'PASS','terminal':settled.scores(),'forecast':prediction})
         snapshots.append(current);owner_states.append(copy.deepcopy(owner_state))
         if len(legal)==1:break
@@ -57,7 +58,7 @@ def solve(s,viewer,p,seed,encounter,tick,memory,state):
             d,_=score(c);next_state=d['next_state'];next_state['intent_action']='PASS'
             next_state['age']=min(owner_state['age']+1,1000000) if owner_state and owner_state['intent_action']=='PASS' else 0
             owner_state=next_state;forced_pass_states[i]=copy.deepcopy(next_state)
-        else:virtual.observe(current,actor,'PASS',f'encounter-{encounter}-tick-{tick+i}-actor-{actor}')
+        elif adaptive:virtual.observe(current,actor,'PASS',f'encounter-{encounter}-tick-{tick+i}-actor-{actor}')
         current=current.play('PASS')
         if len(nodes)>=256:raise ValueError('ledger exceeds finite chain capacity')
     decisions={}
