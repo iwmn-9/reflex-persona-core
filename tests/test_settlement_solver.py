@@ -6,13 +6,46 @@ import numpy as np
 from reflex.board_models import ThanksPosition, card_points
 from reflex.laboratory import PROFILES
 from reflex.finite_continuation import resolve_chain
-from reflex.supported_memory import SupportedPublicMemory
+from reflex.supported_memory import SupportedPublicMemory,GuardedPublicMemory
 from reflex.settlement_solver import solve
 from reflex.goal_guard import choose_with_weighted_goal
 from reflex.examples import context, action, effect
 
 
 class SettlementTests(unittest.TestCase):
+    def test_earned_local_bank_and_revocation_keep_future_owner_forecast_consistent(self):
+        from tools.probe_settlement_consistency import evaluate
+        from reflex.strong_table import decide
+        held=((3,10,11,32,33),(7,8,16,17,34,35),(13,14,19,20,21,23),(5,24,25,28,29,31))
+        s=ThanksPosition(held,(4,11,15,8),1,26,6,tuple(sorted([26]+[x for h in held for x in h])),0,(29,28,28,28))
+        future_held=(held[0][:-1],)+held[1:]
+        future=replace(s,cards=future_held,seen=tuple(x for x in s.seen if x!=33),remaining=1)
+        m=GuardedPublicMemory('no_thanks',1)
+        # Synthetic legal public evidence establishes conflicting banks. The
+        # active gate is a valid checkpoint precondition; this is a continuation
+        # integration test, not a claim that these histories improve game play.
+        for actor in (0,2,3):
+            for i in range(16):m.observe(replace(s,turn=actor),actor,'TAKE',f'local-{actor}-{i}')
+            for i in range(32):m.observe(replace(future,turn=actor),actor,'PASS',f'shared-{actor}-{i}')
+            key=m._key('current_card_only',actor)
+            m.transfer.entries.pop(key,None)
+            for i in range(4):m.transfer.categorical(key,{'TAKE':.5,'PASS':.5},{'TAKE':.95,'PASS':.05},'TAKE')
+            self.assertTrue(m.transfer.accepted(key))
+        clone=copy.deepcopy(m);revocations=0
+        for i in range(16):
+            record=clone.observe(s,0,'PASS',f'future-pass-{i}')
+            revocations+=record['transfer'].get('revoked',False)
+        self.assertGreater(revocations,0)
+        for mode in ('adaptive','planned'):
+            for p in PROFILES:
+                before=copy.deepcopy(m.record())
+                c,d,stats=decide('no_thanks',s,1,p,7600,0,0,m,None,mode,variant='settlement')
+                for root in s.legal():
+                    actual=evaluate(s,1,p,7600,m,None,root,'settlement',d,mode=mode)
+                    for k,field in (('credit','win_share'),('score','mean_score'),('progress','goal_progress')):
+                        self.assertAlmostEqual(actual[k],stats['actions'][root][field],places=10)
+                self.assertEqual(m.record(),before)
+
     def test_planned_future_owner_uses_fixed_prior_not_virtual_learning(self):
         from tools.probe_settlement_consistency import evaluate
         from reflex.strong_table import decide
