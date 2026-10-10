@@ -364,7 +364,7 @@ def _thanks_persona_take(active,turn,card,pot,chips,points,cards,kinds,remaining
     return selected,(utility[:,1]>utility[:,0])|(stock==0)
 
 
-def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng):
+def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng,*,own_profile=None,own_state=None):
     """Vectorized exact transitions; unknown deck samples only PUBLIC unseen set."""
     n=len(roots)*count;players=len(s.chips);rows=np.arange(n)
     chips=np.tile(s.chips,(n,1));points=np.tile([card_points(c) for c in s.cards],(n,1))
@@ -380,6 +380,13 @@ def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng):
     own_style=np.repeat(styles,count);root=np.repeat(roots,count)
     recent_thresholds=np.array([memory.recent_threshold(actor,adaptive) for actor in range(players)])
     model_states=np.zeros((n,players,3));model_states[:,:,:2]=-1
+    if own_profile is not None:
+        kinds[:,viewer]=6+next(i for i,p in enumerate(PROFILES) if p['id']==own_profile['id'])
+        if own_state is not None:
+            # Same supported state representation used by compile_batch; the
+            # actual owner's state is allowed, rival private states never are.
+            c,_=thanks_observe(s,own_profile,0,0,'rollout',own_state)
+            b=compile_batch([c]);model_states[:,viewer]=[b.mode[0],b.primary[0],b.mode_urgency[0]]
     # Root rival action distributions are not consulted: decision belongs to viewer.
     for step in range(2048):
         active=np.flatnonzero(~done)
@@ -399,7 +406,7 @@ def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng):
         uniform=(typ==0)&~own
         take=np.where(uniform,rng.random(len(active))<.5,take)
         persona_rows,persona_take=_thanks_persona_take(active,turn,card,pot,chips,points,cards,kinds,s.remaining-drawn,model_states)
-        lookup=np.searchsorted(active,persona_rows);use=turn[persona_rows]!=viewer
+        lookup=np.searchsorted(active,persona_rows);use=(turn[persona_rows]!=viewer)|(own_profile is not None)
         take[lookup[use]]=persona_take[use]
         conditional=(typ==11)&~own
         if conditional.any():

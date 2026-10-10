@@ -175,7 +175,16 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
                     guard=st['guard'];assert chosen in guard['allowed'];running['guards']+=guard['guard_changed']
                     assert st['sample_count']==plan['persona']['validate']
                     filtered['actions']=[act for act in filtered['actions'] if act['id'] in guard['allowed']]
-                    means={name:q['win_share'] for name,q in st['actions'].items()};best=max(means.values())
+                    signal=guard.get('signal','terminal_success')
+                    if signal=='goal_progress_on_constant_success':
+                        assert all(q['win_share']==0 for q in st['actions'].values())
+                        assert guard['primary_constant']==0
+                        counts[f'{game}_progress_fallbacks']+=1
+                        means={name:q['goal_progress'] for name,q in st['actions'].items()}
+                    else:
+                        assert signal=='terminal_success'
+                        means={name:q['win_share'] for name,q in st['actions'].items()}
+                    best=max(means.values())
                     for name,bound in guard['bounds'].items():
                         assert math.isclose(best-means[name],bound['estimated_regret'],abs_tol=1e-12)
                         assert math.isclose(bound['lower_bound'],bound['estimated_regret']-2*bound['sampling_error'],abs_tol=1e-12)
@@ -222,7 +231,8 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
                     h=hashlib.sha256()
                     def emit(row):h.update((digest(normalized(row))+'\n').encode())
                     actual,_=play(game,seed,encounter,bench,roster,mode,memories,
-                        strong=SearchBudget(**plan['strong']),persona=SearchBudget(**plan['persona']),emit=emit)
+                        strong=SearchBudget(**plan['strong']),persona=SearchBudget(**plan['persona']),emit=emit,
+                        **({'variant':plan['variant']} if 'variant' in plan else {}))
                     key=(game,seed,mode,encounter);assert normalized(actual)==indexed[key]
                     assert h.hexdigest()==row_hashes[key];replayed+=1
     proof=dict(matches=len(indexed),**counts,all_finished=True,source_hashes_checked=len(plan['sources']),

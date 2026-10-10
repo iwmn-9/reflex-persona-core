@@ -1,0 +1,61 @@
+import copy
+from dataclasses import replace
+import unittest
+import numpy as np
+from reflex.goal_progress import relative_progress, choose_with_progress
+from reflex.examples import context, action, effect
+from reflex.board_models import ThanksPosition
+from reflex.laboratory import PROFILES
+from reflex.strong_search import PublicMemory, _thanks_simulate
+from reflex.strong_table import decide
+from reflex.strong_search import SearchBudget
+
+
+class GoalProgressTests(unittest.TestCase):
+    def test_progress_is_invariant_to_score_units_translation_and_participant_order(self):
+        scores=np.array([[[20,30,40,25],[2,4,3,5]],[[25,30,40,25],[3,4,3,5]]])
+        a=relative_progress(scores,0,direction=-1,scale=35)
+        b=relative_progress(scores*7+200,0,direction=-1,scale=35*7)
+        c=relative_progress(-scores[:,:,::-1],3,direction=1,scale=35)
+        np.testing.assert_allclose(a,b);np.testing.assert_allclose(a,c)
+        self.assertTrue(np.all((a>0)&(a<1)))
+
+    def test_losing_plateau_excludes_avoidable_large_progress_regret_without_changing_traits(self):
+        c=context('plateau',[action('HARM',effect(-1)),action('RECOVER',effect(-1))],{'esteem':.5},{'power':.8})
+        original=copy.deepcopy(c);success=np.zeros((2,32));progress=np.array([[.01]*32,[.5]*32])
+        adjusted,d,g=choose_with_progress(c,('HARM','RECOVER'),success,progress)
+        self.assertEqual(d['action_id'],'RECOVER');self.assertEqual(g['allowed'],['RECOVER'])
+        self.assertEqual(g['signal'],'goal_progress_on_constant_success');self.assertEqual(c,original)
+        for k in ('personality','values','needs'):self.assertEqual(adjusted[k],c[k])
+
+    def test_equal_mean_different_events_and_secured_success_do_not_activate_progress(self):
+        c=context('tied',[action('A',effect(0)),action('B',effect(0))],{}, {})
+        for success in (np.array([[0,1]*16,[1,0]*16]),np.ones((2,32))):
+            adjusted,d,g=choose_with_progress(c,('A','B'),success,np.array([[0]*32,[1]*32]))
+            self.assertEqual(g['signal'],'terminal_success');self.assertIs(adjusted,c)
+
+    def test_bad_secondary_samples_are_rejected_before_selection(self):
+        c=context('bad',[action('A',effect(0))],{}, {})
+        for bad in (np.array([[np.nan]*16]),np.ones((1,17)),np.array([[2.]*16])):
+            with self.assertRaises(ValueError):choose_with_progress(c,('A',),np.ones((1,16)),bad)
+
+    def test_owner_reflex_continuation_matches_forced_single_card_rules(self):
+        s=replace(ThanksPosition.start(4,35),remaining=0,chips=(11,0,11,11))
+        memory=PublicMemory('no_thanks',0);before=copy.deepcopy(memory.record())
+        for profile in PROFILES:
+            scores,shares=_thanks_simulate(s,0,memory,True,('TAKE','PASS'),(0,0),16,np.random.default_rng(8),own_profile=profile)
+            np.testing.assert_array_equal(scores[0],np.tile([24,0,-11,-11],(16,1)))
+            np.testing.assert_array_equal(scores[1],np.tile([-10,34,-11,-11],(16,1)))
+            self.assertEqual(memory.record(),before)
+
+    def test_both_components_are_deterministic_and_preserve_owner_state(self):
+        s=replace(ThanksPosition.start(4,30),remaining=2);p=PROFILES[3];m=PublicMemory('no_thanks',0)
+        state=dict(primary_need='esteem',mode='principle',intent_action='PASS',age=5,mode_urgency=.5)
+        saved=copy.deepcopy(state);budget=SearchBudget(8,16,16,1)
+        a=decide('no_thanks',s,0,p,2,0,0,m,state,'adaptive',budget,variant='combined')
+        b=decide('no_thanks',s,0,p,2,0,0,m,state,'adaptive',budget,variant='combined')
+        self.assertEqual(a,b);self.assertEqual(state,saved)
+        self.assertIn('NOT future root-search',a[2]['continuation'])
+
+
+if __name__=='__main__':unittest.main()
