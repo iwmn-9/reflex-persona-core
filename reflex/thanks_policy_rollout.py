@@ -6,13 +6,14 @@ the improved root selector itself is not recursively called in its own model.
 """
 import copy
 import pickle
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, replace,asdict
 import numpy as np
 from .board_models import ThanksAdapter, thanks_referee_score
 from .core import digest
 from .monte_carlo import RolloutBudget, TerminalEvaluation
 from .policy_rollout import evaluate_policy
-from .strong_search import NAMES, PERSONA, persona_context
+from .strong_search import NAMES, PERSONA, persona_context,PublicMemory,search,objective_choice,random_stream
+from .laboratory import PROFILES
 from .goal_progress import relative_progress, choose_with_progress, omit_expired_proxies
 
 
@@ -25,7 +26,7 @@ class Branch:
 
 class OwnerPolicyModel:
     def __init__(self, position, viewer, profile, memory, owner_state, root_decision,
-                 seed, encounter, tick, mode, budget=PERSONA, base=None,future_seed='same_owner'):
+                 seed, encounter, tick, mode, budget=PERSONA, base=None,future_seed='same_owner',rival_policy='reactive'):
         from .strong_table import decide
         self.initial=position;self.viewer=viewer;self.profile=copy.deepcopy(profile)
         self.initial_memory=copy.deepcopy(memory);self.initial_state=copy.deepcopy(owner_state)
@@ -37,6 +38,8 @@ class OwnerPolicyModel:
         if viewer!=position.turn or len(position.chips)!=4 or sum(position.chips)+position.pot!=44:
             raise ValueError('active owner in the four-player public chip ledger required')
         self.future_seed=future_seed
+        if rival_policy not in ('reactive','searched'):raise ValueError('declared rival continuation required')
+        self.rival_policy=rival_policy;self.rival_cache={};self.rival_requests=0;self.rival_searches=0
         self.policy_calls=0;self.transitions=0;self.samples=[];self.starts=0
 
     def begin_trial(self):
@@ -44,6 +47,8 @@ class OwnerPolicyModel:
         self.memory=copy.deepcopy(self.initial_memory)
         self.owner_state=copy.deepcopy(self.root_decision['next_state'])
         self.deck=None;self.kinds=None;self.nonce=None;self.root_committed=False
+        self.rival_memories=[PublicMemory('no_thanks',a) for a in range(4)] if self.rival_policy=='searched' else None
+        self.rival_states=[None]*4
 
     def terminal(self,b): return b.position.card is None and b.position.remaining==0
     def chance(self,b): return b.position.card is None and b.position.remaining>0
@@ -59,8 +64,13 @@ class OwnerPolicyModel:
             self.viewer,'base-policy-world',self.trial])[:16],16))
         unseen=np.array([c for c in range(3,36) if c not in self.initial.seen])
         self.deck=list(map(int,common.permutation(unseen)[:self.initial.remaining]))
-        self.kinds=[NAMES[int(common.choice(len(NAMES),p=self.initial_memory.weights(a,self.mode=='adaptive')))]
-                    for a in range(4)]
+        if self.rival_policy=='reactive':
+            self.kinds=[NAMES[int(common.choice(len(NAMES),p=self.initial_memory.weights(a,self.mode=='adaptive')))] for a in range(4)]
+        else:
+            # A new unlearned public prior, NOT weights borrowed from the old
+            # reactive hypotheses and NOT identities from the real roster.
+            menu=('objective',*(p['id'] for p in PROFILES))
+            self.kinds=[menu[int(common.choice(len(menu),p=np.full(len(menu),1/len(menu))))] for a in range(4)]
         self.nonce=int(common.integers(0,2**62))
 
     def _commit_root(self,b):
@@ -68,6 +78,9 @@ class OwnerPolicyModel:
         self.owner_state['intent_action']=b.root
         old=self.initial_state
         self.owner_state['age']=min(old['age']+1,1000000) if old and old['intent_action']==b.root else 0
+        if self.rival_memories is not None:
+            for a in range(4):
+                if a!=self.viewer:self.rival_memories[a].observe(self.initial,self.viewer,b.root,f'virtual-root-{self.nonce}')
         self.root_committed=True
 
     def sample(self,b,rng):
@@ -98,6 +111,8 @@ class OwnerPolicyModel:
             else:d=self.cache[key]
             self.owner_state=copy.deepcopy(d['next_state'])
             return d['action_id']
+        if self.rival_policy=='searched':
+            return self._searched_rival(s,b.steps)
         if len(legal)==1:return legal[0]
         probs=self.memory.models(s,s.turn,self.mode=='adaptive')[self.kinds[s.turn]]
         probs=np.array([.92*probs[a]+.08/len(legal) for a in legal])
@@ -107,8 +122,32 @@ class OwnerPolicyModel:
         s=b.position
         if s.turn!=self.viewer and self.mode=='adaptive':
             self.memory.observe(s,s.turn,a,f'virtual-{self.nonce}-{b.steps}-{s.turn}')
+        if self.rival_memories is not None:
+            for viewer in range(4):
+                if viewer!=self.viewer and viewer!=s.turn:
+                    self.rival_memories[viewer].observe(s,s.turn,a,f'virtual-{self.nonce}-{b.steps}-{s.turn}')
         self.transitions+=1
         return replace(b,position=s.play(a),steps=b.steps+1)
+
+    def _searched_rival(self,s,steps):
+        from .strong_table import decide as rival_decide
+        actor=s.turn;kind=self.kinds[actor];memory=self.rival_memories[actor];state=self.rival_states[actor]
+        tick=self.tick+steps+1;key=(s,actor,kind,self.nonce,tick,pickle.dumps((memory,state),protocol=5))
+        self.rival_requests+=1
+        if key not in self.rival_cache:
+            if kind=='objective':
+                names,scores,shares,_=search('no_thanks',s,actor,memory,True,self.budget,
+                    random_stream(self.nonce,'no_thanks',self.encounter,tick,actor,'public-objective-hypothesis'))
+                result=(names[objective_choice('no_thanks',names,scores,shares,actor)],None)
+            else:
+                profile=next(p for p in PROFILES if p['id']==kind)
+                _,d,_=rival_decide('no_thanks',s,actor,profile,self.nonce,self.encounter,tick,memory,state,
+                    'adaptive',self.budget,variant='certified_expiry')
+                result=(d['action_id'],copy.deepcopy(d['next_state']))
+            if len(self.rival_cache)>=4096:self.rival_cache.pop(next(iter(self.rival_cache)))
+            self.rival_cache[key]=result;self.rival_searches+=1
+        action,next_state=self.rival_cache[key];self.rival_states[actor]=copy.deepcopy(next_state)
+        return action
 
     def evaluate(self,b):
         self._commit_root(b)
@@ -126,18 +165,21 @@ class OwnerPolicyModel:
 
 
 def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
-           *,variant='certified_expiry',rollout=None,selection='direct',future_seed='same_owner'):
+           *,variant='certified_expiry',rollout=None,selection='direct',future_seed='same_owner',rival_policy='reactive'):
     from .strong_table import decide as incumbent
     c,d,stats=incumbent(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget,variant=variant)
     if selection not in ('direct','paired_guard'):raise ValueError('registered rollout selection required')
     if game!='no_thanks' or mode=='reflex' or variant!='certified_expiry' or len(s.legal())<2:return c,d,stats
     rollout=RolloutBudget(samples=8,min_samples=8,max_nodes=100000,max_steps=2048,rollout_policy='persona') if rollout is None else rollout
-    model=OwnerPolicyModel(s,viewer,p,memory,state,d,seed,encounter,tick,mode,budget,future_seed=future_seed)
+    model=OwnerPolicyModel(s,viewer,p,memory,state,d,seed,encounter,tick,mode,budget,future_seed=future_seed,rival_policy=rival_policy)
     roots={a:Branch(s.play(a),a) for a in s.legal()}
     _,samples,rs=evaluate_policy(roots,model,rollout,[seed,game,encounter,tick,viewer,'actual-base-policy'])
     rs.update(owner_searches=model.policy_calls,owner_requests=model.policy_requests,
-        cache_hits=model.policy_requests-model.policy_calls,owner_budget=vars(budget),future_seed=future_seed,
-        continuation='actual certified_expiry base controller re-searches after every future owner turn; public rival hypotheses; NOT recursively improved controller')
+        cache_hits=model.policy_requests-model.policy_calls,owner_budget=asdict(budget),future_seed=future_seed,
+        rival_policy=rival_policy,rival_requests=model.rival_requests,rival_searches=model.rival_searches,rival_budget=asdict(budget),
+        rival_initial_state='unknown private rival state/memory represented by a fresh fictional public-history observer; no real rival state copied' if rival_policy=='searched' else 'owner-observed reactive model mixture',
+        continuation='actual certified_expiry base controller re-searches after every future owner turn; '+
+            ('unlearned five searched public rival hypotheses' if rival_policy=='searched' else 'owner-learned reactive public rival hypotheses')+'; NOT recursively improved controller')
     stats=dict(stats,policy_rollout=rs,incumbent_action=d['action_id'])
     if not rs['used']:return c,d,stats
     names=s.legal();n=rs['completed_samples']

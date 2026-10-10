@@ -112,6 +112,26 @@ class PolicyRolloutTests(unittest.TestCase):
         filtered=copy.deepcopy(rc);filtered['actions']=[a for a in rc['actions'] if a['id'] in st['guard']['allowed']]
         self.assertEqual(score(filtered)[0],rd);self.assertEqual(st['sample_count'],2)
         self.assertTrue(all(v['win_share']==st['policy_rollout']['actions'][a]['win_share'] for a,v in st['actions'].items()))
+        st['policy_rollout']['owner_budget']['train']=999
+        self.assertEqual(PERSONA.train,32)
+
+    def test_searched_rivals_have_fictional_state_and_preserve_actual_memory(self):
+        s,m,p,c,d=self.setup_model();before=copy.deepcopy(m.record())
+        model=OwnerPolicyModel(s,0,p,m,None,d,123,0,0,'adaptive',rival_policy='searched')
+        roots={a:Branch(s.play(a),a) for a in s.legal()}
+        _,samples,stats=evaluate_policy(roots,model,RolloutBudget(samples=2,min_samples=2,max_nodes=10000),'public-searched')
+        self.assertTrue(stats['used']);self.assertGreater(model.rival_searches,0)
+        self.assertTrue(set(model.kinds)<={'objective','growth','steady','care','ego'})
+        self.assertEqual(m.record(),before);self.assertTrue(all(len(v)==2 for v in samples.values()))
+        self.assertTrue(all(model.rival_memories[a].viewer==a for a in range(4)))
+
+    def test_forced_searched_persona_still_commits_its_hypothetical_intent(self):
+        from dataclasses import replace
+        s,m,p,c,d=self.setup_model();s=replace(s,chips=(10,0,20,14))
+        model=OwnerPolicyModel(s,0,p,m,None,d,123,0,0,'adaptive',rival_policy='searched')
+        model.begin_trial();b=Branch(s.play('PASS'),'PASS');model._initialize(np.random.default_rng(1));model.kinds[1]='care'
+        self.assertEqual(model.choose(b,np.random.default_rng(2),'persona'),'TAKE')
+        self.assertEqual(model.rival_states[1]['intent_action'],'TAKE')
 
 
 if __name__=='__main__':unittest.main()
