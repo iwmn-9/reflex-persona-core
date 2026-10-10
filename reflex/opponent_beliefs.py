@@ -73,12 +73,19 @@ class HypothesisTracker:
         confidence=min(.9,evidence*max(0.,1-entropy)*quality)
         return BeliefSnapshot(self.names,weights,self.observations,float(confidence),self.smoothing,self.surprise,self.responsive)
 
-    def observe(self,models,action,observation_id):
+    def observe(self,models,action,observation_id,*,forecast=None):
         actions,matrix=distributions(models,self.names,self.smoothing)
         if action not in actions: raise ValueError('revealed action must have been legal before reveal')
         if not isinstance(observation_id,str) or not observation_id: raise ValueError('observation ID required')
         if observation_id in self.ids: raise ValueError('duplicate public observation')
-        before=self.snapshot(); forecast=before.predict(models)
+        before=self.snapshot()
+        if forecast is None:forecast=before.predict(models)
+        else:
+            if set(forecast)!=set(actions):raise ValueError('forecast must cover identical legal actions')
+            probabilities=list(forecast.values())
+            if any(isinstance(p,bool) or not isinstance(p,(float,int)) or not math.isfinite(p) or p<=0 for p in probabilities):
+                raise ValueError('forecast requires finite positive probabilities')
+            if abs(sum(probabilities)-1)>1e-8:raise ValueError('forecast probabilities must sum to one')
         predictive=forecast[action]; uniform=1/len(actions)
         self.ids.append(observation_id)
         effective_retention=None

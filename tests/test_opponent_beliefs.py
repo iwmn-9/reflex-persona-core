@@ -12,6 +12,17 @@ from reflex.opponent_reading_experiment import play,prediction_probe
 
 
 class OpponentBeliefTests(unittest.TestCase):
+    def test_actual_caller_forecast_controls_surprise_and_invalid_input_is_atomic(self):
+        t=HypothesisTracker(('uniform','high','low'));models=self.distributions()
+        self.assertEqual(t.snapshot().predict(models)['A'],.5)
+        r=t.observe(models,'A','unexpected',forecast={'A':.1,'B':.9})
+        self.assertEqual(r['predicted_probability'],.1)
+        self.assertAlmostEqual(r['effective_retention'],t.retention*.25)
+        before=copy.deepcopy(t.__dict__)
+        for bad in ({'A':.5},{'A':0.,'B':1.},{'A':float('nan'),'B':.5},{'A':.6,'B':.6}):
+            with self.assertRaises(ValueError):t.observe(models,'A','invalid',forecast=bad)
+            self.assertEqual(t.__dict__,before)
+
     def distributions(self):
         return dict(uniform={'A':.5,'B':.5},high={'A':0.,'B':1.},low={'A':1.,'B':0.})
 

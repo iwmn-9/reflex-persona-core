@@ -33,7 +33,7 @@ def card_score(cards,chips):
     return total-chips
 
 
-def audit(root,replay=False,source_ref=None):
+def audit(root,replay=False,source_ref=None,replay_games=None):
     global PublicMemory,SearchBudget,play,summarize
     root=Path(root);evaluation=json.loads((root/'evaluation.json').read_text(encoding='utf-8'))
     plan=json.loads((root/'preregister.json').read_text(encoding='utf-8'));assert plan==evaluation['plan']
@@ -44,14 +44,14 @@ def audit(root,replay=False,source_ref=None):
         if hashlib.sha256(data).hexdigest()!=sha:
             assert source_ref is not None,'use --source-ref for the registered implementation: '+name
             data=subprocess.check_output(['git','show',f'{source_ref}:{normalized_name}'],cwd=base)
-            assert normalized_name in ('reflex/strong_search.py','reflex/strong_table.py'),'unexpected runtime dependency change'
+            assert normalized_name in ('reflex/opponent_beliefs.py','reflex/strong_search.py','reflex/strong_table.py'),'unexpected runtime dependency change'
             frozen[normalized_name]=data
         assert hashlib.sha256(data).hexdigest()==sha,name
-    # The two experiment modules may later fix presentation/aggregation. Replay
+    # The experiment modules and feedback learner may later fix connections. Replay
     # their actual immutable implementation, with every shared dependency still
     # checked against the registration. No changes to the working tree.
     if frozen:
-        for name in ('reflex/strong_search.py','reflex/strong_table.py'):
+        for name in ('reflex/opponent_beliefs.py','reflex/strong_search.py','reflex/strong_table.py'):
             data=frozen.get(name,(base/name).read_bytes());module_name=name[:-3].replace('/','.')
             module=types.ModuleType(module_name);module.__package__='reflex';module.__file__=str(base/name)
             sys.modules[module_name]=module;exec(compile(data,str(base/name),'exec'),module.__dict__)
@@ -215,6 +215,7 @@ def audit(root,replay=False,source_ref=None):
         seed=plan['seeds'][0];bench=seed%4;others=[p for i,p in enumerate(PROFILES) if i!=(seed//4)%4]
         roster={a:p for a,p in zip([a for a in range(4) if a!=bench],others)}
         for game in plan['games']:
+            if replay_games is not None and game not in replay_games:continue
             for mode in plan['modes']:
                 memories=[PublicMemory(game,a) for a in range(4)]
                 for encounter in range(plan['encounters']):
@@ -227,7 +228,7 @@ def audit(root,replay=False,source_ref=None):
     proof=dict(matches=len(indexed),**counts,all_finished=True,source_hashes_checked=len(plan['sources']),
         source_reference=source_ref,immutable_modules_replayed=sorted(frozen),
         trajectory_sha256=evaluation['trajectory_sha256'],exact_search_replayed_matches=replayed,
-        replay_scope='first registered series, both games, every mode and every encounter' if replay else None,
+        replay_scope=dict(series=plan['seeds'][0],games=(list(replay_games) if replay_games is not None else plan['games']),modes=plan['modes'],encounters=plan['encounters']) if replay else None,
         learning_replay='same algorithm from past public acts; clock/isolation integration check',
         fixed_personality_verified=True,one_objective_cpu_verified=True,matched_worlds_verified=True,
         predictive_losses=[dict(game=k[0],mode=k[1],observer_kind=k[2],observations=len(v),

@@ -16,6 +16,29 @@ from reflex.examples import context, action, effect
 
 
 class StrongTableTests(unittest.TestCase):
+    def test_learning_scores_the_actual_pre_reveal_forecast(self):
+        for game,s,actor,viewer,move in (('goofspiel',Position.start(4,3),1,0,'BID:3'),
+                                       ('no_thanks',ThanksPosition.start(4,35),0,1,'TAKE')):
+            m=PublicMemory(game,viewer)
+            for i in range(8):
+                expected=m.predict(s,actor)[move]
+                r=m.observe(s,actor,move,f'actual-{i}')
+                self.assertEqual(r['predicted_probability'],expected)
+                self.assertEqual(r['mixture_probability'],expected)
+                self.assertEqual(r['log_loss'],r['mixture_log_loss'])
+
+    def test_recent_threshold_is_used_in_future_rollouts_and_removed_when_frozen(self):
+        s=replace(ThanksPosition.start(4,5),remaining=0,chips=(22,22,0,0))
+        m=PublicMemory('no_thanks',0);m.recent[1]=[(True,10),(False,12)]
+        self.assertEqual(m.recent_threshold(1),11);self.assertEqual(m.recent_threshold(1,False),0)
+        def weights(actor,adaptive=True):
+            w=np.zeros(12);w[10]=1.;return w
+        m.weights=weights
+        actual,_=_thanks_simulate(s,0,m,True,('PASS',),(0,),16,np.random.default_rng(8))
+        frozen,_=_thanks_simulate(s,0,m,False,('PASS',),(0,),16,np.random.default_rng(8))
+        np.testing.assert_array_equal(actual[0],np.tile([-21,-18,0,0],(16,1)))
+        np.testing.assert_array_equal(frozen[0],np.tile([-21,-21,3,0],(16,1)))
+
     def test_shared_allocations_equal_exhaustive_independent_scalar_games(self):
         s=Position.start(4,3);plans=np.array(list(permutations((1,2,3))))
         scenarios=np.zeros((216,4,3),int)

@@ -80,6 +80,13 @@ class PublicMemory:
         gap=(scores[actor]-min(v for a,v in enumerate(scores) if a!=actor))/60
         return np.array([1.,(added-s.pot)/20,s.chips[actor]/11,gap,s.remaining/24,s.pot/10])
 
+    def recent_threshold(self,actor,use_history=True):
+        past=self.recent[actor] if use_history else []
+        accepted=[gap for take,gap in past if take]
+        rejected=[gap for take,gap in past if not take]
+        threshold=(max(accepted)+min(rejected))/2 if accepted and rejected else (max(accepted) if accepted else 0.)
+        return float(np.clip(threshold,-4,12))
+
     def models(self,s,actor,use_history=True):
         result=dict(_public_models(self.game,s,actor))
         if self.game=='goofspiel':
@@ -96,11 +103,7 @@ class PublicMemory:
             names=s.legal();added=card_points(s.cards[actor]+(s.card,))-card_points(s.cards[actor])
             def pick(margin,reserve=0):
                 return 'TAKE' if len(names)==1 or s.chips[actor]<=reserve or added<=s.pot+margin else 'PASS'
-            past=self.recent[actor] if use_history else []
-            accepted=[gap for take,gap in past if take]
-            rejected=[gap for take,gap in past if not take]
-            threshold=(max(accepted)+min(rejected))/2 if accepted and rejected else (max(accepted) if accepted else 0.)
-            result['recent']=distribution(names,pick(float(np.clip(threshold,-4,12))))
+            result['recent']=distribution(names,pick(self.recent_threshold(actor,use_history)))
             coefficients=self.coefficients[actor] if use_history else self.initial_coefficients
             z=float(np.clip(coefficients@self.features(s,actor),-12,12));take=1/(1+math.exp(-z))
             result['conditional']=({'TAKE':1.} if len(names)==1 else {'TAKE':take,'PASS':1-take})
@@ -121,7 +124,7 @@ class PublicMemory:
     def observe(self,s,actor,revealed,observation_id):
         if actor==self.viewer:return None
         models=self.models(s,actor);prediction=self.predict(s,actor,models=models)
-        row=self.trackers[actor].observe(models,revealed,observation_id)
+        row=self.trackers[actor].observe(models,revealed,observation_id,forecast=prediction)
         row['mixture_probability']=prediction[revealed]
         row['mixture_log_loss']=-math.log(prediction[revealed])
         if len(prediction)>1:
@@ -375,6 +378,7 @@ def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng):
     for actor in range(players):
         kinds[:,actor]=np.tile(rng.choice(len(NAMES),count,p=memory.weights(actor,adaptive)),len(roots))
     own_style=np.repeat(styles,count);root=np.repeat(roots,count)
+    recent_thresholds=np.array([memory.recent_threshold(actor,adaptive) for actor in range(players)])
     model_states=np.zeros((n,players,3));model_states[:,:,:2]=-1
     # Root rival action distributions are not consulted: decision belongs to viewer.
     for step in range(2048):
@@ -384,6 +388,7 @@ def _thanks_simulate(s,viewer,memory,adaptive,roots,styles,count,rng):
         added=np.where(cards[active,a,c-1],0,c)-np.where(cards[active,a,c+1],c+1,0)
         typ=kinds[active,a]
         margins=np.array([0,0,9,-2,4,0,4,0,1,7,0,0])[typ]
+        margins=np.where(typ==10,recent_thresholds[a],margins)
         reserves=np.array([0,2,0,0,0,0,0,3,1,0,0,0])[typ]
         # Own continuation is one shared threshold policy per candidate, chosen
         # on training returns then evaluated on fresh decks, never per deck.
