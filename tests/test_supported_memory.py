@@ -93,5 +93,14 @@ class SupportedMemoryTests(unittest.TestCase):
         with self.assertRaises(ValueError):m.observe(late,0,'TAKE','late-7')
         self.assertEqual(unchanged,m.record())
 
+    def test_forced_responses_never_supply_transfer_trials_even_with_roundoff(self):
+        m=ValidatedPublicMemory('no_thanks',1);s=replace(ThanksPosition.start(4,35),remaining=0,chips=(0,11,11,11))
+        rng=np.random.default_rng(3)
+        for i in range(100):
+            m.shared.trackers[0].logs=list(rng.normal(size=12)*4)
+            record=m.observe(s,0,'TAKE',f'forced-{i}')
+            self.assertFalse(record['transfer']['scored'])
+        self.assertEqual(m.transfer.entries,{})
+
 
 if __name__=='__main__':unittest.main()

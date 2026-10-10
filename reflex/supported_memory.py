@@ -97,7 +97,8 @@ class ValidatedPublicMemory(SupportedPublicMemory):
         updated=copy.deepcopy(self)
         local_prediction=local.predict(s,actor);shared_prediction=self.shared.predict(s,actor)
         actual_prediction=self.predict(s,actor)
-        transfer=updated.transfer.categorical(self._key(opportunity,actor),local_prediction,shared_prediction,revealed)
+        transfer=(updated.transfer.categorical(self._key(opportunity,actor),local_prediction,shared_prediction,revealed)
+                  if len(local_prediction)>1 else dict(scored=False,reason='forced public response supplies no transfer evidence'))
         record=SupportedPublicMemory.observe(updated,s,actor,revealed,observation_id)
         updated.shared.observe(s,actor,revealed,observation_id)
         self.support,self.ids,self.shared,self.transfer=updated.support,updated.ids,updated.shared,updated.transfer

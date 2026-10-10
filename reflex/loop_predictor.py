@@ -148,7 +148,8 @@ class ValidatedSupportedCategoricalReader(SupportedCategoricalReader):
         index=0 if local.known_conditionals else 1
         local_forecast=local.forecasts(context)[index];shared_forecast=self.shared.forecasts(context)[index]
         new=copy.deepcopy(self)
-        transfer=new.transfer.categorical(opportunity,local_forecast,shared_forecast,event['revealed_action'])
+        transfer=(new.transfer.categorical(opportunity,local_forecast,shared_forecast,event['revealed_action'])
+                  if len(local_forecast)>1 else dict(scored=False,reason='forced public response supplies no transfer evidence'))
         child,update=local.updated(context,observed,event,ticket)
         new.support._banks[opportunity]=child
         new.shared,_=self.shared.updated(context,observed,event,ticket)
