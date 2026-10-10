@@ -14,7 +14,8 @@ class FrozenExperimentTests(unittest.TestCase):
             with patch('tools.freeze_experiment.subprocess.run') as run:
                 dispatch(root,'run_supported_comparison.py',['--start','7000','--seeds','4'])
             args=run.call_args.args[0];snapshot=root/'_source'
-            self.assertEqual(Path(args[1]),snapshot/'tools/run_supported_comparison.py')
+            # Windows runners may expose the temp directory via its 8.3 alias.
+            self.assertEqual(Path(args[1]).resolve(),(snapshot/'tools/run_supported_comparison.py').resolve())
             self.assertIn('--frozen',args)
             records=json.loads((root/'source_snapshot.json').read_text(encoding='utf-8'))
             self.assertTrue(records)
