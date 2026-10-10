@@ -41,8 +41,10 @@ def analyze(root):
         for seed in seeds:
             for enc in range(encounters):
                 a=index[variants[0],game,seed,enc];b=index[variants[1],game,seed,enc]
-                assert a['benchmark']==b['benchmark'] and a['profiles']==b['profiles']
-                assert a['final']['prizes' if game=='goofspiel' else 'seen']==b['final']['prizes' if game=='goofspiel' else 'seen']
+                for variant in variants[1:]:
+                    compared=index[variant,game,seed,enc]
+                    assert a['benchmark']==compared['benchmark'] and a['profiles']==compared['profiles']
+                    assert a['final']['prizes' if game=='goofspiel' else 'seen']==compared['final']['prizes' if game=='goofspiel' else 'seen']
                 if game=='goofspiel':
                     for k in ('scores','credits','final','failures','reading_changes','guards'):assert a[k]==b[k]
                     negative+=1
