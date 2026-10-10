@@ -79,5 +79,23 @@ class PolicyRolloutTests(unittest.TestCase):
         model.choose(branch,np.random.default_rng(2),'persona')
         self.assertEqual(ticks,[18])
 
+    def test_same_public_future_uses_actual_owner_identity_and_selector(self):
+        s,m,p,c,d=self.setup_model()
+        model=OwnerPolicyModel(s,0,p,m,None,d,123,2,17,'adaptive')
+        model.begin_trial();branch=model.sample(Branch(s.play('TAKE'),'TAKE'),np.random.default_rng(1))
+        expected=base_decide('no_thanks',branch.position,0,p,123,2,18,model.memory,
+            copy.deepcopy(model.owner_state),'adaptive',PERSONA,variant='certified_expiry')[1]
+        actual=model.choose(branch,np.random.default_rng(2),'persona')
+        self.assertEqual(actual,expected['action_id']);self.assertEqual(model.owner_state,expected['next_state'])
+
+    def test_owner_seed_ablation_is_explicit(self):
+        s,m,p,c,d=self.setup_model();nonces=[]
+        def owner(*args,**kw):nonces.append(args[4]);return c,d,{}
+        for mode in ('same_owner','resampled'):
+            model=OwnerPolicyModel(s,0,p,m,None,d,123,0,0,'adaptive',base=owner,future_seed=mode)
+            model.begin_trial();branch=model.sample(Branch(s.play('TAKE'),'TAKE'),np.random.default_rng(1))
+            model.choose(branch,np.random.default_rng(2),'persona')
+        self.assertEqual(nonces[0],123);self.assertNotEqual(nonces[1],123)
+
 
 if __name__=='__main__':unittest.main()
