@@ -18,7 +18,7 @@ from .goal_progress import relative_progress, choose_with_progress, omit_expired
 from .strong_search import _thanks_simulate
 
 MODES=('reflex','planned','adaptive')
-VARIANTS=('baseline','progress','continuation','combined','certified_expiry','settlement')
+VARIANTS=('baseline','progress','continuation','combined','certified_expiry','settlement','robust')
 
 
 @dataclass(frozen=True)
@@ -55,14 +55,35 @@ def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
         if game=='goofspiel':c=competitive(make_context(s,viewer,p,'win_share',seed,tick,episode,state))
         else:c,_=thanks_observe(s,p,seed,tick,episode,state)
         d,_=score(c);return c,d,dict(method='reflex',action=d['action_id'])
-    if game=='no_thanks' and variant=='settlement' and s.remaining==0:
+    if game=='no_thanks' and variant in ('settlement','robust') and s.remaining==0:
         from .settlement_solver import solve
         if mode=='planned':
             memory=PublicMemory(game,viewer)
-        c,d,stats=solve(s,viewer,p,seed,encounter,tick,memory,state,adaptive=mode=='adaptive')
+        c,d,stats=solve(s,viewer,p,seed,encounter,tick,memory,state,adaptive=mode=='adaptive',robust=variant=='robust')
         stats['method']=mode
         return c,d,stats
     adaptive=mode=='adaptive';rng=random_stream(seed,game,encounter,tick,viewer,'npc-search')
+    if variant=='robust':
+        from .robust_goal import select
+        baseline=getattr(memory,'shared',memory)
+        names,scores,shares,stats=search(game,s,viewer,baseline,adaptive,budget,rng)
+        direction=1 if game=='goofspiel' else -1;scale=max(s.prizes) if game=='goofspiel' else 35
+        forecasts={'shared':(shares,relative_progress(scores,viewer,direction=direction,scale=scale))}
+        model_stats={'shared':stats['actions']}
+        model_work={'shared':{k:v for k,v in stats.items() if k!='actions'}}
+        if adaptive and hasattr(memory,'_specialized') and memory._specialized(True):
+            other_names,other_scores,other_shares,other_stats=search(game,s,viewer,memory,adaptive,budget,
+                random_stream(seed,game,encounter,tick,viewer,'npc-search'))
+            assert names==other_names
+            forecasts['specialized']=(other_shares,relative_progress(other_scores,viewer,direction=direction,scale=scale))
+            model_stats['specialized']=other_stats['actions']
+            model_work['specialized']={k:v for k,v in other_stats.items() if k!='actions'}
+        c=persona_context(game,s,viewer,p,seed,tick,episode,state,names,scores,shares)
+        c,d,guard=select(c,names,forecasts)
+        for key,model in model_stats.items():
+            for j,a in enumerate(names):model[a]['goal_progress']=float(forecasts[key][1][j].mean())
+        stats.update(method=mode,guard=guard,action=d['action_id'],variant=variant,model_actions=model_stats,model_search_work=model_work)
+        return c,d,stats
     if game=='no_thanks' and variant in ('continuation','combined'):
         names=s.legal()
         scores,shares=_thanks_simulate(s,viewer,memory,adaptive,names,(0,)*len(names),budget.validate,rng,

@@ -181,7 +181,7 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
                 else:
                     assert c['facts']['public_counter_ledger']==str(tuple(b['chips']));assert c['facts']['seen']==str(tuple(b['seen']))
                     expires=(b['remaining']==0 and (plan.get('variant')=='horizon_progress' or
-                        plan.get('variant') in ('certified_expiry','settlement') and b['chips'][(actor+1)%4]==0))
+                        plan.get('variant') in ('certified_expiry','settlement','robust') and b['chips'][(actor+1)%4]==0))
                     if expires:
                         assert 'expired_proxies' in c['facts']
                         assert c['needs']['safety']['enabled'] is False and c['needs']['safety']['deficit'] is None
@@ -190,12 +190,12 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
                             for outcome in act['outcomes']:
                                 assert outcome['needs']['safety']==outcome['values']['security']==outcome['style']['neuroticism']==0
                         counts['no_thanks_real_expiry_choices']+=1
-                        if plan.get('variant') in ('certified_expiry','settlement'):assert 'expiry_certificate' in c['facts']
+                        if plan.get('variant') in ('certified_expiry','settlement','robust'):assert 'expiry_certificate' in c['facts']
                     else:assert 'expired_proxies' not in c['facts']
                 filtered=normalized(c)
                 if d['method']!='reflex':
                     guard=st['guard'];assert chosen in guard['allowed'];running['guards']+=guard['guard_changed']
-                    finite=game=='no_thanks' and plan.get('variant')=='settlement' and b['remaining']==0
+                    finite=game=='no_thanks' and plan.get('variant') in ('settlement','robust') and b['remaining']==0
                     assert st['sample_count']==(0 if finite else plan['persona']['validate'])
                     if finite:
                         assert st['finite_chain_nodes']<=45 and all(q['standard_error']==0 for q in st['actions'].values())
@@ -210,11 +210,32 @@ def audit(root,replay=False,source_ref=None,replay_games=None):
                     else:
                         assert signal=='terminal_success'
                         means={name:q['win_share'] for name,q in st['actions'].items()}
-                    best=max(means.values())
-                    for name,bound in guard['bounds'].items():
-                        assert math.isclose(best-means[name],bound['estimated_regret'],abs_tol=1e-12)
-                        assert math.isclose(bound['lower_bound'],bound['estimated_regret']-2*bound['sampling_error'],abs_tol=1e-12)
-                        assert (bound['lower_bound']<=.12+(1e-12 if finite else 0))==(name in guard['allowed'])
+                    if guard.get('model_robust'):
+                        names=list(means);worst={name:0. for name in names};assert guard['error_multiplier']==2
+                        assert set(st['model_actions'])==set(guard['model_means'])==set(guard['model_sampling_errors'])
+                        for key,model_means in guard['model_means'].items():
+                            assert len(model_means)==len(names);best=max(model_means)
+                            errors=guard['model_sampling_errors'][key];regrets=guard['model_regrets'][key]
+                            for j,name in enumerate(names):
+                                value=st['model_actions'][key][name]['goal_progress' if signal=='goal_progress_on_constant_success' else 'win_share']
+                                assert math.isclose(value,model_means[j],abs_tol=1e-12)
+                                if signal=='goal_progress_on_constant_success':assert st['model_actions'][key][name]['win_share']==0
+                                assert math.isclose(best-model_means[j],regrets[j],abs_tol=1e-12)
+                                assert 0<=errors[j]<=1 and (not finite or errors[j]==0)
+                                worst[name]=max(worst[name],regrets[j]-2*errors[j])
+                        unavoidable=min(worst.values());limit=unavoidable+.12
+                        assert math.isclose(guard['unavoidable_model_regret'],unavoidable,abs_tol=1e-12)
+                        assert math.isclose(guard['allowed_model_regret'],limit,abs_tol=1e-12)
+                        for name,bound in guard['bounds'].items():
+                            assert math.isclose(bound['lower_bound'],worst[name],abs_tol=1e-12)
+                            assert (worst[name]<=limit+1e-12)==(name in guard['allowed'])
+                        counts['robust_model_selections']+=1
+                    else:
+                        best=max(means.values())
+                        for name,bound in guard['bounds'].items():
+                            assert math.isclose(best-means[name],bound['estimated_regret'],abs_tol=1e-12)
+                            assert math.isclose(bound['lower_bound'],bound['estimated_regret']-2*bound['sampling_error'],abs_tol=1e-12)
+                            assert (bound['lower_bound']<=.12+(1e-12 if finite else 0))==(name in guard['allowed'])
                     if d['method']=='adaptive':running['changes']+=st['frozen_action']!=chosen
                 expected=score(filtered)[0];assert expected['action_id']==chosen and expected['next_state']==d['next_state']
                 counts['personality_selections_replayed']+=1

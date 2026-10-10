@@ -24,7 +24,8 @@ def points(cards,chips):
     hand=sorted(cards);return sum(c for i,c in enumerate(hand) if i==0 or hand[i-1]!=c-1)-chips
 
 
-def evaluate(s,viewer,p,seed,memory,state,root,variant,root_decision,*,mode='adaptive'):
+def evaluate(s,viewer,p,seed,memory,state,root,variant,root_decision,*,mode='adaptive',model_source='selected'):
+    if model_source not in ('shared','selected'):raise ValueError('declared public model source required')
     m=copy.deepcopy(memory);st=copy.deepcopy(root_decision['next_state']);st['intent_action']=root
     st['age']=min(state['age']+1,1000000) if state and state['intent_action']==root else 0
     current=s;probability=1.;leaves=[];clock=0;returns=0
@@ -34,7 +35,9 @@ def evaluate(s,viewer,p,seed,memory,state,root,variant,root_decision,*,mode='ada
         elif actor==viewer:
             _,d,_=decide('no_thanks',current,viewer,p,seed,0,clock,m,st,mode,PERSONA,variant=variant)
             take=float(d['action_id']=='TAKE');st=d['next_state'];returns+=1
-        else:take=1. if len(current.legal())==1 else m.predict(current,actor,adaptive=mode=='adaptive')['TAKE']
+        else:
+            predictor=getattr(m,'shared',m) if model_source=='shared' else m
+            take=1. if len(current.legal())==1 else predictor.predict(current,actor,adaptive=mode=='adaptive')['TAKE']
         if take:
             cards=[list(c) for c in current.cards];chips=list(current.chips)
             cards[actor].append(current.card);chips[actor]+=current.pot

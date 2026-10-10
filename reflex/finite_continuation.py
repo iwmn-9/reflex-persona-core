@@ -8,6 +8,48 @@ Backward evaluation uses the SAME selector at every future owner opportunity.
 import math
 
 
+def resolve_chains(models,owner,choose):
+    """Aligned public chains, ONE future owner policy across model families.
+
+    The public states/actions/terminal vectors must agree; only opponent branch
+    probabilities differ. This cannot align arbitrary divergent game trees.
+    ``choose(i, model_outcomes)`` selects one action in every family.
+    """
+    if not isinstance(models,dict) or not 1<=len(models)<=16 or any(not isinstance(k,str) or not 0<len(k)<=128 for k in models):raise ValueError('bounded aligned model families required')
+    reference=next(iter(models.values()))
+    # Reuse the single-chain contract validation without executing caller code.
+    for nodes in models.values():
+        resolve_chain(nodes,owner,lambda i,outcomes:next(iter(outcomes)))
+        if len(nodes)!=len(reference):raise ValueError('aligned public chain length required')
+        for i,(a,b) in enumerate(zip(reference,nodes)):
+            keys=('actor','settle','terminal') if i==len(reference)-1 else ('actor','settle','continue','terminal')
+            if any(a[k]!=b[k] for k in keys):
+                raise ValueError('same public opportunities and terminal vectors required')
+    suffix={key:None for key in models};roots={key:[None]*len(reference) for key in models};choices={}
+    for i in range(len(reference)-1,-1,-1):
+        outcomes={}
+        for key,nodes in models.items():
+            node=nodes[i];outcomes[key]={node['settle']:((1.,tuple(node['terminal'])),)}
+            if suffix[key] is not None:outcomes[key][node['continue']]=suffix[key]
+            roots[key][i]=outcomes[key]
+        if reference[i]['actor']==owner:
+            action=choose(i,outcomes)
+            if any(action not in o for o in outcomes.values()):raise ValueError('one legal owner action in every model required')
+            choices[i]=action
+            for key in models:suffix[key]=outcomes[key][action]
+        else:
+            for key,nodes in models.items():
+                merged={}
+                for action,distribution in outcomes[key].items():
+                    for mass,terminal in distribution:merged[terminal]=merged.get(terminal,0.)+nodes[i]['forecast'][action]*mass
+                suffix[key]=tuple((p,t) for t,p in merged.items() if p>0)
+        for key in models:
+            total=sum(p for p,_ in suffix[key])
+            if abs(total-1)>1e-8:raise ValueError('incomplete model probability mass')
+            suffix[key]=tuple((p/total,t) for p,t in suffix[key])
+    return roots,choices
+
+
 def resolve_chain(nodes,owner,choose):
     """Return weighted root outcomes and every owner decision, without sampling.
 

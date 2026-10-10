@@ -6,7 +6,7 @@ Opponent distributions remain hypotheses. Exact arithmetic is not exact skill.
 """
 import copy
 import numpy as np
-from .finite_continuation import resolve_chain
+from .finite_continuation import resolve_chain,resolve_chains
 from .strong_search import persona_context
 from .goal_progress import relative_progress, omit_expired_proxies, choose_with_weighted_progress
 from .tabletop_trials import score
@@ -33,8 +33,9 @@ def _context(s,viewer,p,seed,tick,episode,state,names,finals,shares,weights):
     return c
 
 
-def solve(s,viewer,p,seed,encounter,tick,memory,state,*,adaptive=True):
+def solve(s,viewer,p,seed,encounter,tick,memory,state,*,adaptive=True,robust=False):
     if type(adaptive) is not bool:raise ValueError('explicit boolean learning control required')
+    if type(robust) is not bool:raise ValueError('explicit boolean model control required')
     if s.remaining!=0 or s.card is None or s.turn!=viewer:raise ValueError('public final-card owner opportunity required')
     if (memory.game,memory.viewer,memory.players)!=('no_thanks',viewer,len(s.chips)):raise ValueError('game/observer support mismatch')
     episode=f'series-{seed}-encounter-{encounter}'
@@ -42,10 +43,17 @@ def solve(s,viewer,p,seed,encounter,tick,memory,state,*,adaptive=True):
     # later opportunity; TAKE ends a branch immediately. Real memory is detached.
     virtual=copy.deepcopy(memory);current=s;owner_state=copy.deepcopy(state);nodes=[];owner_states=[]
     snapshots=[];forced_pass_states={}
+    model_nodes={'shared':[]}
+    if robust and adaptive and hasattr(virtual,'shared'):model_nodes['specialized']=[]
     while True:
         i=len(nodes);actor=current.turn;legal=current.legal();settled=current.play('TAKE')
         prediction=virtual.predict(current,actor,adaptive=adaptive) if actor!=viewer else {a:1/len(legal) for a in legal}
         nodes.append({'actor':actor,'settle':'TAKE','continue':'PASS','terminal':settled.scores(),'forecast':prediction})
+        if robust:
+            baseline=getattr(virtual,'shared',virtual)
+            shared=baseline.predict(current,actor,adaptive=adaptive) if actor!=viewer else prediction
+            model_nodes['shared'].append(dict(nodes[-1],forecast=shared))
+            if 'specialized' in model_nodes:model_nodes['specialized'].append(dict(nodes[-1]))
         snapshots.append(current);owner_states.append(copy.deepcopy(owner_state))
         if len(legal)==1:break
         if actor==viewer:
@@ -63,19 +71,30 @@ def solve(s,viewer,p,seed,encounter,tick,memory,state,*,adaptive=True):
         if len(nodes)>=256:raise ValueError('ledger exceeds finite chain capacity')
     decisions={}
     def choose(i,outcomes):
-        names,finals,shares,weights=_arrays(outcomes,viewer)
+        distributions=outcomes if robust else {'shared':outcomes}
+        arrays={key:_arrays(value,viewer) for key,value in distributions.items()}
+        names,finals,shares,weights=arrays['shared']
         c=_context(snapshots[i],viewer,p,seed,tick+i,episode,owner_states[i],names,finals,shares,weights)
         progress=relative_progress(finals,viewer,direction=-1,scale=35)
-        c,d,guard=choose_with_weighted_progress(c,names,shares,progress,weights)
+        if robust:
+            from .robust_goal import select
+            forecasts={key:(a[2],relative_progress(a[1],viewer,direction=-1,scale=35)) for key,a in arrays.items()}
+            c,d,guard=select(c,names,forecasts,weights={key:a[3] for key,a in arrays.items()})
+        else:c,d,guard=choose_with_weighted_progress(c,names,shares,progress,weights)
         if d['action_id']=='PASS':
             assert d['next_state']==forced_pass_states[i],'owner state update depends on future values; chain contract invalid'
-        decisions[i]=(c,d,guard,names,finals,shares,weights,progress)
+        decisions[i]=(c,d,guard,names,finals,shares,weights,progress,arrays)
         return d['action_id']
-    roots,choices=resolve_chain(nodes,viewer,choose)
-    c,d,guard,names,finals,shares,weights,progress=decisions[0]
-    stats=dict(method='adaptive',action=d['action_id'],variant='settlement',guard=guard,sample_count=0,
+    roots,choices=(resolve_chains(model_nodes,viewer,choose) if robust else resolve_chain(nodes,viewer,choose))
+    c,d,guard,names,finals,shares,weights,progress,arrays=decisions[0]
+    stats=dict(method='adaptive',action=d['action_id'],variant='robust' if robust else 'settlement',guard=guard,sample_count=0,
         finite_chain_nodes=len(nodes),future_owner_opportunities=len(choices)-1,
         validation_scenarios=0,training_scenarios=0,
         continuation=c['facts']['continuation'],actions={a:dict(win_share=float((shares[i]*weights[i]).sum()),standard_error=0.,
             mean_score=float((finals[i,:,viewer]*weights[i]).sum()),goal_progress=float((progress[i]*weights[i]).sum())) for i,a in enumerate(names)})
+    if robust:
+        stats['model_actions']={key:{a:dict(win_share=float((v[2][j]*v[3][j]).sum()),standard_error=0.,
+            mean_score=float((v[1][j,:,viewer]*v[3][j]).sum()),
+            goal_progress=float((relative_progress(v[1],viewer,direction=-1,scale=35)[j]*v[3][j]).sum()))
+            for j,a in enumerate(v[0])} for key,v in arrays.items()}
     return c,d,stats
