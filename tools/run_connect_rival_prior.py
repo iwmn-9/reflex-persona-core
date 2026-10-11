@@ -23,10 +23,10 @@ def worker(job):
     return [a[0],a[1],b[1]]
 
 
-def run(root,start,seeds,samples,workers):
+def run(root,start,seeds,samples,workers,conditions=('baseline','minimax2','mixture'),job_worker=worker,registration=None):
     root=Path(root);root.mkdir(parents=True,exist_ok=True);base=Path(__file__).resolve().parents[1]
     plan=dict(version='public-rival-uncertainty-v1',seeds=list(range(start,start+seeds)),samples=samples,workers=workers,
-        profiles=[p['id'] for p in PROFILES],rivals=['minimax2','minimax4'],conditions=['baseline','minimax2','mixture'],owner_budget=asdict(SHORT),
+        profiles=[p['id'] for p in PROFILES],rivals=['minimax2','minimax4'],conditions=list(conditions),owner_budget=asdict(SHORT),
         primary='mixture minus baseline credit separately for two actual rival families; per-profile losses must be disclosed',
         secondary='mixture minus fixed minimax2 forecast, with actual owner continuation held constant',
         model='one latent minimax2/minimax4 class uniformly sampled per trial and shared across roots; not actual rival label; same 8 terminal trials and real owner controller',
@@ -35,11 +35,12 @@ def run(root,start,seeds,samples,workers):
         limits=['known two-model family, no online opponent-type learning','equally weighted prior matches this balanced experiment; no universal calibration',
                 'single root intervention; no human-level or continuously upgraded-policy proof'],
         sources={str(p.relative_to(base)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((base/'reflex').glob('*.py'))})
+    if registration is not None:plan.update(registration)
     path=root/'preregister.json'
     if path.exists():raise FileExistsError('fresh rival-prior study required')
     path.write_text(json.dumps(plan,indent=2)+'\n',encoding='utf-8');rows=[]
     with ProcessPoolExecutor(max_workers=workers) as pool:
-        jobs=[pool.submit(worker,(seed,p,samples,rival)) for seed in plan['seeds'] for p in range(4) for rival in plan['rivals']]
+        jobs=[pool.submit(job_worker,(seed,p,samples,rival)) for seed in plan['seeds'] for p in range(4) for rival in plan['rivals']]
         with (root/'trajectories.jsonl').open('w',encoding='utf-8') as f:
             for i,future in enumerate(as_completed(jobs),1):
                 batch=future.result();rows.extend(batch)
@@ -51,7 +52,8 @@ def run(root,start,seeds,samples,workers):
         for condition in plan['conditions']:
             rr=[r for r in rows if r['rival']==rival and r['condition']==condition]
             rates.append(dict(rival=rival,condition=condition,credit=float(np.mean([r['credit'] for r in rr]))))
-        for reference,candidate in [('baseline','mixture'),('baseline','minimax2'),('minimax2','mixture')]:
+        first,second=plan['conditions'][1:]
+        for reference,candidate in [('baseline',second),('baseline',first),(first,second)]:
             for profile in ['each_npc',*plan['profiles']]:
                 series=[];better=same=worse=0
                 for seed in plan['seeds']:
