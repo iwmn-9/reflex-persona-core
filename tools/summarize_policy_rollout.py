@@ -32,8 +32,12 @@ def assemble(root):
             git_hash=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
             assert blobs[name]==git_hash,(study,name,commit)
         if study=='actual-oracle':
+            cases=result['cases'];assert result['reference_replays']==result['alternative_branches']==len(cases)
+            assert all(c['original_root_exact_replay'] for c in cases)
             records[study]=dict(source_commit=commit,cases=result['reference_replays'],alternative_branches=result['alternative_branches'],
                 summary=result['summary'],primary_games=0,
+                diagnostic_counts=dict(equal_root_credits=sum(len({v['credit'] for v in c['actual_world_oracle'].values()})==1 for c in cases),
+                    all_roots_zero_credit=sum(all(v['credit']==0 for v in c['actual_world_oracle'].values()) for c in cases)),
                 scope='reuses registered source interventions; exact original-root replay; hindsight actual world not expected action value')
             continue
         if 'matches' in result:
