@@ -49,6 +49,25 @@ class TeamCooperationTests(unittest.TestCase):
         futures=copy.deepcopy(f.contexts);futures[0]['personality']['agreeableness']=0
         with self.assertRaises(ValueError):select(cs,replace(f,contexts=futures),group='red')
 
+    def test_unilateral_reference_does_not_claim_others_will_sacrifice(self):
+        cs,f=fixture();fs=copy.deepcopy(f.contexts)
+        roots={'idle':('wait','wait'),'dream_a':('wait','help'),
+               'dream_b':('help','wait'),'shared':('help','help')}
+        for i,c in enumerate(fs):
+            c['actions']=[action('idle',effect()),
+                action('dream_a',effect(needs={'physiology':1 if i==0 else -1})),
+                action('dream_b',effect(needs={'physiology':-1 if i==0 else 1})),
+                action('shared',effect(needs={'physiology':.2}))]
+        forecast=JointForecast(tuple(fs),roots,{'idle':0.,'dream_a':1.,'dream_b':1.,'shared':1.},4,.15)
+        ds,a=select(cs,forecast,group='red');self.assertIsNone(ds)
+        ds,a=select(cs,forecast,group='red',outside=('wait','wait'))
+        self.assertTrue(a['adopted']);self.assertEqual([d['action_id'] for d in ds],['help','help'])
+        self.assertTrue(all(g>0 for g in a['member_gains'].values()))
+
+    def test_unilateral_reference_must_include_real_independent_proposal(self):
+        cs,f=fixture();broken=replace(f,roots={'idle':('wait','help'),'shared':('help','wait')})
+        with self.assertRaises(ValueError):select(cs,broken,group='red',outside=('wait','wait'))
+
     def test_invalid_real_root_and_nonfinite_purpose_rejected(self):
         cs,f=fixture()
         with self.assertRaises(ValueError):select(cs,replace(f,roots={'idle':('wait','wait'),'shared':('illegal','help')}),group='red')
@@ -95,6 +114,14 @@ class TeamCooperationTests(unittest.TestCase):
         self.assertEqual(cs,saved);self.assertGreater(f.audit['nodes'],0)
         self.assertEqual(len(f.contexts),2)
         for roots in f.roots.values():self.assertEqual(len(roots),2)
+
+    def test_uncertain_unsigned_partner_branches_never_add_a_voting_owner(self):
+        w=tp.Workshop.start();actors=(0,1);cs=[tp.make_context(w,i,PROFILES[i],13) for i in actors]
+        ds=[Policy(principle_priority='finite').choose(c,False) for c in cs]
+        f=tp.forecast(w,actors,cs,ds,horizon=2,max_plans=8,partner_model='uncertain')
+        self.assertEqual(f.audit['scenarios'],2);self.assertEqual(f.audit['unsigned'],[2])
+        self.assertEqual(len(f.contexts),2)
+        self.assertTrue(all(len(a['outcomes'])==2 for a in f.contexts[0]['actions']))
 
 
 if __name__=='__main__':unittest.main()

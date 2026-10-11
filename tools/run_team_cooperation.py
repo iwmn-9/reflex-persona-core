@@ -16,7 +16,7 @@ from reflex.team_choice import select
 
 ROSTERS=((0,1,2),(3,0,1),(2,3,0),(1,2,3))
 SCENARIOS={'combat':('open','choke','rescue'),'projects':('balanced','exhausted','shock')}
-MODES=('independent','sum','consent')
+MODES=('independent','sum','consent','bargain','sum_uncertain','bargain_uncertain')
 
 
 def run_game(job):
@@ -43,8 +43,11 @@ def run_game(job):
             assert c['values']=={k:float(assigned[i]['values'].get(k,0)) for k in VALUES}
         audit=None;f=None;chosen=ds
         if signed and mode!='independent':
-            t=time.perf_counter();f=(tc.forecast(w,signed,contexts,ds) if genre=='combat' else tp.forecast(w,signed,contexts,ds))
-            selected,audit=select(contexts,f,group=f'{genre}-team-{team}',mode=mode)
+            model='uncertain' if mode.endswith('_uncertain') else 'cooperative'
+            t=time.perf_counter();f=(tc.forecast(w,signed,contexts,ds,partner_model=model) if genre=='combat' else tp.forecast(w,signed,contexts,ds,partner_model=model))
+            selection='sum' if mode.startswith('sum') else 'consent'
+            outside=tuple(d['action_id'] for d in ds) if mode.startswith('bargain') else None
+            selected,audit=select(contexts,f,group=f'{genre}-team-{team}',mode=selection,outside=outside)
             elapsed+=time.perf_counter()-t;counts['model_nodes']+=f.audit['nodes']
             counts['adopted']+=selected is not None;counts['declined']+=selected is None
             if selected is not None:chosen=selected
@@ -91,7 +94,8 @@ def run_game(job):
 
 
 def worker(job):
-    return [run_game((*job,mode)) for mode in MODES]
+    args,modes=job
+    return [run_game((*args,mode)) for mode in modes]
 
 
 def run(args):
@@ -101,7 +105,7 @@ def run(args):
     jobs=[(g,s,r,seed,p) for g in args.genres for s in scenarios[g] for r in rosters
           for seed in range(args.start,args.start+args.seeds) for p in args.participation]
     plan=dict(version='team-cooperation-v1',stage=args.stage,start=args.start,seeds=args.seeds,
-        jobs=jobs,modes=MODES,rosters=ROSTERS,workers=args.workers,
+        jobs=jobs,modes=args.modes,rosters=ROSTERS,workers=args.workers,
         primary='paired actual terminal credit, separately by genre and participation; seed-cluster intervals',
         secondary=['fixed mixed personalities, survival/energy, actual aid, resource/movement conflicts, per-member modeled concession'],
         settings=dict(combat_horizon=6,combat_samples=4,combat_plans=24,projects_horizon=6,projects_plans=64),
@@ -113,13 +117,13 @@ def run(args):
     if path.exists():raise FileExistsError('fresh study directory required')
     path.write_text(json.dumps(plan,indent=2)+'\n',encoding='utf-8')
     with ProcessPoolExecutor(max_workers=args.workers) as pool,(root/'trajectories.jsonl').open('w',encoding='utf-8') as stream:
-        pending=[pool.submit(worker,j) for j in jobs]
+        pending=[pool.submit(worker,(j,args.modes)) for j in jobs]
         for index,future in enumerate(as_completed(pending),1):
             rows=future.result()
             for row in rows:stream.write(json.dumps(row,separators=(',',':'))+'\n')
             stream.flush();last=rows[-1]
             print(f'{index}/{len(jobs)} {last["genre"]} {last["scenario"]} roster{last["roster"]} seed{last["seed"]} {last["participation"]}: credits {[r["win_credit"] for r in rows]} seconds {[round(r["game_seconds"],1) for r in rows]}',flush=True)
-    (root/'completed.json').write_text(json.dumps(dict(games=len(jobs)*len(MODES),complete=True))+'\n')
+    (root/'completed.json').write_text(json.dumps(dict(games=len(jobs)*len(args.modes),complete=True))+'\n')
 
 
 if __name__=='__main__':
@@ -128,9 +132,10 @@ if __name__=='__main__':
     p.add_argument('--stage',choices=('diagnostic','confirmation'),default='diagnostic')
     p.add_argument('--genres',nargs='+',choices=tuple(SCENARIOS),default=list(SCENARIOS))
     p.add_argument('--participation',nargs='+',choices=('all','partial'),default=['all','partial'])
+    p.add_argument('--modes',nargs='+',choices=MODES,default=['independent','sum','consent'])
     p.add_argument('--frozen',action='store_true');a=p.parse_args()
     if a.frozen:run(a)
     else:
         from tools.freeze_experiment import dispatch
         dispatch(a.root,Path(__file__).name,['--start',str(a.start),'--seeds',str(a.seeds),
-            '--workers',str(a.workers),'--stage',a.stage,'--genres',*a.genres,'--participation',*a.participation])
+            '--workers',str(a.workers),'--stage',a.stage,'--genres',*a.genres,'--participation',*a.participation,'--modes',*a.modes])

@@ -28,9 +28,11 @@ def make_person(w,actor,profile,seed,state=None):
     return make_context(w,actor,profile,seed,route,memory=state,survival_security=True)
 
 
-def forecast(w,actors,contexts,decisions,horizon=6,samples=4,max_plans=24):
+def forecast(w,actors,contexts,decisions,horizon=6,samples=4,max_plans=24,partner_model='cooperative'):
     team=w.units[actors[0]].team
     if any(w.units[i].team!=team for i in actors):raise ValueError('one signed team required')
+    if partner_model not in ('cooperative','uncertain'):raise ValueError('declared unsigned partner model')
+    unsigned=tuple(i for i in alive(w,team) if i not in actors)
     control=TacticalControl(horizon=horizon,samples=samples,max_plans=max_plans)
     plans=propose(w,actors,contexts,decisions,control)
     # Preserve the actual uncoordinated proposal as a comparison, even if its
@@ -48,8 +50,14 @@ def forecast(w,actors,contexts,decisions,horizon=6,samples=4,max_plans=24):
             model=w;model_seed=int(digest(['signed-combat-model',contexts[0]['scope']['episode'],w.tick,sample])[:16],16)
             for depth in range(horizon):
                 if terminal(model):break
-                ours=tactical_joint(model,alive(model,team),roles,
-                    forced=first if depth==0 else None,coordinate=True)
+                outsiders={}
+                if partner_model=='uncertain':
+                    for i in unsigned:
+                        if i not in alive(model,team):continue
+                        outsiders[i]=('guard' if sample//2%2==0 else
+                            tactical_joint(model,(i,),roles,coordinate=False)[i])
+                forced={**outsiders,**(first if depth==0 else {})}
+                ours=tactical_joint(model,alive(model,team),roles,forced=forced,coordinate=True)
                 theirs=opponent_intents(model,team,aggressive=sample%2==1)
                 model,_=resolve(model,{**ours,**theirs},model_seed);nodes+=1
             value=mission(model,team);scores.append(value)
@@ -59,5 +67,6 @@ def forecast(w,actors,contexts,decisions,horizon=6,samples=4,max_plans=24):
         purpose[key]=float(np.mean(scores))
         for a,c in enumerate(future):c['actions'].append(action(key,*outcomes[a],confidence=.75))
     return JointForecast(tuple(future),roots,purpose,horizon,.15,
-        dict(nodes=nodes,plans=len(roots),model='declared public tactical continuation; unsigned allies modeled neutrally; private future hit stream excluded'),
+        dict(nodes=nodes,plans=len(roots),partner_model=partner_model,unsigned=list(unsigned),
+             model='declared public tactical continuation; unsigned allies are hypothesized, not commanded; private future hit stream excluded'),
         target='signed-combat-purpose')

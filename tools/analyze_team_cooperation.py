@@ -103,13 +103,13 @@ def check_combat(before,choices,after,audit,seed):
     assert seal(audit)==seal(dict(shots=shots,collisions=collisions,healing=heal))
 
 
-def summary(rows):
+def summary(rows,modes):
     groups=[];pairs=[];index={}
     key=lambda r:(r['genre'],r['scenario'],r['roster'],r['seed'],r['participation'])
     for r in rows:index.setdefault(key(r),{})[r['mode']]=r
     for identity,arms in sorted(index.items()):
-        assert set(arms)=={'independent','sum','consent'}
-        for mode in ('sum','consent'):
+        assert set(arms)==set(modes)
+        for mode in (m for m in modes if m!='independent'):
             a,b=arms['independent'],arms[mode]
             pairs.append(dict(identity=identity,mode=mode,credit_delta=b['win_credit']-a['win_credit'],
                 health_delta=b['health']-a['health'],ticks_delta=b['ticks']-a['ticks']))
@@ -118,14 +118,18 @@ def summary(rows):
             rs=[r for r in rows if r['genre']==genre and r['participation']==participation]
             if not rs:continue
             arms={}
-            for mode in ('independent','sum','consent'):
+            for mode in modes:
                 group=[r for r in rs if r['mode']==mode];work=Counter()
                 for r in group:work.update(r['work'])
                 arms[mode]=dict(games=len(group),mean_credit=float(np.mean([r['win_credit'] for r in group])),
                     wins=sum(r['won'] for r in group),losses=sum(r['lost'] for r in group),
                     mean_health=float(np.mean([r['health'] for r in group])),work=dict(work))
             comparisons=[]
-            for candidate,reference in (('sum','independent'),('consent','independent'),('consent','sum')):
+            contrasts=[(m,'independent') for m in modes if m!='independent']
+            contrasts += [(c,r) for c,r in (('consent','sum'),('bargain','consent'),
+                ('sum_uncertain','sum'),('bargain_uncertain','bargain'),('bargain_uncertain','sum_uncertain'))
+                if c in modes and r in modes]
+            for candidate,reference in contrasts:
                 selected=[arms for identity,arms in index.items() if identity[0]==genre and identity[-1]==participation]
                 ds=[(a[candidate]['seed'],a[candidate]['win_credit']-a[reference]['win_credit']) for a in selected]
                 seeds=sorted({s for s,d in ds});means=np.array([np.mean([d for ss,d in ds if ss==s]) for s in seeds])
@@ -176,12 +180,15 @@ def main(args):
                     ds=[Policy(principle_priority='finite').choose(c,False) for c in turn['contexts']]
                     assert ds==turn['independent']
                     if turn['contexts'] and row['mode']!='independent':
-                        if row['genre']=='combat':w=battle_from_record(prior);forecast=tc.forecast(w,tuple(turn['signed']),turn['contexts'],ds)
+                        kw={'partner_model':'uncertain'} if row['mode'].endswith('_uncertain') else {}
+                        if row['genre']=='combat':w=battle_from_record(prior);forecast=tc.forecast(w,tuple(turn['signed']),turn['contexts'],ds,**kw)
                         else:
                             w=tp.Workshop(**{**prior,'people':tuple(tp.Worker(**p) for p in prior['people']),
                                 'stock':tuple(prior['stock']),'points':tuple(prior['points'])})
-                            forecast=tp.forecast(w,tuple(turn['signed']),turn['contexts'],ds)
-                        selected,n=select(turn['contexts'],forecast,group=f'{row["genre"]}-team-{team}',mode=row['mode'])
+                            forecast=tp.forecast(w,tuple(turn['signed']),turn['contexts'],ds,**kw)
+                        skw={'outside':tuple(d['action_id'] for d in ds)} if row['mode'].startswith('bargain') else {}
+                        selection='sum' if row['mode'].startswith('sum') else 'consent'
+                        selected,n=select(turn['contexts'],forecast,group=f'{row["genre"]}-team-{team}',mode=selection,**skw)
                         assert seal(n)==seal(turn['negotiation'])
                         assert (ds if selected is None else selected)==turn['decisions']
                     else:assert ds==turn['decisions']
@@ -200,7 +207,8 @@ def main(args):
                 value=1/len(ws) if team in ws else 0. if ws else .5
             assert row['win_credit']==value and row['won']==(team in ws) and row['lost']==(1-team in ws)
             rows.append(row)
-    groups,pairs=summary(rows)
+    modes=json.loads((root/'preregister.json').read_text())['modes']
+    groups,pairs=summary(rows,modes)
     result=dict(games=len(rows),groups=groups,pairs=pairs,checks=dict(checks),
         action_profiles=[dict(genre=k[0],mode=k[1],profile=k[2],actions=dict(v)) for k,v in sorted(by_profile.items())],
         source_snapshot_sha256=hashlib.sha256((root/'source_snapshot.json').read_bytes()).hexdigest(),

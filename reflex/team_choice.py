@@ -17,7 +17,7 @@ def concession(context):
     return float(np.clip(.05+.25*p['agreeableness']+.1*v['benevolence']-.05*v['power'],.05,.4))
 
 
-def select(base,forecast,*,group,mode='consent'):
+def select(base,forecast,*,group,mode='consent',outside=None):
     identifier(group)
     if mode not in ('sum','consent'):raise ValueError('declared cooperation mode required')
     owners=[c['scope']['npc'] for c in base]
@@ -38,17 +38,32 @@ def select(base,forecast,*,group,mode='consent'):
     b=compile_batch(contexts);d=policy.decide(b,False)
     purpose=np.array([forecast.purpose[k] for k in names])
     allowed=purpose>=purpose.max()-forecast.max_regret-1e-12
-    maximum=np.max(np.where(d.eligible,d.scores,-np.inf),axis=1)
-    regret=maximum[:,None]-d.scores
+    reference=d.eligible.copy()
+    if outside is not None:
+        if not isinstance(outside,tuple) or len(outside)!=len(base):raise ValueError('one submitted outside root per owner')
+        for c,root in zip(base,outside):
+            if root not in {a['id'] for a in c['actions'] if a['legal'] and not a['known_failure']}:
+                raise ValueError('legal submitted outside roots required')
+        if outside not in tuple(tuple(r) for r in forecast.roots.values()):
+            raise ValueError('forecast must retain the actual independent joint proposal')
+        for i in range(len(base)):
+            reference[i]&=np.array([all(j==i or root==outside[j]
+                for j,root in enumerate(forecast.roots[k])) for k in names])
+        if not reference.any(1).all():raise ValueError('forecast must contain unilateral outside reference for every member')
+    maximum=np.max(np.where(reference,d.scores,-np.inf),axis=1)
+    losses=maximum[:,None]-d.scores
+    regret=np.maximum(0.,losses)
     limits=np.array([concession(c) for c in base])
     consent=d.eligible & (regret<=limits[:,None]+1e-12)
     acceptable=allowed & consent.all(0)
     audit.update(concessions=dict(zip(owners,limits.tolist())),
+        outside_reference='all imagined plans' if outside is None else 'other submitted roots fixed; bounded candidate bank',
+        outside_options=reference.sum(1).tolist(),
         consent_options=consent.sum(1).tolist(),accepted_plans=int(acceptable.sum()))
     if not acceptable.any():
         audit.update(adopted=False,reason='no common purpose plan within each communicated concession')
         return None,audit
-    j=int(np.argmax(np.where(acceptable,-regret.mean(0),-np.inf)));key=names[j]
+    j=int(np.argmax(np.where(acceptable,-losses.mean(0),-np.inf)));key=names[j]
     records=replace(d,action=np.full(len(base),j,dtype=int)).records(b)
     for i,(c,root,record) in enumerate(zip(base,forecast.roots[key],records)):
         a=next(a for a in c['actions'] if a['id']==root);old=c['state']
@@ -58,5 +73,6 @@ def select(base,forecast,*,group,mode='consent'):
     audit.update(adopted=True,selected_plan=key,selected_purpose=float(purpose[j]),
         subjective_regret=float(-regret[:,j].mean()),
         member_regrets=dict(zip(owners,regret[:,j].tolist())),
+        member_gains=dict(zip(owners,(-losses[:,j]).tolist())),
         reason='common purpose with individually bounded concession')
     return records,audit
