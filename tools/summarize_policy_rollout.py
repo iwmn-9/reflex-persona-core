@@ -67,12 +67,12 @@ def assemble(root):
             selection='known explanatory case after ablation; same input and forecast, not validation/extra games'),
         primary_games=sum(r['primary_games'] for r in records.values()),
         duplicate_baseline_replays=sum(r.get('duplicate_baseline_replays',0) for r in records.values()),audit_totals=totals,
-        components=['paired terminal policy evaluator','public and owned-state future-controller adapters','searched anonymous rival priors','public rival-strength mixture'],
+        components=['paired terminal policy evaluator','public and owned-state future-controller adapters','searched anonymous rival priors','public rival-strength mixture','owned hypothetical observers reconstructed from witnessed public history'],
         kept=['fixed traits and values','existing needs/Policy/progress rules','same actual baseline CPU budgets and public information','default original controllers'],
         changed='optional match-driver controller hook and new modules; no prior numerical evaluator rewritten',
-        withheld=['broad default switch','online learning for new searched rival semantics','continuous upgraded-policy claims','human-level claims','affect model expansion'],
+        withheld=['broad default switch','online learning for new searched rival semantics','exact future self-consistency for recursively upgraded policy','human-level claims','affect model expansion'],
         limits=['isolated-root studies retain incumbent future; continuous study actual upgrades differ from predicted base future','source cohorts differ in samples and own-seed treatment; do not pool effects',
-                'few independent seed clusters despite many games','sampling uncertainty excludes model mismatch','no new planner efficacy verified in combat/auction/resource genres'])
+                'few independent seed clusters despite many games','sampling uncertainty excludes model mismatch','public-history observers assume declared learning/perception; real private intent remains unknown','no new planner efficacy verified in combat/auction/resource genres'])
     (root/'implementation.json').write_text(json.dumps(output,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(dict(primary_games=output['primary_games'],duplicate_baseline_replays=output['duplicate_baseline_replays'],audit_totals=totals),indent=2))
     return output
