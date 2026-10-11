@@ -73,9 +73,10 @@ def audit(root):
                 counts['root_interventions']+=1;counts['changed_roots']+=roll['changed']
                 counts['hypothetical_owner_searches']+=roll['owner_searches']
                 counts['paired_hypothetical_terminal_branches']+=len(roll['actions'])*plan['samples']
-        eligible=label!='baseline' and any(f['actor']==row['seat'] for f in row['trace'])
-        assert used==eligible,key
-        if label!='baseline' and not eligible:counts['candidate_without_owner_turn']+=1
+        owner_turns=sum(f['actor']==row['seat'] for f in row['trace'])
+        expected_interventions=owner_turns if label=='continuous' else int(label!='baseline' and owner_turns>0)
+        assert used==expected_interventions,key
+        if label!='baseline' and not owner_turns:counts['candidate_without_owner_turn']+=1
         w=winner(grid);assert w==row['winner']
         assert w is not None or all(grid[5][c] is not None for c in range(7))
         assert row['credit']==(.5 if w is None else float(w==row['seat']))
