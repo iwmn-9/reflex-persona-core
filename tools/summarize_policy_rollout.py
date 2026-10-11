@@ -13,6 +13,7 @@ STUDIES={
     'searched-rival-contract-corrected':'58b1f1b',
     'public-rival-uncertainty':'afcf12f',
     'public-continuous':'15ea8c5',
+    'public-perspectives':'6e0842f',
     'actual-oracle':'e702ab3',
 }
 

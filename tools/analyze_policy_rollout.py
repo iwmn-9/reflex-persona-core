@@ -9,6 +9,7 @@ import numpy as np
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from reflex.board_models import ThanksPosition
 from reflex.core import TRAITS, VALUES
+from reflex.core import digest
 from reflex.laboratory import PROFILES
 from reflex.strong_search import PublicMemory
 from reflex.tabletop_trials import score
@@ -35,7 +36,7 @@ def audit(root,e):
         for label in labels:
             path=root/f'{seed}-{label}.jsonl';fingerprints[path.name]=hashlib.sha256(path.read_bytes()).hexdigest()
             memories=[PublicMemory('no_thanks',a) for a in range(4)]
-            current=None;previous=None;reveals=[];ticks=0;exposed=False
+            current=None;previous=None;reveals=[];ticks=0;exposed=False;public_events=0
             def finish():
                 if current is None:return
                 r=index[seed,label,current]
@@ -78,6 +79,7 @@ def audit(root,e):
                 assert after['cards']==cards and after['chips']==chips and after['payments']==paid
                 assert after['seen']==b['seen'] and after['remaining']==b['remaining'] and sum(chips)+after['pot']==44
                 observed=ThanksPosition(tuple(map(tuple,b['cards'])),tuple(b['chips']),actor,b['card'],b['pot'],tuple(b['seen']),b['remaining'],tuple(b['payments']))
+                public_model_digest=digest({str(a):m.record() for a,m in enumerate(memories)})
                 actual_learning=[]
                 for viewer in range(4):
                     if viewer!=actor:
@@ -114,10 +116,16 @@ def audit(root,e):
                         assert roll['used'] and roll['completed_samples']==plan['samples']
                         assert all(q['samples']==plan['samples'] for q in roll['actions'].values())
                         assert roll['owner_budget']==plan['persona'] and roll['discarded_terminal_samples']==0
+                        if by_label[label].get('rival_policy')=='public_history':
+                            history=roll['rival_history']
+                            assert (history['game'],history['scope'],history['owner'])==('no_thanks',f'series-{seed}',actor)
+                            assert history['actors']==list(range(4)) and history['delivered_events']==public_events
+                            assert history['belief_digest']==public_model_digest
+                            counts['public_model_history_receipts']+=1
                         counts['isolated_real_interventions']+=1;counts['changed_roots']+=roll['changed']
                         counts['hypothetical_owner_searches']+=roll['owner_searches']
                         counts['paired_hypothetical_terminal_branches']+=2*roll['completed_samples']
-                previous=after
+                previous=after;public_events+=1
             finish()
     return dict(counts=dict(counts),trajectory_sha256=fingerprints,source_files=len(plan['sources']),
         scope='rules independently reconstructed; public learning and Policy replays are integration checks, not independent inference-quality proofs')
@@ -148,6 +156,11 @@ def analyze(root):
         for arm in arms:
             if arm['rival_policy']=='searched':
                 other=next(a for a in arms if a['band']==arm['band'] and a['future_seed']==arm['future_seed'] and a['rival_policy']=='reactive')
+                comparisons.append((arm,other['label']))
+    if {a.get('rival_policy') for a in arms}=={'searched','public_history'}:
+        for arm in arms:
+            if arm['rival_policy']=='public_history':
+                other=next(a for a in arms if a['band']==arm['band'] and a['future_seed']==arm['future_seed'] and a['rival_policy']=='searched')
                 comparisons.append((arm,other['label']))
     for arm,reference in comparisons:
         label=arm['label']
