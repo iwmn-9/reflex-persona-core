@@ -128,7 +128,8 @@ def summary(rows,modes):
             comparisons=[]
             contrasts=[(m,'independent') for m in modes if m!='independent']
             contrasts += [(c,r) for c,r in (('consent','sum'),('bargain','consent'),
-                ('sum_uncertain','sum'),('bargain_uncertain','bargain'),('bargain_uncertain','sum_uncertain'))
+                ('sum_uncertain','sum'),('bargain_uncertain','bargain'),('bargain_uncertain','sum_uncertain'),
+                ('sum_observed','sum_uncertain'),('bargain_observed','bargain_uncertain'),('bargain_observed','sum_observed'))
                 if c in modes and r in modes]
             for candidate,reference in contrasts:
                 selected=[arms for identity,arms in index.items() if identity[0]==genre and identity[-1]==participation]
@@ -153,7 +154,10 @@ def replay_game(job):
         ds=[Policy(principle_priority='finite').choose(c,False) for c in turn['contexts']]
         assert ds==turn['independent']
         if turn['contexts'] and row['mode']!='independent':
-            prior=turn['before'];kw={'partner_model':'uncertain'} if row['mode'].endswith('_uncertain') else {}
+            prior=turn['before'];kw={'partner_model':'uncertain'} if row['mode'].endswith(('_uncertain','_observed')) else {}
+            learning=turn.get('partner_learning')
+            if learning and learning['models']:
+                actor=next(iter(learning['models']));kw['partner_weights']=tuple(learning['before']['weights'][str(actor)])
             if row['genre']=='combat':w=battle_from_record(prior);forecast=tc.forecast(w,tuple(turn['signed']),turn['contexts'],ds,**kw)
             else:
                 w=tp.Workshop(**{**prior,'people':tuple(tp.Worker(**p) for p in prior['people']),
@@ -183,15 +187,18 @@ def main(args):
     rows=[];checks=Counter();by_profile=defaultdict(Counter);examples=[]
     with (root/'trajectories.jsonl').open(encoding='utf-8') as f:
         for line in f:
-            row=json.loads(line);prior=row['initial'];memories={};team=row['team']
+            row=json.loads(line);prior=row['initial'];memories={};team=row['team'];book=None
             own=[i for i,p in enumerate(prior['units'] if row['genre']=='combat' else prior['people']) if p['team']==team]
+            if row['mode'].endswith('_observed') and row['participation']=='partial':
+                from reflex.team_observation import PartnerMemory
+                book=PartnerMemory(row['genre'],f'team-{row["seed"]}',f'team-{team}',(own[-1],))
             for turn in row['trace']:
                 assert seal(turn['before'])==seal(prior);choices={int(k):v for k,v in turn['choices'].items()}
                 if row['genre']=='combat':check_combat(prior,choices,turn['after'],turn['world_audit'],int(digest(['team-cooperation-world',row['seed']])[:16],16))
                 else:check_projects(prior,choices,turn['after'],turn['world_audit'])
                 checks['independent_world_transitions']+=1;checks['actual_actions']+=len(choices)
                 for i,c,d in zip(turn['signed'],turn['contexts'],turn['decisions']):
-                    p=PROFILES[ROSTERS[row['roster']][own.index(i)%3]]
+                    p=PROFILES[ROSTERS[row['roster']][own.index(i)%3] if len(own)==3 else (own.index(i)+row['roster'])%4]
                     assert c['personality']==dict(zip(TRAITS,p['traits'])) and c['values']=={k:float(p['values'].get(k,0)) for k in VALUES}
                     assert c['scope']['npc'] in (f'unit-{i}',f'worker-{i}') and c['tick']==prior['tick']
                     assert d['action_id']==choices[i] and d['context_hash']==digest(c)
@@ -204,6 +211,25 @@ def main(args):
                     assert set(n['members'])=={c['scope']['npc'] for c in turn['contexts']}
                     for member,regret in n['member_regrets'].items():assert -1e-12<=regret<=n['concessions'][member]+1e-12
                     checks['accepted_consent_receipts']+=1
+                if book is not None:
+                    from reflex.combat import legal as combat_legal
+                    learning=turn['partner_learning'];assert seal(learning['before'])==seal(book.receipt())
+                    rules=tc if row['genre']=='combat' else tp
+                    if row['genre']=='combat':world=battle_from_record(prior)
+                    else:world=tp.Workshop(**{**prior,'people':tuple(tp.Worker(**p) for p in prior['people']),
+                        'stock':tuple(prior['stock']),'points':tuple(prior['points'])})
+                    live=([i for i,p in enumerate(prior['units']) if p['hp']>0 and p['team']==team]
+                        if row['genre']=='combat' else own)
+                    outsiders=[i for i in live if i not in turn['signed']];models={}
+                    for i in outsiders:
+                        names=combat_legal(world,i) if row['genre']=='combat' else tp.legal(world,i)
+                        models[i]={label:{k:float(k==rules.outside_action(world,i,kind)) for k in names}
+                            for kind,label in enumerate(book.names)}
+                    assert seal({str(k):v for k,v in models.items()})==seal(learning['models'])
+                    book.begin(book.scope,prior['tick'],models)
+                    receipts=book.observe(book.scope,prior['tick'],{i:choices[i] for i in models},witnessed=True)
+                    assert seal(receipts)==seal(learning['updates']);assert seal(book.receipt())==seal(learning['after'])
+                    checks['public_partner_tick_replays']+=1
                 prior=turn['after']
             assert seal(prior)==seal(row['final']);assert row['ticks']==prior['tick']
             if row['genre']=='projects':

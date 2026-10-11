@@ -10,6 +10,7 @@ from reflex.deliberation import JointForecast
 from reflex.team_choice import select,concession
 from reflex import team_projects as tp,team_combat as tc
 from reflex.laboratory import PROFILES
+from reflex.team_observation import PartnerMemory
 
 
 def fixture(pain=False):
@@ -122,6 +123,51 @@ class TeamCooperationTests(unittest.TestCase):
         self.assertEqual(f.audit['scenarios'],2);self.assertEqual(f.audit['unsigned'],[2])
         self.assertEqual(len(f.contexts),2)
         self.assertTrue(all(len(a['outcomes'])==2 for a in f.contexts[0]['actions']))
+
+    def test_weighted_partner_model_retains_probability_mass_and_no_votes(self):
+        w=tp.Workshop.start();actors=(0,1);cs=[tp.make_context(w,i,PROFILES[i],13) for i in actors]
+        ds=[Policy(principle_priority='finite').choose(c,False) for c in cs]
+        f=tp.forecast(w,actors,cs,ds,horizon=2,max_plans=8,partner_model='uncertain',partner_weights=(.1,.9))
+        for a in f.contexts[0]['actions']:self.assertEqual([o['p'] for o in a['outcomes']],[.1,.9])
+        with self.assertRaises(ValueError):tp.forecast(w,actors,cs,ds,partner_weights=(1.,1.))
+
+    def test_public_observation_does_not_update_on_an_imagined_forecast(self):
+        book=PartnerMemory('g','e','red',(2,));before=book.receipt()
+        models={2:{'hold':{'rest':1.,'build':0.},'independent':{'rest':0.,'build':1.}}}
+        weights=book.begin(book.scope,0,models);self.assertEqual(weights[2],(.5,.5))
+        self.assertEqual(book.receipt(),before)
+        with self.assertRaises(ValueError):book.observe(book.scope,0,{2:'build'},witnessed=False)
+        self.assertEqual(book.receipt(),before)
+        book.observe(book.scope,0,{2:'build'},witnessed=True)
+        self.assertGreater(book.weights(2)[1],.5)
+
+    def test_missing_observation_is_abandoned_without_success_or_failure(self):
+        book=PartnerMemory('g','e','red',(2,));models={2:{'hold':{'rest':1.},'independent':{'rest':1.}}}
+        book.begin(book.scope,0,models);book.abandon(book.scope,0)
+        self.assertEqual(book.receipt()['beliefs']['2']['observations'],0)
+        with self.assertRaises(ValueError):book.begin(book.scope,0,models)
+
+    def test_wrong_episode_or_duplicate_action_cannot_train_partner(self):
+        book=PartnerMemory('g','e','red',(2,));models={2:{'hold':{'rest':1.},'independent':{'rest':1.}}}
+        with self.assertRaises(ValueError):book.begin(('g','other','red'),0,models)
+        book.begin(book.scope,0,models);book.observe(book.scope,0,{2:'rest'},witnessed=True)
+        with self.assertRaises(ValueError):book.observe(book.scope,0,{2:'rest'},witnessed=True)
+        self.assertEqual(book.receipt()['beliefs']['2']['observations'],0)
+
+    def test_behavior_shift_can_revise_prior_without_changing_any_personality(self):
+        book=PartnerMemory('g','e','red',(2,));models={2:{'hold':{'rest':1.,'build':0.},'independent':{'rest':0.,'build':1.}}}
+        for tick in range(4):
+            book.begin(book.scope,tick,models);book.observe(book.scope,tick,{2:'build'},witnessed=True)
+        self.assertGreater(book.weights(2)[1],.9)
+        for tick in range(4,8):
+            book.begin(book.scope,tick,models);book.observe(book.scope,tick,{2:'rest'},witnessed=True)
+        self.assertGreater(book.weights(2)[0],book.weights(2)[1])
+
+    def test_unknown_but_legal_behavior_does_not_identify_one_hypothesis(self):
+        book=PartnerMemory('g','e','red',(2,));models={2:{'hold':{'rest':1.,'build':0.,'gather':0.},
+            'independent':{'rest':0.,'build':1.,'gather':0.}}}
+        book.begin(book.scope,0,models);book.observe(book.scope,0,{2:'gather'},witnessed=True)
+        self.assertEqual(book.weights(2),(.5,.5))
 
 
 if __name__=='__main__':unittest.main()

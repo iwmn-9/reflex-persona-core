@@ -16,18 +16,22 @@ from reflex.team_choice import select
 
 ROSTERS=((0,1,2),(3,0,1),(2,3,0),(1,2,3))
 SCENARIOS={'combat':('open','choke','rescue'),'projects':('balanced','exhausted','shock')}
-MODES=('independent','sum','consent','bargain','sum_uncertain','bargain_uncertain')
+MODES=('independent','sum','consent','bargain','sum_uncertain','bargain_uncertain','sum_observed','bargain_observed')
 
 
-def run_game(job):
+def run_game(job,members=3):
     genre,scenario,roster,seed,participation,mode=job
     from reflex import team_projects as tp,team_combat as tc
     from reflex.combat import alive,resolve,terminal,victory,battle_record,opponent
-    team=seed%2;w=tc.opening(scenario,team) if genre=='combat' else tp.Workshop.start(scenario)
+    team=seed%2;w=tc.opening(scenario,team) if genre=='combat' else tp.Workshop.start(scenario,members=members)
     initial=asdict(w);real_seed=int(digest(['team-cooperation-world',seed])[:16],16)
     people=alive(w,team) if genre=='combat' else tp.members(w,team)
-    assigned={i:copy.deepcopy(PROFILES[ROSTERS[roster][j%3]]) for j,i in enumerate(people)}
+    assigned={i:copy.deepcopy(PROFILES[ROSTERS[roster][j%3] if len(people)==3 else (j+roster)%4]) for j,i in enumerate(people)}
     before_profiles=copy.deepcopy(assigned);memories={};trace=[];counts=Counter();elapsed=0.
+    book=None
+    if mode.endswith('_observed') and participation=='partial':
+        from reflex.team_observation import PartnerMemory
+        book=PartnerMemory(genre,f'team-{seed}',f'team-{team}',(people[-1],))
     start=time.perf_counter()
     while not (terminal(w) if genre=='combat' else tp.terminal(w)):
         before=w;actors=alive(w,team) if genre=='combat' else tp.members(w,team)
@@ -35,6 +39,17 @@ def run_game(job):
         # participates in collective choice. The unsigned last ally's current
         # choice is computed after negotiation and never enters the forecast.
         signed=actors if participation=='all' else tuple(i for i in actors if i!=people[-1])
+        learning=None;partner_weights=None
+        if book is not None:
+            outsiders=tuple(i for i in actors if i not in signed);models={};rules=tc if genre=='combat' else tp
+            from reflex.combat import legal as combat_legal
+            for i in outsiders:
+                names=combat_legal(w,i) if genre=='combat' else tp.legal(w,i)
+                models[i]={label:{k:float(k==rules.outside_action(w,i,kind)) for k in names}
+                    for kind,label in enumerate(book.names)}
+            learning=dict(before=book.receipt(),models=models)
+            weights=book.begin(book.scope,w.tick,models)
+            if outsiders:partner_weights=weights[outsiders[0]]
         contexts=[(tc.make_person(w,i,assigned[i],seed,memories.get(i)) if genre=='combat'
             else tp.make_context(w,i,assigned[i],seed,memories.get(i))) for i in signed]
         ds=[Policy(principle_priority='finite').choose(c,False) for c in contexts]
@@ -43,8 +58,9 @@ def run_game(job):
             assert c['values']=={k:float(assigned[i]['values'].get(k,0)) for k in VALUES}
         audit=None;f=None;chosen=ds
         if signed and mode!='independent':
-            model='uncertain' if mode.endswith('_uncertain') else 'cooperative'
-            t=time.perf_counter();f=(tc.forecast(w,signed,contexts,ds,partner_model=model) if genre=='combat' else tp.forecast(w,signed,contexts,ds,partner_model=model))
+            model='uncertain' if mode.endswith(('_uncertain','_observed')) else 'cooperative'
+            extra={} if partner_weights is None else {'partner_weights':partner_weights}
+            t=time.perf_counter();f=(tc.forecast(w,signed,contexts,ds,partner_model=model,**extra) if genre=='combat' else tp.forecast(w,signed,contexts,ds,partner_model=model,**extra))
             selection='sum' if mode.startswith('sum') else 'consent'
             outside=tuple(d['action_id'] for d in ds) if mode.startswith('bargain') else None
             selected,audit=select(contexts,f,group=f'{genre}-team-{team}',mode=selection,outside=outside)
@@ -80,22 +96,25 @@ def run_game(job):
             counts['ally_aids']+=sum(k.startswith('aid:') for i,k in choices.items() if i in people)
             counts['overflow']+=world_audit['overflow'];value=tp.credit(w,team);health=sum(w.people[i].energy for i in people)
             goal=team in tp.winners(w);loss=1-team in tp.winners(w)
+        if book is not None:
+            learning['updates']=book.observe(book.scope,before.tick,{i:choices[i] for i in models},witnessed=True)
+            learning['after']=book.receipt()
         selected_plan=None if audit is None or not audit['adopted'] else audit['selected_plan']
         trace.append(dict(before=asdict(before),after=asdict(w),choices=choices,world_audit=world_audit,
             signed=list(signed),contexts=contexts,decisions=chosen,independent=ds,
-            negotiation=audit,
+            negotiation=audit,partner_learning=learning,
             selected_roots=None if selected_plan is None else list(f.roots[selected_plan]),
             selected_effects=None if selected_plan is None else [next(a for a in c['actions'] if a['id']==selected_plan)['outcomes'] for c in f.contexts]))
     assert assigned==before_profiles
     return dict(genre=genre,scenario=scenario,roster=roster,profiles={str(i):p['id'] for i,p in assigned.items()},
-        seed=seed,team=team,participation=participation,mode=mode,initial=initial,final=asdict(w),
+        seed=seed,team=team,participation=participation,mode=mode,members=len(people),initial=initial,final=asdict(w),
         win_credit=value,won=goal,lost=loss,health=health,ticks=w.tick,
         work=dict(counts),planner_seconds=elapsed,game_seconds=time.perf_counter()-start,trace=trace)
 
 
 def worker(job):
-    args,modes=job
-    return [run_game((*args,mode)) for mode in modes]
+    args,modes,members=job
+    return [run_game((*args,mode),members=members) for mode in modes]
 
 
 def run(args):
@@ -105,7 +124,7 @@ def run(args):
     jobs=[(g,s,r,seed,p) for g in args.genres for s in scenarios[g] for r in rosters
           for seed in range(args.start,args.start+args.seeds) for p in args.participation]
     plan=dict(version='team-cooperation-v1',stage=args.stage,start=args.start,seeds=args.seeds,
-        jobs=jobs,modes=args.modes,rosters=ROSTERS,workers=args.workers,
+        jobs=jobs,modes=args.modes,rosters=ROSTERS,workers=args.workers,project_members=args.members,
         primary='paired actual terminal credit, separately by genre and participation; seed-cluster intervals',
         secondary=['fixed mixed personalities, survival/energy, actual aid, resource/movement conflicts, per-member modeled concession'],
         settings=dict(combat_horizon=6,combat_samples=4,combat_plans=24,projects_horizon=6,projects_plans=64),
@@ -117,7 +136,7 @@ def run(args):
     if path.exists():raise FileExistsError('fresh study directory required')
     path.write_text(json.dumps(plan,indent=2)+'\n',encoding='utf-8')
     with ProcessPoolExecutor(max_workers=args.workers) as pool,(root/'trajectories.jsonl').open('w',encoding='utf-8') as stream:
-        pending=[pool.submit(worker,(j,args.modes)) for j in jobs]
+        pending=[pool.submit(worker,(j,args.modes,args.members)) for j in jobs]
         for index,future in enumerate(as_completed(pending),1):
             rows=future.result()
             for row in rows:stream.write(json.dumps(row,separators=(',',':'))+'\n')
@@ -133,9 +152,10 @@ if __name__=='__main__':
     p.add_argument('--genres',nargs='+',choices=tuple(SCENARIOS),default=list(SCENARIOS))
     p.add_argument('--participation',nargs='+',choices=('all','partial'),default=['all','partial'])
     p.add_argument('--modes',nargs='+',choices=MODES,default=['independent','sum','consent'])
+    p.add_argument('--members',type=int,choices=(2,3,4),default=3)
     p.add_argument('--frozen',action='store_true');a=p.parse_args()
     if a.frozen:run(a)
     else:
         from tools.freeze_experiment import dispatch
         dispatch(a.root,Path(__file__).name,['--start',str(a.start),'--seeds',str(a.seeds),
-            '--workers',str(a.workers),'--stage',a.stage,'--genres',*a.genres,'--participation',*a.participation,'--modes',*a.modes])
+            '--workers',str(a.workers),'--stage',a.stage,'--members',str(a.members),'--genres',*a.genres,'--participation',*a.participation,'--modes',*a.modes])

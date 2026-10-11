@@ -147,7 +147,14 @@ def make_context(w,actor,profile,seed,state=None):
     return c
 
 
-def forecast(w,actors,contexts,decisions,horizon=6,max_plans=64,partner_model='cooperative'):
+def outside_action(w,actor,kind):
+    keys=legal(w,actor)
+    if kind==0:return 'rest'
+    if 'build' in keys:return 'build'
+    return 'gather' if 'gather' in keys else 'rest'
+
+
+def forecast(w,actors,contexts,decisions,horizon=6,max_plans=64,partner_model='cooperative',partner_weights=None):
     team=w.people[actors[0]].team
     if any(w.people[i].team!=team for i in actors):raise ValueError('one declared team required')
     bank=[];seen=set();current=tuple(d['action_id'] for d in decisions)
@@ -167,6 +174,9 @@ def forecast(w,actors,contexts,decisions,horizon=6,max_plans=64,partner_model='c
     if partner_model not in ('cooperative','uncertain'):raise ValueError('declared unsigned partner model')
     unsigned=tuple(i for i in members(w,team) if i not in actors)
     scenarios=2 if unsigned and partner_model=='uncertain' else 1
+    weights=np.array((.5,.5) if partner_weights is None else partner_weights,dtype=float)
+    if weights.shape!=(2,) or not np.isfinite(weights).all() or np.any(weights<0) or abs(weights.sum()-1)>1e-8:
+        raise ValueError('finite normalized declared partner weights')
     future=[copy.deepcopy(c) for c in contexts]
     for c in future:c['actions']=[]
     roots={};scores={};nodes=0
@@ -179,21 +189,17 @@ def forecast(w,actors,contexts,decisions,horizon=6,max_plans=64,partner_model='c
                 outsiders={}
                 if scenarios>1:
                     for i in unsigned:
-                        keys=legal(model,i)
-                        if scenario==0:outsiders[i]='rest'
-                        elif 'build' in keys:outsiders[i]='build'
-                        elif 'gather' in keys:outsiders[i]='gather'
-                        else:outsiders[i]='rest'
+                        outsiders[i]=outside_action(model,i,scenario)
                 forced={**outsiders,**(dict(zip(actors,root)) if depth==0 else {})}
                 ours=greedy(model,team,forced)
                 model,_=resolve(model,{**ours,**greedy(model,1-team)});nodes+=1
             value=purpose(model,team);values.append(value)
             for j,actor in enumerate(actors):
-                e=consequence(w,model,actor,root[j],p=1/scenarios);e['objective']=value;e['values']['achievement']=value
+                e=consequence(w,model,actor,root[j],p=float(weights[scenario]) if scenarios==2 else 1.);e['objective']=value;e['values']['achievement']=value
                 outcomes[j].append(e)
-        scores[key]=float(np.mean(values))
+        scores[key]=float(np.dot(values,weights)) if scenarios==2 and partner_weights is not None else float(np.mean(values))
         for j,c in enumerate(future):c['actions'].append(action(key,*outcomes[j],confidence=.8))
     return JointForecast(tuple(future),roots,scores,horizon,.15,
-        dict(nodes=nodes,plans=len(roots),partner_model=partner_model,unsigned=list(unsigned),scenarios=scenarios,
+        dict(nodes=nodes,plans=len(roots),partner_model=partner_model,unsigned=list(unsigned),scenarios=scenarios,partner_weights=weights.tolist(),
              model='public stock-aware future tactic; not future personality replanning'),
         target='team-project-purpose')
