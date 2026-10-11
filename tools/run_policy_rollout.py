@@ -18,6 +18,8 @@ from reflex.strong_search import PublicMemory, STRONG, PERSONA
 from reflex.strong_table import play, decide as incumbent
 from reflex.thanks_policy_rollout import decide as improved
 from reflex.monte_carlo import RolloutBudget
+from reflex.public_perspectives import PublicPerspectives
+from reflex.board_models import ThanksPosition
 
 
 def resolve(job):
@@ -31,10 +33,17 @@ def resolve(job):
     arms=[(label(b,kind,rival),b,kind,rival) for b in bands for kind in future_seeds for rival in rival_policies]
     for label,band,kind,rival in [('baseline',None,None,None),*arms]:
         memories=[PublicMemory('no_thanks',a) for a in range(4)]
+        banks={a:PublicPerspectives('no_thanks',f'series-{seed}',a,range(4),lambda v:PublicMemory('no_thanks',v)) for a in roster} if rival=='public_history' else {}
         started=time.monotonic()
         path=root/f'{seed}-{label}.jsonl'
         with path.open('w',encoding='utf-8') as f:
-            def emit(row):f.write(json.dumps(row,separators=(',',':'))+'\n')
+            def emit(row):
+                f.write(json.dumps(row,separators=(',',':'))+'\n')
+                if banks:
+                    b=row['before'];s=ThanksPosition(tuple(map(tuple,b['cards'])),tuple(b['chips']),b['turn'],b['card'],b['pot'],tuple(b['seen']),b['remaining'],tuple(b['payments']))
+                    for actor,action in row['moves'].items():
+                        actor=int(actor);event=f'encounter-{row["encounter"]}-tick-{row["tick"]}-actor-{actor}'
+                        for bank in banks.values():bank.observe(s,actor,action,event,range(4))
             for enc in range(encounters):
                 target=[a for a in range(4) if a!=bench][enc%3]
                 used=False;intervention=None
@@ -45,9 +54,11 @@ def resolve(job):
                     if mode!='adaptive' or band is None or used or viewer!=target or s.remaining>band or len(s.legal())<2:
                         return incumbent(game,s,viewer,p,nonce,encounter,tick,memory,state,mode,budget,**kw)
                     used=True
+                    if rival=='public_history':
+                        assert banks[viewer].snapshot(game,f'series-{seed}',viewer)[viewer].record()==memory.record()
                     c,d,stats=improved(game,s,viewer,p,nonce,encounter,tick,memory,state,mode,budget,
                         rollout=RolloutBudget(samples=samples,min_samples=samples,max_nodes=100000,max_steps=2048,rollout_policy='persona'),
-                        selection=selection,future_seed=kind,rival_policy=rival,**kw)
+                        selection=selection,future_seed=kind,rival_policy=rival,perspectives=banks.get(viewer),**kw)
                     intervention=dict(tick=tick,remaining=s.remaining,actor=viewer,profile=p['id'],
                         public_state=asdict(s),stats=stats['policy_rollout'],
                         baseline_action=stats['incumbent_action'],action=d['action_id'])
@@ -70,7 +81,8 @@ def run(root,start,seeds,encounters,bands,samples,selection,workers,future_seeds
             band=b,future_seed=kind,rival_policy=rival) for b in bands for kind in future_seeds for rival in rival_policies],
         design='baseline and one actual intervention per designated NPC/encounter; first nonforced turn at remaining<=band; target rotates across three NPC seats',
         primary='same-owner rollout versus baseline designated NPC terminal winner credit, paired complete learning-series mean; no NPC team objective',
-        secondary=['resampled-owner versus baseline and same-owner versus resampled-owner','own game score','per fixed personality result','root changes and forecast regret','complete public learning and rules'],
+        secondary=['resampled-owner versus baseline and same-owner versus resampled-owner','own game score','per fixed personality result','root changes and forecast regret','complete public learning and rules',
+            'public_history minus searched: use witnessed past to initialize declared hypothetical observers; no true private state copy'],
         controls='same actual world seed, actual strong CPU budget, fixed personality and incumbent future controller; each condition learns its own public observations',
         model='uniform public unseen deck, persistent latent public rival hypothesis, actual incumbent owner re-searches with same budget after every hypothetical future decision',
         limits=['known No Thanks only; no human-level claim','one intervention not continuous upgraded policy','rival hypotheses may be wrong; Monte Carlo SE does not cover that error','8/16 paired worlds are not exact values'],
@@ -94,7 +106,7 @@ if __name__=='__main__':
     p.add_argument('--bands',type=int,nargs='+',default=[6,12,23]);p.add_argument('--samples',type=int,default=8)
     p.add_argument('--selection',choices=['direct','paired_guard'],default='direct');p.add_argument('--workers',type=int,default=4)
     p.add_argument('--future-seeds',nargs='+',choices=['same_owner','resampled'],default=['same_owner'])
-    p.add_argument('--rival-policies',nargs='+',choices=['reactive','searched'],default=['reactive'])
+    p.add_argument('--rival-policies',nargs='+',choices=['reactive','searched','public_history'],default=['reactive'])
     p.add_argument('--frozen',action='store_true');a=p.parse_args()
     if a.frozen:run(a.root,a.start,a.seeds,a.encounters,a.bands,a.samples,a.selection,a.workers,a.future_seeds,a.rival_policies)
     else:

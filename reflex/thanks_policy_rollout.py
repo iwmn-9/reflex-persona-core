@@ -26,7 +26,7 @@ class Branch:
 
 class OwnerPolicyModel:
     def __init__(self, position, viewer, profile, memory, owner_state, root_decision,
-                 seed, encounter, tick, mode, budget=PERSONA, base=None,future_seed='same_owner',rival_policy='reactive'):
+                 seed, encounter, tick, mode, budget=PERSONA, base=None,future_seed='same_owner',rival_policy='reactive',perspectives=None):
         from .strong_table import decide
         self.initial=position;self.viewer=viewer;self.profile=copy.deepcopy(profile)
         self.initial_memory=copy.deepcopy(memory);self.initial_state=copy.deepcopy(owner_state)
@@ -38,8 +38,15 @@ class OwnerPolicyModel:
         if viewer!=position.turn or len(position.chips)!=4 or sum(position.chips)+position.pot!=44:
             raise ValueError('active owner in the four-player public chip ledger required')
         self.future_seed=future_seed
-        if rival_policy not in ('reactive','searched'):raise ValueError('declared rival continuation required')
+        if rival_policy not in ('reactive','searched','public_history'):raise ValueError('declared rival continuation required')
         self.rival_policy=rival_policy;self.rival_cache={};self.rival_requests=0;self.rival_searches=0
+        self.rival_initial_memories=None;self.history_receipt=None
+        if rival_policy=='public_history':
+            from .public_perspectives import PublicPerspectives
+            if not isinstance(perspectives,PublicPerspectives):raise ValueError('owned public observer models required')
+            views=perspectives.snapshot('no_thanks',f'series-{seed}',viewer)
+            if set(views)!=set(range(4)):raise ValueError('four public observer models required')
+            self.rival_initial_memories=[views[a] for a in range(4)];self.history_receipt=perspectives.receipt()
         self.policy_calls=0;self.transitions=0;self.samples=[];self.starts=0
 
     def begin_trial(self):
@@ -47,7 +54,8 @@ class OwnerPolicyModel:
         self.memory=copy.deepcopy(self.initial_memory)
         self.owner_state=copy.deepcopy(self.root_decision['next_state'])
         self.deck=None;self.kinds=None;self.nonce=None;self.root_committed=False
-        self.rival_memories=[PublicMemory('no_thanks',a) for a in range(4)] if self.rival_policy=='searched' else None
+        self.rival_memories=(copy.deepcopy(self.rival_initial_memories) if self.rival_initial_memories is not None
+            else [PublicMemory('no_thanks',a) for a in range(4)] if self.rival_policy=='searched' else None)
         self.rival_states=[None]*4
 
     def terminal(self,b): return b.position.card is None and b.position.remaining==0
@@ -111,7 +119,7 @@ class OwnerPolicyModel:
             else:d=self.cache[key]
             self.owner_state=copy.deepcopy(d['next_state'])
             return d['action_id']
-        if self.rival_policy=='searched':
+        if self.rival_policy in ('searched','public_history'):
             return self._searched_rival(s,b.steps)
         if len(legal)==1:return legal[0]
         probs=self.memory.models(s,s.turn,self.mode=='adaptive')[self.kinds[s.turn]]
@@ -165,21 +173,23 @@ class OwnerPolicyModel:
 
 
 def decide(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget=PERSONA,
-           *,variant='certified_expiry',rollout=None,selection='direct',future_seed='same_owner',rival_policy='reactive'):
+           *,variant='certified_expiry',rollout=None,selection='direct',future_seed='same_owner',rival_policy='reactive',perspectives=None):
     from .strong_table import decide as incumbent
     c,d,stats=incumbent(game,s,viewer,p,seed,encounter,tick,memory,state,mode,budget,variant=variant)
     if selection not in ('direct','paired_guard'):raise ValueError('registered rollout selection required')
     if game!='no_thanks' or mode=='reflex' or variant!='certified_expiry' or len(s.legal())<2:return c,d,stats
     rollout=RolloutBudget(samples=8,min_samples=8,max_nodes=100000,max_steps=2048,rollout_policy='persona') if rollout is None else rollout
-    model=OwnerPolicyModel(s,viewer,p,memory,state,d,seed,encounter,tick,mode,budget,future_seed=future_seed,rival_policy=rival_policy)
+    model=OwnerPolicyModel(s,viewer,p,memory,state,d,seed,encounter,tick,mode,budget,future_seed=future_seed,rival_policy=rival_policy,perspectives=perspectives)
     roots={a:Branch(s.play(a),a) for a in s.legal()}
     _,samples,rs=evaluate_policy(roots,model,rollout,[seed,game,encounter,tick,viewer,'actual-base-policy'])
     rs.update(owner_searches=model.policy_calls,owner_requests=model.policy_requests,
         cache_hits=model.policy_requests-model.policy_calls,owner_budget=asdict(budget),future_seed=future_seed,
         rival_policy=rival_policy,rival_requests=model.rival_requests,rival_searches=model.rival_searches,rival_budget=asdict(budget),
-        rival_initial_state='unknown private rival state/memory represented by a fresh fictional public-history observer; no real rival state copied' if rival_policy=='searched' else 'owner-observed reactive model mixture',
+        rival_history=model.history_receipt,
+        rival_initial_state=('declared observer models from witnessed public history; private intent/mode unknown' if rival_policy=='public_history'
+            else 'unknown private rival state/memory represented by a fresh fictional public-history observer; no real rival state copied' if rival_policy=='searched' else 'owner-observed reactive model mixture'),
         continuation='Incumbent owner replans each public turn; '+
-            ('five unlearned searched rival priors' if rival_policy=='searched' else 'owner-learned reactive rival mixture')+'; no recursive improved controller')
+            ('five public-history searched priors' if rival_policy=='public_history' else 'five unlearned searched rival priors' if rival_policy=='searched' else 'owner-learned reactive rival mixture')+'; no recursive improved controller')
     stats=dict(stats,policy_rollout=rs,incumbent_action=d['action_id'])
     if not rs['used']:return c,d,stats
     names=s.legal();n=rs['completed_samples']
