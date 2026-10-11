@@ -1,0 +1,100 @@
+{
+  "version": "conditional-continuation-v1",
+  "games": 1440,
+  "studies": [
+    {
+      "study": "diagnostic-v1",
+      "numerical_commit": "a9f493a81c1d6c288fe354ab6ebeccacc17a26a2",
+      "analysis_commit": "278fcb5d14c8945bfc62b8960aa35fe4f483bcad",
+      "analysis_source_sha256": "4e4eb4bdc0f891bb4fae9b16552abb826078dd1340f0f52ca9bd269d1ce4dc46",
+      "frozen_files": 181,
+      "games": 72,
+      "source_snapshot_sha256": "f61029b98a4e81798a8387c3d4b3c8de5fd55ace97219bf024a49fe7dda440dd",
+      "trajectories_sha256": "8fbb23fcd466b985419793fc3dedcb8f3a6d856d810e131a3acbb9274e6a2fc5"
+    },
+    {
+      "study": "projects-diagnostic",
+      "numerical_commit": "35d070a578f5e8a7656e0490148ae0fc474f5b85",
+      "analysis_commit": "278fcb5d14c8945bfc62b8960aa35fe4f483bcad",
+      "analysis_source_sha256": "4e4eb4bdc0f891bb4fae9b16552abb826078dd1340f0f52ca9bd269d1ce4dc46",
+      "frozen_files": 182,
+      "games": 72,
+      "source_snapshot_sha256": "6f0208b7638f7d21c80b624af71f92b373c6da9f443ea3a695fcacd6c8880888",
+      "trajectories_sha256": "2abbc8ec6a2c79e64353e76407d2c91a7dec73a55e5066d2214baf56d2bf6c38"
+    },
+    {
+      "study": "projects-confirmation",
+      "numerical_commit": "9cc78bd7d71ffb3bce39a3c4473c12eb4c210c0d",
+      "analysis_commit": "f4b56480ef829e82ea646e5ebdc670b99b9d2a17",
+      "analysis_source_sha256": "c1869e47d33d10c641564ba30e11c011f0b6ce3a1492272da978a4e6ae5d82af",
+      "frozen_files": 183,
+      "games": 864,
+      "source_snapshot_sha256": "9101f4e86c0ff1729e592854bf7ca32202457f9765ddc628069d2979a74bb504",
+      "trajectories_sha256": "f172cce8f7a112dcca5216cd9178532a0bba20e45d00cc5a3590df5aaab80ba0"
+    },
+    {
+      "study": "combat-confirmation",
+      "numerical_commit": "278fcb5d14c8945bfc62b8960aa35fe4f483bcad",
+      "analysis_commit": "f4b56480ef829e82ea646e5ebdc670b99b9d2a17",
+      "analysis_source_sha256": "c1869e47d33d10c641564ba30e11c011f0b6ce3a1492272da978a4e6ae5d82af",
+      "frozen_files": 183,
+      "games": 432,
+      "source_snapshot_sha256": "ff358db80b428cf940cac8eaea5d8195768f237a09ef6aa8065a9b7c97667bc6",
+      "trajectories_sha256": "e683c73a310656282be582034a64a72fc9f8d55013cbba34d0b7a8b1e50c7ac9"
+    }
+  ],
+  "checks": {
+    "independent_world_turns": 11480,
+    "actual_intents": 51302,
+    "owner_receipts": 22284,
+    "bounded_consent_receipts": 11055,
+    "frozen_full_episode_turns": 11480
+  },
+  "added": [
+    "detached hypothetical owners and correct counterfactual root intent",
+    "refreshed public needs and route decisions",
+    "optional bounded one-turn future exchange",
+    "multiple continuation models with declared worst purpose"
+  ],
+  "removed_assumptions": [
+    "signed owners always retain one capability continuation in these two team adapters"
+  ],
+  "default": "old independent/core and old standard planners unchanged; candidates optional",
+  "legacy_default_episode_parity": [
+    {
+      "genre": "combat",
+      "old_sha256": "a3ee4054a86d31c1769a4b572454c5dfe73359ca395563d57254d653570c5685",
+      "new_sha256": "a3ee4054a86d31c1769a4b572454c5dfe73359ca395563d57254d653570c5685",
+      "identical": true
+    },
+    {
+      "genre": "projects",
+      "old_sha256": "89dcbcdc96974aa516b3c39dc8a1f6df09b1a26f57ea2cb210fe6eaa521a6f20",
+      "new_sha256": "89dcbcdc96974aa516b3c39dc8a1f6df09b1a26f57ea2cb210fe6eaa521a6f20",
+      "identical": true
+    }
+  ],
+  "current_valid_forecast_episode_parity": [
+    {
+      "genre": "projects",
+      "expected": "b0a75a9865ee4622805c405606302debc7706ccc2f82d391b3dad32dd1699d9d",
+      "actual": "b0a75a9865ee4622805c405606302debc7706ccc2f82d391b3dad32dd1699d9d",
+      "identical": true
+    },
+    {
+      "genre": "combat",
+      "expected": "4183a771fa50f106c896f3aff146c8265b2fb1cc5b0dbadcf5d4e24563d325f0",
+      "actual": "4183a771fa50f106c896f3aff146c8265b2fb1cc5b0dbadcf5d4e24563d325f0",
+      "identical": true
+    }
+  ],
+  "limits": [
+    "future base/one-turn controller differs from actual six-turn outer selection",
+    "unsigned two-policy hypothesis unchanged",
+    "branch root mode comes from baseline decision, not exact outer selected forecast mode",
+    "not a trained human model or evidence of fun"
+  ],
+  "dependencies_added": [],
+  "local_cpu_only": true,
+  "new_colab_sessions": 0
+}

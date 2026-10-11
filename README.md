@@ -1,6 +1,8 @@
 # Reflex Persona Core
 
-チーム所属と共同案への合意を分ける追加部品を用意した。異なる人格の戦闘・資源管理、合意に参加しない仲間の公開行動学習を比較している。通常の独立判断は維持する。[接続契約](docs/TEAM_COOPERATION.md)、[結果・得失・停滞](evidence/team_cooperation/REPORT.md)。
+未来の公開局面でも、同じ本人が欲求・経路・手段を判断し直す任意部品を用意した。戦闘・資源競争の1対1とチーム戦で、能力戦術、本人の再判断、一手の再交渉、複数モデルの目的評価を比較する。協調で合理的な手が一致することは許し、人格の違い自体を報酬にはしない。[接続契約](docs/CONDITIONAL_CONTINUATION.md)、[結果・得失・停滞](evidence/conditional_continuation/REPORT.md)。
+
+チーム所属と共同案への合意は分離する。通常の独立判断、固定性格・主義は維持し、合意外の仲間は公開情報からの仮説で扱う。[チームの契約](docs/TEAM_COOPERATION.md)、[前回の比較](evidence/team_cooperation/REPORT.md)。
 
 異なるゲームへ接続する、人格を条件としたNPC/CPU判断の実験的な土台。通常の判断はCPUの数値バッチ処理で行い、実行時のLLMを必須にしない。
 

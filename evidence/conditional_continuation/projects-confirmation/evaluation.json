@@ -1,0 +1,389 @@
+{
+  "games": 864,
+  "checks": {
+    "independent_world_turns": 6816,
+    "actual_intents": 32064,
+    "owner_receipts": 13728,
+    "bounded_consent_receipts": 6649,
+    "frozen_full_episode_turns": 6816
+  },
+  "groups": [
+    {
+      "genre": "projects",
+      "arena": "all",
+      "arms": {
+        "bargain_uncertain": {
+          "games": 96,
+          "mean_credit": 0.203125,
+          "won": 39,
+          "lost": 96,
+          "mean_health": 10.072916666666666,
+          "distinct_world_histories": 60,
+          "by_roster": {
+            "0": 0.0,
+            "1": 0.3333333333333333,
+            "2": 0.3125,
+            "3": 0.16666666666666666
+          },
+          "work": {
+            "model_nodes": 169718,
+            "adopted": 748,
+            "declined": 20,
+            "changed_roots": 1139,
+            "material_conflicts": 7,
+            "ally_aids": 190,
+            "overflow": 0
+          },
+          "selected_horizon_mean_error": 0.09538324420677362,
+          "selected_horizon_mae": 0.09538324420677362,
+          "first_roster_choices_mean": 3.7083333333333335,
+          "mean_personal_energy": 3.357638888888889,
+          "mean_personal_skill": 0.2638888888888889,
+          "mean_personal_prestige": 7.597222222222222
+        },
+        "bargain_personal": {
+          "games": 96,
+          "mean_credit": 0.11979166666666667,
+          "won": 23,
+          "lost": 96,
+          "mean_health": 12.229166666666666,
+          "distinct_world_histories": 81,
+          "by_roster": {
+            "0": 0.16666666666666666,
+            "1": 0.125,
+            "2": 0.0,
+            "3": 0.1875
+          },
+          "work": {
+            "model_nodes": 217166,
+            "adopted": 724,
+            "declined": 44,
+            "changed_roots": 1191,
+            "material_conflicts": 8,
+            "ally_aids": 276,
+            "overflow": 4
+          },
+          "selected_horizon_mean_error": -0.10427486187845303,
+          "selected_horizon_mae": 0.11345994475138123,
+          "first_roster_choices_mean": 3.7916666666666665,
+          "mean_personal_energy": 4.076388888888889,
+          "mean_personal_skill": 0.14583333333333334,
+          "mean_personal_prestige": 7.723958333333333
+        },
+        "bargain_robust": {
+          "games": 96,
+          "mean_credit": 0.203125,
+          "won": 39,
+          "lost": 96,
+          "mean_health": 11.21875,
+          "distinct_world_histories": 66,
+          "by_roster": {
+            "0": 0.1875,
+            "1": 0.3333333333333333,
+            "2": 0.2708333333333333,
+            "3": 0.020833333333333332
+          },
+          "work": {
+            "model_nodes": 372449,
+            "adopted": 716,
+            "declined": 52,
+            "changed_roots": 1065,
+            "material_conflicts": 0,
+            "ally_aids": 223,
+            "overflow": 9
+          },
+          "selected_horizon_mean_error": -0.1559473929236499,
+          "selected_horizon_mae": 0.16129655493482312,
+          "first_roster_choices_mean": 3.9583333333333335,
+          "mean_personal_energy": 3.7395833333333335,
+          "mean_personal_skill": 0.1111111111111111,
+          "mean_personal_prestige": 7.744791666666667
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "bargain_personal",
+          "reference": "bargain_uncertain",
+          "paired_cases": 96,
+          "seed_clusters": 8,
+          "delta": -0.08333333333333333,
+          "bootstrap95": [
+            -0.125,
+            -0.041666666666666664
+          ],
+          "better": 13,
+          "same": 54,
+          "worse": 29
+        },
+        {
+          "candidate": "bargain_robust",
+          "reference": "bargain_uncertain",
+          "paired_cases": 96,
+          "seed_clusters": 8,
+          "delta": 0.0,
+          "bootstrap95": [
+            -0.020833333333333332,
+            0.020833333333333332
+          ],
+          "better": 10,
+          "same": 76,
+          "worse": 10
+        }
+      ]
+    },
+    {
+      "genre": "projects",
+      "arena": "partial",
+      "arms": {
+        "bargain_uncertain": {
+          "games": 96,
+          "mean_credit": 0.057291666666666664,
+          "won": 11,
+          "lost": 96,
+          "mean_health": 11.322916666666666,
+          "distinct_world_histories": 50,
+          "by_roster": {
+            "0": 0.020833333333333332,
+            "1": 0.0,
+            "2": 0.20833333333333334,
+            "3": 0.0
+          },
+          "work": {
+            "model_nodes": 125322,
+            "adopted": 759,
+            "declined": 9,
+            "changed_roots": 899,
+            "material_conflicts": 280,
+            "ally_aids": 150,
+            "overflow": 0
+          },
+          "selected_horizon_mean_error": 0.03825318401405359,
+          "selected_horizon_mae": 0.1156379007465964,
+          "first_roster_choices_mean": 3.8333333333333335,
+          "mean_personal_energy": 3.7743055555555554,
+          "mean_personal_skill": 0.052083333333333336,
+          "mean_personal_prestige": 6.541666666666667
+        },
+        "bargain_personal": {
+          "games": 96,
+          "mean_credit": 0.026041666666666668,
+          "won": 5,
+          "lost": 96,
+          "mean_health": 12.583333333333334,
+          "distinct_world_histories": 63,
+          "by_roster": {
+            "0": 0.08333333333333333,
+            "1": 0.0,
+            "2": 0.020833333333333332,
+            "3": 0.0
+          },
+          "work": {
+            "model_nodes": 149668,
+            "adopted": 763,
+            "declined": 5,
+            "changed_roots": 997,
+            "material_conflicts": 386,
+            "ally_aids": 165,
+            "overflow": 2
+          },
+          "selected_horizon_mean_error": -0.03342835299257318,
+          "selected_horizon_mae": 0.08218982088248143,
+          "first_roster_choices_mean": 3.7083333333333335,
+          "mean_personal_energy": 4.194444444444445,
+          "mean_personal_skill": 0.0,
+          "mean_personal_prestige": 5.854166666666667
+        },
+        "bargain_robust": {
+          "games": 96,
+          "mean_credit": 0.020833333333333332,
+          "won": 4,
+          "lost": 96,
+          "mean_health": 12.104166666666666,
+          "distinct_world_histories": 60,
+          "by_roster": {
+            "0": 0.08333333333333333,
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0
+          },
+          "work": {
+            "model_nodes": 263322,
+            "adopted": 763,
+            "declined": 5,
+            "changed_roots": 906,
+            "material_conflicts": 260,
+            "ally_aids": 156,
+            "overflow": 0
+          },
+          "selected_horizon_mean_error": -0.03688837920489297,
+          "selected_horizon_mae": 0.09188619484491044,
+          "first_roster_choices_mean": 3.875,
+          "mean_personal_energy": 4.034722222222222,
+          "mean_personal_skill": 0.020833333333333332,
+          "mean_personal_prestige": 6.255208333333333
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "bargain_personal",
+          "reference": "bargain_uncertain",
+          "paired_cases": 96,
+          "seed_clusters": 8,
+          "delta": -0.03125,
+          "bootstrap95": [
+            -0.06770833333333333,
+            0.0
+          ],
+          "better": 4,
+          "same": 82,
+          "worse": 10
+        },
+        {
+          "candidate": "bargain_robust",
+          "reference": "bargain_uncertain",
+          "paired_cases": 96,
+          "seed_clusters": 8,
+          "delta": -0.03645833333333333,
+          "bootstrap95": [
+            -0.06770833333333333,
+            -0.010416666666666666
+          ],
+          "better": 4,
+          "same": 81,
+          "worse": 11
+        }
+      ]
+    },
+    {
+      "genre": "projects",
+      "arena": "solo",
+      "arms": {
+        "bargain_uncertain": {
+          "games": 96,
+          "mean_credit": 0.4166666666666667,
+          "won": 80,
+          "lost": 96,
+          "mean_health": 1.3541666666666667,
+          "distinct_world_histories": 19,
+          "by_roster": {
+            "0": 0.5,
+            "1": 0.3333333333333333,
+            "2": 0.3333333333333333,
+            "3": 0.5
+          },
+          "work": {
+            "model_nodes": 9070,
+            "adopted": 736,
+            "declined": 0,
+            "changed_roots": 144,
+            "material_conflicts": 0,
+            "ally_aids": 0,
+            "overflow": 0
+          },
+          "selected_horizon_mean_error": 0.03907608695652174,
+          "selected_horizon_mae": 0.03907608695652174,
+          "first_roster_choices_mean": 1.4583333333333333,
+          "mean_personal_energy": 1.3541666666666667,
+          "mean_personal_skill": 0.5,
+          "mean_personal_prestige": 9.041666666666666
+        },
+        "bargain_personal": {
+          "games": 96,
+          "mean_credit": 0.453125,
+          "won": 87,
+          "lost": 96,
+          "mean_health": 1.53125,
+          "distinct_world_histories": 27,
+          "by_roster": {
+            "0": 0.5,
+            "1": 0.3125,
+            "2": 0.5,
+            "3": 0.5
+          },
+          "work": {
+            "model_nodes": 11200,
+            "adopted": 720,
+            "declined": 16,
+            "changed_roots": 102,
+            "material_conflicts": 0,
+            "ally_aids": 0,
+            "overflow": 0
+          },
+          "selected_horizon_mean_error": -0.07858333333333332,
+          "selected_horizon_mae": 0.0936388888888889,
+          "first_roster_choices_mean": 2.125,
+          "mean_personal_energy": 1.53125,
+          "mean_personal_skill": 0.28125,
+          "mean_personal_prestige": 9.822916666666666
+        },
+        "bargain_robust": {
+          "games": 96,
+          "mean_credit": 0.484375,
+          "won": 93,
+          "lost": 96,
+          "mean_health": 1.15625,
+          "distinct_world_histories": 28,
+          "by_roster": {
+            "0": 0.5,
+            "1": 0.4375,
+            "2": 0.5,
+            "3": 0.5
+          },
+          "work": {
+            "model_nodes": 20156,
+            "adopted": 720,
+            "declined": 16,
+            "changed_roots": 117,
+            "material_conflicts": 0,
+            "ally_aids": 0,
+            "overflow": 0
+          },
+          "selected_horizon_mean_error": -0.12154861111111111,
+          "selected_horizon_mae": 0.1395902777777778,
+          "first_roster_choices_mean": 2.0833333333333335,
+          "mean_personal_energy": 1.15625,
+          "mean_personal_skill": 0.3229166666666667,
+          "mean_personal_prestige": 9.984375
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "bargain_personal",
+          "reference": "bargain_uncertain",
+          "paired_cases": 96,
+          "seed_clusters": 8,
+          "delta": 0.03645833333333333,
+          "bootstrap95": [
+            0.010416666666666666,
+            0.0625
+          ],
+          "better": 15,
+          "same": 73,
+          "worse": 8
+        },
+        {
+          "candidate": "bargain_robust",
+          "reference": "bargain_uncertain",
+          "paired_cases": 96,
+          "seed_clusters": 8,
+          "delta": 0.06770833333333333,
+          "bootstrap95": [
+            0.05208333333333333,
+            0.078125
+          ],
+          "better": 16,
+          "same": 77,
+          "worse": 3
+        }
+      ]
+    }
+  ],
+  "source_snapshot_sha256": "9101f4e86c0ff1729e592854bf7ca32202457f9765ddc628069d2979a74bb504",
+  "trajectories_sha256": "f172cce8f7a112dcca5216cd9178532a0bba20e45d00cc5a3590df5aaab80ba0",
+  "limits": [
+    "seed intervals conditional on the authored matrix; deterministic histories and repeated rosters are not independent worlds",
+    "selected forecast error conditions on different chosen roots/trajectories; not a matched causal prediction benchmark",
+    "solo mission health proxy still uses original normalization; no solo-specific value retuning",
+    "full policy replay and independent world ledgers verify execution, not human-level intelligence"
+  ]
+}

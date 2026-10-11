@@ -1,0 +1,371 @@
+{
+  "games": 432,
+  "checks": {
+    "independent_world_turns": 3523,
+    "actual_intents": 13902,
+    "owner_receipts": 6258,
+    "bounded_consent_receipts": 3305,
+    "frozen_full_episode_turns": 3523
+  },
+  "groups": [
+    {
+      "genre": "combat",
+      "arena": "all",
+      "arms": {
+        "bargain_uncertain": {
+          "games": 48,
+          "mean_credit": 0.4791666666666667,
+          "won": 23,
+          "lost": 25,
+          "mean_health": 25.833333333333332,
+          "distinct_world_histories": 45,
+          "by_roster": {
+            "0": 0.4166666666666667,
+            "1": 0.5,
+            "2": 0.4166666666666667,
+            "3": 0.5833333333333334
+          },
+          "work": {
+            "model_nodes": 114717,
+            "adopted": 283,
+            "declined": 33,
+            "changed_roots": 415,
+            "movement_conflicts": 233,
+            "failed_moves": 42,
+            "ally_heals": 20,
+            "self_heals": 18
+          },
+          "selected_horizon_mean_error": 0.4833781164114645,
+          "selected_horizon_mae": 0.4853145039916242,
+          "first_roster_choices_mean": 2.25
+        },
+        "bargain_personal": {
+          "games": 48,
+          "mean_credit": 0.3333333333333333,
+          "won": 16,
+          "lost": 32,
+          "mean_health": 25.645833333333332,
+          "distinct_world_histories": 45,
+          "by_roster": {
+            "0": 0.3333333333333333,
+            "1": 0.4166666666666667,
+            "2": 0.4166666666666667,
+            "3": 0.16666666666666666
+          },
+          "work": {
+            "model_nodes": 134559,
+            "adopted": 266,
+            "declined": 12,
+            "changed_roots": 423,
+            "movement_conflicts": 162,
+            "failed_moves": 16,
+            "ally_heals": 18,
+            "self_heals": 23
+          },
+          "selected_horizon_mean_error": 0.41913586048454476,
+          "selected_horizon_mae": 0.5042187499999999,
+          "first_roster_choices_mean": 2.9166666666666665
+        },
+        "bargain_robust": {
+          "games": 48,
+          "mean_credit": 0.5729166666666666,
+          "won": 27,
+          "lost": 20,
+          "mean_health": 25.104166666666668,
+          "distinct_world_histories": 45,
+          "by_roster": {
+            "0": 0.5833333333333334,
+            "1": 0.6666666666666666,
+            "2": 0.5,
+            "3": 0.5416666666666666
+          },
+          "work": {
+            "model_nodes": 290740,
+            "adopted": 310,
+            "declined": 37,
+            "changed_roots": 437,
+            "movement_conflicts": 194,
+            "failed_moves": 31,
+            "ally_heals": 16,
+            "self_heals": 24
+          },
+          "selected_horizon_mean_error": 0.12071359767025092,
+          "selected_horizon_mae": 0.2877680704898447,
+          "first_roster_choices_mean": 2.0833333333333335
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "bargain_personal",
+          "reference": "bargain_uncertain",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "delta": -0.14583333333333334,
+          "bootstrap95": [
+            -0.20833333333333334,
+            -0.08333333333333333
+          ],
+          "better": 3,
+          "same": 35,
+          "worse": 10
+        },
+        {
+          "candidate": "bargain_robust",
+          "reference": "bargain_uncertain",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "delta": 0.09375,
+          "bootstrap95": [
+            0.03125,
+            0.14583333333333331
+          ],
+          "better": 6,
+          "same": 41,
+          "worse": 1
+        }
+      ]
+    },
+    {
+      "genre": "combat",
+      "arena": "partial",
+      "arms": {
+        "bargain_uncertain": {
+          "games": 48,
+          "mean_credit": 0.3333333333333333,
+          "won": 16,
+          "lost": 32,
+          "mean_health": 25.520833333333332,
+          "distinct_world_histories": 44,
+          "by_roster": {
+            "0": 0.3333333333333333,
+            "1": 0.25,
+            "2": 0.25,
+            "3": 0.5
+          },
+          "work": {
+            "model_nodes": 100409,
+            "adopted": 288,
+            "declined": 30,
+            "changed_roots": 283,
+            "movement_conflicts": 199,
+            "failed_moves": 34,
+            "ally_heals": 10,
+            "self_heals": 32
+          },
+          "selected_horizon_mean_error": 0.559618638278035,
+          "selected_horizon_mae": 0.6025226859889403,
+          "first_roster_choices_mean": 2.5
+        },
+        "bargain_personal": {
+          "games": 48,
+          "mean_credit": 0.3125,
+          "won": 15,
+          "lost": 33,
+          "mean_health": 25.291666666666668,
+          "distinct_world_histories": 48,
+          "by_roster": {
+            "0": 0.3333333333333333,
+            "1": 0.3333333333333333,
+            "2": 0.4166666666666667,
+            "3": 0.16666666666666666
+          },
+          "work": {
+            "model_nodes": 117654,
+            "adopted": 279,
+            "declined": 8,
+            "changed_roots": 267,
+            "movement_conflicts": 171,
+            "failed_moves": 23,
+            "ally_heals": 5,
+            "self_heals": 28
+          },
+          "selected_horizon_mean_error": 0.3764784323974512,
+          "selected_horizon_mae": 0.526788692254082,
+          "first_roster_choices_mean": 3.25
+        },
+        "bargain_robust": {
+          "games": 48,
+          "mean_credit": 0.3125,
+          "won": 15,
+          "lost": 33,
+          "mean_health": 25.354166666666668,
+          "distinct_world_histories": 45,
+          "by_roster": {
+            "0": 0.3333333333333333,
+            "1": 0.16666666666666666,
+            "2": 0.3333333333333333,
+            "3": 0.4166666666666667
+          },
+          "work": {
+            "model_nodes": 213586,
+            "adopted": 294,
+            "declined": 9,
+            "changed_roots": 260,
+            "movement_conflicts": 169,
+            "failed_moves": 23,
+            "ally_heals": 6,
+            "self_heals": 26
+          },
+          "selected_horizon_mean_error": 0.4051992787855883,
+          "selected_horizon_mae": 0.5181325585789871,
+          "first_roster_choices_mean": 3.1666666666666665
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "bargain_personal",
+          "reference": "bargain_uncertain",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "delta": -0.020833333333333336,
+          "bootstrap95": [
+            -0.16666666666666669,
+            0.125
+          ],
+          "better": 5,
+          "same": 37,
+          "worse": 6
+        },
+        {
+          "candidate": "bargain_robust",
+          "reference": "bargain_uncertain",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "delta": -0.020833333333333332,
+          "bootstrap95": [
+            -0.125,
+            0.08333333333333333
+          ],
+          "better": 3,
+          "same": 41,
+          "worse": 4
+        }
+      ]
+    },
+    {
+      "genre": "combat",
+      "arena": "solo",
+      "arms": {
+        "bargain_uncertain": {
+          "games": 48,
+          "mean_credit": 0.4375,
+          "won": 18,
+          "lost": 24,
+          "mean_health": 5.6875,
+          "distinct_world_histories": 26,
+          "by_roster": {
+            "0": 0.4583333333333333,
+            "1": 0.4583333333333333,
+            "2": 0.375,
+            "3": 0.4583333333333333
+          },
+          "work": {
+            "model_nodes": 90295,
+            "adopted": 512,
+            "declined": 33,
+            "changed_roots": 226,
+            "movement_conflicts": 4,
+            "failed_moves": 2,
+            "ally_heals": 0,
+            "self_heals": 28
+          },
+          "selected_horizon_mean_error": 0.3272939498336227,
+          "selected_horizon_mae": 0.5342737494574652,
+          "first_roster_choices_mean": 1.1666666666666667
+        },
+        "bargain_personal": {
+          "games": 48,
+          "mean_credit": 0.3333333333333333,
+          "won": 15,
+          "lost": 31,
+          "mean_health": 4.3125,
+          "distinct_world_histories": 36,
+          "by_roster": {
+            "0": 0.3333333333333333,
+            "1": 0.2916666666666667,
+            "2": 0.4166666666666667,
+            "3": 0.2916666666666667
+          },
+          "work": {
+            "model_nodes": 113755,
+            "adopted": 523,
+            "declined": 7,
+            "changed_roots": 242,
+            "movement_conflicts": 30,
+            "failed_moves": 15,
+            "ally_heals": 0,
+            "self_heals": 23
+          },
+          "selected_horizon_mean_error": 0.3878269177997309,
+          "selected_horizon_mae": 0.5707841490510587,
+          "first_roster_choices_mean": 1.0
+        },
+        "bargain_robust": {
+          "games": 48,
+          "mean_credit": 0.4270833333333333,
+          "won": 17,
+          "lost": 24,
+          "mean_health": 4.770833333333333,
+          "distinct_world_histories": 33,
+          "by_roster": {
+            "0": 0.4166666666666667,
+            "1": 0.2916666666666667,
+            "2": 0.4583333333333333,
+            "3": 0.5416666666666666
+          },
+          "work": {
+            "model_nodes": 227463,
+            "adopted": 550,
+            "declined": 18,
+            "changed_roots": 248,
+            "movement_conflicts": 6,
+            "failed_moves": 3,
+            "ally_heals": 0,
+            "self_heals": 27
+          },
+          "selected_horizon_mean_error": 0.150471148989899,
+          "selected_horizon_mae": 0.5023187499999999,
+          "first_roster_choices_mean": 1.0833333333333333
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "bargain_personal",
+          "reference": "bargain_uncertain",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "delta": -0.10416666666666667,
+          "bootstrap95": [
+            -0.375,
+            0.16666666666666669
+          ],
+          "better": 10,
+          "same": 24,
+          "worse": 14
+        },
+        {
+          "candidate": "bargain_robust",
+          "reference": "bargain_uncertain",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "delta": -0.010416666666666664,
+          "bootstrap95": [
+            -0.16666666666666666,
+            0.14583333333333334
+          ],
+          "better": 8,
+          "same": 32,
+          "worse": 8
+        }
+      ]
+    }
+  ],
+  "source_snapshot_sha256": "ff358db80b428cf940cac8eaea5d8195768f237a09ef6aa8065a9b7c97667bc6",
+  "trajectories_sha256": "e683c73a310656282be582034a64a72fc9f8d55013cbba34d0b7a8b1e50c7ac9",
+  "limits": [
+    "seed intervals conditional on the authored matrix; deterministic histories and repeated rosters are not independent worlds",
+    "selected forecast error conditions on different chosen roots/trajectories; not a matched causal prediction benchmark",
+    "solo mission health proxy still uses original normalization; no solo-specific value retuning",
+    "full policy replay and independent world ledgers verify execution, not human-level intelligence"
+  ]
+}
