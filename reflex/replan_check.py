@@ -36,6 +36,8 @@ class ReplanCheck:
         reference=expanded.stability_reference
         if not isinstance(reference,JointForecast) or reference.replan_check is not None:
             raise ValueError('independent unexpanded reference required')
+        if (expanded.target,expanded.horizon,expanded.audit.get('unit'))!=(reference.target,reference.horizon,reference.audit.get('unit')):
+            raise ValueError('same purpose, horizon and public time unit required')
         if not isinstance(self.seeds,tuple) or not 1<=len(self.seeds)<=MAX_OUTCOMES or any(type(s) is not int for s in self.seeds) or len(set(self.seeds))!=len(self.seeds):
             raise ValueError('distinct bounded feedback check seeds required')
         discovery=expanded.audit['continuation_search'].get('validation',{})

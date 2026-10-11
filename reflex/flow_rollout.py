@@ -85,6 +85,7 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
                     if not isinstance(tail,(tuple,list)) or len(tail)>15 or any(not isinstance(k,str) for k in tail):
                         raise ValueError('bounded feedback continuation required')
                     check=copy.deepcopy(cc);check['state']=response['state'];compile_batch([check])
+                    if response['state']['intent_action']!=key:raise ValueError('feedback memory must carry the executed root')
                     revised_memory=copy.deepcopy(response['state']);active_schedule=(key,*tail)
                     replans.append(dict(tick=cc['tick'],context_hash=digest(cc),root=key,remaining=list(tail),audit=copy.deepcopy(response['audit'])))
                 viable=[a['id'] for a in cc['actions'] if a['legal'] and not a['known_failure']]

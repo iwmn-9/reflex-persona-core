@@ -49,6 +49,13 @@ class RepairStabilityTests(unittest.TestCase):
         c,r,f=pair();f.audit['continuation_search']['proposals']['candidate-b']['branches'][0]['seed']=99
         with self.assertRaises(ValueError):select([c],replace(f,stability_reference=r))
 
+    def test_different_objectives_or_time_windows_cannot_be_used_as_reference(self):
+        c,r,f=pair()
+        for other in (replace(r,target='different-goal'),replace(r,horizon=3)):
+            with self.assertRaises(ValueError):select([c],replace(f,stability_reference=other))
+        altered=copy.deepcopy(r.audit);altered['unit']='seconds'
+        with self.assertRaises(ValueError):select([c],replace(f,stability_reference=replace(r,audit=altered)))
+
     def test_protection_does_not_override_an_expanded_value_tier(self):
         c,r,f=pair();cc=copy.deepcopy(f.contexts[0]);cc['actions']=[cc['actions'][1]]
         f=replace(f,contexts=(cc,),roots={'b':('y',)},purpose={'b':.65},stability_reference=r)

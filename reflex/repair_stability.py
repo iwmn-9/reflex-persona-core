@@ -10,6 +10,8 @@ from .deliberation import select
 
 
 def safeguard(c, expanded, reference, policy, allowed=None):
+    if (expanded.target,expanded.horizon,expanded.audit.get('unit'))!=(reference.target,reference.horizon,reference.audit.get('unit')):
+        raise ValueError('same purpose, horizon and public time unit required')
     permission=None if allowed is None else [allowed]
     _,new_vote=select([c],expanded,policy,permission)
     _,old_vote=select([c],reference,policy,permission)

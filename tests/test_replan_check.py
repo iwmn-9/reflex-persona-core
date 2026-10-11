@@ -42,6 +42,13 @@ class ReplanCheckTests(unittest.TestCase):
         with self.assertRaises(ValueError):rollout(c,0,observe=observe,advance=lambda s,k,z:(s+1,effect()),
             terminal=lambda s:s>=2,horizon=2,replan_once=callback)
 
+    def test_future_memory_cannot_claim_an_unexecuted_intent(self):
+        c=context('memory-consistency',[action('start',effect())])
+        def observe(s,m):cc=copy.deepcopy(c);cc['state']=m;cc['tick']=s;return cc
+        callback=lambda *args:dict(root='start',remaining=(),state=c['state'],audit={})
+        with self.assertRaises(ValueError):rollout(c,0,observe=observe,advance=lambda s,k,z:(s+1,effect()),
+            terminal=lambda s:s>=2,horizon=2,replan_once=callback)
+
     def test_replan_gate_uses_fixed_independent_banks_and_common_owner_tail(self):
         c,args=corridor();old=('start','left','left','left','finish');saved=digest(c)
         f=search_forecast(c,(0,False),retained=old,repairs=24,repair_guard=True,validation_seeds=(3,4),**args)
