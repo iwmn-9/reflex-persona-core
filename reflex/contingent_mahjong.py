@@ -7,7 +7,7 @@ purpose is explicitly a hand-shape proxy, never disguised as winning EV.
 """
 from dataclasses import dataclass,replace,asdict
 import copy
-from .core import Policy,digest
+from .core import Policy,digest,character_key as owner_key
 from .examples import effect
 from .purpose_plan import Goal,goal_forecast
 from .flow_rollout import rollout
@@ -69,9 +69,11 @@ class HandModel:
         return after,effect(gain,values={'achievement':gain,'security':-row['exposure']},cost=.02*row['exposure'])
 
 
-def play(profile,seed,method='conditional'):
+def play(profile,seed,method='conditional',*,policy=None,rigidity=None):
     from .mahjong_experiment import audit
     env=engine().RiichiEnv(game_mode='4p-red-single',seed=seed);observations=env.reset();seat=seed%4
+    if policy is not None and rigidity is not None:raise ValueError('one explicit policy configuration required')
+    selected_policy=policy or (Policy() if rigidity is None else None)
     state=None;memory=None;trace=[];owner_tick=0;initial=env.scores()
     for tick in range(600):
         if env.done():break
@@ -80,20 +82,21 @@ def play(profile,seed,method='conditional'):
             if player!=seat:chosen=reference(obs,seed,tick,'efficiency');rows.append(dict(player=player,action=action_id(chosen)));actions[player]=chosen;continue
             view,candidates_=candidates(obs);world=HandState(view,tuple(candidates_),owner_tick)
             model=HandModel(profile,'conditional-mahjong');c=model.context(world,state)
+            if selected_policy is None:selected_policy=Policy(principle_priority='personal',commitments={owner_key(c):rigidity})
             if memory is None:memory=PlanMemory(c,model.target,model.unit)
             saved=memory.record()
             if method=='conditional':
                 retained,prefix=memory.offer(c)
                 f=search_forecast(c,world,observe=model.context,advance=model.advance,terminal=model.terminal,
                     assess=lambda w:model.goal(w).record(),horizon=2,seeds=(401,402),width=1,revisions=1,
-                    target=model.target,unit=model.unit,retained=retained,prefix=prefix,patch_budget=4)
+                    target=model.target,unit=model.unit,retained=retained,prefix=prefix,patch_budget=4,policy=selected_policy)
             elif method=='goal-reflex':
                 paths,bank=rollout(c,world,observe=model.context,advance=model.advance,terminal=model.terminal,
-                    assess=lambda w:model.goal(w).record(),horizon=2,seeds=(401,402),public_controller=lambda view:None)
-                f=goal_forecast(c,paths,bank,horizon=2,unit=model.unit,target=model.target)
+                    assess=lambda w:model.goal(w).record(),horizon=2,seeds=(401,402),public_controller=lambda view:None,policy=selected_policy)
+                f=goal_forecast(c,paths,bank,horizon=2,unit=model.unit,target=model.target,policy=selected_policy)
             else:raise ValueError('known own-hand comparison required')
             assert memory.record()==saved
-            decisions,vote=select([c],f);d=decisions[0];key=d['action_id'];state=d['next_state']
+            decisions,vote=select([c],f,selected_policy);d=decisions[0];key=d['action_id'];state=d['next_state']
             if method=='conditional':memory.remember(c,f,vote.get('selected_plan'),key)
             chosen=next(a for a in obs.legal_actions() if action_id(a)==key)
             rows.append(dict(player=player,public=asdict(view),action=key,decision=d,

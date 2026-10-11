@@ -45,7 +45,7 @@ def can_finish(w):
     return any(can_finish(step(w,k)) for k in legal(w))
 
 
-def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0,repair_guard=False,replan_check=False,complete_to=0,contingent=False,patch_budget=16):
+def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0,repair_guard=False,replan_check=False,complete_to=0,contingent=False,patch_budget=16,rigidity=None):
     watched=variant in ('watch','release','observed','verified')
     pressured=variant in ('pressure','release','observed','verified')
     if variant not in ('goal','watch','pressure','release','observed','verified'):raise ValueError('known ablation required')
@@ -74,7 +74,11 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
     watch=PersonaProgressWatch(c['scope'],ProgressConfig(grace=2,repeat_limit=2,
         proof_margin=0. if variant=='verified' else None)) if watched else None
     pressure=NeedPressure(c['scope'],PressureConfig(grace=2)) if pressured else None
-    policy=Policy(principle_priority=principle_priority)
+    if rigidity is not None:
+        from .core import character_key as owner_key
+        if principle_priority!='lexicographic':raise ValueError('one explicit priority configuration required')
+        policy=Policy(principle_priority='personal',commitments={owner_key(c):rigidity})
+    else:policy=Policy(principle_priority=principle_priority)
     loop=DecisionLoop(c,policy=policy,progress=watch,pressure=pressure);trace=[];previous=None
     while not p.terminal(w):
         c=p.observe(w,loop.state);pr=p.purpose(w,c,previous) if watched else None;captured={}
@@ -83,7 +87,7 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
             if variant=='observed':
                 observer=ModelObserver(c['scope'],purpose=p.purpose,
                     feedback=lambda a,b,k:feedback(p,a,b,k,watched,pressured),
-                    progress=loop.progress,pressure=loop.pressure,previous=previous)
+                    progress=loop.progress,pressure=loop.pressure,previous=previous,policy=policy)
             saved=digest(loop.record())
             saved_intention=None if intention is None else intention.record()
             if search:
@@ -111,7 +115,7 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
                     from .replan_check import ReplanCheck
                     future_observer=ModelObserver(c['scope'],purpose=p.purpose,
                         feedback=lambda a,b,k:feedback(p,a,b,k,watched,pressured),
-                        progress=loop.progress,pressure=loop.pressure,previous=previous)
+                        progress=loop.progress,pressure=loop.pressure,previous=previous,policy=policy)
                     def future(cc,state,observed,retained):
                         return build(cc,state,observe=p.observe,advance=p.advance,terminal=p.terminal,
                             horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observed,

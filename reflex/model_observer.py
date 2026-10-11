@@ -20,8 +20,8 @@ class ModelFeedback:
 
 
 class ModelObserver:
-    def __init__(self,scope,*,purpose,feedback,progress=None,pressure=None,previous=None):
-        self.owner=digest(scope);self.purpose=purpose;self.feedback=feedback
+    def __init__(self,scope,*,purpose,feedback,progress=None,pressure=None,previous=None,policy=None):
+        self.owner=digest(scope);self.purpose=purpose;self.feedback=feedback;self.policy=policy
         if progress is not None and (not isinstance(progress,ProgressWatch) or progress.owner!=self.owner):
             raise ValueError('owned model progress checkpoint required')
         if pressure is not None and (not isinstance(pressure,NeedPressure) or pressure.owner!=self.owner):
@@ -46,7 +46,7 @@ class ModelObserver:
         if self.progress is not None and not isinstance(req,PurposeRequest):raise ValueError('model purpose request required')
         allowed={a['id'] for a in c['actions'] if a['legal'] and not a['known_failure']}
         audit=None
-        if self.progress is not None:allowed,audit=self.progress.mask(c,req)
+        if self.progress is not None:allowed,audit=self.progress.mask(c,req,policy=self.policy)
         return c,req,allowed,audit
 
     def advance(self,before,after,key,context,request):

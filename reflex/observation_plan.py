@@ -6,11 +6,11 @@ owner can use. Unknown/obsolete nodes defer to the declared persona reflex.
 from dataclasses import dataclass
 import copy
 import re
-from .core import compile_batch,digest,identifier
+from .core import compile_batch,digest,identifier,owner_key
 
 
 def owner(c):
-    return digest([c[k] for k in ('scope','seed','personality','values','objective')])
+    return owner_key(c)
 
 
 def history(value):

@@ -18,6 +18,16 @@ def digest(value):
                                     separators=(",", ":"), allow_nan=False).encode()).hexdigest()
 
 
+def owner_key(c):
+    """Stable actor contract, independent of observations and executed tactics."""
+    return digest([c[k] for k in ('scope','seed','personality','values','objective')])
+
+
+def character_key(c):
+    """Static disposition survives a goal change, not a different character."""
+    return digest([c[k] for k in ('scope','seed','personality','values')])
+
+
 def number(value, low, high):
     if isinstance(value, bool) or not isinstance(value, (int, float)) or not np.isfinite(value):
         raise ValueError("finite numeric value required")
@@ -53,6 +63,7 @@ class Batch:
     ids: tuple
     targets: tuple
     hashes: tuple
+    characters: tuple
     traits: np.ndarray
     values: np.ndarray
     needs: np.ndarray
@@ -108,7 +119,7 @@ def compile_batch(contexts):
     primary = np.full(n, -1, int); mode = np.full(n, -1, int); intent = primary.copy()
     age = np.zeros(n, int); mode_urgency=np.zeros(n); seeds=np.zeros(n,dtype=np.uint64); ticks=seeds.copy(); read_confidence = np.zeros(n)
     read_uncertainty = np.zeros(n); threatened = np.zeros(n, bool); ahead = threatened.copy()
-    ids, targets, hashes = [], [], []
+    ids, targets, hashes, characters = [], [], [], []
     for i, c in enumerate(contexts):
         exact(c, ("version", "scope", "seed", "tick", "personality", "values", "needs",
                   "state", "objective", "facts", "actions", "opponent"))
@@ -142,7 +153,7 @@ def compile_batch(contexts):
         ordered = sorted(c["actions"], key=lambda action: action["id"])
         action_ids = tuple(identifier(act["id"]) for act in ordered)
         if len(set(action_ids)) != len(action_ids): raise ValueError("duplicate action id")
-        ids.append(action_ids); targets.append(tuple(act["target"] for act in ordered)); hashes.append(digest(c))
+        ids.append(action_ids); targets.append(tuple(act["target"] for act in ordered)); hashes.append(digest(c)); characters.append(character_key(c))
         if s["intent_action"] is not None:
             identifier(s["intent_action"])
             if s["intent_action"] in action_ids: intent[i] = action_ids.index(s["intent_action"])
@@ -177,7 +188,7 @@ def compile_batch(contexts):
     rng=counter_rng(seeds,ticks)
     arrays = locals()
     fields = {key: arrays[key] for key in Batch.__dataclass_fields__}
-    for key in ("ids", "targets", "hashes"): fields[key] = tuple(fields[key])
+    for key in ("ids", "targets", "hashes", "characters"): fields[key] = tuple(fields[key])
     for value in fields.values():
         if isinstance(value,np.ndarray): value.flags.writeable = False
     return Batch(**fields)
@@ -210,13 +221,28 @@ class Decisions:
 
 class Policy:
     """Stateless shared policy. Learned residual is optional and bounded; defaults zero."""
-    def __init__(self, residual=None, *, principle_priority='lexicographic'):
-        if principle_priority not in ('lexicographic','finite'):raise ValueError('known principle priority required')
+    def __init__(self, residual=None, *, principle_priority='lexicographic',commitments=None):
+        if principle_priority not in ('lexicographic','finite','personal'):raise ValueError('known principle priority required')
         self.principle_priority=principle_priority
+        if principle_priority=='personal':
+            if not isinstance(commitments,dict) or not commitments:raise ValueError('explicit owned commitments required')
+            for key,value in commitments.items():
+                if not isinstance(key,str) or len(key)!=64 or any(x not in '0123456789abcdef' for x in key):
+                    raise ValueError('commitment owner hash required')
+                number(value,0,1)
+        elif commitments is not None:raise ValueError('commitments require personal priority')
+        self._commitments=tuple(sorted((k,float(v)) for k,v in (commitments or {}).items()))
         self.residual = np.zeros(8) if residual is None else np.asarray(residual,dtype=float).copy()
         if self.residual.shape != (8,) or not np.isfinite(self.residual).all() or np.max(abs(self.residual)) > .08+1e-9:
             raise ValueError("residual must have eight finite coefficients bounded by .08")
         self.residual.flags.writeable=False
+
+    @property
+    def commitments(self):
+        return dict(self._commitments) if self.principle_priority=='personal' else None
+
+    def signature(self):
+        return self.principle_priority,tuple(self.residual),self._commitments
 
     def decide(self, b, stochastic=True, *, appraisal=None, purpose=None, max_social_regret=.15):
         n,a,k,d = b.effects.shape; rows=np.arange(n)
@@ -226,11 +252,19 @@ class Policy:
         primary=np.where(keep,b.primary,best); primary=np.where(b.enabled.any(1)&(b.needs.max(1)>.05),primary,-1)
         urgency=np.where(primary>=0,b.needs[rows,np.maximum(primary,0)],0)
         top=b.values.argmax(1); strength=b.values[rows,top]
+        rigidity=None
+        if self.principle_priority=='personal':
+            configured=dict(self._commitments)
+            if any(k not in configured for k in b.characters):raise ValueError('unconfigured commitment owner')
+            rigidity=np.array([configured[k] for k in b.characters])
         # Game coefficients, not a claim about psychological causality.
         hold=np.clip(.5+.35*(b.traits[:,1]-.5)-.25*(b.traits[:,4]-.5)+.3*(strength-urgency),.1,.9)
         mode=(b.rng[:,0]<hold).astype(int)
         valid_old=(b.mode>=0)&(primary==b.primary)&(abs(urgency-b.mode_urgency)<.15)
         mode=np.where(valid_old,b.mode,mode)
+        # An explicit unyielding endpoint keeps its principle even in urgent
+        # need mode. Intermediate characters retain the existing needs/mode.
+        if rigidity is not None:mode=np.where(rigidity==1.,1,mode)
         mode=np.where(strength==0,0,mode)
         mode_urgency=np.where(valid_old,b.mode_urgency,urgency)
         w=np.zeros((n,d)); w[:,0]=.65
@@ -269,6 +303,11 @@ class Policy:
         # Finite priority keeps the same strongest-value weights and mode, but
         # does not give a marginal value gain an unlimited veto over all costs.
         if self.principle_priority=='finite':eligible=viable
+        if rigidity is not None:
+            # Tolerance concerns value outcomes, never a remembered action ID.
+            # 0 reproduces finite priority; 1 keeps the narrow strongest tier.
+            tolerance=.02+1.98*(1-rigidity)**2
+            eligible=viable&((mode==0)[:,None]|(top_effect>=tier[:,None]-tolerance[:,None]))
         own=np.argmax(np.where(eligible,scores,-np.inf),axis=1)
         read_ok=(b.read_confidence>=.6)&(~b.ahead|b.threatened)
         candidate_scores=scores+b.reading*b.read_confidence[:,None]

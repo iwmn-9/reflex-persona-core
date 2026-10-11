@@ -10,7 +10,7 @@ from collections import OrderedDict, deque
 from dataclasses import dataclass, asdict,replace
 import copy
 import numpy as np
-from .core import FEATURES, Policy, compile_batch, digest, identifier
+from .core import FEATURES, Policy, compile_batch, digest, identifier,character_key
 from .judgment import Binding, OutcomeMemory, ReadControl, avoid_waste
 from .planning import vector
 from .routes import RouteState,choose_route
@@ -174,6 +174,7 @@ class DecisionLoop:
         self.scope=copy.deepcopy(context['scope']);self.owner=digest(self.scope)
         self.personality=copy.deepcopy(context['personality']);self.values=copy.deepcopy(context['values']);self.seed=context['seed']
         self.policy=policy or Policy();self.read_control=read_control or ReadControl(max_nodes=16)
+        self.character=character_key(context)
         self.memory=OutcomeMemory(self.scope,capacity);self.evidence=EvidenceGate(capacity)
         self.state=None;self.pending=None;self.last_tick=-1;self.strategy=RouteState()
         self.predictor=copy.deepcopy(predictor)
@@ -201,7 +202,7 @@ class DecisionLoop:
         if self.pressure is not None:c=self.pressure.apply(c)
         compile_batch([c])
         allowed={a['id'] for a in c['actions'] if a['legal'] and not a['known_failure']};progress_audit=None
-        if self.progress is not None:allowed,progress_audit=self.progress.mask(c,request.purpose)
+        if self.progress is not None:allowed,progress_audit=self.progress.mask(c,request.purpose,policy=self.policy)
         elif request.purpose is not None:raise ValueError('purpose request requires configured progress watch')
         if self.progress is not None and self.progress.config.proof_margin is not None and (request.reader is not None or self.predictor is not None):
             raise ValueError('recovery proof currently requires the joint planner path without a separate reader')
@@ -240,6 +241,12 @@ class DecisionLoop:
         policy=items[0][0].policy
         if any(not np.array_equal(loop.policy.residual,policy.residual) or loop.policy.principle_priority!=policy.principle_priority for loop,_ in items):
             raise ValueError('batch must share policy coefficients')
+        if policy.principle_priority=='personal' and any(loop.policy.signature()!=policy.signature() for loop,_ in items):
+            bindings={}
+            for loop,_ in items:
+                if loop.character not in loop.policy.commitments:raise ValueError('unconfigured commitment owner')
+                bindings[loop.character]=loop.policy.commitments[loop.character]
+            policy=Policy(policy.residual,principle_priority='personal',commitments=bindings)
         stages=[]
         for loop,req in items:
             strategy=loop.strategy;route_audit=None
@@ -384,7 +391,7 @@ class DecisionLoop:
                         margin=max(stages[i]['loop'].progress.config.proof_margin for i in proof_indices))
                     approvals=[]
                     for i in proof_indices:
-                        s=stages[i];s['progress_allowed'],s['progress_audit']=s['loop'].progress.mask(s['effective'],s['request'].purpose,proof)
+                        s=stages[i];s['progress_allowed'],s['progress_audit']=s['loop'].progress.mask(s['effective'],s['request'].purpose,proof,policy=s['loop'].policy)
                         approvals.append(s['progress_audit']['recovery']['approved'])
                     if not needed or not all(approvals):decisions,audit=original,old_audit
                 for i,s in enumerate(stages):
@@ -394,7 +401,7 @@ class DecisionLoop:
             for i,s in enumerate(stages):s['decision']=baseline_records[i]
             for i in proof_indices:
                 s=stages[i];proof=dict(needed=True,base_purpose=None,candidate_purpose=None)
-                s['progress_allowed'],s['progress_audit']=s['loop'].progress.mask(s['effective'],s['request'].purpose,proof)
+                s['progress_allowed'],s['progress_audit']=s['loop'].progress.mask(s['effective'],s['request'].purpose,proof,policy=s['loop'].policy)
         # A game may explicitly complete declined joint roots, but only within
         # each owner's unchanged immediate Policy tier and existing near-tie
         # band, after the progress proof has settled its final mask. This is
@@ -532,14 +539,19 @@ class DecisionLoop:
                 min_trials=self.evidence.min_trials,margin=self.evidence.margin,
                 entries=[dict(key=k,state=e['state'],gains=list(e['gains'])) for k,e in self.evidence.entries.items()]))
         if self.policy.principle_priority!='lexicographic':result['principle_priority']=self.policy.principle_priority
+        if self.policy.commitments is not None:result['policy_commitments']={self.character:self.policy.commitments[self.character]}
         if self.pressure is not None:result['pressure']=self.pressure.record()
         if self.progress is not None:result['progress']=self.progress.record()
         return result
 
     @classmethod
     def from_record(cls,context,record,policy=None,read_control=None,predictor=None):
-        saved_policy=Policy(record['policy_residual'],principle_priority=record.get('principle_priority','lexicographic'));saved_control=ReadControl(**record['read_control'])
-        if policy is not None and (not np.array_equal(policy.residual,saved_policy.residual) or policy.principle_priority!=saved_policy.principle_priority):raise ValueError('checkpoint policy changed')
+        saved_policy=Policy(record['policy_residual'],principle_priority=record.get('principle_priority','lexicographic'),commitments=record.get('policy_commitments'));saved_control=ReadControl(**record['read_control'])
+        if policy is not None:
+            if not np.array_equal(policy.residual,saved_policy.residual) or policy.principle_priority!=saved_policy.principle_priority:
+                raise ValueError('checkpoint policy changed')
+            if saved_policy.commitments is not None and any(policy.commitments.get(k)!=v for k,v in saved_policy.commitments.items()):
+                raise ValueError('checkpoint policy changed')
         if read_control is not None and read_control!=saved_control:raise ValueError('checkpoint reading budget changed')
         loop=cls(context,policy or saved_policy,read_control or saved_control,record['memory']['capacity'],predictor)
         if record.get('pressure') is not None:loop.pressure=NeedPressure.from_record(loop.scope,record['pressure'])

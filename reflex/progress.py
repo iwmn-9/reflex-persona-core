@@ -90,7 +90,7 @@ class ProgressWatch:
     def improving(self,p):
         return p.maintained or self.peak is not None and (p.level>self.peak+self.config.floor or p.readiness>self.ready_peak+self.config.floor)
 
-    def mask(self,context,p,recovery=None):
+    def mask(self,context,p,recovery=None,*,policy=None):
         if digest(context['scope'])!=self.owner or not isinstance(p,PurposeRequest):raise ValueError('owned purpose request required')
         roots={a['id'] for a in context['actions']}
         if set(p.activities)!=roots:raise ValueError('activity labels must cover the current roots exactly')
@@ -114,7 +114,7 @@ class ProgressWatch:
             reason='no supported alternative; retain viable roots' if unresolved else 'observed purpose evidence',
             activity={k:asdict(a) for k,a in p.activities.items()})
         if audit['applied'] and self.config.preserve_persona_tier:
-            b=compile_batch([context]);d=Policy().decide(b,False)
+            b=compile_batch([context]);d=(policy or Policy()).decide(b,False)
             tier={k for k,yes in zip(b.ids[0],d.eligible[0]) if yes}
             if not allowed&tier:
                 allowed=viable
