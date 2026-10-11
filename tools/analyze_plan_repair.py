@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import time
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from reflex.core import digest
 from reflex.plan_repair import edits
@@ -16,6 +17,24 @@ from tools.audit_observed_transfer import world,real_step
 
 
 def identity(r):return digest([r['stage'],r['spec'],r['profile_index'],r['seed'],r['mode']])
+
+
+def completed_receipts(root,rows,path):
+    data=json.loads(Path(path).read_text(encoding='utf-8'))
+    assert data['complete'] is True and Path(data['root']).resolve()==root
+    assert data['source_snapshot_sha256']==hashlib.sha256((root/'source_snapshot.json').read_bytes()).hexdigest()
+    assert data['trajectories_sha256']==hashlib.sha256((root/'trajectories.jsonl').read_bytes()).hexdigest()
+    expected_source=hashlib.sha256((root/'_source/tools/analyze_plan_repair.py').read_bytes()).hexdigest()
+    assert data['audit_source_sha256']==expected_source
+    receipts={r['identity']:r for r in data['receipts']};actual={identity(r):r for r in rows}
+    assert len(receipts)==len(data['receipts'])==len(rows) and set(receipts)==set(actual)
+    output={}
+    for key,r in actual.items():
+        receipt=receipts[key];assert receipt['episode_sha256']==digest(r)
+        c=receipt['checks'];assert c['actual_turns']==c['full_episode_replay_turns']==len(r['trace'])
+        assert all(type(v) is int and v>=0 for v in c.values())
+        output[key]=c
+    return output
 
 
 def audit(packet):
@@ -77,11 +96,14 @@ def analyze(a):
     expected={digest(j):j for j in pre['jobs']};actual={identity(r):r for r in rows}
     assert len(expected)==len(actual)==len(rows) and set(expected)==set(actual)
     receipts={}
-    with ProcessPoolExecutor(max_workers=a.workers) as pool:
-        futures={pool.submit(audit,(r,expected[k])):k for k,r in actual.items()}
-        for count,f in enumerate(as_completed(futures),1):
-            receipts[futures[f]]=f.result()
-            if count%12==0:print(f'{count}/{len(rows)} full frozen episodes and independent worlds verified',flush=True)
+    if a.replay_receipts:
+        receipts=completed_receipts(root,rows,a.replay_receipts)
+    else:
+        with ProcessPoolExecutor(max_workers=a.workers) as pool:
+            futures={pool.submit(audit,(r,expected[k])):k for k,r in actual.items()}
+            for count,f in enumerate(as_completed(futures),1):
+                receipts[futures[f]]=f.result()
+                if count%12==0:print(f'{count}/{len(rows)} full frozen episodes and independent worlds verified',flush=True)
     checks={k:sum(v[k] for v in receipts.values()) for k in next(iter(receipts.values()))}
     groups=[];pairs=[]
     for genre in sorted({r['spec']['genre'] for r in rows}):
@@ -114,9 +136,17 @@ def analyze(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--workers',type=int,default=2);p.add_argument('--frozen',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--workers',type=int,default=2);p.add_argument('--frozen',action='store_true');p.add_argument('--replay-receipts');a=p.parse_args()
     if not 1<=a.workers<=8:p.error('bounded workers required')
-    if a.frozen:analyze(a)
+    marker=Path(a.root).resolve()/'_live_replay_requested.json'
+    if not a.frozen and not a.replay_receipts and marker.exists():
+        requested=json.loads(marker.read_text(encoding='utf-8'));study=Path(a.root).resolve()
+        assert Path(requested['root']).resolve()==study
+        assert requested['source_snapshot_sha256']==hashlib.sha256((study/'source_snapshot.json').read_bytes()).hexdigest()
+        target=Path(requested['receipt']).resolve();assert target.parent==study and target.name=='_live_replay_receipts.json'
+        while not target.exists():time.sleep(.5)
+        a.replay_receipts=str(target)
+    if a.frozen or a.replay_receipts:analyze(a)
     else:
         subprocess.run([sys.executable,str(Path(a.root).resolve()/'_source/tools/analyze_plan_repair.py'),
             '--root',str(Path(a.root).resolve()),'--workers',str(a.workers),'--frozen'],check=True)
