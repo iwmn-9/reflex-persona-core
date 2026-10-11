@@ -48,7 +48,22 @@ def assemble(root):
             contrasts=[{k:v for k,v in c.items() if k!='series_differences'} for c in contrasts],
             audit_counts=counts,evaluation_sha256=hashlib.sha256((folder/'evaluation.json').read_bytes()).hexdigest(),
             source_snapshot_sha256=hashlib.sha256((folder/'source_snapshot.json').read_bytes()).hexdigest())
+    # An explanatory known case, never another performance observation. The
+    # same forecast/root changes from helpful to harmful with actual rival type.
+    cases=[json.loads(line) for line in (root/'public-confirmation/trajectories.jsonl').open(encoding='utf-8')]
+    illustration=[];root_forecasts=[];public_roots=[]
+    for rival in ('minimax2','minimax4'):
+        pair=[next(r for r in cases if r['seed']==9340 and r['profile']=='care' and r['rival']==rival and r['condition']==condition)
+              for condition in ('baseline','incumbent')]
+        frames=[next(t for t in r['trace'] if t['actor']==r['seat']) for r in pair]
+        assert frames[0]['before']==frames[1]['before'];public_roots.append(frames[1]['before'])
+        forecast=frames[1]['stats']['policy_rollout']['actions'];root_forecasts.append(forecast)
+        illustration.append(dict(rival=rival,baseline_action=frames[0]['action'],action=frames[1]['action'],
+            actual_credits=[r['credit'] for r in pair],forecast_credit={name:r['win_share'] for name,r in forecast.items()}))
+    assert public_roots[0]==public_roots[1] and root_forecasts[0]==root_forecasts[1]
     output=dict(version='actual-persona-policy-rollout-milestone-v1',studies=records,
+        illustration=dict(seed=9340,profile='care',public_state=public_roots[0],cases=illustration,
+            selection='known explanatory case after ablation; same input and forecast, not validation/extra games'),
         primary_games=sum(r['primary_games'] for r in records.values()),
         duplicate_baseline_replays=sum(r.get('duplicate_baseline_replays',0) for r in records.values()),audit_totals=totals,
         components=['paired terminal policy evaluator','public and owned-state future-controller adapters','searched anonymous rival priors','public rival-strength mixture'],
