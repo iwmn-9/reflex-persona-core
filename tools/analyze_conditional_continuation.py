@@ -73,7 +73,17 @@ def main(a):
         rows.append(dict(**{k:v for k,v in row.items() if k!='trace'},first=first,
             selected_forecast_errors=errors,distinct_world_history=digest([t['after'] for t in row['trace']])))
     assert len(rows)==len(protocol['jobs'])*len(protocol['modes'])
-    if a.replay:
+    if a.replay_receipts:
+        verified=json.loads(Path(a.replay_receipts).read_text(encoding='utf-8'))
+        assert verified['complete'] and verified['root']==str(root.resolve())
+        assert verified['source_snapshot_sha256']==hashlib.sha256((root/'source_snapshot.json').read_bytes()).hexdigest()
+        assert verified['trajectories_sha256']==hashlib.sha256((root/'trajectories.jsonl').read_bytes()).hexdigest()
+        expected={seal(identity):h for _,identity,h in jobs}
+        actual={seal(tuple(r['identity'])):r['stable_episode_sha256'] for r in verified['receipts']}
+        assert len(actual)==len(jobs)==len(verified['receipts']) and actual==expected
+        checks['frozen_full_episode_turns']=sum(r['turns'] for r in verified['receipts'])
+        assert checks['frozen_full_episode_turns']==checks['independent_world_turns']
+    elif a.replay:
         with ProcessPoolExecutor(max_workers=a.workers) as pool:
             tasks=[pool.submit(replay,j) for j in jobs]
             for i,task in enumerate(as_completed(tasks),1):
@@ -125,4 +135,5 @@ def main(a):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--replay',action='store_true');p.add_argument('--workers',type=int,default=4)
+    p.add_argument('--replay-receipts',help='Completed frozen whole-episode replay receipt tied to exact trajectories/source hashes')
     main(p.parse_args())
