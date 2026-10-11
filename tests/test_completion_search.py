@@ -46,5 +46,24 @@ class CompletionSearchTests(unittest.TestCase):
         from reflex.laboratory import profiles
         with self.assertRaises(ValueError):run({'genre':'delivery','limit':4},profiles()[0],'verified',1,complete_to=8)
 
+    def test_long_future_intention_expands_every_root_without_truncation(self):
+        c,args=chain(7)
+        kept=('b',)+('continue',)*5
+        f=completion_forecast(c,(0,False),horizon=2,max_horizon=8,retained=kept,repairs=4,repair_guard=True,**args)
+        audit=f.audit['completion_search']
+        self.assertEqual(audit['requested_horizon'],2)
+        self.assertEqual(audit['retained_length'],6)
+        self.assertEqual([v['horizon'] for v in audit['levels']],[6,8])
+        self.assertEqual(set(v[0] for v in f.roots.values()),{'a','b'})
+        proposal=f.audit['continuation_search']['proposals']['proposal-retained']
+        self.assertEqual([proposal['root']]+proposal['schedule'],list(kept))
+        self.assertEqual(f.stability_reference.horizon,f.horizon)
+
+    def test_future_intention_cannot_silently_exceed_the_completion_cap(self):
+        c,args=chain(7)
+        for kept in (('b',)+('continue',)*8,'b',(1,)):
+            with self.assertRaises(ValueError):
+                completion_forecast(c,(0,False),horizon=2,max_horizon=8,retained=kept,**args)
+
 
 if __name__=='__main__':unittest.main()

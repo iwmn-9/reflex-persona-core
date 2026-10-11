@@ -9,9 +9,15 @@ from .continuation_search import search_forecast
 
 
 def completion_forecast(c,initial,*,horizon,max_horizon,**kwargs):
-    if type(max_horizon) is not int or not horizon<=max_horizon<=16:
+    if type(horizon) is not int or type(max_horizon) is not int or not 1<=horizon<=max_horizon<=16:
         raise ValueError('explicit bounded completion horizon required')
-    levels=[];current=horizon
+    retained=kwargs.get('retained',())
+    if not isinstance(retained,(tuple,list)) or len(retained)>max_horizon or any(not isinstance(k,str) for k in retained):
+        raise ValueError('retained sequence must fit the explicit completion cap')
+    # A future controller may receive the tail of an already extended plan.
+    # Cover that intention at a common horizon for every competing root;
+    # truncating only the reference would bias the repair comparison.
+    levels=[];current=max(horizon,len(retained))
     while True:
         f=search_forecast(c,initial,horizon=current,**kwargs)
         endpoints=[g for rows in f.audit['endpoint'].values() for g in rows]
@@ -20,6 +26,6 @@ def completion_forecast(c,initial,*,horizon,max_horizon,**kwargs):
         if not running or current==max_horizon:break
         current=min(max_horizon,current*2)
     metadata=copy.deepcopy(f.audit)
-    metadata['completion_search']=dict(levels=levels,max_horizon=max_horizon,all_model_endpoints_settled=not running,
+    metadata['completion_search']=dict(levels=levels,requested_horizon=horizon,retained_length=len(retained),max_horizon=max_horizon,all_model_endpoints_settled=not running,
         semantics='complete all candidate endpoints or exhaust explicit horizon cap; sampled models, not real future certainty')
     return replace(f,audit=metadata)
