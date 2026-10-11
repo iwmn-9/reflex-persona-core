@@ -2,7 +2,7 @@
 import argparse
 from concurrent.futures import ProcessPoolExecutor,as_completed
 from dataclasses import asdict
-import hashlib,json
+import hashlib,json,time
 from pathlib import Path
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
@@ -15,6 +15,25 @@ from tools.audit_observed_transfer import world,real_step
 
 
 def identity(r):return digest([r['stage'],r['spec'],r['profile_index'],r['seed'],r['mode']])
+
+
+def completed_receipts(root,rows):
+    path=root/'_live_replay_receipts.json'
+    while not path.exists():time.sleep(2)
+    data=json.loads(path.read_text(encoding='utf-8'))
+    assert data['complete'] and Path(data['root']).resolve()==root
+    assert data['source_snapshot_sha256']==hashlib.sha256((root/'source_snapshot.json').read_bytes()).hexdigest()
+    assert data['trajectories_sha256']==hashlib.sha256((root/'trajectories.jsonl').read_bytes()).hexdigest()
+    assert data['audit_source_sha256']==hashlib.sha256((root/'_source/tools/analyze_repair_stability.py').read_bytes()).hexdigest()
+    marker=json.loads((root/'_live_replay_requested.json').read_text())
+    assert marker['helper_sha256']==data['helper_sha256'] and marker['audit_source_sha256']==data['audit_source_sha256']
+    receipts={r['identity']:r for r in data['receipts']};actual={identity(r):r for r in rows}
+    assert len(receipts)==len(data['receipts'])==len(actual)==len(rows) and set(receipts)==set(actual)
+    for key,r in actual.items():
+        assert receipts[key]['episode_sha256']==digest(r)
+        c=receipts[key]['checks'];assert c['actual_turns']==c['full_replay_turns']==len(r['trace'])
+        assert all(type(v) is int and v>=0 for v in c.values())
+    return {k:r['checks'] for k,r in receipts.items()}
 
 
 def audit(packet):
@@ -74,11 +93,13 @@ def analyze(a):
     actual={identity(r):r for r in rows};assert len(actual)==len(rows)==len(jobs) and set(actual)==set(jobs)
     assert json.loads((root/'completed.json').read_text(encoding='utf-8'))==dict(games=len(rows),complete=True)
     checks={}
-    with ProcessPoolExecutor(max_workers=a.workers) as pool:
-        fs={pool.submit(audit,(r,jobs[k])):k for k,r in actual.items()}
-        for count,f in enumerate(as_completed(fs),1):
-            checks[fs[f]]=f.result()
-            if count%12==0:print(f'{count}/{len(rows)} complete episodes independently verified',flush=True)
+    if (root/'_live_replay_requested.json').exists():checks=completed_receipts(root,rows)
+    else:
+        with ProcessPoolExecutor(max_workers=a.workers) as pool:
+            fs={pool.submit(audit,(r,jobs[k])):k for k,r in actual.items()}
+            for count,f in enumerate(as_completed(fs),1):
+                checks[fs[f]]=f.result()
+                if count%12==0:print(f'{count}/{len(rows)} complete episodes independently verified',flush=True)
     groups=[];pairs=[]
     for genre in sorted({r['spec']['genre'] for r in rows}):
         arms={}
@@ -108,4 +129,5 @@ if __name__=='__main__':
     if a.frozen:analyze(a)
     else:
         import subprocess
-        subprocess.run([sys.executable,str(Path(a.root)/'_source/tools'/Path(__file__).name),'--root',a.root,'--workers',str(a.workers),'--frozen'],check=True)
+        if (Path(a.root)/'_live_replay_requested.json').exists():analyze(a)
+        else:subprocess.run([sys.executable,str(Path(a.root)/'_source/tools'/Path(__file__).name),'--root',a.root,'--workers',str(a.workers),'--frozen'],check=True)
