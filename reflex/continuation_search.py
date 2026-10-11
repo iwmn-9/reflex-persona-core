@@ -30,7 +30,7 @@ def _rank(c,nodes,width,horizon,unit,target,max_regret,policy,settlement_weight=
 
 
 def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0,),
-                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=(),policy=None,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0):
+                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=(),policy=None,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0,repair_guard=False):
     """Keep a reflex baseline and <=width searched continuations per root.
 
     At each future step, expand the union of publicly legal observed action
@@ -47,6 +47,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
         raise ValueError('bounded search width/depth required')
     if type(samples) is not int or not 0<=samples<=64:raise ValueError('bounded schedule samples required')
     if type(repairs) is not int or not 0<=repairs<=64:raise ValueError('bounded repair bank required')
+    if type(repair_guard) is not bool or repair_guard and not repairs:raise ValueError('guard requires explicit repair bank')
     roots=sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure'])
     if not isinstance(retained,(tuple,list)) or len(retained)>horizon or any(not isinstance(k,str) for k in retained):
         raise ValueError('bounded retained action sequence required')
@@ -168,4 +169,23 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
                     *kept[f.audit['plans'][k]['proposal']]['schedule'])) for k in f.roots}
                 preference=RevisionPreference(preference.incumbent,preference.arrivals,distances)
         metadata['continuation_search']['retained_status']=retained_status if incumbent is not None else 'not in current persona tier or not viable'
-    return replace(f,audit=metadata,continuity=preference)
+    expanded=replace(f,audit=metadata,continuity=preference)
+    if repair_guard and retained:
+        # The reference selects its own strongest-principle tier; expanding the
+        # bank must not silently redefine which old plan is the baseline.
+        reference_nodes={k:v for k,v in kept.items() if not k.startswith('proposal-repair-')}
+        reference=_forecast(c,reference_nodes,horizon=horizon,unit=unit,target=target,
+            max_regret=max_regret,policy=policy,settlement_weight=settlement_weight)
+        ref_metadata=copy.deepcopy(reference.audit)
+        ref_metadata['continuation_search']=copy.deepcopy(metadata['continuation_search'])
+        ref_metadata['continuation_search']['proposals']={k:v for k,v in metadata['continuation_search']['proposals'].items() if k in reference_nodes}
+        ref_metadata['continuation_search'].pop('repair',None)
+        incumbent=next((k for k in reference.roots if reference.audit['plans'][k].get('proposal')=='proposal-retained'),None)
+        ref_preference=None
+        if incumbent is not None:
+            from .plan_continuity import ArrivalPreference
+            ref_preference=ArrivalPreference(incumbent,{k:tuple(g['settlement_step'] if g['status']=='success' else None
+                for g in reference.audit['endpoint'][k]) for k in reference.roots})
+        reference=replace(reference,audit=ref_metadata,continuity=ref_preference)
+        expanded=replace(expanded,stability_reference=reference)
+    return expanded

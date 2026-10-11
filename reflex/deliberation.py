@@ -20,10 +20,18 @@ class JointForecast:
     audit: dict=None
     target: str='game-purpose'
     continuity: object=None
+    stability_reference: object=None
 
 
 def select(base,forecast,policy=None,root_allowed=None):
     if not isinstance(forecast,JointForecast):raise ValueError('JointForecast required')
+    if forecast.stability_reference is not None:
+        if len(base)!=1 or not isinstance(forecast.stability_reference,JointForecast) or forecast.stability_reference.stability_reference is not None:
+            raise ValueError('one owner and nonrecursive reference forecast required')
+        from .repair_stability import safeguard
+        checked=safeguard(base[0],replace(forecast,stability_reference=None),forecast.stability_reference,
+            policy or Policy(),None if root_allowed is None else root_allowed[0])
+        return select(base,checked,policy,root_allowed)
     identifier(forecast.target)
     if type(forecast.horizon) is not int or not 1<=forecast.horizon<=16:raise ValueError('bounded horizon required')
     if isinstance(forecast.max_regret,bool) or not np.isfinite(forecast.max_regret) or not 0<=forecast.max_regret<=2:
