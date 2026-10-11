@@ -1,0 +1,350 @@
+{
+  "format": "plan-repair-v1",
+  "jobs": [
+    [
+      "diagnostic",
+      {
+        "genre": "delivery",
+        "limit": 10,
+        "capacity": 3,
+        "supply": 2
+      },
+      0,
+      10000,
+      "fresh"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "delivery",
+        "limit": 10,
+        "capacity": 3,
+        "supply": 2
+      },
+      0,
+      10000,
+      "retained"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "delivery",
+        "limit": 10,
+        "capacity": 3,
+        "supply": 2
+      },
+      0,
+      10000,
+      "repair"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "delivery",
+        "limit": 10,
+        "capacity": 3,
+        "supply": 2
+      },
+      1,
+      10000,
+      "fresh"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "delivery",
+        "limit": 10,
+        "capacity": 3,
+        "supply": 2
+      },
+      1,
+      10000,
+      "retained"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "delivery",
+        "limit": 10,
+        "capacity": 3,
+        "supply": 2
+      },
+      1,
+      10000,
+      "repair"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 14
+      },
+      0,
+      10000,
+      "fresh"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 14
+      },
+      0,
+      10000,
+      "retained"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 14
+      },
+      0,
+      10000,
+      "repair"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 14
+      },
+      1,
+      10000,
+      "fresh"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 14
+      },
+      1,
+      10000,
+      "retained"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 14
+      },
+      1,
+      10000,
+      "repair"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "auction",
+        "prizes": [
+          9,
+          14,
+          6
+        ],
+        "budget": 11,
+        "rival_shift": true
+      },
+      0,
+      10000,
+      "fresh"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "auction",
+        "prizes": [
+          9,
+          14,
+          6
+        ],
+        "budget": 11,
+        "rival_shift": true
+      },
+      0,
+      10000,
+      "retained"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "auction",
+        "prizes": [
+          9,
+          14,
+          6
+        ],
+        "budget": 11,
+        "rival_shift": true
+      },
+      0,
+      10000,
+      "repair"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "auction",
+        "prizes": [
+          9,
+          14,
+          6
+        ],
+        "budget": 11,
+        "rival_shift": true
+      },
+      1,
+      10000,
+      "fresh"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "auction",
+        "prizes": [
+          9,
+          14,
+          6
+        ],
+        "budget": 11,
+        "rival_shift": true
+      },
+      1,
+      10000,
+      "retained"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "auction",
+        "prizes": [
+          9,
+          14,
+          6
+        ],
+        "budget": 11,
+        "rival_shift": true
+      },
+      1,
+      10000,
+      "repair"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "combat",
+        "hp": 7,
+        "limit": 7,
+        "distance": 4
+      },
+      0,
+      10000,
+      "fresh"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "combat",
+        "hp": 7,
+        "limit": 7,
+        "distance": 4
+      },
+      0,
+      10000,
+      "retained"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "combat",
+        "hp": 7,
+        "limit": 7,
+        "distance": 4
+      },
+      0,
+      10000,
+      "repair"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "combat",
+        "hp": 7,
+        "limit": 7,
+        "distance": 4
+      },
+      1,
+      10000,
+      "fresh"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "combat",
+        "hp": 7,
+        "limit": 7,
+        "distance": 4
+      },
+      1,
+      10000,
+      "retained"
+    ],
+    [
+      "diagnostic",
+      {
+        "genre": "combat",
+        "hp": 7,
+        "limit": 7,
+        "distance": 4
+      },
+      1,
+      10000,
+      "repair"
+    ]
+  ],
+  "settings": {
+    "horizon": 6,
+    "width": 2,
+    "depth": 2,
+    "repairs": 24,
+    "principle_priority": "finite",
+    "settlement_weight": "absolute",
+    "actual_feedback": "same progress and need pressure in every arm",
+    "combat_discovery_seeds": [
+      820,
+      821,
+      822,
+      823
+    ],
+    "combat_validation_seeds": [
+      920,
+      921,
+      922,
+      923
+    ]
+  },
+  "primary": "paired actual game-owned terminal goal, survival, shortages, reachability; no standard adoption on regressions",
+  "secondary": "selected one-step patches vs fresh/retained proposals, actual head deviations, goal identity/checkpoint retention, shared-branch schedule fallbacks",
+  "intervention": "same fresh candidates plus the owned remaining plan and bounded single-step patches; tie preference only for equal purpose AND subjective scores",
+  "constraints": [
+    "stable owner/preferences/target/time unit",
+    "only actual executed root consumed",
+    "same schedule in every model branch",
+    "no real future seed or hypothetical empirical learning",
+    "fresh/full replacement remains available"
+  ],
+  "limits": [
+    "known authored games, not unseen rule transfer",
+    "single-owner schedules; team commitments not connected in this study",
+    "publicly unavailable future schedule uses existing reflex fallback",
+    "model replanning is not recursive outer search",
+    "deterministic genres repeat across seeds, not independent samples",
+    "repairs add compute and candidates"
+  ]
+}

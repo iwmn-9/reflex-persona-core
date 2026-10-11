@@ -1,0 +1,321 @@
+{
+  "version": "owned-plan-repair-v1",
+  "games": 216,
+  "studies": [
+    {
+      "study": "diagnostic",
+      "numerical_commit": "631017ab7e2e94ab999d68e6b10403ce08592e9f",
+      "analysis_commit": "cabbba7625f4b0eda397a651a8fab9abdfc2d760",
+      "frozen_replay_audit_commit": "cabbba7625f4b0eda397a651a8fab9abdfc2d760",
+      "games": 24,
+      "frozen_files": 186,
+      "source_snapshot_sha256": "e57a35c3c4e816d5422e8762270e3511641160867f1537b2a3b2be9f8ecfe42b",
+      "trajectories_sha256": "ab42e43dafd4796e750df50fd260a78d16cd95dae3f4f143a334ce14726afb7b",
+      "resume": null,
+      "shipped_numeric_source_matches_frozen": true
+    },
+    {
+      "study": "confirmation",
+      "numerical_commit": "631017ab7e2e94ab999d68e6b10403ce08592e9f",
+      "analysis_commit": "cabbba7625f4b0eda397a651a8fab9abdfc2d760",
+      "frozen_replay_audit_commit": "cabbba7625f4b0eda397a651a8fab9abdfc2d760",
+      "games": 192,
+      "frozen_files": 186,
+      "source_snapshot_sha256": "e57a35c3c4e816d5422e8762270e3511641160867f1537b2a3b2be9f8ecfe42b",
+      "trajectories_sha256": "90b1b9cb9a00818c43d04140511516299110570c1762f27cef159eb339b3acf9",
+      "resume": {
+        "reason": "increase primary workers after diagnostic completion; numerical matrix unchanged",
+        "frozen_source_sha256": "e57a35c3c4e816d5422e8762270e3511641160867f1537b2a3b2be9f8ecfe42b",
+        "retained_trajectory_prefix_sha256": "6a74276d9e0e25419c499004787b8f7b525bbb1740d55e152761064d3e1f718f",
+        "retained_games": 42,
+        "missing_games": 150,
+        "workers": 4
+      },
+      "shipped_numeric_source_matches_frozen": true
+    }
+  ],
+  "checks": {
+    "actual_turns": 1616,
+    "full_episode_replay_turns": 1616,
+    "patch_proposals": 5035,
+    "selected_patches": 50,
+    "selected_retained": 114,
+    "selected_fresh": 1452,
+    "actual_head_deviations": 138,
+    "repair_branch_fallbacks": 1967
+  },
+  "default_changed": false,
+  "edits": [
+    "add bounded shared single-step patch bank to existing search",
+    "keep retained and fresh alternatives",
+    "preserve owned goal, fixed axes and actual-only intention consumption",
+    "prefer fewer edits only on equal purpose AND subjective score"
+  ],
+  "constraints": [
+    "no switching penalty",
+    "no hypothetical real experience",
+    "no model-branch hindsight",
+    "no dropped current roots"
+  ],
+  "limits": [
+    "single-owner plans, no team promise repair yet",
+    "future reflex/schedule feedback differs from future outer replanning",
+    "common-prefix memory shortens when model branches disagree"
+  ],
+  "default_short_episode_parity": {
+    "before": [
+      {
+        "genre": "delivery",
+        "steps": 5,
+        "sha256": "d2d81747c4015d26c7993a76b1df07886f30e99162a835044c3f747e885938a6"
+      },
+      {
+        "genre": "auction",
+        "steps": 2,
+        "sha256": "b2f4b8920cb065921123c4ea8231eaa30e900ed7f3c65d4e8cc299d12ee111d0"
+      }
+    ],
+    "after": [
+      {
+        "genre": "delivery",
+        "steps": 5,
+        "sha256": "d2d81747c4015d26c7993a76b1df07886f30e99162a835044c3f747e885938a6"
+      },
+      {
+        "genre": "auction",
+        "steps": 2,
+        "sha256": "b2f4b8920cb065921123c4ea8231eaa30e900ed7f3c65d4e8cc299d12ee111d0"
+      }
+    ]
+  },
+  "dependencies_added": [],
+  "new_colab_sessions": 0,
+  "exploratory_actual_action_sequence_equality": [
+    {
+      "study": "diagnostic",
+      "genre": "auction",
+      "reference": "fresh",
+      "equal": 2,
+      "pairs": 2
+    },
+    {
+      "study": "diagnostic",
+      "genre": "auction",
+      "reference": "retained",
+      "equal": 2,
+      "pairs": 2
+    },
+    {
+      "study": "diagnostic",
+      "genre": "combat",
+      "reference": "fresh",
+      "equal": 1,
+      "pairs": 2
+    },
+    {
+      "study": "diagnostic",
+      "genre": "combat",
+      "reference": "retained",
+      "equal": 2,
+      "pairs": 2
+    },
+    {
+      "study": "diagnostic",
+      "genre": "delivery",
+      "reference": "fresh",
+      "equal": 0,
+      "pairs": 2
+    },
+    {
+      "study": "diagnostic",
+      "genre": "delivery",
+      "reference": "retained",
+      "equal": 2,
+      "pairs": 2
+    },
+    {
+      "study": "diagnostic",
+      "genre": "resources",
+      "reference": "fresh",
+      "equal": 1,
+      "pairs": 2
+    },
+    {
+      "study": "diagnostic",
+      "genre": "resources",
+      "reference": "retained",
+      "equal": 2,
+      "pairs": 2
+    },
+    {
+      "study": "confirmation",
+      "genre": "auction",
+      "reference": "fresh",
+      "equal": 16,
+      "pairs": 16
+    },
+    {
+      "study": "confirmation",
+      "genre": "auction",
+      "reference": "retained",
+      "equal": 16,
+      "pairs": 16
+    },
+    {
+      "study": "confirmation",
+      "genre": "combat",
+      "reference": "fresh",
+      "equal": 1,
+      "pairs": 16
+    },
+    {
+      "study": "confirmation",
+      "genre": "combat",
+      "reference": "retained",
+      "equal": 10,
+      "pairs": 16
+    },
+    {
+      "study": "confirmation",
+      "genre": "delivery",
+      "reference": "fresh",
+      "equal": 0,
+      "pairs": 16
+    },
+    {
+      "study": "confirmation",
+      "genre": "delivery",
+      "reference": "retained",
+      "equal": 4,
+      "pairs": 16
+    },
+    {
+      "study": "confirmation",
+      "genre": "resources",
+      "reference": "fresh",
+      "equal": 8,
+      "pairs": 16
+    },
+    {
+      "study": "confirmation",
+      "genre": "resources",
+      "reference": "retained",
+      "equal": 16,
+      "pairs": 16
+    }
+  ],
+  "posthoc_mechanism_example": [
+    {
+      "study": "confirmation",
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "growth",
+      "seed": 10040,
+      "actual_actions": {
+        "fresh": [
+          "heal:0",
+          "move:0:2",
+          "move:1:2",
+          "guard",
+          "shoot:3",
+          "shoot:3",
+          "shoot:3",
+          "move:0:2",
+          "guard",
+          "guard",
+          "guard",
+          "guard"
+        ],
+        "retained": [
+          "heal:0",
+          "move:0:2",
+          "move:1:2",
+          "shoot:3",
+          "shoot:3",
+          "shoot:3",
+          "guard",
+          "move:0:2",
+          "guard",
+          "guard",
+          "guard",
+          "guard"
+        ],
+        "repair": [
+          "heal:0",
+          "shoot:3",
+          "shoot:3",
+          "reload",
+          "shoot:3",
+          "shoot:3",
+          "shoot:3"
+        ]
+      },
+      "decision": 1,
+      "old": [
+        "shoot:3",
+        "shoot:3"
+      ],
+      "patch": [
+        "shoot:3",
+        "reload"
+      ],
+      "baseline_same_root_modeled_purpose": 0.35,
+      "patched_modeled_purpose": 0.44999999999999996,
+      "inference": "a distinct modeled continuation, not only a tied alias; descriptive mechanism example, not independent quality evidence"
+    },
+    {
+      "study": "confirmation",
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "ego",
+      "seed": 10040,
+      "actual_actions": {
+        "fresh": [
+          "shoot:3",
+          "heal:0",
+          "shoot:3",
+          "shoot:3",
+          "reload",
+          "shoot:3",
+          "shoot:3",
+          "reload",
+          "shoot:3"
+        ],
+        "retained": [
+          "shoot:3",
+          "heal:0",
+          "shoot:3",
+          "shoot:3",
+          "reload",
+          "shoot:3",
+          "shoot:3",
+          "reload",
+          "shoot:3"
+        ],
+        "repair": [
+          "shoot:3",
+          "shoot:3",
+          "heal:0",
+          "shoot:3",
+          "reload",
+          "shoot:3",
+          "shoot:3",
+          "reload",
+          "shoot:3",
+          "move:0:2",
+          "guard",
+          "guard"
+        ]
+      },
+      "inference": "a paired primary goal regression; changed attack/healing order, same owned goal; no case-specific correction or default adoption"
+    }
+  ]
+}

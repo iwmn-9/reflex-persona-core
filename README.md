@@ -1,5 +1,7 @@
 # Reflex Persona Core
 
+目的を保って残りの計画を修補する任意部品を追加した。残存案・一箇所の差し替え・新しい組み直しを同じ人格と目的で比較し、手順の同一性へ固執しない。まず本人一人の計画を戦闘・資源・オークション・物流へ接続する。[接続契約](docs/PLAN_REPAIR.md)、[結果・得失](evidence/plan_repair/REPORT.md)。
+
 未来の公開局面でも、同じ本人が欲求・経路・手段を判断し直す任意部品を用意した。戦闘・資源競争の1対1とチーム戦で、能力戦術、本人の再判断、一手の再交渉、複数モデルの目的評価を比較する。協調で合理的な手が一致することは許し、人格の違い自体を報酬にはしない。[接続契約](docs/CONDITIONAL_CONTINUATION.md)、[結果・得失・停滞](evidence/conditional_continuation/REPORT.md)。
 
 チーム所属と共同案への合意は分離する。通常の独立判断、固定性格・主義は維持し、合意外の仲間は公開情報からの仮説で扱う。[チームの契約](docs/TEAM_COOPERATION.md)、[前回の比較](evidence/team_cooperation/REPORT.md)。
