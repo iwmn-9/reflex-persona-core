@@ -136,11 +136,17 @@ def analyze(a):
     rows=[json.loads(s) for s in (root/'trajectories.jsonl').read_text().splitlines()]
     indexed={digest([r['graph'],r['profile_index'],r['seed'],r['mode'],r['length']]):r for r in rows};assert len(rows)==len(indexed)==len(jobs) and set(indexed)==set(jobs)
     checks=[]
-    with ProcessPoolExecutor(max_workers=a.workers) as pool:
-        fs=[pool.submit(audit_game,(r,jobs[k])) for k,r in indexed.items()]
-        for n,f in enumerate(as_completed(fs),1):
-            checks.append(f.result())
-            if n%12==0:print(f'{n}/{len(jobs)} independently verified',flush=True)
+    if (root/'_live_replay_requested.json').exists():
+        from tools.analyze_repair_stability import completed_receipts
+        checks=list(completed_receipts(root.resolve(),rows,
+            identify=lambda r:digest([r['graph'],r['profile_index'],r['seed'],r['mode'],r['length']]),
+            audit_filename='tools/run_procedural_stability.py').values())
+    else:
+        with ProcessPoolExecutor(max_workers=a.workers) as pool:
+            fs=[pool.submit(audit_game,(r,jobs[k])) for k,r in indexed.items()]
+            for n,f in enumerate(as_completed(fs),1):
+                checks.append(f.result())
+                if n%12==0:print(f'{n}/{len(jobs)} independently verified',flush=True)
     pairs=[]
     for r in rows:
         if r['mode']=='retained':continue
