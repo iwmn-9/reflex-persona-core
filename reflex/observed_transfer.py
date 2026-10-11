@@ -45,7 +45,7 @@ def can_finish(w):
     return any(can_finish(step(w,k)) for k in legal(w))
 
 
-def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0,repair_guard=False,replan_check=False,complete_to=0):
+def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0,repair_guard=False,replan_check=False,complete_to=0,contingent=False,patch_budget=16):
     watched=variant in ('watch','release','observed','verified')
     pressured=variant in ('pressure','release','observed','verified')
     if variant not in ('goal','watch','pressure','release','observed','verified'):raise ValueError('known ablation required')
@@ -56,9 +56,21 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
     if type(complete_to) is not int or complete_to and (not search or not horizon<=complete_to<=16):raise ValueError('explicit bounded completion search required')
     if samples and not search:raise ValueError('schedule sampling requires search')
     if validation_seeds is not None and not search:raise ValueError('proposal validation requires search')
+    if contingent and (not search or repairs or repair_guard or replan_check or complete_to or samples):
+        raise ValueError('one explicit conditional search mechanism required')
     p=make_probe(spec,profile);w=p.start();c=p.observe(w)
+    if contingent:
+        from .public_perception import with_public
+        raw_observe=p.observe
+        # These four adapters declare the complete current position public.
+        # Actual future disturbances remain outside this projection.
+        p.observe=lambda world,state=None:with_public(raw_observe(world,state),asdict(world))
+        c=p.observe(w)
     from .plan_continuity import PlanIntention
-    intention=PlanIntention(c) if continuity else None
+    if contingent:
+        from .observation_plan import PlanMemory
+        intention=PlanMemory(c,p.target) if continuity else None
+    else:intention=PlanIntention(c) if continuity else None
     watch=PersonaProgressWatch(c['scope'],ProgressConfig(grace=2,repeat_limit=2,
         proof_margin=0. if variant=='verified' else None)) if watched else None
     pressure=NeedPressure(c['scope'],PressureConfig(grace=2)) if pressured else None
@@ -75,15 +87,23 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
             saved=digest(loop.record())
             saved_intention=None if intention is None else intention.record()
             if search:
-                from .continuation_search import search_forecast
+                if contingent:from .contingent_search import search_forecast
+                else:from .continuation_search import search_forecast
                 build=search_forecast
                 if complete_to:
                     from .completion_search import completion_forecast
                     build=lambda cc,world,**kw:completion_forecast(cc,world,max_horizon=complete_to,**kw)
+                options=dict(width=width,target=p.target,policy=policy,max_regret=max_regret,
+                    validation_seeds=validation_seeds,settlement_weight=settlement_weight)
+                if contingent:
+                    held,prefix=(None,'') if intention is None else intention.offer(cs[0])
+                    options.update(revisions=depth,retained=held,prefix=prefix,patch_budget=patch_budget)
+                else:options.update(depth=depth,samples=samples,
+                    retained=() if intention is None else intention.offer(cs[0],target=p.target,unit='public-turns',horizon=horizon),
+                    repairs=repairs,repair_guard=repair_guard)
                 f=build(cs[0],w,observe=p.observe,advance=p.advance,terminal=p.terminal,
                     horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observer,
-                    width=width,depth=depth,target=p.target,policy=policy,max_regret=max_regret,samples=samples,validation_seeds=validation_seeds,settlement_weight=settlement_weight,
-                    retained=() if intention is None else intention.offer(cs[0],target=p.target,unit='public-turns',horizon=horizon),repairs=repairs,repair_guard=repair_guard)
+                    **options)
                 assert digest(loop.record())==saved,'hypothetical state reached actual owner'
                 assert intention is None or intention.record()==saved_intention,'planning changed actual intention'
                 captured.update(forecast=f)
@@ -111,9 +131,9 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
         result=DecisionLoop.decide_batch([(loop,req)],False,planner)[0]
         key=result['decision']['action_id'];before=w;w,row=p.actual(w,key,seed)
         if search:
-            f=captured['forecast'];proposals=f.audit['continuation_search']['proposals']
+            f=captured['forecast'];bank='contingent_search' if contingent else 'continuation_search';proposals=f.audit[bank]['proposals']
             selected=result['deliberation'].get('selected_plan')
-            proposal=f.audit['plans'][selected]['proposal'] if selected else next(k for k,n in proposals.items() if n['root']==key and not n['schedule'])
+            proposal=f.audit['plans'][selected]['proposal'] if selected else next(k for k,n in proposals.items() if n['root']==key and (not n['program']['entries'] if contingent else not n['schedule']))
             captured['audit']={key:proposals[proposal]['branches']}
         fb=feedback(p,before,w,key,watched,pressured)
         loop.abandon(result['ticket'],need_progress=fb.needs,maintained=fb.maintained,

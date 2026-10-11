@@ -49,6 +49,25 @@ def contexts(seed,domain,energy,reserve,health,history,tick):
     return result
 
 
+def transition(domain,before,key,success):
+    """One actor's exact rule transition, shared by trial and model bridges."""
+    if domain not in ('allocation','patrol'):raise ValueError('known social rule domain required')
+    if key=='finished':return before.copy(),0.
+    energy,reserve,health=(before[k] for k in ('energy','reserve','health'))
+    if key=='recover':energy=min(1,energy+.35);gain=.08
+    else:
+        energy=max(0,energy-.18)
+        if key=='aid':
+            gain=(.42 if domain=='allocation' else .55) if success else (-.12 if domain=='allocation' else -.4)
+            if domain=='allocation':reserve+=gain
+            else:health=min(8,health+(.25 if gain>0 else -.75))
+        elif key=='independent':gain=.45 if domain=='allocation' else .4;reserve+=.3
+        elif key=='retaliate':gain=-.8;reserve-=.4;health-=.5
+        else:raise ValueError('known social action required')
+    energy=max(0,energy-.025);reserve=max(0,reserve-.1);health=max(0,health-(.15 if reserve<=0 else 0))
+    return dict(energy=energy,reserve=reserve,health=health,score=before['score']+gain),gain
+
+
 def run(seed,domain,schedule,enabled,turns=36,*,population_factory=SocialPopulation):
     energy=np.full(4,.8);reserve=np.full(4,3.);health=np.full(4,8.);score=np.zeros(4)
     history=[[] for _ in range(4)];trace=[];rng=np.random.default_rng(seed)
@@ -71,17 +90,8 @@ def run(seed,domain,schedule,enabled,turns=36,*,population_factory=SocialPopulat
                     cooperate=cooperate,luck_failure=False,before=before,after=before.copy(),
                     actual_gain=0.,appraisal={},values_unchanged=True,terminal=True))
                 continue
-            if key=='recover':energy[i]=min(1,energy[i]+.35);gain=.08
-            else:
-                energy[i]=max(0,energy[i]-.18)
-                if key=='aid':
-                    gain=(.42 if domain=='allocation' else .55) if cooperate and not failures[i] else (-.12 if domain=='allocation' else -.4)
-                    if domain=='allocation':reserve[i]+=gain
-                    else:health[i]=min(8,health[i]+(.25 if gain>0 else -.75))
-                elif key=='independent':gain=.45 if domain=='allocation' else .4;reserve[i]+=.3
-                else:gain=-.8;reserve[i]-=.4;health[i]-=.5
-            energy[i]=max(0,energy[i]-.025);reserve[i]=max(0,reserve[i]-.1)
-            health[i]=max(0,health[i]-(.15 if reserve[i]<=0 else 0));score[i]+=gain
+            after,gain=transition(domain,before,key,cooperate and not failures[i])
+            energy[i],reserve[i],health[i],score[i]=(after[k] for k in ('energy','reserve','health','score'))
             history[i].append(int(cooperate and not failures[i]))
             # Cooperation is an observed benefit. Deliberate appropriation of
             # the NPC's assistance is an observed harm; failure has no agency.

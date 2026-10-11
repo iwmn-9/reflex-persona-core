@@ -1,0 +1,65 @@
+{
+  "format": "conditional-policy-transport-parity-v1",
+  "cases": 4,
+  "all_identical": true,
+  "compared": "entire valid-input records except serialization format tags; not all-input proof",
+  "reference": "colab-runtime\\reflex_artifacts\\contingent_coverage\\mechanics-confirmation-v1\\source",
+  "records": [
+    {
+      "case": {
+        "game": "navigation",
+        "variant": 1
+      },
+      "method": "goal-reflex",
+      "goal": {
+        "target": "game-purpose",
+        "status": "success",
+        "value": 1.0
+      },
+      "steps": 11,
+      "semantic_record_sha256": "3e60485c1890319e3d01aaaf4df8cece64ace45854bfcaef4d26a6de3a7f3412"
+    },
+    {
+      "case": {
+        "game": "navigation",
+        "variant": 1
+      },
+      "method": "conditional",
+      "goal": {
+        "target": "game-purpose",
+        "status": "success",
+        "value": 1.0
+      },
+      "steps": 11,
+      "semantic_record_sha256": "864b563013d8eb06610b314c1ef43cad14203f262403b83e654ed1472377e309"
+    },
+    {
+      "case": {
+        "game": "project",
+        "variant": 0
+      },
+      "method": "goal-reflex",
+      "goal": {
+        "target": "game-purpose",
+        "status": "success",
+        "value": 1.0
+      },
+      "steps": 10,
+      "semantic_record_sha256": "72d300386b4add8feb4714523bb7633bf2969d174304767e99ec78d940ee0c55"
+    },
+    {
+      "case": {
+        "game": "project",
+        "variant": 0
+      },
+      "method": "conditional",
+      "goal": {
+        "target": "game-purpose",
+        "status": "success",
+        "value": 1.0
+      },
+      "steps": 10,
+      "semantic_record_sha256": "32257c5b2f47e441e7efa2bb1f4737e711cf8c1655b01d20e44d0e84e62e96c0"
+    }
+  ]
+}

@@ -225,11 +225,13 @@ def consequences(before,after):
     delay=[new[i]-old[i] for i in range(len(old))]; progress=-delay[actor]
     lead=min(old[i] for i in rivals); threat_gain=min(new[i] for i in rivals)-lead
     pressure=max((delay[i]*max(0,1-(old[i]-lead)/4) for i in rivals),default=0)
-    wall=int(before.walls!=after.walls); harm=sum(max(0,delay[i]) for i in rivals)/(len(rivals)*3)
+    # A full owner-to-owner interval may include rival fences. Only the owner's
+    # inventory pays its wall cost; one-ply callers retain identical semantics.
+    wall=int(before.stock[actor]!=after.stock[actor]); harm=sum(max(0,delay[i]) for i in rivals)/(len(rivals)*3)
     margin=lead-old[actor]; win=after.winner()==actor
     # Rule-based immediate threat, not an opponent-model rollout: can the next
     # actor legally reach its goal now? Public pawn jumps count for this check.
-    next_finish=not win and any(goal(tuple(map(int,name.split(':')[1:])),after.goals[after.turn]) for name in after.moves())
+    next_finish=not win and after.turn!=actor and any(goal(tuple(map(int,name.split(':')[1:])),after.goals[after.turn]) for name in after.moves())
     utility=(.7*progress+.6*threat_gain-.12*wall)/3
     # Attack interest is discounted when already near an uncontested finish.
     interference=pressure*(.25 if margin>=3 else 1)

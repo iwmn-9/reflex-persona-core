@@ -12,7 +12,7 @@ from .examples import effect
 from .intertemporal import Branch
 
 
-def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None, observer=None, schedule=(), roots=None, record_choices=False,policy=None,schedule_sampler=None,root_state=None,replan_once=None):
+def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None, observer=None, schedule=(), roots=None, record_choices=False,policy=None,schedule_sampler=None,root_state=None,replan_once=None,public_controller=None,public_history=''):
     """Return complete root Branches and a diagnostic continuation audit.
 
     observe(state, actor_state) returns an immediate Policy context.
@@ -49,12 +49,19 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
         check=copy.deepcopy(c);check['state']=copy.deepcopy(root_state);compile_batch([check])
     if replan_once is not None and (not callable(replan_once) or continuation is not None or schedule_sampler is not None):
         raise ValueError('one explicit feedback replan callback required')
+    if public_controller is not None:
+        if not callable(public_controller) or continuation is not None or schedule or schedule_sampler is not None or replan_once is not None:
+            raise ValueError('one public-observation continuation mechanism required')
+        from .observation_plan import View,after_action,history
+        history(public_history)
+    elif public_history!='':raise ValueError('history requires explicit public controller')
     paths={};audit={};policy=policy or Policy()
     for root in roots:
         branches=[];traces=[]
         for seed in seeds:
             state=copy.deepcopy(initial);memory=copy.deepcopy(c['state']);flows=[];actions=[];ended=None;choices=[];fallbacks=[]
             modeled=None if observer is None else observer.fork();observations=[];replans=[];active_schedule=tuple(schedule)
+            prefix=public_history;public_nodes=[]
             for tick in range(horizon):
                 if terminal(state):
                     if ended is None:ended=tick
@@ -70,6 +77,18 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
                 legal=b.legal if allowed is None or tick==0 else b.legal&np.array([[k in allowed for k in b.ids[0]]])
                 d=policy.decide(replace(b,legal=legal),False)
                 key=root if tick == 0 else (d.records(b)[0]['action_id'] if continuation is None else continuation(copy.deepcopy(state),copy.deepcopy(cc)))
+                if public_controller is not None:
+                    permitted=[a['id'] for a in cc['actions'] if a['legal'] and not a['known_failure']
+                        and (tick==0 or allowed is None or a['id'] in allowed)]
+                    view=View.make(prefix,cc,permitted)
+                    supplied=None if tick==0 else public_controller(view)
+                    if supplied is not None:
+                        if supplied not in view.allowed:raise ValueError('public controller ignored observed permission')
+                        key=supplied
+                    public_nodes.append(dict(depth=tick,node=view.node,prefix=prefix,
+                        context_hash=digest(cc),allowed=list(view.allowed),action=key,
+                        supplied=supplied is not None,actor_state=copy.deepcopy(cc['state'])))
+                    prefix=after_action(view.node,key)
                 revised_memory=None
                 if tick==1 and replan_once is not None:
                     # The callback receives a PUBLIC modeled observation, not
@@ -115,6 +134,7 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
             trace=dict(seed=seed,actions=actions,absorbed_at=ended,terminal=bool(terminal(state)))
             if schedule or record_choices:trace.update(choices=choices,schedule_fallbacks=fallbacks)
             if replan_once is not None:trace['feedback_replans']=replans
+            if public_controller is not None:trace['public_nodes']=public_nodes
             if assess is not None:trace['assessment']=copy.deepcopy(assess(copy.deepcopy(state)))
             if modeled is not None:trace['modeled_observations']=observations
             traces.append(trace)

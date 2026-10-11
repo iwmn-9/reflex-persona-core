@@ -1,0 +1,117 @@
+{
+  "format": "conditional-analysis-v1",
+  "timing": "post-study descriptive analysis; not a prospective statistical test",
+  "cohorts": {
+    "development-v2": {
+      "stage": "development",
+      "exclude_whole_games": []
+    },
+    "quoridor-development-v2": {
+      "stage": "development",
+      "exclude_whole_games": []
+    },
+    "quoridor-confirmation-v1": {
+      "stage": "confirmation",
+      "exclude_whole_games": []
+    },
+    "confirmation-v1": {
+      "stage": "confirmation",
+      "exclude_whole_games": [
+        "laboratory",
+        "mahjong_closed",
+        "team_combat"
+      ]
+    },
+    "social-development-v2": {
+      "stage": "development",
+      "exclude_whole_games": []
+    },
+    "endpoints-confirmation-v2": {
+      "stage": "confirmation",
+      "exclude_whole_games": []
+    },
+    "social-confirmation-v2": {
+      "stage": "confirmation",
+      "exclude_whole_games": []
+    },
+    "mahjong-development-v2": {
+      "stage": "development",
+      "exclude_whole_games": []
+    },
+    "mahjong-confirmation-v3": {
+      "stage": "confirmation",
+      "exclude_whole_games": []
+    },
+    "mechanics-development-v1": {
+      "stage": "development",
+      "exclude_whole_games": []
+    },
+    "mechanics-confirmation-v1": {
+      "stage": "confirmation",
+      "exclude_whole_games": []
+    },
+    "tiny-development-v1": {
+      "stage": "development",
+      "exclude_whole_games": []
+    },
+    "tiny-confirmation-v1": {
+      "stage": "confirmation",
+      "exclude_whole_games": []
+    },
+    "graph-development-v1": {
+      "stage": "development",
+      "exclude_whole_games": []
+    },
+    "graph-confirmation-v1": {
+      "stage": "confirmation",
+      "exclude_whole_games": []
+    }
+  },
+  "supplemental": [
+    "development-v1",
+    "team-endpoints-development-v2",
+    "laboratory-development-v2",
+    "social-development-v1",
+    "duel-validation-v1",
+    "mahjong-confirmation-v2"
+  ],
+  "replacement": "whole laboratory/team-combat/mahjong cohorts replaced; social-v1 replaced in full",
+  "comparisons": "same case/profile/actual seed; goal-reflex vs conditional; no pooled goal mean or significance",
+  "required_games": [
+    "auction_contest",
+    "branching_delivery",
+    "connect_four",
+    "cyclic_arena",
+    "duel",
+    "empire_race",
+    "encounter_exchange",
+    "encounter_watch",
+    "gambling",
+    "goofspiel",
+    "hagetaka",
+    "laboratory",
+    "mahjong_closed",
+    "navigation",
+    "no_thanks",
+    "observed_auction",
+    "observed_combat",
+    "observed_delivery",
+    "observed_resources",
+    "project",
+    "public_graph",
+    "quoridor",
+    "reversi",
+    "shared_commons",
+    "social_allocation",
+    "social_patrol",
+    "team_combat",
+    "team_projects",
+    "tiny_arena",
+    "tiny_resources"
+  ],
+  "caveats": [
+    "deterministic repeated seeds are repeated executions, not independent environments",
+    "not matched compute, not a comparison with legacy fixed-script search",
+    "mechanics coverage does not mean all prior psychological and team-agreement pipelines connected"
+  ]
+}
