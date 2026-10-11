@@ -1,0 +1,3030 @@
+{
+  "version": "actual-persona-policy-rollout-milestone-v1",
+  "studies": {
+    "discovery-clock-corrected": {
+      "source_commit": "a1d70f8",
+      "primary_games": 384,
+      "duplicate_baseline_replays": 0,
+      "independent_units": 24,
+      "profiles": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "summary": [
+        {
+          "label": "6",
+          "band": 6,
+          "future_seed": "resampled",
+          "interventions": 78,
+          "changed": 11,
+          "credit": 0.1875,
+          "score": 56.135416666666664,
+          "owner_searches": 6094
+        },
+        {
+          "label": "12",
+          "band": 12,
+          "future_seed": "resampled",
+          "interventions": 94,
+          "changed": 14,
+          "credit": 0.24479166666666666,
+          "score": 58.395833333333336,
+          "owner_searches": 14875
+        },
+        {
+          "label": "23",
+          "band": 23,
+          "future_seed": "resampled",
+          "interventions": 96,
+          "changed": 17,
+          "credit": 0.21875,
+          "score": 55.15625,
+          "owner_searches": 33986
+        }
+      ],
+      "contrasts": [
+        {
+          "label": "6",
+          "band": 6,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "each_target",
+          "series": 24,
+          "mean_credit_difference": -0.020833333333333332,
+          "paired_series_bootstrap95": [
+            -0.09375,
+            0.036458333333333336
+          ],
+          "mean_own_score_improvement": -0.2708333333333333,
+          "better": 4,
+          "same": 86,
+          "worse": 6
+        },
+        {
+          "label": "6",
+          "band": 6,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "growth",
+          "series": 16,
+          "mean_credit_difference": -0.03125,
+          "paired_series_bootstrap95": [
+            -0.171875,
+            0.09375
+          ],
+          "mean_own_score_improvement": -0.75,
+          "better": 2,
+          "same": 27,
+          "worse": 3
+        },
+        {
+          "label": "6",
+          "band": 6,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "steady",
+          "series": 20,
+          "mean_credit_difference": -0.05,
+          "paired_series_bootstrap95": [
+            -0.175,
+            0.05
+          ],
+          "mean_own_score_improvement": -3.475,
+          "better": 1,
+          "same": 25,
+          "worse": 2
+        },
+        {
+          "label": "6",
+          "band": 6,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "care",
+          "series": 20,
+          "mean_credit_difference": -0.05,
+          "paired_series_bootstrap95": [
+            -0.15,
+            0.0
+          ],
+          "mean_own_score_improvement": 0.25,
+          "better": 0,
+          "same": 19,
+          "worse": 1
+        },
+        {
+          "label": "6",
+          "band": 6,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "ego",
+          "series": 16,
+          "mean_credit_difference": 0.0625,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.1875
+          ],
+          "mean_own_score_improvement": 4.875,
+          "better": 1,
+          "same": 15,
+          "worse": 0
+        },
+        {
+          "label": "12",
+          "band": 12,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "each_target",
+          "series": 24,
+          "mean_credit_difference": 0.036458333333333336,
+          "paired_series_bootstrap95": [
+            -0.03125,
+            0.109375
+          ],
+          "mean_own_score_improvement": -2.53125,
+          "better": 7,
+          "same": 85,
+          "worse": 4
+        },
+        {
+          "label": "12",
+          "band": 12,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "growth",
+          "series": 16,
+          "mean_credit_difference": 0.0625,
+          "paired_series_bootstrap95": [
+            -0.0625,
+            0.1875
+          ],
+          "mean_own_score_improvement": -3.28125,
+          "better": 3,
+          "same": 28,
+          "worse": 1
+        },
+        {
+          "label": "12",
+          "band": 12,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "steady",
+          "series": 20,
+          "mean_credit_difference": -0.025,
+          "paired_series_bootstrap95": [
+            -0.075,
+            0.0
+          ],
+          "mean_own_score_improvement": -10.1,
+          "better": 0,
+          "same": 27,
+          "worse": 1
+        },
+        {
+          "label": "12",
+          "band": 12,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "care",
+          "series": 20,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            -0.15,
+            0.15
+          ],
+          "mean_own_score_improvement": -3.85,
+          "better": 1,
+          "same": 18,
+          "worse": 1
+        },
+        {
+          "label": "12",
+          "band": 12,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "ego",
+          "series": 16,
+          "mean_credit_difference": 0.15625,
+          "paired_series_bootstrap95": [
+            -0.03125,
+            0.375
+          ],
+          "mean_own_score_improvement": 8.8125,
+          "better": 3,
+          "same": 12,
+          "worse": 1
+        },
+        {
+          "label": "23",
+          "band": 23,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "each_target",
+          "series": 24,
+          "mean_credit_difference": 0.010416666666666666,
+          "paired_series_bootstrap95": [
+            -0.041666666666666664,
+            0.0625
+          ],
+          "mean_own_score_improvement": 0.7083333333333334,
+          "better": 6,
+          "same": 85,
+          "worse": 5
+        },
+        {
+          "label": "23",
+          "band": 23,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "growth",
+          "series": 16,
+          "mean_credit_difference": -0.09375,
+          "paired_series_bootstrap95": [
+            -0.21875,
+            0.03125
+          ],
+          "mean_own_score_improvement": -2.78125,
+          "better": 1,
+          "same": 27,
+          "worse": 4
+        },
+        {
+          "label": "23",
+          "band": 23,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "steady",
+          "series": 20,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            -0.15,
+            0.15
+          ],
+          "mean_own_score_improvement": -1.95,
+          "better": 1,
+          "same": 26,
+          "worse": 1
+        },
+        {
+          "label": "23",
+          "band": 23,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "care",
+          "series": 20,
+          "mean_credit_difference": 0.1,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.25
+          ],
+          "mean_own_score_improvement": -10.1,
+          "better": 2,
+          "same": 18,
+          "worse": 0
+        },
+        {
+          "label": "23",
+          "band": 23,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "ego",
+          "series": 16,
+          "mean_credit_difference": 0.125,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.3125
+          ],
+          "mean_own_score_improvement": 24.625,
+          "better": 2,
+          "same": 14,
+          "worse": 0
+        }
+      ],
+      "audit_counts": {
+        "public_actions": 44901,
+        "public_learning_records": 134703,
+        "unchanged_cpu_decisions": 10763,
+        "fixed_persona_policy_replays": 34138,
+        "games": 384,
+        "isolated_real_interventions": 268,
+        "changed_roots": 42,
+        "hypothetical_owner_searches": 54955,
+        "paired_hypothetical_terminal_branches": 4288
+      },
+      "evaluation_sha256": "7bae41251f571e539b9b9d33ffc360614b0966efc968419333ee9e96b513b033",
+      "source_snapshot_sha256": "00eb14e651f529ee776996fe8db540d76631cec8c9613bf56a87ac6784b56799"
+    },
+    "identity-confirmation": {
+      "source_commit": "e60a3e6",
+      "primary_games": 288,
+      "duplicate_baseline_replays": 0,
+      "independent_units": 16,
+      "profiles": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "summary": [
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "interventions": 89,
+          "changed": 17,
+          "credit": 0.25,
+          "score": 59.864583333333336,
+          "owner_searches": 28421
+        },
+        {
+          "label": "12-resampled",
+          "band": 12,
+          "future_seed": "resampled",
+          "interventions": 89,
+          "changed": 23,
+          "credit": 0.22916666666666666,
+          "score": 60.239583333333336,
+          "owner_searches": 29495
+        }
+      ],
+      "contrasts": [
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "reference": "baseline",
+          "profile": "each_target",
+          "series": 16,
+          "mean_credit_difference": 0.046875,
+          "paired_series_bootstrap95": [
+            -0.04166666666666667,
+            0.14583333333333331
+          ],
+          "mean_own_score_improvement": -5.552083333333334,
+          "better": 12,
+          "same": 77,
+          "worse": 7
+        },
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "reference": "baseline",
+          "profile": "growth",
+          "series": 12,
+          "mean_credit_difference": 0.0625,
+          "paired_series_bootstrap95": [
+            -0.08333333333333333,
+            0.20833333333333334
+          ],
+          "mean_own_score_improvement": -1.4166666666666667,
+          "better": 3,
+          "same": 20,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "reference": "baseline",
+          "profile": "steady",
+          "series": 12,
+          "mean_credit_difference": 0.041666666666666664,
+          "paired_series_bootstrap95": [
+            -0.08333333333333333,
+            0.16666666666666666
+          ],
+          "mean_own_score_improvement": -7.75,
+          "better": 2,
+          "same": 21,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "reference": "baseline",
+          "profile": "care",
+          "series": 12,
+          "mean_credit_difference": -0.020833333333333332,
+          "paired_series_bootstrap95": [
+            -0.16666666666666666,
+            0.125
+          ],
+          "mean_own_score_improvement": -5.875,
+          "better": 3,
+          "same": 18,
+          "worse": 3
+        },
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "reference": "baseline",
+          "profile": "ego",
+          "series": 12,
+          "mean_credit_difference": 0.10416666666666667,
+          "paired_series_bootstrap95": [
+            -0.08333333333333333,
+            0.2916666666666667
+          ],
+          "mean_own_score_improvement": -7.166666666666667,
+          "better": 4,
+          "same": 18,
+          "worse": 2
+        },
+        {
+          "label": "12-resampled",
+          "band": 12,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "each_target",
+          "series": 16,
+          "mean_credit_difference": 0.026041666666666668,
+          "paired_series_bootstrap95": [
+            -0.07825520833333321,
+            0.140625
+          ],
+          "mean_own_score_improvement": -5.927083333333333,
+          "better": 12,
+          "same": 75,
+          "worse": 9
+        },
+        {
+          "label": "12-resampled",
+          "band": 12,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "growth",
+          "series": 12,
+          "mean_credit_difference": 0.020833333333333332,
+          "paired_series_bootstrap95": [
+            -0.10416666666666667,
+            0.14583333333333334
+          ],
+          "mean_own_score_improvement": -3.2083333333333335,
+          "better": 2,
+          "same": 21,
+          "worse": 1
+        },
+        {
+          "label": "12-resampled",
+          "band": 12,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "steady",
+          "series": 12,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            -0.16666666666666666,
+            0.16666666666666666
+          ],
+          "mean_own_score_improvement": -3.5,
+          "better": 2,
+          "same": 20,
+          "worse": 2
+        },
+        {
+          "label": "12-resampled",
+          "band": 12,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "care",
+          "series": 12,
+          "mean_credit_difference": 0.020833333333333332,
+          "paired_series_bootstrap95": [
+            -0.1875,
+            0.20833333333333334
+          ],
+          "mean_own_score_improvement": -17.791666666666668,
+          "better": 4,
+          "same": 17,
+          "worse": 3
+        },
+        {
+          "label": "12-resampled",
+          "band": 12,
+          "future_seed": "resampled",
+          "reference": "baseline",
+          "profile": "ego",
+          "series": 12,
+          "mean_credit_difference": 0.0625,
+          "paired_series_bootstrap95": [
+            -0.10416666666666667,
+            0.22916666666666666
+          ],
+          "mean_own_score_improvement": 0.7916666666666666,
+          "better": 4,
+          "same": 17,
+          "worse": 3
+        },
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "reference": "12-resampled",
+          "profile": "each_target",
+          "series": 16,
+          "mean_credit_difference": 0.020833333333333336,
+          "paired_series_bootstrap95": [
+            -0.0625,
+            0.09375
+          ],
+          "mean_own_score_improvement": 0.3750000000000002,
+          "better": 9,
+          "same": 80,
+          "worse": 7
+        },
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "reference": "12-resampled",
+          "profile": "growth",
+          "series": 12,
+          "mean_credit_difference": 0.041666666666666664,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.125
+          ],
+          "mean_own_score_improvement": 1.7916666666666667,
+          "better": 1,
+          "same": 23,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "reference": "12-resampled",
+          "profile": "steady",
+          "series": 12,
+          "mean_credit_difference": 0.041666666666666664,
+          "paired_series_bootstrap95": [
+            -0.08333333333333333,
+            0.16666666666666666
+          ],
+          "mean_own_score_improvement": -4.25,
+          "better": 2,
+          "same": 21,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "reference": "12-resampled",
+          "profile": "care",
+          "series": 12,
+          "mean_credit_difference": -0.041666666666666664,
+          "paired_series_bootstrap95": [
+            -0.20833333333333334,
+            0.125
+          ],
+          "mean_own_score_improvement": 11.916666666666666,
+          "better": 2,
+          "same": 19,
+          "worse": 3
+        },
+        {
+          "label": "12-same_owner",
+          "band": 12,
+          "future_seed": "same_owner",
+          "reference": "12-resampled",
+          "profile": "ego",
+          "series": 12,
+          "mean_credit_difference": 0.041666666666666664,
+          "paired_series_bootstrap95": [
+            -0.08333333333333333,
+            0.16666666666666666
+          ],
+          "mean_own_score_improvement": -7.958333333333333,
+          "better": 4,
+          "same": 17,
+          "worse": 3
+        }
+      ],
+      "audit_counts": {
+        "public_actions": 33114,
+        "public_learning_records": 99342,
+        "unchanged_cpu_decisions": 7925,
+        "fixed_persona_policy_replays": 25189,
+        "games": 288,
+        "isolated_real_interventions": 178,
+        "changed_roots": 40,
+        "hypothetical_owner_searches": 57916,
+        "paired_hypothetical_terminal_branches": 5696
+      },
+      "evaluation_sha256": "f3e335ff38098366fdb21f9d304d8e319d4ac30a3739f3ff3e7f14c89564e64c",
+      "source_snapshot_sha256": "0f22bfe19a2589ad4e9afb692d83093016c34fb4d0163f6818c0ab7961c39751"
+    },
+    "public-transfer-corrected": {
+      "source_commit": "f313945",
+      "primary_games": 64,
+      "duplicate_baseline_replays": 0,
+      "independent_units": 8,
+      "profiles": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "summary": {
+        "games": 64,
+        "independent_boards": 8,
+        "mean_credit_difference": 0.34375,
+        "paired_board_bootstrap95": [
+          0.0625,
+          0.65625
+        ],
+        "profiles": {
+          "growth": {
+            "mean_credit_difference": 0.375,
+            "changed": 5,
+            "differences": [
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "steady": {
+            "mean_credit_difference": 0.25,
+            "changed": 5,
+            "differences": [
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "care": {
+            "mean_credit_difference": 0.375,
+            "changed": 5,
+            "differences": [
+              0.0,
+              1.0,
+              1.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "ego": {
+            "mean_credit_difference": 0.375,
+            "changed": 5,
+            "differences": [
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        "actual_owner_policy_replays": 603,
+        "hypothetical_owner_searches": 3192
+      },
+      "contrasts": [],
+      "audit_counts": {
+        "public_actions": 1213,
+        "producer_checked_complete_owner_receipts": 603,
+        "primary_games": 64,
+        "root_interventions": 28,
+        "changed_roots": 20,
+        "hypothetical_owner_searches": 3192,
+        "paired_hypothetical_terminal_branches": 1568,
+        "candidate_without_owner_turn": 4
+      },
+      "evaluation_sha256": "fd70c8c4a3d5ab5f81ea3d99a02b63ce1b144c1f3cf3e4b2c96fa25058b8c8cb",
+      "source_snapshot_sha256": "9f2bc05266d0716a4dd514e1dcb9046171fb444c890d56f1f63e84e6256ab6b6"
+    },
+    "public-confirmation": {
+      "source_commit": "48e7da4",
+      "primary_games": 384,
+      "duplicate_baseline_replays": 128,
+      "independent_units": 16,
+      "profiles": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "summary": [
+        {
+          "rival": "minimax2",
+          "condition": "baseline",
+          "credit": 0.4375
+        },
+        {
+          "rival": "minimax2",
+          "condition": "incumbent",
+          "credit": 0.8984375
+        },
+        {
+          "rival": "minimax2",
+          "condition": "reflex",
+          "credit": 0.390625
+        },
+        {
+          "rival": "minimax4",
+          "condition": "baseline",
+          "credit": 0.3203125
+        },
+        {
+          "rival": "minimax4",
+          "condition": "incumbent",
+          "credit": 0.2734375
+        },
+        {
+          "rival": "minimax4",
+          "condition": "reflex",
+          "credit": 0.1796875
+        }
+      ],
+      "contrasts": [
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "incumbent",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.4609375,
+          "paired_board_bootstrap95": [
+            0.25,
+            0.671875
+          ],
+          "independent_boards": 16,
+          "better": 33,
+          "same": 31,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "incumbent",
+          "profile": "growth",
+          "mean_credit_difference": 0.5,
+          "paired_board_bootstrap95": [
+            0.28125,
+            0.71875
+          ],
+          "independent_boards": 16,
+          "better": 9,
+          "same": 7,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "incumbent",
+          "profile": "steady",
+          "mean_credit_difference": 0.4375,
+          "paired_board_bootstrap95": [
+            0.21875,
+            0.65625
+          ],
+          "independent_boards": 16,
+          "better": 8,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "incumbent",
+          "profile": "care",
+          "mean_credit_difference": 0.40625,
+          "paired_board_bootstrap95": [
+            0.1875,
+            0.65625
+          ],
+          "independent_boards": 16,
+          "better": 7,
+          "same": 9,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "incumbent",
+          "profile": "ego",
+          "mean_credit_difference": 0.5,
+          "paired_board_bootstrap95": [
+            0.28125,
+            0.71875
+          ],
+          "independent_boards": 16,
+          "better": 9,
+          "same": 7,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "reflex",
+          "profile": "each_npc",
+          "mean_credit_difference": -0.046875,
+          "paired_board_bootstrap95": [
+            -0.3125,
+            0.21875
+          ],
+          "independent_boards": 16,
+          "better": 12,
+          "same": 35,
+          "worse": 17
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "reflex",
+          "profile": "growth",
+          "mean_credit_difference": -0.03125,
+          "paired_board_bootstrap95": [
+            -0.34375,
+            0.28125
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 9,
+          "worse": 4
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "reflex",
+          "profile": "steady",
+          "mean_credit_difference": -0.09375,
+          "paired_board_bootstrap95": [
+            -0.375,
+            0.1875
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 10,
+          "worse": 4
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "reflex",
+          "profile": "care",
+          "mean_credit_difference": -0.09375,
+          "paired_board_bootstrap95": [
+            -0.4375,
+            0.25
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 8,
+          "worse": 5
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "reflex",
+          "profile": "ego",
+          "mean_credit_difference": 0.03125,
+          "paired_board_bootstrap95": [
+            -0.3125,
+            0.375
+          ],
+          "independent_boards": 16,
+          "better": 4,
+          "same": 8,
+          "worse": 4
+        },
+        {
+          "rival": "minimax2",
+          "reference": "reflex",
+          "candidate": "incumbent",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.5078125,
+          "paired_board_bootstrap95": [
+            0.296875,
+            0.71875
+          ],
+          "independent_boards": 16,
+          "better": 34,
+          "same": 30,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "reflex",
+          "candidate": "incumbent",
+          "profile": "growth",
+          "mean_credit_difference": 0.53125,
+          "paired_board_bootstrap95": [
+            0.3125,
+            0.75
+          ],
+          "independent_boards": 16,
+          "better": 9,
+          "same": 7,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "reflex",
+          "candidate": "incumbent",
+          "profile": "steady",
+          "mean_credit_difference": 0.53125,
+          "paired_board_bootstrap95": [
+            0.3125,
+            0.75
+          ],
+          "independent_boards": 16,
+          "better": 9,
+          "same": 7,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "reflex",
+          "candidate": "incumbent",
+          "profile": "care",
+          "mean_credit_difference": 0.5,
+          "paired_board_bootstrap95": [
+            0.25,
+            0.75
+          ],
+          "independent_boards": 16,
+          "better": 8,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "reflex",
+          "candidate": "incumbent",
+          "profile": "ego",
+          "mean_credit_difference": 0.46875,
+          "paired_board_bootstrap95": [
+            0.25,
+            0.71875
+          ],
+          "independent_boards": 16,
+          "better": 8,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "incumbent",
+          "profile": "each_npc",
+          "mean_credit_difference": -0.046875,
+          "paired_board_bootstrap95": [
+            -0.28125,
+            0.203125
+          ],
+          "independent_boards": 16,
+          "better": 10,
+          "same": 41,
+          "worse": 13
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "incumbent",
+          "profile": "growth",
+          "mean_credit_difference": -0.03125,
+          "paired_board_bootstrap95": [
+            -0.3125,
+            0.25
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 10,
+          "worse": 3
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "incumbent",
+          "profile": "steady",
+          "mean_credit_difference": -0.03125,
+          "paired_board_bootstrap95": [
+            -0.21875,
+            0.15625
+          ],
+          "independent_boards": 16,
+          "better": 1,
+          "same": 13,
+          "worse": 2
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "incumbent",
+          "profile": "care",
+          "mean_credit_difference": -0.09375,
+          "paired_board_bootstrap95": [
+            -0.40625,
+            0.25
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 8,
+          "worse": 5
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "incumbent",
+          "profile": "ego",
+          "mean_credit_difference": -0.03125,
+          "paired_board_bootstrap95": [
+            -0.3125,
+            0.25
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 10,
+          "worse": 3
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "reflex",
+          "profile": "each_npc",
+          "mean_credit_difference": -0.140625,
+          "paired_board_bootstrap95": [
+            -0.3046875,
+            -0.0078125
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 51,
+          "worse": 11
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "reflex",
+          "profile": "growth",
+          "mean_credit_difference": -0.125,
+          "paired_board_bootstrap95": [
+            -0.3125,
+            0.0
+          ],
+          "independent_boards": 16,
+          "better": 0,
+          "same": 14,
+          "worse": 2
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "reflex",
+          "profile": "steady",
+          "mean_credit_difference": -0.0625,
+          "paired_board_bootstrap95": [
+            -0.21875,
+            0.0625
+          ],
+          "independent_boards": 16,
+          "better": 1,
+          "same": 13,
+          "worse": 2
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "reflex",
+          "profile": "care",
+          "mean_credit_difference": -0.25,
+          "paired_board_bootstrap95": [
+            -0.5,
+            -0.03125
+          ],
+          "independent_boards": 16,
+          "better": 1,
+          "same": 10,
+          "worse": 5
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "reflex",
+          "profile": "ego",
+          "mean_credit_difference": -0.125,
+          "paired_board_bootstrap95": [
+            -0.3125,
+            0.0
+          ],
+          "independent_boards": 16,
+          "better": 0,
+          "same": 14,
+          "worse": 2
+        },
+        {
+          "rival": "minimax4",
+          "reference": "reflex",
+          "candidate": "incumbent",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.09375,
+          "paired_board_bootstrap95": [
+            -0.046875,
+            0.265625
+          ],
+          "independent_boards": 16,
+          "better": 11,
+          "same": 48,
+          "worse": 5
+        },
+        {
+          "rival": "minimax4",
+          "reference": "reflex",
+          "candidate": "incumbent",
+          "profile": "growth",
+          "mean_credit_difference": 0.09375,
+          "paired_board_bootstrap95": [
+            -0.125,
+            0.3125
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 12,
+          "worse": 1
+        },
+        {
+          "rival": "minimax4",
+          "reference": "reflex",
+          "candidate": "incumbent",
+          "profile": "steady",
+          "mean_credit_difference": 0.03125,
+          "paired_board_bootstrap95": [
+            -0.1875,
+            0.25
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 12,
+          "worse": 2
+        },
+        {
+          "rival": "minimax4",
+          "reference": "reflex",
+          "candidate": "incumbent",
+          "profile": "care",
+          "mean_credit_difference": 0.15625,
+          "paired_board_bootstrap95": [
+            -0.03125,
+            0.375
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 12,
+          "worse": 1
+        },
+        {
+          "rival": "minimax4",
+          "reference": "reflex",
+          "candidate": "incumbent",
+          "profile": "ego",
+          "mean_credit_difference": 0.09375,
+          "paired_board_bootstrap95": [
+            -0.125,
+            0.3125
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 12,
+          "worse": 1
+        }
+      ],
+      "audit_counts": {
+        "public_actions": 8165,
+        "producer_checked_complete_owner_receipts": 4068,
+        "primary_games": 384,
+        "root_interventions": 256,
+        "changed_roots": 228,
+        "hypothetical_owner_searches": 26782,
+        "paired_hypothetical_terminal_branches": 14336
+      },
+      "evaluation_sha256": "d607a0d5d0f3f97e7e6f03000c1051e2328a23ea9e65089bfda5c92241af58a4",
+      "source_snapshot_sha256": "12cbda61a1ed32d39d6d28d89af602350b61cd44b7133cf87367414c96ddab6a"
+    },
+    "searched-rival-contract-corrected": {
+      "source_commit": "58b1f1b",
+      "primary_games": 144,
+      "duplicate_baseline_replays": 0,
+      "independent_units": 16,
+      "profiles": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "summary": [
+        {
+          "label": "12-same_owner-reactive",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "reactive",
+          "interventions": 44,
+          "changed": 9,
+          "credit": 0.13541666666666666,
+          "score": 59.333333333333336,
+          "owner_searches": 7121
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "interventions": 45,
+          "changed": 11,
+          "credit": 0.15625,
+          "score": 60.583333333333336,
+          "owner_searches": 8272
+        }
+      ],
+      "contrasts": [
+        {
+          "label": "12-same_owner-reactive",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "reactive",
+          "reference": "baseline",
+          "profile": "each_target",
+          "series": 16,
+          "mean_credit_difference": 0.010416666666666666,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.03125
+          ],
+          "mean_own_score_improvement": 2.6875,
+          "better": 2,
+          "same": 45,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner-reactive",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "reactive",
+          "reference": "baseline",
+          "profile": "growth",
+          "series": 12,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean_own_score_improvement": 0.5833333333333334,
+          "better": 0,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-reactive",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "reactive",
+          "reference": "baseline",
+          "profile": "steady",
+          "series": 12,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean_own_score_improvement": 3.5,
+          "better": 0,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-reactive",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "reactive",
+          "reference": "baseline",
+          "profile": "care",
+          "series": 12,
+          "mean_credit_difference": -0.08333333333333333,
+          "paired_series_bootstrap95": [
+            -0.25,
+            0.0
+          ],
+          "mean_own_score_improvement": 4.416666666666667,
+          "better": 0,
+          "same": 11,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner-reactive",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "reactive",
+          "reference": "baseline",
+          "profile": "ego",
+          "series": 12,
+          "mean_credit_difference": 0.125,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.3333333333333333
+          ],
+          "mean_own_score_improvement": 2.25,
+          "better": 2,
+          "same": 10,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "baseline",
+          "profile": "each_target",
+          "series": 16,
+          "mean_credit_difference": 0.03125,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.08333333333333333
+          ],
+          "mean_own_score_improvement": 1.4375,
+          "better": 3,
+          "same": 44,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "baseline",
+          "profile": "growth",
+          "series": 12,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean_own_score_improvement": -2.4166666666666665,
+          "better": 0,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "baseline",
+          "profile": "steady",
+          "series": 12,
+          "mean_credit_difference": 0.08333333333333333,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.25
+          ],
+          "mean_own_score_improvement": 4.083333333333333,
+          "better": 1,
+          "same": 11,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "baseline",
+          "profile": "care",
+          "series": 12,
+          "mean_credit_difference": -0.08333333333333333,
+          "paired_series_bootstrap95": [
+            -0.25,
+            0.0
+          ],
+          "mean_own_score_improvement": 1.8333333333333333,
+          "better": 0,
+          "same": 11,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "baseline",
+          "profile": "ego",
+          "series": 12,
+          "mean_credit_difference": 0.125,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.3333333333333333
+          ],
+          "mean_own_score_improvement": 2.25,
+          "better": 2,
+          "same": 10,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "12-same_owner-reactive",
+          "profile": "each_target",
+          "series": 16,
+          "mean_credit_difference": 0.020833333333333332,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.0625
+          ],
+          "mean_own_score_improvement": -1.25,
+          "better": 1,
+          "same": 47,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "12-same_owner-reactive",
+          "profile": "growth",
+          "series": 12,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean_own_score_improvement": -3.0,
+          "better": 0,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "12-same_owner-reactive",
+          "profile": "steady",
+          "series": 12,
+          "mean_credit_difference": 0.08333333333333333,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.25
+          ],
+          "mean_own_score_improvement": 0.5833333333333334,
+          "better": 1,
+          "same": 11,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "12-same_owner-reactive",
+          "profile": "care",
+          "series": 12,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean_own_score_improvement": -2.5833333333333335,
+          "better": 0,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "12-same_owner-reactive",
+          "profile": "ego",
+          "series": 12,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean_own_score_improvement": 0.0,
+          "better": 0,
+          "same": 12,
+          "worse": 0
+        }
+      ],
+      "audit_counts": {
+        "public_actions": 17154,
+        "public_learning_records": 51462,
+        "unchanged_cpu_decisions": 4086,
+        "fixed_persona_policy_replays": 13068,
+        "games": 144,
+        "isolated_real_interventions": 89,
+        "changed_roots": 20,
+        "hypothetical_owner_searches": 15393,
+        "paired_hypothetical_terminal_branches": 1424
+      },
+      "evaluation_sha256": "5c84b5004e4c56eb655c4488d1082099b49d269fe44f2ccbe032357a6bc1731c",
+      "source_snapshot_sha256": "a8790c54e2aa61d36dd3a391598c3b287fa26a1ca67f99f2c48b689fd9bcaf9f"
+    },
+    "public-rival-uncertainty": {
+      "source_commit": "afcf12f",
+      "primary_games": 384,
+      "duplicate_baseline_replays": 128,
+      "independent_units": 16,
+      "profiles": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "summary": [
+        {
+          "rival": "minimax2",
+          "condition": "baseline",
+          "credit": 0.3046875
+        },
+        {
+          "rival": "minimax2",
+          "condition": "minimax2",
+          "credit": 0.671875
+        },
+        {
+          "rival": "minimax2",
+          "condition": "mixture",
+          "credit": 0.6328125
+        },
+        {
+          "rival": "minimax4",
+          "condition": "baseline",
+          "credit": 0.328125
+        },
+        {
+          "rival": "minimax4",
+          "condition": "minimax2",
+          "credit": 0.203125
+        },
+        {
+          "rival": "minimax4",
+          "condition": "mixture",
+          "credit": 0.3984375
+        }
+      ],
+      "contrasts": [
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "mixture",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.328125,
+          "paired_board_bootstrap95": [
+            0.1171875,
+            0.5390625
+          ],
+          "independent_boards": 16,
+          "better": 25,
+          "same": 35,
+          "worse": 4
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "mixture",
+          "profile": "growth",
+          "mean_credit_difference": 0.21875,
+          "paired_board_bootstrap95": [
+            -0.03125,
+            0.46875
+          ],
+          "independent_boards": 16,
+          "better": 5,
+          "same": 10,
+          "worse": 1
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "mixture",
+          "profile": "steady",
+          "mean_credit_difference": 0.34375,
+          "paired_board_bootstrap95": [
+            0.125,
+            0.59375
+          ],
+          "independent_boards": 16,
+          "better": 7,
+          "same": 8,
+          "worse": 1
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "mixture",
+          "profile": "care",
+          "mean_credit_difference": 0.3125,
+          "paired_board_bootstrap95": [
+            0.03125,
+            0.59375
+          ],
+          "independent_boards": 16,
+          "better": 6,
+          "same": 8,
+          "worse": 2
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "mixture",
+          "profile": "ego",
+          "mean_credit_difference": 0.4375,
+          "paired_board_bootstrap95": [
+            0.1875,
+            0.6875
+          ],
+          "independent_boards": 16,
+          "better": 7,
+          "same": 9,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "minimax2",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.3671875,
+          "paired_board_bootstrap95": [
+            0.1875,
+            0.5625
+          ],
+          "independent_boards": 16,
+          "better": 25,
+          "same": 39,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "minimax2",
+          "profile": "growth",
+          "mean_credit_difference": 0.28125,
+          "paired_board_bootstrap95": [
+            0.09375,
+            0.5
+          ],
+          "independent_boards": 16,
+          "better": 5,
+          "same": 11,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "minimax2",
+          "profile": "steady",
+          "mean_credit_difference": 0.375,
+          "paired_board_bootstrap95": [
+            0.15625,
+            0.59375
+          ],
+          "independent_boards": 16,
+          "better": 7,
+          "same": 9,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "minimax2",
+          "profile": "care",
+          "mean_credit_difference": 0.375,
+          "paired_board_bootstrap95": [
+            0.125,
+            0.625
+          ],
+          "independent_boards": 16,
+          "better": 6,
+          "same": 10,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "minimax2",
+          "profile": "ego",
+          "mean_credit_difference": 0.4375,
+          "paired_board_bootstrap95": [
+            0.1875,
+            0.6875
+          ],
+          "independent_boards": 16,
+          "better": 7,
+          "same": 9,
+          "worse": 0
+        },
+        {
+          "rival": "minimax2",
+          "reference": "minimax2",
+          "candidate": "mixture",
+          "profile": "each_npc",
+          "mean_credit_difference": -0.0390625,
+          "paired_board_bootstrap95": [
+            -0.09375,
+            0.0
+          ],
+          "independent_boards": 16,
+          "better": 0,
+          "same": 60,
+          "worse": 4
+        },
+        {
+          "rival": "minimax2",
+          "reference": "minimax2",
+          "candidate": "mixture",
+          "profile": "growth",
+          "mean_credit_difference": -0.0625,
+          "paired_board_bootstrap95": [
+            -0.1875,
+            0.0
+          ],
+          "independent_boards": 16,
+          "better": 0,
+          "same": 15,
+          "worse": 1
+        },
+        {
+          "rival": "minimax2",
+          "reference": "minimax2",
+          "candidate": "mixture",
+          "profile": "steady",
+          "mean_credit_difference": -0.03125,
+          "paired_board_bootstrap95": [
+            -0.09375,
+            0.0
+          ],
+          "independent_boards": 16,
+          "better": 0,
+          "same": 15,
+          "worse": 1
+        },
+        {
+          "rival": "minimax2",
+          "reference": "minimax2",
+          "candidate": "mixture",
+          "profile": "care",
+          "mean_credit_difference": -0.0625,
+          "paired_board_bootstrap95": [
+            -0.15625,
+            0.0
+          ],
+          "independent_boards": 16,
+          "better": 0,
+          "same": 14,
+          "worse": 2
+        },
+        {
+          "rival": "minimax2",
+          "reference": "minimax2",
+          "candidate": "mixture",
+          "profile": "ego",
+          "mean_credit_difference": 0.0,
+          "paired_board_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "independent_boards": 16,
+          "better": 0,
+          "same": 16,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "mixture",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.0703125,
+          "paired_board_bootstrap95": [
+            -0.1171875,
+            0.28125
+          ],
+          "independent_boards": 16,
+          "better": 11,
+          "same": 46,
+          "worse": 7
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "mixture",
+          "profile": "growth",
+          "mean_credit_difference": 0.09375,
+          "paired_board_bootstrap95": [
+            -0.15625,
+            0.34375
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 11,
+          "worse": 2
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "mixture",
+          "profile": "steady",
+          "mean_credit_difference": 0.125,
+          "paired_board_bootstrap95": [
+            -0.03125,
+            0.3125
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 12,
+          "worse": 1
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "mixture",
+          "profile": "care",
+          "mean_credit_difference": 0.0,
+          "paired_board_bootstrap95": [
+            -0.25,
+            0.25
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 12,
+          "worse": 2
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "mixture",
+          "profile": "ego",
+          "mean_credit_difference": 0.0625,
+          "paired_board_bootstrap95": [
+            -0.15625,
+            0.3125
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 11,
+          "worse": 2
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "minimax2",
+          "profile": "each_npc",
+          "mean_credit_difference": -0.125,
+          "paired_board_bootstrap95": [
+            -0.390625,
+            0.15625
+          ],
+          "independent_boards": 16,
+          "better": 8,
+          "same": 37,
+          "worse": 19
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "minimax2",
+          "profile": "growth",
+          "mean_credit_difference": -0.09375,
+          "paired_board_bootstrap95": [
+            -0.375,
+            0.1875
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 10,
+          "worse": 4
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "minimax2",
+          "profile": "steady",
+          "mean_credit_difference": -0.125,
+          "paired_board_bootstrap95": [
+            -0.40625,
+            0.15625
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 9,
+          "worse": 5
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "minimax2",
+          "profile": "care",
+          "mean_credit_difference": -0.1875,
+          "paired_board_bootstrap95": [
+            -0.46875,
+            0.125
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 8,
+          "worse": 6
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "minimax2",
+          "profile": "ego",
+          "mean_credit_difference": -0.09375,
+          "paired_board_bootstrap95": [
+            -0.375,
+            0.1875
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 10,
+          "worse": 4
+        },
+        {
+          "rival": "minimax4",
+          "reference": "minimax2",
+          "candidate": "mixture",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.1953125,
+          "paired_board_bootstrap95": [
+            0.0625,
+            0.359375
+          ],
+          "independent_boards": 16,
+          "better": 14,
+          "same": 50,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "minimax2",
+          "candidate": "mixture",
+          "profile": "growth",
+          "mean_credit_difference": 0.1875,
+          "paired_board_bootstrap95": [
+            0.0,
+            0.375
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 13,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "minimax2",
+          "candidate": "mixture",
+          "profile": "steady",
+          "mean_credit_difference": 0.25,
+          "paired_board_bootstrap95": [
+            0.0625,
+            0.4375
+          ],
+          "independent_boards": 16,
+          "better": 4,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "minimax2",
+          "candidate": "mixture",
+          "profile": "care",
+          "mean_credit_difference": 0.1875,
+          "paired_board_bootstrap95": [
+            0.03125,
+            0.375
+          ],
+          "independent_boards": 16,
+          "better": 4,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "minimax2",
+          "candidate": "mixture",
+          "profile": "ego",
+          "mean_credit_difference": 0.15625,
+          "paired_board_bootstrap95": [
+            0.0,
+            0.34375
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 13,
+          "worse": 0
+        }
+      ],
+      "audit_counts": {
+        "public_actions": 9351,
+        "producer_checked_complete_owner_receipts": 4662,
+        "primary_games": 384,
+        "root_interventions": 256,
+        "changed_roots": 203,
+        "hypothetical_owner_searches": 36206,
+        "paired_hypothetical_terminal_branches": 14336
+      },
+      "evaluation_sha256": "26b97daf7583be819a68249b012bc8c1b371f20ddb9205b63fdb1dfd9e97400b",
+      "source_snapshot_sha256": "d51e4ccf1b56cfe8af59e5e52b76cfc45339f937dd652b4950048ff2c370f6dc"
+    },
+    "public-continuous": {
+      "source_commit": "15ea8c5",
+      "primary_games": 384,
+      "duplicate_baseline_replays": 128,
+      "independent_units": 16,
+      "profiles": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "summary": [
+        {
+          "rival": "minimax2",
+          "condition": "baseline",
+          "credit": 0.640625
+        },
+        {
+          "rival": "minimax2",
+          "condition": "single",
+          "credit": 0.734375
+        },
+        {
+          "rival": "minimax2",
+          "condition": "continuous",
+          "credit": 0.7734375
+        },
+        {
+          "rival": "minimax4",
+          "condition": "baseline",
+          "credit": 0.2421875
+        },
+        {
+          "rival": "minimax4",
+          "condition": "single",
+          "credit": 0.484375
+        },
+        {
+          "rival": "minimax4",
+          "condition": "continuous",
+          "credit": 0.7421875
+        }
+      ],
+      "contrasts": [
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "continuous",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.1328125,
+          "paired_board_bootstrap95": [
+            -0.0546875,
+            0.34375
+          ],
+          "independent_boards": 16,
+          "better": 16,
+          "same": 41,
+          "worse": 7
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "continuous",
+          "profile": "growth",
+          "mean_credit_difference": 0.0625,
+          "paired_board_bootstrap95": [
+            -0.1875,
+            0.34375
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 10,
+          "worse": 3
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "continuous",
+          "profile": "steady",
+          "mean_credit_difference": 0.15625,
+          "paired_board_bootstrap95": [
+            -0.03125,
+            0.34375
+          ],
+          "independent_boards": 16,
+          "better": 4,
+          "same": 11,
+          "worse": 1
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "continuous",
+          "profile": "care",
+          "mean_credit_difference": 0.21875,
+          "paired_board_bootstrap95": [
+            -0.0625,
+            0.46875
+          ],
+          "independent_boards": 16,
+          "better": 5,
+          "same": 10,
+          "worse": 1
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "continuous",
+          "profile": "ego",
+          "mean_credit_difference": 0.09375,
+          "paired_board_bootstrap95": [
+            -0.1875,
+            0.375
+          ],
+          "independent_boards": 16,
+          "better": 4,
+          "same": 10,
+          "worse": 2
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "single",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.09375,
+          "paired_board_bootstrap95": [
+            -0.0859375,
+            0.28125
+          ],
+          "independent_boards": 16,
+          "better": 13,
+          "same": 43,
+          "worse": 8
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "single",
+          "profile": "growth",
+          "mean_credit_difference": 0.0625,
+          "paired_board_bootstrap95": [
+            -0.15625,
+            0.28125
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 11,
+          "worse": 2
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "single",
+          "profile": "steady",
+          "mean_credit_difference": 0.0,
+          "paired_board_bootstrap95": [
+            -0.25,
+            0.25
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 12,
+          "worse": 2
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "single",
+          "profile": "care",
+          "mean_credit_difference": 0.1875,
+          "paired_board_bootstrap95": [
+            -0.03125,
+            0.4375
+          ],
+          "independent_boards": 16,
+          "better": 4,
+          "same": 10,
+          "worse": 2
+        },
+        {
+          "rival": "minimax2",
+          "reference": "baseline",
+          "candidate": "single",
+          "profile": "ego",
+          "mean_credit_difference": 0.125,
+          "paired_board_bootstrap95": [
+            -0.125,
+            0.375
+          ],
+          "independent_boards": 16,
+          "better": 4,
+          "same": 10,
+          "worse": 2
+        },
+        {
+          "rival": "minimax2",
+          "reference": "single",
+          "candidate": "continuous",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.0390625,
+          "paired_board_bootstrap95": [
+            -0.0703125,
+            0.1640625
+          ],
+          "independent_boards": 16,
+          "better": 10,
+          "same": 48,
+          "worse": 6
+        },
+        {
+          "rival": "minimax2",
+          "reference": "single",
+          "candidate": "continuous",
+          "profile": "growth",
+          "mean_credit_difference": 0.0,
+          "paired_board_bootstrap95": [
+            -0.1875,
+            0.1875
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 12,
+          "worse": 2
+        },
+        {
+          "rival": "minimax2",
+          "reference": "single",
+          "candidate": "continuous",
+          "profile": "steady",
+          "mean_credit_difference": 0.15625,
+          "paired_board_bootstrap95": [
+            -0.09375,
+            0.40625
+          ],
+          "independent_boards": 16,
+          "better": 5,
+          "same": 9,
+          "worse": 2
+        },
+        {
+          "rival": "minimax2",
+          "reference": "single",
+          "candidate": "continuous",
+          "profile": "care",
+          "mean_credit_difference": 0.03125,
+          "paired_board_bootstrap95": [
+            -0.15625,
+            0.21875
+          ],
+          "independent_boards": 16,
+          "better": 2,
+          "same": 13,
+          "worse": 1
+        },
+        {
+          "rival": "minimax2",
+          "reference": "single",
+          "candidate": "continuous",
+          "profile": "ego",
+          "mean_credit_difference": -0.03125,
+          "paired_board_bootstrap95": [
+            -0.1875,
+            0.09375
+          ],
+          "independent_boards": 16,
+          "better": 1,
+          "same": 14,
+          "worse": 1
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "continuous",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.5,
+          "paired_board_bootstrap95": [
+            0.3203125,
+            0.6796875
+          ],
+          "independent_boards": 16,
+          "better": 38,
+          "same": 26,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "continuous",
+          "profile": "growth",
+          "mean_credit_difference": 0.53125,
+          "paired_board_bootstrap95": [
+            0.3125,
+            0.75
+          ],
+          "independent_boards": 16,
+          "better": 10,
+          "same": 6,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "continuous",
+          "profile": "steady",
+          "mean_credit_difference": 0.4375,
+          "paired_board_bootstrap95": [
+            0.21875,
+            0.65625
+          ],
+          "independent_boards": 16,
+          "better": 9,
+          "same": 7,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "continuous",
+          "profile": "care",
+          "mean_credit_difference": 0.4375,
+          "paired_board_bootstrap95": [
+            0.21875,
+            0.65625
+          ],
+          "independent_boards": 16,
+          "better": 8,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "continuous",
+          "profile": "ego",
+          "mean_credit_difference": 0.59375,
+          "paired_board_bootstrap95": [
+            0.375,
+            0.8125
+          ],
+          "independent_boards": 16,
+          "better": 11,
+          "same": 5,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "single",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.2421875,
+          "paired_board_bootstrap95": [
+            0.078125,
+            0.421875
+          ],
+          "independent_boards": 16,
+          "better": 20,
+          "same": 43,
+          "worse": 1
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "single",
+          "profile": "growth",
+          "mean_credit_difference": 0.1875,
+          "paired_board_bootstrap95": [
+            0.03125,
+            0.375
+          ],
+          "independent_boards": 16,
+          "better": 4,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "single",
+          "profile": "steady",
+          "mean_credit_difference": 0.15625,
+          "paired_board_bootstrap95": [
+            -0.0625,
+            0.40625
+          ],
+          "independent_boards": 16,
+          "better": 4,
+          "same": 11,
+          "worse": 1
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "single",
+          "profile": "care",
+          "mean_credit_difference": 0.25,
+          "paired_board_bootstrap95": [
+            0.0625,
+            0.46875
+          ],
+          "independent_boards": 16,
+          "better": 5,
+          "same": 11,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "baseline",
+          "candidate": "single",
+          "profile": "ego",
+          "mean_credit_difference": 0.375,
+          "paired_board_bootstrap95": [
+            0.15625,
+            0.59375
+          ],
+          "independent_boards": 16,
+          "better": 7,
+          "same": 9,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "single",
+          "candidate": "continuous",
+          "profile": "each_npc",
+          "mean_credit_difference": 0.2578125,
+          "paired_board_bootstrap95": [
+            0.09375,
+            0.421875
+          ],
+          "independent_boards": 16,
+          "better": 21,
+          "same": 40,
+          "worse": 3
+        },
+        {
+          "rival": "minimax4",
+          "reference": "single",
+          "candidate": "continuous",
+          "profile": "growth",
+          "mean_credit_difference": 0.34375,
+          "paired_board_bootstrap95": [
+            0.09375,
+            0.59375
+          ],
+          "independent_boards": 16,
+          "better": 7,
+          "same": 8,
+          "worse": 1
+        },
+        {
+          "rival": "minimax4",
+          "reference": "single",
+          "candidate": "continuous",
+          "profile": "steady",
+          "mean_credit_difference": 0.28125,
+          "paired_board_bootstrap95": [
+            0.0625,
+            0.5
+          ],
+          "independent_boards": 16,
+          "better": 6,
+          "same": 9,
+          "worse": 1
+        },
+        {
+          "rival": "minimax4",
+          "reference": "single",
+          "candidate": "continuous",
+          "profile": "care",
+          "mean_credit_difference": 0.1875,
+          "paired_board_bootstrap95": [
+            0.0,
+            0.375
+          ],
+          "independent_boards": 16,
+          "better": 3,
+          "same": 13,
+          "worse": 0
+        },
+        {
+          "rival": "minimax4",
+          "reference": "single",
+          "candidate": "continuous",
+          "profile": "ego",
+          "mean_credit_difference": 0.21875,
+          "paired_board_bootstrap95": [
+            0.03125,
+            0.4375
+          ],
+          "independent_boards": 16,
+          "better": 5,
+          "same": 10,
+          "worse": 1
+        }
+      ],
+      "audit_counts": {
+        "public_actions": 9410,
+        "producer_checked_complete_owner_receipts": 4726,
+        "primary_games": 384,
+        "root_interventions": 1753,
+        "changed_roots": 661,
+        "hypothetical_owner_searches": 157616,
+        "paired_hypothetical_terminal_branches": 77032
+      },
+      "evaluation_sha256": "b492284150ca0cdbfea88edead8cd4f2417146f23a79629b7d0abd8a56e3bf40",
+      "source_snapshot_sha256": "43582a51d5de1ab2a7b2f39181de521e09efc0552727b3a9abea847509c41e29"
+    },
+    "public-perspectives": {
+      "source_commit": "6e0842f",
+      "primary_games": 144,
+      "duplicate_baseline_replays": 0,
+      "independent_units": 16,
+      "profiles": [
+        "growth",
+        "steady",
+        "care",
+        "ego"
+      ],
+      "summary": [
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "interventions": 45,
+          "changed": 11,
+          "credit": 0.3020833333333333,
+          "score": 50.8125,
+          "owner_searches": 7369
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "interventions": 47,
+          "changed": 13,
+          "credit": 0.2916666666666667,
+          "score": 52.4375,
+          "owner_searches": 7448
+        }
+      ],
+      "contrasts": [
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "baseline",
+          "profile": "each_target",
+          "series": 16,
+          "mean_credit_difference": 0.041666666666666664,
+          "paired_series_bootstrap95": [
+            -0.041666666666666664,
+            0.125
+          ],
+          "mean_own_score_improvement": 7.125,
+          "better": 4,
+          "same": 42,
+          "worse": 2
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "baseline",
+          "profile": "growth",
+          "series": 12,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean_own_score_improvement": -2.9166666666666665,
+          "better": 0,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "baseline",
+          "profile": "steady",
+          "series": 12,
+          "mean_credit_difference": 0.16666666666666666,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.4166666666666667
+          ],
+          "mean_own_score_improvement": 10.75,
+          "better": 2,
+          "same": 10,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "baseline",
+          "profile": "care",
+          "series": 12,
+          "mean_credit_difference": -0.08333333333333333,
+          "paired_series_bootstrap95": [
+            -0.25,
+            0.0
+          ],
+          "mean_own_score_improvement": -0.9166666666666666,
+          "better": 0,
+          "same": 11,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner-searched",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "searched",
+          "reference": "baseline",
+          "profile": "ego",
+          "series": 12,
+          "mean_credit_difference": 0.08333333333333333,
+          "paired_series_bootstrap95": [
+            -0.16666666666666666,
+            0.3333333333333333
+          ],
+          "mean_own_score_improvement": 21.583333333333332,
+          "better": 2,
+          "same": 9,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "reference": "baseline",
+          "profile": "each_target",
+          "series": 16,
+          "mean_credit_difference": 0.03125,
+          "paired_series_bootstrap95": [
+            -0.05208333333333333,
+            0.11458333333333333
+          ],
+          "mean_own_score_improvement": 5.5,
+          "better": 4,
+          "same": 41,
+          "worse": 3
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "reference": "baseline",
+          "profile": "growth",
+          "series": 12,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean_own_score_improvement": -3.8333333333333335,
+          "better": 0,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "reference": "baseline",
+          "profile": "steady",
+          "series": 12,
+          "mean_credit_difference": 0.08333333333333333,
+          "paired_series_bootstrap95": [
+            -0.16666666666666666,
+            0.3333333333333333
+          ],
+          "mean_own_score_improvement": 1.4166666666666667,
+          "better": 2,
+          "same": 9,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "reference": "baseline",
+          "profile": "care",
+          "series": 12,
+          "mean_credit_difference": 0.08333333333333333,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.25
+          ],
+          "mean_own_score_improvement": 9.25,
+          "better": 1,
+          "same": 11,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "reference": "baseline",
+          "profile": "ego",
+          "series": 12,
+          "mean_credit_difference": -0.041666666666666664,
+          "paired_series_bootstrap95": [
+            -0.2916666666666667,
+            0.20833333333333334
+          ],
+          "mean_own_score_improvement": 15.166666666666666,
+          "better": 1,
+          "same": 9,
+          "worse": 2
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "reference": "12-same_owner-searched",
+          "profile": "each_target",
+          "series": 16,
+          "mean_credit_difference": -0.010416666666666666,
+          "paired_series_bootstrap95": [
+            -0.07291666666666666,
+            0.05208333333333333
+          ],
+          "mean_own_score_improvement": -1.625,
+          "better": 3,
+          "same": 41,
+          "worse": 4
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "reference": "12-same_owner-searched",
+          "profile": "growth",
+          "series": 12,
+          "mean_credit_difference": 0.0,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean_own_score_improvement": -0.9166666666666666,
+          "better": 0,
+          "same": 12,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "reference": "12-same_owner-searched",
+          "profile": "steady",
+          "series": 12,
+          "mean_credit_difference": -0.08333333333333333,
+          "paired_series_bootstrap95": [
+            -0.25,
+            0.0
+          ],
+          "mean_own_score_improvement": -9.333333333333334,
+          "better": 0,
+          "same": 11,
+          "worse": 1
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "reference": "12-same_owner-searched",
+          "profile": "care",
+          "series": 12,
+          "mean_credit_difference": 0.16666666666666666,
+          "paired_series_bootstrap95": [
+            0.0,
+            0.4166666666666667
+          ],
+          "mean_own_score_improvement": 10.166666666666666,
+          "better": 2,
+          "same": 10,
+          "worse": 0
+        },
+        {
+          "label": "12-same_owner-public_history",
+          "band": 12,
+          "future_seed": "same_owner",
+          "rival_policy": "public_history",
+          "reference": "12-same_owner-searched",
+          "profile": "ego",
+          "series": 12,
+          "mean_credit_difference": -0.125,
+          "paired_series_bootstrap95": [
+            -0.4166666666666667,
+            0.16666666666666666
+          ],
+          "mean_own_score_improvement": -6.416666666666667,
+          "better": 1,
+          "same": 8,
+          "worse": 3
+        }
+      ],
+      "audit_counts": {
+        "public_actions": 16704,
+        "public_learning_records": 50112,
+        "unchanged_cpu_decisions": 4043,
+        "fixed_persona_policy_replays": 12661,
+        "games": 144,
+        "isolated_real_interventions": 92,
+        "changed_roots": 24,
+        "hypothetical_owner_searches": 14817,
+        "paired_hypothetical_terminal_branches": 1472,
+        "public_model_history_receipts": 47
+      },
+      "evaluation_sha256": "820bb3483c8ff18024f152fcbe0c834b871d5a3c33fd0681f1f9f73b745f77ee",
+      "source_snapshot_sha256": "b6e6efe7aee5d5ebc00125ba9d51b0b57bd1cb5ceb1acea7cb9afb4d937da358"
+    },
+    "actual-oracle": {
+      "source_commit": "e702ab3",
+      "cases": 65,
+      "alternative_branches": 65,
+      "summary": [
+        {
+          "band": 6,
+          "cases": 19,
+          "changed": 4,
+          "mean_actual_gain": -0.05263157894736842,
+          "chosen_credit_regret": 0.05263157894736842,
+          "incumbent_credit_regret": 0.0,
+          "changed_better": 0,
+          "changed_worse": 1
+        },
+        {
+          "band": 12,
+          "cases": 22,
+          "changed": 2,
+          "mean_actual_gain": 0.045454545454545456,
+          "chosen_credit_regret": 0.045454545454545456,
+          "incumbent_credit_regret": 0.09090909090909091,
+          "changed_better": 1,
+          "changed_worse": 0
+        },
+        {
+          "band": 23,
+          "cases": 24,
+          "changed": 5,
+          "mean_actual_gain": -0.041666666666666664,
+          "chosen_credit_regret": 0.14583333333333334,
+          "incumbent_credit_regret": 0.10416666666666667,
+          "changed_better": 0,
+          "changed_worse": 1
+        }
+      ],
+      "primary_games": 0,
+      "diagnostic_counts": {
+        "equal_root_credits": 49,
+        "all_roots_zero_credit": 43
+      },
+      "scope": "reuses registered source interventions; exact original-root replay; hindsight actual world not expected action value"
+    }
+  },
+  "illustration": {
+    "seed": 9340,
+    "profile": "care",
+    "public_state": {
+      "discs": [
+        4432406249600,
+        270532609
+      ],
+      "heights": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "turn": 0
+    },
+    "cases": [
+      {
+        "rival": "minimax2",
+        "baseline_action": "DROP:4",
+        "action": "DROP:1",
+        "actual_credits": [
+          0.0,
+          1.0
+        ],
+        "forecast_credit": {
+          "DROP:0": 0.0,
+          "DROP:1": 1.0,
+          "DROP:2": 0.0,
+          "DROP:3": 0.0,
+          "DROP:4": 0.0,
+          "DROP:5": 0.0,
+          "DROP:6": 0.5
+        }
+      },
+      {
+        "rival": "minimax4",
+        "baseline_action": "DROP:4",
+        "action": "DROP:1",
+        "actual_credits": [
+          1.0,
+          0.0
+        ],
+        "forecast_credit": {
+          "DROP:0": 0.0,
+          "DROP:1": 1.0,
+          "DROP:2": 0.0,
+          "DROP:3": 0.0,
+          "DROP:4": 0.0,
+          "DROP:5": 0.0,
+          "DROP:6": 0.5
+        }
+      }
+    ],
+    "selection": "known explanatory case after ablation; same input and forecast, not validation/extra games"
+  },
+  "primary_games": 2176,
+  "duplicate_baseline_replays": 384,
+  "audit_totals": {
+    "public_actions": 140012,
+    "public_learning_records": 335619,
+    "unchanged_cpu_decisions": 26817,
+    "fixed_persona_policy_replays": 85056,
+    "games": 960,
+    "isolated_real_interventions": 627,
+    "changed_roots": 1238,
+    "hypothetical_owner_searches": 366877,
+    "paired_hypothetical_terminal_branches": 120152,
+    "producer_checked_complete_owner_receipts": 14059,
+    "primary_games": 1216,
+    "root_interventions": 2293,
+    "candidate_without_owner_turn": 4,
+    "public_model_history_receipts": 47
+  },
+  "components": [
+    "paired terminal policy evaluator",
+    "public and owned-state future-controller adapters",
+    "searched anonymous rival priors",
+    "public rival-strength mixture",
+    "owned hypothetical observers reconstructed from witnessed public history"
+  ],
+  "kept": [
+    "fixed traits and values",
+    "existing needs/Policy/progress rules",
+    "same actual baseline CPU budgets and public information",
+    "default original controllers"
+  ],
+  "changed": "optional match-driver controller hook and new modules; no prior numerical evaluator rewritten",
+  "withheld": [
+    "broad default switch",
+    "online learning for new searched rival semantics",
+    "exact future self-consistency for recursively upgraded policy",
+    "human-level claims",
+    "affect model expansion"
+  ],
+  "limits": [
+    "isolated-root studies retain incumbent future; continuous study actual upgrades differ from predicted base future",
+    "source cohorts differ in samples and own-seed treatment; do not pool effects",
+    "few independent seed clusters despite many games",
+    "sampling uncertainty excludes model mismatch",
+    "public-history observers assume declared learning/perception; real private intent remains unknown",
+    "no new planner efficacy verified in combat/auction/resource genres"
+  ]
+}
