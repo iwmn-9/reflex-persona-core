@@ -1,0 +1,4218 @@
+{
+  "games": 384,
+  "groups": [
+    {
+      "genre": "projects",
+      "participation": "all",
+      "arms": {
+        "independent": {
+          "games": 48,
+          "mean_credit": 0.0,
+          "wins": 0,
+          "losses": 48,
+          "mean_health": 19.208333333333332,
+          "work": {
+            "changed_roots": 0,
+            "material_conflicts": 1288,
+            "ally_aids": 0,
+            "overflow": 26
+          }
+        },
+        "sum": {
+          "games": 48,
+          "mean_credit": 0.2916666666666667,
+          "wins": 28,
+          "losses": 48,
+          "mean_health": 11.791666666666666,
+          "work": {
+            "model_nodes": 104184,
+            "adopted": 400,
+            "declined": 0,
+            "changed_roots": 846,
+            "material_conflicts": 0,
+            "ally_aids": 109,
+            "overflow": 16
+          }
+        },
+        "bargain_uncertain": {
+          "games": 48,
+          "mean_credit": 0.23958333333333334,
+          "wins": 23,
+          "losses": 48,
+          "mean_health": 12.666666666666666,
+          "work": {
+            "model_nodes": 105274,
+            "adopted": 388,
+            "declined": 12,
+            "changed_roots": 784,
+            "material_conflicts": 55,
+            "ally_aids": 95,
+            "overflow": 16
+          }
+        },
+        "bargain_observed": {
+          "games": 48,
+          "mean_credit": 0.23958333333333334,
+          "wins": 23,
+          "losses": 48,
+          "mean_health": 12.666666666666666,
+          "work": {
+            "model_nodes": 105274,
+            "adopted": 388,
+            "declined": 12,
+            "changed_roots": 784,
+            "material_conflicts": 55,
+            "ally_aids": 95,
+            "overflow": 16
+          }
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "sum",
+          "reference": "independent",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "mean_credit_delta": 0.2916666666666667,
+          "seed_cluster_bootstrap95": [
+            0.2604166666666667,
+            0.32291666666666663
+          ],
+          "better": 28,
+          "same": 20,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "independent",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "mean_credit_delta": 0.23958333333333337,
+          "seed_cluster_bootstrap95": [
+            0.1875,
+            0.2916666666666667
+          ],
+          "better": 23,
+          "same": 25,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_observed",
+          "reference": "independent",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "mean_credit_delta": 0.23958333333333337,
+          "seed_cluster_bootstrap95": [
+            0.1875,
+            0.2916666666666667
+          ],
+          "better": 23,
+          "same": 25,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_observed",
+          "reference": "bargain_uncertain",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 48,
+          "worse": 0
+        }
+      ]
+    },
+    {
+      "genre": "projects",
+      "participation": "partial",
+      "arms": {
+        "independent": {
+          "games": 48,
+          "mean_credit": 0.0,
+          "wins": 0,
+          "losses": 48,
+          "mean_health": 19.208333333333332,
+          "work": {
+            "changed_roots": 0,
+            "material_conflicts": 1288,
+            "ally_aids": 0,
+            "overflow": 26
+          }
+        },
+        "sum": {
+          "games": 48,
+          "mean_credit": 0.0,
+          "wins": 0,
+          "losses": 48,
+          "mean_health": 18.666666666666668,
+          "work": {
+            "model_nodes": 101447,
+            "adopted": 400,
+            "declined": 0,
+            "changed_roots": 765,
+            "material_conflicts": 424,
+            "ally_aids": 137,
+            "overflow": 16
+          }
+        },
+        "bargain_uncertain": {
+          "games": 48,
+          "mean_credit": 0.020833333333333332,
+          "wins": 2,
+          "losses": 48,
+          "mean_health": 15.4375,
+          "work": {
+            "model_nodes": 201646,
+            "adopted": 390,
+            "declined": 10,
+            "changed_roots": 717,
+            "material_conflicts": 196,
+            "ally_aids": 116,
+            "overflow": 28
+          }
+        },
+        "bargain_observed": {
+          "games": 48,
+          "mean_credit": 0.041666666666666664,
+          "wins": 4,
+          "losses": 48,
+          "mean_health": 15.4375,
+          "work": {
+            "model_nodes": 202210,
+            "adopted": 391,
+            "declined": 9,
+            "changed_roots": 692,
+            "material_conflicts": 210,
+            "ally_aids": 116,
+            "overflow": 18
+          }
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "sum",
+          "reference": "independent",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 48,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "independent",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "mean_credit_delta": 0.020833333333333332,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.041666666666666664
+          ],
+          "better": 2,
+          "same": 46,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_observed",
+          "reference": "independent",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "mean_credit_delta": 0.041666666666666664,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.09375
+          ],
+          "better": 4,
+          "same": 44,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_observed",
+          "reference": "bargain_uncertain",
+          "paired_cases": 48,
+          "seed_clusters": 4,
+          "mean_credit_delta": 0.020833333333333332,
+          "seed_cluster_bootstrap95": [
+            -0.020833333333333332,
+            0.0625
+          ],
+          "better": 3,
+          "same": 44,
+          "worse": 1
+        }
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -14,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -14,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -14,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -13,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -14,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -14,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -14,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -13,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -17,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -17,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -17,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -13,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -11,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -11,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -19,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -15,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -15,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -15,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -11,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -11,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -17,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -19,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -19,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -16,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        2,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -11,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -11,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -17,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -12,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -11,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        3,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -11,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -10,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        2,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        3,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 10,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 10,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        0,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        1,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -10,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -10,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        2,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9760,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9760,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9760,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9760,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9761,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9761,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9761,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9761,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9762,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9762,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9762,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9762,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9763,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9763,
+        "all"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.5,
+      "health_delta": -8,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9763,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "shock",
+        3,
+        9763,
+        "partial"
+      ],
+      "mode": "bargain_observed",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    }
+  ],
+  "checks": {
+    "independent_world_transitions": 3200,
+    "actual_actions": 25600,
+    "owner_receipts": 11200,
+    "accepted_consent_receipts": 1557,
+    "public_partner_tick_replays": 400,
+    "frozen_policy_tick_replays": 3200
+  },
+  "action_profiles": [
+    {
+      "genre": "projects",
+      "mode": "bargain_observed",
+      "profile": "care",
+      "actions": {
+        "decisions": 700,
+        "train": 29,
+        "gather": 236,
+        "build": 186,
+        "rest": 146,
+        "aid": 103
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_observed",
+      "profile": "ego",
+      "actions": {
+        "decisions": 700,
+        "gather": 270,
+        "build": 237,
+        "rest": 171,
+        "aid": 13,
+        "train": 9
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_observed",
+      "profile": "growth",
+      "actions": {
+        "decisions": 700,
+        "gather": 267,
+        "build": 182,
+        "rest": 195,
+        "aid": 52,
+        "train": 4
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_observed",
+      "profile": "steady",
+      "actions": {
+        "decisions": 700,
+        "rest": 287,
+        "gather": 197,
+        "build": 162,
+        "train": 20,
+        "aid": 34
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_uncertain",
+      "profile": "care",
+      "actions": {
+        "decisions": 700,
+        "train": 33,
+        "gather": 242,
+        "build": 179,
+        "rest": 150,
+        "aid": 96
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_uncertain",
+      "profile": "ego",
+      "actions": {
+        "decisions": 700,
+        "gather": 256,
+        "build": 241,
+        "rest": 175,
+        "train": 14,
+        "aid": 14
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_uncertain",
+      "profile": "growth",
+      "actions": {
+        "decisions": 700,
+        "gather": 266,
+        "build": 174,
+        "rest": 202,
+        "train": 8,
+        "aid": 50
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_uncertain",
+      "profile": "steady",
+      "actions": {
+        "decisions": 700,
+        "rest": 300,
+        "gather": 198,
+        "build": 152,
+        "aid": 38,
+        "train": 12
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "independent",
+      "profile": "care",
+      "actions": {
+        "decisions": 700,
+        "build": 664,
+        "rest": 8,
+        "gather": 28
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "independent",
+      "profile": "ego",
+      "actions": {
+        "decisions": 700,
+        "build": 664,
+        "rest": 8,
+        "gather": 28
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "independent",
+      "profile": "growth",
+      "actions": {
+        "decisions": 700,
+        "build": 664,
+        "rest": 8,
+        "gather": 28
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "independent",
+      "profile": "steady",
+      "actions": {
+        "decisions": 700,
+        "build": 388,
+        "rest": 293,
+        "gather": 19
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum",
+      "profile": "care",
+      "actions": {
+        "decisions": 700,
+        "train": 54,
+        "gather": 215,
+        "build": 155,
+        "rest": 169,
+        "aid": 107
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum",
+      "profile": "ego",
+      "actions": {
+        "decisions": 700,
+        "gather": 239,
+        "build": 235,
+        "rest": 166,
+        "train": 28,
+        "aid": 32
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum",
+      "profile": "growth",
+      "actions": {
+        "decisions": 700,
+        "gather": 266,
+        "build": 180,
+        "rest": 178,
+        "train": 16,
+        "aid": 60
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum",
+      "profile": "steady",
+      "actions": {
+        "decisions": 700,
+        "rest": 261,
+        "gather": 168,
+        "build": 168,
+        "train": 61,
+        "aid": 42
+      }
+    }
+  ],
+  "source_snapshot_sha256": "00fb8267e8ca079baaba6cc207e77d2aea4c6f58faa23814c049e501919f13b1",
+  "trajectories_sha256": "5424e851adba83047636efe6ea39d78712632597544f61fd050c913dbabec8d3",
+  "limits": [
+    "intervals condition on frozen authored scenarios; eight seeds are not eight unknown games",
+    "modeled concessions are not measured real-life psychology or a promise of personal survival",
+    "frozen numerical policy replay is separate from independently implemented world ledgers"
+  ]
+}

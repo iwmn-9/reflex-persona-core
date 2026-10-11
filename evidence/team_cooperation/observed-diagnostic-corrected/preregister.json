@@ -1,0 +1,170 @@
+{
+  "version": "team-cooperation-v1",
+  "stage": "diagnostic",
+  "start": 9600,
+  "seeds": 2,
+  "jobs": [
+    [
+      "combat",
+      "open",
+      0,
+      9600,
+      "partial"
+    ],
+    [
+      "combat",
+      "open",
+      0,
+      9601,
+      "partial"
+    ],
+    [
+      "combat",
+      "open",
+      1,
+      9600,
+      "partial"
+    ],
+    [
+      "combat",
+      "open",
+      1,
+      9601,
+      "partial"
+    ],
+    [
+      "combat",
+      "choke",
+      0,
+      9600,
+      "partial"
+    ],
+    [
+      "combat",
+      "choke",
+      0,
+      9601,
+      "partial"
+    ],
+    [
+      "combat",
+      "choke",
+      1,
+      9600,
+      "partial"
+    ],
+    [
+      "combat",
+      "choke",
+      1,
+      9601,
+      "partial"
+    ],
+    [
+      "projects",
+      "balanced",
+      0,
+      9600,
+      "partial"
+    ],
+    [
+      "projects",
+      "balanced",
+      0,
+      9601,
+      "partial"
+    ],
+    [
+      "projects",
+      "balanced",
+      1,
+      9600,
+      "partial"
+    ],
+    [
+      "projects",
+      "balanced",
+      1,
+      9601,
+      "partial"
+    ],
+    [
+      "projects",
+      "exhausted",
+      0,
+      9600,
+      "partial"
+    ],
+    [
+      "projects",
+      "exhausted",
+      0,
+      9601,
+      "partial"
+    ],
+    [
+      "projects",
+      "exhausted",
+      1,
+      9600,
+      "partial"
+    ],
+    [
+      "projects",
+      "exhausted",
+      1,
+      9601,
+      "partial"
+    ]
+  ],
+  "modes": [
+    "independent",
+    "sum_uncertain",
+    "bargain_uncertain",
+    "sum_observed",
+    "bargain_observed"
+  ],
+  "rosters": [
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      3,
+      0,
+      1
+    ],
+    [
+      2,
+      3,
+      0
+    ],
+    [
+      1,
+      2,
+      3
+    ]
+  ],
+  "workers": 2,
+  "project_members": 3,
+  "primary": "paired actual terminal credit, separately by genre and participation; seed-cluster intervals",
+  "secondary": [
+    "fixed mixed personalities, survival/energy, actual aid, resource/movement conflicts, per-member modeled concession"
+  ],
+  "settings": {
+    "combat_horizon": 6,
+    "combat_samples": 4,
+    "combat_plans": 24,
+    "projects_horizon": 6,
+    "projects_plans": 64
+  },
+  "selection": "No personality coefficient or concession tuning on this matrix; failures retained. Confirmation uses fresh seeds.",
+  "limits": [
+    "authored public rule engines",
+    "explicit signed numeric bid exchange, not language negotiation",
+    "future teammate tactics differ from actual re-negotiation",
+    "no trained team policy or performance target",
+    "same seeds couple hit streams across arms but actual state divergence changes hit probabilities"
+  ]
+}

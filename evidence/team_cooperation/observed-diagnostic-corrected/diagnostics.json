@@ -1,0 +1,147 @@
+{
+  "games": 80,
+  "exploratory": true,
+  "source_snapshot_sha256": "00fb8267e8ca079baaba6cc207e77d2aea4c6f58faa23814c049e501919f13b1",
+  "diagnostics": [
+    {
+      "genre": "combat",
+      "participation": "partial",
+      "mode": "bargain_observed",
+      "counts": {
+        "observed_partner_actions": 63,
+        "outside_all_declared_types": 6,
+        "current_action_probability_sum": 41.085791575947404
+      },
+      "distinct_actual_world_histories": 8,
+      "first_turn_distinct_joint_choices_mean": 1.75,
+      "first_turn_roster_comparisons": 4
+    },
+    {
+      "genre": "combat",
+      "participation": "partial",
+      "mode": "bargain_uncertain",
+      "counts": {},
+      "distinct_actual_world_histories": 8,
+      "first_turn_distinct_joint_choices_mean": 1.75,
+      "first_turn_roster_comparisons": 4
+    },
+    {
+      "genre": "combat",
+      "participation": "partial",
+      "mode": "independent",
+      "counts": {},
+      "distinct_actual_world_histories": 8,
+      "first_turn_distinct_joint_choices_mean": 2.0,
+      "first_turn_roster_comparisons": 4
+    },
+    {
+      "genre": "combat",
+      "participation": "partial",
+      "mode": "sum_observed",
+      "counts": {
+        "observed_partner_actions": 58,
+        "outside_all_declared_types": 3,
+        "current_action_probability_sum": 40.89668324037361
+      },
+      "distinct_actual_world_histories": 8,
+      "first_turn_distinct_joint_choices_mean": 1.0,
+      "first_turn_roster_comparisons": 4
+    },
+    {
+      "genre": "combat",
+      "participation": "partial",
+      "mode": "sum_uncertain",
+      "counts": {},
+      "distinct_actual_world_histories": 7,
+      "first_turn_distinct_joint_choices_mean": 1.0,
+      "first_turn_roster_comparisons": 4
+    },
+    {
+      "genre": "projects",
+      "participation": "partial",
+      "mode": "bargain_observed",
+      "counts": {
+        "observed_partner_actions": 68,
+        "outside_all_declared_types": 1,
+        "current_action_probability_sum": 41.779308451151906,
+        "support_interventions": 10,
+        "positive_immediate_recipient_effect": 10,
+        "zero_immediate_recipient_effect": 0,
+        "recipient_effect_sum": 19,
+        "helper_health_or_energy_cost_sum": 27,
+        "same_turn_survival_rescues": 0
+      },
+      "distinct_actual_world_histories": 8,
+      "first_turn_distinct_joint_choices_mean": 1.75,
+      "first_turn_roster_comparisons": 4
+    },
+    {
+      "genre": "projects",
+      "participation": "partial",
+      "mode": "bargain_uncertain",
+      "counts": {
+        "support_interventions": 9,
+        "positive_immediate_recipient_effect": 9,
+        "zero_immediate_recipient_effect": 0,
+        "recipient_effect_sum": 17,
+        "helper_health_or_energy_cost_sum": 28,
+        "same_turn_survival_rescues": 0
+      },
+      "distinct_actual_world_histories": 8,
+      "first_turn_distinct_joint_choices_mean": 1.75,
+      "first_turn_roster_comparisons": 4
+    },
+    {
+      "genre": "projects",
+      "participation": "partial",
+      "mode": "independent",
+      "counts": {},
+      "distinct_actual_world_histories": 8,
+      "first_turn_distinct_joint_choices_mean": 1.75,
+      "first_turn_roster_comparisons": 4
+    },
+    {
+      "genre": "projects",
+      "participation": "partial",
+      "mode": "sum_observed",
+      "counts": {
+        "observed_partner_actions": 68,
+        "outside_all_declared_types": 0,
+        "current_action_probability_sum": 41.86255014669474,
+        "support_interventions": 10,
+        "positive_immediate_recipient_effect": 10,
+        "zero_immediate_recipient_effect": 0,
+        "recipient_effect_sum": 18,
+        "helper_health_or_energy_cost_sum": 27,
+        "same_turn_survival_rescues": 0
+      },
+      "distinct_actual_world_histories": 8,
+      "first_turn_distinct_joint_choices_mean": 1.75,
+      "first_turn_roster_comparisons": 4
+    },
+    {
+      "genre": "projects",
+      "participation": "partial",
+      "mode": "sum_uncertain",
+      "counts": {
+        "support_interventions": 11,
+        "positive_immediate_recipient_effect": 11,
+        "zero_immediate_recipient_effect": 0,
+        "recipient_effect_sum": 21,
+        "helper_health_or_energy_cost_sum": 28,
+        "same_turn_survival_rescues": 0
+      },
+      "distinct_actual_world_histories": 8,
+      "first_turn_distinct_joint_choices_mean": 1.75,
+      "first_turn_roster_comparisons": 4
+    }
+  ],
+  "examples": [],
+  "limits": [
+    "support replacement holds other current intents fixed; no long-term causal claim",
+    "first-turn diversity compares the declared roster arrangements, not all personality settings",
+    "partner type coverage is not calibrated confidence or evidence of character motives",
+    "counterfactuals are not additional games or empirical training data",
+    "resource rules have no world randomness; repeated histories are not independent discoveries"
+  ]
+}

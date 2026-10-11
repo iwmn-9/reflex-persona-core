@@ -15,10 +15,10 @@ from tools.analyze_team_cooperation import check_combat,check_projects,seal
 
 
 def summarize(root):
-    root=Path(root);evaluation=json.loads((root/'evaluation.json').read_text())
+    root=Path(root);evaluation=json.loads((root/'evaluation.json').read_text(encoding='utf-8'))
     raw=root/'trajectories.jsonl'
     assert hashlib.sha256(raw.read_bytes()).hexdigest()==evaluation['trajectories_sha256']
-    snapshot=json.loads((root/'source_snapshot.json').read_text())
+    snapshot=json.loads((root/'source_snapshot.json').read_text(encoding='utf-8'))
     for name,sha in snapshot.items():
         assert hashlib.sha256((root/'_source'/name).read_bytes()).hexdigest()==sha
     sys.path.insert(0,str(root/'_source'))

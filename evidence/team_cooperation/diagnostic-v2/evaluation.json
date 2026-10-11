@@ -1,0 +1,3676 @@
+{
+  "games": 192,
+  "groups": [
+    {
+      "genre": "combat",
+      "participation": "all",
+      "arms": {
+        "independent": {
+          "games": 8,
+          "mean_credit": 0.375,
+          "wins": 3,
+          "losses": 5,
+          "mean_health": 27.0,
+          "work": {
+            "changed_roots": 0,
+            "movement_conflicts": 32,
+            "failed_moves": 0,
+            "ally_heals": 0,
+            "self_heals": 0
+          }
+        },
+        "sum": {
+          "games": 8,
+          "mean_credit": 0.625,
+          "wins": 5,
+          "losses": 3,
+          "mean_health": 25.875,
+          "work": {
+            "model_nodes": 23713,
+            "adopted": 59,
+            "declined": 0,
+            "changed_roots": 85,
+            "movement_conflicts": 31,
+            "failed_moves": 3,
+            "ally_heals": 0,
+            "self_heals": 1
+          }
+        },
+        "consent": {
+          "games": 8,
+          "mean_credit": 0.5,
+          "wins": 4,
+          "losses": 4,
+          "mean_health": 25.875,
+          "work": {
+            "model_nodes": 24345,
+            "adopted": 47,
+            "declined": 18,
+            "changed_roots": 67,
+            "movement_conflicts": 38,
+            "failed_moves": 0,
+            "ally_heals": 1,
+            "self_heals": 1
+          }
+        },
+        "bargain": {
+          "games": 8,
+          "mean_credit": 0.75,
+          "wins": 6,
+          "losses": 2,
+          "mean_health": 25.875,
+          "work": {
+            "model_nodes": 26059,
+            "adopted": 58,
+            "declined": 11,
+            "changed_roots": 79,
+            "movement_conflicts": 36,
+            "failed_moves": 2,
+            "ally_heals": 1,
+            "self_heals": 1
+          }
+        },
+        "sum_uncertain": {
+          "games": 8,
+          "mean_credit": 0.625,
+          "wins": 5,
+          "losses": 3,
+          "mean_health": 25.875,
+          "work": {
+            "model_nodes": 23713,
+            "adopted": 59,
+            "declined": 0,
+            "changed_roots": 85,
+            "movement_conflicts": 31,
+            "failed_moves": 3,
+            "ally_heals": 0,
+            "self_heals": 1
+          }
+        },
+        "bargain_uncertain": {
+          "games": 8,
+          "mean_credit": 0.75,
+          "wins": 6,
+          "losses": 2,
+          "mean_health": 25.875,
+          "work": {
+            "model_nodes": 26059,
+            "adopted": 58,
+            "declined": 11,
+            "changed_roots": 79,
+            "movement_conflicts": 36,
+            "failed_moves": 2,
+            "ally_heals": 1,
+            "self_heals": 1
+          }
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "sum",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.25,
+          "seed_cluster_bootstrap95": [
+            0.25,
+            0.25
+          ],
+          "better": 3,
+          "same": 4,
+          "worse": 1
+        },
+        {
+          "candidate": "consent",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.125,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.25
+          ],
+          "better": 1,
+          "same": 7,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.375,
+          "seed_cluster_bootstrap95": [
+            0.25,
+            0.5
+          ],
+          "better": 3,
+          "same": 5,
+          "worse": 0
+        },
+        {
+          "candidate": "sum_uncertain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.25,
+          "seed_cluster_bootstrap95": [
+            0.25,
+            0.25
+          ],
+          "better": 3,
+          "same": 4,
+          "worse": 1
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.375,
+          "seed_cluster_bootstrap95": [
+            0.25,
+            0.5
+          ],
+          "better": 3,
+          "same": 5,
+          "worse": 0
+        },
+        {
+          "candidate": "consent",
+          "reference": "sum",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": -0.125,
+          "seed_cluster_bootstrap95": [
+            -0.25,
+            0.0
+          ],
+          "better": 1,
+          "same": 5,
+          "worse": 2
+        },
+        {
+          "candidate": "bargain",
+          "reference": "consent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.25,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.5
+          ],
+          "better": 2,
+          "same": 6,
+          "worse": 0
+        },
+        {
+          "candidate": "sum_uncertain",
+          "reference": "sum",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "bargain",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "sum_uncertain",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.125,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.25
+          ],
+          "better": 1,
+          "same": 7,
+          "worse": 0
+        }
+      ]
+    },
+    {
+      "genre": "combat",
+      "participation": "partial",
+      "arms": {
+        "independent": {
+          "games": 8,
+          "mean_credit": 0.375,
+          "wins": 3,
+          "losses": 5,
+          "mean_health": 27.0,
+          "work": {
+            "changed_roots": 0,
+            "movement_conflicts": 32,
+            "failed_moves": 0,
+            "ally_heals": 0,
+            "self_heals": 0
+          }
+        },
+        "sum": {
+          "games": 8,
+          "mean_credit": 0.5,
+          "wins": 4,
+          "losses": 4,
+          "mean_health": 27.0,
+          "work": {
+            "model_nodes": 25390,
+            "adopted": 75,
+            "declined": 0,
+            "changed_roots": 75,
+            "movement_conflicts": 52,
+            "failed_moves": 4,
+            "ally_heals": 0,
+            "self_heals": 0
+          }
+        },
+        "consent": {
+          "games": 8,
+          "mean_credit": 0.625,
+          "wins": 5,
+          "losses": 3,
+          "mean_health": 24.0,
+          "work": {
+            "model_nodes": 29536,
+            "adopted": 58,
+            "declined": 25,
+            "changed_roots": 59,
+            "movement_conflicts": 52,
+            "failed_moves": 2,
+            "ally_heals": 0,
+            "self_heals": 3
+          }
+        },
+        "bargain": {
+          "games": 8,
+          "mean_credit": 0.5,
+          "wins": 4,
+          "losses": 4,
+          "mean_health": 24.5,
+          "work": {
+            "model_nodes": 26996,
+            "adopted": 64,
+            "declined": 12,
+            "changed_roots": 70,
+            "movement_conflicts": 44,
+            "failed_moves": 0,
+            "ally_heals": 0,
+            "self_heals": 2
+          }
+        },
+        "sum_uncertain": {
+          "games": 8,
+          "mean_credit": 0.375,
+          "wins": 3,
+          "losses": 5,
+          "mean_health": 27.0,
+          "work": {
+            "model_nodes": 27652,
+            "adopted": 82,
+            "declined": 0,
+            "changed_roots": 77,
+            "movement_conflicts": 44,
+            "failed_moves": 0,
+            "ally_heals": 0,
+            "self_heals": 0
+          }
+        },
+        "bargain_uncertain": {
+          "games": 8,
+          "mean_credit": 0.375,
+          "wins": 3,
+          "losses": 5,
+          "mean_health": 27.0,
+          "work": {
+            "model_nodes": 28999,
+            "adopted": 70,
+            "declined": 15,
+            "changed_roots": 68,
+            "movement_conflicts": 48,
+            "failed_moves": 0,
+            "ally_heals": 0,
+            "self_heals": 0
+          }
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "sum",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.125,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.25
+          ],
+          "better": 2,
+          "same": 5,
+          "worse": 1
+        },
+        {
+          "candidate": "consent",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.25,
+          "seed_cluster_bootstrap95": [
+            0.25,
+            0.25
+          ],
+          "better": 2,
+          "same": 6,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.125,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.25
+          ],
+          "better": 2,
+          "same": 5,
+          "worse": 1
+        },
+        {
+          "candidate": "sum_uncertain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            -0.25,
+            0.25
+          ],
+          "better": 2,
+          "same": 4,
+          "worse": 2
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            -0.25,
+            0.25
+          ],
+          "better": 2,
+          "same": 4,
+          "worse": 2
+        },
+        {
+          "candidate": "consent",
+          "reference": "sum",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.125,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.25
+          ],
+          "better": 1,
+          "same": 7,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain",
+          "reference": "consent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": -0.125,
+          "seed_cluster_bootstrap95": [
+            -0.25,
+            0.0
+          ],
+          "better": 0,
+          "same": 7,
+          "worse": 1
+        },
+        {
+          "candidate": "sum_uncertain",
+          "reference": "sum",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": -0.125,
+          "seed_cluster_bootstrap95": [
+            -0.25,
+            0.0
+          ],
+          "better": 1,
+          "same": 5,
+          "worse": 2
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "bargain",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": -0.125,
+          "seed_cluster_bootstrap95": [
+            -0.25,
+            0.0
+          ],
+          "better": 1,
+          "same": 5,
+          "worse": 2
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "sum_uncertain",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        }
+      ]
+    },
+    {
+      "genre": "projects",
+      "participation": "all",
+      "arms": {
+        "independent": {
+          "games": 8,
+          "mean_credit": 0.0,
+          "wins": 0,
+          "losses": 8,
+          "mean_health": 16.375,
+          "work": {
+            "changed_roots": 0,
+            "material_conflicts": 157,
+            "ally_aids": 0,
+            "overflow": 0
+          }
+        },
+        "sum": {
+          "games": 8,
+          "mean_credit": 0.3125,
+          "wins": 4,
+          "losses": 7,
+          "mean_health": 8.125,
+          "work": {
+            "model_nodes": 15880,
+            "adopted": 67,
+            "declined": 0,
+            "changed_roots": 110,
+            "material_conflicts": 0,
+            "ally_aids": 20,
+            "overflow": 0
+          }
+        },
+        "consent": {
+          "games": 8,
+          "mean_credit": 0.125,
+          "wins": 2,
+          "losses": 8,
+          "mean_health": 13.875,
+          "work": {
+            "model_nodes": 15091,
+            "adopted": 41,
+            "declined": 27,
+            "changed_roots": 69,
+            "material_conflicts": 20,
+            "ally_aids": 16,
+            "overflow": 0
+          }
+        },
+        "bargain": {
+          "games": 8,
+          "mean_credit": 0.125,
+          "wins": 2,
+          "losses": 8,
+          "mean_health": 11.25,
+          "work": {
+            "model_nodes": 15427,
+            "adopted": 65,
+            "declined": 3,
+            "changed_roots": 96,
+            "material_conflicts": 3,
+            "ally_aids": 17,
+            "overflow": 0
+          }
+        },
+        "sum_uncertain": {
+          "games": 8,
+          "mean_credit": 0.3125,
+          "wins": 4,
+          "losses": 7,
+          "mean_health": 8.125,
+          "work": {
+            "model_nodes": 15880,
+            "adopted": 67,
+            "declined": 0,
+            "changed_roots": 110,
+            "material_conflicts": 0,
+            "ally_aids": 20,
+            "overflow": 0
+          }
+        },
+        "bargain_uncertain": {
+          "games": 8,
+          "mean_credit": 0.125,
+          "wins": 2,
+          "losses": 8,
+          "mean_health": 11.25,
+          "work": {
+            "model_nodes": 15427,
+            "adopted": 65,
+            "declined": 3,
+            "changed_roots": 96,
+            "material_conflicts": 3,
+            "ally_aids": 17,
+            "overflow": 0
+          }
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "sum",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.3125,
+          "seed_cluster_bootstrap95": [
+            0.25,
+            0.375
+          ],
+          "better": 4,
+          "same": 4,
+          "worse": 0
+        },
+        {
+          "candidate": "consent",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.125,
+          "seed_cluster_bootstrap95": [
+            0.125,
+            0.125
+          ],
+          "better": 2,
+          "same": 6,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.125,
+          "seed_cluster_bootstrap95": [
+            0.125,
+            0.125
+          ],
+          "better": 2,
+          "same": 6,
+          "worse": 0
+        },
+        {
+          "candidate": "sum_uncertain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.3125,
+          "seed_cluster_bootstrap95": [
+            0.25,
+            0.375
+          ],
+          "better": 4,
+          "same": 4,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.125,
+          "seed_cluster_bootstrap95": [
+            0.125,
+            0.125
+          ],
+          "better": 2,
+          "same": 6,
+          "worse": 0
+        },
+        {
+          "candidate": "consent",
+          "reference": "sum",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": -0.1875,
+          "seed_cluster_bootstrap95": [
+            -0.25,
+            -0.125
+          ],
+          "better": 0,
+          "same": 5,
+          "worse": 3
+        },
+        {
+          "candidate": "bargain",
+          "reference": "consent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "sum_uncertain",
+          "reference": "sum",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "bargain",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "sum_uncertain",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": -0.1875,
+          "seed_cluster_bootstrap95": [
+            -0.25,
+            -0.125
+          ],
+          "better": 0,
+          "same": 5,
+          "worse": 3
+        }
+      ]
+    },
+    {
+      "genre": "projects",
+      "participation": "partial",
+      "arms": {
+        "independent": {
+          "games": 8,
+          "mean_credit": 0.0,
+          "wins": 0,
+          "losses": 8,
+          "mean_health": 16.375,
+          "work": {
+            "changed_roots": 0,
+            "material_conflicts": 157,
+            "ally_aids": 0,
+            "overflow": 0
+          }
+        },
+        "sum": {
+          "games": 8,
+          "mean_credit": 0.0,
+          "wins": 0,
+          "losses": 8,
+          "mean_health": 12.125,
+          "work": {
+            "model_nodes": 5024,
+            "adopted": 68,
+            "declined": 0,
+            "changed_roots": 79,
+            "material_conflicts": 34,
+            "ally_aids": 19,
+            "overflow": 1
+          }
+        },
+        "consent": {
+          "games": 8,
+          "mean_credit": 0.0,
+          "wins": 0,
+          "losses": 8,
+          "mean_health": 13.375,
+          "work": {
+            "model_nodes": 5810,
+            "adopted": 54,
+            "declined": 14,
+            "changed_roots": 66,
+            "material_conflicts": 70,
+            "ally_aids": 9,
+            "overflow": 0
+          }
+        },
+        "bargain": {
+          "games": 8,
+          "mean_credit": 0.0,
+          "wins": 0,
+          "losses": 8,
+          "mean_health": 13.0,
+          "work": {
+            "model_nodes": 4974,
+            "adopted": 65,
+            "declined": 3,
+            "changed_roots": 77,
+            "material_conflicts": 34,
+            "ally_aids": 19,
+            "overflow": 0
+          }
+        },
+        "sum_uncertain": {
+          "games": 8,
+          "mean_credit": 0.0,
+          "wins": 0,
+          "losses": 8,
+          "mean_health": 11.375,
+          "work": {
+            "model_nodes": 11875,
+            "adopted": 68,
+            "declined": 0,
+            "changed_roots": 86,
+            "material_conflicts": 16,
+            "ally_aids": 11,
+            "overflow": 0
+          }
+        },
+        "bargain_uncertain": {
+          "games": 8,
+          "mean_credit": 0.0,
+          "wins": 0,
+          "losses": 8,
+          "mean_health": 11.125,
+          "work": {
+            "model_nodes": 11579,
+            "adopted": 67,
+            "declined": 1,
+            "changed_roots": 80,
+            "material_conflicts": 18,
+            "ally_aids": 9,
+            "overflow": 0
+          }
+        }
+      },
+      "comparisons": [
+        {
+          "candidate": "sum",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "consent",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "sum_uncertain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "independent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "consent",
+          "reference": "sum",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain",
+          "reference": "consent",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "sum_uncertain",
+          "reference": "sum",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "bargain",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        },
+        {
+          "candidate": "bargain_uncertain",
+          "reference": "sum_uncertain",
+          "paired_cases": 8,
+          "seed_clusters": 2,
+          "mean_credit_delta": 0.0,
+          "seed_cluster_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "better": 0,
+          "same": 8,
+          "worse": 0
+        }
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 3
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 5
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 3
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 5
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 6
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 6
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": -1.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 6
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 6
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": -1.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 6
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": -1.0,
+      "health_delta": 0,
+      "ticks_delta": -3
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -8,
+      "ticks_delta": 6
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": -1.0,
+      "health_delta": 0,
+      "ticks_delta": -3
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": -1.0,
+      "health_delta": 0,
+      "ticks_delta": -3
+    },
+    {
+      "identity": [
+        "combat",
+        "choke",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": -1.0,
+      "health_delta": 0,
+      "ticks_delta": -3
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 1
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 1
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 1
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 1
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 1
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 10
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 10
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 10
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 18
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 17
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 1
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 1
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 1
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 1
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 1.0,
+      "health_delta": 0,
+      "ticks_delta": 3
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 1.0,
+      "health_delta": -3,
+      "ticks_delta": 4
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 1.0,
+      "health_delta": -9,
+      "ticks_delta": 6
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": -3
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 5
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 3
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": -3
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 3
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 15
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 4
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 4
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 12
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 16
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 6
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 2
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 2
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 6
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 2
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": -1
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -13,
+      "ticks_delta": 8
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -11,
+      "ticks_delta": 8
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": -1.0,
+      "health_delta": 0,
+      "ticks_delta": -2
+    },
+    {
+      "identity": [
+        "combat",
+        "open",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": -1.0,
+      "health_delta": 0,
+      "ticks_delta": -2
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -14,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -14,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -14,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -14,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.5,
+      "health_delta": -12,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.5,
+      "health_delta": -13,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.5,
+      "health_delta": -12,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -12,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -12,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -10,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 1.0,
+      "health_delta": -18,
+      "ticks_delta": -1
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.5,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.5,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 1.0,
+      "health_delta": -18,
+      "ticks_delta": -1
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.5,
+      "health_delta": -9,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "balanced",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9600,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -7,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9601,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -4,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        0,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9600,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": 2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9600,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": 0,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9601,
+        "all"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -5,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "sum",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "consent",
+      "credit_delta": 0.0,
+      "health_delta": -2,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain",
+      "credit_delta": 0.0,
+      "health_delta": -6,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "sum_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": 1,
+      "ticks_delta": 0
+    },
+    {
+      "identity": [
+        "projects",
+        "exhausted",
+        1,
+        9601,
+        "partial"
+      ],
+      "mode": "bargain_uncertain",
+      "credit_delta": 0.0,
+      "health_delta": -3,
+      "ticks_delta": 0
+    }
+  ],
+  "checks": {
+    "independent_world_transitions": 1638,
+    "actual_actions": 9537,
+    "owner_receipts": 4053,
+    "accepted_consent_receipts": 712,
+    "frozen_policy_tick_replays": 1638
+  },
+  "action_profiles": [
+    {
+      "genre": "combat",
+      "mode": "bargain",
+      "profile": "care",
+      "actions": {
+        "decisions": 29,
+        "move": 13,
+        "guard": 6,
+        "shoot": 8,
+        "reload": 2
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "bargain",
+      "profile": "ego",
+      "actions": {
+        "decisions": 77,
+        "move": 36,
+        "shoot": 21,
+        "reload": 5,
+        "guard": 13,
+        "heal": 2
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "bargain",
+      "profile": "growth",
+      "actions": {
+        "decisions": 145,
+        "move": 64,
+        "guard": 19,
+        "shoot": 52,
+        "reload": 9,
+        "heal": 1
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "bargain",
+      "profile": "steady",
+      "actions": {
+        "decisions": 107,
+        "move": 47,
+        "shoot": 36,
+        "guard": 14,
+        "reload": 9,
+        "heal": 1
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "bargain_uncertain",
+      "profile": "care",
+      "actions": {
+        "decisions": 29,
+        "move": 13,
+        "guard": 6,
+        "shoot": 8,
+        "reload": 2
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "bargain_uncertain",
+      "profile": "ego",
+      "actions": {
+        "decisions": 80,
+        "move": 41,
+        "shoot": 23,
+        "reload": 8,
+        "guard": 7,
+        "heal": 1
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "bargain_uncertain",
+      "profile": "growth",
+      "actions": {
+        "decisions": 154,
+        "move": 75,
+        "guard": 23,
+        "shoot": 47,
+        "reload": 9
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "bargain_uncertain",
+      "profile": "steady",
+      "actions": {
+        "decisions": 114,
+        "move": 49,
+        "shoot": 40,
+        "guard": 14,
+        "reload": 10,
+        "heal": 1
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "consent",
+      "profile": "care",
+      "actions": {
+        "decisions": 23,
+        "move": 7,
+        "guard": 7,
+        "shoot": 8,
+        "reload": 1
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "consent",
+      "profile": "ego",
+      "actions": {
+        "decisions": 89,
+        "move": 38,
+        "guard": 19,
+        "shoot": 23,
+        "reload": 7,
+        "heal": 2
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "consent",
+      "profile": "growth",
+      "actions": {
+        "decisions": 148,
+        "move": 62,
+        "guard": 24,
+        "shoot": 49,
+        "reload": 11,
+        "heal": 2
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "consent",
+      "profile": "steady",
+      "actions": {
+        "decisions": 101,
+        "move": 42,
+        "shoot": 32,
+        "reload": 8,
+        "guard": 18,
+        "heal": 1
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "independent",
+      "profile": "care",
+      "actions": {
+        "decisions": 22,
+        "guard": 16,
+        "shoot": 4,
+        "move": 2
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "independent",
+      "profile": "ego",
+      "actions": {
+        "decisions": 58,
+        "move": 24,
+        "shoot": 20,
+        "reload": 8,
+        "guard": 6
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "independent",
+      "profile": "growth",
+      "actions": {
+        "decisions": 102,
+        "guard": 38,
+        "move": 24,
+        "shoot": 32,
+        "reload": 8
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "independent",
+      "profile": "steady",
+      "actions": {
+        "decisions": 73,
+        "move": 16,
+        "shoot": 29,
+        "reload": 8,
+        "guard": 20
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "sum",
+      "profile": "care",
+      "actions": {
+        "decisions": 27,
+        "move": 14,
+        "guard": 3,
+        "shoot": 8,
+        "reload": 2
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "sum",
+      "profile": "ego",
+      "actions": {
+        "decisions": 72,
+        "move": 40,
+        "shoot": 22,
+        "reload": 6,
+        "guard": 4
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "sum",
+      "profile": "growth",
+      "actions": {
+        "decisions": 134,
+        "move": 69,
+        "guard": 12,
+        "shoot": 44,
+        "reload": 8,
+        "heal": 1
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "sum",
+      "profile": "steady",
+      "actions": {
+        "decisions": 94,
+        "move": 42,
+        "shoot": 35,
+        "guard": 9,
+        "reload": 8
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "sum_uncertain",
+      "profile": "care",
+      "actions": {
+        "decisions": 27,
+        "move": 14,
+        "guard": 3,
+        "shoot": 8,
+        "reload": 2
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "sum_uncertain",
+      "profile": "ego",
+      "actions": {
+        "decisions": 68,
+        "move": 40,
+        "shoot": 20,
+        "reload": 5,
+        "guard": 3
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "sum_uncertain",
+      "profile": "growth",
+      "actions": {
+        "decisions": 141,
+        "move": 69,
+        "guard": 15,
+        "shoot": 47,
+        "reload": 9,
+        "heal": 1
+      }
+    },
+    {
+      "genre": "combat",
+      "mode": "sum_uncertain",
+      "profile": "steady",
+      "actions": {
+        "decisions": 105,
+        "move": 50,
+        "shoot": 34,
+        "guard": 15,
+        "reload": 6
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain",
+      "profile": "care",
+      "actions": {
+        "decisions": 34,
+        "train": 2,
+        "gather": 13,
+        "build": 6,
+        "aid": 5,
+        "rest": 8
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain",
+      "profile": "ego",
+      "actions": {
+        "decisions": 68,
+        "gather": 25,
+        "build": 16,
+        "rest": 11,
+        "train": 6,
+        "aid": 10
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain",
+      "profile": "growth",
+      "actions": {
+        "decisions": 136,
+        "rest": 36,
+        "gather": 53,
+        "build": 27,
+        "train": 8,
+        "aid": 12
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain",
+      "profile": "steady",
+      "actions": {
+        "decisions": 102,
+        "rest": 56,
+        "train": 8,
+        "build": 16,
+        "gather": 18,
+        "aid": 4
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_uncertain",
+      "profile": "care",
+      "actions": {
+        "decisions": 34,
+        "train": 2,
+        "gather": 13,
+        "build": 6,
+        "aid": 5,
+        "rest": 8
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_uncertain",
+      "profile": "ego",
+      "actions": {
+        "decisions": 68,
+        "gather": 32,
+        "build": 16,
+        "rest": 14,
+        "train": 3,
+        "aid": 3
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_uncertain",
+      "profile": "growth",
+      "actions": {
+        "decisions": 136,
+        "rest": 33,
+        "gather": 50,
+        "build": 33,
+        "train": 7,
+        "aid": 13
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "bargain_uncertain",
+      "profile": "steady",
+      "actions": {
+        "decisions": 102,
+        "rest": 52,
+        "gather": 29,
+        "build": 15,
+        "aid": 4,
+        "train": 2
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "consent",
+      "profile": "care",
+      "actions": {
+        "decisions": 34,
+        "train": 2,
+        "gather": 14,
+        "build": 5,
+        "aid": 5,
+        "rest": 8
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "consent",
+      "profile": "ego",
+      "actions": {
+        "decisions": 68,
+        "gather": 20,
+        "build": 20,
+        "rest": 13,
+        "train": 8,
+        "aid": 7
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "consent",
+      "profile": "growth",
+      "actions": {
+        "decisions": 136,
+        "rest": 32,
+        "gather": 41,
+        "build": 45,
+        "train": 8,
+        "aid": 10
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "consent",
+      "profile": "steady",
+      "actions": {
+        "decisions": 102,
+        "rest": 60,
+        "train": 8,
+        "build": 20,
+        "gather": 13,
+        "aid": 1
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "independent",
+      "profile": "care",
+      "actions": {
+        "decisions": 34,
+        "build": 34
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "independent",
+      "profile": "ego",
+      "actions": {
+        "decisions": 68,
+        "build": 66,
+        "gather": 2
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "independent",
+      "profile": "growth",
+      "actions": {
+        "decisions": 136,
+        "build": 130,
+        "rest": 4,
+        "gather": 2
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "independent",
+      "profile": "steady",
+      "actions": {
+        "decisions": 102,
+        "rest": 67,
+        "build": 35
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum",
+      "profile": "care",
+      "actions": {
+        "decisions": 34,
+        "train": 2,
+        "gather": 13,
+        "build": 7,
+        "rest": 8,
+        "aid": 4
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum",
+      "profile": "ego",
+      "actions": {
+        "decisions": 67,
+        "gather": 25,
+        "build": 15,
+        "rest": 11,
+        "train": 7,
+        "aid": 9
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum",
+      "profile": "growth",
+      "actions": {
+        "decisions": 135,
+        "rest": 33,
+        "gather": 50,
+        "build": 32,
+        "train": 6,
+        "aid": 14
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum",
+      "profile": "steady",
+      "actions": {
+        "decisions": 101,
+        "rest": 39,
+        "gather": 31,
+        "build": 16,
+        "train": 8,
+        "aid": 7
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum_uncertain",
+      "profile": "care",
+      "actions": {
+        "decisions": 34,
+        "train": 2,
+        "gather": 13,
+        "build": 7,
+        "rest": 8,
+        "aid": 4
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum_uncertain",
+      "profile": "ego",
+      "actions": {
+        "decisions": 67,
+        "gather": 33,
+        "build": 13,
+        "rest": 14,
+        "train": 2,
+        "aid": 5
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum_uncertain",
+      "profile": "growth",
+      "actions": {
+        "decisions": 135,
+        "rest": 32,
+        "gather": 47,
+        "build": 37,
+        "train": 6,
+        "aid": 13
+      }
+    },
+    {
+      "genre": "projects",
+      "mode": "sum_uncertain",
+      "profile": "steady",
+      "actions": {
+        "decisions": 101,
+        "rest": 36,
+        "gather": 41,
+        "build": 14,
+        "aid": 8,
+        "train": 2
+      }
+    }
+  ],
+  "source_snapshot_sha256": "c1ccb2c437de5d9f92f8b36cc2085ac1c08e06a29a1e6bb6b0b75135f928ba4e",
+  "trajectories_sha256": "57233f4d7c1d20001d039ec32d4de8df1507680fa9fb35643c1aaac5c4f2604f",
+  "limits": [
+    "intervals condition on frozen authored scenarios; eight seeds are not eight unknown games",
+    "modeled concessions are not measured real-life psychology or a promise of personal survival",
+    "frozen numerical policy replay is separate from independently implemented world ledgers"
+  ]
+}
