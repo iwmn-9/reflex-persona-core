@@ -1,7 +1,8 @@
 """Second adapter: closed-loop incumbent planning on a public spatial board.
 
 Uses the same paired-policy evaluator as the hidden-future card game. The
-declared rival hypothesis is minimax2; it is not inferred from a secret roster.
+declared rival prior can contain finite minimax2/minimax4 hypotheses; a real
+rival label or secret roster is never passed to the forecaster.
 """
 import copy
 from dataclasses import dataclass, replace
