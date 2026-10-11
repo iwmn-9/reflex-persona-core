@@ -79,7 +79,9 @@ def audit(root,e):
                 assert after['cards']==cards and after['chips']==chips and after['payments']==paid
                 assert after['seen']==b['seen'] and after['remaining']==b['remaining'] and sum(chips)+after['pot']==44
                 observed=ThanksPosition(tuple(map(tuple,b['cards'])),tuple(b['chips']),actor,b['card'],b['pot'],tuple(b['seen']),b['remaining'],tuple(b['payments']))
-                public_model_digest=digest({str(a):m.record() for a,m in enumerate(memories)})
+                eligible=label!='baseline' and not exposed and actor==r['target'] and b['remaining']<=by_label[label]['band'] and len(observed.legal())>1
+                public_model_digest=(digest({str(a):m.record() for a,m in enumerate(memories)})
+                    if eligible and by_label[label].get('rival_policy')=='public_history' else None)
                 actual_learning=[]
                 for viewer in range(4):
                     if viewer!=actor:
@@ -106,7 +108,6 @@ def audit(root,e):
                         assert replay==st['policy_rollout']['decision_record']
                     counts['fixed_persona_policy_replays']+=1
                     roll=st.get('policy_rollout')
-                    eligible=label!='baseline' and not exposed and actor==r['target'] and b['remaining']<=by_label[label]['band'] and len(observed.legal())>1
                     if eligible:
                         assert roll is not None;exposed=True
                         v=r['intervention'];assert v['tick']==t['tick'] and v['remaining']==b['remaining'] and v['public_state']==b
