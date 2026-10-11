@@ -1,6 +1,7 @@
 """Independent transition ledgers and paired, seed-cluster team comparisons."""
 import argparse
 from collections import Counter,defaultdict
+from concurrent.futures import ProcessPoolExecutor,as_completed
 import copy
 import hashlib
 import json
@@ -141,6 +142,33 @@ def summary(rows,modes):
     return groups,pairs
 
 
+def replay_game(job):
+    root,row=job;sys.path.insert(0,str(Path(root)/'_source'))
+    from reflex.core import Policy
+    from reflex.team_choice import select
+    from reflex import team_projects as tp,team_combat as tc
+    from reflex.combat import battle_from_record
+    count=0
+    for turn in row['trace']:
+        ds=[Policy(principle_priority='finite').choose(c,False) for c in turn['contexts']]
+        assert ds==turn['independent']
+        if turn['contexts'] and row['mode']!='independent':
+            prior=turn['before'];kw={'partner_model':'uncertain'} if row['mode'].endswith('_uncertain') else {}
+            if row['genre']=='combat':w=battle_from_record(prior);forecast=tc.forecast(w,tuple(turn['signed']),turn['contexts'],ds,**kw)
+            else:
+                w=tp.Workshop(**{**prior,'people':tuple(tp.Worker(**p) for p in prior['people']),
+                    'stock':tuple(prior['stock']),'points':tuple(prior['points'])})
+                forecast=tp.forecast(w,tuple(turn['signed']),turn['contexts'],ds,**kw)
+            skw={'outside':tuple(d['action_id'] for d in ds)} if row['mode'].startswith('bargain') else {}
+            selection='sum' if row['mode'].startswith('sum') else 'consent'
+            selected,n=select(turn['contexts'],forecast,group=f'{row["genre"]}-team-{row["team"]}',mode=selection,**skw)
+            assert seal(n)==seal(turn['negotiation'])
+            assert (ds if selected is None else selected)==turn['decisions']
+        else:assert ds==turn['decisions']
+        count+=1
+    return count
+
+
 def main(args):
     root=Path(args.root);assert (root/'completed.json').exists(),'incomplete study'
     sys.path.insert(0,str(root/'_source'))
@@ -176,23 +204,6 @@ def main(args):
                     assert set(n['members'])=={c['scope']['npc'] for c in turn['contexts']}
                     for member,regret in n['member_regrets'].items():assert -1e-12<=regret<=n['concessions'][member]+1e-12
                     checks['accepted_consent_receipts']+=1
-                if args.replay_policies:
-                    ds=[Policy(principle_priority='finite').choose(c,False) for c in turn['contexts']]
-                    assert ds==turn['independent']
-                    if turn['contexts'] and row['mode']!='independent':
-                        kw={'partner_model':'uncertain'} if row['mode'].endswith('_uncertain') else {}
-                        if row['genre']=='combat':w=battle_from_record(prior);forecast=tc.forecast(w,tuple(turn['signed']),turn['contexts'],ds,**kw)
-                        else:
-                            w=tp.Workshop(**{**prior,'people':tuple(tp.Worker(**p) for p in prior['people']),
-                                'stock':tuple(prior['stock']),'points':tuple(prior['points'])})
-                            forecast=tp.forecast(w,tuple(turn['signed']),turn['contexts'],ds,**kw)
-                        skw={'outside':tuple(d['action_id'] for d in ds)} if row['mode'].startswith('bargain') else {}
-                        selection='sum' if row['mode'].startswith('sum') else 'consent'
-                        selected,n=select(turn['contexts'],forecast,group=f'{row["genre"]}-team-{team}',mode=selection,**skw)
-                        assert seal(n)==seal(turn['negotiation'])
-                        assert (ds if selected is None else selected)==turn['decisions']
-                    else:assert ds==turn['decisions']
-                    checks['frozen_policy_tick_replays']+=1
                 prior=turn['after']
             assert seal(prior)==seal(row['final']);assert row['ticks']==prior['tick']
             if row['genre']=='projects':
@@ -207,6 +218,12 @@ def main(args):
                 value=1/len(ws) if team in ws else 0. if ws else .5
             assert row['win_credit']==value and row['won']==(team in ws) and row['lost']==(1-team in ws)
             rows.append(row)
+    if args.replay_policies:
+        with ProcessPoolExecutor(max_workers=args.workers) as pool:
+            tasks=[pool.submit(replay_game,(str(root),row)) for row in rows]
+            for i,task in enumerate(as_completed(tasks),1):
+                checks['frozen_policy_tick_replays']+=task.result()
+                if i%48==0 or i==len(rows):print(f'policy replay {i}/{len(rows)}',flush=True)
     modes=json.loads((root/'preregister.json').read_text())['modes']
     groups,pairs=summary(rows,modes)
     result=dict(games=len(rows),groups=groups,pairs=pairs,checks=dict(checks),
@@ -222,4 +239,5 @@ def main(args):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--replay-policies',action='store_true')
+    p.add_argument('--workers',type=int,default=4)
     main(p.parse_args())
