@@ -45,7 +45,7 @@ def can_finish(w):
     return any(can_finish(step(w,k)) for k in legal(w))
 
 
-def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0,repair_guard=False,replan_check=False):
+def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0,repair_guard=False,replan_check=False,complete_to=0):
     watched=variant in ('watch','release','observed','verified')
     pressured=variant in ('pressure','release','observed','verified')
     if variant not in ('goal','watch','pressure','release','observed','verified'):raise ValueError('known ablation required')
@@ -53,6 +53,7 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
     if repairs and not continuity:raise ValueError('repair requires an owned retained plan')
     if type(repair_guard) is not bool or repair_guard and not repairs:raise ValueError('guard requires explicit repairs')
     if type(replan_check) is not bool or replan_check and not repair_guard:raise ValueError('feedback check requires explicit paired repair guard')
+    if type(complete_to) is not int or complete_to and (not search or not horizon<=complete_to<=16):raise ValueError('explicit bounded completion search required')
     if samples and not search:raise ValueError('schedule sampling requires search')
     if validation_seeds is not None and not search:raise ValueError('proposal validation requires search')
     p=make_probe(spec,profile);w=p.start();c=p.observe(w)
@@ -75,7 +76,11 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
             saved_intention=None if intention is None else intention.record()
             if search:
                 from .continuation_search import search_forecast
-                f=search_forecast(cs[0],w,observe=p.observe,advance=p.advance,terminal=p.terminal,
+                build=search_forecast
+                if complete_to:
+                    from .completion_search import completion_forecast
+                    build=lambda cc,world,**kw:completion_forecast(cc,world,max_horizon=complete_to,**kw)
+                f=build(cs[0],w,observe=p.observe,advance=p.advance,terminal=p.terminal,
                     horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observer,
                     width=width,depth=depth,target=p.target,policy=policy,max_regret=max_regret,samples=samples,validation_seeds=validation_seeds,settlement_weight=settlement_weight,
                     retained=() if intention is None else intention.offer(cs[0],target=p.target,unit='public-turns',horizon=horizon),repairs=repairs,repair_guard=repair_guard)
@@ -88,7 +93,7 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
                         feedback=lambda a,b,k:feedback(p,a,b,k,watched,pressured),
                         progress=loop.progress,pressure=loop.pressure,previous=previous)
                     def future(cc,state,observed,retained):
-                        return search_forecast(cc,state,observe=p.observe,advance=p.advance,terminal=p.terminal,
+                        return build(cc,state,observe=p.observe,advance=p.advance,terminal=p.terminal,
                             horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observed,
                             width=width,depth=depth,target=p.target,policy=policy,max_regret=max_regret,
                             samples=samples,validation_seeds=validation_seeds,settlement_weight=settlement_weight,

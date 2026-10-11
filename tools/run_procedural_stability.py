@@ -22,8 +22,8 @@ MODES=('retained','repair','feedback')
 
 
 class Trial:
-    def __init__(self,graph,profile):
-        self.profile=profile;self.graph=graph;self.length=5;self.width=4
+    def __init__(self,graph,profile,length=5):
+        self.profile=profile;self.graph=graph;self.length=length;self.width=4
         rng=random.Random(graph);self.edges={};self.effects={}
         for stage in range(self.length):
             for node in range(self.width):
@@ -31,7 +31,7 @@ class Trial:
                     self.edges[stage,node,key]=(rng.randrange(self.width),rng.randrange(self.width))
                     self.effects[stage,node,key]=rng.choice((-.15,0.,.15))
         self.winning=frozenset(rng.sample(range(self.width),2))
-        self.name=digest([graph,profile['id']]);self.target='public-terminal-class'
+        self.name=digest([graph,length,profile['id']]);self.target='public-terminal-class'
 
     def terminal(self,state):return state[0]>=self.length
     def goal(self,state):
@@ -66,17 +66,23 @@ class Trial:
 
 
 def run_game(job):
-    graph,index,actual_seed,mode=job;p=Trial(graph,profiles()[index]);state=(0,0);c=p.observe(state)
+    graph,index,actual_seed,mode,*configuration=job
+    length=configuration[0] if configuration else 5
+    p=Trial(graph,profiles()[index],length);state=(0,0);c=p.observe(state)
     memory=c['state'];intention=PlanIntention(c);policy=Policy(principle_priority='finite');trace=[]
     def forecast(cc,world,observer,retained,guard):
-        return search_forecast(cc,world,observe=p.observe,advance=p.advance,terminal=p.terminal,
+        build=search_forecast
+        if mode.startswith('complete-'):
+            from reflex.completion_search import completion_forecast
+            build=lambda c,w,**kw:completion_forecast(c,w,max_horizon=16,**kw)
+        return build(cc,world,observe=p.observe,advance=p.advance,terminal=p.terminal,
             assess=lambda s:p.goal(s).record(),horizon=6,seeds=(100,101,102,103),validation_seeds=tuple(range(200,208)),
-            target=p.target,unit='public-turns',policy=policy,retained=retained,repairs=0 if mode=='retained' else 24,
+            target=p.target,unit='public-turns',policy=policy,retained=retained,repairs=0 if mode in ('retained','complete-retained') else 24,
             repair_guard=guard,width=2,depth=2,settlement_weight='absolute')
     while not p.terminal(state):
         c=p.observe(state,memory);remaining=intention.offer(c,target=p.target,unit='public-turns',horizon=6)
-        f=forecast(c,state,None,remaining,mode=='feedback')
-        if mode=='feedback' and f.stability_reference is not None:
+        f=forecast(c,state,None,remaining,mode in ('feedback','complete-feedback'))
+        if mode in ('feedback','complete-feedback') and f.stability_reference is not None:
             f=replace(f,replan_check=ReplanCheck(state,p.observe,p.advance,p.terminal,lambda s:p.goal(s).record(),
                 lambda cc,w,obs,tail:forecast(cc,w,obs,tail,True),(300,301,302,303)))
         saved=digest([c,intention.record()]);records,a=select([c],f,policy)
@@ -85,12 +91,12 @@ def run_game(job):
         intention.remember(c,f,a['selected_plan'],d['action_id'])
         trace.append(dict(before=before,after=state,root=d['action_id'],flow=row,goal=p.goal(state).record(),
             deliberation=a,intention=intention.record(),state=memory,persona_hash=digest([c['personality'],c['values']])))
-    return dict(graph=graph,profile_index=index,profile=profiles()[index]['id'],seed=actual_seed,mode=mode,
+    return dict(graph=graph,length=length,profile_index=index,profile=profiles()[index]['id'],seed=actual_seed,mode=mode,
         status=p.goal(state).status,goal_value=p.goal(state).value,actions=[t['root'] for t in trace],trace=trace)
 
 
 def audit_game(packet):
-    r,job=packet;p=Trial(r['graph'],profiles()[r['profile_index']]);owner=None;turns=0;checks=0;rejected=0
+    r,job=packet;p=Trial(r['graph'],profiles()[r['profile_index']],r.get('length',5));owner=None;turns=0;checks=0;rejected=0
     for t in r['trace']:
         before=tuple(t['before']);bit=hashlib.sha256(json.dumps([r['seed'],before,t['root']],separators=(',',':')).encode()).digest()[0]%2
         after=(before[0]+1,p.edges[*before,t['root']][bit]);assert list(after)==list(t['after'])
@@ -105,12 +111,13 @@ def audit_game(packet):
 
 def run(a):
     root=Path(a.root);root.mkdir(parents=True,exist_ok=True)
-    jobs=[(g,p,s,m) for g in range(12100,12100+a.graphs) for p in range(4) for s in range(18000,18000+a.seeds) for m in MODES]
+    modes=MODES if not a.completion else ('retained','complete-retained','complete-feedback')
+    jobs=[(g,p,s,m,a.length) for g in range(12100,12100+a.graphs) for p in range(4) for s in range(18000,18000+a.seeds) for m in modes]
     if (root/'preregister.json').exists():raise FileExistsError('fresh study required')
-    pre=dict(format='procedural-stability-v1',jobs=jobs,modes=MODES,
+    pre=dict(format='procedural-stability-v1',jobs=jobs,modes=modes,length=a.length,completion=a.completion,
         primary='paired actual binary terminal goal, per graph/profile and seed; whole frozen replay',
         hypothesis='common protection/one-replan check remains useful on generated public rule graphs without tuning',
-        constraints=['same five-stage graph in every arm','game-owned goal and public rules','no actual seed input to controllers',
+        constraints=['same registered length and graph in every arm','game-owned goal and public rules','no actual seed input to controllers',
             'same persona, six-step horizon, width2/depth2, eight validation branches',
             'graphs are not chosen by outcomes; no graph-specific action priorities'],
         limits=['tiny fully public authored generator, not unknown-rule understanding or a game-player benchmark',
@@ -127,7 +134,7 @@ def run(a):
 def analyze(a):
     root=Path(a.root);pre=json.loads((root/'preregister.json').read_text());jobs={digest(j):j for j in pre['jobs']}
     rows=[json.loads(s) for s in (root/'trajectories.jsonl').read_text().splitlines()]
-    indexed={digest([r['graph'],r['profile_index'],r['seed'],r['mode']]):r for r in rows};assert len(rows)==len(indexed)==len(jobs) and set(indexed)==set(jobs)
+    indexed={digest([r['graph'],r['profile_index'],r['seed'],r['mode'],r['length']]):r for r in rows};assert len(rows)==len(indexed)==len(jobs) and set(indexed)==set(jobs)
     checks=[]
     with ProcessPoolExecutor(max_workers=a.workers) as pool:
         fs=[pool.submit(audit_game,(r,jobs[k])) for k,r in indexed.items()]
@@ -137,10 +144,10 @@ def analyze(a):
     pairs=[]
     for r in rows:
         if r['mode']=='retained':continue
-        old=indexed[digest([r['graph'],r['profile_index'],r['seed'],'retained'])]
+        old=indexed[digest([r['graph'],r['profile_index'],r['seed'],'retained',r['length']])]
         pairs.append(dict(graph=r['graph'],profile=r['profile'],seed=r['seed'],mode=r['mode'],delta=r['goal_value']-old['goal_value'],actions_equal=r['actions']==old['actions']))
     result=dict(games=len(rows),full_replay=True,pairs=pairs,
-        arms={m:dict(games=sum(r['mode']==m for r in rows),wins=sum(r['mode']==m and r['status']=='success' for r in rows)) for m in MODES},
+        arms={m:dict(games=sum(r['mode']==m for r in rows),wins=sum(r['mode']==m and r['status']=='success' for r in rows)) for m in pre['modes']},
         checks={k:sum(c[k] for c in checks) for k in checks[0]},
         trajectories_sha256=hashlib.sha256((root/'trajectories.jsonl').read_bytes()).hexdigest(),
         source_snapshot_sha256=hashlib.sha256((root/'source_snapshot.json').read_bytes()).hexdigest())
@@ -149,9 +156,11 @@ def analyze(a):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--graphs',type=int,default=4)
-    p.add_argument('--seeds',type=int,default=2);p.add_argument('--workers',type=int,default=2);p.add_argument('--analyze',action='store_true');p.add_argument('--frozen',action='store_true');a=p.parse_args()
+    p.add_argument('--seeds',type=int,default=2);p.add_argument('--workers',type=int,default=2);p.add_argument('--length',type=int,default=5)
+    p.add_argument('--completion',action='store_true');p.add_argument('--analyze',action='store_true');p.add_argument('--frozen',action='store_true');a=p.parse_args()
+    if not 1<=a.graphs<=32 or not 1<=a.seeds<=32 or not 1<=a.workers<=8 or not 3<=a.length<=16:p.error('bounded graph/seed/worker/length configuration required')
     if a.analyze:analyze(a)
     elif a.frozen:run(a)
     else:
         from tools.freeze_experiment import dispatch
-        dispatch(a.root,Path(__file__).name,['--graphs',str(a.graphs),'--seeds',str(a.seeds),'--workers',str(a.workers)])
+        dispatch(a.root,Path(__file__).name,['--graphs',str(a.graphs),'--seeds',str(a.seeds),'--workers',str(a.workers),'--length',str(a.length),*(['--completion'] if a.completion else [])])
