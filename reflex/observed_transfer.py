@@ -45,11 +45,12 @@ def can_finish(w):
     return any(can_finish(step(w,k)) for k in legal(w))
 
 
-def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted'):
+def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0):
     watched=variant in ('watch','release','observed','verified')
     pressured=variant in ('pressure','release','observed','verified')
     if variant not in ('goal','watch','pressure','release','observed','verified'):raise ValueError('known ablation required')
     if continuity and not search:raise ValueError('continuity requires explicit search proposals')
+    if repairs and not continuity:raise ValueError('repair requires an owned retained plan')
     if samples and not search:raise ValueError('schedule sampling requires search')
     if validation_seeds is not None and not search:raise ValueError('proposal validation requires search')
     p=make_probe(spec,profile);w=p.start();c=p.observe(w)
@@ -75,7 +76,7 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
                 f=search_forecast(cs[0],w,observe=p.observe,advance=p.advance,terminal=p.terminal,
                     horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observer,
                     width=width,depth=depth,target=p.target,policy=policy,max_regret=max_regret,samples=samples,validation_seeds=validation_seeds,settlement_weight=settlement_weight,
-                    retained=() if intention is None else intention.offer(cs[0],target=p.target,unit='public-turns',horizon=horizon))
+                    retained=() if intention is None else intention.offer(cs[0],target=p.target,unit='public-turns',horizon=horizon),repairs=repairs)
                 assert digest(loop.record())==saved,'hypothetical state reached actual owner'
                 assert intention is None or intention.record()==saved_intention,'planning changed actual intention'
                 captured.update(forecast=f)

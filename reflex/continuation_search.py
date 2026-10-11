@@ -30,7 +30,7 @@ def _rank(c,nodes,width,horizon,unit,target,max_regret,policy,settlement_weight=
 
 
 def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0,),
-                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=(),policy=None,samples=0,validation_seeds=None,settlement_weight='discounted'):
+                    width=2,depth=2,unit='public-turns',target,max_regret=.15,observer=None,retained=(),policy=None,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0):
     """Keep a reflex baseline and <=width searched continuations per root.
 
     At each future step, expand the union of publicly legal observed action
@@ -46,10 +46,11 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
     if type(width) is not int or not 1<=width<=4 or type(depth) is not int or not 0<=depth<horizon:
         raise ValueError('bounded search width/depth required')
     if type(samples) is not int or not 0<=samples<=64:raise ValueError('bounded schedule samples required')
+    if type(repairs) is not int or not 0<=repairs<=64:raise ValueError('bounded repair bank required')
     roots=sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure'])
     if not isinstance(retained,(tuple,list)) or len(retained)>horizon or any(not isinstance(k,str) for k in retained):
         raise ValueError('bounded retained action sequence required')
-    if len(roots)*(width+1)+bool(retained)>MAX_ACTIONS:raise ValueError('proposal capacity exceeded; roots cannot be dropped')
+    if len(roots)*(width+1)+bool(retained)+repairs>MAX_ACTIONS:raise ValueError('proposal capacity exceeded; roots cannot be dropped')
     if validation_seeds is not None:
         if not isinstance(validation_seeds,(tuple,list)) or not 1<=len(validation_seeds)<=MAX_OUTCOMES or any(type(s) is not int for s in validation_seeds) or len(set(validation_seeds))!=len(validation_seeds) or set(seeds)&set(validation_seeds):
             raise ValueError('distinct independent bounded validation seeds required')
@@ -106,6 +107,32 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
                 horizon=horizon,seeds=seeds,observer=observer,roots=(retained[0],),schedule=retained[1:],record_choices=True,policy=policy)
             kept['proposal-retained']=dict(root=retained[0],schedule=list(retained[1:]),paths=paths[retained[0]],audit=audit[retained[0]])
             evaluations+=1;retained_status='reevaluated'
+    repair_audit=None
+    if repairs:
+        from .plan_repair import patches
+        sequences=[];anchors=0
+        if retained:
+            choices=[set() for _ in retained];choices[0]=set(roots)
+            # If the old root is now illegal, each legal head with the OLD tail
+            # is a public discovery anchor. No illegal root is sent to rollout.
+            anchor_roots=(retained[0],) if retained[0] in roots else tuple(roots)
+            for root in anchor_roots:
+                if root==retained[0]:rows=kept['proposal-retained']['audit']
+                else:
+                    _,audit=rollout(c,initial,observe=observe,advance=advance,terminal=terminal,assess=assess,
+                        horizon=horizon,seeds=seeds,observer=observer,roots=(root,),schedule=retained[1:],record_choices=True,policy=policy)
+                    rows=audit[root];evaluations+=1;anchors+=1
+                for row in rows:
+                    for pos in range(1,len(retained)):
+                        if len(row['choices'])>pos:choices[pos].update(row['choices'][pos])
+            sequences=[s for s in patches(retained,choices,limit=repairs) if s[0] in roots]
+            for index,sequence in enumerate(sequences):
+                paths,audit=rollout(c,initial,observe=observe,advance=advance,terminal=terminal,assess=assess,
+                    horizon=horizon,seeds=seeds,observer=observer,roots=(sequence[0],),schedule=sequence[1:],record_choices=True,policy=policy)
+                kept[f'proposal-repair-{index:03d}']=dict(root=sequence[0],schedule=list(sequence[1:]),paths=paths[sequence[0]],audit=audit[sequence[0]])
+                evaluations+=1
+        repair_audit=dict(limit=repairs,retained=list(retained),proposed=len(sequences),discovery_anchors=anchors,
+            semantics='shared single-step substitutions; fresh replacement plans remain available; no edit penalty')
     validation=None
     if validation_seeds is not None:
         # Proposal creation/pruning never sees this bank. Recheck every retained
@@ -127,6 +154,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
     if samples:metadata['continuation_search'].update(samples=samples,pilot_evaluations=pilot_evaluations,sampling=sampling,
         sampling_semantics='uniform legal full-horizon model pilots; freeze sequence then evaluate across all model seeds; no learned dynamics or actual future input')
     if validation is not None:metadata['continuation_search']['validation']=validation
+    if repair_audit is not None:metadata['continuation_search']['repair']=repair_audit
     preference=None
     if retained:
         from .plan_continuity import ArrivalPreference
@@ -134,5 +162,10 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
         if incumbent is not None:
             preference=ArrivalPreference(incumbent,{k:tuple(g['settlement_step'] if g['status']=='success' else None
                 for g in f.audit['endpoint'][k]) for k in f.roots})
+            if repairs:
+                from .plan_repair import RevisionPreference,edits
+                distances={k:edits(retained,(kept[f.audit['plans'][k]['proposal']]['root'],
+                    *kept[f.audit['plans'][k]['proposal']]['schedule'])) for k in f.roots}
+                preference=RevisionPreference(preference.incumbent,preference.arrivals,distances)
         metadata['continuation_search']['retained_status']=retained_status if incumbent is not None else 'not in current persona tier or not viable'
     return replace(f,audit=metadata,continuity=preference)

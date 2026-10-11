@@ -32,6 +32,9 @@ class ArrivalPreference:
                 keep[j]=False;audit['excluded'].append(key)
         return keep,audit
 
+    def resolve_tie(self,names,eligible,subjective,purpose,selected):
+        return selected
+
 
 class PlanIntention:
     def __init__(self,c):

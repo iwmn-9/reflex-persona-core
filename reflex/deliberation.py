@@ -76,6 +76,8 @@ def select(base,forecast,policy=None,root_allowed=None):
     continuity=None
     if forecast.continuity is not None:eligible,continuity=forecast.continuity.mask(names,eligible,purpose)
     j=int(np.argmax(np.where(eligible,regret,-np.inf)));key=names[j]
+    if forecast.continuity is not None:
+        j=forecast.continuity.resolve_tie(names,eligible,regret,purpose,j);key=names[j]
     records=replace(d,action=np.full(len(base),j,dtype=int)).records(b)
     decisions=[]
     for i,(c,root,record) in enumerate(zip(base,forecast.roots[key],records)):
