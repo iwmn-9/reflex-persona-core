@@ -16,6 +16,7 @@ def combine(forecasts,*,purpose_rule='worst'):
     first=forecasts[0]
     if not all(isinstance(f,JointForecast) for f in forecasts):raise ValueError('declared joint forecasts required')
     for f in forecasts:
+        if f.continuity is not None:raise ValueError('arrival continuity must be resolved explicitly before model aggregation')
         if (f.roots!=first.roots or f.target!=first.target or f.horizon!=first.horizon or
                 f.max_regret!=first.max_regret or len(f.contexts)!=len(first.contexts)):
             raise ValueError('identical owners, real roots, purpose target and horizon required')

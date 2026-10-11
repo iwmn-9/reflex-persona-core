@@ -121,5 +121,10 @@ class ConditionalContinuationTests(unittest.TestCase):
         for t in row['trace']:
             for c,d in zip(t['contexts'],t['decisions']):self.assertEqual(d['context_hash'],digest(c))
 
+    def test_ensemble_never_silently_discards_arrival_continuity(self):
+        w,a,cs,ds=fixture();one=tp.forecast(w,a,cs,ds,horizon=1)
+        with self.assertRaisesRegex(ValueError,'arrival continuity'):
+            combine((one,replace(one,continuity=object())))
+
 
 if __name__=='__main__':unittest.main()
