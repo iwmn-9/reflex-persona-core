@@ -5,7 +5,7 @@ or diagnostic oracle is supplied to any decision. Optional CPU workers execute
 independent episodes, not NPCs sharing one simulated world.
 """
 from concurrent.futures import ProcessPoolExecutor
-from dataclasses import asdict
+from dataclasses import asdict,replace
 from functools import lru_cache
 from pathlib import Path
 import copy
@@ -45,13 +45,14 @@ def can_finish(w):
     return any(can_finish(step(w,k)) for k in legal(w))
 
 
-def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0,repair_guard=False):
+def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,continuity=False,principle_priority='lexicographic',max_regret=.15,samples=0,validation_seeds=None,settlement_weight='discounted',repairs=0,repair_guard=False,replan_check=False):
     watched=variant in ('watch','release','observed','verified')
     pressured=variant in ('pressure','release','observed','verified')
     if variant not in ('goal','watch','pressure','release','observed','verified'):raise ValueError('known ablation required')
     if continuity and not search:raise ValueError('continuity requires explicit search proposals')
     if repairs and not continuity:raise ValueError('repair requires an owned retained plan')
     if type(repair_guard) is not bool or repair_guard and not repairs:raise ValueError('guard requires explicit repairs')
+    if type(replan_check) is not bool or replan_check and not repair_guard:raise ValueError('feedback check requires explicit paired repair guard')
     if samples and not search:raise ValueError('schedule sampling requires search')
     if validation_seeds is not None and not search:raise ValueError('proposal validation requires search')
     p=make_probe(spec,profile);w=p.start();c=p.observe(w)
@@ -81,6 +82,20 @@ def run(spec,profile,variant,seed,horizon=6,*,search=False,width=2,depth=2,conti
                 assert digest(loop.record())==saved,'hypothetical state reached actual owner'
                 assert intention is None or intention.record()==saved_intention,'planning changed actual intention'
                 captured.update(forecast=f)
+                if replan_check and f.stability_reference is not None:
+                    from .replan_check import ReplanCheck
+                    future_observer=ModelObserver(c['scope'],purpose=p.purpose,
+                        feedback=lambda a,b,k:feedback(p,a,b,k,watched,pressured),
+                        progress=loop.progress,pressure=loop.pressure,previous=previous)
+                    def future(cc,state,observed,retained):
+                        return search_forecast(cc,state,observe=p.observe,advance=p.advance,terminal=p.terminal,
+                            horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observed,
+                            width=width,depth=depth,target=p.target,policy=policy,max_regret=max_regret,
+                            samples=samples,validation_seeds=validation_seeds,settlement_weight=settlement_weight,
+                            retained=retained[:horizon],repairs=repairs,repair_guard=repair_guard)
+                    f=replace(f,replan_check=ReplanCheck(w,p.observe,p.advance,p.terminal,
+                        lambda s:p.goal(s).record(),future,(960,961,962,963) if p.genre=='combat' else (1,),future_observer,settlement_weight))
+                    captured['forecast']=f
                 return f
             paths,audit=rollout(cs[0],w,observe=p.observe,advance=p.advance,terminal=p.terminal,
                 horizon=horizon,seeds=p.seeds,assess=lambda s:p.goal(s).record(),observer=observer,policy=policy)

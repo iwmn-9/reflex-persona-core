@@ -21,10 +21,17 @@ class JointForecast:
     target: str='game-purpose'
     continuity: object=None
     stability_reference: object=None
+    replan_check: object=None
 
 
 def select(base,forecast,policy=None,root_allowed=None):
     if not isinstance(forecast,JointForecast):raise ValueError('JointForecast required')
+    if forecast.replan_check is not None:
+        from .replan_check import ReplanCheck
+        if len(base)!=1 or not isinstance(forecast.replan_check,ReplanCheck):raise ValueError('one owner feedback check required')
+        checked=forecast.replan_check.apply(base[0],replace(forecast,replan_check=None),policy or Policy(),
+            None if root_allowed is None else root_allowed[0])
+        return select(base,checked,policy,root_allowed)
     if forecast.stability_reference is not None:
         if len(base)!=1 or not isinstance(forecast.stability_reference,JointForecast) or forecast.stability_reference.stability_reference is not None:
             raise ValueError('one owner and nonrecursive reference forecast required')

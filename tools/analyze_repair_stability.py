@@ -20,7 +20,8 @@ def identity(r):return digest([r['stage'],r['spec'],r['profile_index'],r['seed']
 def audit(packet):
     r,job=packet;assert identity(r)==digest(job)
     p=make_probe(r['spec'],profiles()[r['profile_index']]);owner=None;previous=[];last=None
-    counts=dict(actual_turns=0,full_replay_turns=0,guards=0,rejections=0,unprotected=0,selected_repairs=0)
+    counts=dict(actual_turns=0,full_replay_turns=0,guards=0,rejections=0,unprotected=0,selected_repairs=0,
+        feedback_checks=0,feedback_rejections=0,feedback_unprotected=0)
     for t in r['trace']:
         before=world(r['spec']['genre'],t['before'])
         assert digest(asdict(real_step(before,t['root'],r['spec']['genre'],r['spec'],r['seed'])))==digest(t['after'])
@@ -30,11 +31,22 @@ def audit(packet):
         assert scope==owner;tick=p.observe(before)['tick'];assert intention['last_tick']==tick and (last is None or tick>last);last=tick
         a=t['deliberation'];m=a['metadata'];s=m['continuation_search'];guard=m.get('repair_stability')
         if guard:
-            assert r['mode']=='guard';counts['guards']+=1
+            assert r['mode'] in ('guard','feedback');counts['guards']+=1
             counts['rejections']+=not guard['accepted'];counts['unprotected']+=not guard['protected']
             if guard['protected']:assert guard['accepted']==all(v>=-1e-12 for v in guard['branch_deltas'])
-            if not guard['accepted']:
+            if not guard['accepted'] and not m.get('replan_check',{}).get('checked'):
                 assert m['plans'][a['selected_plan']]['proposal']==guard['reference_proposal']
+        check=m.get('replan_check')
+        if check:
+            assert r['mode']=='feedback'
+            counts['feedback_checks']+=check['checked'];counts['feedback_rejections']+=not check['accepted']
+            counts['feedback_unprotected']+=check['checked'] and not check['protected']
+            if check['checked']:
+                assert check['seeds']==([960,961,962,963] if r['spec']['genre']=='combat' else [1])
+                for branch in sum(check['branches'].values(),[]):
+                    assert len(branch['feedback_replans'])<=1
+                    for event in branch['feedback_replans']:assert event['audit']['target']==owner[2]
+            if not check['accepted']:assert m['plans'][a['selected_plan']]['proposal']==check['reference_proposal']
         for name,row in s['proposals'].items():
             if name.startswith('proposal-repair-'):
                 assert edits(previous[:6],[row['root']]+row['schedule'])==1
@@ -65,7 +77,7 @@ def analyze(a):
     groups=[];pairs=[]
     for genre in sorted({r['spec']['genre'] for r in rows}):
         arms={}
-        for mode in MODES:
+        for mode in pre.get('modes',MODES):
             rr=[r for r in rows if r['spec']['genre']==genre and r['mode']==mode]
             arms[mode]=dict(games=len(rr),mean_goal=sum(r['goal_value'] for r in rr)/len(rr),
                 wins=sum(r['status']=='success' for r in rr),losses=sum(r['status']=='failure' for r in rr),
