@@ -95,6 +95,12 @@ def main(a):
                     distinct_world_histories=len({r['distinct_world_history'] for r in rs}),by_roster=per_profile,work=dict(work),
                     selected_horizon_mean_error=float(np.mean(errors)) if errors else None,
                     selected_horizon_mae=float(np.mean(np.abs(errors))) if errors else None)
+                first_by=defaultdict(set)
+                for r in rs:first_by[(r['scenario'],r['seed'])].add(tuple(r['first']))
+                arms[mode]['first_roster_choices_mean']=float(np.mean([len(v) for v in first_by.values()]))
+                if genre=='projects':
+                    for field in ('energy','skill','prestige'):
+                        arms[mode]['mean_personal_'+field]=float(np.mean([p[field] for r in rs for p in r['final']['people'] if p['team']==r['team']]))
             comparisons=[]
             contrasts=[(m,'bargain_uncertain') for m in protocol['modes'] if m!='bargain_uncertain']
             if 'bargain_exchange' in protocol['modes'] and 'bargain_personal' in protocol['modes']:contrasts.append(('bargain_exchange','bargain_personal'))
