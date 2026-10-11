@@ -1,0 +1,93 @@
+{
+  "studies": [
+    "diagnostic",
+    "feedback-diagnostic",
+    "procedural",
+    "completion-confirmation",
+    "procedural-completion"
+  ],
+  "primary": "registered paired actual game-owned terminal goal, survival/shortage/reachability when available",
+  "selection": "no case-specific action/profile/game rule or fitted coefficient; all generated graphs retained",
+  "analysis": "whole frozen episodes and independent real transitions; mechanism counts separate from primary sample size",
+  "limits": "fixed finite conditions; deterministic repetitions not independent; no general human-level or unseen-rule proof",
+  "provenance": [
+    {
+      "study": "diagnostic",
+      "numerical_and_full_audit_commit": "202414d09684163ccf6725784fe227c034366aea",
+      "games": 48,
+      "source_snapshot_sha256": "24829062353a3005a24d5ce7b5f7f9847c4dc1a3c63a447e593684d954df83ea",
+      "trajectories_sha256": "79da6a17b081f11836b12666bc6f1e4a41edc333d723c2b3c9cb545622a933bb",
+      "shipped_numeric_source_identical": false,
+      "measured_path_identity_verified": false,
+      "final_extension": null
+    },
+    {
+      "study": "feedback-diagnostic",
+      "numerical_and_full_audit_commit": "02774772a91a9403144ce0c7b937b8d7179bc396",
+      "games": 48,
+      "source_snapshot_sha256": "2eb6facb1763448f9e0ce7b37622360dddfed517b7a26b34fa49d6863bc6fef8",
+      "trajectories_sha256": "02e9bd4ce098ab22d87f5e9fe96cf3cb6a7e9b0c7dfabee70d1ece485a14a924",
+      "shipped_numeric_source_identical": false,
+      "measured_path_identity_verified": false,
+      "final_extension": null,
+      "live_frozen_full_replay": {
+        "receipts_sha256": "12f66f95daa9766b7c93961f1ff3fee998c1096d9727d54686afddf6e185abf4",
+        "helper_sha256": "014e357fe781640cbb9c74e087a39dd40d9d9a0c263f85562ef5d24930c1780d",
+        "audit_source_sha256": "6f94d8a05cc609543e6018aa4a867d3600a84de467e69a008c5713a71ec445fe",
+        "summary_analysis_commit": "97e927cfde53fe2f0d6a448b9627b7a9cd6e1bb8"
+      }
+    },
+    {
+      "study": "procedural",
+      "numerical_and_full_audit_commit": "3217289cfd61809ade32a73fe7303693b0e4a43e",
+      "games": 96,
+      "source_snapshot_sha256": "adb62ed8aa95b6af287f1b65657a56be7c1b11563fd33874ca7efc525c4a1972",
+      "trajectories_sha256": "315be9a936ffba1881b3f09438a97fac11c01981426e7bf57fb3ebf0740bc97c",
+      "shipped_numeric_source_identical": false,
+      "measured_path_identity_verified": false,
+      "final_extension": null
+    },
+    {
+      "study": "completion-confirmation",
+      "numerical_and_full_audit_commit": "a33cc7fdfc0aead3ff2846689bdb050cc166d11a",
+      "games": 48,
+      "source_snapshot_sha256": "999bfb225d2acff5f230c60dbe1486648058a49425dc53b3d09d49ee4ef6a8ee",
+      "trajectories_sha256": "208a2139e7cb63217c444ddae168305b12d8e1b7e097094886d721836af43264",
+      "shipped_numeric_source_identical": false,
+      "measured_path_identity_verified": true,
+      "final_extension": "diagnostic-off feedback tail and longer retained intentions; the old completed study only admitted retained length <= current horizon",
+      "live_frozen_full_replay": {
+        "receipts_sha256": "93a83262ba19b50eae3055f838531643340562629dca3f28811d0fa203d36d16",
+        "helper_sha256": "014e357fe781640cbb9c74e087a39dd40d9d9a0c263f85562ef5d24930c1780d",
+        "audit_source_sha256": "96c4272bba06108ffb87b164d5b20e46e9ce3ce53030391eef062666045a87e7",
+        "summary_analysis_commit": "97e927cfde53fe2f0d6a448b9627b7a9cd6e1bb8"
+      }
+    },
+    {
+      "study": "procedural-completion",
+      "numerical_and_full_audit_commit": "0e4dcf51a8abac592688d1709d022f44bb89ee66",
+      "games": 96,
+      "source_snapshot_sha256": "bf96e90dc7908ec4d2f794b5a9f288c57851a52fa93a49538bb930cf0760e314",
+      "trajectories_sha256": "edfcb4c3d4dece538f95186d94d4af0a4f49f364d452e512437572074feb282e",
+      "shipped_numeric_source_identical": true,
+      "measured_path_identity_verified": true,
+      "final_extension": null,
+      "live_frozen_full_replay": {
+        "receipts_sha256": "f3fd79f5122b92ff9f343a4072835f1eccf96c9d3dde30a9c3b12f84cfe76668",
+        "helper_sha256": "9600449b92ee65ef9432bff6a37f574ef5df88041896365736bdd06a00f7add5",
+        "audit_source_sha256": "5830105cc041331984cc461009122f9383f5a6ac498055eec675ce4b6c53df34",
+        "summary_analysis_commit": "97e927cfde53fe2f0d6a448b9627b7a9cd6e1bb8"
+      }
+    }
+  ],
+  "invalid_excluded": [
+    {
+      "study": "procedural-completion-invalid-a33cc7f",
+      "reason": "long retained future intention exceeded the initial short search horizon; entire failed study excluded",
+      "source_snapshot_sha256": "999bfb225d2acff5f230c60dbe1486648058a49425dc53b3d09d49ee4ef6a8ee",
+      "trajectories_sha256": "3b782f43e817933ac25b17f0e099cf00fb7ebc9f2bf05c8ed0cde62cad720f6f",
+      "rerun": "procedural-completion",
+      "rerun_conditions_unchanged": true
+    }
+  ]
+}

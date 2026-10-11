@@ -1,0 +1,434 @@
+{
+  "default_enabled": false,
+  "new_core": [
+    "repair_stability",
+    "replan_check",
+    "completion_search"
+  ],
+  "modified_existing": [
+    "continuation_search",
+    "deliberation",
+    "flow_rollout",
+    "observed_transfer"
+  ],
+  "fixed_preferences_preserved": true,
+  "dependencies_added": [],
+  "new_colab_sessions": 0,
+  "purpose": "validate repairs against a baseline and future public replanning, distinguish cutoff proxy from model settlement",
+  "limits": [
+    "branchwise dominance is not actual-world safety",
+    "one future replan is not recursive exact self-prediction",
+    "extra model work, not equal-compute comparison",
+    "team-plan repair remains unconnected"
+  ],
+  "post_hoc_objective_only_public_model_diagnostic": [
+    {
+      "study": "procedural",
+      "post_hoc": true,
+      "scope": "exact objective-only upper bound under the declared public .5 DAG model; not persona utility, real seed expectation, or independent trials",
+      "controller_input": false,
+      "rows": [
+        {
+          "mode": "feedback",
+          "profile": "care",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 9,
+          "objective_only_public_model_gap_sum": 2.75,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 2.75,
+          "late_turns": 40
+        },
+        {
+          "mode": "feedback",
+          "profile": "ego",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 5,
+          "objective_only_public_model_gap_sum": 1.5,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 1.5,
+          "late_turns": 40
+        },
+        {
+          "mode": "feedback",
+          "profile": "growth",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 5,
+          "objective_only_public_model_gap_sum": 1.5,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 1.5,
+          "late_turns": 40
+        },
+        {
+          "mode": "feedback",
+          "profile": "steady",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 3,
+          "objective_only_public_model_gap_sum": 2.0,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 2.0,
+          "late_turns": 40
+        },
+        {
+          "mode": "repair",
+          "profile": "care",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 9,
+          "objective_only_public_model_gap_sum": 2.75,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 2.75,
+          "late_turns": 40
+        },
+        {
+          "mode": "repair",
+          "profile": "ego",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 5,
+          "objective_only_public_model_gap_sum": 1.5,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 1.5,
+          "late_turns": 40
+        },
+        {
+          "mode": "repair",
+          "profile": "growth",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 5,
+          "objective_only_public_model_gap_sum": 1.5,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 1.5,
+          "late_turns": 40
+        },
+        {
+          "mode": "repair",
+          "profile": "steady",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 3,
+          "objective_only_public_model_gap_sum": 2.0,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 2.0,
+          "late_turns": 40
+        },
+        {
+          "mode": "retained",
+          "profile": "care",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 9,
+          "objective_only_public_model_gap_sum": 2.75,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 2.75,
+          "late_turns": 40
+        },
+        {
+          "mode": "retained",
+          "profile": "ego",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 5,
+          "objective_only_public_model_gap_sum": 1.5,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 1.5,
+          "late_turns": 40
+        },
+        {
+          "mode": "retained",
+          "profile": "growth",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 5,
+          "objective_only_public_model_gap_sum": 1.5,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 1.5,
+          "late_turns": 40
+        },
+        {
+          "mode": "retained",
+          "profile": "steady",
+          "games": 8,
+          "turns": 40,
+          "positive_gap_turns": 3,
+          "objective_only_public_model_gap_sum": 2.0,
+          "early_gap_sum": 0.0,
+          "early_turns": 0,
+          "late_gap_sum": 2.0,
+          "late_turns": 40
+        }
+      ],
+      "independent_exhaustive_suffix_states": 96,
+      "helper_sha256": "6a641f2e3da2f698d1866fac3f019a448e2600933a1bde4df6b3058d9c1d2d7a",
+      "trajectories_sha256": "315be9a936ffba1881b3f09438a97fac11c01981426e7bf57fb3ebf0740bc97c",
+      "source_snapshot_sha256": "adb62ed8aa95b6af287f1b65657a56be7c1b11563fd33874ca7efc525c4a1972"
+    },
+    {
+      "study": "procedural-completion",
+      "post_hoc": true,
+      "scope": "exact objective-only upper bound under the declared public .5 DAG model; not persona utility, real seed expectation, or independent trials",
+      "controller_input": false,
+      "rows": [
+        {
+          "mode": "complete-feedback",
+          "profile": "care",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 0,
+          "objective_only_public_model_gap_sum": 0.0,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.0,
+          "late_turns": 48
+        },
+        {
+          "mode": "complete-feedback",
+          "profile": "ego",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 1,
+          "objective_only_public_model_gap_sum": 0.25,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.25,
+          "late_turns": 48
+        },
+        {
+          "mode": "complete-feedback",
+          "profile": "growth",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 1,
+          "objective_only_public_model_gap_sum": 0.25,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.25,
+          "late_turns": 48
+        },
+        {
+          "mode": "complete-feedback",
+          "profile": "steady",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 0,
+          "objective_only_public_model_gap_sum": 0.0,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.0,
+          "late_turns": 48
+        },
+        {
+          "mode": "complete-retained",
+          "profile": "care",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 0,
+          "objective_only_public_model_gap_sum": 0.0,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.0,
+          "late_turns": 48
+        },
+        {
+          "mode": "complete-retained",
+          "profile": "ego",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 1,
+          "objective_only_public_model_gap_sum": 0.25,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.25,
+          "late_turns": 48
+        },
+        {
+          "mode": "complete-retained",
+          "profile": "growth",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 1,
+          "objective_only_public_model_gap_sum": 0.25,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.25,
+          "late_turns": 48
+        },
+        {
+          "mode": "complete-retained",
+          "profile": "steady",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 0,
+          "objective_only_public_model_gap_sum": 0.0,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.0,
+          "late_turns": 48
+        },
+        {
+          "mode": "retained",
+          "profile": "care",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 1,
+          "objective_only_public_model_gap_sum": 0.25,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.25,
+          "late_turns": 48
+        },
+        {
+          "mode": "retained",
+          "profile": "ego",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 1,
+          "objective_only_public_model_gap_sum": 0.25,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.25,
+          "late_turns": 48
+        },
+        {
+          "mode": "retained",
+          "profile": "growth",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 1,
+          "objective_only_public_model_gap_sum": 0.25,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.25,
+          "late_turns": 48
+        },
+        {
+          "mode": "retained",
+          "profile": "steady",
+          "games": 8,
+          "turns": 96,
+          "positive_gap_turns": 0,
+          "objective_only_public_model_gap_sum": 0.0,
+          "early_gap_sum": 0.0,
+          "early_turns": 48,
+          "late_gap_sum": 0.0,
+          "late_turns": 48
+        }
+      ],
+      "independent_exhaustive_suffix_states": 96,
+      "helper_sha256": "6a641f2e3da2f698d1866fac3f019a448e2600933a1bde4df6b3058d9c1d2d7a",
+      "trajectories_sha256": "edfcb4c3d4dece538f95186d94d4af0a4f49f364d452e512437572074feb282e",
+      "source_snapshot_sha256": "bf96e90dc7908ec4d2f794b5a9f288c57851a52fa93a49538bb930cf0760e314"
+    }
+  ],
+  "mechanism_counts": {
+    "scope": "current outer decisions from all fully replayed records; nested future callbacks are not additional decisions or trials",
+    "total": {
+      "actual_turns": 2678,
+      "selected_repairs": 110,
+      "guards": 751,
+      "rejections": 11,
+      "unprotected": 0,
+      "feedback_checks": 63,
+      "feedback_rejections": 15,
+      "feedback_unprotected": 0,
+      "completion_calls": 990,
+      "completion_settled": 990,
+      "full_replay_turns": 2678
+    },
+    "by_study": {
+      "diagnostic": {
+        "actual_turns": 378,
+        "selected_repairs": 37,
+        "guards": 106,
+        "rejections": 5,
+        "unprotected": 0
+      },
+      "feedback-diagnostic": {
+        "actual_turns": 338,
+        "selected_repairs": 32,
+        "guards": 100,
+        "rejections": 4,
+        "unprotected": 0,
+        "feedback_checks": 9,
+        "feedback_rejections": 0,
+        "feedback_unprotected": 0
+      },
+      "procedural": {
+        "actual_turns": 480,
+        "selected_repairs": 2,
+        "guards": 121,
+        "rejections": 0,
+        "unprotected": 0,
+        "feedback_checks": 0,
+        "feedback_rejections": 0,
+        "feedback_unprotected": 0
+      },
+      "completion-confirmation": {
+        "actual_turns": 330,
+        "selected_repairs": 10,
+        "completion_calls": 222,
+        "completion_settled": 222,
+        "guards": 92,
+        "rejections": 1,
+        "unprotected": 0,
+        "feedback_checks": 20,
+        "feedback_rejections": 0,
+        "feedback_unprotected": 0
+      },
+      "procedural-completion": {
+        "actual_turns": 1152,
+        "selected_repairs": 29,
+        "completion_calls": 768,
+        "completion_settled": 768,
+        "guards": 332,
+        "rejections": 1,
+        "unprotected": 0,
+        "feedback_checks": 34,
+        "feedback_rejections": 15,
+        "feedback_unprotected": 0
+      }
+    },
+    "normalization": "procedural frozen audit rejections counts one-future-check rejection; paired guards are counted separately from raw authenticated metadata"
+  },
+  "paired_bare_gains_not_preserved_by_protection": [
+    {
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "steady",
+      "seed": 11020,
+      "bare_delta": 1.0,
+      "guarded_delta": 0.0
+    },
+    {
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "care",
+      "seed": 11020,
+      "bare_delta": 1.0,
+      "guarded_delta": 0.0
+    }
+  ]
+}

@@ -1,0 +1,768 @@
+{
+  "format": "repair-stability-v1",
+  "games": 48,
+  "groups": [
+    {
+      "genre": "auction",
+      "arms": {
+        "retained": {
+          "games": 4,
+          "mean_goal": 0.4634146341463415,
+          "wins": 0,
+          "losses": 0,
+          "actual_turns": 16,
+          "full_replay_turns": 16,
+          "guards": 0,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 0,
+          "feedback_checks": 0,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        },
+        "repair": {
+          "games": 4,
+          "mean_goal": 0.4634146341463415,
+          "wins": 0,
+          "losses": 0,
+          "actual_turns": 16,
+          "full_replay_turns": 16,
+          "guards": 0,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 0,
+          "feedback_checks": 0,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        },
+        "feedback": {
+          "games": 4,
+          "mean_goal": 0.4634146341463415,
+          "wins": 0,
+          "losses": 0,
+          "actual_turns": 16,
+          "full_replay_turns": 16,
+          "guards": 12,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 0,
+          "feedback_checks": 0,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        }
+      }
+    },
+    {
+      "genre": "combat",
+      "arms": {
+        "retained": {
+          "games": 4,
+          "mean_goal": 0.5,
+          "wins": 2,
+          "losses": 0,
+          "actual_turns": 32,
+          "full_replay_turns": 32,
+          "guards": 0,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 0,
+          "feedback_checks": 0,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        },
+        "repair": {
+          "games": 4,
+          "mean_goal": 1.0,
+          "wins": 4,
+          "losses": 0,
+          "actual_turns": 16,
+          "full_replay_turns": 16,
+          "guards": 0,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 5,
+          "feedback_checks": 0,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        },
+        "feedback": {
+          "games": 4,
+          "mean_goal": 0.5,
+          "wins": 2,
+          "losses": 0,
+          "actual_turns": 32,
+          "full_replay_turns": 32,
+          "guards": 26,
+          "rejections": 4,
+          "unprotected": 0,
+          "selected_repairs": 1,
+          "feedback_checks": 0,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        }
+      }
+    },
+    {
+      "genre": "delivery",
+      "arms": {
+        "retained": {
+          "games": 4,
+          "mean_goal": 1.0,
+          "wins": 4,
+          "losses": 0,
+          "actual_turns": 31,
+          "full_replay_turns": 31,
+          "guards": 0,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 0,
+          "feedback_checks": 0,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        },
+        "repair": {
+          "games": 4,
+          "mean_goal": 1.0,
+          "wins": 4,
+          "losses": 0,
+          "actual_turns": 31,
+          "full_replay_turns": 31,
+          "guards": 0,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 9,
+          "feedback_checks": 0,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        },
+        "feedback": {
+          "games": 4,
+          "mean_goal": 1.0,
+          "wins": 4,
+          "losses": 0,
+          "actual_turns": 31,
+          "full_replay_turns": 31,
+          "guards": 27,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 9,
+          "feedback_checks": 8,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        }
+      }
+    },
+    {
+      "genre": "resources",
+      "arms": {
+        "retained": {
+          "games": 4,
+          "mean_goal": 1.0,
+          "wins": 4,
+          "losses": 0,
+          "actual_turns": 39,
+          "full_replay_turns": 39,
+          "guards": 0,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 0,
+          "feedback_checks": 0,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        },
+        "repair": {
+          "games": 4,
+          "mean_goal": 1.0,
+          "wins": 4,
+          "losses": 0,
+          "actual_turns": 39,
+          "full_replay_turns": 39,
+          "guards": 0,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 4,
+          "feedback_checks": 0,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        },
+        "feedback": {
+          "games": 4,
+          "mean_goal": 1.0,
+          "wins": 4,
+          "losses": 0,
+          "actual_turns": 39,
+          "full_replay_turns": 39,
+          "guards": 35,
+          "rejections": 0,
+          "unprotected": 0,
+          "selected_repairs": 4,
+          "feedback_checks": 1,
+          "feedback_rejections": 0,
+          "feedback_unprotected": 0
+        }
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "spec": {
+        "genre": "delivery",
+        "limit": 12,
+        "capacity": 2,
+        "supply": 3
+      },
+      "profile": "growth",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": false
+    },
+    {
+      "spec": {
+        "genre": "delivery",
+        "limit": 12,
+        "capacity": 2,
+        "supply": 3
+      },
+      "profile": "growth",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": false
+    },
+    {
+      "spec": {
+        "genre": "delivery",
+        "limit": 12,
+        "capacity": 2,
+        "supply": 3
+      },
+      "profile": "steady",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": false
+    },
+    {
+      "spec": {
+        "genre": "delivery",
+        "limit": 12,
+        "capacity": 2,
+        "supply": 3
+      },
+      "profile": "steady",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": false
+    },
+    {
+      "spec": {
+        "genre": "delivery",
+        "limit": 12,
+        "capacity": 2,
+        "supply": 3
+      },
+      "profile": "care",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "delivery",
+        "limit": 12,
+        "capacity": 2,
+        "supply": 3
+      },
+      "profile": "care",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "delivery",
+        "limit": 12,
+        "capacity": 2,
+        "supply": 3
+      },
+      "profile": "ego",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "delivery",
+        "limit": 12,
+        "capacity": 2,
+        "supply": 3
+      },
+      "profile": "ego",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 16
+      },
+      "profile": "growth",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 16
+      },
+      "profile": "growth",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 16
+      },
+      "profile": "steady",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 16
+      },
+      "profile": "steady",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 16
+      },
+      "profile": "ego",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 16
+      },
+      "profile": "ego",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "auction",
+        "prizes": [
+          8,
+          15,
+          7,
+          11
+        ],
+        "budget": 12,
+        "rival_shift": true
+      },
+      "profile": "growth",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "auction",
+        "prizes": [
+          8,
+          15,
+          7,
+          11
+        ],
+        "budget": 12,
+        "rival_shift": true
+      },
+      "profile": "growth",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "auction",
+        "prizes": [
+          8,
+          15,
+          7,
+          11
+        ],
+        "budget": 12,
+        "rival_shift": true
+      },
+      "profile": "steady",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "auction",
+        "prizes": [
+          8,
+          15,
+          7,
+          11
+        ],
+        "budget": 12,
+        "rival_shift": true
+      },
+      "profile": "steady",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "auction",
+        "prizes": [
+          8,
+          15,
+          7,
+          11
+        ],
+        "budget": 12,
+        "rival_shift": true
+      },
+      "profile": "care",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "auction",
+        "prizes": [
+          8,
+          15,
+          7,
+          11
+        ],
+        "budget": 12,
+        "rival_shift": true
+      },
+      "profile": "care",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "auction",
+        "prizes": [
+          8,
+          15,
+          7,
+          11
+        ],
+        "budget": 12,
+        "rival_shift": true
+      },
+      "profile": "ego",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "auction",
+        "prizes": [
+          8,
+          15,
+          7,
+          11
+        ],
+        "budget": 12,
+        "rival_shift": true
+      },
+      "profile": "ego",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 16
+      },
+      "profile": "care",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "resources",
+        "route": "mixed",
+        "limit": 16
+      },
+      "profile": "care",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "growth",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "growth",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "steady",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 1.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": false
+    },
+    {
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "steady",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "care",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 1.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": false
+    },
+    {
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "care",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "ego",
+      "seed": 11020,
+      "mode": "repair",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    },
+    {
+      "spec": {
+        "genre": "combat",
+        "hp": 5,
+        "limit": 12,
+        "distance": 4
+      },
+      "profile": "ego",
+      "seed": 11020,
+      "mode": "feedback",
+      "delta": 0.0,
+      "survival_regression": false,
+      "shortages_delta": 0,
+      "route_loss_delta": 0,
+      "actions_equal": true
+    }
+  ],
+  "checks": {
+    "actual_turns": 338,
+    "full_replay_turns": 338,
+    "guards": 100,
+    "rejections": 4,
+    "unprotected": 0,
+    "selected_repairs": 32,
+    "feedback_checks": 9,
+    "feedback_rejections": 0,
+    "feedback_unprotected": 0
+  },
+  "full_replay": true,
+  "source_snapshot_sha256": "2eb6facb1763448f9e0ce7b37622360dddfed517b7a26b34fa49d6863bc6fef8",
+  "trajectories_sha256": "02e9bd4ce098ab22d87f5e9fe96cf3cb6a7e9b0c7dfabee70d1ece485a14a924",
+  "preregister_digest": "b19d7f924547260e50658266560c8c48b18071297a5a0cbce7c6161c1142af33",
+  "default_changed": false
+}
