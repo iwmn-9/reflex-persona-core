@@ -169,5 +169,14 @@ class TeamCooperationTests(unittest.TestCase):
         book.begin(book.scope,0,models);book.observe(book.scope,0,{2:'gather'},witnessed=True)
         self.assertEqual(book.weights(2),(.5,.5))
 
+    def test_public_partner_learning_survives_full_combat_and_resource_episodes(self):
+        from tools.run_team_cooperation import run_game
+        for genre,scenario in (('combat','open'),('projects','balanced')):
+            r=run_game((genre,scenario,0,9600,'partial','bargain_observed'))
+            self.assertTrue(r['trace'])
+            self.assertTrue(all(t['partner_learning'] is not None for t in r['trace']))
+            last=r['trace'][-1]['partner_learning']['after']
+            self.assertEqual(last['last_tick'],r['ticks']-1)
+
 
 if __name__=='__main__':unittest.main()

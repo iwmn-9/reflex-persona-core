@@ -42,6 +42,7 @@ def forecast(w,actors,contexts,decisions,horizon=6,samples=4,max_plans=24,partne
     weights=np.array((.5,.5) if partner_weights is None else partner_weights,dtype=float)
     if weights.shape!=(2,) or not np.isfinite(weights).all() or np.any(weights<0) or abs(weights.sum()-1)>1e-8:
         raise ValueError('finite normalized declared partner weights')
+    weights/=weights.sum()
     control=TacticalControl(horizon=horizon,samples=samples,max_plans=max_plans)
     plans=propose(w,actors,contexts,decisions,control)
     # Preserve the actual uncoordinated proposal as a comparison, even if its
@@ -74,7 +75,7 @@ def forecast(w,actors,contexts,decisions,horizon=6,samples=4,max_plans=24,partne
                 e=transition_effect(w,model,i,first[i],contexts[a]['facts']['chosen_route'],survival_security=True,p=probability)
                 e['objective']=value;e['values']['achievement']=value;outcomes[a].append(e)
         probability=np.tile(np.repeat(weights*2/samples,2),samples//4)
-        purpose[key]=float(np.dot(scores,probability)) if unsigned and partner_model=='uncertain' and partner_weights is not None else float(np.mean(scores))
+        purpose[key]=float(np.clip(np.dot(scores,probability),-1,1)) if unsigned and partner_model=='uncertain' and partner_weights is not None else float(np.mean(scores))
         for a,c in enumerate(future):c['actions'].append(action(key,*outcomes[a],confidence=.75))
     return JointForecast(tuple(future),roots,purpose,horizon,.15,
         dict(nodes=nodes,plans=len(roots),partner_model=partner_model,unsigned=list(unsigned),partner_weights=weights.tolist(),
