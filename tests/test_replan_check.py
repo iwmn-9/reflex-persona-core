@@ -35,6 +35,18 @@ class ReplanCheckTests(unittest.TestCase):
             horizon=2,root_state=memory)
         self.assertEqual(seen,['principle']);self.assertEqual(memory['mode'],'principle')
 
+    def test_feedback_tail_is_executed_even_without_choice_diagnostics(self):
+        c=context('tail',[action('start',effect())])
+        def observe(s,m):
+            cc=copy.deepcopy(c);cc['state']=m;cc['tick']=s
+            cc['actions']=[action(k,effect()) for k in ('a-reflex','z-plan')];return cc
+        def callback(s,cc,*args):
+            memory=copy.deepcopy(cc['state']);memory['intent_action']='z-plan'
+            return dict(root='z-plan',remaining=('z-plan',),state=memory,audit={})
+        _,traces=rollout(c,0,observe=observe,advance=lambda s,k,z:(s+1,effect()),terminal=lambda s:s>=3,
+            horizon=3,replan_once=callback)
+        self.assertEqual(traces['start'][0]['actions'],['start','z-plan','z-plan'])
+
     def test_illegal_feedback_choice_is_rejected(self):
         c=context('legal',[action('start',effect())])
         def observe(s,m):cc=copy.deepcopy(c);cc['state']=m;cc['tick']=s;return cc

@@ -89,7 +89,7 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
                     revised_memory=copy.deepcopy(response['state']);active_schedule=(key,*tail)
                     replans.append(dict(tick=cc['tick'],context_hash=digest(cc),root=key,remaining=list(tail),audit=copy.deepcopy(response['audit'])))
                 viable=[a['id'] for a in cc['actions'] if a['legal'] and not a['known_failure']]
-                if schedule or record_choices or schedule_sampler is not None:
+                if schedule or record_choices or schedule_sampler is not None or replan_once is not None:
                     permitted=viable if allowed is None or tick==0 else [k for k in viable if k in allowed]
                     choices.append(sorted(permitted))
                     if tick>0 and schedule_sampler is not None:key=schedule_sampler(tuple(sorted(permitted)),tick)
