@@ -9,7 +9,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from tools.run_team_cooperation import run_game as team_game,SCENARIOS
 from reflex.conditional_forecast import forecast
 
-MODES=('bargain_uncertain','bargain_personal','bargain_exchange')
+MODES=('bargain_uncertain','bargain_personal','bargain_exchange','bargain_robust')
 
 
 def solo_opening(genre,scenario,team,w):
@@ -25,7 +25,13 @@ def run_game(job):
     genre,scenario,roster,seed,arena,mode=job
     participation='partial' if arena=='partial' else 'all'
     continuation=mode.removeprefix('bargain_')
-    callback=None if mode=='bargain_uncertain' else lambda g,w,a,c,d:forecast(g,w,a,c,d,continuation=continuation)
+    def candidate(g,w,a,c,d):
+        if continuation!='robust':return forecast(g,w,a,c,d,continuation=continuation)
+        from reflex import team_combat as tc,team_projects as tp
+        from reflex.forecast_ensemble import combine
+        baseline=(tc if g=='combat' else tp).forecast(w,a,c,d,partner_model='uncertain')
+        return combine((baseline,forecast(g,w,a,c,d)),purpose_rule='worst')
+    callback=None if mode=='bargain_uncertain' else candidate
     row=team_game((genre,scenario,roster,seed,participation,mode),
         opening=solo_opening if arena=='solo' else None,forecast_fn=callback)
     row['arena']=arena
@@ -46,7 +52,7 @@ def run(a):
         primary='paired full-game terminal credit by adapter and solo/all/partial arena; seed-cluster intervals',
         settings=dict(outer_horizon=6,combat_samples=4,combat_root_plans=24,projects_root_plans=64,
             inner_horizon=1,inner_plans=8,unsigned_models='same hold/independent uniform hypotheses in all arms'),
-        intervention='old capability continuation vs detached fixed owners refreshing needs/routes, with optional one-turn future exchange',
+        intervention='old capability continuation vs detached fixed owners refreshing needs/routes, optional one-turn future exchange, or worst-purpose ensemble',
         constraints=['same current candidate bank, purpose/concession/personality parameters','no real future intents/private unsigned memories',
             'solo reuses exactly the world rules and owner contract, with one person on each side','no coefficient tuning after results'],
         limits=['authored public worlds, not commercial games or humans','future one-turn exchange differs from actual six-turn exchange',

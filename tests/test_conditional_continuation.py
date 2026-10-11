@@ -4,6 +4,7 @@ import unittest
 from reflex.core import Policy,digest
 from reflex.owner_continuation import OwnerBranch
 from reflex.conditional_forecast import forecast
+from reflex.forecast_ensemble import combine
 from reflex import team_projects as tp,team_combat as tc
 from reflex.laboratory import PROFILES
 from tools.run_conditional_continuation import run_game,solo_opening
@@ -96,6 +97,29 @@ class ConditionalContinuationTests(unittest.TestCase):
         w,a,cs,ds=fixture()
         for kwargs in ({'horizon':0},{'inner_plans':0},{'continuation':'oracle'}):
             with self.assertRaises(ValueError):forecast('projects',w,a,cs,ds,**kwargs)
+
+    def test_ensemble_preserves_bad_outcomes_and_worst_model_purpose(self):
+        w,a,cs,ds=fixture();one=tp.forecast(w,a,cs,ds,horizon=2,partner_model='uncertain')
+        two=forecast('projects',w,a,cs,ds,horizon=2);saved=copy.deepcopy((one,two))
+        mixed=combine((one,two))
+        for k in one.roots:self.assertEqual(mixed.purpose[k],min(one.purpose[k],two.purpose[k]))
+        for c,x,y in zip(mixed.contexts,one.contexts,two.contexts):
+            for result,left,right in zip(c['actions'],x['actions'],y['actions']):
+                self.assertAlmostEqual(sum(e['p'] for e in result['outcomes']),1.)
+                self.assertEqual(len(result['outcomes']),len(left['outcomes'])+len(right['outcomes']))
+        self.assertEqual((one,two),saved)
+
+    def test_ensemble_refuses_mismatched_targets_horizons_axes_and_roots(self):
+        w,a,cs,ds=fixture();one=tp.forecast(w,a,cs,ds,horizon=2)
+        for other in (replace(one,target='different'),replace(one,horizon=3),replace(one,roots={})):
+            with self.assertRaises(ValueError):combine((one,other))
+        changed=copy.deepcopy(one.contexts);changed[0]['values']['power']=1.
+        with self.assertRaises(ValueError):combine((one,replace(one,contexts=changed)))
+
+    def test_robust_solo_episode_retains_legal_owner_receipts(self):
+        row=run_game(('projects','balanced',0,9800,'solo','bargain_robust'))
+        for t in row['trace']:
+            for c,d in zip(t['contexts'],t['decisions']):self.assertEqual(d['context_hash'],digest(c))
 
 
 if __name__=='__main__':unittest.main()
