@@ -19,11 +19,12 @@ SCENARIOS={'combat':('open','choke','rescue'),'projects':('balanced','exhausted'
 MODES=('independent','sum','consent','bargain','sum_uncertain','bargain_uncertain','sum_observed','bargain_observed')
 
 
-def run_game(job,members=3):
+def run_game(job,members=3,*,opening=None,forecast_fn=None):
     genre,scenario,roster,seed,participation,mode=job
     from reflex import team_projects as tp,team_combat as tc
     from reflex.combat import alive,resolve,terminal,victory,battle_record,opponent
     team=seed%2;w=tc.opening(scenario,team) if genre=='combat' else tp.Workshop.start(scenario,members=members)
+    if opening is not None:w=opening(genre,scenario,team,w)
     initial=asdict(w);real_seed=int(digest(['team-cooperation-world',seed])[:16],16)
     people=alive(w,team) if genre=='combat' else tp.members(w,team)
     assigned={i:copy.deepcopy(PROFILES[ROSTERS[roster][j%3] if len(people)==3 else (j+roster)%4]) for j,i in enumerate(people)}
@@ -60,7 +61,8 @@ def run_game(job,members=3):
         if signed and mode!='independent':
             model='uncertain' if mode.endswith(('_uncertain','_observed')) else 'cooperative'
             extra={} if partner_weights is None else {'partner_weights':partner_weights}
-            t=time.perf_counter();f=(tc.forecast(w,signed,contexts,ds,partner_model=model,**extra) if genre=='combat' else tp.forecast(w,signed,contexts,ds,partner_model=model,**extra))
+            t=time.perf_counter();f=(forecast_fn(genre,w,signed,contexts,ds) if forecast_fn is not None else
+                tc.forecast(w,signed,contexts,ds,partner_model=model,**extra) if genre=='combat' else tp.forecast(w,signed,contexts,ds,partner_model=model,**extra))
             selection='sum' if mode.startswith('sum') else 'consent'
             outside=tuple(d['action_id'] for d in ds) if mode.startswith('bargain') else None
             selected,audit=select(contexts,f,group=f'{genre}-team-{team}',mode=selection,outside=outside)
