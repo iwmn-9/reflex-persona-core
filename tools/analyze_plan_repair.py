@@ -12,6 +12,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from reflex.core import digest
 from reflex.plan_repair import edits
 from reflex.laboratory import profiles
+from reflex.observed_transfer import make_probe
 from tools.run_plan_repair import run_game,MODES
 from tools.audit_observed_transfer import world,real_step
 
@@ -24,7 +25,7 @@ def completed_receipts(root,rows,path):
     assert data['complete'] is True and Path(data['root']).resolve()==root
     assert data['source_snapshot_sha256']==hashlib.sha256((root/'source_snapshot.json').read_bytes()).hexdigest()
     assert data['trajectories_sha256']==hashlib.sha256((root/'trajectories.jsonl').read_bytes()).hexdigest()
-    expected_source=hashlib.sha256((root/'_source/tools/analyze_plan_repair.py').read_bytes()).hexdigest()
+    expected_source=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     assert data['audit_source_sha256']==expected_source
     receipts={r['identity']:r for r in data['receipts']};actual={identity(r):r for r in rows}
     assert len(receipts)==len(data['receipts'])==len(rows) and set(receipts)==set(actual)
@@ -40,6 +41,7 @@ def completed_receipts(root,rows,path):
 def audit(packet):
     r,job=packet
     assert identity(r)==digest(job)
+    probe=make_probe(r['spec'],profiles()[r['profile_index']])
     independent=0;target=None;previous_remaining=[];previous_tick=None
     changes=0;patches=0;fresh=0;held=0;proposals=0;fallbacks=0;root_changed=0
     for t in r['trace']:
@@ -52,9 +54,10 @@ def audit(packet):
         if record:
             if target is None:target=record['target']
             assert record['target']==target and record['unit']=='public-turns'
-            assert record['last_tick']==before.tick
-            assert previous_tick is None or before.tick>previous_tick
-            previous_tick=before.tick
+            actual_tick=probe.observe(before)['tick']
+            assert record['last_tick']==actual_tick
+            assert previous_tick is None or actual_tick>previous_tick
+            previous_tick=actual_tick
             if previous_remaining:root_changed+=t['root']!=previous_remaining[0]
             if repair:assert repair['retained']==previous_remaining[:6]
             previous_remaining=record['remaining']
