@@ -1,0 +1,44 @@
+{
+  "baseline_distribution": [
+    0.4,
+    0.6
+  ],
+  "candidate_distribution": [
+    0.5,
+    0.7
+  ],
+  "baseline_mean": 0.5,
+  "candidate_mean": 0.6,
+  "aligned": {
+    "rule": "paired endpoint nondeterioration against separately selected unexpanded bank",
+    "protected": true,
+    "accepted": true,
+    "reference_selection": "flow-plan-000",
+    "expanded_selection": "flow-plan-000",
+    "guarantee": "sampled model dominance only; no calibrated probability or actual-result guarantee",
+    "reference_proposal": "old",
+    "expanded_proposal": "added",
+    "branch_deltas": [
+      0.09999999999999998,
+      0.09999999999999998
+    ],
+    "reason": "no modeled branch worsened"
+  },
+  "crossed": {
+    "rule": "paired endpoint nondeterioration against separately selected unexpanded bank",
+    "protected": true,
+    "accepted": false,
+    "reference_selection": "flow-plan-000",
+    "expanded_selection": "flow-plan-000",
+    "guarantee": "sampled model dominance only; no calibrated probability or actual-result guarantee",
+    "reference_proposal": "old",
+    "expanded_proposal": "added",
+    "branch_deltas": [
+      0.29999999999999993,
+      -0.09999999999999998
+    ],
+    "reason": "expanded choice worsened a paired model branch"
+  },
+  "scope": "same exact marginal outcome distributions, different declared pairing; no real-world trial",
+  "conclusion": "per-branch dominance depends on coupling, not solely return distribution or knowledge confidence"
+}

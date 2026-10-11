@@ -48,5 +48,12 @@ class ObservationCapacityProbeTests(unittest.TestCase):
                          (b['fixed_goal'],b['conditional_goal']))
         self.assertNotEqual(a['conditional_root'],b['conditional_root'])
 
+    def test_branch_guard_decision_depends_on_pairing_not_only_distribution(self):
+        from tools.probe_branch_guard import diagnostic
+        result=diagnostic()
+        self.assertTrue(result['aligned']['accepted'])
+        self.assertFalse(result['crossed']['accepted'])
+        self.assertGreater(result['candidate_mean'],result['baseline_mean'])
+
 
 if __name__=='__main__': unittest.main()
