@@ -30,6 +30,8 @@
 
 `PublicResponses.record()` / `from_record(scope, record)` は同じ所有者の仮説・最近の検証gateを復元する。別の所有者へ移植しない。凍結した初回社会試験の内部診断recordはこの後のcheckpoint形式とは異なる。予測精度の改善と、本人の目的値・主義の実成果を別に集計した結果、標準採用に足る意思決定の利益は確認できなかった。
 
+後続の入力境界検査で、旧推定器にpeer packetのseedが残り、相手の内部mode選択に影響する値を使っていたことが判明した。現在は宣言した仮説seed・未知のstate・私的opponent推定なしへ置換し、checkpointはv2。旧v1のlikelihood/gateは新推定器へ自動復元しない。初回Brier改善を純公開情報の読む能力の証明として引用せず、[訂正・修正後の比較](../evidence/choice_scale/REPORT.md)と[現在の契約](CHOICE_SCALE.md)を参照する。
+
 ## 遅れて判明した予測の採点
 
 `ForecastLedger` は選んだrootの「目的値＠宣言した本人手数」を保存し、その手数が経過した実観測で採点する。実終局が先に来た場合は吸収状態として解決する。割引した選好、即時効果、違う時点の目的値を同じ教師値へ混ぜない。

@@ -60,6 +60,9 @@ class ForecastBudget:
     max_regret: float = .15
     uncertainty_weight: float = 1.
     direct_continuation: bool = False
+    objective_gain: bool = False
+    opportunity_regret: bool = False
+    objective_unit: float = 1.
 
     def __post_init__(self):
         for h in (self.horizon,self.future_horizon,self.reference_horizon):
@@ -67,6 +70,10 @@ class ForecastBudget:
         if type(self.future_levels) is not int or not 0<=self.future_levels<=2:raise ValueError('bounded controller nesting required')
         if type(self.future_replans) is not int or not 1<=self.future_replans<=16:raise ValueError('bounded future replans required')
         if type(self.direct_continuation) is not bool:raise ValueError('explicit direct continuation mode required')
+        if type(self.objective_gain) is not bool or type(self.opportunity_regret) is not bool:raise ValueError('explicit valuation modes required')
+        if isinstance(self.objective_unit,bool) or not math.isfinite(self.objective_unit) or not .125<=self.objective_unit<=1.:
+            raise ValueError('declared bounded objective unit required')
+        if self.opportunity_regret and self.max_regret>1.:raise ValueError('bounded opportunity fraction required')
         for bank in (self.seeds,self.future_seeds,self.validation_seeds,self.extra_validation_seeds,self.audit_seeds):
             if not isinstance(bank,tuple) or len(bank)>MAX_OUTCOMES or any(type(s) is not int for s in bank) or len(set(bank))!=len(bank):
                 raise ValueError('distinct bounded scenario bank required')
@@ -125,7 +132,10 @@ def checked_choice(c,candidate,reference,validation,policy,*,uncertainty_weight=
         if len(goals[new])!=len(goals[old]):raise ValueError('aligned scenario count required')
         # These branches were evaluated in one bank, with equal paired weights.
         confidence={a['id']:a['confidence'] for a in c['actions']}
-        value=lambda g,k:g['value']*(g['positive_confidence']*confidence[roots[k]] if g['value']>0 else 1.)
+        def value(g,k):
+            if 'reference_origin' in g:
+                return g['value'] if g['gain_confidence']==1. else g['reference_origin']+(g['value']-g['reference_origin'])*g['gain_confidence']
+            return g['value']*(g['positive_confidence']*confidence[roots[k]] if g['value']>0 else 1.)
         delta=np.array([value(a,new)-value(b,old) for a,b in zip(goals[new],goals[old])])
         mean=float(delta.mean());se=float(delta.std(ddof=1)/math.sqrt(len(delta))) if len(delta)>1 else 0.
         best=max(validation.purpose[k] for k in validation.roots if allowed is None or roots[k] in allowed)
@@ -183,8 +193,12 @@ class ForecastController:
         self.work+=sum(len(t['actions']) for rows in audit.values() for t in rows)
         local=copy.deepcopy(c)
         if roots is not None:local['actions']=[a for a in local['actions'] if a['id'] in roots]
+        scale={} if not (budget.objective_gain or budget.opportunity_regret or budget.objective_unit!=1.) else dict(
+            objective_origin=Goal(**self.assess(initial)) if budget.objective_gain else None,
+            objective_unit=budget.objective_unit,opportunity_regret=budget.opportunity_regret,
+            competence_support=actor._prepare(request)['progress_allowed'])
         f=goal_forecast(local,paths,audit,horizon=budget.horizon,unit=self.unit,target=self.target,
-            max_regret=budget.max_regret,policy=actor.policy,settlement_weight='absolute')
+            max_regret=budget.max_regret,policy=actor.policy,settlement_weight='absolute',**scale)
         f=replace(f,audit=dict(f.audit,scenario_seeds=list(budget.seeds),future_levels=budget.future_levels,
             future_horizon=budget.future_horizon,future_seeds=list(budget.future_seeds)))
         if digest(actor.record())!=saved:raise AssertionError('hypothetical controller mutated real owner')
@@ -249,7 +263,7 @@ class ForecastController:
                 check=f.audit['forecast_check']
                 if (budget.extra_validation_seeds and check['reason']=='uncertain candidate gain; retain planning reference'
                     and check.get('candidate_in_corridor') and
-                    check['mean_delta']+budget.uncertainty_weight*check['standard_error']>=-budget.max_regret-1e-12):
+                    check['mean_delta']+budget.uncertainty_weight*check['standard_error']>=-validated.max_regret-1e-12):
                     # Add scenarios only when uncertainty can change this
                     # frozen comparison. No new candidates or game weights.
                     eb=replace(vb,seeds=budget.validation_seeds+budget.extra_validation_seeds)

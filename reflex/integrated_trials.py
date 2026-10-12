@@ -96,7 +96,9 @@ def play(case,profile,seed,arm,*,horizon=2):
         actions=[t['root'] for t in trace],learned_entries=len(actor.memory.entries),trace=trace,action_replay_verified=True)
 
 
-def life(seed,domain,layout,arm,*,turns=36,horizon=2,peer_model_factory=None,world_setup=None):
+def life(seed,domain,layout,arm,*,turns=36,horizon=2,peer_model_factory=None,world_setup=None,objective_gain=False,opportunity_regret=False,forecast_cache=None):
+    if type(objective_gain) is not bool or type(opportunity_regret) is not bool:raise ValueError('explicit valuation modes required')
+    if forecast_cache is not None and not isinstance(forecast_cache,dict):raise ValueError('explicit paired-experiment cache required')
     if arm not in ('reflex','returns','owned'):raise ValueError('declared life comparison required')
     from .encounters import EncounterWorld
     from .social_withdrawal import WithdrawalSocialMemory
@@ -177,13 +179,32 @@ def life(seed,domain,layout,arm,*,turns=36,horizon=2,peer_model_factory=None,wor
                         assert selected==key
                         return ModelFeedback(None,social_events=social)
                     observer=ActorModel(actor,root_request=req,request_for=request_future,feedback=feedback)
-                paths,audit=rollout(base[0],projected,observe=observe,advance=advance,
-                    terminal=lambda q:q.tick>=turns or q.health[own]<=0,horizon=horizon,seeds=(401,402),
-                    assess=lambda q:goal(q,own).record(),observer=observer,policy=p)
+                cached=None;cache_key=None
+                if forecast_cache is not None:
+                    # The complete model inputs, including owned memory and
+                    # peer posterior, are equal before sharing scenario work.
+                    # Valuation mode changes only the scoring AFTER rollout.
+                    public=dict(vars(projected));public['history']={a:list(h) for a,h in projected.history.items()}
+                    if '_peer_model' in public:public['_peer_model']=public['_peer_model'].record()
+                    cache_key=digest(['life-paired-rollout-v1',public,actor.record(),base[0],arm,turns,horizon])
+                    cached=forecast_cache.get(cache_key)
+                if cached is None:
+                    paths,audit=rollout(base[0],projected,observe=observe,advance=advance,
+                        terminal=lambda q:q.tick>=turns or q.health[own]<=0,horizon=horizon,seeds=(401,402),
+                        assess=lambda q:goal(q,own).record(),observer=observer,policy=p)
+                    compact_audit=compact(audit)
+                    if forecast_cache is not None:
+                        scoring_audit={k:[{key:copy.deepcopy(row[key]) for key in ('assessment','actions','terminal')} for row in rows] for k,rows in audit.items()}
+                        if len(forecast_cache)>=512:forecast_cache.clear()
+                        forecast_cache[cache_key]=copy.deepcopy((paths,scoring_audit,compact_audit))
+                else:paths,audit,compact_audit=copy.deepcopy(cached)
                 if peer_model_factory is not None:assert digest(peer_models[own].record())==peer_saved
-                branch_reports[own]=compact(audit)
+                branch_reports[own]=compact_audit
+                valuation={} if not (objective_gain or opportunity_regret) else dict(
+                    objective_origin=goal(projected,own) if objective_gain else None,opportunity_regret=opportunity_regret,
+                    competence_support=actor._prepare(req)['progress_allowed'])
                 return goal_forecast(base[0],paths,audit,horizon=horizon,unit='ticks',target='resource-and-survival',
-                    policy=p,settlement_weight='absolute')
+                    policy=p,settlement_weight='absolute',**valuation)
             result=DecisionLoop.decide_batch([(actor,req)],False,None if arm=='reflex' or world.health[own]<=0 else personal_planner)[0]
             results.append(result)
         # No peer is advanced until all current intentions have been selected.

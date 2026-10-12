@@ -45,5 +45,21 @@ class PublicResponseTests(unittest.TestCase):
         scope=copy.deepcopy(scope);scope['npc']='other'
         with self.assertRaises(ValueError):PublicResponses.from_record(scope,checkpoint)
 
+    def test_private_seed_mode_intent_and_reading_never_change_public_predictions(self):
+        c=context('private-fields',[action('need',effect(needs={'physiology':.5})),action('value',effect(values={'benevolence':.4}))],
+            needs={k:.5 if k=='physiology' else 0. for k in NEEDS},mode=None);c['scope']['npc']='peer'
+        bank=PublicResponses(public()['scope'],PROFILES);baseline=bank.models(c);saved=copy.deepcopy(c)
+        for seed in (0,1,4400,7200):
+            for mode in ('need','principle'):
+                cc=copy.deepcopy(c);cc['seed']=seed;cc['state'].update(primary_need='physiology',mode=mode,mode_urgency=.5,intent_action='value',age=99)
+                cc['opponent']=dict(confidence=1.,uncertainty=0.,evidence_ids=['options'],threatened=True,maintains_advantage=False,deltas={'need':-1.,'value':1.})
+                self.assertEqual(bank.models(cc),baseline)
+        self.assertEqual(c,saved)
+
+    def test_old_seed_exposed_estimator_checkpoint_cannot_reuse_its_gate(self):
+        bank=PublicResponses(public()['scope'],PROFILES);checkpoint=bank.record();checkpoint['format']='public-response-v1'
+        with self.assertRaises(ValueError):PublicResponses.from_record(public()['scope'],checkpoint)
+        with self.assertRaises(ValueError):PublicResponses(public()['scope'],PROFILES,model_seeds=(1,1))
+
 
 if __name__=='__main__':unittest.main()

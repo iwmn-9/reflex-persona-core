@@ -44,6 +44,7 @@ def play(case,profile,seed,arm,*,budgets=None):
             check=f.audit.get('forecast_check'),forecast_scores=scores,modeled=compact({key:audit[key]})[key],
             adaptive=f.audit.get('adaptive_validation'),
             challenger=f.audit.get('purpose_challenger'),
+            valuation={k:f.audit[k] for k in ('objective_basis','purpose_band') if k in f.audit},
             model_steps=controller.work-work,owner_before=saved,owner_after=digest(actor.record())))
         if len(trace)>1000:raise AssertionError('whole episode failed to settle')
     check=b.start()

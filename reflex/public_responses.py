@@ -14,9 +14,12 @@ from .prediction_support import gate_record,restored_gate
 
 
 class PublicResponses:
-    def __init__(self,scope,profiles,*,capacity=64):
+    def __init__(self,scope,profiles,*,capacity=64,model_seeds=(271,811)):
         if type(capacity) is not int or not 1<=capacity<=1024:raise ValueError('bounded peer memory required')
         if not isinstance(profiles,(tuple,list)) or not 2<=len(profiles)<=15:raise ValueError('finite declared profile hypotheses required')
+        if not isinstance(model_seeds,tuple) or not 1<=len(model_seeds)<=8 or len(set(model_seeds))!=len(model_seeds) or any(type(s) is not int or not 0<=s<2**63 for s in model_seeds):
+            raise ValueError('bounded declared hypothesis seeds required')
+        self.model_seeds=model_seeds
         self.owner=digest(scope);self.capacity=capacity;self.profiles=copy.deepcopy(tuple(profiles))
         names=tuple(p['id'] for p in profiles)
         if len(set(names))!=len(names) or 'neutral' in names:raise ValueError('distinct declared hypotheses required')
@@ -28,12 +31,20 @@ class PublicResponses:
         self.names=('neutral',*names);self.trackers=OrderedDict();self.gates=EvidenceGate(capacity);self.policy=Policy(principle_priority='finite')
 
     def models(self,public):
+        public=copy.deepcopy(public)
+        # Core packets contain fields for their OWN executor. Those fields are
+        # not public evidence about a counterpart's hidden random generator,
+        # current intent/mode, or privately inferred opponent response.
+        public['seed']=self.model_seeds[0];public['opponent']=None
+        public['state']=dict(primary_need=None,mode=None,intent_action=None,age=0,mode_urgency=0.)
         compile_batch([public]);legal={a['id'] for a in public['actions'] if a['legal'] and not a['known_failure']}
         templates=(dict(id='neutral',traits=(.5,)*5,values={}),*self.profiles);result={}
         for profile in templates:
             c=copy.deepcopy(public);c.update(personality=dict(zip(TRAITS,profile['traits'])),values={k:profile['values'].get(k,0.) for k in VALUES})
-            chosen=self.policy.choose(c,False)['action_id']
-            result[profile['id']]={k:float(k==chosen) for k in sorted(legal)}
+            probs={k:0. for k in sorted(legal)}
+            for seed in self.model_seeds:
+                c['seed']=seed;chosen=self.policy.choose(c,False)['action_id'];probs[chosen]+=1/len(self.model_seeds)
+            result[profile['id']]=probs
         return result
 
     def forecast(self,peer,public):
@@ -58,13 +69,13 @@ class PublicResponses:
         return dict(update=update,score=score,active=self.gates.accepted(peer))
 
     def record(self):
-        return dict(format='public-response-v1',owner=self.owner,capacity=self.capacity,profiles=copy.deepcopy(self.profiles),
+        return dict(format='public-response-v2',owner=self.owner,capacity=self.capacity,profiles=copy.deepcopy(self.profiles),model_seeds=list(self.model_seeds),
             peers=[dict(peer=k,tracker=v.record()) for k,v in self.trackers.items()],gates=gate_record(self.gates))
 
     @classmethod
     def from_record(cls,scope,r):
-        if r['format']!='public-response-v1' or r['owner']!=digest(scope):raise ValueError('same owner response checkpoint required')
-        bank=cls(scope,r['profiles'],capacity=r['capacity'])
+        if r['format']!='public-response-v2' or r['owner']!=digest(scope):raise ValueError('same owner and public-only estimator checkpoint required')
+        bank=cls(scope,r['profiles'],capacity=r['capacity'],model_seeds=tuple(r['model_seeds']))
         if not isinstance(r['peers'],list) or len(r['peers'])>bank.capacity:raise ValueError('bounded peer checkpoint required')
         for row in r['peers']:
             peer=row['peer'];identifier(peer)
