@@ -31,8 +31,15 @@ def main():
             adaptive_changed.append(dict(game=x['case']['game'],profile=x['profile'],seed=x['seed'],
                 checked=x['goal'],adaptive=y['goal']))
     labels=[c['name'] for c in summary['cohorts']]+['public_peer_reliability_20261012']
-    bridge=[]
+    bridge=[];receipts=[]
     for label in labels:
+        folder=v/label
+        registration=json.loads((folder/'preregister.json').read_text(encoding='utf-8'))
+        for relative,expected in registration['source_hashes'].items():
+            if hashlib.sha256((folder/'source'/relative).read_bytes()).hexdigest()!=expected:
+                raise ValueError('frozen source changed: '+label+'/'+relative)
+        receipts.append(dict(cohort=label,files_sha256={name:hashlib.sha256((folder/name).read_bytes()).hexdigest()
+            for name in ('preregister.json','evaluation.json','trajectories.jsonl')},frozen_source_files=len(registration['source_hashes'])))
         source=v/label/'source/reflex';changes=[]
         for p in sorted(source.glob('*.py')):
             current=ROOT/'reflex'/p.name
@@ -42,7 +49,7 @@ def main():
                     ast_equal=ast.dump(ast.parse(p.read_text(encoding='utf-8-sig')))==ast.dump(ast.parse(current.read_text(encoding='utf-8-sig')))))
         bridge.append(dict(cohort=label,changed_reflex_files=changes))
     manifest=dict(current_reflex_sha256={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT/'reflex').glob('*.py'))},
-        source_bridge=bridge,tests_log_sha256=hashlib.sha256((v/'forecast-reliability-tests-final.log').read_bytes()).hexdigest(),
+        source_bridge=bridge,raw_receipts=receipts,tests_log_sha256=hashlib.sha256((v/'forecast-reliability-tests-final.log').read_bytes()).hexdigest(),
         tests=937,cloud_runtime_used=False,license_added=False,
         settlement_selected_model_counts=terminal_counts,adaptive_changed_goals=adaptive_changed,
         limitations=['frozen cohorts remain authoritative; later optional adaptive/challenger modes and strict pure-policy validation are explicit source differences',
