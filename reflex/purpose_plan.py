@@ -31,7 +31,7 @@ class Goal:
 
 
 def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,plan_roots=None,policy=None,settlement_weight='discounted',
-                  objective_origin=None,objective_unit=1.,opportunity_regret=False,competence_support=None):
+                  objective_origin=None,objective_unit=1.,opportunity_regret=False,competence_support=None,outcome_limit=8):
     """Use one endpoint per coherent branch for objective and competence.
 
     Needs/values/style/cost retain their discounted flow treatment. Subjective
@@ -52,7 +52,7 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
     if competence_support is not None and (not isinstance(competence_support,set) or any(not isinstance(k,str) for k in competence_support)):
         raise ValueError('supported real roots required')
     encoded_regret=max_regret if opportunity_regret or objective_unit==1. else max_regret*objective_unit
-    f=forecast(c,paths,horizon=horizon,unit=unit,target=target,max_regret=encoded_regret,plan_roots=plan_roots)
+    f=forecast(c,paths,horizon=horizon,unit=unit,target=target,max_regret=encoded_regret,plan_roots=plan_roots,outcome_limit=outcome_limit)
     fc=copy.deepcopy(f.contexts[0]);purpose={};endpoint={}
     if set(rollout_audit)!=set(paths):raise ValueError('endpoint coverage must match all viable roots')
     for a in fc['actions']:
@@ -98,7 +98,7 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
     if objective_origin is not None or objective_unit!=1.:
         objective_scale=(2. if objective_origin is not None else 1.)/objective_unit
         frame=replace(frame,effects=tuple((objective_scale,)+row[1:] for row in frame.effects))
-    b=compile_batch([fc]);d=(policy or Policy()).decide(b,False,return_frame=frame)
+    b=compile_batch([fc],outcome_limit=outcome_limit);d=(policy or Policy()).decide(b,False,return_frame=frame)
     retained={key for key,yes in zip(b.ids[0],d.eligible[0]) if yes}
     fc['actions']=[a for a in fc['actions'] if a['id'] in retained]
     metadata=copy.deepcopy(f.audit);metadata.update(endpoint=endpoint,original_tier_plans=sorted(retained),

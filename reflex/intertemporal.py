@@ -7,7 +7,7 @@ This is finite foresight, not a learned terminal value or a promise of payback.
 from dataclasses import dataclass
 import copy
 import numpy as np
-from .core import compile_batch, identifier, number, MAX_OUTCOMES
+from .core import compile_batch, identifier, number, MAX_OUTCOMES,digest
 from .examples import action
 from .planning import vector, from_vector
 from .deliberation import JointForecast
@@ -35,7 +35,7 @@ def patience(c):
     return float(np.clip(.45+.45*t['conscientiousness']+.1*(1-t['neuroticism'])-.35*urgent,.25,1.))
 
 
-def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None,plan_roots=None):
+def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None,plan_roots=None,outcome_limit=MAX_OUTCOMES):
     """One actor, all viable roots, <=8 coherent conditional branches per root.
 
     Discounted flows use ONE common denominator sum(gamma**t) for bounded
@@ -47,6 +47,7 @@ def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None,plan_
     Future effects are not returned as immediate empirical observations.
     """
     compile_batch([c]);identifier(unit);identifier(target)
+    if type(outcome_limit) is not int or not 1<=outcome_limit<=4096:raise ValueError('bounded forecast outcome capacity required')
     if type(horizon) is not int or not 1<=horizon<=16:raise ValueError('bounded common flow horizon required')
     gamma=patience(c) if discount is None else number(discount,0,1)
     number(max_regret,0,2)
@@ -59,10 +60,10 @@ def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None,plan_
     weights=gamma**np.arange(horizon);normalizer=float(weights.sum())
     future=copy.deepcopy(c);future['actions']=[]
     future['facts']['planning_target']='discounted incremental flows; conditional continuation; separate from immediate feedback'
-    plans={};purpose={};audit={}
+    plans={};purpose={};audit={};validated={}
     for index,proposal in enumerate(sorted(plan_roots)):
         root=plan_roots[proposal];rows=branches[proposal]
-        if not isinstance(rows,(tuple,list)) or not 1<=len(rows)<=MAX_OUTCOMES:raise ValueError('bounded coherent branches required')
+        if not isinstance(rows,(tuple,list)) or not 1<=len(rows)<=outcome_limit:raise ValueError('bounded coherent branches required')
         probability=[];outcomes=[];path_values=[]
         for branch in rows:
             if not isinstance(branch,Branch):raise ValueError('Branch required')
@@ -73,10 +74,14 @@ def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None,plan_
                 q=number(q,0,1)
                 # Reuse the public numeric contract for every flow, including
                 # keys, bounds, probability=1 and disabled-need semantics.
-                check=copy.deepcopy(c);check['actions']=[action('flow',copy.deepcopy(row))]
-                compile_batch([check])
-                if row['p']!=1:raise ValueError('probability belongs to the branch, not an individual flow')
-                v=vector(row);v[:-1]*=np.where(v[:-1]>0,q,1.)
+                stamp=digest([row,q])
+                if stamp not in validated:
+                    check=copy.deepcopy(c);check['actions']=[action('flow',copy.deepcopy(row))]
+                    compile_batch([check])
+                    if row['p']!=1:raise ValueError('probability belongs to the branch, not an individual flow')
+                    v=vector(row);v[:-1]*=np.where(v[:-1]>0,q,1.)
+                    validated[stamp]=v
+                v=validated[stamp]
                 vectors.append(v)
             matrix=np.array(vectors);total=np.einsum('t,td->d',weights,matrix)/normalizer
             outcomes.append(from_vector(total,p))
@@ -95,8 +100,8 @@ def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None,plan_
         purpose[key]=float(sum(r['p']*r['objective']*(a['confidence'] if r['objective']>0 else 1.) for r in outcomes))
         audit[key]=dict(root=root,paths=path_values,discounted_objective=purpose[key])
         if proposal!=root:audit[key]['proposal']=proposal
-    compile_batch([future])
+    compile_batch([future],outcome_limit=outcome_limit)
     return JointForecast((future,),plans,purpose,horizon,max_regret,
         dict(discount=gamma,normalizer=normalizer,unit=unit,plans=audit,
              contract='bounded transport of discounted incremental returns; no unseen tail value; confidence is not calibrated'),
-        target=target,return_frame=ReturnFrame.flows((future,),normalizer,unit))
+        target=target,return_frame=ReturnFrame.flows((future,),normalizer,unit),outcome_limit=outcome_limit)

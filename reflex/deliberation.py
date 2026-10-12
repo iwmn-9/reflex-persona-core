@@ -23,6 +23,7 @@ class JointForecast:
     stability_reference: object=None
     replan_check: object=None
     return_frame: object=None
+    outcome_limit: int=8
 
 
 def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
@@ -78,7 +79,7 @@ def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
     contexts=[]
     for fc in forecast.contexts:
         c=copy.deepcopy(fc);by={a['id']:a for a in c['actions']};c['actions']=[by[k] for k in names];contexts.append(c)
-    b=compile_batch(contexts);p=policy or Policy()
+    b=compile_batch(contexts,outcome_limit=forecast.outcome_limit);p=policy or Policy()
     framed={} if forecast.return_frame is None else dict(return_frame=forecast.return_frame)
     if appraisal is not None:
         if len(appraisal)!=len(base) or any(not isinstance(row,dict) or set(row)-{a['id'] for a in c['actions']} for c,row in zip(base,appraisal)):

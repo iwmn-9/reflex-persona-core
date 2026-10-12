@@ -1,0 +1,523 @@
+[
+  {
+    "condition": [
+      "unfavorable",
+      17,
+      2,
+      "growth"
+    ],
+    "arm": "baseline",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "7f7081dd4e2f8ddb1c75e463f5466ec72096cb9a24fa11953f0badf45bdae040",
+      "action_id": "safe",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "safe",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 0.0,
+      "flow-plan-001": 0.5,
+      "flow-plan-002": 0.0,
+      "flow-plan-003": 0.0
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 0.5,
+    "best_purpose": 0.5,
+    "max_regret": 0.15,
+    "actual_record": 0.4
+  },
+  {
+    "condition": [
+      "unfavorable",
+      17,
+      2,
+      "growth"
+    ],
+    "arm": "sampled_tree",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "7f7081dd4e2f8ddb1c75e463f5466ec72096cb9a24fa11953f0badf45bdae040",
+      "action_id": "safe",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "safe",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 0.0,
+      "flow-plan-001": 0.5,
+      "flow-plan-002": 0.0,
+      "flow-plan-003": 0.0
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 0.5,
+    "best_purpose": 0.5,
+    "max_regret": 0.15,
+    "actual_record": 0.4
+  },
+  {
+    "condition": [
+      "unfavorable",
+      17,
+      2,
+      "growth"
+    ],
+    "arm": "exact_reflex",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "7f7081dd4e2f8ddb1c75e463f5466ec72096cb9a24fa11953f0badf45bdae040",
+      "action_id": "safe",
+      "target": null,
+      "reading_used": true,
+      "request_reading": true,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "safe",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 0.0,
+      "flow-plan-001": 0.4,
+      "flow-plan-002": 0.2,
+      "flow-plan-003": 0.15
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 0.4,
+    "best_purpose": 0.4,
+    "max_regret": 0.15,
+    "actual_record": 0.52
+  },
+  {
+    "condition": [
+      "unfavorable",
+      17,
+      2,
+      "growth"
+    ],
+    "arm": "exact_tree",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "7f7081dd4e2f8ddb1c75e463f5466ec72096cb9a24fa11953f0badf45bdae040",
+      "action_id": "pass",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "pass",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 0.4,
+      "flow-plan-001": 0.52,
+      "flow-plan-002": 0.36000000000000004,
+      "flow-plan-003": 0.32
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 0.4,
+    "best_purpose": 0.52,
+    "max_regret": 0.15,
+    "actual_record": 0.4
+  },
+  {
+    "condition": [
+      "opportunity",
+      17,
+      4,
+      "steady"
+    ],
+    "arm": "baseline",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "e18a742c64a4a74a02a12f9e48039307a9d04b50d6ece502692255bb4e301782",
+      "action_id": "swing",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "swing",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 0.5,
+      "flow-plan-001": 1.0,
+      "flow-plan-002": 1.0,
+      "flow-plan-003": 0.5
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 1.0,
+    "best_purpose": 1.0,
+    "max_regret": 0.15,
+    "actual_record": 0.8299000000000001
+  },
+  {
+    "condition": [
+      "opportunity",
+      17,
+      4,
+      "steady"
+    ],
+    "arm": "sampled_tree",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "e18a742c64a4a74a02a12f9e48039307a9d04b50d6ece502692255bb4e301782",
+      "action_id": "safe",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "safe",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 1.0,
+      "flow-plan-001": 1.0,
+      "flow-plan-002": 0.8125,
+      "flow-plan-003": 0.625
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 1.0,
+    "best_purpose": 1.0,
+    "max_regret": 0.15,
+    "actual_record": 0.9595
+  },
+  {
+    "condition": [
+      "opportunity",
+      17,
+      4,
+      "steady"
+    ],
+    "arm": "exact_reflex",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "e18a742c64a4a74a02a12f9e48039307a9d04b50d6ece502692255bb4e301782",
+      "action_id": "safe",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "safe",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 0.928,
+      "flow-plan-001": 0.928,
+      "flow-plan-002": 0.7804000000000001,
+      "flow-plan-003": 0.5852
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 0.928,
+    "best_purpose": 0.928,
+    "max_regret": 0.15,
+    "actual_record": 0.9676
+  },
+  {
+    "condition": [
+      "opportunity",
+      17,
+      4,
+      "steady"
+    ],
+    "arm": "exact_tree",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "e18a742c64a4a74a02a12f9e48039307a9d04b50d6ece502692255bb4e301782",
+      "action_id": "swing",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "swing",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 0.9595,
+      "flow-plan-001": 0.9675999999999999,
+      "flow-plan-002": 0.8865999999999999,
+      "flow-plan-003": 0.7858
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 0.8865999999999999,
+    "best_purpose": 0.9675999999999999,
+    "max_regret": 0.15,
+    "actual_record": 0.8866
+  },
+  {
+    "condition": [
+      "opportunity",
+      6,
+      4,
+      "growth"
+    ],
+    "arm": "baseline",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "a55c1da9759ad95b5be5f7f910db1696cb30b5f69c6bd8f039b35dc95dfa968e",
+      "action_id": "swing",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "swing",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": -0.5,
+      "flow-plan-001": 0.0,
+      "flow-plan-002": 0.0,
+      "flow-plan-003": -0.5
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 0.0,
+    "best_purpose": 0.0,
+    "max_regret": 0.15,
+    "actual_record": 0.16637500000000005
+  },
+  {
+    "condition": [
+      "opportunity",
+      6,
+      4,
+      "growth"
+    ],
+    "arm": "sampled_tree",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "a55c1da9759ad95b5be5f7f910db1696cb30b5f69c6bd8f039b35dc95dfa968e",
+      "action_id": "safe",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "safe",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 0.0,
+      "flow-plan-001": 0.0,
+      "flow-plan-002": 0.125,
+      "flow-plan-003": 0.0
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 0.0,
+    "best_purpose": 0.125,
+    "max_regret": 0.15,
+    "actual_record": 0.0
+  },
+  {
+    "condition": [
+      "opportunity",
+      6,
+      4,
+      "growth"
+    ],
+    "arm": "exact_reflex",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "a55c1da9759ad95b5be5f7f910db1696cb30b5f69c6bd8f039b35dc95dfa968e",
+      "action_id": "swing",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "swing",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 0.07525000000000008,
+      "flow-plan-001": 0.12500000000000006,
+      "flow-plan-002": 0.07525000000000008,
+      "flow-plan-003": -0.08591249999999996
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 0.07525000000000008,
+    "best_purpose": 0.12500000000000006,
+    "max_regret": 0.15,
+    "actual_record": 0.16637500000000005
+  },
+  {
+    "condition": [
+      "opportunity",
+      6,
+      4,
+      "growth"
+    ],
+    "arm": "exact_tree",
+    "choice": {
+      "version": "reflex-v3",
+      "context_hash": "a55c1da9759ad95b5be5f7f910db1696cb30b5f69c6bd8f039b35dc95dfa968e",
+      "action_id": "swing",
+      "target": null,
+      "reading_used": true,
+      "request_reading": false,
+      "next_state": {
+        "primary_need": "growth",
+        "mode": "principle",
+        "mode_urgency": 0.35,
+        "intent_action": "swing",
+        "age": 0
+      }
+    },
+    "root_purpose": {
+      "flow-plan-000": 0.16637500000000005,
+      "flow-plan-001": 0.13310000000000005,
+      "flow-plan-002": 0.16637500000000005,
+      "flow-plan-003": 0.08621250000000001
+    },
+    "tier": [
+      "flow-plan-000",
+      "flow-plan-001",
+      "flow-plan-002",
+      "flow-plan-003"
+    ],
+    "selected_purpose": 0.16637500000000005,
+    "best_purpose": 0.16637500000000005,
+    "max_regret": 0.15,
+    "actual_record": 0.16637500000000005
+  },
+  {
+    "kind": "first_registered_game_loss",
+    "stage": "confirmation",
+    "pair": {
+      "condition": {
+        "game": "goofspiel",
+        "players": 5,
+        "cards": 7,
+        "order": "descending",
+        "opening_steps": 3,
+        "opening_seed": 36102
+      },
+      "seed": 36101,
+      "profile": "care",
+      "group": "goofspiel",
+      "comparison": "sampled_tree-baseline_window",
+      "before": 1.0,
+      "after": -1.0,
+      "delta": -2.0
+    }
+  },
+  {
+    "kind": "first_registered_game_loss",
+    "stage": "confirmation",
+    "pair": {
+      "condition": {
+        "game": "team_projects",
+        "scenario": "exhausted",
+        "members": 2,
+        "opening_steps": 3,
+        "opening_seed": 36108
+      },
+      "seed": 36103,
+      "profile": "steady",
+      "group": "team_projects",
+      "comparison": "sampled_tree-baseline_window",
+      "before": 1.0,
+      "after": 0.0,
+      "delta": -1.0
+    }
+  }
+]

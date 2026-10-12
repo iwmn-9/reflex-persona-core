@@ -98,12 +98,14 @@ class Batch:
         return Batch(**fields)
 
 
-def compile_batch(contexts):
+def compile_batch(contexts, *, outcome_limit=MAX_OUTCOMES):
     """Validate snapshots, canonically order candidates, freeze numeric input arrays.
 
     Adapter supplies perceived outcome estimates, never hidden true world state.
     Unsupported and disabled needs differ in JSON; both receive zero numeric weight.
     """
+    if type(outcome_limit) is not int or not 1<=outcome_limit<=4096:
+        raise ValueError('bounded explicit outcome capacity required')
     if not contexts:
         raise ValueError("empty batch")
     n = len(contexts)
@@ -112,7 +114,7 @@ def compile_batch(contexts):
     # Allocate only actual maxima, bounded by the public contract.
     a = max(len(c["actions"]) for c in contexts)
     k = max(len(act["outcomes"]) for c in contexts for act in c["actions"])
-    if not 1 <= a <= MAX_ACTIONS or not 1 <= k <= MAX_OUTCOMES:
+    if not 1 <= a <= MAX_ACTIONS or not 1 <= k <= outcome_limit:
         raise ValueError("action/outcome capacity exceeded")
     effects = np.zeros((n, a, k, len(FEATURES))); probability = np.zeros((n, a, k))
     legal = np.zeros((n, a), bool); confidence = np.zeros((n, a)); familiarity = confidence.copy()
