@@ -96,14 +96,15 @@ def play(case,profile,seed,arm,*,horizon=2):
         actions=[t['root'] for t in trace],learned_entries=len(actor.memory.entries),trace=trace,action_replay_verified=True)
 
 
-def life(seed,domain,layout,arm,*,turns=36,horizon=2):
+def life(seed,domain,layout,arm,*,turns=36,horizon=2,peer_model_factory=None,world_setup=None):
     if arm not in ('reflex','returns','owned'):raise ValueError('declared life comparison required')
     from .encounters import EncounterWorld
     from .social_withdrawal import WithdrawalSocialMemory
     from .purpose_plan import Goal
     from .public_perception import with_public
     world=EncounterWorld(seed,domain,layout,'public');p=Policy(principle_priority='finite')
-    actors={};trace=[]
+    if world_setup is not None:world_setup(world)
+    actors={};trace=[];peer_models={}
     def contexts(w,states=None):
         cs,sb=w.contexts()
         for c in cs:
@@ -112,7 +113,14 @@ def life(seed,domain,layout,arm,*,turns=36,horizon=2):
             if states is not None:c['state']=copy.deepcopy(states[c['scope']['npc']])
         return cs,sb
     cs,_=contexts(world)
-    for c in cs:actors[c['scope']['npc']]=DecisionLoop(c,policy=p,social=WithdrawalSocialMemory(c))
+    for c in cs:
+        own=c['scope']['npc'];actors[own]=DecisionLoop(c,policy=p,social=WithdrawalSocialMemory(c))
+        if peer_model_factory is not None:peer_models[own]=peer_model_factory(c)
+    def peer_public(cc):
+        # Public bodily resources/history are legitimate. The current peer's
+        # real traits, values and private DecisionLoop state are not supplied.
+        cc=copy.deepcopy(cc);cc['personality']={k:.5 for k in cc['personality']};cc['values']={k:0. for k in cc['values']}
+        return cc
     def goal(w,own):
         dead=w.health[own]<=0
         return Goal('resource-and-survival','failure' if dead else 'scored' if w.tick>=turns else 'running',
@@ -124,9 +132,11 @@ def life(seed,domain,layout,arm,*,turns=36,horizon=2):
         for (actor,req) in items:
             own=req.context['scope']['npc']
             def personal_planner(base,decisions):
+                peer_saved=None if peer_model_factory is None else digest(peer_models[own].record())
                 projected=copy.deepcopy(world)
                 for a in projected.actors:
                     if a!=own:projected.profiles[a]=dict(id='neutral',traits=(.5,)*5,values={})
+                if peer_model_factory is not None:projected._peer_model=copy.deepcopy(peer_models[own])
                 def observe(q,state):
                     cc=next(c for c in contexts(q)[0] if c['scope']['npc']==own);cc['state']=copy.deepcopy(state)
                     return with_public(cc,dict(tick=q.tick,public_history={a:list(q.history[a]) for a in q.actors},
@@ -134,6 +144,14 @@ def life(seed,domain,layout,arm,*,turns=36,horizon=2):
                 def advance(q,key,model_seed):
                     after=copy.deepcopy(q);model_cs,_=contexts(after)
                     selected={c['scope']['npc']:p.choose(c,False)['action_id'] for c in model_cs};selected[own]=key
+                    if peer_model_factory is not None:
+                        import numpy as np
+                        for j,cc in enumerate(model_cs):
+                            peer=cc['scope']['npc']
+                            if peer==own:continue
+                            probs,_=after._peer_model.forecast(peer,peer_public(cc));keys=sorted(probs)
+                            generator=np.random.default_rng(np.random.SeedSequence([model_seed,after.tick,j,731]))
+                            selected[peer]=keys[int(generator.choice(len(keys),p=[probs[k] for k in keys]))]
                     after.seed=model_seed;rows,events=after.resolve(selected);after.seed=seed
                     i=after.actors.index(own);r=rows[i]
                     row=after.perceived(r['kind'],r['other_kind'],r['matched'],1.)
@@ -162,6 +180,7 @@ def life(seed,domain,layout,arm,*,turns=36,horizon=2):
                 paths,audit=rollout(base[0],projected,observe=observe,advance=advance,
                     terminal=lambda q:q.tick>=turns or q.health[own]<=0,horizon=horizon,seeds=(401,402),
                     assess=lambda q:goal(q,own).record(),observer=observer,policy=p)
+                if peer_model_factory is not None:assert digest(peer_models[own].record())==peer_saved
                 branch_reports[own]=compact(audit)
                 return goal_forecast(base[0],paths,audit,horizon=horizon,unit='ticks',target='resource-and-survival',
                     policy=p,settlement_weight='absolute')
@@ -169,15 +188,33 @@ def life(seed,domain,layout,arm,*,turns=36,horizon=2):
             results.append(result)
         # No peer is advanced until all current intentions have been selected.
         chosen={a:r['decision']['action_id'] for a,r in zip(world.actors,results)}
+        peer_updates=[]
+        if peer_model_factory is not None:
+            public_before={c['scope']['npc']:peer_public(c) for c in cs}
+            peer_snapshots={a:digest(peer_models[a].record()) for a in world.actors}
         rows,events=world.resolve(chosen)
         for a,r,ev in zip(world.actors,results,events):actors[a].abandon(r['ticket'],social_events=tuple(ev))
-        trace.append(dict(tick=tick,rows=rows,chosen=chosen,
+        if peer_model_factory is not None:
+            for own in world.actors:
+                # Forecast callbacks cannot learn from their imaginary peers.
+                assert digest(peer_models[own].record())==peer_snapshots[own]
+                for peer in world.actors:
+                    if peer!=own:
+                        update=peer_models[own].observe(peer,public_before[peer],chosen[peer],f'{tick}-{peer}')
+                        peer_updates.append(dict(owner=own,peer=peer,score=update['score'],active=update['active']))
+        item=dict(tick=tick,rows=rows,chosen=chosen,
             owner_sha256={a:digest(actors[a].record()) for a in world.actors},
-            modeled={a:branch_reports.get(a,{}).get(chosen[a],[]) for a in world.actors}))
+            modeled={a:branch_reports.get(a,{}).get(chosen[a],[]) for a in world.actors})
+        if peer_model_factory is not None:item['peer_updates']=peer_updates
+        trace.append(item)
     check=EncounterWorld(seed,domain,layout,'public')
+    if world_setup is not None:world_setup(check)
     for t in trace:
         rows,events=check.resolve(t['chosen']);assert rows==t['rows']
-    return dict(seed=seed,domain=domain,layout=layout,arm=arm,turns=turns,
+    result=dict(seed=seed,domain=domain,layout=layout,arm=arm,turns=turns,
         actors=[dict(npc=a,profile=world.profiles[a]['id'],goal=goal(world,a).record(),**world.state(a)) for a in world.actors],
         trace=trace,action_replay_verified=True,
         limitation='neutral declared rival continuation, public histories, no counterpart private memory or true persona')
+    if peer_model_factory is not None:result.update(peer_models={k:v.record() for k,v in peer_models.items()},
+        limitation='finite declared peer profile hypotheses with public prequential scoring; no counterpart private memory or true persona; modeled posterior frozen between real observations')
+    return result
