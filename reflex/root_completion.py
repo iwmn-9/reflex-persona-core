@@ -29,8 +29,8 @@ def constrained_completion(contexts, records, root_allowed, exact_masks, policy,
         raise ValueError('completion record/context owner mismatch')
     mask=np.array([[k in allowed for k in list(ids)+[None]*(b.legal.shape[1]-len(ids))]
         for ids,allowed in zip(b.ids,root_allowed)])
-    guarded,_=avoid_waste(replace(b,legal=b.legal&mask),exact_masks)
     extra={} if appraisal is None else dict(appraisal=np.array([[row.get(k,0.) for k in list(ids)+[None]*(b.legal.shape[1]-len(ids))] for ids,row in zip(b.ids,appraisal)]))
+    guarded,_=avoid_waste(replace(b,legal=b.legal&mask),exact_masks,**extra)
     d=policy.decide(guarded,False,**extra)
     best=np.max(np.where(d.eligible,d.scores,-np.inf),axis=1)
     options=[{k:float(d.scores[i,j]) for j,k in enumerate(ids)

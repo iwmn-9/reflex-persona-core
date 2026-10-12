@@ -36,8 +36,8 @@ def constrain(context,incumbent,proposal,policy,allowed,exact,*,appraisal=None):
         raise ValueError('finite empirical errors and bounded purpose tolerance required')
     batch=compile_batch([context])
     mask=np.array([[[f in exact[k] for f in FEATURES] for k in batch.ids[0]]])
-    batch,_=avoid_waste(replace(batch,legal=batch.legal&np.array([[k in allowed for k in batch.ids[0]]])),mask)
     extra={} if appraisal is None else dict(appraisal=np.array([[appraisal.get(k,0.) for k in batch.ids[0]]]))
+    batch,_=avoid_waste(replace(batch,legal=batch.legal&np.array([[k in allowed for k in batch.ids[0]]])),mask,**extra)
     scored=policy.decide(batch,False,**extra)
     permitted=[k for j,k in enumerate(batch.ids[0]) if scored.eligible[0,j]]
     audit=dict(scope=proposal.scope,target=proposal.target,model_sha256=digest(proposal.model),changed=False,

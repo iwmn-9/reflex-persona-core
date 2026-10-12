@@ -175,17 +175,21 @@ class OutcomeMemory:
         m.last_tick=tick
         return m
 
-def avoid_waste(batch, exact):
+def avoid_waste(batch, exact, *, appraisal=None):
     """Remove only proven same-benefit deterministic actions with higher cost.
 
     All feature dimensions must be certified exact by the game for BOTH actions.
     Estimated equality, unknown correlation and lottery means prove nothing.
-    Equal familiarity/switch penalties and reading effects are required. The
+    Equal familiarity/switch penalties, reading and relationship appraisal are required. The
     guard deliberately leaves value/risk conflicts and stochastic gambles alone.
     """
     exact=np.asarray(exact)
     if exact.dtype != np.bool_ or exact.shape != batch.effects.shape[:2]+(len(FEATURES),):
         raise ValueError('boolean exact mask shaped NPC/action/feature required')
+    if appraisal is not None:
+        appraisal=np.asarray(appraisal,dtype=float)
+        if appraisal.shape!=batch.legal.shape or not np.isfinite(appraisal).all() or (abs(appraisal)>1.5).any():
+            raise ValueError('bounded same-shape relationship appraisal required')
     legal=batch.legal & ~batch.known_failure; removed=np.zeros_like(legal)
     possible=legal & exact.all(2) & (batch.confidence==1) & ((batch.probability>0).sum(2)==1)
     idx=batch.probability.argmax(2)
@@ -198,6 +202,10 @@ def avoid_waste(batch, exact):
         same &= batch.familiarity==batch.familiarity[:,j,None]
         same &= batch.reading==batch.reading[:,j,None]
         same &= fees==fees[:,j,None]
+        # Equal physical effects need not benefit the same valued recipient.
+        # Only discard a dearer option when its current social benefit also
+        # matches; the ordinary Policy still decides whether to pay extra.
+        if appraisal is not None:same &= appraisal==appraisal[:,j,None]
         removed[:,j]=np.any(same & (v[:,:,-1]<v[:,j,None,-1]),axis=1)
     guarded=replace(batch,legal=batch.legal & ~removed)
     guarded.legal.flags.writeable=False

@@ -1,0 +1,102 @@
+[
+  {
+    "kind": "flat_model_despite_public_opportunity",
+    "case": {
+      "game": "public_graph",
+      "graph": 23100,
+      "length": 5
+    },
+    "profile": "ego",
+    "seed": 33100,
+    "node": {
+      "public_node": [
+        2,
+        0
+      ],
+      "turns": 2
+    },
+    "choice": "option-u",
+    "forecast": {
+      "predicted": {
+        "option-u": 0.5,
+        "option-v": 0.5
+      },
+      "persona": "option-u",
+      "purpose": "option-u",
+      "persona_tier": [
+        "option-u",
+        "option-v"
+      ],
+      "planned_purpose_cost": 0.0,
+      "settled_branches": 8,
+      "branches": 8,
+      "model_steps": 24
+    },
+    "exact_optimal_continuation_q": {
+      "option-u": 0.625,
+      "option-v": 0.75
+    }
+  },
+  {
+    "kind": "first_registered_confirmation_loss",
+    "comparison": "persona4-reflex",
+    "pair": {
+      "case": {
+        "game": "gambling",
+        "scenario": "change",
+        "opening_steps": 3,
+        "opening_seed": 34107
+      },
+      "profile": "care",
+      "seed": 31103,
+      "comparison": "persona4-reflex",
+      "before": 1.0,
+      "after": 0.0,
+      "delta": -1.0,
+      "actions_changed": true
+    },
+    "semantics": "selected illustration after comparison, not an additional independent trial"
+  },
+  {
+    "kind": "first_registered_confirmation_loss",
+    "comparison": "persona8-persona4",
+    "pair": {
+      "case": {
+        "game": "no_thanks",
+        "players": 5,
+        "deal": 36,
+        "opening_steps": 3,
+        "opening_seed": 34101
+      },
+      "profile": "steady",
+      "seed": 31101,
+      "comparison": "persona8-persona4",
+      "before": 1.0,
+      "after": 0.0,
+      "delta": -1.0,
+      "actions_changed": true
+    },
+    "semantics": "selected illustration after comparison, not an additional independent trial"
+  },
+  {
+    "kind": "first_registered_confirmation_loss",
+    "comparison": "purpose4-persona4",
+    "pair": {
+      "case": {
+        "game": "no_thanks",
+        "players": 5,
+        "deal": 36,
+        "opening_steps": 3,
+        "opening_seed": 34101
+      },
+      "profile": "steady",
+      "seed": 31101,
+      "comparison": "purpose4-persona4",
+      "before": 1.0,
+      "after": -1.0,
+      "delta": -2.0,
+      "actions_changed": true
+    },
+    "semantics": "selected illustration after comparison, not an additional independent trial"
+  }
+]

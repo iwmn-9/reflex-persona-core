@@ -294,10 +294,10 @@ class DecisionLoop:
         masks=np.array([[[name in s['exact'][key] for name in FEATURES] if j<len(b.ids[i]) else [False]*len(FEATURES)
             for j,key in enumerate(list(b.ids[i])+[None]*(b.legal.shape[1]-len(b.ids[i])))] for i,s in enumerate(stages)],dtype=bool)
         progress_mask=np.array([[k in s['progress_allowed'] for k in list(b.ids[i])+[None]*(b.legal.shape[1]-len(b.ids[i]))] for i,s in enumerate(stages)])
-        guarded,removed=avoid_waste(replace(b,legal=b.legal&progress_mask),masks)
         social_kwargs={}
         if any(s['social_scores'] is not None for s in stages):
             social_kwargs['appraisal']=np.array([[(s['social_scores'] or {}).get(k,0.) for k in list(b.ids[i])+[None]*(b.legal.shape[1]-len(b.ids[i]))] for i,s in enumerate(stages)])
+        guarded,removed=avoid_waste(replace(b,legal=b.legal&progress_mask),masks,**social_kwargs)
         numeric=policy.decide(guarded,stochastic,**social_kwargs)
         records=numeric.records(guarded)
         proof_indices=[i for i,s in enumerate(stages) if s['loop'].progress is not None and
@@ -307,8 +307,11 @@ class DecisionLoop:
         if proof_indices:
             for i in proof_indices:base_allowed[i]={a['id'] for a in stages[i]['effective']['actions'] if a['legal'] and not a['known_failure']}
             base_mask=np.array([[k in base_allowed[i] for k in list(b.ids[i])+[None]*(b.legal.shape[1]-len(b.ids[i]))] for i in range(len(stages))])
-            unguarded,_=avoid_waste(replace(b,legal=b.legal&base_mask),masks)
-            baseline_records=policy.decide(unguarded,stochastic).records(unguarded)
+            unguarded,_=avoid_waste(replace(b,legal=b.legal&base_mask),masks,**social_kwargs)
+            # Recovery compares against the SAME person's unmasked choice.
+            # Keep current relationship appraisal for all batched owners,
+            # including those whose own progress guard did not trigger.
+            baseline_records=policy.decide(unguarded,stochastic,**social_kwargs).records(unguarded)
         for i,s in enumerate(stages):
             loop=s['loop'];req=s['request'];s['decision']=records[i]
             s['guard']=[b.ids[i][j] for j in np.flatnonzero(removed[i])]
@@ -344,7 +347,7 @@ class DecisionLoop:
             audit['response_model']='validated_hypotheses' if proposal.known_conditionals and s['evidence'].accepted(key) and s['evidence'].accepted(key+loop._decision_suffix()) else 'bounded_recent_response'
             rb=compile_batch([rc]);rm=np.array([[[name in s['exact'][k] for name in FEATURES] for k in rb.ids[0]]])
             rb=replace(rb,legal=rb.legal&np.array([[k in s['progress_allowed'] for k in rb.ids[0]]]))
-            rb,_=avoid_waste(rb,rm)
+            rb,_=avoid_waste(rb,rm,appraisal=None if s['social_scores'] is None else np.array([[s['social_scores'].get(k,0.) for k in rb.ids[0]]]))
             if 'decision_trial_context' in s:
                 # Competing choices are frozen before reveal. Known immediate
                 # conditional rules can later compare purpose effects under
@@ -353,7 +356,7 @@ class DecisionLoop:
                     bb=compile_batch([c])
                     mm=np.array([[[name in s['exact'][k] for name in FEATURES] for k in bb.ids[0]]])
                     bb=replace(bb,legal=bb.legal&np.array([[k in s['progress_allowed'] for k in bb.ids[0]]]))
-                    bb,_=avoid_waste(bb,mm)
+                    bb,_=avoid_waste(bb,mm,appraisal=None if s['social_scores'] is None else np.array([[s['social_scores'].get(k,0.) for k in bb.ids[0]]]))
                     outcome_audit={} if capture else None
                     dd=policy.decide(bb,stochastic,outcome_audit=outcome_audit,**({} if s['social_scores'] is None else dict(appraisal=np.array([[s['social_scores'].get(k,0.) for k in bb.ids[0]]]))))
                     j=int(dd.action[0]);old_j=bb.ids[0].index(s['decision']['action_id'])
