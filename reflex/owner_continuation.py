@@ -10,14 +10,14 @@ from .core import Policy, TRAITS, digest
 
 
 class OwnerBranch:
-    def __init__(self, actors, contexts, decisions, roots):
+    def __init__(self, actors, contexts, decisions, roots,*,policy=None):
         if not actors or not len(actors)==len(contexts)==len(decisions)==len(roots):
             raise ValueError('one context, decision and root per declared owner')
         if len(set(actors))!=len(actors):raise ValueError('distinct owners required')
         if (len({c['scope']['npc'] for c in contexts})!=len(contexts) or
                 len({(c['scope']['game'],c['scope']['episode'],c['tick']) for c in contexts})!=1):
             raise ValueError('distinct owners in one simultaneous game context required')
-        self.owners={};self.states={};self.steps=0
+        self.owners={};self.states={};self.steps=0;self.policy=policy or Policy(principle_priority='finite')
         for actor,c,d,root in zip(actors,contexts,decisions,roots):
             if d['context_hash']!=digest(c):raise ValueError('decision belongs to owner context')
             if root not in {a['id'] for a in c['actions'] if a['legal'] and not a['known_failure']}:
@@ -33,14 +33,14 @@ class OwnerBranch:
         profile=dict(traits=tuple(owner['personality'][k] for k in TRAITS),values=copy.deepcopy(owner['values']))
         c=factory(world,actor,profile,owner['seed'],copy.deepcopy(self.states[actor]))
         if (c['scope']!=owner['scope'] or c['personality']!=owner['personality'] or
-                c['values']!=owner['values'] or c['state']!=self.states[actor] or c['tick']<=owner['tick']):
+                c['values']!=owner['values'] or c['seed']!=owner['seed'] or c['state']!=self.states[actor] or c['tick']<=owner['tick']):
             raise ValueError('future context must retain owner/axes/state and advance time')
         return c
 
     def choose(self, actors, world, factory, exchange=None):
         if not actors or any(i not in self.owners for i in actors):raise ValueError('declared living owners required')
         contexts=[self.context(i,world,factory) for i in actors]
-        decisions=[Policy(principle_priority='finite').choose(c,False) for c in contexts]
+        decisions=[self.policy.choose(c,False) for c in contexts]
         audit=None
         if exchange is not None:
             selected,audit=exchange(world,tuple(actors),contexts,decisions)

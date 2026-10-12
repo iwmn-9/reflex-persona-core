@@ -19,16 +19,48 @@ def history(value):
     return value
 
 
-def node_key(prefix,c,allowed):
+@dataclass(frozen=True)
+class ObservationSchema:
+    """Versioned game declaration of relevant PUBLIC facts; numeric state stays.
+
+    This conservative first abstraction omits only declared facts. It never
+    removes actor identity, clock, preferences, owned state, actions or belief
+    effects. The game is responsible for retaining facts needed by future rules.
+    """
+    name: str
+    facts: tuple
+
+    def __post_init__(self):
+        identifier(self.name)
+        if not isinstance(self.facts,tuple) or len(self.facts)>256 or len(set(self.facts))!=len(self.facts):raise ValueError('bounded distinct public fact fields required')
+        for key in self.facts:identifier(key)
+
+    @property
+    def key(self):return digest([self.name,self.facts])
+
+    def project(self,c):
+        keys=set(self.facts)
+        if c['opponent'] is not None:keys.update(c['opponent']['evidence_ids'])
+        if not keys<=set(c['facts']):raise ValueError('declared public fact missing')
+        c['facts']={k:c['facts'][k] for k in sorted(keys)}
+        return c
+
+    def record(self):return dict(name=self.name,facts=list(self.facts))
+
+
+def node_key(prefix,c,allowed,*,schema=None):
     """Canonical perceived input, owned state and past actions, not a scenario ID."""
     history(prefix);compile_batch([c])
     view=copy.deepcopy(c)
+    if schema is not None:
+        if not isinstance(schema,ObservationSchema):raise ValueError('declared observation schema required')
+        view=schema.project(view)
     view['actions']=sorted(view['actions'],key=lambda a:a['id'])
     for a in view['actions']:a['outcomes']=sorted(a['outcomes'],key=digest)
     viable={a['id'] for a in c['actions'] if a['legal'] and not a['known_failure']}
     permitted=tuple(sorted(viable if allowed is None else set(allowed)))
     if not permitted or not set(permitted)<=viable:raise ValueError('nonempty observed viable permission required')
-    return digest([prefix,view,permitted])
+    return digest([prefix,view,permitted] if schema is None else [schema.key,prefix,view,permitted])
 
 
 def after_action(node,key):
@@ -42,12 +74,13 @@ class View:
     allowed: tuple
     prefix: str
     node: str
+    schema: str='exact-v1'
 
     @classmethod
-    def make(cls,prefix,c,allowed=None):
+    def make(cls,prefix,c,allowed=None,*,schema=None):
         viable={a['id'] for a in c['actions'] if a['legal'] and not a['known_failure']}
         permitted=tuple(sorted(viable if allowed is None else set(allowed)))
-        return cls(copy.deepcopy(c),permitted,history(prefix),node_key(prefix,c,permitted))
+        return cls(copy.deepcopy(c),permitted,history(prefix),node_key(prefix,c,permitted,schema=schema),'exact-v1' if schema is None else schema.key)
 
 
 @dataclass(frozen=True)
@@ -56,9 +89,11 @@ class ObservationPlan:
     target: str
     unit: str
     entries: tuple=()
+    schema: str='exact-v1'
 
     def __post_init__(self):
         history(self.owner);identifier(self.target);identifier(self.unit)
+        if self.schema!='exact-v1':history(self.schema)
         if not self.owner:raise ValueError('nonempty observation program owner required')
         if not isinstance(self.entries,tuple) or len(self.entries)>128:
             raise ValueError('bounded immutable observation program required')
@@ -71,26 +106,31 @@ class ObservationPlan:
             raise ValueError('unique sorted observation program required')
 
     @classmethod
-    def make(cls,c,target,unit,entries=None):
-        return cls(owner(c),target,unit,tuple(sorted((entries or {}).items())))
+    def make(cls,c,target,unit,entries=None,*,schema=None):
+        if schema is not None and not isinstance(schema,ObservationSchema):raise ValueError('declared observation schema required')
+        return cls(owner(c),target,unit,tuple(sorted((entries or {}).items())),'exact-v1' if schema is None else schema.key)
 
     def choose(self,view):
         if not isinstance(view,View) or owner(view.context)!=self.owner:
             raise ValueError('observation program belongs to another owner')
+        if view.schema!=self.schema:raise ValueError('observation schema changed')
         key=dict(self.entries).get(view.node)
         return key if key in view.allowed else None
 
     def patch(self,node,key):
         data=dict(self.entries);data[node]=key
-        return ObservationPlan(self.owner,self.target,self.unit,tuple(sorted(data.items())))
+        return ObservationPlan(self.owner,self.target,self.unit,tuple(sorted(data.items())),self.schema)
 
     def record(self):
-        return dict(format='observation-plan-v1',owner=self.owner,target=self.target,unit=self.unit,entries=[list(p) for p in self.entries])
+        result=dict(format='observation-plan-v1',owner=self.owner,target=self.target,unit=self.unit,entries=[list(p) for p in self.entries])
+        if self.schema!='exact-v1':result.update(format='observation-plan-v2',schema=self.schema)
+        return result
 
     @classmethod
     def restore(cls,record):
-        if record['format']!='observation-plan-v1':raise ValueError('known observation program format required')
-        return cls(record['owner'],record['target'],record['unit'],tuple(tuple(p) for p in record['entries']))
+        if record['format'] not in ('observation-plan-v1','observation-plan-v2'):raise ValueError('known observation program format required')
+        schema='exact-v1' if record['format']=='observation-plan-v1' else record['schema']
+        return cls(record['owner'],record['target'],record['unit'],tuple(tuple(p) for p in record['entries']),schema)
 
 
 class PlanMemory:
@@ -99,9 +139,11 @@ class PlanMemory:
     No forecast becomes empirical learning. If an actual observation differs,
     its unmatched node falls back; new search can patch that current reality.
     """
-    def __init__(self,c,target,unit='public-turns'):
+    def __init__(self,c,target,unit='public-turns',*,schema=None):
         compile_batch([c]);self.owner=owner(c);self.target=target;self.unit=unit
         identifier(target);identifier(unit);self.prefix='';self.plan=None
+        if schema is not None and not isinstance(schema,ObservationSchema):raise ValueError('declared observation schema required')
+        self.schema=schema
 
     def offer(self,c):
         if owner(c)!=self.owner:raise ValueError('owned plan memory required')
@@ -111,6 +153,7 @@ class PlanMemory:
         if owner(c)!=self.owner or forecast.target!=self.target:
             raise ValueError('owned same-purpose conditional plan required')
         bank=forecast.audit['contingent_search']
+        if bank.get('schema','exact-v1')!=('exact-v1' if self.schema is None else self.schema.key):raise ValueError('remember only same observation schema')
         if bank['unit']!=self.unit:raise ValueError('same conditional plan time unit required')
         if bank['prefix']!=self.prefix:raise ValueError('stale conditional plan prefix')
         plan=None
@@ -124,16 +167,20 @@ class PlanMemory:
         self.prefix=after_action(bank['root_node'],key);self.plan=plan
 
     def record(self):
-        return dict(format='observation-memory-v1',owner=self.owner,target=self.target,unit=self.unit,prefix=self.prefix,
+        result=dict(format='observation-memory-v1',owner=self.owner,target=self.target,unit=self.unit,prefix=self.prefix,
                     plan=None if self.plan is None else self.plan.record())
+        if self.schema is not None:result.update(format='observation-memory-v2',schema=self.schema.record())
+        return result
 
     @classmethod
     def restore(cls,c,record):
-        if record['format']!='observation-memory-v1':raise ValueError('known owned plan checkpoint required')
-        result=cls(c,record['target'],record['unit'])
+        if record['format'] not in ('observation-memory-v1','observation-memory-v2'):raise ValueError('known owned plan checkpoint required')
+        schema=None if record['format']=='observation-memory-v1' else ObservationSchema(record['schema']['name'],tuple(record['schema']['facts']))
+        result=cls(c,record['target'],record['unit'],schema=schema)
         if record['owner']!=result.owner:raise ValueError('checkpoint belongs to another owner')
         result.prefix=history(record['prefix'])
         result.plan=None if record['plan'] is None else ObservationPlan.restore(record['plan'])
         if result.plan is not None and (result.plan.owner,result.plan.target,result.plan.unit)!=(result.owner,result.target,result.unit):
             raise ValueError('checkpoint purpose or owner mismatch')
+        if result.plan is not None and result.plan.schema!=('exact-v1' if schema is None else schema.key):raise ValueError('checkpoint observation schema mismatch')
         return result

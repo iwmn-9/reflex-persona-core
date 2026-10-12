@@ -32,7 +32,7 @@ class ReplanCheck:
     observer: object=None
     settlement_weight: str='absolute'
 
-    def apply(self,c,expanded,policy,allowed):
+    def apply(self,c,expanded,policy,allowed,*,appraisal=None):
         reference=expanded.stability_reference
         if not isinstance(reference,JointForecast) or reference.replan_check is not None:
             raise ValueError('independent unexpanded reference required')
@@ -44,8 +44,8 @@ class ReplanCheck:
         if set(self.seeds)&set(discovery.get('seeds',[])+discovery.get('discovery_seeds',[])):
             raise ValueError('feedback check bank must be separate from candidate discovery/selection')
         masks=None if allowed is None else [allowed]
-        new_records,new_vote=select([c],expanded,policy,masks)
-        old_records,old_vote=select([c],reference,policy,masks)
+        new_records,new_vote=select([c],expanded,policy,masks,appraisal=appraisal)
+        old_records,old_vote=select([c],reference,policy,masks,appraisal=appraisal)
         report=dict(kind='one future feedback replan, then observed-legal shared tail/reflex',
             accepted=True,protected=False,checked=False,seeds=list(self.seeds),
             guarantee='finite counterfactual model comparison; not a real-result or human-level guarantee')

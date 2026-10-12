@@ -15,7 +15,7 @@ from .observation_plan import ObservationPlan,View,owner,history
 def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0,),
                     width=2,revisions=2,unit='public-turns',target,max_regret=.15,
                     observer=None,policy=None,validation_seeds=None,
-                    settlement_weight='discounted',retained=None,prefix='',patch_budget=16):
+                    settlement_weight='discounted',retained=None,prefix='',patch_budget=16,observation_schema=None):
     compile_batch([c]);history(prefix);policy=policy or Policy()
     if type(width) is not int or not 1<=width<=4 or type(revisions) is not int or not 0<=revisions<=8:
         raise ValueError('bounded conditional width/revisions required')
@@ -37,12 +37,14 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
     for level in range(width):
         for r in order:
             if available:slots[r]+=1;available-=1
-    empty=ObservationPlan.make(c,target,unit);kept={};evaluations=0;layers=[]
+    empty=ObservationPlan.make(c,target,unit,schema=observation_schema)
+    if retained is not None and retained.schema!=empty.schema:raise ValueError('same retained observation schema required')
+    kept={};evaluations=0;layers=[]
     def evaluate(root,program,bank):
         nonlocal evaluations
         paths,audit=rollout(c,initial,observe=observe,advance=advance,terminal=terminal,
             assess=assess,horizon=horizon,seeds=bank,roots=(root,),observer=observer,policy=policy,
-            public_controller=program.choose,public_history=prefix,record_choices=True)
+            public_controller=program.choose,public_history=prefix,record_choices=True,observation_schema=observation_schema)
         evaluations+=1
         return dict(root=root,program=program,paths=paths[root],audit=audit[root])
     for ri,root in enumerate(roots):
@@ -77,7 +79,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
                     # Drop entries unreachable in this candidate's modeled
                     # histories. Unknown actual histories still use reflex.
                     visited={p['node'] for t in n['audit'] for p in t['public_nodes'][1:]}
-                    compact=ObservationPlan.make(c,target,unit,{p:k for p,k in n['program'].entries if p in visited})
+                    compact=ObservationPlan.make(c,target,unit,{p:k for p,k in n['program'].entries if p in visited},schema=observation_schema)
                     program=compact.patch(node,key)
                     expanded[program.entries]=candidate(program)
             beam=_rank(local,expanded.values(),width,horizon,unit,target,max_regret,policy,settlement_weight)
@@ -86,7 +88,7 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
         unique={n['program'].entries:n for n in [baseline]+extras}
         for j,n in enumerate(unique.values()):kept[f'conditional-{ri:03d}-{j:02d}']=n
     if retained is not None and len(kept)<MAX_ACTIONS:
-        view=View.make(prefix,c)
+        view=View.make(prefix,c,schema=observation_schema)
         root=retained.choose(view) or policy.choose(c,stochastic=False)['action_id']
         # Programs normally omit a forced current root. Re-evaluate the retained
         # continuation under every viable root above; no stale root is forced.
@@ -107,4 +109,5 @@ def search_forecast(c,initial,*,observe,advance,terminal,assess,horizon,seeds=(0
         proposals={k:dict(root=n['root'],program=n['program'].record(),branches=n['audit']) for k,n in kept.items()},
         semantics='one immutable observation-history program across all model scenarios; unknown nodes use owner reflex; execute only current root')
     if validation is not None:metadata['contingent_search']['validation']=validation
+    if observation_schema is not None:metadata['contingent_search']['schema']=observation_schema.key
     return replace(f,audit=metadata)

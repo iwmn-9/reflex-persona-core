@@ -15,7 +15,7 @@ from .core import compile_batch
 from .judgment import avoid_waste
 
 
-def constrained_completion(contexts, records, root_allowed, exact_masks, policy, complete, blocked_changes=None):
+def constrained_completion(contexts, records, root_allowed, exact_masks, policy, complete, blocked_changes=None,*,appraisal=None):
     """Validate an adapter completion before DecisionLoop's atomic commit."""
     if not contexts or len(records)!=len(contexts) or len(root_allowed)!=len(contexts):
         raise ValueError('one current record and allowed-root set per owner required')
@@ -30,7 +30,8 @@ def constrained_completion(contexts, records, root_allowed, exact_masks, policy,
     mask=np.array([[k in allowed for k in list(ids)+[None]*(b.legal.shape[1]-len(ids))]
         for ids,allowed in zip(b.ids,root_allowed)])
     guarded,_=avoid_waste(replace(b,legal=b.legal&mask),exact_masks)
-    d=policy.decide(guarded,False)
+    extra={} if appraisal is None else dict(appraisal=np.array([[row.get(k,0.) for k in list(ids)+[None]*(b.legal.shape[1]-len(ids))] for ids,row in zip(b.ids,appraisal)]))
+    d=policy.decide(guarded,False,**extra)
     best=np.max(np.where(d.eligible,d.scores,-np.inf),axis=1)
     options=[{k:float(d.scores[i,j]) for j,k in enumerate(ids)
         if d.eligible[i,j] and d.scores[i,j]>=best[i]-.025} for i,ids in enumerate(b.ids)]

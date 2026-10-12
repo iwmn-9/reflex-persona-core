@@ -18,7 +18,7 @@ def combine(forecasts,*,purpose_rule='worst'):
     for f in forecasts:
         if f.continuity is not None:raise ValueError('arrival continuity must be resolved explicitly before model aggregation')
         if (f.roots!=first.roots or f.target!=first.target or f.horizon!=first.horizon or
-                f.max_regret!=first.max_regret or len(f.contexts)!=len(first.contexts)):
+                f.max_regret!=first.max_regret or len(f.contexts)!=len(first.contexts) or f.return_frame!=first.return_frame):
             raise ValueError('identical owners, real roots, purpose target and horizon required')
         if set(f.purpose)!=set(first.roots) or not all(np.isfinite(v) and abs(v)<=1 for v in f.purpose.values()):
             raise ValueError('finite complete bounded purpose required')
@@ -47,4 +47,4 @@ def combine(forecasts,*,purpose_rule='worst'):
             purpose_rule=purpose_rule,model_purpose=rows,
             model_disagreement={k:max(v)-min(v) for k,v in rows.items()},
             model='declared equal mixture for personal effects; worst conditional purpose without claiming a true model'),
-        target=first.target)
+        target=first.target,return_frame=first.return_frame)

@@ -13,7 +13,7 @@ from .owner_continuation import OwnerBranch
 from .team_choice import select
 
 
-def forecast(genre,w,actors,contexts,decisions,*,continuation='personal',horizon=6,inner_plans=8):
+def forecast(genre,w,actors,contexts,decisions,*,continuation='personal',horizon=6,inner_plans=8,policy=None):
     if genre not in ('combat','projects') or continuation not in ('personal','exchange'):
         raise ValueError('declared adapter and continuation required')
     if type(horizon) is not int or not 1<=horizon<=16 or type(inner_plans) is not int or not 1<=inner_plans<=64:
@@ -36,13 +36,13 @@ def forecast(genre,w,actors,contexts,decisions,*,continuation='personal',horizon
         nonlocal inner_nodes,accepted
         f=rules.forecast(model,live,cs,ds,horizon=1,max_plans=inner_plans,partner_model='uncertain')
         inner_nodes+=f.audit['nodes']
-        result,audit=select(cs,f,group=f'future-{genre}-{team}',outside=tuple(d['action_id'] for d in ds))
+        result,audit=select(cs,f,group=f'future-{genre}-{team}',outside=tuple(d['action_id'] for d in ds),policy=policy)
         accepted+=result is not None
         return result,audit
     for key,root in roots.items():
         outcomes=[[] for _ in actors];scores=[]
         for sample in range(samples):
-            model=w;branch=OwnerBranch(actors,contexts,decisions,root)
+            model=w;branch=OwnerBranch(actors,contexts,decisions,root,policy=policy)
             model_seed=int(digest(['signed-combat-model',contexts[0]['scope']['episode'],w.tick,sample])[:16],16)
             for depth in range(horizon):
                 if terminal(model) if genre=='combat' else tp.terminal(model):break

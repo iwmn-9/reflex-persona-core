@@ -9,12 +9,12 @@ import copy
 from .deliberation import select
 
 
-def safeguard(c, expanded, reference, policy, allowed=None):
+def safeguard(c, expanded, reference, policy, allowed=None,*,appraisal=None):
     if (expanded.target,expanded.horizon,expanded.audit.get('unit'))!=(reference.target,reference.horizon,reference.audit.get('unit')):
         raise ValueError('same purpose, horizon and public time unit required')
     permission=None if allowed is None else [allowed]
-    _,new_vote=select([c],expanded,policy,permission)
-    _,old_vote=select([c],reference,policy,permission)
+    _,new_vote=select([c],expanded,policy,permission,appraisal=appraisal)
+    _,old_vote=select([c],reference,policy,permission,appraisal=appraisal)
     new=new_vote.get('selected_plan');old=old_vote.get('selected_plan')
     report=dict(rule='paired endpoint nondeterioration against separately selected unexpanded bank',
         protected=False,accepted=True,reference_selection=old,expanded_selection=new,

@@ -22,7 +22,7 @@ def _forecast(c,nodes,*,horizon,unit,target,max_regret,policy,settlement_weight=
 def _rank(c,nodes,width,horizon,unit,target,max_regret,policy,settlement_weight='discounted'):
     indexed={f'candidate-{j:03d}':n for j,n in enumerate(nodes)}
     f=_forecast(c,indexed,horizon=horizon,unit=unit,target=target,max_regret=max_regret,policy=policy,settlement_weight=settlement_weight)
-    b=compile_batch(f.contexts);d=policy.decide(b,False);best=max(f.purpose.values());rank=[]
+    b=compile_batch(f.contexts);d=policy.decide(b,False,return_frame=f.return_frame);best=max(f.purpose.values());rank=[]
     for j,key in enumerate(b.ids[0]):
         proposal=f.audit['plans'][key]['proposal']
         rank.append((not(f.purpose[key]>=best-max_regret-1e-12),-float(d.scores[0,j]),proposal))

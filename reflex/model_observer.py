@@ -17,6 +17,9 @@ class ModelFeedback:
     needs: dict | None=None
     maintained: tuple=()
     completed: tuple=()
+    observed: object=None
+    event: object=None
+    social_events: tuple=()
 
 
 class ModelObserver:
@@ -53,6 +56,7 @@ class ModelObserver:
         if digest(context['scope'])!=self.owner:raise ValueError('model observer owner mismatch')
         fb=self.feedback(copy.deepcopy(before),copy.deepcopy(after),key)
         if not isinstance(fb,ModelFeedback):raise ValueError('explicit modeled feedback required')
+        if fb.observed is not None or fb.event is not None or fb.social_events:raise ValueError('modeled experience/relationship feedback requires an ActorModel')
         if self.progress is None and fb.purpose is not None:raise ValueError('unexpected modeled purpose feedback')
         if self.progress is not None and not isinstance(fb.purpose,PurposeFeedback):raise ValueError('modeled purpose feedback required')
         if self.pressure is None and (fb.needs is not None or fb.maintained or fb.completed):raise ValueError('unexpected modeled pressure feedback')

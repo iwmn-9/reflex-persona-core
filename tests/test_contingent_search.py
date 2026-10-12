@@ -59,7 +59,8 @@ class ContingentSearchTests(unittest.TestCase):
         m,c,observe,advance=self.setup_model();views=[]
         def control(view):
             self.assertIsInstance(view,View);views.append(view)
-            self.assertEqual(set(view.__dataclass_fields__),{'context','allowed','prefix','node'})
+            self.assertEqual(set(view.__dataclass_fields__),{'context','allowed','prefix','node','schema'})
+            self.assertEqual(view.schema,'exact-v1')
             return None
         before=digest(c)
         rollout(c,State(),observe=observe,advance=advance,terminal=m.terminal,horizon=3,seeds=(0,1),public_controller=control)

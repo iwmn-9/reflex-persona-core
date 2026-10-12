@@ -17,7 +17,7 @@ def concession(context):
     return float(np.clip(.05+.25*p['agreeableness']+.1*v['benevolence']-.05*v['power'],.05,.4))
 
 
-def select(base,forecast,*,group,mode='consent',outside=None):
+def select(base,forecast,*,group,mode='consent',outside=None,policy=None):
     identifier(group)
     if mode not in ('sum','consent'):raise ValueError('declared cooperation mode required')
     owners=[c['scope']['npc'] for c in base]
@@ -26,7 +26,7 @@ def select(base,forecast,*,group,mode='consent',outside=None):
         raise ValueError('one game, episode and simultaneous tick required')
     # Reuse the existing complete legality, owner, unchanged-facts and forecast
     # contract before computing a different optional selection criterion.
-    policy=Policy(principle_priority='finite')
+    policy=policy or Policy(principle_priority='finite')
     legacy,audit=joint_select(base,forecast,policy)
     audit.update(group=group,members=owners,cooperation_mode=mode)
     if mode=='sum' or legacy is None:return legacy,audit
@@ -35,7 +35,7 @@ def select(base,forecast,*,group,mode='consent',outside=None):
     for original in forecast.contexts:
         c=copy.deepcopy(original);by={a['id']:a for a in c['actions']}
         c['actions']=[by[k] for k in names];contexts.append(c)
-    b=compile_batch(contexts);d=policy.decide(b,False)
+    b=compile_batch(contexts);d=policy.decide(b,False,**({} if forecast.return_frame is None else dict(return_frame=forecast.return_frame)))
     purpose=np.array([forecast.purpose[k] for k in names])
     allowed=purpose>=purpose.max()-forecast.max_regret-1e-12
     reference=d.eligible.copy()

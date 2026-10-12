@@ -177,3 +177,20 @@ class SocialPopulation(Population):
             result.append(updates)
         self.social=memories
         return result
+
+
+def memory_record(memory):
+    """Persist the chosen projection as well as the underlying relationship."""
+    from .social_projection import CoarseSocialMemory
+    from .social_withdrawal import WithdrawalSocialMemory
+    kinds={SocialMemory:'continuous',CoarseSocialMemory:'coarse',WithdrawalSocialMemory:'withdrawal'}
+    if type(memory) not in kinds:raise ValueError('known social projection required')
+    return dict(kind=kinds[type(memory)],state=memory.record())
+
+
+def restore_memory(context,record):
+    from .social_projection import CoarseSocialMemory
+    from .social_withdrawal import WithdrawalSocialMemory
+    kinds={'continuous':SocialMemory,'coarse':CoarseSocialMemory,'withdrawal':WithdrawalSocialMemory}
+    if record['kind'] not in kinds:raise ValueError('known social projection required')
+    return kinds[record['kind']].from_record(context,record['state'])

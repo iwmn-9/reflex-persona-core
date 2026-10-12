@@ -12,7 +12,7 @@ from .examples import effect
 from .intertemporal import Branch
 
 
-def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None, observer=None, schedule=(), roots=None, record_choices=False,policy=None,schedule_sampler=None,root_state=None,replan_once=None,public_controller=None,public_history=''):
+def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), continuation=None, assess=None, observer=None, schedule=(), roots=None, record_choices=False,policy=None,schedule_sampler=None,root_state=None,replan_once=None,public_controller=None,public_history='',observation_schema=None):
     """Return complete root Branches and a diagnostic continuation audit.
 
     observe(state, actor_state) returns an immediate Policy context.
@@ -20,7 +20,8 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
     terminal includes owner death/known episode end where appropriate.
     Each model seed is one coherent trajectory, with equal probability. Caller
     keeps actual RNG separate. An optional scripted continuation is a control.
-    No hypothetical experience is learned; hypothetical intent/mode is carried.
+    Hypothetical experience never updates the real owner. ActorModel can update
+    a detached owner copy; the default continuation carries intent/mode only.
     Optional assess(final_state) records a game-owned endpoint assessment once.
     Optional ModelObserver forks actual progress/pressure for each branch. It
     updates only modeled state; continuation remains reflex, not recursive search.
@@ -54,8 +55,9 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
             raise ValueError('one public-observation continuation mechanism required')
         from .observation_plan import View,after_action,history
         history(public_history)
-    elif public_history!='':raise ValueError('history requires explicit public controller')
+    elif public_history!='' or observation_schema is not None:raise ValueError('history/schema requires explicit public controller')
     paths={};audit={};policy=policy or Policy()
+    if observer is not None and hasattr(observer,'validate_policy'):observer.validate_policy(policy)
     for root in roots:
         branches=[];traces=[]
         for seed in seeds:
@@ -76,11 +78,14 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
                 b=compile_batch([cc])
                 legal=b.legal if allowed is None or tick==0 else b.legal&np.array([[k in allowed for k in b.ids[0]]])
                 d=policy.decide(replace(b,legal=legal),False)
-                key=root if tick == 0 else (d.records(b)[0]['action_id'] if continuation is None else continuation(copy.deepcopy(state),copy.deepcopy(cc)))
+                preview=None
+                if modeled is not None and hasattr(modeled,'preview'):preview=modeled.preview()
+                reflex=d.records(b)[0]['action_id'] if preview is None else preview['action_id']
+                key=root if tick == 0 else (reflex if continuation is None else continuation(copy.deepcopy(state),copy.deepcopy(cc)))
                 if public_controller is not None:
                     permitted=[a['id'] for a in cc['actions'] if a['legal'] and not a['known_failure']
                         and (tick==0 or allowed is None or a['id'] in allowed)]
-                    view=View.make(prefix,cc,permitted)
+                    view=View.make(prefix,cc,permitted,schema=observation_schema)
                     supplied=None if tick==0 else public_controller(view)
                     if supplied is not None:
                         if supplied not in view.allowed:raise ValueError('public controller ignored observed permission')
@@ -121,8 +126,10 @@ def rollout(c, initial, *, observe, advance, terminal, horizon, seeds=(0,), cont
                 # Forced first roots still carry the Policy's current mode and
                 # need, with the actual selected root's intent/age transition.
                 memory=replace(d,action=np.array([b.ids[0].index(key)])).records(b)[0]['next_state']
+                if preview is not None:memory=modeled.commit_choice(key)['next_state']
                 if tick==0 and root_state is not None:memory=copy.deepcopy(root_state)
                 if revised_memory is not None:memory=revised_memory
+                if preview is not None:modeled.adopt_state(memory)
                 before=copy.deepcopy(state);state,row=advance(state,key,seed)
                 if row.get('p') != 1:raise ValueError('branch probability must not be counted twice')
                 flows.append(copy.deepcopy(row));actions.append(key)

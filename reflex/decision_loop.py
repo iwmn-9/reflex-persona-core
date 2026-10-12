@@ -109,6 +109,7 @@ class Request:
     invalidate: tuple=()
     purpose: object=None
     value_proposal: object=None
+    social_bindings: object=None
 
 
 @dataclass(frozen=True)
@@ -169,7 +170,7 @@ class DecisionLoop:
     Internal intent state is carried automatically. JSON boundary is audited;
     this path does not replace the existing fast numeric Population runtime.
     """
-    def __init__(self,context,policy=None,read_control=None,capacity=64,predictor=None,pressure=None,progress=None):
+    def __init__(self,context,policy=None,read_control=None,capacity=64,predictor=None,pressure=None,progress=None,social=None):
         compile_batch([context])
         self.scope=copy.deepcopy(context['scope']);self.owner=digest(self.scope)
         self.personality=copy.deepcopy(context['personality']);self.values=copy.deepcopy(context['values']);self.seed=context['seed']
@@ -183,6 +184,12 @@ class DecisionLoop:
         self.pressure=copy.deepcopy(pressure)
         if progress is not None and (not isinstance(progress,ProgressWatch) or progress.owner!=self.owner):raise ValueError('progress owner mismatch')
         self.progress=copy.deepcopy(progress)
+        self.social=None
+        if social is not None:
+            from .social import memory_record
+            memory_record(social)
+            if social.owner!=self.owner or social.personality!=self.personality or social.values!=self.values:raise ValueError('social owner or disposition mismatch')
+            self.social=copy.deepcopy(social)
 
     def _prepare(self,request):
         if not isinstance(request,Request):raise ValueError('Request required')
@@ -217,6 +224,12 @@ class DecisionLoop:
             memory.entries.pop((method,situation),None)
             evidence.entries.pop('experience:'+digest([method,situation]),None)
         shadow,stats=memory.prepare(c,bindings);effective=copy.deepcopy(shadow)
+        social_scores=None;social_audit=None
+        if self.social is not None:
+            if not isinstance(request.social_bindings,dict):raise ValueError('explicit social root bindings required')
+            bb=compile_batch([effective]);ss,social_audit=self.social.scores(bb.ids[0],bb.targets[0],request.social_bindings,c['tick'])
+            social_scores=dict(zip(bb.ids[0],map(float,ss)))
+        elif request.social_bindings is not None:raise ValueError('social bindings require owned relationship state')
         for a in effective['actions']:
             b=bindings[a['id']];key='experience:'+digest([b.method,b.situation])
             stats[a['id']]['gate']=evidence.status(key)
@@ -231,13 +244,15 @@ class DecisionLoop:
             response_trial=dict(key='response:'+digest(self.predictor.key),prior=prior,candidate=candidate)
         return dict(loop=self,request=request,raw=c,shadow=shadow,effective=effective,
             bindings=bindings,exact=exact,memory=memory,evidence=evidence,learning=stats,reading=None,response_trial=response_trial,
-            progress_allowed=allowed,progress_audit=progress_audit)
+            progress_allowed=allowed,progress_audit=progress_audit,social_scores=social_scores,social_audit=social_audit)
 
     @staticmethod
-    def decide_batch(items,stochastic=True,planner=None):
+    def decide_batch(items,stochastic=True,planner=None,*,_counterfactual_roots=None):
         """Batch all reflex scoring; readers are bounded and optional per actor."""
         if not items:return []
         if len({loop.owner for loop,_ in items})!=len(items):raise ValueError('duplicate actor owner')
+        if _counterfactual_roots is not None and (not isinstance(_counterfactual_roots,tuple) or len(_counterfactual_roots)!=len(items) or planner is not None):
+            raise ValueError('explicit detached counterfactual roots without another planner required')
         policy=items[0][0].policy
         if any(not np.array_equal(loop.policy.residual,policy.residual) or loop.policy.principle_priority!=policy.principle_priority for loop,_ in items):
             raise ValueError('batch must share policy coefficients')
@@ -277,7 +292,11 @@ class DecisionLoop:
         masks=np.array([[[name in s['exact'][key] for name in FEATURES] if j<len(b.ids[i]) else [False]*len(FEATURES)
             for j,key in enumerate(list(b.ids[i])+[None]*(b.legal.shape[1]-len(b.ids[i])))] for i,s in enumerate(stages)],dtype=bool)
         progress_mask=np.array([[k in s['progress_allowed'] for k in list(b.ids[i])+[None]*(b.legal.shape[1]-len(b.ids[i]))] for i,s in enumerate(stages)])
-        guarded,removed=avoid_waste(replace(b,legal=b.legal&progress_mask),masks);numeric=policy.decide(guarded,stochastic)
+        guarded,removed=avoid_waste(replace(b,legal=b.legal&progress_mask),masks)
+        social_kwargs={}
+        if any(s['social_scores'] is not None for s in stages):
+            social_kwargs['appraisal']=np.array([[(s['social_scores'] or {}).get(k,0.) for k in list(b.ids[i])+[None]*(b.legal.shape[1]-len(b.ids[i]))] for i,s in enumerate(stages)])
+        numeric=policy.decide(guarded,stochastic,**social_kwargs)
         records=numeric.records(guarded)
         proof_indices=[i for i,s in enumerate(stages) if s['loop'].progress is not None and
             s['loop'].progress.config.proof_margin is not None and s['progress_audit']['applied']]
@@ -333,7 +352,7 @@ class DecisionLoop:
                     mm=np.array([[[name in s['exact'][k] for name in FEATURES] for k in bb.ids[0]]])
                     bb=replace(bb,legal=bb.legal&np.array([[k in s['progress_allowed'] for k in bb.ids[0]]]))
                     bb,_=avoid_waste(bb,mm)
-                    dd=policy.decide(bb,stochastic)
+                    dd=policy.decide(bb,stochastic,**({} if s['social_scores'] is None else dict(appraisal=np.array([[s['social_scores'].get(k,0.) for k in bb.ids[0]]]))))
                     j=int(dd.action[0]);old_j=bb.ids[0].index(s['decision']['action_id'])
                     use=not dd.eligible[0,old_j] or dd.scores[0,j]-dd.scores[0,old_j]>.05
                     chosen=bb.ids[0][j] if use else s['decision']['action_id']
@@ -349,7 +368,7 @@ class DecisionLoop:
             # same method/condition evidence for EVERY changed root decision.
             approved=np.array([[proposal.known_conditionals or s['evidence'].accepted(key+':'+digest([s['bindings'][k].method,s['bindings'][k].situation]))
                 or j==old for j,k in enumerate(rb.ids[0])]])
-            rb=replace(rb,legal=rb.legal&approved);rd=policy.decide(rb,stochastic)
+            rb=replace(rb,legal=rb.legal&approved);rd=policy.decide(rb,stochastic,**({} if s['social_scores'] is None else dict(appraisal=np.array([[s['social_scores'].get(k,0.) for k in rb.ids[0]]]))))
             audit['unvalidated_roots']=[k for j,k in enumerate(rb.ids[0]) if not approved[0,j]]
             new=int(rd.action[0])
             gain=float(rd.scores[0,new]-rd.scores[0,old])
@@ -366,9 +385,10 @@ class DecisionLoop:
             contexts=[copy.deepcopy(s['effective']) for s in stages]
             forecast=planner(contexts,copy.deepcopy(baseline_records) if proof_indices else [copy.deepcopy(s['decision']) for s in stages])
             if forecast is not None:
-                decisions,audit=select(contexts,forecast,policy,root_allowed=[s['progress_allowed'] for s in stages])
+                root_appraisal=None if not social_kwargs else [s['social_scores'] or {} for s in stages]
+                decisions,audit=select(contexts,forecast,policy,root_allowed=[s['progress_allowed'] for s in stages],appraisal=root_appraisal)
                 if proof_indices:
-                    original,old_audit=select(contexts,forecast,policy,root_allowed=base_allowed)
+                    original,old_audit=select(contexts,forecast,policy,root_allowed=base_allowed,appraisal=root_appraisal)
                     original=original or baseline_records
                     needed=any(original[i]['action_id'] not in stages[i]['progress_allowed'] for i in proof_indices)
                     # A game may supply extra constrained options when its
@@ -380,7 +400,7 @@ class DecisionLoop:
                         if recovery is not None:
                             if recovery.horizon!=forecast.horizon or recovery.max_regret!=forecast.max_regret or recovery.target!=forecast.target:
                                 raise ValueError('recovery must keep purpose target, horizon and persona corridor')
-                            decisions,extra_audit=select(contexts,recovery,policy,root_allowed=[s['progress_allowed'] for s in stages])
+                            decisions,extra_audit=select(contexts,recovery,policy,root_allowed=[s['progress_allowed'] for s in stages],appraisal=root_appraisal)
                             extra_audit['recovery_options']=dict(before=copy.deepcopy(audit),expanded=True)
                             audit=extra_audit
                             old_audit['recovery_attempt']=copy.deepcopy(extra_audit)
@@ -414,7 +434,8 @@ class DecisionLoop:
             completed,completion_audit=constrained_completion(
                 [s['effective'] for s in stages],[s['decision'] for s in stages],
                 [s['progress_allowed'] for s in stages],masks,policy,planner.complete_fallback,
-                [set((s['progress_audit'] or {}).get('blocked',{})) for s in stages])
+                [set((s['progress_audit'] or {}).get('blocked',{})) for s in stages],
+                appraisal=None if not social_kwargs else [s['social_scores'] or {} for s in stages])
             for s,d in zip(stages,completed):
                 s['decision']=d;s['root_completion']=copy.deepcopy(completion_audit)
         for s in stages:
@@ -422,7 +443,18 @@ class DecisionLoop:
             if proposal is not None:
                 from .paired_guard import constrain
                 s['decision'],s['value_guard']=constrain(s['effective'],s['decision'],proposal,
-                    policy,s['progress_allowed'],s['exact'])
+                    policy,s['progress_allowed'],s['exact'],appraisal=s['social_scores'])
+        if _counterfactual_roots is not None:
+            # Detached model trials compare even a root the real progress guard
+            # would reject. Only this forced first step differs; later choices
+            # still use the owner's guard. Physical viability is never relaxed.
+            for s,key in zip(stages,_counterfactual_roots):
+                c=s['effective'];a=next((a for a in c['actions'] if a['id']==key),None)
+                if a is None or not a['legal'] or a['known_failure']:raise ValueError('viable counterfactual root required')
+                d=copy.deepcopy(s['decision']);old=c['state']
+                d.update(action_id=key,target=a['target'])
+                d['next_state'].update(intent_action=key,age=min(old['age']+1,1000000) if old['intent_action']==key else 0)
+                s['decision']=d;s['counterfactual']=dict(root=key,progress_allowed=key in s['progress_allowed'])
         # All validation/scoring, including every reader, completes BEFORE any
         # actor advances. Exceptions leave every original actor untouched.
         results=[]
@@ -448,6 +480,8 @@ class DecisionLoop:
             if 'deliberation' in s:result['deliberation']=s['deliberation']
             if 'root_completion' in s:result['root_completion']=s['root_completion']
             if 'value_guard' in s:result['value_guard']=s['value_guard']
+            if 'counterfactual' in s:result['counterfactual']=s['counterfactual']
+            if s['social_audit'] is not None:result['social']=s['social_audit']
             if s['progress_audit'] is not None:result['progress']=s['progress_audit']
             results.append(result)
         return results
@@ -455,7 +489,7 @@ class DecisionLoop:
     def decide(self,request,stochastic=True):
         return self.decide_batch([(self,request)],stochastic)[0]
 
-    def observe(self,ticket,observed,event=None,need_progress=None,maintained=(),completed=(),purpose_feedback=None):
+    def observe(self,ticket,observed,event=None,need_progress=None,maintained=(),completed=(),purpose_feedback=None,social_events=()):
         if self.pending is None or ticket!=self.pending['ticket']:raise ValueError('matching outstanding ticket required')
         memory=copy.deepcopy(self.memory);evidence=copy.deepcopy(self.evidence)
         update=memory.observe(ticket,observed)  # validates vector BEFORE evidence changes
@@ -495,12 +529,23 @@ class DecisionLoop:
             predictor,model_update=predictor.updated(p['raw'],observed,event,ticket)
         pressure,pressure_update=self._progress(need_progress,maintained,completed)
         progress,progress_update=self._purpose(purpose_feedback)
+        social,social_update=self._social(social_events)
         self.memory=memory;self.evidence=evidence;self.predictor=predictor;self.pending=None;self.pressure=pressure
-        self.progress=progress
+        self.progress=progress;self.social=social
         result=dict(memory=update,learning=learning,reading=reading,decision_comparison=decision_comparison,predictor=model_update)
         if self.pressure is not None:result['pressure']=pressure_update
         if self.progress is not None:result['progress']=progress_update
+        if self.social is not None:result['social']=social_update
         return result
+
+    def _social(self,events):
+        from .social import SocialEvent
+        social=copy.deepcopy(self.social);updates=[]
+        if events and social is None:raise ValueError('social feedback requires owned relationship state')
+        for event in events:
+            if not isinstance(event,SocialEvent) or event.tick!=self.pending['tick']:raise ValueError('selected interval social event required')
+            updates.append(social.observe(event))
+        return social,updates
 
     def _purpose(self,feedback):
         progress=copy.deepcopy(self.progress);update=None
@@ -517,7 +562,7 @@ class DecisionLoop:
         elif maintained or completed:raise ValueError('need labels require observed progress')
         return pressure,update
 
-    def abandon(self,ticket,need_progress=None,maintained=(),completed=(),purpose_feedback=None):
+    def abandon(self,ticket,need_progress=None,maintained=(),completed=(),purpose_feedback=None,social_events=()):
         """No effect-vector learning; optionally resolve separate actual need progress.
 
         Game goal progress need not equal an immediate predicted effect vector.
@@ -526,8 +571,9 @@ class DecisionLoop:
         if self.pending is None or ticket!=self.pending['ticket']:raise ValueError('matching outstanding ticket required')
         pressure,_=self._progress(need_progress,maintained,completed)
         progress,_=self._purpose(purpose_feedback)
+        social,_=self._social(social_events)
         self.memory.pending=None;self.memory.last_tick=self.pending['tick'];self.pending=None;self.pressure=pressure
-        self.progress=progress
+        self.progress=progress;self.social=social
 
     def record(self):
         if self.pending is not None:raise ValueError('resolve observation before checkpointing')
@@ -542,6 +588,9 @@ class DecisionLoop:
         if self.policy.commitments is not None:result['policy_commitments']={self.character:self.policy.commitments[self.character]}
         if self.pressure is not None:result['pressure']=self.pressure.record()
         if self.progress is not None:result['progress']=self.progress.record()
+        if self.social is not None:
+            from .social import memory_record
+            result['social']=memory_record(self.social)
         return result
 
     @classmethod
@@ -554,6 +603,9 @@ class DecisionLoop:
                 raise ValueError('checkpoint policy changed')
         if read_control is not None and read_control!=saved_control:raise ValueError('checkpoint reading budget changed')
         loop=cls(context,policy or saved_policy,read_control or saved_control,record['memory']['capacity'],predictor)
+        if record.get('social') is not None:
+            from .social import restore_memory
+            loop.social=restore_memory(context,record['social'])
         if record.get('pressure') is not None:loop.pressure=NeedPressure.from_record(loop.scope,record['pressure'])
         if record.get('progress') is not None:loop.progress=ProgressWatch.from_record(loop.scope,record['progress'])
         if loop.progress is not None and loop.progress.last_tick!=record['last_tick']:raise ValueError('progress checkpoint timeline mismatch')

@@ -22,7 +22,7 @@ class ValueProposal:
     max_regret: float=.12
 
 
-def constrain(context,incumbent,proposal,policy,allowed,exact):
+def constrain(context,incumbent,proposal,policy,allowed,exact,*,appraisal=None):
     if not isinstance(proposal,ValueProposal):raise ValueError('explicit ValueProposal required')
     identifier(proposal.scope);identifier(proposal.target)
     viable=[a['id'] for a in context['actions'] if a['legal'] and not a['known_failure']]
@@ -37,7 +37,8 @@ def constrain(context,incumbent,proposal,policy,allowed,exact):
     batch=compile_batch([context])
     mask=np.array([[[f in exact[k] for f in FEATURES] for k in batch.ids[0]]])
     batch,_=avoid_waste(replace(batch,legal=batch.legal&np.array([[k in allowed for k in batch.ids[0]]])),mask)
-    scored=policy.decide(batch,False)
+    extra={} if appraisal is None else dict(appraisal=np.array([[appraisal.get(k,0.) for k in batch.ids[0]]]))
+    scored=policy.decide(batch,False,**extra)
     permitted=[k for j,k in enumerate(batch.ids[0]) if scored.eligible[0,j]]
     audit=dict(scope=proposal.scope,target=proposal.target,model_sha256=digest(proposal.model),changed=False,
         uncertainty='held-out paired residual is empirical; no true-game safety guarantee',

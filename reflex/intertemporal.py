@@ -11,6 +11,7 @@ from .core import compile_batch, identifier, number, MAX_OUTCOMES
 from .examples import action
 from .planning import vector, from_vector
 from .deliberation import JointForecast
+from .valuation import ReturnFrame
 
 
 @dataclass(frozen=True)
@@ -37,8 +38,9 @@ def patience(c):
 def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None,plan_roots=None):
     """One actor, all viable roots, <=8 coherent conditional branches per root.
 
-    Discounted flows use ONE common denominator sum(gamma**t), keeping effects
-    bounded without clipping away costs. A zero flow pads an absorbing terminal;
+    Discounted flows use ONE common denominator sum(gamma**t) for bounded
+    transport. ReturnFrame restores cumulative scoring units before the Policy
+    tier and utility are evaluated. A zero flow pads an absorbing terminal;
     an unknown/truncated future must NOT be padded by the adapter. Probabilities
     describe modeled branches, confidence discounts their positive estimates
     (never their losses/costs). Root confidence is still applied by Policy.
@@ -96,5 +98,5 @@ def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None,plan_
     compile_batch([future])
     return JointForecast((future,),plans,purpose,horizon,max_regret,
         dict(discount=gamma,normalizer=normalizer,unit=unit,plans=audit,
-             contract='incremental flows; no unseen tail value; confidence is not a calibrated success probability'),
-        target=target)
+             contract='bounded transport of discounted incremental returns; no unseen tail value; confidence is not calibrated'),
+        target=target,return_frame=ReturnFrame.flows((future,),normalizer,unit))

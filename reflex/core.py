@@ -64,6 +64,7 @@ class Batch:
     targets: tuple
     hashes: tuple
     characters: tuple
+    owners: tuple
     traits: np.ndarray
     values: np.ndarray
     needs: np.ndarray
@@ -119,7 +120,7 @@ def compile_batch(contexts):
     primary = np.full(n, -1, int); mode = np.full(n, -1, int); intent = primary.copy()
     age = np.zeros(n, int); mode_urgency=np.zeros(n); seeds=np.zeros(n,dtype=np.uint64); ticks=seeds.copy(); read_confidence = np.zeros(n)
     read_uncertainty = np.zeros(n); threatened = np.zeros(n, bool); ahead = threatened.copy()
-    ids, targets, hashes, characters = [], [], [], []
+    ids, targets, hashes, characters, owners = [], [], [], [], []
     for i, c in enumerate(contexts):
         exact(c, ("version", "scope", "seed", "tick", "personality", "values", "needs",
                   "state", "objective", "facts", "actions", "opponent"))
@@ -153,7 +154,7 @@ def compile_batch(contexts):
         ordered = sorted(c["actions"], key=lambda action: action["id"])
         action_ids = tuple(identifier(act["id"]) for act in ordered)
         if len(set(action_ids)) != len(action_ids): raise ValueError("duplicate action id")
-        ids.append(action_ids); targets.append(tuple(act["target"] for act in ordered)); hashes.append(digest(c)); characters.append(character_key(c))
+        ids.append(action_ids); targets.append(tuple(act["target"] for act in ordered)); hashes.append(digest(c)); characters.append(character_key(c));owners.append(owner_key(c))
         if s["intent_action"] is not None:
             identifier(s["intent_action"])
             if s["intent_action"] in action_ids: intent[i] = action_ids.index(s["intent_action"])
@@ -188,7 +189,7 @@ def compile_batch(contexts):
     rng=counter_rng(seeds,ticks)
     arrays = locals()
     fields = {key: arrays[key] for key in Batch.__dataclass_fields__}
-    for key in ("ids", "targets", "hashes", "characters"): fields[key] = tuple(fields[key])
+    for key in ("ids", "targets", "hashes", "characters", "owners"): fields[key] = tuple(fields[key])
     for value in fields.values():
         if isinstance(value,np.ndarray): value.flags.writeable = False
     return Batch(**fields)
@@ -244,7 +245,7 @@ class Policy:
     def signature(self):
         return self.principle_priority,tuple(self.residual),self._commitments
 
-    def decide(self, b, stochastic=True, *, appraisal=None, purpose=None, max_social_regret=.15):
+    def decide(self, b, stochastic=True, *, appraisal=None, purpose=None, max_social_regret=.15,return_frame=None):
         n,a,k,d = b.effects.shape; rows=np.arange(n)
         old=np.maximum(b.primary,0); best=b.needs.argmax(1)
         # Intent switches only for material urgency changes; no rigid Maslow ranking.
@@ -276,6 +277,12 @@ class Policy:
         w[:,-1]=-.6
         # Outcome effects are bounded and residual cannot bypass legal/failure masks.
         perceived=b.effects.copy()
+        root_scale=None
+        if return_frame is not None:
+            from .valuation import ReturnFrame
+            if not isinstance(return_frame,ReturnFrame):raise ValueError('explicit owned return units required')
+            scales,root_scale=return_frame.numeric(b)
+            perceived*=scales[:,None,None,:]
         perceived[:,:,:,:-1]*=np.where(perceived[:,:,:,:-1]>0,b.confidence[:,:,None,None],1)
         outcome=np.einsum('nakd,nd->nak',perceived,w)
         means=np.einsum('nak,nakd->nad',b.probability,perceived)
@@ -286,6 +293,7 @@ class Policy:
         risk_adjusted=expected-risk[:,None]*loss
         familiar=.10*(1-b.confidence)*b.familiarity
         switch=b.switch_cost*(np.arange(a)[None,:]!=b.intent[:,None])
+        if root_scale is not None:familiar*=root_scale[:,None];switch*=root_scale[:,None]
         scores=risk_adjusted+familiar-switch
         top_effect=means[rows,:,6+top]
         primary_effect=means[rows,:,1+np.maximum(primary,0)]* (primary>=0)[:,None]

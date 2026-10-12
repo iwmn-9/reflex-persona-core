@@ -14,8 +14,8 @@ class CategoricalReader:
     loop trains this owner-local tracker only after the actual event is revealed.
     World state/pending opponent moves are never supplied to these callbacks.
     """
-    def __init__(self,scope,names,models_for,outcome_for,key='categorical-response',known_conditionals=False):
-        self.owner=digest(scope);self.tracker=HypothesisTracker(names)
+    def __init__(self,scope,names,models_for,outcome_for,key='categorical-response',known_conditionals=False,*,belief_options=None):
+        self.owner=digest(scope);self.tracker=HypothesisTracker(names,**(belief_options or {}));self.configured=bool(belief_options)
         if type(known_conditionals) is not bool:raise ValueError('explicit known-rule declaration required')
         self.models_for=models_for;self.outcome_for=outcome_for;self.key=key;self.known_conditionals=known_conditionals
         self.recent=deque(maxlen=4)
@@ -58,12 +58,23 @@ class CategoricalReader:
 
     def record(self):
         t=self.tracker
+        if self.configured or t.prior is not None or t.inertia or t.assumption_trust:
+            return dict(version='loop-predictor-v2',owner=self.owner,key=self.key,known_conditionals=self.known_conditionals,
+                tracker=t.record(),recent=list(self.recent))
         return dict(version='loop-predictor-v1',owner=self.owner,key=self.key,known_conditionals=self.known_conditionals,names=list(t.names),
             logs=list(t.logs),observations=t.observations,lifts=list(t.lifts),ids=list(t.ids),surprise=t.surprise,recent=list(self.recent))
 
     def restored(self,record):
         import math
         from collections import deque
+        if record['version']=='loop-predictor-v2':
+            if any(record[k]!=getattr(self,k) for k in ('owner','key','known_conditionals')):raise ValueError('predictor checkpoint contract mismatch')
+            t=HypothesisTracker.from_record(record['tracker'])
+            configuration=lambda x:(x.names,x.retention,x.smoothing,x.lifts.maxlen,x.responsive,x.prior,x.inertia,x.assumption_trust)
+            if configuration(t)!=configuration(self.tracker):raise ValueError('predictor disposition changed')
+            if not isinstance(record['recent'],list) or len(record['recent'])>4 or any(not isinstance(k,str) or not k for k in record['recent']):raise ValueError('invalid recent response checkpoint')
+            new=copy.deepcopy(self);new.tracker=t;new.configured=True;new.recent=deque(record['recent'],maxlen=4);return new
+        if self.configured or self.tracker.prior is not None or self.tracker.inertia or self.tracker.assumption_trust:raise ValueError('predictor disposition missing from old checkpoint')
         if record['version']!='loop-predictor-v1' or record['owner']!=self.owner or record['key']!=self.key or record['known_conditionals']!=self.known_conditionals or tuple(record['names'])!=self.tracker.names:
             raise ValueError('predictor checkpoint contract mismatch')
         new=copy.deepcopy(self);t=new.tracker
@@ -85,10 +96,10 @@ class SupportedCategoricalReader:
     the adapter's versioned meaning of those classes; checkpoint restore cannot
     silently change it. Branch evaluations retain the ordinary node accounting.
     """
-    def __init__(self,scope,names,models_for,outcome_for,*,classes,opportunity_for,support_key,key='categorical-response',known_conditionals=False):
+    def __init__(self,scope,names,models_for,outcome_for,*,classes,opportunity_for,support_key,key='categorical-response',known_conditionals=False,belief_options=None):
         if not isinstance(support_key,str) or not 0<len(support_key)<=128:raise ValueError('versioned bounded support contract required')
         self.owner=digest(scope);self.key=key;self.support_key=support_key;self.opportunity_for=opportunity_for
-        self.support=SupportBanks(classes,lambda:CategoricalReader(scope,names,models_for,outcome_for,key,known_conditionals))
+        self.support=SupportBanks(classes,lambda:CategoricalReader(scope,names,models_for,outcome_for,key,known_conditionals,belief_options=belief_options))
         for opportunity in self.support.classes:
             self.support.select(opportunity).key=key+':'+digest([support_key,opportunity])
 

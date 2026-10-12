@@ -9,6 +9,8 @@ import copy
 from .core import Policy,compile_batch,identifier,number
 from .intertemporal import forecast
 from .progress import ProgressWatch,ProgressConfig
+from .valuation import ReturnFrame
+from .planning import vector
 
 
 @dataclass(frozen=True)
@@ -55,6 +57,10 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
             steps=trace['actions']
             if not isinstance(steps,list) or not 1<=len(steps)<=horizon or steps[0]!=root:
                 raise ValueError('actual modeled settlement/cutoff time required')
+            if g.status=='running' and len(steps)!=horizon:
+                raise ValueError('unknown truncated future cannot be padded as a terminal')
+            if any(any(vector(row)) for row in branch.effects[len(steps):]):
+                raise ValueError('no reward or preference flow after modeled settlement')
             confidence=min(branch.confidence[:len(steps)]) if g.value>0 else 1.
             time_weight=1. if settlement_weight=='absolute' and g.status!='running' else f.audit['discount']**(len(steps)-1)
             out['objective']=g.value*confidence*time_weight
@@ -64,15 +70,16 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
         endpoint[a['id']]=goals
     # Preserving the tier before the purpose gate prevents a competence band
     # from silently substituting a lower-principle option for the owner.
-    b=compile_batch([fc]);d=(policy or Policy()).decide(b,False)
+    frame=ReturnFrame.flows((fc,),f.audit['normalizer'],unit,endpoint=True)
+    b=compile_batch([fc]);d=(policy or Policy()).decide(b,False,return_frame=frame)
     retained={key for key,yes in zip(b.ids[0],d.eligible[0]) if yes}
     fc['actions']=[a for a in fc['actions'] if a['id'] in retained]
     metadata=copy.deepcopy(f.audit);metadata.update(endpoint=endpoint,original_tier_plans=sorted(retained),
         endpoint_semantics='settled result OR explicit nonterminal proxy; not calibrated win EV',
-        readiness_learned=False)
+        readiness_learned=False,return_frame=frame.record())
     if settlement_weight=='absolute':metadata['subjective_settlement_semantics']='absolute terminal outcome once; running cutoff proxy and preference flows still discounted'
     return replace(f,contexts=(fc,),roots={k:v for k,v in f.roots.items() if k in retained},
-        purpose={k:v for k,v in purpose.items() if k in retained},audit=metadata)
+        purpose={k:v for k,v in purpose.items() if k in retained},audit=metadata,return_frame=frame)
 
 
 class PersonaProgressWatch(ProgressWatch):

@@ -22,23 +22,24 @@ class JointForecast:
     continuity: object=None
     stability_reference: object=None
     replan_check: object=None
+    return_frame: object=None
 
 
-def select(base,forecast,policy=None,root_allowed=None):
+def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
     if not isinstance(forecast,JointForecast):raise ValueError('JointForecast required')
     if forecast.replan_check is not None:
         from .replan_check import ReplanCheck
         if len(base)!=1 or not isinstance(forecast.replan_check,ReplanCheck):raise ValueError('one owner feedback check required')
         checked=forecast.replan_check.apply(base[0],replace(forecast,replan_check=None),policy or Policy(),
-            None if root_allowed is None else root_allowed[0])
-        return select(base,checked,policy,root_allowed)
+            None if root_allowed is None else root_allowed[0],appraisal=appraisal)
+        return select(base,checked,policy,root_allowed,appraisal=appraisal)
     if forecast.stability_reference is not None:
         if len(base)!=1 or not isinstance(forecast.stability_reference,JointForecast) or forecast.stability_reference.stability_reference is not None:
             raise ValueError('one owner and nonrecursive reference forecast required')
         from .repair_stability import safeguard
         checked=safeguard(base[0],replace(forecast,stability_reference=None),forecast.stability_reference,
-            policy or Policy(),None if root_allowed is None else root_allowed[0])
-        return select(base,checked,policy,root_allowed)
+            policy or Policy(),None if root_allowed is None else root_allowed[0],appraisal=appraisal)
+        return select(base,checked,policy,root_allowed,appraisal=appraisal)
     identifier(forecast.target)
     if type(forecast.horizon) is not int or not 1<=forecast.horizon<=16:raise ValueError('bounded horizon required')
     if isinstance(forecast.max_regret,bool) or not np.isfinite(forecast.max_regret) or not 0<=forecast.max_regret<=2:
@@ -77,7 +78,14 @@ def select(base,forecast,policy=None,root_allowed=None):
     contexts=[]
     for fc in forecast.contexts:
         c=copy.deepcopy(fc);by={a['id']:a for a in c['actions']};c['actions']=[by[k] for k in names];contexts.append(c)
-    b=compile_batch(contexts);p=policy or Policy();d=p.decide(replace(b,legal=b.legal&allowed[None,:]),False)
+    b=compile_batch(contexts);p=policy or Policy()
+    framed={} if forecast.return_frame is None else dict(return_frame=forecast.return_frame)
+    if appraisal is not None:
+        if len(appraisal)!=len(base) or any(not isinstance(row,dict) or set(row)-{a['id'] for a in c['actions']} for c,row in zip(base,appraisal)):
+            raise ValueError('one current-root appraisal per owner required')
+        framed.update(appraisal=np.array([[row.get(forecast.roots[k][i],0.) for k in names] for i,row in enumerate(appraisal)]),
+            purpose=np.tile(purpose,(len(base),1)))
+    d=p.decide(replace(b,legal=b.legal&allowed[None,:]),False,**framed)
     # Cooperation cannot silently overwrite an individual's strongest value.
     # Accept a joint plan only when every actor's current tier permits it.
     votes=d.eligible.sum(0);eligible=allowed&d.eligible.all(0)
