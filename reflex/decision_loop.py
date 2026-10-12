@@ -170,7 +170,9 @@ class DecisionLoop:
     Internal intent state is carried automatically. JSON boundary is audited;
     this path does not replace the existing fast numeric Population runtime.
     """
-    def __init__(self,context,policy=None,read_control=None,capacity=64,predictor=None,pressure=None,progress=None,social=None):
+    def __init__(self,context,policy=None,read_control=None,capacity=64,predictor=None,pressure=None,progress=None,social=None,*,decision_metric='purpose'):
+        if decision_metric not in ('purpose','persona'):raise ValueError('declared decision evidence metric required')
+        self.decision_metric=decision_metric
         compile_batch([context])
         self.scope=copy.deepcopy(context['scope']);self.owner=digest(self.scope)
         self.personality=copy.deepcopy(context['personality']);self.values=copy.deepcopy(context['values']);self.seed=context['seed']
@@ -332,14 +334,14 @@ class DecisionLoop:
                 for a in c['actions']:
                     for row,response in zip(a['outcomes'],proposal.responses):row['p']=proposal.response_candidate[response]
                 s['decision_trial_context']=_validate_reading(s['effective'],replace(proposal,context=c,responses=proposal.response_candidate),s['bindings'],req.outcome_target,int(gate['nodes'][0]))
-                if s['evidence'].accepted(key) and s['evidence'].accepted(key+':decision'):
+                if s['evidence'].accepted(key) and s['evidence'].accepted(key+loop._decision_suffix()):
                     proposal=replace(proposal,context=c,responses=proposal.response_candidate)
             rc=_validate_reading(s['effective'],proposal,s['bindings'],req.outcome_target,int(gate['nodes'][0]))
             key=('response:' if proposal.known_conditionals else 'reader:')+digest(proposal.key)
             s['reading']=dict(context=rc,key=key,responses=copy.deepcopy(proposal.responses),known=proposal.known_conditionals)
             audit.update(nodes=proposal.nodes,gate=s['evidence'].status(key),reason='forecast_on_trial')
             if not proposal.known_conditionals and not s['evidence'].accepted(key):continue
-            audit['response_model']='validated_hypotheses' if proposal.known_conditionals and s['evidence'].accepted(key) and s['evidence'].accepted(key+':decision') else 'bounded_recent_response'
+            audit['response_model']='validated_hypotheses' if proposal.known_conditionals and s['evidence'].accepted(key) and s['evidence'].accepted(key+loop._decision_suffix()) else 'bounded_recent_response'
             rb=compile_batch([rc]);rm=np.array([[[name in s['exact'][k] for name in FEATURES] for k in rb.ids[0]]])
             rb=replace(rb,legal=rb.legal&np.array([[k in s['progress_allowed'] for k in rb.ids[0]]]))
             rb,_=avoid_waste(rb,rm)
@@ -347,22 +349,36 @@ class DecisionLoop:
                 # Competing choices are frozen before reveal. Known immediate
                 # conditional rules can later compare purpose effects under
                 # the SAME publicly revealed response. Never empirical samples.
-                def read_choice(c):
+                def read_choice(c,capture=False):
                     bb=compile_batch([c])
                     mm=np.array([[[name in s['exact'][k] for name in FEATURES] for k in bb.ids[0]]])
                     bb=replace(bb,legal=bb.legal&np.array([[k in s['progress_allowed'] for k in bb.ids[0]]]))
                     bb,_=avoid_waste(bb,mm)
-                    dd=policy.decide(bb,stochastic,**({} if s['social_scores'] is None else dict(appraisal=np.array([[s['social_scores'].get(k,0.) for k in bb.ids[0]]]))))
+                    outcome_audit={} if capture else None
+                    dd=policy.decide(bb,stochastic,outcome_audit=outcome_audit,**({} if s['social_scores'] is None else dict(appraisal=np.array([[s['social_scores'].get(k,0.) for k in bb.ids[0]]]))))
                     j=int(dd.action[0]);old_j=bb.ids[0].index(s['decision']['action_id'])
                     use=not dd.eligible[0,old_j] or dd.scores[0,j]-dd.scores[0,old_j]>.05
                     chosen=bb.ids[0][j] if use else s['decision']['action_id']
-                    return copy.deepcopy(next(a['outcomes'] for a in c['actions'] if a['id']==chosen)),chosen
+                    return copy.deepcopy(next(a['outcomes'] for a in c['actions'] if a['id']==chosen)),chosen,bb,outcome_audit,dd
                 bc=s.get('baseline_read',proposal.context)
-                baseline,base_choice=read_choice(bc)
-                candidate,candidate_choice=read_choice(s['decision_trial_context'])
-                s['decision_trial']=dict(key=key+':decision',responses=list(proposal.responses),
+                baseline,base_choice,base_batch,base_appraisal,_=read_choice(bc,loop.decision_metric=='persona')
+                candidate,candidate_choice,candidate_batch,_,candidate_decision=read_choice(s['decision_trial_context'])
+                s['decision_trial']=dict(key=key+loop._decision_suffix(),responses=list(proposal.responses),
                     baseline=baseline,candidate=candidate,base_choice=base_choice,candidate_choice=candidate_choice)
-                audit['decision_gate']=s['evidence'].status(key+':decision')
+                if loop.decision_metric=='persona':
+                    # ONE reference frame for both advice choices. A revised
+                    # forecast cannot reprice personality or private feelings
+                    # after seeing which response really happened.
+                    s['decision_trial']['appraisal']={choice:base_appraisal['scores'][0,base_batch.ids[0].index(choice),:len(proposal.responses)].tolist()
+                        for choice in (base_choice,candidate_choice)}
+                    goal=np.einsum('nak,nak->na',candidate_batch.probability,candidate_batch.effects[:,:,:,0])[0]
+                    valid=candidate_batch.legal[0]&~candidate_batch.known_failure[0]
+                    best=int(np.argmax(np.where(valid,goal,-np.inf)));chosen=candidate_batch.ids[0].index(candidate_choice)
+                    s['decision_trial']['candidate_rationale']=dict(purpose_best=candidate_batch.ids[0][best],
+                        expected_purpose_cost=float(goal[best]-goal[chosen]),
+                        persona_advantage=float(candidate_decision.scores[0,chosen]-candidate_decision.scores[0,best]),
+                        purpose_best_persona_eligible=bool(candidate_decision.eligible[0,best]))
+                audit['decision_gate']=s['evidence'].status(key+loop._decision_suffix())
             old=rb.ids[0].index(s['decision']['action_id'])
             # A model being good for A proves nothing about untried B. Require
             # same method/condition evidence for EVERY changed root decision.
@@ -489,6 +505,9 @@ class DecisionLoop:
     def decide(self,request,stochastic=True):
         return self.decide_batch([(self,request)],stochastic)[0]
 
+    def _decision_suffix(self):
+        return ':decision' if self.decision_metric=='purpose' else ':decision:persona-v1'
+
     def observe(self,ticket,observed,event=None,need_progress=None,maintained=(),completed=(),purpose_feedback=None,social_events=()):
         if self.pending is None or ticket!=self.pending['ticket']:raise ValueError('matching outstanding ticket required')
         memory=copy.deepcopy(self.memory);evidence=copy.deepcopy(self.evidence)
@@ -523,8 +542,21 @@ class DecisionLoop:
             trial=p['decision_trial'];j=trial['responses'].index(event['revealed_action'])
             if trial['base_choice']!=trial['candidate_choice']:
                 a=trial['baseline'][j]['objective'];b=trial['candidate'][j]['objective']
-                decision_comparison=evidence._update(trial['key'],(1-a)/2,(1-b)/2)
-                decision_comparison['kind']='known-rule purpose comparison; not observed unchosen samples'
+                if 'appraisal' in trial:
+                    def expectation(rows,values):return float(sum(r['p']*v for r,v in zip(rows,values)))
+                    av=trial['appraisal'][trial['base_choice']];bv=trial['appraisal'][trial['candidate_choice']]
+                    delta=bv[j]-av[j];bounded=float(np.clip(delta/2,-1,1))
+                    decision_comparison=evidence._update(trial['key'],max(bounded,0),max(-bounded,0))
+                    pa=sum(r['p']*r['objective'] for r in trial['baseline']);pb=sum(r['p']*r['objective'] for r in trial['candidate'])
+                    decision_comparison.update(persona_delta=delta,purpose_delta=b-a,
+                        baseline_choice=trial['base_choice'],candidate_choice=trial['candidate_choice'],executed_choice=p['action'],
+                        planned_purpose_delta=pb-pa,purpose_surprise_delta=(b-pb)-(a-pa),
+                        planned_persona_delta=expectation(trial['candidate'],bv)-expectation(trial['baseline'],av),
+                        candidate_rationale=copy.deepcopy(trial['candidate_rationale']),
+                        kind='known-rule paired decision-time appraisal; unchosen rule evaluation is not experience')
+                else:
+                    decision_comparison=evidence._update(trial['key'],(1-a)/2,(1-b)/2)
+                    decision_comparison['kind']='known-rule purpose comparison; not observed unchosen samples'
         if predictor is not None:
             predictor,model_update=predictor.updated(p['raw'],observed,event,ticket)
         pressure,pressure_update=self._progress(need_progress,maintained,completed)
@@ -585,6 +617,7 @@ class DecisionLoop:
                 min_trials=self.evidence.min_trials,margin=self.evidence.margin,
                 entries=[dict(key=k,state=e['state'],gains=list(e['gains'])) for k,e in self.evidence.entries.items()]))
         if self.policy.principle_priority!='lexicographic':result['principle_priority']=self.policy.principle_priority
+        if self.decision_metric!='purpose':result['decision_metric']=self.decision_metric
         if self.policy.commitments is not None:result['policy_commitments']={self.character:self.policy.commitments[self.character]}
         if self.pressure is not None:result['pressure']=self.pressure.record()
         if self.progress is not None:result['progress']=self.progress.record()
@@ -594,7 +627,9 @@ class DecisionLoop:
         return result
 
     @classmethod
-    def from_record(cls,context,record,policy=None,read_control=None,predictor=None):
+    def from_record(cls,context,record,policy=None,read_control=None,predictor=None,*,decision_metric=None):
+        metric=record.get('decision_metric','purpose')
+        if decision_metric is not None and decision_metric!=metric:raise ValueError('decision evidence metric changed')
         saved_policy=Policy(record['policy_residual'],principle_priority=record.get('principle_priority','lexicographic'),commitments=record.get('policy_commitments'));saved_control=ReadControl(**record['read_control'])
         if policy is not None:
             if not np.array_equal(policy.residual,saved_policy.residual) or policy.principle_priority!=saved_policy.principle_priority:
@@ -602,7 +637,7 @@ class DecisionLoop:
             if saved_policy.commitments is not None and any(policy.commitments.get(k)!=v for k,v in saved_policy.commitments.items()):
                 raise ValueError('checkpoint policy changed')
         if read_control is not None and read_control!=saved_control:raise ValueError('checkpoint reading budget changed')
-        loop=cls(context,policy or saved_policy,read_control or saved_control,record['memory']['capacity'],predictor)
+        loop=cls(context,policy or saved_policy,read_control or saved_control,record['memory']['capacity'],predictor,decision_metric=metric)
         if record.get('social') is not None:
             from .social import restore_memory
             loop.social=restore_memory(context,record['social'])

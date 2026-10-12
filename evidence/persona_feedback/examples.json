@@ -1,0 +1,3623 @@
+[
+  {
+    "cohort": "development",
+    "regime": "cycle",
+    "seed": 9100,
+    "profile": "care",
+    "endpoints": {
+      "purpose": {
+        "score": 8.18,
+        "appraisal": 35.610129400000005,
+        "values": {
+          "self_direction": 0.0,
+          "stimulation": 0.0,
+          "hedonism": 0.0,
+          "achievement": 0.0,
+          "power": 0.0,
+          "security": 0.0,
+          "conformity": 0.0,
+          "tradition": 0.0,
+          "benevolence": 21.8,
+          "universalism": 7.8
+        },
+        "model_uses": 0
+      },
+      "persona": {
+        "score": 9.360000000000001,
+        "appraisal": 41.47557475000001,
+        "values": {
+          "self_direction": 0.0,
+          "stimulation": 0.0,
+          "hedonism": 0.0,
+          "achievement": 0.0,
+          "power": 0.0,
+          "security": 0.0,
+          "conformity": 0.0,
+          "tradition": 0.0,
+          "benevolence": 27.200000000000003,
+          "universalism": 9.6
+        },
+        "model_uses": 39
+      }
+    },
+    "differences": [
+      {
+        "tick": 28,
+        "response": "decline",
+        "purpose": {
+          "tick": 28,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 2.680000000000001,
+          "energy": 0.07499999999999954,
+          "appraisal": -0.0742886000000001,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2361380219106499
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 4,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019509675247223995,
+            "gain": 0.23899372611332023,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "3166edcf002a2e107f1491e37f4e39b4195d3f42868615412e6eac19466540bb"
+        },
+        "persona": {
+          "tick": 28,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 2.640000000000001,
+          "energy": 0.6549999999999995,
+          "appraisal": 0.4248480000000003,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2361380219106499
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 4,
+              "recent_gain": 0.19980696250000018
+            },
+            "unvalidated_roots": [],
+            "gain": 0.29178796977148214
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.2495683000000002,
+            "candidate_loss": 0,
+            "gain": 0.2495683000000002,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.4991366000000004,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285715,
+            "purpose_surprise_delta": 0.007142857142857159,
+            "planned_persona_delta": -0.1987695428571425,
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019509675247223995,
+            "gain": 0.23899372611332023,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "1e37879d7ab79ec1dc2347493392ec0764982ce0b281a611dbac512619a33018"
+        }
+      },
+      {
+        "tick": 29,
+        "response": "cooperate",
+        "purpose": {
+          "tick": 29,
+          "action": "rest",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 2.760000000000001,
+          "energy": 0.4499999999999995,
+          "appraisal": 0.5311200000000003,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019508971993270844,
+            "gain": 0.2389944293672734,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "61011d5bb7abc69f9a66809da015638d66f314d91c850bb0db723953655dac5e"
+        },
+        "persona": {
+          "tick": 29,
+          "action": "cooperate",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": 0.12
+            },
+            "objective": 0.55,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 1,
+              "universalism": 0.3
+            }
+          },
+          "score": 3.1900000000000013,
+          "energy": 0.44999999999999946,
+          "appraisal": 1.411412,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23669919068430337
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 5,
+              "recent_gain": 0.20975923000000019
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019508971993270844,
+            "gain": 0.2389944293672734,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "7e78c007694701d46d06467947f66b9b6c4a4b398111379a467b12a81ce06a47"
+        }
+      },
+      {
+        "tick": 31,
+        "response": "decline",
+        "purpose": {
+          "tick": 31,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 2.7300000000000013,
+          "energy": 0.03999999999999953,
+          "appraisal": -0.08457965000000013,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23758513514973226
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 5,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019507856734066124,
+            "gain": 0.2389955446264781,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "59347e33da834833183a054ef62bef8043b74227f895ca5b9b5cae98fb397e68"
+        },
+        "persona": {
+          "tick": 31,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 3.1200000000000014,
+          "energy": 0.6199999999999994,
+          "appraisal": 0.44299200000000033,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23758513514973226
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 5,
+              "recent_gain": 0.20975923000000019
+            },
+            "unvalidated_roots": [],
+            "gain": 0.3195438898489831
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.26378582500000025,
+            "candidate_loss": 0,
+            "gain": 0.26378582500000025,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.5275716500000005,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285714,
+            "purpose_surprise_delta": 0.007142857142857145,
+            "planned_persona_delta": -0.17282524285714246,
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019507856734066124,
+            "gain": 0.2389955446264781,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "35b190d593e2e9b6ebdc2ad31bcbb880ee321f8318b8ea871735b8cd65a236ee"
+        }
+      },
+      {
+        "tick": 32,
+        "response": "cooperate",
+        "purpose": {
+          "tick": 32,
+          "action": "rest",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 2.8100000000000014,
+          "energy": 0.41499999999999954,
+          "appraisal": 0.5492640000000003,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019507411990717486,
+            "gain": 0.23899598936982674,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "32d9fba332903e4ba5071af6454d906cec284f7fb247f44a9fc5fc5b9dd8c515"
+        },
+        "persona": {
+          "tick": 32,
+          "action": "cooperate",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": 0.12
+            },
+            "objective": 0.55,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 1,
+              "universalism": 0.3
+            }
+          },
+          "score": 3.6700000000000017,
+          "energy": 0.4149999999999994,
+          "appraisal": 1.404608,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23792775738297736
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 6,
+              "recent_gain": 0.2187636625000002
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019507411990717486,
+            "gain": 0.23899598936982674,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "316dbf1001c3ceb0071af6f676f383e9cea9eb504acd639486cfc722f001f957"
+        }
+      },
+      {
+        "tick": 37,
+        "response": "decline",
+        "purpose": {
+          "tick": 37,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 3.7600000000000016,
+          "energy": 0.5499999999999993,
+          "appraisal": 0.04661199999999986,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2388826648263145
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 6,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950591977989705,
+            "gain": 0.23899748158064718,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "ec6d978bc1df1595e668e7f4906eec6c235e39ebe9b3c2975ff62ba67f3911b0"
+        },
+        "persona": {
+          "tick": 37,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 4.580000000000002,
+          "energy": 0.975,
+          "appraisal": 0.17860800000000038,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2388826648263145
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 6,
+              "recent_gain": 0.2187636625000002
+            },
+            "unvalidated_roots": [],
+            "gain": 0.07872053354741003
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.06599800000000025,
+            "candidate_loss": 0,
+            "gain": 0.06599800000000025,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.1319960000000005,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285714,
+            "purpose_surprise_delta": 0.007142857142857145,
+            "planned_persona_delta": -0.027738285714285188,
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950591977989705,
+            "gain": 0.23899748158064718,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "7522e77848f3ea6c7c3f0338a358d896534883b0907f3f8c5b045181ac42f6b2"
+        }
+      },
+      {
+        "tick": 39,
+        "response": "claim",
+        "purpose": {
+          "tick": 39,
+          "action": "rest",
+          "response": "claim",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 4.3900000000000015,
+          "energy": 0.7199999999999992,
+          "appraisal": 0.39115200000000044,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23898946227797188
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 7,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019505547289046334,
+            "gain": 0.2389978540714979,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "264c9574a9100296ce3170d8821bbb2271b8787f3b68df87681c6e0a346f3094"
+        },
+        "persona": {
+          "tick": 39,
+          "action": "cooperate",
+          "response": "claim",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": -0.1
+            },
+            "objective": -0.15,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.7,
+              "universalism": 0.3
+            }
+          },
+          "score": 4.980000000000001,
+          "energy": 0.5649999999999998,
+          "appraisal": 0.856948,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23898946227797188
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 7,
+              "recent_gain": 0.19693999642857163
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019505547289046334,
+            "gain": 0.2389978540714979,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "6a3cda60dc9041025ab8c3a5222d185f8f012a7ef9ef26ac05bf3dfc0923f94b"
+        }
+      },
+      {
+        "tick": 42,
+        "response": "claim",
+        "purpose": {
+          "tick": 42,
+          "action": "cooperate",
+          "response": "claim",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": -0.1
+            },
+            "objective": -0.15,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.7,
+              "universalism": 0.3
+            }
+          },
+          "score": 4.910000000000001,
+          "energy": 0.10499999999999912,
+          "appraisal": 0.6181239999999999,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899692307134637
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 8,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019505136381784773,
+            "gain": 0.23899826497875945,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "ee70e167e7360ced5c9e9b94bb4edb2c68103df716627dba0c39385b480a9383"
+        },
+        "persona": {
+          "tick": 42,
+          "action": "rest",
+          "response": "claim",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 5.730000000000001,
+          "energy": 0.5299999999999998,
+          "appraisal": 0.4896480000000002,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019505136381784773,
+            "gain": 0.23899826497875945,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "d9dadd29af4f7c08b566108ed4f1fb7c9cd78f527383fc742cf16f80fe1cb02d"
+        }
+      },
+      {
+        "tick": 47,
+        "response": "cooperate",
+        "purpose": {
+          "tick": 47,
+          "action": "rest",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 5.550000000000001,
+          "energy": 0.8199999999999991,
+          "appraisal": 0.33931200000000056,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899797586109875
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 8,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.46,
+            "candidate_loss": 0.22499999999999998,
+            "gain": 0.23500000000000004,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950470567772634,
+            "gain": 0.2389986956828179,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "96a3876fde279e0295c6a5a8d1d08d75a679caa93a73057640fd17b9b5cc7d9f"
+        },
+        "persona": {
+          "tick": 47,
+          "action": "cooperate",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": 0.12
+            },
+            "objective": 0.55,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 1,
+              "universalism": 0.3
+            }
+          },
+          "score": 6.840000000000001,
+          "energy": 0.6649999999999997,
+          "appraisal": 0.700608,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899797586109875
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 9,
+              "recent_gain": 0.1876474000000002
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950470567772634,
+            "gain": 0.2389986956828179,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "20f0346f67c9842119c69921392b7d02142d6612f197d5cbb4431099f4913d6b"
+        }
+      },
+      {
+        "tick": 49,
+        "response": "decline",
+        "purpose": {
+          "tick": 49,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 5.5200000000000005,
+          "energy": 0.409999999999999,
+          "appraisal": 0.019395999999999806,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2389982418850635
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 9,
+              "recent_gain": 0.008333333333333323
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950459140517655,
+            "gain": 0.23899880995536768,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "c9292c8923af780f11882b2a8ee694707a147ed20374bfd18ca370da7f976b2b"
+        },
+        "persona": {
+          "tick": 49,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 6.7700000000000005,
+          "energy": 0.8349999999999996,
+          "appraisal": 0.3315360000000002,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2389982418850635
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 9,
+              "recent_gain": 0.1876474000000002
+            },
+            "unvalidated_roots": [],
+            "gain": 0.1491195225486196
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.17644960000000015,
+            "candidate_loss": 0,
+            "gain": 0.17644960000000015,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.3528992000000003,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285714,
+            "purpose_surprise_delta": 0.007142857142857145,
+            "planned_persona_delta": -0.3321973714285712,
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950459140517655,
+            "gain": 0.23899880995536768,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "6c74a8b9f303bf1445f4d91528aa590d14ed90bc5ab37e47dd776153d327a189"
+        }
+      },
+      {
+        "tick": 53,
+        "response": "cooperate",
+        "purpose": {
+          "tick": 53,
+          "action": "rest",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 6.08,
+          "energy": 0.75,
+          "appraisal": 0.3756000000000001,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899861584709756
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 9,
+              "recent_gain": 0.008333333333333323
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504426715407443,
+            "gain": 0.23899897464513678,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "55e35de15c83d41b2ce8c904ff5b5b43ed90e623f00d399264fd4497964c63e5"
+        },
+        "persona": {
+          "tick": 53,
+          "action": "cooperate",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": 0.12
+            },
+            "objective": 0.55,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 1,
+              "universalism": 0.3
+            }
+          },
+          "score": 7.8,
+          "energy": 0.5949999999999994,
+          "appraisal": 0.5555999999999999,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899861584709756
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 10,
+              "recent_gain": 0.18652762000000017
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504426715407443,
+            "gain": 0.23899897464513678,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "be3b8a9c624b286d30ece2a5fbf26a0dbb56ba55c1337ccd056fa27be0fa09de"
+        }
+      },
+      {
+        "tick": 54,
+        "response": "claim",
+        "purpose": {
+          "tick": 54,
+          "action": "cooperate",
+          "response": "claim",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": -0.1
+            },
+            "objective": -0.15,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.7,
+              "universalism": 0.3
+            }
+          },
+          "score": 5.93,
+          "energy": 0.545,
+          "appraisal": 0.08485999999999995,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899868509567465
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 9,
+              "recent_gain": 0.008333333333333323
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.575,
+            "candidate_loss": 0.46,
+            "gain": 0.11499999999999994,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950439557622787,
+            "gain": 0.23899900578431635,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "701dc61fae5cbc12f467349571d0976c134083a857384b6a1e25e643029c8099"
+        },
+        "persona": {
+          "tick": 54,
+          "action": "rest",
+          "response": "claim",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 7.88,
+          "energy": 0.9699999999999994,
+          "appraisal": 0.26155200000000034,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899868509567465
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 10,
+              "recent_gain": 0.18652762000000017
+            },
+            "unvalidated_roots": [],
+            "gain": 0.16516987370847042
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.10341200000000024,
+            "candidate_loss": 0,
+            "gain": 0.10341200000000024,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.20682400000000048,
+            "purpose_delta": 0.22999999999999998,
+            "planned_purpose_delta": -0.14714285714285713,
+            "purpose_surprise_delta": 0.3771428571428571,
+            "planned_persona_delta": 0.020449714285714737,
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950439557622787,
+            "gain": 0.23899900578431635,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "43610982ab902ea22764a58ecf573121babdbf929cb7cf6f08d09d702d35cee6"
+        }
+      },
+      {
+        "tick": 57,
+        "response": "claim",
+        "purpose": {
+          "tick": 57,
+          "action": "rest",
+          "response": "claim",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 6.68,
+          "energy": 0.51,
+          "appraisal": 0.500016,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950432043579193,
+            "gain": 0.2389990809247523,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "5e353f4126c506a3c31dc22a6df0ef35226dca0a31038a777b00463701591fdb"
+        },
+        "persona": {
+          "tick": 57,
+          "action": "cooperate",
+          "response": "claim",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": -0.1
+            },
+            "objective": -0.15,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.7,
+              "universalism": 0.3
+            }
+          },
+          "score": 8.4,
+          "energy": 0.35499999999999926,
+          "appraisal": 0.853924,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.238998851226538
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 11,
+              "recent_gain": 0.17897165454545474
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950432043579193,
+            "gain": 0.2389990809247523,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "3206503235e3dcc2975d320d819f6b4b78f00625cedfda3aa4c23a7b7e6d3bfa"
+        }
+      },
+      {
+        "tick": 58,
+        "response": "decline",
+        "purpose": {
+          "tick": 58,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 6.8,
+          "energy": 0.305,
+          "appraisal": -0.00666170000000001,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899889525000897
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 11,
+              "recent_gain": 0.015454545454545438
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504300422775126,
+            "gain": 0.2389991009377691,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "14fec5cdfc5c8c8244eb6e8f939cc894be9e03a4df0654fed3fab1290d080562"
+        },
+        "persona": {
+          "tick": 58,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 8.48,
+          "energy": 0.7299999999999992,
+          "appraisal": 0.3859680000000004,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899889525000897
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 11,
+              "recent_gain": 0.17897165454545474
+            },
+            "unvalidated_roots": [],
+            "gain": 0.23236005124718165
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.2191021750000003,
+            "candidate_loss": 0,
+            "gain": 0.2191021750000003,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.4382043500000006,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285715,
+            "purpose_surprise_delta": 0.007142857142857159,
+            "planned_persona_delta": -0.2543644714285709,
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504300422775126,
+            "gain": 0.2389991009377691,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "9270de0fddbbfea3882f63d118755c93a6f1a6510732215adf0f3efa833fc4b0"
+        }
+      },
+      {
+        "tick": 60,
+        "response": "claim",
+        "purpose": {
+          "tick": 60,
+          "action": "rest",
+          "response": "claim",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 7.43,
+          "energy": 0.475,
+          "appraisal": 0.5181600000000002,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504266112674376,
+            "gain": 0.23899913524786986,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "82960a5ea3094b2d9b7a6f307205f0b0eddc952e1fd446aa93327b4c1aa18f81"
+        },
+        "persona": {
+          "tick": 60,
+          "action": "cooperate",
+          "response": "claim",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": -0.1
+            },
+            "objective": -0.15,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.7,
+              "universalism": 0.3
+            }
+          },
+          "score": 8.88,
+          "energy": 0.3199999999999991,
+          "appraisal": 0.6599199999999998,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2389989699314935
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.18231586458333351
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504266112674376,
+            "gain": 0.23899913524786986,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "e7410efa9a164ded4bf8370315cdf797fc0aa89a5ca7b3f7947af36cda9f3f1e"
+        }
+      },
+      {
+        "tick": 61,
+        "response": "decline",
+        "purpose": {
+          "tick": 61,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 7.55,
+          "energy": 0.26999999999999996,
+          "appraisal": -0.016952750000000013,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899900151440054
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 12,
+              "recent_gain": 0.012499999999999983
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950425161995203,
+            "gain": 0.2389991497405922,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "fe2087e5bf8df1a6e7527264d666bbd68d0e76a6ffb4f85c5329231639b3b108"
+        },
+        "persona": {
+          "tick": 61,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 8.96,
+          "energy": 0.6949999999999991,
+          "appraisal": 0.4041120000000006,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899900151440054
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.18231586458333351
+            },
+            "unvalidated_roots": [],
+            "gain": 0.2601066461818018
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.2333197000000004,
+            "candidate_loss": 0,
+            "gain": 0.2333197000000004,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.4666394000000008,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285715,
+            "purpose_surprise_delta": 0.007142857142857159,
+            "planned_persona_delta": -0.22842017142857063,
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950425161995203,
+            "gain": 0.2389991497405922,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "f2909023bfd23dd22d02da2ae467e20a2a670b2e7f1b7b754c01aa1402bf9851"
+        }
+      },
+      {
+        "tick": 63,
+        "response": "claim",
+        "purpose": {
+          "tick": 63,
+          "action": "rest",
+          "response": "claim",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 8.18,
+          "energy": 0.43999999999999995,
+          "appraisal": 0.5363040000000001,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950422675078332,
+            "gain": 0.23899917460976092,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "5b0f80f932ff9aa8450893a424c88ee24ccda3de98d828ba81e6921ee4b75647"
+        },
+        "persona": {
+          "tick": 63,
+          "action": "cooperate",
+          "response": "claim",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": -0.1
+            },
+            "objective": -0.15,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.7,
+              "universalism": 0.3
+            }
+          },
+          "score": 9.360000000000001,
+          "energy": 0.284999999999999,
+          "appraisal": 0.6531159999999998,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899905521403855
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.18688578333333358
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950422675078332,
+            "gain": 0.23899917460976092,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "7ebfa72a204cd288b6177e01e274d8150819c76709579fec76af436b6f8d2582"
+        }
+      }
+    ]
+  },
+  {
+    "cohort": "confirmation",
+    "regime": "cycle",
+    "seed": 10101,
+    "profile": "care",
+    "endpoints": {
+      "purpose": {
+        "score": 10.87,
+        "appraisal": 39.160593350000006,
+        "values": {
+          "self_direction": 0.0,
+          "stimulation": 0.0,
+          "hedonism": 0.0,
+          "achievement": 0.0,
+          "power": 0.0,
+          "security": 0.0,
+          "conformity": 0.0,
+          "tradition": 0.0,
+          "benevolence": 25.4,
+          "universalism": 8.7
+        },
+        "model_uses": 0
+      },
+      "persona": {
+        "score": 10.649999999999999,
+        "appraisal": 44.5488416,
+        "values": {
+          "self_direction": 0.0,
+          "stimulation": 0.0,
+          "hedonism": 0.0,
+          "achievement": 0.0,
+          "power": 0.0,
+          "security": 0.0,
+          "conformity": 0.0,
+          "tradition": 0.0,
+          "benevolence": 30.2,
+          "universalism": 10.5
+        },
+        "model_uses": 37
+      }
+    },
+    "differences": [
+      {
+        "tick": 35,
+        "response": "decline",
+        "purpose": {
+          "tick": 35,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 5.28,
+          "energy": 0.3799999999999996,
+          "appraisal": 0.013563999999999927,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23863311464471584
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 4,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019506399913451065,
+            "gain": 0.23899700144709315,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "da8192dd23460ccc2dd552d45afd65e157e3d4fcd722740834e8be1601ade1d0"
+        },
+        "persona": {
+          "tick": 35,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 5.24,
+          "energy": 0.9599999999999996,
+          "appraisal": 0.26673600000000025,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23863311464471584
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 4,
+              "recent_gain": 0.20837980000000017
+            },
+            "unvalidated_roots": [],
+            "gain": 0.05148193455358974
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.12658600000000014,
+            "candidate_loss": 0,
+            "gain": 0.12658600000000014,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.2531720000000003,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285714,
+            "purpose_surprise_delta": 0.007142857142857145,
+            "planned_persona_delta": -0.4243337142857139,
+            "candidate_rationale": {
+              "purpose_best": "alone",
+              "expected_purpose_cost": 0.21999999999999997,
+              "persona_advantage": 0.1797320000000004,
+              "purpose_best_persona_eligible": true
+            },
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019506399913451065,
+            "gain": 0.23899700144709315,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "7a34c7724cd1fda85b184d895f1a038a7ab92930a05220440c9c576c00a8239f"
+        }
+      },
+      {
+        "tick": 37,
+        "response": "claim",
+        "purpose": {
+          "tick": 37,
+          "action": "rest",
+          "response": "claim",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 5.91,
+          "energy": 0.5499999999999996,
+          "appraisal": 0.4792800000000003,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950591977989705,
+            "gain": 0.23899748158064718,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "dd9451ada8a1ef869826951fb73f4d9c3c91da00a1036605fb614e673b96d915"
+        },
+        "persona": {
+          "tick": 37,
+          "action": "cooperate",
+          "response": "claim",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": -0.1
+            },
+            "objective": -0.15,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.7,
+              "universalism": 0.3
+            }
+          },
+          "score": 5.64,
+          "energy": 0.5499999999999995,
+          "appraisal": 0.856732,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2388826648263145
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 5,
+              "recent_gain": 0.19202104000000014
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950591977989705,
+            "gain": 0.23899748158064718,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "f74f3cab209b704a4286d7eff03d15f47a51c49de6624c3cc10c90bda6f95aa3"
+        }
+      },
+      {
+        "tick": 38,
+        "response": "decline",
+        "purpose": {
+          "tick": 38,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 6.03,
+          "energy": 0.3449999999999996,
+          "appraisal": 0.005099499999999873,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23895243734358018
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 5,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950572215818501,
+            "gain": 0.2389976792023592,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "5f23dec07fa20cd3cae2b6845383cb6a96cae66e9df72230c1ff255a6c9f2ae5"
+        },
+        "persona": {
+          "tick": 38,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 5.72,
+          "energy": 0.9249999999999995,
+          "appraisal": 0.2848800000000003,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23895243734358018
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 5,
+              "recent_gain": 0.19202104000000014
+            },
+            "unvalidated_roots": [],
+            "gain": 0.07776596343078523
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.13989025000000022,
+            "candidate_loss": 0,
+            "gain": 0.13989025000000022,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.27978050000000043,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.047142857142857125,
+            "purpose_surprise_delta": 0.007142857142857131,
+            "planned_persona_delta": -0.3989112857142853,
+            "candidate_rationale": {
+              "purpose_best": "alone",
+              "expected_purpose_cost": 0.22000000000000003,
+              "persona_advantage": 0.20468000000000042,
+              "purpose_best_persona_eligible": true
+            },
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950572215818501,
+            "gain": 0.2389976792023592,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "8ebc88c83c97f6dedcabf5338bbc8c6925614c79515408c9d53174b53fba107d"
+        }
+      },
+      {
+        "tick": 40,
+        "response": "claim",
+        "purpose": {
+          "tick": 40,
+          "action": "rest",
+          "response": "claim",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 6.66,
+          "energy": 0.5149999999999996,
+          "appraisal": 0.4974240000000003,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019505394058185927,
+            "gain": 0.2389980073023583,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "9093ebae64bea7f50fe6bdc848ee0d224cd887ae3c8550db525a727a36dc7fea"
+        },
+        "persona": {
+          "tick": 40,
+          "action": "cooperate",
+          "response": "claim",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": -0.1
+            },
+            "objective": -0.15,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.7,
+              "universalism": 0.3
+            }
+          },
+          "score": 6.119999999999999,
+          "energy": 0.5149999999999993,
+          "appraisal": 0.856228,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899625678101502
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 6,
+              "recent_gain": 0.1833325750000002
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019505394058185927,
+            "gain": 0.2389980073023583,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "a51090ce3ff7b6207ad0bd5a6760a7e28ccab5661a7bc63e5c1653a95c8f9fee"
+        }
+      },
+      {
+        "tick": 41,
+        "response": "decline",
+        "purpose": {
+          "tick": 41,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 6.78,
+          "energy": 0.30999999999999955,
+          "appraisal": -0.005191550000000133,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899661354676824
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 6,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019505257698332685,
+            "gain": 0.23899814366221153,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "e3a563181496e3f99ca5cc1f50093e7003ce496e6e043a14951b621a319bb262"
+        },
+        "persona": {
+          "tick": 41,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 6.199999999999999,
+          "energy": 0.8899999999999993,
+          "appraisal": 0.3030240000000004,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899661354676824
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 6,
+              "recent_gain": 0.1833325750000002
+            },
+            "unvalidated_roots": [],
+            "gain": 0.10551468560582392
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.15410777500000028,
+            "candidate_loss": 0,
+            "gain": 0.15410777500000028,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.30821555000000056,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285714,
+            "purpose_surprise_delta": 0.007142857142857145,
+            "planned_persona_delta": -0.3729669857142852,
+            "candidate_rationale": {
+              "purpose_best": "alone",
+              "expected_purpose_cost": 0.21999999999999997,
+              "persona_advantage": 0.22962800000000053,
+              "purpose_best_persona_eligible": true
+            },
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019505257698332685,
+            "gain": 0.23899814366221153,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "9511c36ccfb2d1042ab216cff502a99ed09de0a0a5675d39aef96575a847b939"
+        }
+      },
+      {
+        "tick": 43,
+        "response": "claim",
+        "purpose": {
+          "tick": 43,
+          "action": "rest",
+          "response": "claim",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 7.41,
+          "energy": 0.47999999999999954,
+          "appraisal": 0.5155680000000004,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019505029522370036,
+            "gain": 0.23899837183817418,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "c774a92d36719e80bd1dd885b85503cf2611ef7234b41905cf4bc2bc90918e23"
+        },
+        "persona": {
+          "tick": 43,
+          "action": "cooperate",
+          "response": "claim",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": -0.1
+            },
+            "objective": -0.15,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.7,
+              "universalism": 0.3
+            }
+          },
+          "score": 6.599999999999999,
+          "energy": 0.4799999999999992,
+          "appraisal": 0.8557239999999999,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899719246531362
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 7,
+              "recent_gain": 0.1791576035714288
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019505029522370036,
+            "gain": 0.23899837183817418,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "7423075e37e31e1d2608e435321627c3661d9db7272b4adb4c61e4e16132218a"
+        }
+      },
+      {
+        "tick": 44,
+        "response": "decline",
+        "purpose": {
+          "tick": 44,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 7.53,
+          "energy": 0.2749999999999995,
+          "appraisal": -0.015482600000000141,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2389974280662883
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 7,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950493402020664,
+            "gain": 0.23899846734033758,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "c9b70f48e32fc66f0b950cc7c0486ea5ad52ad5012df37f7707b643ea6092241"
+        },
+        "persona": {
+          "tick": 44,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 6.679999999999999,
+          "energy": 0.8549999999999992,
+          "appraisal": 0.3211680000000005,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2389974280662883
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 7,
+              "recent_gain": 0.1791576035714288
+            },
+            "unvalidated_roots": [],
+            "gain": 0.13326269115384565
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.16832530000000037,
+            "candidate_loss": 0,
+            "gain": 0.16832530000000037,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.33665060000000074,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285714,
+            "purpose_surprise_delta": 0.007142857142857145,
+            "planned_persona_delta": -0.347022685714285,
+            "candidate_rationale": {
+              "purpose_best": "alone",
+              "expected_purpose_cost": 0.21999999999999997,
+              "persona_advantage": 0.2545760000000007,
+              "purpose_best_persona_eligible": true
+            },
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950493402020664,
+            "gain": 0.23899846734033758,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "dffea7f71db28c4e2e3e3c3f21ec8a46101e3099ede38c249c4118c8b9688a61"
+        }
+      },
+      {
+        "tick": 46,
+        "response": "claim",
+        "purpose": {
+          "tick": 46,
+          "action": "rest",
+          "response": "claim",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 8.16,
+          "energy": 0.4449999999999995,
+          "appraisal": 0.5337120000000004,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504773295032234,
+            "gain": 0.238998628065512,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "08094fac631d2fb184defe204acacbf5cffa1c64563a42a13e9b9d8b883d06d8"
+        },
+        "persona": {
+          "tick": 46,
+          "action": "cooperate",
+          "response": "claim",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": -0.1
+            },
+            "objective": -0.15,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.7,
+              "universalism": 0.3
+            }
+          },
+          "score": 7.079999999999998,
+          "energy": 0.4449999999999991,
+          "appraisal": 0.85522,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899781594889644
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 8,
+              "recent_gain": 0.17780356562500022
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504773295032234,
+            "gain": 0.238998628065512,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "356b51c0355e65c05b1624dcf21d14919dfe07da10d6907c4d470d05ea18b51e"
+        }
+      },
+      {
+        "tick": 53,
+        "response": "decline",
+        "purpose": {
+          "tick": 53,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 9.24,
+          "energy": 0.1699999999999993,
+          "appraisal": -0.04635575000000021,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899861584709756
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 8,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504426715407443,
+            "gain": 0.23899897464513678,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "04aa8faa17fec39ca4e05a722ace9e6e447d38fcdf61adbc96011c73360ac346"
+        },
+        "persona": {
+          "tick": 53,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 8.119999999999997,
+          "energy": 0.7499999999999988,
+          "appraisal": 0.37560000000000066,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899861584709756
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 8,
+              "recent_gain": 0.17780356562500022
+            },
+            "unvalidated_roots": [],
+            "gain": 0.2165043370281928
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.21097787500000048,
+            "candidate_loss": 0,
+            "gain": 0.21097787500000048,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.42195575000000096,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285714,
+            "purpose_surprise_delta": 0.007142857142857145,
+            "planned_persona_delta": -0.26918978571428487,
+            "candidate_rationale": {
+              "purpose_best": "alone",
+              "expected_purpose_cost": 0.21999999999999995,
+              "persona_advantage": 0.3294200000000008,
+              "purpose_best_persona_eligible": true
+            },
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504426715407443,
+            "gain": 0.23899897464513678,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "f2fee9773285921f14f2771ee8ba694bc222c919428dfd4398056338bb6294e6"
+        }
+      },
+      {
+        "tick": 54,
+        "response": "cooperate",
+        "purpose": {
+          "tick": 54,
+          "action": "rest",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 9.32,
+          "energy": 0.5449999999999993,
+          "appraisal": 0.48187200000000047,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950439557622787,
+            "gain": 0.23899900578431635,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "9def5e777da61de3589fd321e0eb41f9e576cd870031c2bc6eeecb92a45766ba"
+        },
+        "persona": {
+          "tick": 54,
+          "action": "cooperate",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": 0.12
+            },
+            "objective": 0.55,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 1,
+              "universalism": 0.3
+            }
+          },
+          "score": 8.669999999999998,
+          "energy": 0.5449999999999987,
+          "appraisal": 1.4298799999999998,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.23899868509567465
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 9,
+              "recent_gain": 0.18148960000000025
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.01950439557622787,
+            "gain": 0.23899900578431635,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "b6c3c4fce760964949623183ffde0a207f77f6f648435910ad63fa6357ac86cf"
+        }
+      },
+      {
+        "tick": 59,
+        "response": "decline",
+        "purpose": {
+          "tick": 59,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 10.04,
+          "energy": 0.09999999999999923,
+          "appraisal": -0.06693785000000022,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2389989346560304
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 9,
+              "recent_gain": -0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504282372169363,
+            "gain": 0.23899911898837486,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "4288c74a787bab701f933064a83f0f6888d27dbbb1e616fae23eeffb8c290862"
+        },
+        "persona": {
+          "tick": 59,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 9.349999999999998,
+          "energy": 0.6799999999999985,
+          "appraisal": 0.41188800000000086,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2389989346560304
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 9,
+              "recent_gain": 0.18148960000000025
+            },
+            "unvalidated_roots": [],
+            "gain": 0.2719977707947912
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.23941292500000064,
+            "candidate_loss": 0,
+            "gain": 0.23941292500000064,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "persona_delta": 0.4788258500000013,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.04714285714285714,
+            "purpose_surprise_delta": 0.007142857142857145,
+            "planned_persona_delta": -0.21730118571428453,
+            "candidate_rationale": {
+              "purpose_best": "alone",
+              "expected_purpose_cost": 0.21999999999999992,
+              "persona_advantage": 0.3793160000000011,
+              "purpose_best_persona_eligible": true
+            },
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504282372169363,
+            "gain": 0.23899911898837486,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "9b1b94848e9e2fdfa782b91f863a41bd0f5084e09179df81803592f18282c4cd"
+        }
+      },
+      {
+        "tick": 60,
+        "response": "cooperate",
+        "purpose": {
+          "tick": 60,
+          "action": "rest",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 10.12,
+          "energy": 0.4749999999999992,
+          "appraisal": 0.5181600000000005,
+          "reading": {
+            "requested": false,
+            "nodes": 0,
+            "adopted": false,
+            "reason": "reflex"
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504266112674376,
+            "gain": 0.23899913524786986,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "74a15070a76ad14e6d3ab7d0e560412adfb9f15dc90b4edaa1fe5e35b6b651a3"
+        },
+        "persona": {
+          "tick": 60,
+          "action": "cooperate",
+          "response": "cooperate",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.3,
+              "physiology": -0.12,
+              "safety": 0.12
+            },
+            "objective": 0.55,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 1,
+              "universalism": 0.3
+            }
+          },
+          "score": 9.899999999999999,
+          "energy": 0.4749999999999985,
+          "appraisal": 0.5322719999999997,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.2389989699314935
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 10,
+              "recent_gain": 0.18728193250000028
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.2585034013605442,
+            "candidate_loss": 0.019504266112674376,
+            "gain": 0.23899913524786986,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "fd3a26e0457930830f466bbde28138c9fc47dc45ac0a17cd96d64488bc6522e7"
+        }
+      }
+    ]
+  },
+  {
+    "cohort": "confirmation",
+    "regime": "switch",
+    "seed": 10100,
+    "profile": "care",
+    "endpoints": {
+      "purpose": {
+        "score": 9.459999999999996,
+        "appraisal": 30.767518500000005,
+        "values": {
+          "self_direction": 0.6,
+          "stimulation": 0.0,
+          "hedonism": 0.0,
+          "achievement": 0.8,
+          "power": 0.16,
+          "security": 0.9,
+          "conformity": 0.0,
+          "tradition": 0.0,
+          "benevolence": 17.3,
+          "universalism": 6.0
+        },
+        "model_uses": 10
+      },
+      "persona": {
+        "score": 9.419999999999996,
+        "appraisal": 30.940230500000006,
+        "values": {
+          "self_direction": 0.6,
+          "stimulation": 0.0,
+          "hedonism": 0.0,
+          "achievement": 0.8,
+          "power": 0.16,
+          "security": 0.9,
+          "conformity": 0.0,
+          "tradition": 0.0,
+          "benevolence": 17.3,
+          "universalism": 6.0
+        },
+        "model_uses": 0
+      }
+    },
+    "differences": [
+      {
+        "tick": 60,
+        "response": "decline",
+        "purpose": {
+          "tick": 60,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 9.099999999999998,
+          "energy": 0.975,
+          "appraisal": 0.2434080000000004,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.04059940017939438
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 4,
+              "recent_gain": 0.020000000000000018
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.44,
+            "candidate_loss": 0.46,
+            "gain": -0.020000000000000018,
+            "before": "active",
+            "after": "active",
+            "revoked": false,
+            "kind": "known-rule purpose comparison; not observed unchosen samples"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.04081632653061224,
+            "candidate_loss": 0.01952398908789575,
+            "gain": 0.02129233744271649,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "25e732f6291ddc7ad5840e680ea479338dc4dddd27b055fca080e0fd0fea8396"
+        },
+        "persona": {
+          "tick": 60,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 9.139999999999997,
+          "energy": 0.4249999999999993,
+          "appraisal": 0.022311999999999863,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": true,
+            "reason": "conditional_rule_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.04059940017939438
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 4,
+              "recent_gain": -0.17797290625000006
+            },
+            "unvalidated_roots": [],
+            "gain": 0.07065542857142804
+          },
+          "comparison": {
+            "scored": true,
+            "prior_loss": 0.11054800000000026,
+            "candidate_loss": 0,
+            "gain": 0.11054800000000026,
+            "before": "revoked",
+            "after": "revoked",
+            "revoked": false,
+            "persona_delta": 0.22109600000000051,
+            "purpose_delta": -0.039999999999999994,
+            "planned_purpose_delta": -0.06285714285714285,
+            "purpose_surprise_delta": 0.022857142857142854,
+            "planned_persona_delta": -0.07065542857142806,
+            "candidate_rationale": {
+              "purpose_best": "alone",
+              "expected_purpose_cost": 0.21999999999999997,
+              "persona_advantage": 0.14765600000000056,
+              "purpose_best_persona_eligible": true
+            },
+            "kind": "known-rule paired decision-time appraisal; unchosen rule evaluation is not experience"
+          },
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.04081632653061224,
+            "candidate_loss": 0.01952398908789575,
+            "gain": 0.02129233744271649,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "279faba637c79a17dea9bb884199f3a8d0e1d9748a4e8b838834e17ebc4c70f8"
+        }
+      },
+      {
+        "tick": 61,
+        "response": "decline",
+        "purpose": {
+          "tick": 61,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 9.219999999999997,
+          "energy": 0.7699999999999999,
+          "appraisal": 0.09387999999999999,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.03839562864382092
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 5,
+              "recent_gain": 0.01200000000000001
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.04081632653061224,
+            "candidate_loss": 0.019520542883821868,
+            "gain": 0.021295783646790373,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "906d607dc8c69a9f257b09c444a2db8e1359c24584155102e19dc5d838f96030"
+        },
+        "persona": {
+          "tick": 61,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 9.219999999999997,
+          "energy": 0.7999999999999993,
+          "appraisal": 0.34968000000000043,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.03839562864382092
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 5,
+              "recent_gain": -0.12026872499999999
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.04081632653061224,
+            "candidate_loss": 0.019520542883821868,
+            "gain": 0.021295783646790373,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "baf7fb8f968a755bb71913c201935f57bb0d576b029285a28410f3e85a330060"
+        }
+      },
+      {
+        "tick": 63,
+        "response": "decline",
+        "purpose": {
+          "tick": 63,
+          "action": "cooperate",
+          "response": "decline",
+          "flow": {
+            "cost": 0.05,
+            "needs": {
+              "belonging": 0.0,
+              "physiology": -0.12,
+              "safety": 0
+            },
+            "objective": 0.12,
+            "p": 1.0,
+            "style": {
+              "agreeableness": 0.6
+            },
+            "values": {
+              "benevolence": 0.0,
+              "universalism": 0.0
+            }
+          },
+          "score": 9.459999999999996,
+          "energy": 0.3599999999999998,
+          "appraisal": 0.08797599999999998,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.024213678593985568
+            },
+            "response_model": "validated_hypotheses",
+            "decision_gate": {
+              "state": "active",
+              "trials": 5,
+              "recent_gain": 0.01200000000000001
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.04081632653061224,
+            "candidate_loss": 0.020487083707724608,
+            "gain": 0.020329242822887634,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "436d6db903f1f125018a043327153ffc0525d1a8c3edffe35e2ec3360f3e25af"
+        },
+        "persona": {
+          "tick": 63,
+          "action": "rest",
+          "response": "decline",
+          "flow": {
+            "cost": 0,
+            "needs": {
+              "physiology": 0.4
+            },
+            "objective": 0.08,
+            "p": 1.0,
+            "style": {},
+            "values": {}
+          },
+          "score": 9.419999999999996,
+          "energy": 0.9699999999999992,
+          "appraisal": 0.2615520000000005,
+          "reading": {
+            "requested": true,
+            "nodes": 12,
+            "adopted": false,
+            "reason": "no_material_persona_gain",
+            "gate": {
+              "state": "active",
+              "trials": 12,
+              "recent_gain": 0.024213678593985568
+            },
+            "response_model": "bounded_recent_response",
+            "decision_gate": {
+              "state": "revoked",
+              "trials": 5,
+              "recent_gain": -0.12026872499999999
+            },
+            "unvalidated_roots": []
+          },
+          "comparison": null,
+          "predictive": {
+            "scored": true,
+            "prior_loss": 0.04081632653061224,
+            "candidate_loss": 0.020487083707724608,
+            "gain": 0.020329242822887634,
+            "before": "active",
+            "after": "active",
+            "revoked": false
+          },
+          "owner": "e60644015c4d4b22adbe8490e26be5706a597b41914ca8fca4b514b0a557662a"
+        }
+      }
+    ]
+  }
+]

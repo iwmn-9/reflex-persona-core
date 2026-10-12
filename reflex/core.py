@@ -245,7 +245,8 @@ class Policy:
     def signature(self):
         return self.principle_priority,tuple(self.residual),self._commitments
 
-    def decide(self, b, stochastic=True, *, appraisal=None, purpose=None, max_social_regret=.15,return_frame=None):
+    def decide(self, b, stochastic=True, *, appraisal=None, purpose=None, max_social_regret=.15,return_frame=None,outcome_audit=None):
+        if outcome_audit is not None and not isinstance(outcome_audit,dict):raise ValueError('explicit outcome audit dictionary required')
         n,a,k,d = b.effects.shape; rows=np.arange(n)
         old=np.maximum(b.primary,0); best=b.needs.argmax(1)
         # Intent switches only for material urgency changes; no rigid Maslow ranking.
@@ -336,8 +337,17 @@ class Policy:
         result=Decisions(chosen,primary,mode,mode_urgency,read_used,request,features,scores,eligible)
         if appraisal is not None:
             from .social import appraised
-            return appraised(b,result,appraisal,purpose,max_social_regret,stochastic)
-        if purpose is not None:raise ValueError('social purpose requires an appraisal')
+            result=appraised(b,result,appraisal,purpose,max_social_regret,stochastic)
+        elif purpose is not None:raise ValueError('social purpose requires an appraisal')
+        if outcome_audit is not None:
+            # Freeze the appraisal at decision time. Risk is charged per outcome;
+            # familiarity, switching, bounded residual and social/read offsets
+            # stay as the actor priced them BEFORE any public result is known.
+            # The probability-weighted rows recover the exact decision scores.
+            conditional=outcome-risk[:,None,None]*np.maximum(-outcome,0)
+            conditional+=(result.scores-risk_adjusted)[:,:,None]
+            outcome_audit.update(scores=conditional.copy(),expected=result.scores.copy(),
+                semantics='frozen decision-time appraisal; not objective reward or future causal credit')
         return result
 
     def choose(self, context, stochastic=True):
