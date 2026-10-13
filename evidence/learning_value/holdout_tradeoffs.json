@@ -1,0 +1,342 @@
+{
+  "findings": [
+    {
+      "case": {
+        "game": "auction",
+        "limit": 3,
+        "prizes": [
+          6,
+          2,
+          9
+        ],
+        "budget": 8,
+        "flip": 0.1
+      },
+      "profile": "care",
+      "world": {
+        "format": "public-belief-state-v1",
+        "identity": "46700e01a50777838040ed0cc3cf0e7f663e1ec00ed3c9b336b3ae68423fafce",
+        "tick": 1,
+        "weights": [
+          0.1,
+          0.9
+        ],
+        "public": {
+          "tick": 1,
+          "position": {
+            "game": "auction",
+            "hands": [
+              [],
+              [],
+              []
+            ],
+            "scores": [
+              6,
+              0,
+              0
+            ],
+            "budgets": [
+              5,
+              8,
+              8
+            ],
+            "prize": 2,
+            "category": "science",
+            "remaining": [
+              9
+            ],
+            "carry": 0,
+            "round": 1,
+            "episode": 0,
+            "last": [
+              3,
+              3,
+              2
+            ],
+            "last_prize": 6
+          }
+        }
+      },
+      "baseline": "bid:2",
+      "selected": "bid:3",
+      "fixed_forecast_without_style": "bid:2",
+      "plans": [
+        {
+          "root": "bid:0",
+          "purpose": 0.7176470588235294,
+          "score": 0.45136858823529413,
+          "features": [
+            0.7176470588235294,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bid:1",
+          "purpose": 0.7176470588235295,
+          "score": 0.4585685882352941,
+          "features": [
+            0.7176470588235295,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bid:2",
+          "purpose": 0.736764705882353,
+          "score": 0.47935425882352944,
+          "features": [
+            0.736764705882353,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bid:3",
+          "purpose": 0.7269117647058825,
+          "score": 0.479875224632353,
+          "features": [
+            0.7269117647058825,
+            0.0,
+            0.0,
+            0.00048821764705882367,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bid:4",
+          "purpose": 0.0623529411764706,
+          "score": 0.04221236544117647,
+          "features": [
+            0.0623529411764706,
+            0.0,
+            0.0,
+            0.04196808235294118,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bid:5",
+          "purpose": -0.13764705882352943,
+          "score": -0.13431341911764705,
+          "features": [
+            -0.13764705882352943,
+            0.0,
+            0.0,
+            0.08596058823529412,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        }
+      ],
+      "feature_order": [
+        "endpoint",
+        "primary_need",
+        "top_value",
+        "weighted_loss",
+        "cost",
+        "familiarity",
+        "switch",
+        "confidence"
+      ]
+    },
+    {
+      "case": {
+        "game": "auction",
+        "limit": 3,
+        "prizes": [
+          6,
+          2,
+          9
+        ],
+        "budget": 8,
+        "flip": 0.1
+      },
+      "profile": "growth",
+      "world": {
+        "format": "public-belief-state-v1",
+        "identity": "46700e01a50777838040ed0cc3cf0e7f663e1ec00ed3c9b336b3ae68423fafce",
+        "tick": 1,
+        "weights": [
+          0.1,
+          0.9
+        ],
+        "public": {
+          "tick": 1,
+          "position": {
+            "game": "auction",
+            "hands": [
+              [],
+              [],
+              []
+            ],
+            "scores": [
+              6,
+              0,
+              0
+            ],
+            "budgets": [
+              5,
+              8,
+              8
+            ],
+            "prize": 2,
+            "category": "science",
+            "remaining": [
+              9
+            ],
+            "carry": 0,
+            "round": 1,
+            "episode": 0,
+            "last": [
+              3,
+              3,
+              2
+            ],
+            "last_prize": 6
+          }
+        }
+      },
+      "baseline": "bid:2",
+      "selected": "bid:3",
+      "fixed_forecast_without_style": "bid:2",
+      "plans": [
+        {
+          "root": "bid:0",
+          "purpose": 0.7176470588235294,
+          "score": 0.9468208382352943,
+          "features": [
+            0.7176470588235294,
+            0.0,
+            0.4139732142857143,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bid:1",
+          "purpose": 0.7176470588235295,
+          "score": 0.9660208382352942,
+          "features": [
+            0.7176470588235295,
+            0.0,
+            0.4139732142857143,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bid:2",
+          "purpose": 0.736764705882353,
+          "score": 1.0138449088235297,
+          "features": [
+            0.736764705882353,
+            0.0,
+            0.42468750000000005,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bid:3",
+          "purpose": 0.7269117647058825,
+          "score": 1.0205969970588236,
+          "features": [
+            0.7269117647058825,
+            0.0,
+            0.41989107142857146,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bid:4",
+          "purpose": 0.0623529411764706,
+          "score": 0.29262878676470594,
+          "features": [
+            0.0623529411764706,
+            0.0,
+            0.15045982142857145,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bid:5",
+          "purpose": -0.13764705882352943,
+          "score": -0.011439749999999997,
+          "features": [
+            -0.13764705882352943,
+            0.0,
+            0.053571428571428575,
+            0.007690588235294116,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        }
+      ],
+      "feature_order": [
+        "endpoint",
+        "primary_need",
+        "top_value",
+        "weighted_loss",
+        "cost",
+        "familiarity",
+        "switch",
+        "confidence"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 """Inspect all registered objective regressions, without tuning the chooser."""
 import argparse,copy,json,sys
+from dataclasses import replace
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from reflex.core import Policy,character_key,compile_batch,digest
@@ -35,7 +36,16 @@ def main():
             assert d['decision']['action_id']==step['action']
             if s.public['tick']==e['steps'][differing]['before']['public']['tick']:
                 f=cap['node']['forecast'];batch=compile_batch(f.contexts,outcome_limit=f.outcome_limit);score=policy.decide(batch,False,return_frame=f.return_frame)
+                # Diagnostic of this fixed forecast only, not a new whole-game
+                # policy: remove style contributions, keeping all predictions.
+                from reflex.deliberation import select
+                contexts=copy.deepcopy(f.contexts)
+                for cc in contexts:
+                    for act in cc['actions']:
+                        for outcome in act['outcomes']:outcome['style']={}
+                restyled,_=select([before._prepare(req)['effective']],replace(f,contexts=contexts),policy)
                 findings.append(dict(case=r['case'],profile=r['profile'],world=g.kernel.record(s),baseline=other['steps'][differing]['action'],selected=d['decision']['action_id'],
+                    fixed_forecast_without_style=restyled[0]['action_id'],
                     plans=[dict(root=f.roots[key][0],purpose=f.purpose[key],score=float(score.scores[0,j]),
                                 features=score.features[0,j].tolist(),eligible=bool(score.eligible[0,j])) for j,key in enumerate(batch.ids[0])],
                     feature_order=['endpoint','primary_need','top_value','weighted_loss','cost','familiarity','switch','confidence']))

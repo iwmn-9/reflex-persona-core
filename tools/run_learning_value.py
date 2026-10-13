@@ -18,6 +18,15 @@ from tools.run_frontier_value import pool_run
 
 
 def cases(stage):
+    if stage=='holdout':
+        return [dict(game='auction',limit=3,prizes=(3,8,5),budget=7,prior=(.35,.65)),
+                dict(game='auction',limit=3,prizes=(6,2,9),budget=8,flip=.1),
+                dict(game='resources',limit=5,cash=5,fee=2,prior=(.35,.65)),
+                dict(game='resources',limit=4,poor_yield=1,prior=(.8,.2),flip=.1),
+                dict(game='combat',limit=4,hp=2,enemy=6,signal_accuracy=.75,flip=.1),
+                dict(game='combat',limit=4,hp=1,enemy=4,signal_accuracy=.6),
+                dict(game='gambling',limit=4,cash=4,target=8,good_odds=.75,bad_odds=.25,signal_accuracy=.7,prior=(.45,.55)),
+                dict(game='gambling',limit=4,cash=2,target=6,good_odds=.9,bad_odds=.3,signal_accuracy=.6,flip=.15)]
     base=[dict(game='auction',limit=3),dict(game='resources',limit=4),dict(game='combat',limit=3,hp=1),dict(game='gambling',limit=4)]
     if stage=='pilot':return base
     if stage=='continuation':
@@ -104,12 +113,12 @@ def evaluate(job):
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--stage',choices=('pilot','development','confirmation','continuation'),default='development')
+    p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--stage',choices=('pilot','development','confirmation','continuation','holdout'),default='development')
     p.add_argument('--workers',type=int,default=3);p.add_argument('--frozen',action='store_true');a=p.parse_args();root=Path(a.root)
     if not a.frozen:
         from tools.freeze_experiment import dispatch
         return dispatch(root,Path(__file__).name,['--stage',a.stage,'--workers',str(a.workers)])
-    seeds=list(range(62000 if a.stage!='confirmation' else 63000,(62000 if a.stage!='confirmation' else 63000)+32))
+    first={'confirmation':63000,'holdout':65000}.get(a.stage,62000);seeds=list(range(first,first+32))
     ps=profiles()[:1] if a.stage=='pilot' else profiles()
     arms=('myopic','frozen','adaptive','tail') if a.stage=='continuation' else ('myopic','frozen','adaptive')
     jobs=[(case,profile,arm,seeds) for case in cases(a.stage) for profile in ps for arm in arms]

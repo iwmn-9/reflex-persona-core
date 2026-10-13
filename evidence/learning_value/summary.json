@@ -450,10 +450,127 @@
       "information_measure": "observed action counts only; not an intrinsic information reward or proof of efficient exploration",
       "rows_digest": "aba216044c80d8b7c1ed6f522d83eb1828e43519e23f19809d2958baaf176acd",
       "registration_digest": "6dcd7a896b3b9b3ebf3ea054a9b1b2668f55fe897ea97c2ec4eb4d084f56d444"
+    },
+    {
+      "study": "learning_value_accounted_holdout_20261014",
+      "policies": 96,
+      "executions": 3072,
+      "replayed_decisions": 10586,
+      "decision_states": 729,
+      "max_adaptive_prediction_gap": 1.1102230246251565e-16,
+      "groups": [
+        {
+          "game": "all",
+          "candidate": "adaptive",
+          "baseline": "myopic",
+          "pairs": 32,
+          "better": 20,
+          "worse": 0,
+          "same": 12,
+          "average_delta": 0.31984855698529413
+        },
+        {
+          "game": "all",
+          "candidate": "adaptive",
+          "baseline": "frozen",
+          "pairs": 32,
+          "better": 5,
+          "worse": 2,
+          "same": 25,
+          "average_delta": 0.028451861213235285
+        },
+        {
+          "game": "auction",
+          "candidate": "adaptive",
+          "baseline": "myopic",
+          "pairs": 8,
+          "better": 8,
+          "worse": 0,
+          "same": 0,
+          "average_delta": 0.27642922794117647
+        },
+        {
+          "game": "auction",
+          "candidate": "adaptive",
+          "baseline": "frozen",
+          "pairs": 8,
+          "better": 1,
+          "worse": 2,
+          "same": 5,
+          "average_delta": 0.013807444852941164
+        },
+        {
+          "game": "combat",
+          "candidate": "adaptive",
+          "baseline": "myopic",
+          "pairs": 8,
+          "better": 4,
+          "worse": 0,
+          "same": 4,
+          "average_delta": 0.662625
+        },
+        {
+          "game": "combat",
+          "candidate": "adaptive",
+          "baseline": "frozen",
+          "pairs": 8,
+          "better": 4,
+          "worse": 0,
+          "same": 4,
+          "average_delta": 0.09999999999999998
+        },
+        {
+          "game": "gambling",
+          "candidate": "adaptive",
+          "baseline": "myopic",
+          "pairs": 8,
+          "better": 0,
+          "worse": 0,
+          "same": 8,
+          "average_delta": 0.0
+        },
+        {
+          "game": "gambling",
+          "candidate": "adaptive",
+          "baseline": "frozen",
+          "pairs": 8,
+          "better": 0,
+          "worse": 0,
+          "same": 8,
+          "average_delta": 0.0
+        },
+        {
+          "game": "resources",
+          "candidate": "adaptive",
+          "baseline": "myopic",
+          "pairs": 8,
+          "better": 8,
+          "worse": 0,
+          "same": 0,
+          "average_delta": 0.34034000000000003
+        },
+        {
+          "game": "resources",
+          "candidate": "adaptive",
+          "baseline": "frozen",
+          "pairs": 8,
+          "better": 0,
+          "worse": 0,
+          "same": 8,
+          "average_delta": 0.0
+        }
+      ],
+      "information_actions": 352,
+      "fully_known_information_actions": 0,
+      "diverse_initial_conditions": 6,
+      "persona_condition_groups": 24,
+      "information_measure": "observed action counts only; not an intrinsic information reward or proof of efficient exploration",
+      "rows_digest": "f0f3e904f40ad49ee401c1310387476cfa54585928a39cf0a0b8e700b3aeb5ea",
+      "registration_digest": "c168f6be40a8435a7eb1d9a16f375def5bace7c1acd17b1e34406db018e56b65"
     }
   ],
-  "total_policies": 352,
-  "total_actual_executions": 11264,
-  "total_replayed_decisions": 33437,
-  "scope": "exact expectations of 28 authored configurations x 4 personas; repeated seeds and correlated persona conditions are not independent generalization evidence"
+  "total_policies": 448,
+  "total_actual_executions": 14336,
+  "total_replayed_decisions": 44023,
+  "scope": "exact expectations of 36 authored configurations x 4 personas; repeated seeds and correlated persona conditions are not independent generalization evidence"
 }

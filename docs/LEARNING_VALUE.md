@@ -48,6 +48,7 @@
 python tools/run_learning_value.py --root FRESH_DEVELOPMENT --stage development
 python tools/run_learning_value.py --root FRESH_CONFIRMATION --stage confirmation
 python tools/run_learning_value.py --root FRESH_CONTINUATION --stage continuation
+python tools/run_learning_value.py --root FRESH_HOLDOUT --stage holdout
 python tools/probe_learning_connections.py --root FRESH_CONNECTIONS
 python -m unittest discover -s tests -p test_belief_planning.py -v
 ```
