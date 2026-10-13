@@ -1,0 +1,214 @@
+{
+  "findings": [
+    {
+      "case": {
+        "game": "gambling",
+        "limit": 4,
+        "label": "continuation",
+        "prior": [
+          0.6,
+          0.4
+        ],
+        "signal_accuracy": 0.8
+      },
+      "profile": "care",
+      "world": {
+        "format": "public-belief-state-v1",
+        "identity": "3a95bfab614165d61edb360a2536a9e9a46055d37360b0ed7166baa7ba962788",
+        "tick": 1,
+        "weights": [
+          0.894736842105263,
+          0.10526315789473682
+        ],
+        "public": {
+          "tick": 1,
+          "cash": 5,
+          "signal": null
+        }
+      },
+      "baseline": "bet-a",
+      "selected": "probe",
+      "plans": [
+        {
+          "root": "bet-a",
+          "purpose": 0.6273355263157894,
+          "score": 0.5122814213553402,
+          "features": [
+            0.6273355263157894,
+            0.27263516419956135,
+            0.0,
+            0.008091751521792765,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bet-b",
+          "purpose": 0.6685526315789474,
+          "score": 0.5187229015502416,
+          "features": [
+            0.6685526315789474,
+            0.22854717817982456,
+            0.0,
+            0.008091751521792766,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "pass",
+          "purpose": 0.5812938596491228,
+          "score": 0.45040908021056064,
+          "features": [
+            0.5812938596491228,
+            0.19545320559210527,
+            0.0,
+            0.009992701468750002,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "probe",
+          "purpose": 0.6253070175438598,
+          "score": 0.5394011164377399,
+          "features": [
+            0.6253070175438598,
+            0.33197899890350885,
+            0.0,
+            0.013299623430372807,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        }
+      ],
+      "feature_order": [
+        "endpoint",
+        "primary_need",
+        "top_value",
+        "weighted_loss",
+        "cost",
+        "familiarity",
+        "switch",
+        "confidence"
+      ]
+    },
+    {
+      "case": {
+        "game": "gambling",
+        "limit": 4,
+        "label": "continuation",
+        "prior": [
+          0.6,
+          0.4
+        ],
+        "signal_accuracy": 0.8
+      },
+      "profile": "growth",
+      "world": {
+        "format": "public-belief-state-v1",
+        "identity": "3a95bfab614165d61edb360a2536a9e9a46055d37360b0ed7166baa7ba962788",
+        "tick": 1,
+        "weights": [
+          0.894736842105263,
+          0.10526315789473682
+        ],
+        "public": {
+          "tick": 1,
+          "cash": 5,
+          "signal": null
+        }
+      },
+      "baseline": "bet-a",
+      "selected": "probe",
+      "plans": [
+        {
+          "root": "bet-a",
+          "purpose": 0.6273355263157894,
+          "score": 0.8339644752971848,
+          "features": [
+            0.6273355263157894,
+            0.2628077603481359,
+            0.2628077603481359,
+            0.02071984813743833,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "bet-b",
+          "purpose": 0.6685526315789474,
+          "score": 0.7178171626608771,
+          "features": [
+            0.6685526315789474,
+            0.17842288555372804,
+            0.17842288555372804,
+            0.020719848137438338,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "pass",
+          "purpose": 0.5812938596491228,
+          "score": 0.642055412004213,
+          "features": [
+            0.5812938596491228,
+            0.1686603518366228,
+            0.1686603518366228,
+            0.03238289211883225,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        },
+        {
+          "root": "probe",
+          "purpose": 0.6253070175438598,
+          "score": 0.865108306227517,
+          "features": [
+            0.6253070175438598,
+            0.27263216200657897,
+            0.27263216200657897,
+            0.027621563513843213,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eligible": true
+        }
+      ],
+      "feature_order": [
+        "endpoint",
+        "primary_need",
+        "top_value",
+        "weighted_loss",
+        "cost",
+        "familiarity",
+        "switch",
+        "confidence"
+      ]
+    }
+  ]
+}

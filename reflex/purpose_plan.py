@@ -90,6 +90,9 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
                 entry=dict(g.record(),settlement_step=len(steps),positive_confidence=confidence,
                     reference_origin=objective_origin.value,gain_confidence=gain_confidence)
             goals.append(entry)
+        # Valid bounded atoms can sum to 1 + one rounding unit. Preserve the
+        # strict selector contract without masking a materially invalid score.
+        if 1. < abs(expected) <= 1.+1e-12:expected=1. if expected>0 else -1.
         purpose[a['id']]=expected
         endpoint[a['id']]=goals
     # Preserving the tier before the purpose gate prevents a competence band

@@ -2,7 +2,7 @@
 
 最終目標は、ゲームを替えても使える「その人物なりに合理的な判断」の土台。単なる最強CPU、勝率を揃えた性格集、心理パラメータの細密な再現を目指さない。固定した人物の軸を持ち、欲求・感情・経験によって手段を変え、協力・エゴ・妥協・攻略への対応からゲームの展開を作る。
 
-この文書は現在の判断基準と優先順位の正本。各実験の数値・旧案・不採用理由はそれぞれの evidence に置く。全体診断は [foundation_audit](../evidence/foundation_audit/REPORT.md)、将来の本人と目的評価は [closed_loop](../evidence/closed_loop/REPORT.md)、打切り地点の価値・実結果による学習・標本数の検証は [frontier_value](../evidence/frontier_value/REPORT.md)。
+この文書は現在の判断基準と優先順位の正本。各実験の数値・旧案・不採用理由はそれぞれの evidence に置く。全体診断は [foundation_audit](../evidence/foundation_audit/REPORT.md)、将来の本人と目的評価は [closed_loop](../evidence/closed_loop/REPORT.md)、打切り地点の価値は [frontier_value](../evidence/frontier_value/REPORT.md)、学びによる将来の選択変更は [learning_value](../evidence/learning_value/REPORT.md)。
 
 ## 守る七つの条件
 
@@ -60,12 +60,15 @@
 
 採否は、事前に固定した異なるルール・途中局面・人格で、目的の利益と損、主義のための支払い、停滞、情報の公平性を報告して決める。既に全勝の条件、同じ決定論的軌跡の再実行、同じ世界の複数NPCを独立標本として水増ししない。速度費用は当面の合否に使わない。全般的な賢さ、人間水準、面白さの完成は未達成。
 
+観測から学んだ後に本人の選択が変わることを、有限の仮説・公開結果の分岐として扱う任意接続を実装した。情報の量を固定報酬にしない。小さな有限モデルでは通しの改善を確認したが、仮説の自動獲得・モデル外の変化・短い探索への圧縮・既存の主観的な頑なさとの合成は未解決。次はこの境界を中心に扱う。費用の意味が行動名によって違うと「学びの価値」を水増しするため、同じ資源増減の意味を揃えた比較を維持する。
+
 ## 主要な根拠と接続契約
 
 - 実行の境界：[DECISION_LOOP](DECISION_LOOP.md)、[INTEGRATED_BASELINE](INTEGRATED_BASELINE.md)
 - 先読みの利益と限界：[policy_rollout](../evidence/policy_rollout/REPORT.md)、[FORECAST_RELIABILITY](FORECAST_RELIABILITY.md)、[CHOICE_SCALE](CHOICE_SCALE.md)
 - 将来も選び直す本人：[CLOSED_LOOP](CLOSED_LOOP.md)、[全分岐とゲーム横断の検証](../evidence/closed_loop/REPORT.md)
 - 打切り以後の価値：[FRONTIER_VALUE](FRONTIER_VALUE.md)、[予測・候補順位・実行を分けた検証](../evidence/frontier_value/REPORT.md)
+- 学びを含む計画：[LEARNING_VALUE](LEARNING_VALUE.md)、[費用の対照・全分岐・実行の検証](../evidence/learning_value/REPORT.md)
 - 人格・学習：[PERSONAL_COMMITMENT](PERSONAL_COMMITMENT.md)、[PERSONA_FEEDBACK](PERSONA_FEEDBACK.md)
 - 省略と社会判断：[social_omission](../evidence/social_omission/REPORT.md)、[encounter_withdrawal](../evidence/encounter_withdrawal/REPORT.md)
 - チーム・計画修正：[TEAM_COOPERATION](TEAM_COOPERATION.md)、[CONDITIONAL_CONTINUATION](CONDITIONAL_CONTINUATION.md)、[PLAN_REPAIR](PLAN_REPAIR.md)、[REPAIR_STABILITY](REPAIR_STABILITY.md)

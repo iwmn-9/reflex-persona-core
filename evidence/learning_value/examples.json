@@ -1,0 +1,3823 @@
+[
+  {
+    "case": {
+      "game": "combat",
+      "limit": 3,
+      "hp": 1
+    },
+    "profile": "growth",
+    "expected": 0.8,
+    "initial": "feint",
+    "executions": [
+      {
+        "seed": 62000,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "success",
+          "value": 1.0
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "hp": 1,
+                "enemy": 4,
+                "signal": null
+              }
+            },
+            "action": "feint",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 1,
+              "weights": [
+                0.09999999999999998,
+                0.9
+              ],
+              "public": {
+                "tick": 1,
+                "hp": 1,
+                "enemy": 4,
+                "signal": 1
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0,
+              "needs": {},
+              "values": {},
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 1,
+              "weights": [
+                0.09999999999999998,
+                0.9
+              ],
+              "public": {
+                "tick": 1,
+                "hp": 1,
+                "enemy": 4,
+                "signal": 1
+              }
+            },
+            "action": "strike-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "hp": 1,
+                "enemy": 2,
+                "signal": 1
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.5,
+              "needs": {
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.5,
+                "security": 0.0
+              },
+              "style": {
+                "openness": 0.2
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "hp": 1,
+                "enemy": 2,
+                "signal": 1
+              }
+            },
+            "action": "strike-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 3,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 3,
+                "hp": 1,
+                "enemy": 0,
+                "signal": 1
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.5,
+              "needs": {
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.5,
+                "security": 0.0
+              },
+              "style": {
+                "openness": 0.2
+              },
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62001,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "success",
+          "value": 1.0
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "hp": 1,
+                "enemy": 4,
+                "signal": null
+              }
+            },
+            "action": "feint",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 1,
+              "weights": [
+                0.09999999999999998,
+                0.9
+              ],
+              "public": {
+                "tick": 1,
+                "hp": 1,
+                "enemy": 4,
+                "signal": 1
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0,
+              "needs": {},
+              "values": {},
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 1,
+              "weights": [
+                0.09999999999999998,
+                0.9
+              ],
+              "public": {
+                "tick": 1,
+                "hp": 1,
+                "enemy": 4,
+                "signal": 1
+              }
+            },
+            "action": "strike-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "hp": 1,
+                "enemy": 2,
+                "signal": 1
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.5,
+              "needs": {
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.5,
+                "security": 0.0
+              },
+              "style": {
+                "openness": 0.2
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "hp": 1,
+                "enemy": 2,
+                "signal": 1
+              }
+            },
+            "action": "strike-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 3,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 3,
+                "hp": 1,
+                "enemy": 0,
+                "signal": 1
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.5,
+              "needs": {
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.5,
+                "security": 0.0
+              },
+              "style": {
+                "openness": 0.2
+              },
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62002,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "success",
+          "value": 1.0
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "hp": 1,
+                "enemy": 4,
+                "signal": null
+              }
+            },
+            "action": "feint",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 1,
+              "weights": [
+                0.09999999999999998,
+                0.9
+              ],
+              "public": {
+                "tick": 1,
+                "hp": 1,
+                "enemy": 4,
+                "signal": 1
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0,
+              "needs": {},
+              "values": {},
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 1,
+              "weights": [
+                0.09999999999999998,
+                0.9
+              ],
+              "public": {
+                "tick": 1,
+                "hp": 1,
+                "enemy": 4,
+                "signal": 1
+              }
+            },
+            "action": "strike-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "hp": 1,
+                "enemy": 2,
+                "signal": 1
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.5,
+              "needs": {
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.5,
+                "security": 0.0
+              },
+              "style": {
+                "openness": 0.2
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "hp": 1,
+                "enemy": 2,
+                "signal": 1
+              }
+            },
+            "action": "strike-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 3,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 3,
+                "hp": 1,
+                "enemy": 0,
+                "signal": 1
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.5,
+              "needs": {
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.5,
+                "security": 0.0
+              },
+              "style": {
+                "openness": 0.2
+              },
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62003,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "success",
+          "value": 1.0
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "hp": 1,
+                "enemy": 4,
+                "signal": null
+              }
+            },
+            "action": "feint",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 1,
+              "weights": [
+                0.9,
+                0.09999999999999998
+              ],
+              "public": {
+                "tick": 1,
+                "hp": 1,
+                "enemy": 4,
+                "signal": 0
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0,
+              "needs": {},
+              "values": {},
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 1,
+              "weights": [
+                0.9,
+                0.09999999999999998
+              ],
+              "public": {
+                "tick": 1,
+                "hp": 1,
+                "enemy": 4,
+                "signal": 0
+              }
+            },
+            "action": "strike-a",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 2,
+              "weights": [
+                1.0,
+                0.0
+              ],
+              "public": {
+                "tick": 2,
+                "hp": 1,
+                "enemy": 2,
+                "signal": 0
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.5,
+              "needs": {
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.5,
+                "security": 0.0
+              },
+              "style": {
+                "openness": 0.2
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 2,
+              "weights": [
+                1.0,
+                0.0
+              ],
+              "public": {
+                "tick": 2,
+                "hp": 1,
+                "enemy": 2,
+                "signal": 0
+              }
+            },
+            "action": "strike-a",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "d0f60ee539730635059daaec658033b55d29fdf3c6b92b0bef3a85d5c6de61a8",
+              "tick": 3,
+              "weights": [
+                1.0,
+                0.0
+              ],
+              "public": {
+                "tick": 3,
+                "hp": 1,
+                "enemy": 0,
+                "signal": 0
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.5,
+              "needs": {
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.5,
+                "security": 0.0
+              },
+              "style": {
+                "openness": 0.2
+              },
+              "cost": 0
+            }
+          }
+        ]
+      }
+    ],
+    "trace": [
+      {
+        "public": {
+          "tick": 2,
+          "hp": 1,
+          "enemy": 2,
+          "signal": 1
+        },
+        "belief": [
+          0.0,
+          1.0
+        ],
+        "action": "strike-b",
+        "expected": 1.0,
+        "predicted": 1.0,
+        "gap": 0.0,
+        "tree_nodes": 1
+      },
+      {
+        "public": {
+          "tick": 1,
+          "hp": 1,
+          "enemy": 4,
+          "signal": 1
+        },
+        "belief": [
+          0.09999999999999998,
+          0.9
+        ],
+        "action": "strike-b",
+        "expected": 0.8,
+        "predicted": 0.8,
+        "gap": 0.0,
+        "tree_nodes": 6
+      },
+      {
+        "public": {
+          "tick": 2,
+          "hp": 1,
+          "enemy": 2,
+          "signal": 0
+        },
+        "belief": [
+          1.0,
+          0.0
+        ],
+        "action": "strike-a",
+        "expected": 1.0,
+        "predicted": 1.0,
+        "gap": 0.0,
+        "tree_nodes": 1
+      },
+      {
+        "public": {
+          "tick": 1,
+          "hp": 1,
+          "enemy": 4,
+          "signal": 0
+        },
+        "belief": [
+          0.9,
+          0.09999999999999998
+        ],
+        "action": "strike-a",
+        "expected": 0.8,
+        "predicted": 0.8,
+        "gap": 0.0,
+        "tree_nodes": 6
+      },
+      {
+        "public": {
+          "tick": 0,
+          "hp": 1,
+          "enemy": 4,
+          "signal": null
+        },
+        "belief": [
+          0.5,
+          0.5
+        ],
+        "action": "feint",
+        "expected": 0.8,
+        "predicted": 0.8,
+        "gap": 0.0,
+        "tree_nodes": 27
+      }
+    ]
+  },
+  {
+    "case": {
+      "game": "auction",
+      "limit": 3
+    },
+    "profile": "growth",
+    "expected": 0.5,
+    "initial": "bid:2",
+    "executions": [
+      {
+        "seed": 62000,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": 0.11538461538461539
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "budgets": [
+                    6,
+                    6,
+                    6
+                  ],
+                  "prize": 2,
+                  "category": "science",
+                  "remaining": [
+                    7,
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 0,
+                  "episode": 0,
+                  "last": [],
+                  "last_prize": 0
+                }
+              }
+            },
+            "action": "bid:2",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 1,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 1,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    0,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    6,
+                    3,
+                    6
+                  ],
+                  "prize": 7,
+                  "category": "science",
+                  "remaining": [
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 1,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    3,
+                    2
+                  ],
+                  "last_prize": 2
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.0,
+              "needs": {},
+              "values": {
+                "achievement": 0.0
+              },
+              "style": {
+                "openness": -0.16666666666666669
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 1,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 1,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    0,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    6,
+                    3,
+                    6
+                  ],
+                  "prize": 7,
+                  "category": "science",
+                  "remaining": [
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 1,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    3,
+                    2
+                  ],
+                  "last_prize": 2
+                }
+              }
+            },
+            "action": "bid:4",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    7,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    2,
+                    3,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 2,
+                  "episode": 0,
+                  "last": [
+                    4,
+                    3,
+                    2
+                  ],
+                  "last_prize": 7
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.42857142857142855,
+              "needs": {},
+              "values": {
+                "achievement": 0.42857142857142855
+              },
+              "style": {
+                "openness": 0.16666666666666663
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    7,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    2,
+                    3,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 2,
+                  "episode": 0,
+                  "last": [
+                    4,
+                    3,
+                    2
+                  ],
+                  "last_prize": 7
+                }
+              }
+            },
+            "action": "bid:2",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 3,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 3,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    7,
+                    6,
+                    0
+                  ],
+                  "budgets": [
+                    2,
+                    0,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 3,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    3,
+                    2
+                  ],
+                  "last_prize": 4
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.0,
+              "needs": {},
+              "values": {
+                "achievement": 0.0
+              },
+              "style": {
+                "openness": 0.5
+              },
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62001,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": 0.11538461538461539
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "budgets": [
+                    6,
+                    6,
+                    6
+                  ],
+                  "prize": 2,
+                  "category": "science",
+                  "remaining": [
+                    7,
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 0,
+                  "episode": 0,
+                  "last": [],
+                  "last_prize": 0
+                }
+              }
+            },
+            "action": "bid:2",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 1,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 1,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    0,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    6,
+                    3,
+                    6
+                  ],
+                  "prize": 7,
+                  "category": "science",
+                  "remaining": [
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 1,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    3,
+                    2
+                  ],
+                  "last_prize": 2
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.0,
+              "needs": {},
+              "values": {
+                "achievement": 0.0
+              },
+              "style": {
+                "openness": -0.16666666666666669
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 1,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 1,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    0,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    6,
+                    3,
+                    6
+                  ],
+                  "prize": 7,
+                  "category": "science",
+                  "remaining": [
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 1,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    3,
+                    2
+                  ],
+                  "last_prize": 2
+                }
+              }
+            },
+            "action": "bid:4",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    7,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    2,
+                    3,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 2,
+                  "episode": 0,
+                  "last": [
+                    4,
+                    3,
+                    2
+                  ],
+                  "last_prize": 7
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.42857142857142855,
+              "needs": {},
+              "values": {
+                "achievement": 0.42857142857142855
+              },
+              "style": {
+                "openness": 0.16666666666666663
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    7,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    2,
+                    3,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 2,
+                  "episode": 0,
+                  "last": [
+                    4,
+                    3,
+                    2
+                  ],
+                  "last_prize": 7
+                }
+              }
+            },
+            "action": "bid:2",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 3,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 3,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    7,
+                    6,
+                    0
+                  ],
+                  "budgets": [
+                    2,
+                    0,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 3,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    3,
+                    2
+                  ],
+                  "last_prize": 4
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.0,
+              "needs": {},
+              "values": {
+                "achievement": 0.0
+              },
+              "style": {
+                "openness": 0.5
+              },
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62002,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": 0.11538461538461539
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "budgets": [
+                    6,
+                    6,
+                    6
+                  ],
+                  "prize": 2,
+                  "category": "science",
+                  "remaining": [
+                    7,
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 0,
+                  "episode": 0,
+                  "last": [],
+                  "last_prize": 0
+                }
+              }
+            },
+            "action": "bid:2",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 1,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 1,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    0,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    6,
+                    3,
+                    6
+                  ],
+                  "prize": 7,
+                  "category": "science",
+                  "remaining": [
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 1,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    3,
+                    2
+                  ],
+                  "last_prize": 2
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.0,
+              "needs": {},
+              "values": {
+                "achievement": 0.0
+              },
+              "style": {
+                "openness": -0.16666666666666669
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 1,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 1,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    0,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    6,
+                    3,
+                    6
+                  ],
+                  "prize": 7,
+                  "category": "science",
+                  "remaining": [
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 1,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    3,
+                    2
+                  ],
+                  "last_prize": 2
+                }
+              }
+            },
+            "action": "bid:4",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    7,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    2,
+                    3,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 2,
+                  "episode": 0,
+                  "last": [
+                    4,
+                    3,
+                    2
+                  ],
+                  "last_prize": 7
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.42857142857142855,
+              "needs": {},
+              "values": {
+                "achievement": 0.42857142857142855
+              },
+              "style": {
+                "openness": 0.16666666666666663
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 2,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 2,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    7,
+                    2,
+                    0
+                  ],
+                  "budgets": [
+                    2,
+                    3,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 2,
+                  "episode": 0,
+                  "last": [
+                    4,
+                    3,
+                    2
+                  ],
+                  "last_prize": 7
+                }
+              }
+            },
+            "action": "bid:2",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 3,
+              "weights": [
+                0.0,
+                1.0
+              ],
+              "public": {
+                "tick": 3,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    7,
+                    6,
+                    0
+                  ],
+                  "budgets": [
+                    2,
+                    0,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 3,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    3,
+                    2
+                  ],
+                  "last_prize": 4
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.0,
+              "needs": {},
+              "values": {
+                "achievement": 0.0
+              },
+              "style": {
+                "openness": 0.5
+              },
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62003,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": 0.8846153846153846
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "budgets": [
+                    6,
+                    6,
+                    6
+                  ],
+                  "prize": 2,
+                  "category": "science",
+                  "remaining": [
+                    7,
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 0,
+                  "episode": 0,
+                  "last": [],
+                  "last_prize": 0
+                }
+              }
+            },
+            "action": "bid:2",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 1,
+              "weights": [
+                1.0,
+                0.0
+              ],
+              "public": {
+                "tick": 1,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    2,
+                    0,
+                    0
+                  ],
+                  "budgets": [
+                    4,
+                    6,
+                    6
+                  ],
+                  "prize": 7,
+                  "category": "science",
+                  "remaining": [
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 1,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    1,
+                    0
+                  ],
+                  "last_prize": 2
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.10714285714285714,
+              "needs": {},
+              "values": {
+                "achievement": 0.10714285714285714
+              },
+              "style": {
+                "openness": -0.16666666666666669
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 1,
+              "weights": [
+                1.0,
+                0.0
+              ],
+              "public": {
+                "tick": 1,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    2,
+                    0,
+                    0
+                  ],
+                  "budgets": [
+                    4,
+                    6,
+                    6
+                  ],
+                  "prize": 7,
+                  "category": "science",
+                  "remaining": [
+                    4
+                  ],
+                  "carry": 0,
+                  "round": 1,
+                  "episode": 0,
+                  "last": [
+                    2,
+                    1,
+                    0
+                  ],
+                  "last_prize": 2
+                }
+              }
+            },
+            "action": "bid:3",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 2,
+              "weights": [
+                1.0,
+                0.0
+              ],
+              "public": {
+                "tick": 2,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    9,
+                    0,
+                    0
+                  ],
+                  "budgets": [
+                    1,
+                    6,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 2,
+                  "episode": 0,
+                  "last": [
+                    3,
+                    1,
+                    0
+                  ],
+                  "last_prize": 7
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.44642857142857145,
+              "needs": {},
+              "values": {
+                "achievement": 0.44642857142857145
+              },
+              "style": {
+                "openness": 0.25
+              },
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 2,
+              "weights": [
+                1.0,
+                0.0
+              ],
+              "public": {
+                "tick": 2,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    9,
+                    0,
+                    0
+                  ],
+                  "budgets": [
+                    1,
+                    6,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 2,
+                  "episode": 0,
+                  "last": [
+                    3,
+                    1,
+                    0
+                  ],
+                  "last_prize": 7
+                }
+              }
+            },
+            "action": "bid:1",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "8cf51861d90037365495524d504f7ad80eac058dacf6a091cc93d160484f1248",
+              "tick": 3,
+              "weights": [
+                1.0,
+                0.0
+              ],
+              "public": {
+                "tick": 3,
+                "position": {
+                  "game": "auction",
+                  "hands": [
+                    [],
+                    [],
+                    []
+                  ],
+                  "scores": [
+                    13,
+                    0,
+                    0
+                  ],
+                  "budgets": [
+                    0,
+                    6,
+                    6
+                  ],
+                  "prize": 4,
+                  "category": "science",
+                  "remaining": [],
+                  "carry": 0,
+                  "round": 3,
+                  "episode": 0,
+                  "last": [
+                    1,
+                    1,
+                    0
+                  ],
+                  "last_prize": 4
+                }
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.26785714285714285,
+              "needs": {},
+              "values": {
+                "achievement": 0.26785714285714285
+              },
+              "style": {
+                "openness": 0.5
+              },
+              "cost": 0
+            }
+          }
+        ]
+      }
+    ],
+    "trace": [
+      {
+        "public": {
+          "tick": 2,
+          "position": {
+            "game": "auction",
+            "hands": [
+              [],
+              [],
+              []
+            ],
+            "scores": [
+              9,
+              0,
+              0
+            ],
+            "budgets": [
+              1,
+              6,
+              6
+            ],
+            "prize": 4,
+            "category": "science",
+            "remaining": [],
+            "carry": 0,
+            "round": 2,
+            "episode": 0,
+            "last": [
+              3,
+              1,
+              0
+            ],
+            "last_prize": 7
+          }
+        },
+        "belief": [
+          1.0,
+          0.0
+        ],
+        "action": "bid:1",
+        "expected": 0.8846153846153846,
+        "predicted": 0.8846153846153846,
+        "gap": 0.0,
+        "tree_nodes": 1
+      },
+      {
+        "public": {
+          "tick": 1,
+          "position": {
+            "game": "auction",
+            "hands": [
+              [],
+              [],
+              []
+            ],
+            "scores": [
+              2,
+              0,
+              0
+            ],
+            "budgets": [
+              4,
+              6,
+              6
+            ],
+            "prize": 7,
+            "category": "science",
+            "remaining": [
+              4
+            ],
+            "carry": 0,
+            "round": 1,
+            "episode": 0,
+            "last": [
+              2,
+              1,
+              0
+            ],
+            "last_prize": 2
+          }
+        },
+        "belief": [
+          1.0,
+          0.0
+        ],
+        "action": "bid:3",
+        "expected": 0.8846153846153846,
+        "predicted": 0.8846153846153846,
+        "gap": 0.0,
+        "tree_nodes": 6
+      },
+      {
+        "public": {
+          "tick": 2,
+          "position": {
+            "game": "auction",
+            "hands": [
+              [],
+              [],
+              []
+            ],
+            "scores": [
+              7,
+              2,
+              0
+            ],
+            "budgets": [
+              2,
+              3,
+              6
+            ],
+            "prize": 4,
+            "category": "science",
+            "remaining": [],
+            "carry": 0,
+            "round": 2,
+            "episode": 0,
+            "last": [
+              4,
+              3,
+              2
+            ],
+            "last_prize": 7
+          }
+        },
+        "belief": [
+          0.0,
+          1.0
+        ],
+        "action": "bid:2",
+        "expected": 0.11538461538461539,
+        "predicted": 0.11538461538461539,
+        "gap": 0.0,
+        "tree_nodes": 1
+      },
+      {
+        "public": {
+          "tick": 1,
+          "position": {
+            "game": "auction",
+            "hands": [
+              [],
+              [],
+              []
+            ],
+            "scores": [
+              0,
+              2,
+              0
+            ],
+            "budgets": [
+              6,
+              3,
+              6
+            ],
+            "prize": 7,
+            "category": "science",
+            "remaining": [
+              4
+            ],
+            "carry": 0,
+            "round": 1,
+            "episode": 0,
+            "last": [
+              2,
+              3,
+              2
+            ],
+            "last_prize": 2
+          }
+        },
+        "belief": [
+          0.0,
+          1.0
+        ],
+        "action": "bid:4",
+        "expected": 0.11538461538461539,
+        "predicted": 0.11538461538461539,
+        "gap": 0.0,
+        "tree_nodes": 8
+      },
+      {
+        "public": {
+          "tick": 0,
+          "position": {
+            "game": "auction",
+            "hands": [
+              [],
+              [],
+              []
+            ],
+            "scores": [
+              0,
+              0,
+              0
+            ],
+            "budgets": [
+              6,
+              6,
+              6
+            ],
+            "prize": 2,
+            "category": "science",
+            "remaining": [
+              7,
+              4
+            ],
+            "carry": 0,
+            "round": 0,
+            "episode": 0,
+            "last": [],
+            "last_prize": 0
+          }
+        },
+        "belief": [
+          0.5,
+          0.5
+        ],
+        "action": "bid:2",
+        "expected": 0.5,
+        "predicted": 0.5,
+        "gap": 0.0,
+        "tree_nodes": 63
+      }
+    ]
+  },
+  {
+    "case": {
+      "game": "gambling",
+      "limit": 4
+    },
+    "profile": "growth",
+    "expected": 0.534365625,
+    "initial": "bet-a",
+    "executions": [
+      {
+        "seed": 62000,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": -0.16666666666666666
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "cash": 3,
+                "signal": null
+              }
+            },
+            "action": "bet-a",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 1,
+              "weights": [
+                0.15000000000000002,
+                0.85
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 2,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": -0.16666666666666666,
+              "needs": {
+                "growth": -0.16666666666666666,
+                "safety": -0.16666666666666666
+              },
+              "values": {
+                "achievement": -0.16666666666666666
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 1,
+              "weights": [
+                0.15000000000000002,
+                0.85
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 2,
+                "signal": null
+              }
+            },
+            "action": "bet-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 2,
+              "weights": [
+                0.030201342281879203,
+                0.9697986577181208
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 4,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.3333333333333333,
+              "needs": {
+                "growth": 0.3333333333333333,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.3333333333333333
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 2,
+              "weights": [
+                0.030201342281879203,
+                0.9697986577181208
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 4,
+                "signal": null
+              }
+            },
+            "action": "bet-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 3,
+              "weights": [
+                0.15000000000000002,
+                0.85
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 3,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": -0.16666666666666666,
+              "needs": {
+                "growth": -0.16666666666666666,
+                "safety": -0.16666666666666666
+              },
+              "values": {
+                "achievement": -0.16666666666666666
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 3,
+              "weights": [
+                0.15000000000000002,
+                0.85
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 3,
+                "signal": null
+              }
+            },
+            "action": "bet-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 4,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 4,
+                "cash": 2,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": -0.16666666666666666,
+              "needs": {
+                "growth": -0.16666666666666666,
+                "safety": -0.16666666666666666
+              },
+              "values": {
+                "achievement": -0.16666666666666666
+              },
+              "style": {},
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62001,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": -0.5
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "cash": 3,
+                "signal": null
+              }
+            },
+            "action": "bet-a",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 1,
+              "weights": [
+                0.15000000000000002,
+                0.85
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 2,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": -0.16666666666666666,
+              "needs": {
+                "growth": -0.16666666666666666,
+                "safety": -0.16666666666666666
+              },
+              "values": {
+                "achievement": -0.16666666666666666
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 1,
+              "weights": [
+                0.15000000000000002,
+                0.85
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 2,
+                "signal": null
+              }
+            },
+            "action": "bet-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": -0.16666666666666666,
+              "needs": {
+                "growth": -0.16666666666666666,
+                "safety": -0.16666666666666666
+              },
+              "values": {
+                "achievement": -0.16666666666666666
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 1,
+                "signal": null
+              }
+            },
+            "action": "bet-a",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 3,
+              "weights": [
+                0.15000000000000002,
+                0.85
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 0,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": -0.16666666666666666,
+              "needs": {
+                "growth": -0.16666666666666666,
+                "safety": -0.16666666666666666
+              },
+              "values": {
+                "achievement": -0.16666666666666666
+              },
+              "style": {},
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62002,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": 0.3333333333333333
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "cash": 3,
+                "signal": null
+              }
+            },
+            "action": "bet-a",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 1,
+              "weights": [
+                0.85,
+                0.15
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 5,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.3333333333333333,
+              "needs": {
+                "growth": 0.3333333333333333,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.3333333333333333
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 1,
+              "weights": [
+                0.85,
+                0.15
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 5,
+                "signal": null
+              }
+            },
+            "action": "bet-a",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 4,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": -0.16666666666666666,
+              "needs": {
+                "growth": -0.16666666666666666,
+                "safety": -0.16666666666666666
+              },
+              "values": {
+                "achievement": -0.16666666666666666
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 4,
+                "signal": null
+              }
+            },
+            "action": "bet-a",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 3,
+              "weights": [
+                0.15000000000000002,
+                0.85
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 3,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": -0.16666666666666666,
+              "needs": {
+                "growth": -0.16666666666666666,
+                "safety": -0.16666666666666666
+              },
+              "values": {
+                "achievement": -0.16666666666666666
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 3,
+              "weights": [
+                0.15000000000000002,
+                0.85
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 3,
+                "signal": null
+              }
+            },
+            "action": "bet-b",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 4,
+              "weights": [
+                0.030201342281879203,
+                0.9697986577181208
+              ],
+              "public": {
+                "tick": 4,
+                "cash": 5,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.3333333333333333,
+              "needs": {
+                "growth": 0.3333333333333333,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.3333333333333333
+              },
+              "style": {},
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62003,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": 0.6666666666666666
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "cash": 3,
+                "signal": null
+              }
+            },
+            "action": "bet-a",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 1,
+              "weights": [
+                0.85,
+                0.15
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 5,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.3333333333333333,
+              "needs": {
+                "growth": 0.3333333333333333,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.3333333333333333
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 1,
+              "weights": [
+                0.85,
+                0.15
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 5,
+                "signal": null
+              }
+            },
+            "action": "bet-a",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "ac371f28fac3c684b0995e27aa58c65d8999cd6359c81f1d498e960a88215f5c",
+              "tick": 2,
+              "weights": [
+                0.9697986577181208,
+                0.0302013422818792
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 7,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.3333333333333333,
+              "needs": {
+                "growth": 0.3333333333333333,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.3333333333333333
+              },
+              "style": {},
+              "cost": 0
+            }
+          }
+        ]
+      }
+    ],
+    "trace": [
+      {
+        "public": {
+          "tick": 3,
+          "cash": 3,
+          "signal": null
+        },
+        "belief": [
+          0.85,
+          0.15
+        ],
+        "action": "bet-a",
+        "expected": 0.2058333333333333,
+        "predicted": 0.2058333333333333,
+        "gap": 0.0,
+        "tree_nodes": 1
+      },
+      {
+        "public": {
+          "tick": 2,
+          "cash": 1,
+          "signal": null
+        },
+        "belief": [
+          0.5,
+          0.5
+        ],
+        "action": "bet-a",
+        "expected": -0.14708333333333334,
+        "predicted": -0.14708333333333334,
+        "gap": 0.0,
+        "tree_nodes": 4
+      },
+      {
+        "public": {
+          "tick": 3,
+          "cash": 6,
+          "signal": null
+        },
+        "belief": [
+          0.005465587044534414,
+          0.9945344129554656
+        ],
+        "action": "bet-b",
+        "expected": 0.7564203778677463,
+        "predicted": 0.7564203778677463,
+        "gap": 0.0,
+        "tree_nodes": 1
+      },
+      {
+        "public": {
+          "tick": 3,
+          "cash": 3,
+          "signal": null
+        },
+        "belief": [
+          0.15000000000000002,
+          0.85
+        ],
+        "action": "bet-b",
+        "expected": 0.2058333333333333,
+        "predicted": 0.2058333333333333,
+        "gap": 0.0,
+        "tree_nodes": 1
+      },
+      {
+        "public": {
+          "tick": 2,
+          "cash": 4,
+          "signal": null
+        },
+        "belief": [
+          0.030201342281879203,
+          0.9697986577181208
+        ],
+        "action": "bet-b",
+        "expected": 0.6621923937360179,
+        "predicted": 0.6621923937360179,
+        "gap": 0.0,
+        "tree_nodes": 8
+      },
+      {
+        "public": {
+          "tick": 1,
+          "cash": 2,
+          "signal": null
+        },
+        "belief": [
+          0.15000000000000002,
+          0.85
+        ],
+        "action": "bet-b",
+        "expected": 0.4558270833333333,
+        "predicted": 0.4558270833333334,
+        "gap": 5.551115123125783e-17,
+        "tree_nodes": 41
+      },
+      {
+        "public": {
+          "tick": 3,
+          "cash": 6,
+          "signal": null
+        },
+        "belief": [
+          0.85,
+          0.15
+        ],
+        "action": "bet-a",
+        "expected": 0.7058333333333333,
+        "predicted": 0.7058333333333333,
+        "gap": 0.0,
+        "tree_nodes": 1
+      },
+      {
+        "public": {
+          "tick": 3,
+          "cash": 3,
+          "signal": null
+        },
+        "belief": [
+          0.15000000000000002,
+          0.85
+        ],
+        "action": "bet-b",
+        "expected": 0.2058333333333333,
+        "predicted": 0.2058333333333333,
+        "gap": 0.0,
+        "tree_nodes": 1
+      },
+      {
+        "public": {
+          "tick": 2,
+          "cash": 4,
+          "signal": null
+        },
+        "belief": [
+          0.5,
+          0.5
+        ],
+        "action": "bet-a",
+        "expected": 0.4558333333333333,
+        "predicted": 0.4558333333333333,
+        "gap": 0.0,
+        "tree_nodes": 8
+      },
+      {
+        "public": {
+          "tick": 1,
+          "cash": 5,
+          "signal": null
+        },
+        "belief": [
+          0.85,
+          0.15
+        ],
+        "action": "bet-a",
+        "expected": 0.6129041666666667,
+        "predicted": 0.6129041666666667,
+        "gap": 0.0,
+        "tree_nodes": 39
+      },
+      {
+        "public": {
+          "tick": 0,
+          "cash": 3,
+          "signal": null
+        },
+        "belief": [
+          0.5,
+          0.5
+        ],
+        "action": "bet-a",
+        "expected": 0.534365625,
+        "predicted": 0.5343656250000001,
+        "gap": 1.1102230246251565e-16,
+        "tree_nodes": 224
+      }
+    ]
+  },
+  {
+    "case": {
+      "game": "resources",
+      "limit": 4
+    },
+    "profile": "growth",
+    "expected": 0.4,
+    "initial": "trade",
+    "executions": [
+      {
+        "seed": 62000,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": 0.4
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "cash": 6,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 1,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 7,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 1,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 7,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 8,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 8,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 3,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 9,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 3,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 9,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 4,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 4,
+                "cash": 10,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62001,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": 0.4
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "cash": 6,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 1,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 7,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 1,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 7,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 8,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 8,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 3,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 9,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 3,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 9,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 4,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 4,
+                "cash": 10,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62002,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": 0.4
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "cash": 6,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 1,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 7,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 1,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 7,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 8,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 8,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 3,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 9,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 3,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 9,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 4,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 4,
+                "cash": 10,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          }
+        ]
+      },
+      {
+        "seed": 62003,
+        "goal": {
+          "target": "declared-game-purpose",
+          "status": "scored",
+          "value": 0.4
+        },
+        "steps": [
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 0,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 0,
+                "cash": 6,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 1,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 7,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 1,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 1,
+                "cash": 7,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 8,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 2,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 2,
+                "cash": 8,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 3,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 9,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          },
+          {
+            "before": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 3,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 3,
+                "cash": 9,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "action": "trade",
+            "after": {
+              "format": "public-belief-state-v1",
+              "identity": "6522a4872e7c9fc31999ac7b913beaaf560373f99eea4df0892c097d3c9debf5",
+              "tick": 4,
+              "weights": [
+                0.5,
+                0.5
+              ],
+              "public": {
+                "tick": 4,
+                "cash": 10,
+                "plant": -1,
+                "signal": null
+              }
+            },
+            "flow": {
+              "p": 1,
+              "objective": 0.1,
+              "needs": {
+                "growth": 0.1,
+                "safety": 0.0
+              },
+              "values": {
+                "achievement": 0.1
+              },
+              "style": {},
+              "cost": 0
+            }
+          }
+        ]
+      }
+    ],
+    "trace": [
+      {
+        "public": {
+          "tick": 3,
+          "cash": 9,
+          "plant": -1,
+          "signal": null
+        },
+        "belief": [
+          0.5,
+          0.5
+        ],
+        "action": "trade",
+        "expected": 0.4,
+        "predicted": 0.4,
+        "gap": 0.0,
+        "tree_nodes": 1
+      },
+      {
+        "public": {
+          "tick": 2,
+          "cash": 8,
+          "plant": -1,
+          "signal": null
+        },
+        "belief": [
+          0.5,
+          0.5
+        ],
+        "action": "trade",
+        "expected": 0.4,
+        "predicted": 0.4,
+        "gap": 0.0,
+        "tree_nodes": 6
+      },
+      {
+        "public": {
+          "tick": 1,
+          "cash": 7,
+          "plant": -1,
+          "signal": null
+        },
+        "belief": [
+          0.5,
+          0.5
+        ],
+        "action": "trade",
+        "expected": 0.4,
+        "predicted": 0.4,
+        "gap": 0.0,
+        "tree_nodes": 35
+      },
+      {
+        "public": {
+          "tick": 0,
+          "cash": 6,
+          "plant": -1,
+          "signal": null
+        },
+        "belief": [
+          0.5,
+          0.5
+        ],
+        "action": "trade",
+        "expected": 0.4,
+        "predicted": 0.4,
+        "gap": 0.0,
+        "tree_nodes": 166
+      }
+    ]
+  }
+]
