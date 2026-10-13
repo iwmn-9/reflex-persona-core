@@ -2,7 +2,7 @@
 
 最終目標は、ゲームを替えても使える「その人物なりに合理的な判断」の土台。単なる最強CPU、勝率を揃えた性格集、心理パラメータの細密な再現を目指さない。固定した人物の軸を持ち、欲求・感情・経験によって手段を変え、協力・エゴ・妥協・攻略への対応からゲームの展開を作る。
 
-この文書は現在の判断基準と優先順位の正本。各実験の数値・旧案・不採用理由はそれぞれの evidence に置く。全体診断は [foundation_audit](../evidence/foundation_audit/REPORT.md)、そこから着手した将来の本人と目的評価の検証は [closed_loop](../evidence/closed_loop/REPORT.md)。
+この文書は現在の判断基準と優先順位の正本。各実験の数値・旧案・不採用理由はそれぞれの evidence に置く。全体診断は [foundation_audit](../evidence/foundation_audit/REPORT.md)、将来の本人と目的評価は [closed_loop](../evidence/closed_loop/REPORT.md)、打切り地点の価値・実結果による学習・標本数の検証は [frontier_value](../evidence/frontier_value/REPORT.md)。
 
 ## 守る七つの条件
 
@@ -46,6 +46,10 @@
 
 条件付き探索によって「同じ公開モデル・残り区間・本人なら、予測内の再判断と実行が一致する」範囲を作れた。次に優先するのは打切り地点の価値とモデル誤差。正しい確率と終局までの読みを参照役に、短い読みの先の評価を独立な実結果へ校正する。深さを一律に増やすことや局面ごとの禁止手の追加で済ませない。
 
+打切り地点へ目的値の分布を渡す接続を追加し、反射継続の試走と、終局の実結果を保存する学習器を比較した。平均の予測誤差だけでは採用しない。同じ公開局面での予測、候補をそろえた独立試走、最後まで再判断する実行を別々に測る。推定器が正しく表す参考方策と、今後も探索し直す本人は同じではない。試走での決着は実局面の確定勝敗にしない。
+
+学習の次の中心は、成功・失敗を分ける公開状態の情報と、比較可能な選択肢の差を集めること。同じような終局結果ばかりを蓄積し、予測平均だけ良くなったことを賢さの向上としない。ルール・目的・観測表現・継続方策の適用契約を明示し、単なる数値距離を学習の信用へ読み替えない。高い標本数で小さな公開モデルの精度が改善しても、未知の相手や未公開の変化へその保証を移さない。
+
 学習候補としては、平均値だけでなく結果分布を予測する [Distributional RL](https://proceedings.mlr.press/v70/bellemare17a/bellemare17a.pdf) を検討する。ただし同論文の実装は期待値で行動を選び、分布は環境の結果のばらつきであってモデルの信用そのものではない。人格ごとの危険の扱いと、未知モデルへの不確かさは別途必要になる。これは次の選定基準であり、今回その学習器を実装・採用した意味ではない。
 
 報酬の好みを替えて経験を再利用する [Successor Features / GPI](https://arxiv.org/abs/1606.05312) も参考になるが、原論文の転移設定は環境の遷移が共通で報酬が変わる場合。違うゲームへの自動移植や、非線形な人格採点の保証へ読み替えない。同じゲームで人物の好みを替える能力と、ルールそのものが違う環境へ移す能力を分けて検証する。
@@ -61,6 +65,7 @@
 - 実行の境界：[DECISION_LOOP](DECISION_LOOP.md)、[INTEGRATED_BASELINE](INTEGRATED_BASELINE.md)
 - 先読みの利益と限界：[policy_rollout](../evidence/policy_rollout/REPORT.md)、[FORECAST_RELIABILITY](FORECAST_RELIABILITY.md)、[CHOICE_SCALE](CHOICE_SCALE.md)
 - 将来も選び直す本人：[CLOSED_LOOP](CLOSED_LOOP.md)、[全分岐とゲーム横断の検証](../evidence/closed_loop/REPORT.md)
+- 打切り以後の価値：[FRONTIER_VALUE](FRONTIER_VALUE.md)、[予測・候補順位・実行を分けた検証](../evidence/frontier_value/REPORT.md)
 - 人格・学習：[PERSONAL_COMMITMENT](PERSONAL_COMMITMENT.md)、[PERSONA_FEEDBACK](PERSONA_FEEDBACK.md)
 - 省略と社会判断：[social_omission](../evidence/social_omission/REPORT.md)、[encounter_withdrawal](../evidence/encounter_withdrawal/REPORT.md)
 - チーム・計画修正：[TEAM_COOPERATION](TEAM_COOPERATION.md)、[CONDITIONAL_CONTINUATION](CONDITIONAL_CONTINUATION.md)、[PLAN_REPAIR](PLAN_REPAIR.md)、[REPAIR_STABILITY](REPAIR_STABILITY.md)

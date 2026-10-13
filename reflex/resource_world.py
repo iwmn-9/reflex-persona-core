@@ -6,6 +6,7 @@ Short forecasts are conditional solo continuations: opponents do not act in the
 model, current announced yields persist, and no future event schedule is input.
 """
 from dataclasses import dataclass, replace, asdict
+from functools import lru_cache
 import copy
 import numpy as np
 from .core import NEEDS, TRAITS, Policy, digest
@@ -90,6 +91,7 @@ def pay(e, cost, **changes):
     return replace(e, stock=tuple(a-b for a, b in zip(e.stock, cost)), **changes)
 
 
+@lru_cache(maxsize=16384)
 def income(e, w):
     """Production, food/army maintenance, then bounded storage. No free deficit."""
     farm, forest, mine, market, lab, temple = e.buildings
@@ -107,6 +109,7 @@ def income(e, w):
         shortages=e.shortages+food_short+gold_short, overflow=e.overflow+lost)
 
 
+@lru_cache(maxsize=16384)
 def legal(w):
     if terminal(w):
         return ()
@@ -135,6 +138,7 @@ def legal(w):
     return tuple(sorted(choices))
 
 
+@lru_cache(maxsize=16384)
 def act(w, key):
     """Exact action transition, before end-of-round production."""
     if key not in legal(w):
@@ -188,6 +192,7 @@ def goal_progress(e, routes):
     return max(progress(e)[ROUTES.index(r)] for r in routes)
 
 
+@lru_cache(maxsize=16384)
 def potential(w, viewer):
     """Explicit game-authored economic proxy; not learned or calibrated EV.
 
@@ -238,6 +243,7 @@ def consequence(base, after, viewer):
         cost=float(min(1, spending)))
 
 
+@lru_cache(maxsize=16384)
 def forecast(base, key, horizon):
     """Bounded solo model with generic proxy-greedy continuation.
 
@@ -313,6 +319,19 @@ def make_context(w, profile, seed, tick, episode, memory=None, horizon=1):
 
 def economic_move(w, horizon=4):
     """Deterministic game-authored comparator; does not share the persona scorer."""
+    if terminal(w):raise ValueError('economic comparator requires a live world')
+    # This SOLO comparator freezes rivals. In a live world, another empire
+    # cannot newly win during its solo rollout; only its army/land can affect
+    # legal invasions. Its stock/buildings/research never enter our potential.
+    # Canonicalize precisely those irrelevant fields, retaining every target
+    # index, army, land, yield, route, frontier and deadline. This changes no
+    # opponent policy and is checked against the original full-world formula.
+    projected=replace(w,empires=tuple(e if i==w.turn else Empire(land=e.land,army=e.army) for i,e in enumerate(w.empires)))
+    return _economic_move_live(projected,horizon)
+
+
+@lru_cache(maxsize=16384)
+def _economic_move_live(w,horizon):
     return max(legal(w), key=lambda key:(potential(forecast(w, key, horizon)[0], w.turn), key))
 
 

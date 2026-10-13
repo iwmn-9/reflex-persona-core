@@ -100,16 +100,19 @@ class SampledKernel:
 
 class ClosedLoop:
     def __init__(self,*,observe,transitions,terminal,assess,record,request_for,feedback,unit,target,
-                 model_id,budget=None,max_regret=.15,future_choices='planned'):
+                 model_id,budget=None,max_regret=.15,future_choices='planned',frontier=None):
         if any(not callable(x) for x in (observe,transitions,terminal,assess,record,request_for,feedback)):
             raise ValueError('explicit public model callbacks required')
         if not isinstance(model_id,str) or not model_id:raise ValueError('model identity required')
         if isinstance(max_regret,bool) or not math.isfinite(max_regret) or not 0<=max_regret<=2:raise ValueError('bounded purpose corridor required')
         if future_choices not in ('planned','reflex'):raise ValueError('explicit future choice rule required')
+        if frontier is not None and (not isinstance(getattr(frontier,'identity',None),str) or not frontier.identity or not callable(getattr(frontier,'evaluate',None))):
+            raise ValueError('identified endpoint evaluator required')
         self.observe=observe;self.transitions=transitions;self.terminal=terminal;self.assess=assess;self.record=record
         self.request_for=request_for;self.feedback=feedback;self.unit=unit;self.target=target
         self.model_id=model_id;self.budget=budget or TreeBudget();self.max_regret=max_regret
         self.future_choices=future_choices
+        self.frontier=frontier
         self.cache={};self.work=0;self.hits=0;self.last={};self._used=set()
 
     def clear(self):
@@ -122,14 +125,16 @@ class ClosedLoop:
         if request.reader is not None or request.value_proposal is not None or actor.predictor is not None:
             raise ValueError('tree requires an explicit joint planner without external advice overrides')
         stage=actor._prepare(request);c=stage['effective'];compile_batch([c])
-        stamp=digest([self.model_id,self.target,self.unit,self.max_regret,self.record(world),actor.record(),asdict(request),c,remaining,
+        identity=[self.model_id,self.target,self.unit,self.max_regret,self.record(world),actor.record(),asdict(request),c,remaining,
             actor.policy.principle_priority,actor.policy.residual.tolist(),actor.policy.commitments,self.future_choices,
-            root if self.future_choices=='reflex' else False])
+            root if self.future_choices=='reflex' else False]
+        if self.frontier is not None:identity.append(self.frontier.identity)
+        stamp=digest(identity)
         self._used.update(self.cache[stamp]['dependencies'] if stamp in self.cache else (stamp,))
         self.work=len(self._used)
         if self.work>self.budget.nodes:raise WorkLimit('node capacity')
         if stamp in self.cache:self.hits+=1;return self.cache[stamp]
-        paths={};audit={};children={};dependencies={stamp}
+        paths={};audit={};children={};dependencies={stamp};frontiers=[]
         for key in sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure']):
             options=self.transitions(copy.deepcopy(world),key)
             if not isinstance(options,(tuple,list)) or not options:raise ValueError('nonempty public transition distribution required')
@@ -157,6 +162,17 @@ class ClosedLoop:
                 if ended or remaining==1:
                     tails=[(1.,(),(),g.record(),ended)]
                     child_key=None
+                    if not ended and self.frontier is not None:
+                        from .frontier_value import EndpointEstimate
+                        estimate=self.frontier.evaluate(copy.deepcopy(transition.state),copy.deepcopy(clone))
+                        if estimate is not None:
+                            if not isinstance(estimate,EndpointEstimate):raise ValueError('explicit endpoint estimate required')
+                            # Keep the state RUNNING. Predicted settlement is not
+                            # actual settlement, nor personal factual experience.
+                            tails=[(p,(),(),Goal(self.target,'running',v).record(),False) for p,v in estimate.outcomes]
+                        frontiers.append(dict(root=key,public=self.record(transition.state),supported=estimate is not None,
+                            source=None if estimate is None else estimate.source,
+                            settled_fraction=None if estimate is None else estimate.settled_fraction))
                 else:
                     cc=self.observe(copy.deepcopy(transition.state),copy.deepcopy(clone.state))
                     child=self._node(transition.state,clone,self.request_for(cc),remaining-1)
@@ -172,6 +188,9 @@ class ClosedLoop:
                     owner=digest(clone.record()),child=child_key,feedback=fb,flow=transition.flow,state=transition.state))
         forecast=goal_forecast(c,paths,audit,horizon=remaining,unit=self.unit,target=self.target,policy=actor.policy,
             max_regret=self.max_regret,settlement_weight='absolute',outcome_limit=self.budget.outcomes)
+        if self.frontier is not None:
+            forecast.audit['frontier']=dict(identity=self.frontier.identity,
+                semantics='estimated purpose beyond cutoff under reference continuation; prefix personality flows only; running state retained')
         chosen=copy.deepcopy(actor)
         planner=None if self.future_choices=='reflex' and not root else lambda cs,ds:forecast
         result=DecisionLoop.decide_batch([(chosen,request)],False,planner)[0]
@@ -186,6 +205,7 @@ class ClosedLoop:
             if digest(actual.record())!=item['owner']:raise ValueError('planned and counterfactual owner continuation disagree')
         node=dict(stamp=stamp,forecast=forecast,returns=returns,action=key,decision=result['decision'],dependencies=frozenset(dependencies),
             purpose=result.get('deliberation',{}).get('selected_purpose'),children={k:[{n:v for n,v in x.items() if n not in ('feedback','flow','state')} for x in xs] for k,xs in children.items()})
+        if self.frontier is not None:node['frontiers']=frontiers
         self.cache[stamp]=node
         return node
 

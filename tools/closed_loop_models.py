@@ -39,7 +39,7 @@ def gambling_kernel(bridge):
     return transitions
 
 
-def controller(bridge,*,horizon=4,exact=False,seeds=(401,402),future_choices='planned',nodes=4096,outcomes=256,max_regret=.15,learn=False):
+def controller(bridge,*,horizon=4,exact=False,seeds=(401,402),future_choices='planned',nodes=4096,outcomes=256,max_regret=.15,learn=False,frontier=None):
     from reflex.integrated_trials import TRAPS
     from reflex.planning import vector
     kernels={'public_graph':graph_kernel,'gambling':gambling_kernel}
@@ -50,4 +50,4 @@ def controller(bridge,*,horizon=4,exact=False,seeds=(401,402),future_choices='pl
         request_for=lambda c:request_for(c,bridge.case['game'],learn=learn),
         feedback=lambda before,after,key,c,row:ModelFeedback(None,observed=vector(row) if learn and key!='CHECK' else None),
         unit=bridge.unit,target=bridge.target,model_id=('public-graph-enumeration-v1' if bridge.case['game']=='public_graph' else 'public-gambling-enumeration-v1') if exact else 'public-samples-'+str(seeds),
-        budget=TreeBudget(horizon=horizon,nodes=nodes,outcomes=outcomes),max_regret=max_regret,future_choices=future_choices)
+        budget=TreeBudget(horizon=horizon,nodes=nodes,outcomes=outcomes),max_regret=max_regret,future_choices=future_choices,frontier=frontier)

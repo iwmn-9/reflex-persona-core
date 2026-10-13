@@ -13,6 +13,26 @@ from reflex.resource_experiment import public_event, run, replay
 
 
 class ResourceWorldTests(unittest.TestCase):
+    def test_cached_solo_comparator_matches_full_world_across_public_changes(self):
+        from reflex.resource_world import economic_move,potential,_economic_move_live
+        rng=np.random.default_rng(7241);checked=0
+        for players in (2,4,6):
+            for routes in (('science',),('culture',),('power',),('science','culture','power')):
+                w=World.start(players=players,routes=routes)
+                for tick in range(32):
+                    if terminal(w):break
+                    if tick==12:w=replace(w,food_yield=1,ore_yield=2,trade_price=1)
+                    if tick==24:w=replace(w,limit=w.round+1)
+                    for horizon in (1,4):
+                        expected=max(legal(w),key=lambda key:(potential(forecast(w,key,horizon)[0],w.turn),key))
+                        self.assertEqual(economic_move(w,horizon),expected)
+                        _economic_move_live.cache_clear();self.assertEqual(economic_move(w,horizon),expected)
+                    w=step(w,str(rng.choice(legal(w))));checked+=1
+        self.assertGreater(checked,250)
+        # Completed rival victory must not disappear through projection.
+        done=replace(World.start(),empires=(Empire(),replace(Empire(),tech=3,science=14),Empire(),Empire()))
+        with self.assertRaises(ValueError):economic_move(done)
+
     def test_costs_are_paid_and_initial_illegal_prerequisites_rejected(self):
         w = World.start(); e = w.empires[0]
         for name, cost in COSTS.items():
