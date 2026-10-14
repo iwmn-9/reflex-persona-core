@@ -11,7 +11,7 @@ import copy
 import math
 import numpy as np
 
-from .core import Policy, compile_batch, digest
+from .core import Policy, compile_batch, digest, NEEDS, VALUES
 from .purpose_plan import Goal
 from .frontier_value import EndpointEstimate
 
@@ -33,7 +33,7 @@ class Alternative:
     outcomes: tuple
 
 
-def persona_choices(contexts, alternatives, policy, max_regret=.15):
+def persona_choices(contexts, alternatives, policy, max_regret=.15, *, preference_basis=None, target=None, audit=None):
     """Batch the existing one-step persona chooser with terminal purpose atoms.
 
     Equivalent to horizon-one goal_forecast/select, without building diagnostic
@@ -43,6 +43,11 @@ def persona_choices(contexts, alternatives, policy, max_regret=.15):
     """
     if len(contexts)!=len(alternatives) or not contexts:
         raise ValueError('one context per continuation choice required')
+    if preference_basis is not None:
+        from .preference_basis import PreferenceBasis
+        if not isinstance(preference_basis,PreferenceBasis) or target!=preference_basis.target:
+            raise ValueError('explicit matching preference basis required')
+    if audit is not None and not isinstance(audit,list):raise ValueError('list for choice audit required')
     if isinstance(max_regret,bool) or not math.isfinite(max_regret) or not 0<=max_regret<=2:
         raise ValueError('bounded purpose corridor required')
     expanded=[];purposes=[];limit=1
@@ -54,7 +59,8 @@ def persona_choices(contexts, alternatives, policy, max_regret=.15):
         for alt in choices:
             action=copy.deepcopy(current[alt.key]);out=[]
             for atom in alt.outcomes:
-                row=copy.deepcopy(atom.flow);row.update(p=atom.probability,objective=atom.value);out.append(row)
+                row=copy.deepcopy(atom.flow) if preference_basis is None else preference_basis.resolve(atom.flow,atom.value,target=target,complete=True)
+                row.update(p=atom.probability,objective=atom.value);out.append(row)
             action['outcomes']=out;fc['actions'].append(action);limit=max(limit,len(out))
             values.append(math.fsum(r.probability*r.value*(action['confidence'] if r.value>0 else 1.) for r in alt.outcomes))
         expanded.append(fc);purposes.append(values)
@@ -66,6 +72,14 @@ def persona_choices(contexts, alternatives, policy, max_regret=.15):
     best=np.max(np.where(first.eligible,purpose,-np.inf),axis=1)
     allowed=first.eligible & (purpose>=best[:,None]-max_regret)
     second=policy.decide(replace(batch,legal=batch.legal&allowed),False)
+    if audit is not None:
+        for i,choices in enumerate(alternatives):
+            audit.append(dict(selected=batch.ids[i][second.action[i]],basis=None if preference_basis is None else preference_basis.identity,
+                primary_need=None if second.primary[i]<0 else NEEDS[second.primary[i]],principle=VALUES[batch.values[i].argmax()],
+                actions={a.key:dict(purpose=float(purpose[i,j]),principle_eligible=bool(first.eligible[i,j]),
+                    corridor_eligible=bool(allowed[i,j]),score=float(second.scores[i,j]),
+                    primary_effect=float(second.features[i,j,1]),principle_effect=float(second.features[i,j,2]),
+                    downside=float(second.features[i,j,3])) for j,a in enumerate(choices)}))
     return tuple(batch.ids[i][j] for i,j in enumerate(second.action))
 
 

@@ -31,7 +31,8 @@ class Goal:
 
 
 def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,plan_roots=None,policy=None,settlement_weight='discounted',
-                  objective_origin=None,objective_unit=1.,opportunity_regret=False,competence_support=None,outcome_limit=8):
+                  objective_origin=None,objective_unit=1.,opportunity_regret=False,competence_support=None,outcome_limit=8,
+                  preference_basis=None):
     """Use one endpoint per coherent branch for objective and competence.
 
     Needs/values/style/cost retain their discounted flow treatment. Subjective
@@ -43,6 +44,12 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
     the purpose corridor inside it. A principle may therefore rationally lose.
     """
     if settlement_weight not in ('discounted','absolute'):raise ValueError('known settlement time weight required')
+    if preference_basis is not None:
+        from .preference_basis import PreferenceBasis
+        if not isinstance(preference_basis,PreferenceBasis) or preference_basis.target!=target:
+            raise ValueError('matching declared preference basis required')
+        if horizon!=1 or objective_origin is not None or objective_unit!=1.:
+            raise ValueError('preference basis currently requires one immediate flow and absolute purpose units')
     number(objective_unit,.125,1.)
     number(max_regret,0.,2.)
     if objective_origin is not None and (not isinstance(objective_origin,Goal) or objective_origin.target!=target):
@@ -61,6 +68,12 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
         goals=[];expected=0.
         for out,trace,branch in zip(a['outcomes'],rows,paths[proposal]):
             g=Goal(**trace['assessment'])
+            if preference_basis is not None:
+                if any(x!=1. for x in branch.confidence):
+                    raise ValueError('preference basis requires explicit outcome probabilities, not additional branch-confidence scaling')
+                resolved=preference_basis.resolve(out,g.value,target=target,
+                    complete=g.status!='running' or trace.get('terminal_coverage') is True)
+                out.clear();out.update(resolved)
             if g.target!=target:raise ValueError('same goal target across branches required')
             if bool(trace['terminal'])!=(g.status!='running'):
                 raise ValueError('terminal and settled goal must agree')
@@ -107,6 +120,7 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
     metadata=copy.deepcopy(f.audit);metadata.update(endpoint=endpoint,original_tier_plans=sorted(retained),
         endpoint_semantics='settled result OR explicit nonterminal proxy; not calibrated win EV',
         readiness_learned=False,return_frame=frame.record())
+    if preference_basis is not None:metadata['preference_basis']=preference_basis.identity
     if settlement_weight=='absolute':metadata['subjective_settlement_semantics']='absolute terminal outcome once; running cutoff proxy and preference flows still discounted'
     if objective_origin is not None or objective_unit!=1.:
         metadata['objective_basis']=dict(origin=None if objective_origin is None else objective_origin.record(),unit=objective_unit,

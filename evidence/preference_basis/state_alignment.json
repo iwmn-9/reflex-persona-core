@@ -1,0 +1,558 @@
+{
+  "previous_evidence_unchanged": true,
+  "changed": 7,
+  "cases": [
+    {
+      "case": [
+        3,
+        "descending",
+        82601,
+        "steady",
+        "score"
+      ],
+      "old_action": "BID:4",
+      "new_action": "BID:9",
+      "old_value": 0.11111111111111113,
+      "new_value": 0.18518518518518517
+    },
+    {
+      "case": [
+        4,
+        "ascending",
+        82601,
+        "steady",
+        "score"
+      ],
+      "old_action": "BID:6",
+      "new_action": "BID:6",
+      "old_value": 0.3590534979423868,
+      "new_value": 0.35185185185185186
+    },
+    {
+      "case": [
+        4,
+        "ascending",
+        82601,
+        "care",
+        "score"
+      ],
+      "old_action": "BID:6",
+      "new_action": "BID:6",
+      "old_value": 0.36111111111111105,
+      "new_value": 0.35699588477366256
+    },
+    {
+      "case": [
+        4,
+        "ascending",
+        82600,
+        "growth",
+        "win_share"
+      ],
+      "old_action": "BID:6",
+      "new_action": "BID:6",
+      "old_value": -0.6635802469135804,
+      "new_value": -0.6728395061728394
+    },
+    {
+      "case": [
+        4,
+        "ascending",
+        82600,
+        "ego",
+        "win_share"
+      ],
+      "old_action": "BID:6",
+      "new_action": "BID:6",
+      "old_value": -0.6635802469135804,
+      "new_value": -0.6728395061728394
+    },
+    {
+      "case": [
+        5,
+        "descending",
+        82601,
+        "steady",
+        "score"
+      ],
+      "old_action": "BID:4",
+      "new_action": "BID:4",
+      "old_value": 0.08230452674897117,
+      "new_value": 0.07716049382716045
+    },
+    {
+      "case": [
+        5,
+        "descending",
+        82601,
+        "care",
+        "score"
+      ],
+      "old_action": "BID:4",
+      "new_action": "BID:4",
+      "old_value": 0.08230452674897117,
+      "new_value": 0.05864197530864193
+    }
+  ],
+  "updated_legacy_probe": {
+    "players": 3,
+    "order": "descending",
+    "seed": 82601,
+    "public_start": {
+      "hands": [
+        [
+          4,
+          9,
+          10
+        ],
+        [
+          6,
+          7,
+          12
+        ],
+        [
+          7,
+          10,
+          12
+        ]
+      ],
+      "scores": [
+        41,
+        16,
+        15
+      ],
+      "prizes": [
+        13,
+        12,
+        11,
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1
+      ],
+      "round": 10,
+      "discarded": 13
+    },
+    "graphs": [
+      {
+        "goal": "score",
+        "complete": true,
+        "nodes": 183,
+        "edges": 368,
+        "height": 3
+      },
+      {
+        "goal": "win_share",
+        "complete": true,
+        "nodes": 183,
+        "edges": 368,
+        "height": 3
+      }
+    ],
+    "cases": [
+      {
+        "goal": "score",
+        "profile": "growth",
+        "actual_root_matches": true,
+        "arms": {
+          "reflex": {
+            "action": "BID:10",
+            "expected_goal": 0.18518518518518517,
+            "distribution": [
+              [
+                0.5555555555555555,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ],
+              [
+                0.2222222222222222,
+                0.5
+              ]
+            ]
+          },
+          "planned_persona": {
+            "action": "BID:10",
+            "expected_goal": 0.18518518518518517,
+            "distribution": [
+              [
+                0.5555555555555555,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ],
+              [
+                0.2222222222222222,
+                0.5
+              ]
+            ]
+          },
+          "terminal_goal": {
+            "action": "BID:10",
+            "expected_goal": 0.18518518518518517,
+            "distribution": [
+              [
+                0.5555555555555555,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ],
+              [
+                0.2222222222222222,
+                0.5
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "goal": "score",
+        "profile": "steady",
+        "actual_root_matches": true,
+        "arms": {
+          "reflex": {
+            "action": "BID:9",
+            "expected_goal": 0.18518518518518517,
+            "distribution": [
+              [
+                0.5555555555555555,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ],
+              [
+                0.2222222222222222,
+                0.5
+              ]
+            ]
+          },
+          "planned_persona": {
+            "action": "BID:9",
+            "expected_goal": 0.18518518518518517,
+            "distribution": [
+              [
+                0.5555555555555555,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ],
+              [
+                0.2222222222222222,
+                0.5
+              ]
+            ]
+          },
+          "terminal_goal": {
+            "action": "BID:10",
+            "expected_goal": 0.18518518518518517,
+            "distribution": [
+              [
+                0.5555555555555555,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ],
+              [
+                0.2222222222222222,
+                0.5
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "goal": "score",
+        "profile": "care",
+        "actual_root_matches": true,
+        "arms": {
+          "reflex": {
+            "action": "BID:9",
+            "expected_goal": 0.16203703703703706,
+            "distribution": [
+              [
+                0.5555555555555556,
+                0.0
+              ],
+              [
+                0.13888888888888892,
+                0.16666666666666666
+              ],
+              [
+                0.08333333333333334,
+                0.3333333333333333
+              ],
+              [
+                0.22222222222222224,
+                0.5
+              ]
+            ]
+          },
+          "planned_persona": {
+            "action": "BID:4",
+            "expected_goal": 0.11111111111111113,
+            "distribution": [
+              [
+                0.5555555555555556,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.16666666666666666
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ]
+            ]
+          },
+          "terminal_goal": {
+            "action": "BID:10",
+            "expected_goal": 0.18518518518518517,
+            "distribution": [
+              [
+                0.5555555555555555,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ],
+              [
+                0.2222222222222222,
+                0.5
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "goal": "score",
+        "profile": "ego",
+        "actual_root_matches": true,
+        "arms": {
+          "reflex": {
+            "action": "BID:10",
+            "expected_goal": 0.18518518518518517,
+            "distribution": [
+              [
+                0.5555555555555555,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ],
+              [
+                0.2222222222222222,
+                0.5
+              ]
+            ]
+          },
+          "planned_persona": {
+            "action": "BID:10",
+            "expected_goal": 0.18518518518518517,
+            "distribution": [
+              [
+                0.5555555555555555,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ],
+              [
+                0.2222222222222222,
+                0.5
+              ]
+            ]
+          },
+          "terminal_goal": {
+            "action": "BID:10",
+            "expected_goal": 0.18518518518518517,
+            "distribution": [
+              [
+                0.5555555555555555,
+                0.0
+              ],
+              [
+                0.22222222222222227,
+                0.3333333333333333
+              ],
+              [
+                0.2222222222222222,
+                0.5
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "goal": "win_share",
+        "profile": "growth",
+        "actual_root_matches": true,
+        "arms": {
+          "reflex": {
+            "action": "BID:10",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "planned_persona": {
+            "action": "BID:10",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "terminal_goal": {
+            "action": "BID:10",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "goal": "win_share",
+        "profile": "steady",
+        "actual_root_matches": true,
+        "arms": {
+          "reflex": {
+            "action": "BID:4",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "planned_persona": {
+            "action": "BID:4",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "terminal_goal": {
+            "action": "BID:10",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "goal": "win_share",
+        "profile": "care",
+        "actual_root_matches": true,
+        "arms": {
+          "reflex": {
+            "action": "BID:9",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "planned_persona": {
+            "action": "BID:4",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "terminal_goal": {
+            "action": "BID:10",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "goal": "win_share",
+        "profile": "ego",
+        "actual_root_matches": true,
+        "arms": {
+          "reflex": {
+            "action": "BID:10",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "planned_persona": {
+            "action": "BID:10",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "terminal_goal": {
+            "action": "BID:10",
+            "expected_goal": 1.0,
+            "distribution": [
+              [
+                1.0,
+                1.0
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "independent_two_round_oracle": true
+  }
+}

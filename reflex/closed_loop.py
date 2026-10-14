@@ -100,7 +100,7 @@ class SampledKernel:
 
 class ClosedLoop:
     def __init__(self,*,observe,transitions,terminal,assess,record,request_for,feedback,unit,target,
-                 model_id,budget=None,max_regret=.15,future_choices='planned',frontier=None):
+                 model_id,budget=None,max_regret=.15,future_choices='planned',frontier=None,preference_basis=None):
         if any(not callable(x) for x in (observe,transitions,terminal,assess,record,request_for,feedback)):
             raise ValueError('explicit public model callbacks required')
         if not isinstance(model_id,str) or not model_id:raise ValueError('model identity required')
@@ -113,6 +113,11 @@ class ClosedLoop:
         self.model_id=model_id;self.budget=budget or TreeBudget();self.max_regret=max_regret
         self.future_choices=future_choices
         self.frontier=frontier
+        self.preference_basis=preference_basis
+        if preference_basis is not None:
+            from .preference_basis import PreferenceBasis
+            if not isinstance(preference_basis,PreferenceBasis) or preference_basis.target!=target or self.budget.horizon!=1:
+                raise ValueError('matching preference basis requires one-step flow plus full terminal endpoint')
         self.cache={};self.work=0;self.hits=0;self.last={};self._used=set()
 
     def clear(self):
@@ -129,6 +134,7 @@ class ClosedLoop:
             actor.policy.principle_priority,actor.policy.residual.tolist(),actor.policy.commitments,self.future_choices,
             root if self.future_choices=='reflex' else False]
         if self.frontier is not None:identity.append(self.frontier.identity)
+        if self.preference_basis is not None:identity.append(self.preference_basis.identity)
         stamp=digest(identity)
         self._used.update(self.cache[stamp]['dependencies'] if stamp in self.cache else (stamp,))
         self.work=len(self._used)
@@ -158,6 +164,7 @@ class ClosedLoop:
                 fb=self.feedback(world,transition.state,key,c,transition.flow)
                 reveal(clone,forced['ticket'],fb)
                 ended=bool(self.terminal(transition.state));g=Goal(**self.assess(transition.state))
+                terminal_coverage=ended
                 if g.target!=self.target or ended!=(g.status!='running'):raise ValueError('consistent endpoint target and settlement required')
                 if ended or remaining==1:
                     tails=[(1.,(),(),g.record(),ended)]
@@ -170,6 +177,7 @@ class ClosedLoop:
                             # Keep the state RUNNING. Predicted settlement is not
                             # actual settlement, nor personal factual experience.
                             tails=[(p,(),(),Goal(self.target,'running',v).record(),False) for p,v in estimate.outcomes]
+                            terminal_coverage=estimate.settled_fraction==1.
                         frontiers.append(dict(root=key,public=self.record(transition.state),supported=estimate is not None,
                             source=None if estimate is None else estimate.source,
                             settled_fraction=None if estimate is None else estimate.settled_fraction))
@@ -182,12 +190,12 @@ class ClosedLoop:
                     probability=transition.probability*p;actual=(copy.deepcopy(transition.flow),)+flows
                     path=(key,)+actions
                     paths[key].append(Branch(probability,actual+(effect(),)*(remaining-len(actual)),(1.,)*remaining))
-                    audit[key].append(dict(actions=list(path),terminal=settled,assessment=goal))
+                    audit[key].append(dict(actions=list(path),terminal=settled,assessment=goal,terminal_coverage=terminal_coverage))
                     if len(paths[key])>self.budget.outcomes:raise WorkLimit('return distribution capacity')
                 children[key].append(dict(probability=transition.probability,public=self.record(transition.state),
                     owner=digest(clone.record()),child=child_key,feedback=fb,flow=transition.flow,state=transition.state))
         forecast=goal_forecast(c,paths,audit,horizon=remaining,unit=self.unit,target=self.target,policy=actor.policy,
-            max_regret=self.max_regret,settlement_weight='absolute',outcome_limit=self.budget.outcomes)
+            max_regret=self.max_regret,settlement_weight='absolute',outcome_limit=self.budget.outcomes,preference_basis=self.preference_basis)
         if self.frontier is not None:
             forecast.audit['frontier']=dict(identity=self.frontier.identity,
                 semantics='estimated purpose beyond cutoff under reference continuation; prefix personality flows only; running state retained')

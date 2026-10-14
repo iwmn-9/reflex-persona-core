@@ -1,0 +1,31 @@
+{
+  "base": "af91a4b3a122ebb3bcee2dd9c430159baf61f96d",
+  "full_suite": 1035,
+  "new_tests": 9,
+  "full_suite_log_sha256": "99d6e67bd05da2f07607c51e0bccb6308f5e6a87483a9344c2959a6d448b3c95",
+  "final_targeted_log_sha256": "20833c66adb673b9508ca6c2fc99a50913fd5238905183da2305bc50e59bf19e",
+  "personality_core_byte_identical": true,
+  "primary_conditions": 480,
+  "primary_actual_decisions": 4306,
+  "diagnostic_replayed_conditions": 20,
+  "source_hashes": {
+    "reflex/preference_basis.py": "22dd7af4f2ffddcbc324f7026682bb9f16d6b903ca5557894ee8af1145feede5",
+    "reflex/decision_audit.py": "bc62e1142b8745532fb4ac26821b542436727441dbde4831f460ab027e8b0191",
+    "reflex/opportunity_graph.py": "eb6351672d00b62b657fe3af38d062b2acf5edde1e0416f5f6092a39cc8dd5eb",
+    "reflex/purpose_plan.py": "450db5d59dea0b04586001278549394c60b62019283eeab087b3dbbbcd653c87",
+    "reflex/closed_loop.py": "3df4f9b9705f7fd828c733fe17a17f335c96b5dd2e80af2eed1d5ebf04f8a551",
+    "tests/test_preference_basis.py": "d0c6eead535c173084f413c7eb3d1d73dfb20c4cc97c1103819fb61ef28f7ce6",
+    "tools/run_preference_basis.py": "3ffa982a868950c85da859f9fd4301a99151ec7659a7c1e0f4336a259ebb793d",
+    "tools/analyze_preference_basis.py": "f1c5f8e313b09a8e48c0c695277008b923a8cbefe81e1a66a326e00ce0db3152",
+    "tools/probe_opportunity_cards.py": "5ae30e7ddf28d37f1fa6cd8e166f3fb22171d1baf7f8d011aee01103aa351bb8"
+  },
+  "analyzer_sha256": "f1c5f8e313b09a8e48c0c695277008b923a8cbefe81e1a66a326e00ce0db3152",
+  "instrumentation": "after development added signed interaction and current/future attribution; after holdout freeze added explanatory audit fields and a frozen reference-law snapshot; 20 development conditions reproduced exactly; final guard rejects extra branch-confidence scaling (all study branches use 1), final targeted 9 tests passed",
+  "limits": [
+    "finite public model",
+    "reference law known only in diagnostics",
+    "explicit adapter semantics, not automatic inference",
+    "one immediate psychological flow plus terminal purpose",
+    "no universal strength or human-believability claim"
+  ]
+}

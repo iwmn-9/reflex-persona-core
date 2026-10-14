@@ -58,8 +58,13 @@ def evaluate(job):
         root_values={k:sum(oracle[digest(asdict(e.public))] for e in events(start,k))/len(events(start,k)) for k in keys(start)}
         assert abs(sum(p*v for p,v in ideal.evaluate(start).outcomes)-max(root_values.values()))<1e-12
         for profile in profiles():
-            def observe(s,state=None):return make_context(s,0,profile,goal,91,s.round,'opportunity-cards:'+model,memory=state)
+            regime=None
+            def observe(s,state=None):return make_context(s,0,profile,goal,91,s.round,'opportunity-cards:'+model,memory=regime if state is None else state)
             c=observe(start);policy=Policy(principle_priority='personal',commitments={character_key(c):.5})
+            # These needs are constant and switching has no fee. The owned mode
+            # persists after the first choice; do not reroll it in future nodes.
+            b=compile_batch([c]);regime=policy.decide(b,False).records(b)[0]['next_state']
+            regime.update(intent_action=None,age=0)
             def immediate(states,alternatives):
                 b=compile_batch([observe(s) for s in states]);records=policy.decide(b,False).records(b)
                 return tuple(r['action_id'] for r in records)
