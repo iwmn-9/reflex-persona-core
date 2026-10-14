@@ -66,6 +66,8 @@
 
 ## 主要な根拠と接続契約
 
+能力・資源・途中参戦の非対称性も検証対象にする。人格に強者・弱者の分類を埋め込まず、ゲーム側が合法な手段、効果、資源、世界の時刻を渡す。途中参戦で盤面や期限を初期化せず、観戦していた公開履歴と未観測を分ける。負けたという結果だけで判断力不足とせず、その立場の到達可能性と選んだ手の損を別に測る。詳細は [ASYMMETRY](ASYMMETRY.md) と [検証報告](../evidence/asymmetry/REPORT.md)。
+
 - 実行の境界：[DECISION_LOOP](DECISION_LOOP.md)、[INTEGRATED_BASELINE](INTEGRATED_BASELINE.md)
 - 先読みの利益と限界：[policy_rollout](../evidence/policy_rollout/REPORT.md)、[FORECAST_RELIABILITY](FORECAST_RELIABILITY.md)、[CHOICE_SCALE](CHOICE_SCALE.md)
 - 将来も選び直す本人：[CLOSED_LOOP](CLOSED_LOOP.md)、[全分岐とゲーム横断の検証](../evidence/closed_loop/REPORT.md)

@@ -2,7 +2,7 @@
 
 ゲームをまたいで、人物の軸を保ちながら欲求・関係・経験に応じて判断するNPCの土台。通常は数値バッチの反射、必要な場面では任意の先読みを使う。現在の目標・接続の不足・改修順位は [開発方針](docs/PROJECT_DIRECTION.md) を正本とする。全般的な賢さや人間水準、面白さの完成はまだ実証していない。
 
-既存の相手予測の見切り・修正を、人格付きの終局評価へ接続した。実観測で更新した予測と古い長期評価を混ぜず、目的と人格を維持して手段を選び直す。相手の変化への追従と単発の外れの後続損を分けて検証する任意経路。[実証と得失](evidence/adaptive_opportunities/REPORT.md)、[接続契約](docs/ADAPTIVE_OPPORTUNITIES.md)。人格の代償と代理点の区別は [PREFERENCE_BASIS](docs/PREFERENCE_BASIS.md)、終局までの資源配分は [OPPORTUNITY_GRAPH](docs/OPPORTUNITY_GRAPH.md)、既存の予測更新は [OPEN_MODEL](docs/OPEN_MODEL.md)。
+能力・資源・参戦時期が違う条件へ、既存の人格付き終局評価と予測更新を接続して検証する。弱者・強者の専用判断を加えず、その人物の合法手と将来の機会から選ぶ。途中参戦は進行済みの盤面と世界の期限を引き継ぐ。勝敗だけでなく、立場による限界・人格の交換・予測の誤りを分ける。[実証と得失](evidence/asymmetry/REPORT.md)、[条件と再現](docs/ASYMMETRY.md)。予測修正の接続は [ADAPTIVE_OPPORTUNITIES](docs/ADAPTIVE_OPPORTUNITIES.md)、人格と代理点の区別は [PREFERENCE_BASIS](docs/PREFERENCE_BASIS.md)、終局までの機会は [OPPORTUNITY_GRAPH](docs/OPPORTUNITY_GRAPH.md)。
 
 過去の方式の比較・不採用理由は [開発方針の根拠](docs/PROJECT_DIRECTION.md#主要な根拠と接続契約) と各 evidence の報告を参照。既往の実行結果は保存し、この入口には履歴の要約を積み重ねない。
 

@@ -37,10 +37,9 @@ class OpenOpportunities:
     def state(self,w,memory=None):
         return AdaptiveState(w,self.placeholder if memory is None else memory,self.g.kernel.state_identity,w['tick'])
 
-    def solve(self,s,owner,continuation='persona',*,preference_basis=None,bound=False):
-        if continuation not in ('purpose','persona'):raise ValueError('declared continuation required')
-        g=self.g;memory=s.memory;predictions={}
-        before=digest([g.kernel.record(s),owner.record()])
+    def continuation(self,s,owner,*,preference_basis=None):
+        """The same sufficient persona projection for execution and diagnostics."""
+        g=self.g
         root=g.observe(s,owner.state)
         # Resolve the current mode exactly as the real owner; choices do not
         # affect mode selection in these fixed-needs, zero-switch-cost games.
@@ -49,10 +48,6 @@ class OpenOpportunities:
         regime.update(intent_action=None,age=0)
         if owner.pressure is not None or owner.progress is not None or owner.social is not None or owner.predictor is not None or owner.memory.record()['entries']:
             raise ValueError('this diagnostic projection does not cover additional owner memory')
-        def law(w,key,symbols):
-            context=g.features(w,key);models=g.models(w,key);stamp=digest([context,symbols,models])
-            if stamp not in predictions:predictions[stamp]=g.kernel.learner.predict(memory,context,symbols,models)
-            return predictions[stamp]
         def choose(states,alternatives):
             cs=[]
             for w,alts in zip(states,alternatives):
@@ -62,6 +57,17 @@ class OpenOpportunities:
                 c=copy.deepcopy(effective);c['tick']=w['tick'];c['state']=copy.deepcopy(regime)
                 c['actions']=[action(a.key,effect()) for a in alts];cs.append(c)
             return persona_choices(cs,alternatives,owner.policy,preference_basis=preference_basis,target=g.target)
+        return choose, root, regime
+
+    def solve(self,s,owner,continuation='persona',*,preference_basis=None,bound=False):
+        if continuation not in ('purpose','persona'):raise ValueError('declared continuation required')
+        g=self.g;memory=s.memory;predictions={}
+        before=digest([g.kernel.record(s),owner.record()])
+        choose,root,regime=self.continuation(s,owner,preference_basis=preference_basis)
+        def law(w,key,symbols):
+            context=g.features(w,key);models=g.models(w,key);stamp=digest([context,symbols,models])
+            if stamp not in predictions:predictions[stamp]=g.kernel.learner.predict(memory,context,symbols,models)
+            return predictions[stamp]
         if bound:
             if continuation!='persona':raise ValueError('bound execution requires the same persona continuation')
             result=AdaptiveOpportunity(self.graph,g.kernel,s,owner,choose=choose,
