@@ -9,7 +9,7 @@
     "tools/open_model_games.py": "0ffb5732ca428d7773879f9ef3a7f208196931320ce308dd2a148785c6af4f94",
     "tests/test_adaptive_opportunities.py": "5ffcdfdb514839256c9890ca3fb6f763726c827ebdcc23734b06dfdc1b04f0ec",
     "tools/run_adaptive_opportunities.py": "92aa36cc1ff09d1cc470b24702153bcfb64e2dbe644a1373e140eb0dd6d2fd29",
-    "tools/analyze_adaptive_opportunities.py": "9b3c5f158b521039aa9fb9455d0b9a203e40b0dcc0dfe8410d77d50e7553a630",
+    "tools/analyze_adaptive_opportunities.py": "764a10ba2a3ba857afdd6faa4057c1c28107c4deb899d95e78ab365346cb4ebd",
     "tools/probe_adaptive_horizon.py": "edff6210b877ad49125f63d8d4d8a7d83b2219a22b6397f18ac8811b1068ca66"
   },
   "numeric_runner_and_runtime_unchanged_across_primary_cohorts": true,
@@ -45,6 +45,14 @@
   ],
   "pilot": "4-decision games, 3 test episodes, excluded from primary; main uses 3-decision games and 12 test episodes, selected before primary outcomes",
   "scope": "four public short games; fixed needs; actual observations update prediction; future learning inside a solve omitted",
+  "short_campaign_analysis": {
+    "campaigns": 8,
+    "games": 96,
+    "decisions": 288,
+    "source": "863af03852c9b3091af1f0749be2e2d3acf5ae81d9aea97792c6941cd5154ec2",
+    "summary_sha256": "b2106172f80f4f822b1313b7af23dbedf0e11011626d884ce97bd7d870c5fb87",
+    "correction": "missing late phase is None, not a numeric score or a crash; reporting-only fix after primary study; primary means have no missing entries"
+  },
   "horizon": {
     "cases": [
       {

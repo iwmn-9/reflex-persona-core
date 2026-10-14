@@ -11,7 +11,9 @@ from reflex.laboratory import profiles
 from tools.open_model_games import OpenGame
 
 
-def mean(xs):return math.fsum(xs)/len(xs) if xs else None
+def mean(xs):
+    xs=[x for x in xs if x is not None]
+    return math.fsum(xs)/len(xs) if xs else None
 
 
 def replay(row,arm):
