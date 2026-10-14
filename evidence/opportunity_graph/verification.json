@@ -1,0 +1,31 @@
+{
+  "full_suite": 1026,
+  "new_tests": 13,
+  "test_log_sha256": "516a1bd36586a3faff89b5dc91652268ade969741b0088e7630451e319ee5901",
+  "source_hashes": {
+    "reflex/opportunity_graph.py": "cafdeb6565c013de595a5d675f514e35ff1cb4eef73baf4543e8980eafc58c5c",
+    "tests/test_opportunity_graph.py": "03569699c7efb19b0093162d923012ede0ab55199fa19dffbcb9f7879c443940",
+    "tools/opportunity_models.py": "5f0fdfb0052788680d769dc0f672d5b1928ead00a19f44848f8bbcbb583b06a2",
+    "tools/run_opportunity.py": "0de24d0ecc2ee6e4cf60e655298321b8871b0c43ab966f783bb04db19f0a7842",
+    "tools/analyze_opportunity.py": "09b271e94d68752dccc277143d58c7e51d867ad02a54022261103f5ba32342fe",
+    "tools/probe_opportunity.py": "225bbad98979d6e08dac95b1408e3fc82bbd2151e45726dc6e87f14207e6c7b3",
+    "tools/probe_opportunity_cards.py": "1a073a3cbc6ebf1e6ab8eb42fe611486d46d52ee271e3a2259edf3e462fa9c45"
+  },
+  "campaigns": 768,
+  "episodes": 9216,
+  "decisions": 53734,
+  "all_public_reveals_replayed": true,
+  "recorded_persona_choice_agreements": 13432,
+  "reconstructed_openings": 192,
+  "core_unchanged_since_pilot": true,
+  "personality_coefficients_unchanged": true,
+  "source_differences": "baseline-only runner switch, adapter ownership guard, and streaming probe dispatch added after primary development freeze; no choice coefficient changes; versions retained",
+  "limitations": [
+    "finite authored known-rule worlds",
+    "future learning frozen inside each solve",
+    "distant preference flows omitted",
+    "fixed-needs adapter",
+    "all outcomes limited by graph/distribution capacity",
+    "no general human-level or throughput claim"
+  ]
+}

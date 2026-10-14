@@ -2,7 +2,7 @@
 
 最終目標は、ゲームを替えても使える「その人物なりに合理的な判断」の土台。単なる最強CPU、勝率を揃えた性格集、心理パラメータの細密な再現を目指さない。固定した人物の軸を持ち、欲求・感情・経験によって手段を変え、協力・エゴ・妥協・攻略への対応からゲームの展開を作る。
 
-この文書は現在の判断基準と優先順位の正本。各実験の数値・旧案・不採用理由はそれぞれの evidence に置く。全体診断は [foundation_audit](../evidence/foundation_audit/REPORT.md)、将来の本人と目的評価は [closed_loop](../evidence/closed_loop/REPORT.md)、打切り地点の価値は [frontier_value](../evidence/frontier_value/REPORT.md)、学びによる将来の選択変更は [learning_value](../evidence/learning_value/REPORT.md)、既存仮説外の公開傾向の学習は [open_model](../evidence/open_model/REPORT.md)。
+この文書は現在の判断基準と優先順位の正本。各実験の数値・旧案・不採用理由はそれぞれの evidence に置く。全体診断は [foundation_audit](../evidence/foundation_audit/REPORT.md)、将来の本人と目的評価は [closed_loop](../evidence/closed_loop/REPORT.md)、打切り地点の価値は [frontier_value](../evidence/frontier_value/REPORT.md)、学びによる将来の選択変更は [learning_value](../evidence/learning_value/REPORT.md)、既存仮説外の公開傾向の学習は [open_model](../evidence/open_model/REPORT.md)、残資源と将来の選択肢は [opportunity_graph](../evidence/opportunity_graph/REPORT.md)。
 
 ## 守る七つの条件
 
@@ -62,6 +62,8 @@
 
 観測から学んだ後に本人の選択が変わることを、公開結果の分岐として扱う。情報の量を固定報酬にしない。有限仮説に加え、既知の公開イベントについて、用意した仮説の混合では表せない条件付き分布を実観測から獲得する接続を追加した。短期・長期・特徴の組合せを観測前の予測成績で比較し、一つの外れを原因の確定診断にしない。未知の知覚特徴・ルール、短い探索への圧縮、主観的な頑なさとの合成は残る。予測改善が判断改善に届かない資源配分を、人格の交換条件と目的評価の不足に切り分ける。同じ資源増減の意味を揃えた比較を維持する。
 
+残資源から将来の合法な機会へつながる有限公開グラフを追加した。ルールを一度列挙し、実際の観測後に学んだ予測で解き直す。未来も同じ人格で選ぶ継続と、目的だけを最大化する参考継続を分ける。今回の交換は、読みの中の将来学習と遠い心理効果の累積を省いて、終局までの資源配分を扱うこと。固定欲求の4診断とGoofspiel短終盤への接続に限り、動く欲求・関係を含む全機能へ標準化しない。次はこの十分な状態表現を維持したまま、列挙できない規模と心理状態の変化へどう接続するかが課題になる。
+
 ## 主要な根拠と接続契約
 
 - 実行の境界：[DECISION_LOOP](DECISION_LOOP.md)、[INTEGRATED_BASELINE](INTEGRATED_BASELINE.md)
@@ -70,6 +72,7 @@
 - 打切り以後の価値：[FRONTIER_VALUE](FRONTIER_VALUE.md)、[予測・候補順位・実行を分けた検証](../evidence/frontier_value/REPORT.md)
 - 学びを含む計画：[LEARNING_VALUE](LEARNING_VALUE.md)、[費用の対照・全分岐・実行の検証](../evidence/learning_value/REPORT.md)
 - 仮説外の公開傾向：[OPEN_MODEL](OPEN_MODEL.md)、[予測・適応・判断の検証](../evidence/open_model/REPORT.md)
+- 残資源の機会：[OPPORTUNITY_GRAPH](OPPORTUNITY_GRAPH.md)、[人格継続と実行の検証](../evidence/opportunity_graph/REPORT.md)
 - 人格・学習：[PERSONAL_COMMITMENT](PERSONAL_COMMITMENT.md)、[PERSONA_FEEDBACK](PERSONA_FEEDBACK.md)
 - 省略と社会判断：[social_omission](../evidence/social_omission/REPORT.md)、[encounter_withdrawal](../evidence/encounter_withdrawal/REPORT.md)
 - チーム・計画修正：[TEAM_COOPERATION](TEAM_COOPERATION.md)、[CONDITIONAL_CONTINUATION](CONDITIONAL_CONTINUATION.md)、[PLAN_REPAIR](PLAN_REPAIR.md)、[REPAIR_STABILITY](REPAIR_STABILITY.md)

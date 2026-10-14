@@ -48,3 +48,5 @@ python tools/run_open_model.py --stage development --root FRESH_DEVELOPMENT
 python tools/run_open_model.py --stage holdout --root FRESH_HOLDOUT
 python tools/run_open_model.py --stage planning --root FRESH_PLANNING
 ```
+
+資源配分の不足を扱う後続の任意機構は [OPPORTUNITY_GRAPH](OPPORTUNITY_GRAPH.md)。公開ルールの有限グラフを、現在学んだ予測で終局まで解く。未来の人格選択を残す一方、solve中の将来学習を省く交換であり、本機構を含む全設定への既定化ではない。
