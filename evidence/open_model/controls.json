@@ -1,0 +1,536 @@
+{
+  "groups": {
+    "exact-library": {
+      "library": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.08699561969355694,
+        "expected_log_loss": 0.08959649779540668,
+        "late_max_prediction": 0.974797508916484,
+        "late_over_80_percent": 1019,
+        "late_predictions": 1024
+      },
+      "existing-responsive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.18418092406173012,
+        "expected_log_loss": 0.1868638074693628,
+        "late_max_prediction": 0.8736424950637711,
+        "late_over_80_percent": 988,
+        "late_predictions": 1024
+      },
+      "marginal": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.08829514862992276,
+        "expected_log_loss": 0.0926248868034445,
+        "late_max_prediction": 0.9677740889917947,
+        "late_over_80_percent": 1017,
+        "late_predictions": 1024
+      },
+      "long": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.08596407498085201,
+        "expected_log_loss": 0.08990147155407975,
+        "late_max_prediction": 0.9741202667563676,
+        "late_over_80_percent": 1019,
+        "late_predictions": 1024
+      },
+      "adaptive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.08940531141894341,
+        "expected_log_loss": 0.0937618152296873,
+        "late_max_prediction": 0.9657467407837156,
+        "late_over_80_percent": 1016,
+        "late_predictions": 1024
+      }
+    },
+    "interaction": {
+      "library": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 2.5361661309183283,
+        "expected_log_loss": 2.528694661403547,
+        "late_max_prediction": 0.9632570440910302,
+        "late_over_80_percent": 1012,
+        "late_predictions": 1024
+      },
+      "existing-responsive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 1.1473691030858462,
+        "expected_log_loss": 1.1467008037985893,
+        "late_max_prediction": 0.5845360346252582,
+        "late_over_80_percent": 207,
+        "late_predictions": 1024
+      },
+      "marginal": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.7508449690199908,
+        "expected_log_loss": 0.7600410145744232,
+        "late_max_prediction": 0.5369697054074399,
+        "late_over_80_percent": 5,
+        "late_predictions": 1024
+      },
+      "long": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.14954411595159528,
+        "expected_log_loss": 0.15247009050058802,
+        "late_max_prediction": 0.9309425621046871,
+        "late_over_80_percent": 1003,
+        "late_predictions": 1024
+      },
+      "adaptive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.15308781329109017,
+        "expected_log_loss": 0.15601165429899982,
+        "late_max_prediction": 0.9303195599085425,
+        "late_over_80_percent": 1002,
+        "late_predictions": 1024
+      }
+    },
+    "noise": {
+      "library": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 2.60410559130049,
+        "expected_log_loss": 2.693184222693265,
+        "late_max_prediction": 0.873762950484898,
+        "late_over_80_percent": 732,
+        "late_predictions": 1024
+      },
+      "existing-responsive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 1.2432765332182292,
+        "expected_log_loss": 1.25223495972819,
+        "late_max_prediction": 0.5294706358154447,
+        "late_over_80_percent": 108,
+        "late_predictions": 1024
+      },
+      "marginal": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 1.1309465453784078,
+        "expected_log_loss": 1.1314619641755046,
+        "late_max_prediction": 0.39979884398480753,
+        "late_over_80_percent": 1,
+        "late_predictions": 1024
+      },
+      "long": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 1.126575255439738,
+        "expected_log_loss": 1.1288265535784665,
+        "late_max_prediction": 0.39880167541012024,
+        "late_over_80_percent": 1,
+        "late_predictions": 1024
+      },
+      "adaptive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 1.133056299164802,
+        "expected_log_loss": 1.1360377359126808,
+        "late_max_prediction": 0.4056285330254163,
+        "late_over_80_percent": 1,
+        "late_predictions": 1024
+      }
+    },
+    "novel": {
+      "library": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 4.958146255647723,
+        "expected_log_loss": 4.955191719401818,
+        "late_max_prediction": 0.6771176050130738,
+        "late_over_80_percent": 224,
+        "late_predictions": 1024
+      },
+      "existing-responsive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 1.1206033910486555,
+        "expected_log_loss": 1.120360940742356,
+        "late_max_prediction": 0.3433968605389591,
+        "late_over_80_percent": 12,
+        "late_predictions": 1024
+      },
+      "marginal": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.11272761062852438,
+        "expected_log_loss": 0.11152019137101055,
+        "late_max_prediction": 0.9504645275948849,
+        "late_over_80_percent": 1007,
+        "late_predictions": 1024
+      },
+      "long": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.10939835844080449,
+        "expected_log_loss": 0.1082792752075674,
+        "late_max_prediction": 0.9587387951452373,
+        "late_over_80_percent": 1008,
+        "late_predictions": 1024
+      },
+      "adaptive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.11622622456443903,
+        "expected_log_loss": 0.11505531161115683,
+        "late_max_prediction": 0.948404291385594,
+        "late_over_80_percent": 1007,
+        "late_predictions": 1024
+      }
+    },
+    "return": {
+      "library": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 1.7231541039305582,
+        "expected_log_loss": 1.71460160413713,
+        "late_max_prediction": 0.9720622698423683,
+        "late_over_80_percent": 1012,
+        "late_predictions": 1024
+      },
+      "existing-responsive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.5209996239218294,
+        "expected_log_loss": 0.5199601337452384,
+        "late_max_prediction": 0.8683830822136954,
+        "late_over_80_percent": 978,
+        "late_predictions": 1024
+      },
+      "marginal": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.14873048172932424,
+        "expected_log_loss": 0.15145692259069007,
+        "late_max_prediction": 0.9607570694060239,
+        "late_over_80_percent": 1000,
+        "late_predictions": 1024
+      },
+      "long": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.41481922440819985,
+        "expected_log_loss": 0.41593778120217223,
+        "late_max_prediction": 0.9624713750746975,
+        "late_over_80_percent": 999,
+        "late_predictions": 1024
+      },
+      "adaptive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.15345920589456888,
+        "expected_log_loss": 0.15584956184615986,
+        "late_max_prediction": 0.9592054750719593,
+        "late_over_80_percent": 997,
+        "late_predictions": 1024
+      }
+    },
+    "shift": {
+      "library": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 2.523775577018083,
+        "expected_log_loss": 2.524011973281632,
+        "late_max_prediction": 0.6895621029442275,
+        "late_over_80_percent": 225,
+        "late_predictions": 1024
+      },
+      "existing-responsive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.6826104295011154,
+        "expected_log_loss": 0.6811251113814185,
+        "late_max_prediction": 0.34339716249287106,
+        "late_over_80_percent": 12,
+        "late_predictions": 1024
+      },
+      "marginal": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.1491304930843306,
+        "expected_log_loss": 0.14418394617728958,
+        "late_max_prediction": 0.9320697851154406,
+        "late_over_80_percent": 1002,
+        "late_predictions": 1024
+      },
+      "long": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.40490781089010225,
+        "expected_log_loss": 0.40276012518940646,
+        "late_max_prediction": 0.8401224450580932,
+        "late_over_80_percent": 679,
+        "late_predictions": 1024
+      },
+      "adaptive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.15394265445614289,
+        "expected_log_loss": 0.14912535789320852,
+        "late_max_prediction": 0.925292706890996,
+        "late_over_80_percent": 1000,
+        "late_predictions": 1024
+      }
+    },
+    "unobservable": {
+      "library": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 2.5915533539950375,
+        "expected_log_loss": 2.5950688377871214,
+        "late_max_prediction": 0.9638405454257714,
+        "late_over_80_percent": 1019,
+        "late_predictions": 1024
+      },
+      "existing-responsive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 1.157225889365239,
+        "expected_log_loss": 1.1573135122621643,
+        "late_max_prediction": 0.5808617480139655,
+        "late_over_80_percent": 207,
+        "late_predictions": 1024
+      },
+      "marginal": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.7619064553976164,
+        "expected_log_loss": 0.7609433496393688,
+        "late_max_prediction": 0.5428835321847361,
+        "late_over_80_percent": 7,
+        "late_predictions": 1024
+      },
+      "long": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.759470197985415,
+        "expected_log_loss": 0.758195057475555,
+        "late_max_prediction": 0.5377390984235443,
+        "late_over_80_percent": 6,
+        "late_predictions": 1024
+      },
+      "adaptive": {
+        "streams": 8,
+        "observations": 3072,
+        "log_loss": 0.7658667846380588,
+        "expected_log_loss": 0.7645647630377362,
+        "late_max_prediction": 0.5400252035193888,
+        "late_over_80_percent": 6,
+        "late_predictions": 1024
+      }
+    }
+  },
+  "recoveries": [
+    {
+      "arm": "library",
+      "seed": 75000,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "library",
+      "seed": 75001,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "library",
+      "seed": 75002,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "library",
+      "seed": 75003,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "library",
+      "seed": 75004,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "library",
+      "seed": 75005,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "library",
+      "seed": 75006,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "library",
+      "seed": 75007,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "existing-responsive",
+      "seed": 75000,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "existing-responsive",
+      "seed": 75001,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "existing-responsive",
+      "seed": 75002,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "existing-responsive",
+      "seed": 75003,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "existing-responsive",
+      "seed": 75004,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "existing-responsive",
+      "seed": 75005,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "existing-responsive",
+      "seed": 75006,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "existing-responsive",
+      "seed": 75007,
+      "first_70_percent_prediction_lag": null
+    },
+    {
+      "arm": "marginal",
+      "seed": 75000,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "marginal",
+      "seed": 75001,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "marginal",
+      "seed": 75002,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "marginal",
+      "seed": 75003,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "marginal",
+      "seed": 75004,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "marginal",
+      "seed": 75005,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "marginal",
+      "seed": 75006,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "marginal",
+      "seed": 75007,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "long",
+      "seed": 75000,
+      "first_70_percent_prediction_lag": 91
+    },
+    {
+      "arm": "long",
+      "seed": 75001,
+      "first_70_percent_prediction_lag": 92
+    },
+    {
+      "arm": "long",
+      "seed": 75002,
+      "first_70_percent_prediction_lag": 91
+    },
+    {
+      "arm": "long",
+      "seed": 75003,
+      "first_70_percent_prediction_lag": 91
+    },
+    {
+      "arm": "long",
+      "seed": 75004,
+      "first_70_percent_prediction_lag": 95
+    },
+    {
+      "arm": "long",
+      "seed": 75005,
+      "first_70_percent_prediction_lag": 92
+    },
+    {
+      "arm": "long",
+      "seed": 75006,
+      "first_70_percent_prediction_lag": 90
+    },
+    {
+      "arm": "long",
+      "seed": 75007,
+      "first_70_percent_prediction_lag": 92
+    },
+    {
+      "arm": "adaptive",
+      "seed": 75000,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "adaptive",
+      "seed": 75001,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "adaptive",
+      "seed": 75002,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "adaptive",
+      "seed": 75003,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "adaptive",
+      "seed": 75004,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "adaptive",
+      "seed": 75005,
+      "first_70_percent_prediction_lag": 7
+    },
+    {
+      "arm": "adaptive",
+      "seed": 75006,
+      "first_70_percent_prediction_lag": 6
+    },
+    {
+      "arm": "adaptive",
+      "seed": 75007,
+      "first_70_percent_prediction_lag": 7
+    }
+  ],
+  "caveat": "prediction of c>=.7 is a descriptive recovery threshold, not a change-point probability; repeated streams share the same authored mechanisms"
+}

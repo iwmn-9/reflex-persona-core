@@ -2,7 +2,7 @@
 
 最終目標は、ゲームを替えても使える「その人物なりに合理的な判断」の土台。単なる最強CPU、勝率を揃えた性格集、心理パラメータの細密な再現を目指さない。固定した人物の軸を持ち、欲求・感情・経験によって手段を変え、協力・エゴ・妥協・攻略への対応からゲームの展開を作る。
 
-この文書は現在の判断基準と優先順位の正本。各実験の数値・旧案・不採用理由はそれぞれの evidence に置く。全体診断は [foundation_audit](../evidence/foundation_audit/REPORT.md)、将来の本人と目的評価は [closed_loop](../evidence/closed_loop/REPORT.md)、打切り地点の価値は [frontier_value](../evidence/frontier_value/REPORT.md)、学びによる将来の選択変更は [learning_value](../evidence/learning_value/REPORT.md)。
+この文書は現在の判断基準と優先順位の正本。各実験の数値・旧案・不採用理由はそれぞれの evidence に置く。全体診断は [foundation_audit](../evidence/foundation_audit/REPORT.md)、将来の本人と目的評価は [closed_loop](../evidence/closed_loop/REPORT.md)、打切り地点の価値は [frontier_value](../evidence/frontier_value/REPORT.md)、学びによる将来の選択変更は [learning_value](../evidence/learning_value/REPORT.md)、既存仮説外の公開傾向の学習は [open_model](../evidence/open_model/REPORT.md)。
 
 ## 守る七つの条件
 
@@ -32,7 +32,7 @@
 | --- | --- | --- |
 | 固定人格・価値 | 有限軸、欲求との同時採点、主義の固執度、バッチ個体分離 | 人間の心理尺度としての科学的校正、長期の人格らしさの実証 |
 | 欲求・関係・感情 | 欲求更新、相手別の経験、好悪の省略、無益な報復を増やさない社会接続 | 共通の包括的感情更新器。追加の感情分類を先に増やさない |
-| 即時学習・相手読み | 選んだ手の実結果、有限仮説、採用・撤回、既知条件付きルールで本人評価に沿う助言採点 | 未知の反応型の発見、変化した欲求へ過去の判断利益を移す基準 |
+| 即時学習・相手読み | 選んだ手の実結果、有限仮説、採用・撤回、公開カテゴリの条件付き分布を実観測から獲得し短期・長期予測を比較 | 未知の特徴・ルールの発見、仮説外学習の全実ゲームへの移植、変化した欲求へ過去の判断利益を移す基準 |
 | 先読み | 共通の目的・人格採点、複製本人の再帰的な再判断、既知確率の全分布、有限の計画修正、実行後の予測採点 | 途中の代理評価の妥当性、有限標本・未知の相手モデルの誤り、遅延誤差から次の計画を良くする学習。正確な公開モデルでの一致を未知環境へ一般化しない |
 | 停滞解除 | 準備と無根拠な停止の区別、目的改善の証拠がある代案だけを採用 | 改善証拠を求める監視と独立readerの併用は未対応。接続禁止を解除するだけでは直らない |
 | チーム | 所属と合意の分離、独立案との譲歩比較、公開された仲間の行動学習 | 全員が実際に再交渉する継続の予測、長期の役割変更、強い協調相手への安定性 |
@@ -60,7 +60,7 @@
 
 採否は、事前に固定した異なるルール・途中局面・人格で、目的の利益と損、主義のための支払い、停滞、情報の公平性を報告して決める。既に全勝の条件、同じ決定論的軌跡の再実行、同じ世界の複数NPCを独立標本として水増ししない。速度費用は当面の合否に使わない。全般的な賢さ、人間水準、面白さの完成は未達成。
 
-観測から学んだ後に本人の選択が変わることを、有限の仮説・公開結果の分岐として扱う任意接続を実装した。情報の量を固定報酬にしない。小さな有限モデルでは通しの改善を確認したが、仮説の自動獲得・モデル外の変化・短い探索への圧縮・既存の主観的な頑なさとの合成は未解決。次はこの境界を中心に扱う。費用の意味が行動名によって違うと「学びの価値」を水増しするため、同じ資源増減の意味を揃えた比較を維持する。
+観測から学んだ後に本人の選択が変わることを、公開結果の分岐として扱う。情報の量を固定報酬にしない。有限仮説に加え、既知の公開イベントについて、用意した仮説の混合では表せない条件付き分布を実観測から獲得する接続を追加した。短期・長期・特徴の組合せを観測前の予測成績で比較し、一つの外れを原因の確定診断にしない。未知の知覚特徴・ルール、短い探索への圧縮、主観的な頑なさとの合成は残る。予測改善が判断改善に届かない資源配分を、人格の交換条件と目的評価の不足に切り分ける。同じ資源増減の意味を揃えた比較を維持する。
 
 ## 主要な根拠と接続契約
 
@@ -69,6 +69,7 @@
 - 将来も選び直す本人：[CLOSED_LOOP](CLOSED_LOOP.md)、[全分岐とゲーム横断の検証](../evidence/closed_loop/REPORT.md)
 - 打切り以後の価値：[FRONTIER_VALUE](FRONTIER_VALUE.md)、[予測・候補順位・実行を分けた検証](../evidence/frontier_value/REPORT.md)
 - 学びを含む計画：[LEARNING_VALUE](LEARNING_VALUE.md)、[費用の対照・全分岐・実行の検証](../evidence/learning_value/REPORT.md)
+- 仮説外の公開傾向：[OPEN_MODEL](OPEN_MODEL.md)、[予測・適応・判断の検証](../evidence/open_model/REPORT.md)
 - 人格・学習：[PERSONAL_COMMITMENT](PERSONAL_COMMITMENT.md)、[PERSONA_FEEDBACK](PERSONA_FEEDBACK.md)
 - 省略と社会判断：[social_omission](../evidence/social_omission/REPORT.md)、[encounter_withdrawal](../evidence/encounter_withdrawal/REPORT.md)
 - チーム・計画修正：[TEAM_COOPERATION](TEAM_COOPERATION.md)、[CONDITIONAL_CONTINUATION](CONDITIONAL_CONTINUATION.md)、[PLAN_REPAIR](PLAN_REPAIR.md)、[REPAIR_STABILITY](REPAIR_STABILITY.md)

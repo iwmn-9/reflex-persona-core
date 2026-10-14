@@ -1,0 +1,921 @@
+{
+  "cases": 32,
+  "batches": 8,
+  "npcs_per_batch": 4,
+  "batch_single_equal": true,
+  "no_counterfactual_memory_written": true,
+  "findings": [
+    {
+      "game": "auction",
+      "profile": "growth",
+      "warm": false,
+      "selected": "bid:3",
+      "single": "bid:3",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "position": {
+          "game": "auction",
+          "hands": [
+            [],
+            [],
+            []
+          ],
+          "scores": [
+            0,
+            0,
+            0
+          ],
+          "budgets": [
+            8,
+            8,
+            8
+          ],
+          "prize": 3,
+          "category": "science",
+          "remaining": [
+            6,
+            2,
+            5,
+            4,
+            7
+          ],
+          "carry": 0,
+          "round": 0,
+          "episode": 0,
+          "last": [],
+          "last_prize": 0
+        }
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.3725,
+        "1": 0.3725,
+        "2": 0.1275,
+        "3": 0.1275
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "warm": false,
+      "selected": "trade",
+      "single": "trade",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6,
+        "plant": 0
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "warm": false,
+      "selected": "strike:0",
+      "single": "strike:0",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "hp": 4,
+        "enemy": 8
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "warm": false,
+      "selected": "pass",
+      "single": "pass",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "warm": true,
+      "selected": "bid:3",
+      "single": "bid:3",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "position": {
+          "game": "auction",
+          "hands": [
+            [],
+            [],
+            []
+          ],
+          "scores": [
+            0,
+            0,
+            0
+          ],
+          "budgets": [
+            8,
+            8,
+            8
+          ],
+          "prize": 3,
+          "category": "science",
+          "remaining": [
+            6,
+            2,
+            5,
+            4,
+            7
+          ],
+          "carry": 0,
+          "round": 0,
+          "episode": 0,
+          "last": [],
+          "last_prize": 0
+        }
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.04703484061238232,
+        "1": 0.04839368993385451,
+        "2": 0.04783797883720154,
+        "3": 0.8567334906165617
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "warm": true,
+      "selected": "crop:2",
+      "single": "crop:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6,
+        "plant": 0
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.16840604489969022,
+        "1": 0.05569855768178541,
+        "2": 0.7758953974185244
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "warm": true,
+      "selected": "strike:2",
+      "single": "strike:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "hp": 4,
+        "enemy": 8
+      },
+      "memory_observations": 110,
+      "forecast": {
+        "0": 0.05536211629912903,
+        "1": 0.05854812304214998,
+        "2": 0.886089760658721
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "warm": true,
+      "selected": "bet:2",
+      "single": "bet:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.16550599902063648,
+        "1": 0.056112575705483204,
+        "2": 0.7783814252738803
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "warm": false,
+      "selected": "bid:2",
+      "single": "bid:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "position": {
+          "game": "auction",
+          "hands": [
+            [],
+            [],
+            []
+          ],
+          "scores": [
+            0,
+            0,
+            0
+          ],
+          "budgets": [
+            8,
+            8,
+            8
+          ],
+          "prize": 3,
+          "category": "science",
+          "remaining": [
+            6,
+            2,
+            5,
+            4,
+            7
+          ],
+          "carry": 0,
+          "round": 0,
+          "episode": 0,
+          "last": [],
+          "last_prize": 0
+        }
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.3725,
+        "1": 0.3725,
+        "2": 0.1275,
+        "3": 0.1275
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "warm": false,
+      "selected": "trade",
+      "single": "trade",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6,
+        "plant": 0
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "steady",
+      "warm": false,
+      "selected": "guard",
+      "single": "guard",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "hp": 4,
+        "enemy": 8
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "warm": false,
+      "selected": "pass",
+      "single": "pass",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "warm": true,
+      "selected": "bid:3",
+      "single": "bid:3",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "position": {
+          "game": "auction",
+          "hands": [
+            [],
+            [],
+            []
+          ],
+          "scores": [
+            0,
+            0,
+            0
+          ],
+          "budgets": [
+            8,
+            8,
+            8
+          ],
+          "prize": 3,
+          "category": "science",
+          "remaining": [
+            6,
+            2,
+            5,
+            4,
+            7
+          ],
+          "carry": 0,
+          "round": 0,
+          "episode": 0,
+          "last": [],
+          "last_prize": 0
+        }
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.04646300071575417,
+        "1": 0.04935865153122899,
+        "2": 0.04841833837899907,
+        "3": 0.8557600093740176
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "warm": true,
+      "selected": "crop:2",
+      "single": "crop:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6,
+        "plant": 0
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.16830046613824262,
+        "1": 0.054747368788551375,
+        "2": 0.776952165073206
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "steady",
+      "warm": true,
+      "selected": "strike:2",
+      "single": "strike:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "hp": 4,
+        "enemy": 8
+      },
+      "memory_observations": 117,
+      "forecast": {
+        "0": 0.05137208771649521,
+        "1": 0.05572490106527788,
+        "2": 0.8929030112182269
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "warm": true,
+      "selected": "bet:2",
+      "single": "bet:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.16905930734668803,
+        "1": 0.05544837920124821,
+        "2": 0.7754923134520637
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "warm": false,
+      "selected": "bid:3",
+      "single": "bid:3",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "position": {
+          "game": "auction",
+          "hands": [
+            [],
+            [],
+            []
+          ],
+          "scores": [
+            0,
+            0,
+            0
+          ],
+          "budgets": [
+            8,
+            8,
+            8
+          ],
+          "prize": 3,
+          "category": "science",
+          "remaining": [
+            6,
+            2,
+            5,
+            4,
+            7
+          ],
+          "carry": 0,
+          "round": 0,
+          "episode": 0,
+          "last": [],
+          "last_prize": 0
+        }
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.3725,
+        "1": 0.3725,
+        "2": 0.1275,
+        "3": 0.1275
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "care",
+      "warm": false,
+      "selected": "trade",
+      "single": "trade",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6,
+        "plant": 0
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "warm": false,
+      "selected": "guard",
+      "single": "guard",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "hp": 4,
+        "enemy": 8
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "warm": false,
+      "selected": "pass",
+      "single": "pass",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "warm": true,
+      "selected": "bid:3",
+      "single": "bid:3",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "position": {
+          "game": "auction",
+          "hands": [
+            [],
+            [],
+            []
+          ],
+          "scores": [
+            0,
+            0,
+            0
+          ],
+          "budgets": [
+            8,
+            8,
+            8
+          ],
+          "prize": 3,
+          "category": "science",
+          "remaining": [
+            6,
+            2,
+            5,
+            4,
+            7
+          ],
+          "carry": 0,
+          "round": 0,
+          "episode": 0,
+          "last": [],
+          "last_prize": 0
+        }
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.04703484061238232,
+        "1": 0.04839368993385451,
+        "2": 0.04783797883720154,
+        "3": 0.8567334906165617
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "care",
+      "warm": true,
+      "selected": "crop:2",
+      "single": "crop:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6,
+        "plant": 0
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.16840604489969022,
+        "1": 0.05569855768178541,
+        "2": 0.7758953974185244
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "warm": true,
+      "selected": "strike:2",
+      "single": "strike:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "hp": 4,
+        "enemy": 8
+      },
+      "memory_observations": 110,
+      "forecast": {
+        "0": 0.05536751367255489,
+        "1": 0.05848498937332359,
+        "2": 0.8861474969541215
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "warm": true,
+      "selected": "bet:2",
+      "single": "bet:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.16639149147704793,
+        "1": 0.05594873958769674,
+        "2": 0.7776597689352553
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "ego",
+      "warm": false,
+      "selected": "bid:3",
+      "single": "bid:3",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "position": {
+          "game": "auction",
+          "hands": [
+            [],
+            [],
+            []
+          ],
+          "scores": [
+            0,
+            0,
+            0
+          ],
+          "budgets": [
+            8,
+            8,
+            8
+          ],
+          "prize": 3,
+          "category": "science",
+          "remaining": [
+            6,
+            2,
+            5,
+            4,
+            7
+          ],
+          "carry": 0,
+          "round": 0,
+          "episode": 0,
+          "last": [],
+          "last_prize": 0
+        }
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.3725,
+        "1": 0.3725,
+        "2": 0.1275,
+        "3": 0.1275
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "ego",
+      "warm": false,
+      "selected": "trade",
+      "single": "trade",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6,
+        "plant": 0
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "warm": false,
+      "selected": "guard",
+      "single": "guard",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "hp": 4,
+        "enemy": 8
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "warm": false,
+      "selected": "pass",
+      "single": "pass",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6
+      },
+      "memory_observations": 0,
+      "forecast": {
+        "0": 0.415,
+        "1": 0.415,
+        "2": 0.16999999999999998
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "ego",
+      "warm": true,
+      "selected": "bid:3",
+      "single": "bid:3",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "position": {
+          "game": "auction",
+          "hands": [
+            [],
+            [],
+            []
+          ],
+          "scores": [
+            0,
+            0,
+            0
+          ],
+          "budgets": [
+            8,
+            8,
+            8
+          ],
+          "prize": 3,
+          "category": "science",
+          "remaining": [
+            6,
+            2,
+            5,
+            4,
+            7
+          ],
+          "carry": 0,
+          "round": 0,
+          "episode": 0,
+          "last": [],
+          "last_prize": 0
+        }
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.04703484061238232,
+        "1": 0.04839368993385451,
+        "2": 0.04783797883720154,
+        "3": 0.8567334906165617
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "ego",
+      "warm": true,
+      "selected": "crop:2",
+      "single": "crop:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6,
+        "plant": 0
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.16840604489969022,
+        "1": 0.05569855768178541,
+        "2": 0.7758953974185244
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "warm": true,
+      "selected": "strike:2",
+      "single": "strike:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "hp": 4,
+        "enemy": 8
+      },
+      "memory_observations": 110,
+      "forecast": {
+        "0": 0.05536751367255489,
+        "1": 0.05848498937332359,
+        "2": 0.8861474969541215
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "warm": true,
+      "selected": "bet:2",
+      "single": "bet:2",
+      "public": {
+        "tick": 0,
+        "episode": 24,
+        "previous": "none",
+        "signal": null,
+        "cash": 6
+      },
+      "memory_observations": 144,
+      "forecast": {
+        "0": 0.16639149147704793,
+        "1": 0.05594873958769674,
+        "2": 0.7776597689352553
+      }
+    }
+  ]
+}
