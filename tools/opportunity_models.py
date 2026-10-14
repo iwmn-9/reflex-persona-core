@@ -7,6 +7,7 @@ This sufficiency is specific to these adapters, not assumed by the graph core.
 """
 import copy
 from reflex.adaptive_dynamics import AdaptiveState
+from reflex.adaptive_opportunities import AdaptiveOpportunity
 from reflex.core import Policy, character_key, digest, compile_batch
 from reflex.opportunity_graph import OpportunityGraph, persona_choices
 from reflex.integrated_trials import request_for
@@ -36,7 +37,7 @@ class OpenOpportunities:
     def state(self,w,memory=None):
         return AdaptiveState(w,self.placeholder if memory is None else memory,self.g.kernel.state_identity,w['tick'])
 
-    def solve(self,s,owner,continuation='persona'):
+    def solve(self,s,owner,continuation='persona',*,preference_basis=None,bound=False):
         if continuation not in ('purpose','persona'):raise ValueError('declared continuation required')
         g=self.g;memory=s.memory;predictions={}
         before=digest([g.kernel.record(s),owner.record()])
@@ -60,7 +61,14 @@ class OpenOpportunities:
                 # the same EventLearner forecast again would add no evidence.
                 c=copy.deepcopy(effective);c['tick']=w['tick'];c['state']=copy.deepcopy(regime)
                 c['actions']=[action(a.key,effect()) for a in alts];cs.append(c)
-            return persona_choices(cs,alternatives,owner.policy)
+            return persona_choices(cs,alternatives,owner.policy,preference_basis=preference_basis,target=g.target)
+        if bound:
+            if continuation!='persona':raise ValueError('bound execution requires the same persona continuation')
+            result=AdaptiveOpportunity(self.graph,g.kernel,s,owner,choose=choose,
+                chooser_id=digest([continuation,owner.policy.signature(),root['scope'],regime,
+                                   None if preference_basis is None else preference_basis.identity]))
+            if digest([g.kernel.record(s),owner.record()])!=before:raise AssertionError('solve mutated factual owner')
+            return result
         result=self.graph.solve(law,law_id=digest(g.kernel.learner.record(memory)),
             choose=choose if continuation=='persona' else None,
             chooser_id=digest([continuation,owner.policy.signature(),root['scope'],regime]),initial=s.public)

@@ -2,7 +2,7 @@
 
 ゲームをまたいで、人物の軸を保ちながら欲求・関係・経験に応じて判断するNPCの土台。通常は数値バッチの反射、必要な場面では任意の先読みを使う。現在の目標・接続の不足・改修順位は [開発方針](docs/PROJECT_DIRECTION.md) を正本とする。全般的な賢さや人間水準、面白さの完成はまだ実証していない。
 
-人格のために払う目的上の損と、古い代理評価・相手予測の誤りによる損を、同じ局面で切り分ける接続を追加した。人格係数を変えず、明示した手段的な近似点だけを終局の評価へつなぐ。内在的な好みは残し、全ゲームへの一律の置換は行わない。[実証と得失](evidence/preference_basis/REPORT.md)、[意味の宣言と診断の契約](docs/PREFERENCE_BASIS.md)。残資源から将来の機会への接続は [OPPORTUNITY_GRAPH](docs/OPPORTUNITY_GRAPH.md)、仮説外の相手学習は [OPEN_MODEL](docs/OPEN_MODEL.md) を参照。
+既存の相手予測の見切り・修正を、人格付きの終局評価へ接続した。実観測で更新した予測と古い長期評価を混ぜず、目的と人格を維持して手段を選び直す。相手の変化への追従と単発の外れの後続損を分けて検証する任意経路。[実証と得失](evidence/adaptive_opportunities/REPORT.md)、[接続契約](docs/ADAPTIVE_OPPORTUNITIES.md)。人格の代償と代理点の区別は [PREFERENCE_BASIS](docs/PREFERENCE_BASIS.md)、終局までの資源配分は [OPPORTUNITY_GRAPH](docs/OPPORTUNITY_GRAPH.md)、既存の予測更新は [OPEN_MODEL](docs/OPEN_MODEL.md)。
 
 過去の方式の比較・不採用理由は [開発方針の根拠](docs/PROJECT_DIRECTION.md#主要な根拠と接続契約) と各 evidence の報告を参照。既往の実行結果は保存し、この入口には履歴の要約を積み重ねない。
 

@@ -128,8 +128,9 @@ class OpenGame:
         if state is not None:c['state']=copy.deepcopy(state)
         return c
 
-    def controller(self,horizon=1,update=True):
+    def controller(self,horizon=1,update=True,*,opportunity=None,preference_basis=None):
         k=copy.copy(self.kernel);k.update=update;k.identity=digest([k.state_identity,update])
-        return ClosedLoop(observe=self.observe,transitions=k,terminal=self.terminal,assess=lambda s:self.goal(s).record(),
+        return ClosedLoop(observe=self.observe,transitions=k if opportunity is None else opportunity,terminal=self.terminal,assess=lambda s:self.goal(s).record(),
             record=self.kernel.record,request_for=lambda c:request_for(c,'open-model'),feedback=lambda *args:ModelFeedback(None),
-            unit='owner-decisions',target=self.target,model_id=k.identity,budget=TreeBudget(horizon=horizon,nodes=100000,outcomes=4096))
+            unit='owner-decisions',target=self.target,model_id=k.identity if opportunity is None else opportunity.identity,
+            budget=TreeBudget(horizon=horizon,nodes=100000,outcomes=4096),frontier=opportunity,preference_basis=preference_basis)
