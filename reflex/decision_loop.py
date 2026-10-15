@@ -356,6 +356,8 @@ class DecisionLoop:
             audit['response_model']='validated_hypotheses' if proposal.known_conditionals and loop._response_accepted(s['evidence'],key) else 'bounded_recent_response'
             if audit['response_model']=='validated_hypotheses' and loop.response_adoption=='persona_choice':
                 audit['response_model']='validated_personal_choice'
+            if proposal.known_conditionals and proposal.response_candidate is None:
+                audit['response_model']='single_response_forecast'
             rb=compile_batch([rc]);rm=np.array([[[name in s['exact'][k] for name in FEATURES] for k in rb.ids[0]]])
             rb=replace(rb,legal=rb.legal&np.array([[k in s['progress_allowed'] for k in rb.ids[0]]]))
             rb,_=avoid_waste(rb,rm,appraisal=None if s['social_scores'] is None else np.array([[s['social_scores'].get(k,0.) for k in rb.ids[0]]]))

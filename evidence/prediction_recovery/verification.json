@@ -1,0 +1,70 @@
+{
+  "archives": {
+    "pilot.zip": {
+      "bytes": 1337553,
+      "sha256": "fdce63c968274bf91a584937b5b28d76d1b301926067d51fbdecec382939b5d8"
+    },
+    "development.zip": {
+      "bytes": 6014225,
+      "sha256": "54b1d9983dcbc8ffb71be1e029aad8d3fbc202756e7c1789af7cd3f37a48b2b6"
+    },
+    "holdout.zip": {
+      "bytes": 8250789,
+      "sha256": "eabaf3dd25bdab98205881380e7e5db32834e29db4e052993e97900e6a44215b"
+    },
+    "historical_bridge.zip": {
+      "bytes": 1662174,
+      "sha256": "626bf4a9b76ccb4095c98753b4e74c0c114700345ffcb77aa033083768463630"
+    },
+    "auction_reflex.zip": {
+      "bytes": 1659891,
+      "sha256": "79ace4e09a713f9b7375abdfd6dc94dab3760defd8db48340f106e42b74cf064"
+    },
+    "streams.zip": {
+      "bytes": 5973525,
+      "sha256": "6dd3170336ae3a444212fe176678e098ce7f8b33d90abed89d14764978a3437b"
+    },
+    "final_source.zip": {
+      "bytes": 65475,
+      "sha256": "3e271334fd2cb8164bf6f1b5e78b659ca528d55d369aa52686e93e07c51138c9"
+    }
+  },
+  "tests": {
+    "total": 1097,
+    "passed": 1080,
+    "optional_skipped": 17,
+    "sha256": "d340a9f1df56a455cbca464d2dd6b5db293fa042df399fbc744d5dd8874d42f8"
+  },
+  "source_sha256": {
+    "reflex/event_reader.py": "2cb5b281fd2762b72b44cb0a6ab15d2adcb0a7d21161c769b9d31a8c37e4717f",
+    "reflex/decision_loop.py": "b610ab268b2017be4e086c763fd78b63f12da896d1b96bfbf9ed04e4a2d1cd48",
+    "tests/test_event_reader.py": "cc1d09f1c9e43ea79ff209efa5c998b111e52e5c8e18c3448dfd7ebe31b51ffa",
+    "tools/run_prediction_recovery.py": "c980c0618b6fc1bbdbfc69a0baa33d21425315d00c363b2d984596e1427089d9",
+    "tools/audit_prediction_recovery.py": "a5829a58e03e1e11fa77451f715dbd5a4b96c8e2932cdf8d8fd1b7db0e21dc17",
+    "tools/probe_prediction_recovery.py": "84e18a9e067eea1702d227683f1bdfc81644eec125a12cd36debd83a19b37d5c",
+    "tools/run_recovery_bridge.py": "15770a8cb7c9e453890034a0a1b896842832d0049729ab7c9b771645985c9dd8",
+    "tools/audit_recovery_bridge.py": "16514efee179dacc999fc60e84e2300e805029c297ca52597779900182617f7b",
+    "tools/replay_prediction_recovery.py": "728f3d446f9f03d2e8857048d2067fe912946547f43f2188c9f809ac5f8fe95b",
+    "tools/diagnose_recovery_bridge.py": "179c11df366523ff9259c024d53e057dfbeb733eab91acc31db1fe8c144b653b",
+    "tools/diagnose_recovery_horizon.py": "76b177ea48dac42822cc37b6a511757e263c25224abf86107e69fb4e9234769c"
+  },
+  "unchanged": [
+    "reflex/core.py",
+    "reflex/runtime.py",
+    "reflex/social.py",
+    "reflex/social_withdrawal.py",
+    "reflex/adaptive_dynamics.py",
+    "reflex/loop_predictor.py",
+    "reflex/progress.py",
+    "reflex/actor_model.py",
+    "tools/open_model_games.py"
+  ],
+  "final_runtime_matches_holdout": true,
+  "source_differences": {
+    "pilot": "Before public-feature-aware rollout and versioned rule ID. Exploratory only.",
+    "development": "Final reader also declines alphabets wider than the Policy capacity; all games have <=4 symbols. Runner later avoids redundant public action enumeration. Final-source auction replay is exact.",
+    "historical_bridge": "Same <=4-symbol guard difference; original lifecycle protocol deliberately retained."
+  },
+  "new_dependencies": false,
+  "cloud_used": false
+}
