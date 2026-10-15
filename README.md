@@ -2,7 +2,9 @@
 
 ゲームをまたいで、人物の軸を保ちながら欲求・関係・経験に応じて判断するNPCの土台。通常は数値バッチの反射、必要な場面では任意の先読みを使う。現在の目標・接続の不足・改修順位は [開発方針](docs/PROJECT_DIRECTION.md) を正本とする。全般的な賢さや人間水準、面白さの完成はまだ実証していない。
 
-能力・資源・参戦時期が違う条件へ、既存の人格付き終局評価と予測更新を接続して検証する。弱者・強者の専用判断を加えず、その人物の合法手と将来の機会から選ぶ。途中参戦は進行済みの盤面と世界の期限を引き継ぐ。勝敗だけでなく、立場による限界・人格の交換・予測の誤りを分ける。[実証と得失](evidence/asymmetry/REPORT.md)、[条件と再現](docs/ASYMMETRY.md)。予測修正の接続は [ADAPTIVE_OPPORTUNITIES](docs/ADAPTIVE_OPPORTUNITIES.md)、人格と代理点の区別は [PREFERENCE_BASIS](docs/PREFERENCE_BASIS.md)、終局までの機会は [OPPORTUNITY_GRAPH](docs/OPPORTUNITY_GRAPH.md)。
+4〜8人が320ターン暮らす600世界を検査した。関係記憶は搾取を減らし、同じ相手との協力再開も生んだ。一方、協力を維持しないと生存できない世界では多くが死亡し、一手の入力補正だけでは解決しなかった。[長期の利益・失敗・採否](evidence/long_lived/REPORT.md)、[条件と再現](docs/LONG_LIVED_NPCS.md)。能力・資源・途中参戦の比較は [非対称性の検証](evidence/asymmetry/REPORT.md)。
+
+実験・比較はPythonを維持し、採用した実行部品をRustへ移す方針。通常採点の小試作は5,124判断でPythonと選択・乱数が一致したが、正式なRust実行ライブラリや全機能の移植ではない。[移植する境界と確認範囲](docs/RUST_BOUNDARY.md)。
 
 過去の方式の比較・不採用理由は [開発方針の根拠](docs/PROJECT_DIRECTION.md#主要な根拠と接続契約) と各 evidence の報告を参照。既往の実行結果は保存し、この入口には履歴の要約を積み重ねない。
 

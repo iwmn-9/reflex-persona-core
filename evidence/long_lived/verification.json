@@ -1,0 +1,57 @@
+{
+  "phase": {
+    "development": {
+      "worlds": 120,
+      "counts": {
+        "actor_ticks": 204800,
+        "actual_choices": 137231,
+        "social_appraisals": 12438,
+        "same_state_experience_probes": 3385
+      },
+      "whole_policy_world_replays": 0,
+      "frozen_sources_verified": true,
+      "actual_transition_and_memory_replay": true,
+      "no_human_playtesting": true
+    },
+    "holdout": {
+      "worlds": 480,
+      "counts": {
+        "actor_ticks": 819200,
+        "actual_choices": 547025,
+        "social_appraisals": 50219,
+        "same_state_experience_probes": 13470
+      },
+      "whole_policy_world_replays": 12,
+      "frozen_sources_verified": true,
+      "actual_transition_and_memory_replay": true,
+      "no_human_playtesting": true
+    }
+  },
+  "archives": {
+    "development.zip": {
+      "sha256": "3a6943a211ebee7e24e835aa80c45603e9de05ca1f76f01b5c4a9b017a89e525",
+      "bytes": 2987242
+    },
+    "holdout.zip": {
+      "sha256": "75b7326a4bedf00e849f335c1bf86420268672739d16e20adff35eb6fd5e8306",
+      "bytes": 11789424
+    }
+  },
+  "suite": {
+    "total": 1051,
+    "passed": 1034,
+    "optional_skipped": 17,
+    "log_sha256": "5cac9b8f9acca3e930132a4a40a73e90bfe3acd9ae6e5aa3b0243b5265ca3e78"
+  },
+  "sources": {
+    "reflex/encounters.py": "286b0b7a7073d8aed8e0ccf89b156d23e57e30f35ff58477912ff2489e96822b",
+    "tools/long_lived_npcs.py": "16a92daaa5eb26982aaccaf03639bc86e3134963be57cc9983a69df832bcb8e9",
+    "tools/audit_long_lived_npcs.py": "ff0ab45cf955ff3d404b2fee4d9086788edb439fab31f9ff182cc023d0657b4e",
+    "tests/test_long_lived_npcs.py": "92859241e401a451d832b32d7c9051a005a95674aa42eef35bbc6c835ade72ba",
+    "tools/rust_policy_probe.rs": "390ba7419733cd32c25d8771c3aff5556f97ddc1f103de17b0f3325219a3a2f5",
+    "tools/verify_rust_policy_probe.py": "6f630d72f6f1a4ae8a05cdcec7ae1bc8bd9bdfa3488bbd91f91d8d1dc4ea7332"
+  },
+  "production_policy_unchanged": true,
+  "net_effects_candidate_promoted": false,
+  "new_runtime_dependencies": false
+}

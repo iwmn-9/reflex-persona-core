@@ -1,0 +1,553 @@
+{
+  "development": {
+    "plan": {
+      "version": "long-lived-npcs-v1",
+      "seeds": [
+        91000,
+        91001
+      ],
+      "turns": 320,
+      "arms": [
+        "amnesic",
+        "prediction",
+        "social",
+        "net_effects",
+        "material_greedy"
+      ],
+      "domains": [
+        "exchange",
+        "watch"
+      ],
+      "layouts": [
+        "balanced4",
+        "balanced8",
+        "social4"
+      ],
+      "contacts": [
+        "free",
+        "public"
+      ],
+      "same_state_probe_every": 16,
+      "window": 80,
+      "rules": {
+        "exchange": {
+          "cc": [
+            0.55,
+            0.12
+          ],
+          "ct": [
+            -0.15,
+            -0.1
+          ],
+          "tc": [
+            0.8,
+            0.08
+          ],
+          "tt": [
+            0.05,
+            -0.02
+          ],
+          "alone": [
+            0.3,
+            0.06
+          ],
+          "unmatched": [
+            0.12,
+            0
+          ],
+          "rest": [
+            0.08,
+            0
+          ],
+          "upkeep": 0.04
+        },
+        "watch": {
+          "cc": [
+            0.5,
+            0.3
+          ],
+          "ct": [
+            -0.4,
+            -0.5
+          ],
+          "tc": [
+            0.6,
+            0.1
+          ],
+          "tt": [
+            -0.25,
+            -0.3
+          ],
+          "alone": [
+            0.32,
+            0.05
+          ],
+          "unmatched": [
+            0.1,
+            0
+          ],
+          "rest": [
+            0.08,
+            0
+          ],
+          "upkeep": 0.1
+        }
+      },
+      "workers": 4,
+      "acceptance": "diagnose long-lived integration; do not promote by aggregate gain alone or change fixed personality",
+      "sources": {
+        "reflex/core.py": "b1cfd38170f7bcb89079d8b32e528b452cf411a5c2e836c11fc1efb0952b2336",
+        "reflex/runtime.py": "eaaf9fcb31238437989695947121275734e04dea4506ce1510c5382d6feee96f",
+        "reflex/encounters.py": "286b0b7a7073d8aed8e0ccf89b156d23e57e30f35ff58477912ff2489e96822b",
+        "reflex/social.py": "86200514fd4f0f780b67fd3e6d5dea18de050e7fdb4ee2436809b3837b04551b",
+        "reflex/social_projection.py": "76fec7f60b16bdcbcffe6e197c3502f388a82d1730d6e2619228db52f6096e70",
+        "reflex/social_withdrawal.py": "d3886a188247eebf28b719fdad9bc29dde03fd2b4092e37cea3984f63d733301",
+        "reflex/laboratory.py": "dabd8eb5cf2acff2d03ed7659b2f86bd5eedc0012fb3b5d7c978cb8b99f0ac4c",
+        "reflex/examples.py": "85610dc68fa527526369eb58151c6b29e01be0f5f2795873690a399829a171f8",
+        "reflex/encounter_experiment.py": "3a2f8a0d0fbcadb1ad13de30dea06cdc189e2f2d24b97d0eed9f4dc04e67bb7b",
+        "tools/long_lived_npcs.py": "992d2341e6ec3710436cfce6bf784c673de0abaf471807261fbc3925572279bc"
+      },
+      "limitations": [
+        "two authored worlds",
+        "no future planning or general emotion updater",
+        "no autonomous goal replacement",
+        "all publicly observed history",
+        "same-world actors are correlated",
+        "material-greedy is not representative of all existing methods"
+      ]
+    },
+    "summary": {
+      "totals": {
+        "amnesic": {
+          "worlds": 24,
+          "actors": 128,
+          "alive": 40,
+          "mean_actor_gain": 37.73929687499986,
+          "active_turns": 25036,
+          "cooperation_pairs": 164,
+          "exploited": 441,
+          "repaired_relations": 0,
+          "repair_worlds": 0
+        },
+        "prediction": {
+          "worlds": 24,
+          "actors": 128,
+          "alive": 60,
+          "mean_actor_gain": 46.760468749999816,
+          "active_turns": 26954,
+          "cooperation_pairs": 1079,
+          "exploited": 568,
+          "repaired_relations": 0,
+          "repair_worlds": 0
+        },
+        "social": {
+          "worlds": 24,
+          "actors": 128,
+          "alive": 65,
+          "mean_actor_gain": 50.088671874999804,
+          "active_turns": 28588,
+          "cooperation_pairs": 1384,
+          "exploited": 289,
+          "repaired_relations": 4,
+          "repair_worlds": 4
+        },
+        "net_effects": {
+          "worlds": 24,
+          "actors": 128,
+          "alive": 66,
+          "mean_actor_gain": 50.4480468749998,
+          "active_turns": 28557,
+          "cooperation_pairs": 1513,
+          "exploited": 315,
+          "repaired_relations": 9,
+          "repair_worlds": 8
+        },
+        "material_greedy": {
+          "worlds": 24,
+          "actors": 128,
+          "alive": 64,
+          "mean_actor_gain": 49.73749999999979,
+          "active_turns": 28096,
+          "cooperation_pairs": 0,
+          "exploited": 0,
+          "repaired_relations": 0,
+          "repair_worlds": 0
+        }
+      },
+      "paired": {
+        "prediction_vs_amnesic": {
+          "actor_counts": {
+            "worse": 13,
+            "new_deaths": 0,
+            "avoided_deaths": 20,
+            "same": 49,
+            "better": 66
+          },
+          "by_domain": {
+            "exchange": {
+              "worse": 6,
+              "same": 21,
+              "better": 37
+            },
+            "watch": {
+              "better": 29,
+              "same": 28,
+              "worse": 7
+            }
+          },
+          "world_pairs": 24,
+          "world_mean_delta": 9.683020833333293
+        },
+        "social_vs_prediction": {
+          "actor_counts": {
+            "better": 46,
+            "new_deaths": 1,
+            "avoided_deaths": 6,
+            "same": 56,
+            "worse": 26
+          },
+          "by_domain": {
+            "exchange": {
+              "better": 26,
+              "same": 23,
+              "worse": 15
+            },
+            "watch": {
+              "better": 20,
+              "same": 33,
+              "worse": 11
+            }
+          },
+          "world_pairs": 24,
+          "world_mean_delta": 3.6541666666666455
+        },
+        "net_effects_vs_social": {
+          "actor_counts": {
+            "worse": 42,
+            "new_deaths": 2,
+            "avoided_deaths": 3,
+            "same": 53,
+            "better": 33
+          },
+          "by_domain": {
+            "exchange": {
+              "worse": 22,
+              "same": 20,
+              "better": 22
+            },
+            "watch": {
+              "worse": 20,
+              "same": 33,
+              "better": 11
+            }
+          },
+          "world_pairs": 24,
+          "world_mean_delta": 0.5500520833333358
+        },
+        "social_vs_material_greedy": {
+          "actor_counts": {
+            "worse": 68,
+            "new_deaths": 5,
+            "avoided_deaths": 6,
+            "same": 33,
+            "better": 27
+          },
+          "by_domain": {
+            "exchange": {
+              "worse": 40,
+              "same": 5,
+              "better": 19
+            },
+            "watch": {
+              "worse": 28,
+              "same": 28,
+              "better": 8
+            }
+          },
+          "world_pairs": 24,
+          "world_mean_delta": 0.9773958333333507
+        }
+      }
+    },
+    "seconds": 144.112355499994
+  },
+  "holdout": {
+    "plan": {
+      "version": "long-lived-npcs-v1",
+      "seeds": [
+        91100,
+        91101,
+        91102,
+        91103,
+        91104,
+        91105,
+        91106,
+        91107
+      ],
+      "turns": 320,
+      "arms": [
+        "amnesic",
+        "prediction",
+        "social",
+        "net_effects",
+        "material_greedy"
+      ],
+      "domains": [
+        "exchange",
+        "watch"
+      ],
+      "layouts": [
+        "balanced4",
+        "balanced8",
+        "social4"
+      ],
+      "contacts": [
+        "free",
+        "public"
+      ],
+      "same_state_probe_every": 16,
+      "window": 80,
+      "rules": {
+        "exchange": {
+          "cc": [
+            0.55,
+            0.12
+          ],
+          "ct": [
+            -0.15,
+            -0.1
+          ],
+          "tc": [
+            0.8,
+            0.08
+          ],
+          "tt": [
+            0.05,
+            -0.02
+          ],
+          "alone": [
+            0.3,
+            0.06
+          ],
+          "unmatched": [
+            0.12,
+            0
+          ],
+          "rest": [
+            0.08,
+            0
+          ],
+          "upkeep": 0.04
+        },
+        "watch": {
+          "cc": [
+            0.5,
+            0.3
+          ],
+          "ct": [
+            -0.4,
+            -0.5
+          ],
+          "tc": [
+            0.6,
+            0.1
+          ],
+          "tt": [
+            -0.25,
+            -0.3
+          ],
+          "alone": [
+            0.32,
+            0.05
+          ],
+          "unmatched": [
+            0.1,
+            0
+          ],
+          "rest": [
+            0.08,
+            0
+          ],
+          "upkeep": 0.1
+        }
+      },
+      "workers": 4,
+      "acceptance": "diagnose long-lived integration; do not promote by aggregate gain alone or change fixed personality",
+      "sources": {
+        "reflex/core.py": "b1cfd38170f7bcb89079d8b32e528b452cf411a5c2e836c11fc1efb0952b2336",
+        "reflex/runtime.py": "eaaf9fcb31238437989695947121275734e04dea4506ce1510c5382d6feee96f",
+        "reflex/encounters.py": "286b0b7a7073d8aed8e0ccf89b156d23e57e30f35ff58477912ff2489e96822b",
+        "reflex/social.py": "86200514fd4f0f780b67fd3e6d5dea18de050e7fdb4ee2436809b3837b04551b",
+        "reflex/social_projection.py": "76fec7f60b16bdcbcffe6e197c3502f388a82d1730d6e2619228db52f6096e70",
+        "reflex/social_withdrawal.py": "d3886a188247eebf28b719fdad9bc29dde03fd2b4092e37cea3984f63d733301",
+        "reflex/laboratory.py": "dabd8eb5cf2acff2d03ed7659b2f86bd5eedc0012fb3b5d7c978cb8b99f0ac4c",
+        "reflex/examples.py": "85610dc68fa527526369eb58151c6b29e01be0f5f2795873690a399829a171f8",
+        "reflex/encounter_experiment.py": "3a2f8a0d0fbcadb1ad13de30dea06cdc189e2f2d24b97d0eed9f4dc04e67bb7b",
+        "tools/long_lived_npcs.py": "16a92daaa5eb26982aaccaf03639bc86e3134963be57cc9983a69df832bcb8e9"
+      },
+      "net_effect_adoption_gate": "no additional deaths, actor material improvements at least regressions; otherwise diagnostic only",
+      "limitations": [
+        "two authored worlds",
+        "no future planning or general emotion updater",
+        "no autonomous goal replacement",
+        "all publicly observed history",
+        "same-world actors are correlated",
+        "material-greedy is not representative of all existing methods"
+      ]
+    },
+    "summary": {
+      "totals": {
+        "amnesic": {
+          "worlds": 96,
+          "actors": 512,
+          "alive": 154,
+          "mean_actor_gain": 37.16654296874986,
+          "active_turns": 98911,
+          "cooperation_pairs": 519,
+          "exploited": 1887,
+          "repaired_relations": 0,
+          "repair_worlds": 0
+        },
+        "prediction": {
+          "worlds": 96,
+          "actors": 512,
+          "alive": 235,
+          "mean_actor_gain": 47.19992187499981,
+          "active_turns": 108149,
+          "cooperation_pairs": 4543,
+          "exploited": 2210,
+          "repaired_relations": 0,
+          "repair_worlds": 0
+        },
+        "social": {
+          "worlds": 96,
+          "actors": 512,
+          "alive": 259,
+          "mean_actor_gain": 50.30119140624981,
+          "active_turns": 114197,
+          "cooperation_pairs": 5671,
+          "exploited": 1153,
+          "repaired_relations": 21,
+          "repair_worlds": 17
+        },
+        "net_effects": {
+          "worlds": 96,
+          "actors": 512,
+          "alive": 256,
+          "mean_actor_gain": 50.26343749999981,
+          "active_turns": 113384,
+          "cooperation_pairs": 6010,
+          "exploited": 1315,
+          "repaired_relations": 29,
+          "repair_worlds": 24
+        },
+        "material_greedy": {
+          "worlds": 96,
+          "actors": 512,
+          "alive": 256,
+          "mean_actor_gain": 49.737499999999784,
+          "active_turns": 112384,
+          "cooperation_pairs": 0,
+          "exploited": 0,
+          "repaired_relations": 0,
+          "repair_worlds": 0
+        }
+      },
+      "paired": {
+        "prediction_vs_amnesic": {
+          "actor_counts": {
+            "same": 192,
+            "new_deaths": 4,
+            "avoided_deaths": 85,
+            "better": 277,
+            "worse": 43
+          },
+          "by_domain": {
+            "exchange": {
+              "same": 81,
+              "better": 155,
+              "worse": 20
+            },
+            "watch": {
+              "same": 111,
+              "better": 122,
+              "worse": 23
+            }
+          },
+          "world_pairs": 96,
+          "world_mean_delta": 10.709661458333288
+        },
+        "social_vs_prediction": {
+          "actor_counts": {
+            "same": 227,
+            "new_deaths": 8,
+            "avoided_deaths": 32,
+            "worse": 121,
+            "better": 164
+          },
+          "by_domain": {
+            "exchange": {
+              "same": 97,
+              "worse": 70,
+              "better": 89
+            },
+            "watch": {
+              "same": 130,
+              "better": 75,
+              "worse": 51
+            }
+          },
+          "world_pairs": 96,
+          "world_mean_delta": 3.7296484374999808
+        },
+        "net_effects_vs_social": {
+          "actor_counts": {
+            "same": 214,
+            "new_deaths": 11,
+            "avoided_deaths": 8,
+            "better": 136,
+            "worse": 162
+          },
+          "by_domain": {
+            "exchange": {
+              "same": 80,
+              "better": 81,
+              "worse": 95
+            },
+            "watch": {
+              "same": 134,
+              "worse": 67,
+              "better": 55
+            }
+          },
+          "world_pairs": 96,
+          "world_mean_delta": -0.13026041666666402
+        },
+        "social_vs_material_greedy": {
+          "actor_counts": {
+            "same": 127,
+            "new_deaths": 19,
+            "avoided_deaths": 22,
+            "worse": 279,
+            "better": 106
+          },
+          "by_domain": {
+            "exchange": {
+              "same": 14,
+              "worse": 162,
+              "better": 80
+            },
+            "watch": {
+              "same": 113,
+              "worse": 117,
+              "better": 26
+            }
+          },
+          "world_pairs": 96,
+          "world_mean_delta": 1.3206901041666843
+        }
+      }
+    },
+    "seconds": 557.0108317999984
+  }
+}

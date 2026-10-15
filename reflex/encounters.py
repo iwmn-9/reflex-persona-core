@@ -23,6 +23,14 @@ LAYOUTS={'balanced4':(0,1,2,3),'balanced8':(0,1,2,3,0,1,2,3),'social4':(2,2,0,3)
 KINDS=('cooperate','claim')
 
 
+def after_action(before, kind, gain, health, upkeep):
+    """Pure full-tick transition; the decision adapter can include maintenance."""
+    if kind=='finished':return dict(before)
+    energy=min(1,before['energy']+.4) if kind=='rest' else max(0,before['energy']-.18)
+    return dict(energy=max(0,energy-.025),stock=max(0,before['stock']+gain-.08),
+        health=max(0,min(8,before['health']+health)-upkeep),score=before['score']+gain)
+
+
 def options(actors,own):
     return {'alone':('alone',None),'rest':('rest',None),'finished':('finished',None),
             **{f'{kind}:{target}':(kind,target) for target in actors if target!=own for kind in KINDS}}
@@ -150,11 +158,8 @@ class EncounterWorld:
             failure=matched and kind==other=='cooperate' and luck[min(index[own],index[target]),max(index[own],index[target])]<.05
             gain,health=self.consequences(kind,other,matched,failure)
             if kind!='finished':
-                self.energy[own]=min(1,self.energy[own]+.4) if kind=='rest' else max(0,self.energy[own]-.18)
-                self.energy[own]=max(0,self.energy[own]-.025)
-                self.stock[own]=max(0,self.stock[own]+gain-.08)
-                self.health[own]=max(0,min(8,self.health[own]+health)-self.rules['upkeep'])
-                self.score[own]+=gain
+                after=after_action(before[own],kind,gain,health,self.rules['upkeep'])
+                for field,value in after.items():getattr(self,field)[own]=value
                 if matched:
                     benefit=0. if failure else .8 if other=='cooperate' else -1. if kind=='cooperate' else 0.
                     events[own].append(SocialEvent(target,f'{self.tick}-{own}-{target}',self.tick,benefit,agency=not failure))
