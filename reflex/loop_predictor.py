@@ -29,6 +29,11 @@ class CategoricalReader:
         prior={k:(counts[k]+1)/(len(self.recent)+len(candidate)) for k in candidate} if len(self.recent)>=3 else {k:1/len(candidate) for k in candidate}
         return prior,candidate
 
+    def response_comparison(self,context):
+        if not self.known_conditionals:return None
+        prior,candidate=self.forecasts(context)
+        return self.key,prior,candidate
+
     def __call__(self,context,cap):
         if digest(context['scope'])!=self.owner:raise ValueError('predictor owner mismatch')
         if self.known_conditionals and len(self.recent)<3:return None
@@ -55,6 +60,15 @@ class CategoricalReader:
         update=new.tracker.observe(models,event['revealed_action'],ticket)
         new.recent.append(event['revealed_action'])
         return new,update
+
+    def updated_event(self,context,event,ticket):
+        """A revealed response is usable even when the effect vector is absent."""
+        return self.updated(context,None,event,ticket)
+
+    def updated_effect(self,context,observed,ticket):
+        """An effect sample is not evidence of an unobserved opponent action."""
+        if digest(context['scope'])!=self.owner:raise ValueError('predictor owner mismatch')
+        return copy.deepcopy(self),dict(scored=False,reason='response not observed')
 
     def record(self):
         t=self.tracker
@@ -110,16 +124,37 @@ class SupportedCategoricalReader:
 
     def forecasts(self,context):return self.support.select(self._class(context)).forecasts(context)
 
+    def reading_key(self,opportunity,selected):
+        key=self.support.select(opportunity).key
+        return 'response-validation-v2:'+digest([key,'local']) if selected.known_conditionals else key
+
+    def response_comparison(self,context):
+        opportunity=self._class(context);selected=self.support.select(opportunity)
+        comparison=selected.response_comparison(context)
+        if comparison is None:return None
+        _,prior,candidate=comparison
+        return self.reading_key(opportunity,selected),prior,candidate
+
     def __call__(self,context,cap):
         opportunity=self._class(context);reading=self.support.select(opportunity)(context,cap)
         if reading is not None:reading.context['facts']['prediction_support']=self.support_key+':'+opportunity
-        return reading
+        if reading is None:return None
+        return Reading(reading.context,reading.nodes,self.reading_key(opportunity,self.support.select(opportunity)),
+            reading.target,reading.responses,reading.known_conditionals,reading.response_candidate)
 
     def updated(self,context,observed,event,ticket):
         opportunity=self._class(context)
         child,update=self.support.select(opportunity).updated(context,observed,event,ticket)
         new=copy.deepcopy(self);new.support._banks[opportunity]=child
         return new,dict(update,opportunity_class=opportunity,support_key=self.support_key)
+
+    def updated_event(self,context,event,ticket):
+        # Dynamic dispatch preserves validated/shared-bank update semantics.
+        return self.updated(context,None,event,ticket)
+
+    def updated_effect(self,context,observed,ticket):
+        self._class(context)
+        return copy.deepcopy(self),dict(scored=False,reason='response not observed')
 
     def record(self):
         return dict(version='loop-supported-predictor-v1',owner=self.owner,key=self.key,support_key=self.support_key,
@@ -148,9 +183,17 @@ class ValidatedSupportedCategoricalReader(SupportedCategoricalReader):
     def comparison(self,local_forecast,shared_forecast):return local_forecast,shared_forecast
 
     def reading_key(self,opportunity,selected):
-        return self.support.select(opportunity).key+(':validated-transfer' if selected is self.shared else ':local')
+        key=self.support.select(opportunity).key;mode='validated-transfer' if selected is self.shared else 'local'
+        return 'response-validation-v2:'+digest([key,mode]) if selected.known_conditionals else key+':'+mode
 
     def forecasts(self,context):return self.selected(context).forecasts(context)
+
+    def response_comparison(self,context):
+        opportunity=self._class(context);selected=self.selected(context)
+        comparison=selected.response_comparison(context)
+        if comparison is None:return None
+        _,prior,candidate=comparison
+        return self.reading_key(opportunity,selected),prior,candidate
 
     def __call__(self,context,cap):
         opportunity=self._class(context);selected=self.selected(context);reading=selected(context,cap)
@@ -199,4 +242,5 @@ class GuardedSupportedCategoricalReader(ValidatedSupportedCategoricalReader):
     def comparison(self,local_forecast,shared_forecast):return shared_forecast,local_forecast
 
     def reading_key(self,opportunity,selected):
-        return self.support.select(opportunity).key+(':shared-fallback' if selected is self.shared else ':validated-local')
+        key=self.support.select(opportunity).key;mode='shared-fallback' if selected is self.shared else 'validated-local'
+        return 'response-validation-v2:'+digest([key,mode]) if selected.known_conditionals else key+':'+mode

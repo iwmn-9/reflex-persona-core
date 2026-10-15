@@ -22,6 +22,15 @@ class ModelFeedback:
     social_events: tuple=()
 
 
+def resolve_feedback(actor,ticket,feedback):
+    """One lifecycle for real and detached owners, with independent channels."""
+    if not isinstance(feedback,ModelFeedback):raise ValueError('explicit modeled feedback required')
+    kwargs=dict(need_progress=feedback.needs,maintained=feedback.maintained,completed=feedback.completed,
+                purpose_feedback=feedback.purpose,social_events=feedback.social_events,event=feedback.event)
+    if feedback.observed is not None:return actor.observe(ticket,feedback.observed,**kwargs)
+    return actor.abandon(ticket,**kwargs)
+
+
 class ModelObserver:
     def __init__(self,scope,*,purpose,feedback,progress=None,pressure=None,previous=None,policy=None):
         self.owner=digest(scope);self.purpose=purpose;self.feedback=feedback;self.policy=policy

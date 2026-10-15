@@ -9,7 +9,7 @@ import copy
 import numpy as np
 from .core import digest,compile_batch
 from .decision_loop import DecisionLoop,Request
-from .model_observer import ModelObserver,ModelFeedback
+from .model_observer import ModelObserver,ModelFeedback,resolve_feedback
 
 
 class ActorModel(ModelObserver):
@@ -82,13 +82,8 @@ class ActorModel(ModelObserver):
         if self.actor.pending is None or self.actor.pending['action']!=key:raise ValueError('matching modeled owner selection required')
         fb=self.feedback(copy.deepcopy(before),copy.deepcopy(after),key,copy.deepcopy(context))
         if not isinstance(fb,ModelFeedback):raise ValueError('explicit modeled feedback required')
-        args=dict(need_progress=fb.needs,maintained=fb.maintained,completed=fb.completed,
-            purpose_feedback=fb.purpose,social_events=fb.social_events)
         ticket=self.actor.pending['ticket']
-        if fb.observed is not None:self.actor.observe(ticket,fb.observed,event=fb.event,**args)
-        else:
-            if fb.event is not None:raise ValueError('public event update currently requires matched immediate feedback')
-            self.actor.abandon(ticket,**args)
+        resolve_feedback(self.actor,ticket,fb)
         self._request=None;self._preview=None;self._preview_actor=None
         self._public_state=None;self._prepared_root=False
 

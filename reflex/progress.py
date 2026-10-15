@@ -150,6 +150,15 @@ class ProgressWatch:
             if feedback.readiness>ready+self.config.floor:ready=feedback.readiness
         stalls=0 if improved else self.stalls;spent=0 if improved else self.wait_spent
         failures=OrderedDict() if improved else self.failures.copy();a=request.activities[root]
+        # Recovering lost capacity is evidence that THIS deterministic method
+        # works, even below a historical peak. It is not evidence that the
+        # overall purpose advanced: retain global stalls and waiting limits.
+        # Require observed, non-trading progress in the declared two channels.
+        restored=(feedback is not None and
+            feedback.level>=request.level-self.config.floor and
+            feedback.readiness>=request.readiness-self.config.floor and
+            (feedback.level>request.level+self.config.floor or
+             feedback.readiness>request.readiness+self.config.floor))
         if not improved:
             # A genuinely useful uncertain attempt can fail by chance. It ends
             # a waiting episode without pretending that the goal progressed.
@@ -160,10 +169,11 @@ class ProgressWatch:
                 stalls=min(1000000,stalls+1)
                 if a.kind=='attempt':
                     key=digest([root,a.condition]);count=failures.pop(key,0)
-                    failures[key]=min(1000000,count+1)
+                    if not restored:failures[key]=min(1000000,count+1)
                     while len(failures)>self.config.capacity:failures.popitem(last=False)
         self.peak=peak;self.ready_peak=ready;self.stalls=stalls;self.wait_spent=spent;self.failures=failures;self.last_tick=tick
-        return dict(improved=bool(improved),stalls=stalls,wait_spent=spent,completed=feedback.completed if feedback else False)
+        return dict(improved=bool(improved),stalls=stalls,wait_spent=spent,completed=feedback.completed if feedback else False,
+            method_progress=bool(restored and a.kind=='attempt'))
 
     def record(self):
         return dict(version='progress-watch-v1',owner=self.owner,config=asdict(self.config),peak=self.peak,ready_peak=self.ready_peak,

@@ -1,0 +1,70 @@
+{
+  "archives": {
+    "pilot.zip": {
+      "bytes": 1007191,
+      "sha256": "ad366a07965b89419f75da67448d634c166680059c312652a87dbd476dfddb4d"
+    },
+    "confirmation.zip": {
+      "bytes": 3549306,
+      "sha256": "2ac46eadb0ae887e24d978c14be730b8bc9d974cd262cf6de5e787a7d610f839"
+    },
+    "support.zip": {
+      "bytes": 1953972,
+      "sha256": "c893630c743a3ce641bdae26477859389f5e9b5d43c393dba29e2851970bfd5d"
+    },
+    "final_check.zip": {
+      "bytes": 1002110,
+      "sha256": "b7ca68256295dbed2d9127ac7e0d665bab70d900d5a17ece974db25ceffd7452"
+    },
+    "choice_development.zip": {
+      "bytes": 1633610,
+      "sha256": "f547fe29f8f1c7de971b3f73cde069e54bc65cea0f0155de0e70bed08fc0d447"
+    },
+    "choice_holdout.zip": {
+      "bytes": 2292217,
+      "sha256": "c875f89da645b823766d67c0001f031497be5a049447c6c1cda06fcb361f3f39"
+    },
+    "final_source.zip": {
+      "bytes": 83367,
+      "sha256": "b696c84520c6d653e824f37d667e93078f58a3a0494b561b0865cd73e6f49a9c"
+    }
+  },
+  "tests": {
+    "total": 1090,
+    "passed": 1073,
+    "optional_skipped": 17,
+    "sha256": "bc4633ad0c41687d43f81922577bbb8425bbd3620043c94c432521a92c118bd3"
+  },
+  "source_sha256": {
+    "reflex/decision_loop.py": "8d1b0c1c054a233e1303b616a6a68751b7ddc3cf086714c405db31636b34ab38",
+    "reflex/loop_predictor.py": "63850bee4cfb9d7d435279d5d57187abebe94b6868ab76f18a7992b5a728cfd6",
+    "reflex/progress.py": "e2a2f10d9e036387e3886d801df60f791e60850e3fabf453bad3e3e2823659d0",
+    "reflex/actor_model.py": "bba8951282769cd42885561d778b539479175aaa180c8ba16d9d95351c6c7765",
+    "reflex/closed_loop.py": "ba2226e96da98df5d71c5a47809a2ac357b707fa26c9df1f49d02fc9452b5114",
+    "reflex/model_observer.py": "39046fd447a4091c04dcae7a79829df19ad407737e01a97b8be6dcc0bbfc853b",
+    "tests/test_feedback_channels.py": "6da2f705cc3e672b0e40ce44fadfa260012d8d6659c64e3d49d931925d278a16",
+    "tests/test_progress_recovery.py": "e2a2dddfedbbc0b219c2e86f79be04d27dd0798001e5e1bdd89f22f3cea4f76c",
+    "tests/test_response_comparison.py": "327760248516906a25aae7059c510e33e9e46f22c78f4f92a04ebd317a91d94b",
+    "tests/test_choice_adoption.py": "361254c74b50d641b8031d8db603509f2e6bb99280f0095339a78f23abd9fe3a",
+    "tools/run_lifecycle_soak.py": "5f2b28b27a003f75f031c7bb835f92f25fecd89cfc72cde57b60d8864389064b",
+    "tools/audit_lifecycle_soak.py": "8ae471074db8c464c1693963625a176869d80b9913ad63643e2b43711406fb5a",
+    "tools/review_lifecycle_losses.py": "183c64c658ad73a4341ca29d958134d61ae8ae2de5afd20e9f05789821a6b67a",
+    "tools/run_lifecycle_support.py": "09bfc3f6282d9a2c73b773708629ee19fd02200a5c23daa4305ad5bdc7380a6f",
+    "tools/run_lifecycle_choice.py": "08def07ba47412185b5a029abd3127eb496011d2ccdb5db03742f525841e2ab2",
+    "tools/review_lifecycle_choice.py": "d2d5980e4c906094f3e94eed713f47a6790d3411175747153ac7e69d6e784848"
+  },
+  "unchanged": [
+    "reflex/core.py",
+    "reflex/runtime.py",
+    "reflex/social.py",
+    "reflex/social_withdrawal.py",
+    "tools/open_model_games.py"
+  ],
+  "confirmation_source_delta": "Final code preserves third-party effect-only compatibility, repairs returned update receipt, and exposes equivalent categorical comparison through a protocol. Matrix uses ordinary categorical predictor; supported-wrapper correction is a separate experiment. Runner adds diagnostic capture/factory injection. Recorded adverse-case replays check the ordinary categorical transition boundary.",
+  "support_source_delta": "Final known-response gate namespace isolates pre-fix checkpoint evidence. Final check repeats the support pilot with the final names; tests verify old-checkpoint isolation. Optional choice adoption defaults to the unchanged joint gate.",
+  "choice_source_delta": "Development predates only the distinct validated_personal_choice audit label. Holdout contains final core code. Later review/audit scripts summarize outcomes without changing controller behavior.",
+  "final_core_matches_holdout": true,
+  "baseline_source_sha256": "3cc5a9506c41741cc64de2b03042bc46a7ccedfba211d3a7a56b8e899adbb296",
+  "new_dependencies": false,
+  "cloud_used": false
+}

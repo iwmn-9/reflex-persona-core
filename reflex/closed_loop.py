@@ -13,7 +13,7 @@ from .core import digest,compile_batch
 from .decision_loop import DecisionLoop,Request
 from .intertemporal import Branch
 from .purpose_plan import goal_forecast,Goal
-from .model_observer import ModelFeedback
+from .model_observer import ModelFeedback,resolve_feedback as reveal
 from .examples import effect
 
 
@@ -66,16 +66,6 @@ class DecisionWindow:
         if record['owner']!=out.owner or type(record['used']) is not int or record['used']<0 or type(record['last_tick']) is not int or record['last_tick']< -1:
             raise ValueError('valid owned decision window required')
         out.used=record['used'];out.last_tick=record['last_tick'];return out
-
-
-def reveal(actor,ticket,feedback):
-    if not isinstance(feedback,ModelFeedback):raise ValueError('explicit modeled feedback required')
-    kwargs=dict(need_progress=feedback.needs,maintained=feedback.maintained,completed=feedback.completed,
-                purpose_feedback=feedback.purpose,social_events=feedback.social_events)
-    if feedback.observed is not None:actor.observe(ticket,feedback.observed,event=feedback.event,**kwargs)
-    else:
-        if feedback.event is not None:raise ValueError('public event requires observed feedback')
-        actor.abandon(ticket,**kwargs)
 
 
 class SampledKernel:

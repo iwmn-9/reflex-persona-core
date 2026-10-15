@@ -170,9 +170,12 @@ class DecisionLoop:
     Internal intent state is carried automatically. JSON boundary is audited;
     this path does not replace the existing fast numeric Population runtime.
     """
-    def __init__(self,context,policy=None,read_control=None,capacity=64,predictor=None,pressure=None,progress=None,social=None,*,decision_metric='purpose'):
+    def __init__(self,context,policy=None,read_control=None,capacity=64,predictor=None,pressure=None,progress=None,social=None,*,decision_metric='purpose',response_adoption='joint'):
         if decision_metric not in ('purpose','persona'):raise ValueError('declared decision evidence metric required')
+        if response_adoption not in ('joint','persona_choice') or response_adoption=='persona_choice' and decision_metric!='persona':
+            raise ValueError('choice-based adoption requires frozen persona appraisal')
         self.decision_metric=decision_metric
+        self.response_adoption=response_adoption
         compile_batch([context])
         self.scope=copy.deepcopy(context['scope']);self.owner=digest(self.scope)
         self.personality=copy.deepcopy(context['personality']);self.values=copy.deepcopy(context['values']);self.seed=context['seed']
@@ -241,7 +244,13 @@ class DecisionLoop:
             stats[a['id']]['used']=True
             stats[a['id']]['predictive_warning']=evidence.status(key)['state']=='revoked'
         response_trial=None
-        if self.predictor is not None and getattr(self.predictor,'known_conditionals',False):
+        comparison=getattr(self.predictor,'response_comparison',None)
+        if callable(comparison):
+            trial=comparison(copy.deepcopy(c))
+            if trial is not None:
+                key,prior,candidate=trial;identifier(key)
+                response_trial=dict(key='response:'+digest(key),prior=prior,candidate=candidate)
+        elif self.predictor is not None and getattr(self.predictor,'known_conditionals',False):
             prior,candidate=self.predictor.forecasts(copy.deepcopy(c))
             response_trial=dict(key='response:'+digest(self.predictor.key),prior=prior,candidate=candidate)
         return dict(loop=self,request=request,raw=c,shadow=shadow,effective=effective,
@@ -337,14 +346,16 @@ class DecisionLoop:
                 for a in c['actions']:
                     for row,response in zip(a['outcomes'],proposal.responses):row['p']=proposal.response_candidate[response]
                 s['decision_trial_context']=_validate_reading(s['effective'],replace(proposal,context=c,responses=proposal.response_candidate),s['bindings'],req.outcome_target,int(gate['nodes'][0]))
-                if s['evidence'].accepted(key) and s['evidence'].accepted(key+loop._decision_suffix()):
+                if loop._response_accepted(s['evidence'],key):
                     proposal=replace(proposal,context=c,responses=proposal.response_candidate)
             rc=_validate_reading(s['effective'],proposal,s['bindings'],req.outcome_target,int(gate['nodes'][0]))
             key=('response:' if proposal.known_conditionals else 'reader:')+digest(proposal.key)
             s['reading']=dict(context=rc,key=key,responses=copy.deepcopy(proposal.responses),known=proposal.known_conditionals)
             audit.update(nodes=proposal.nodes,gate=s['evidence'].status(key),reason='forecast_on_trial')
             if not proposal.known_conditionals and not s['evidence'].accepted(key):continue
-            audit['response_model']='validated_hypotheses' if proposal.known_conditionals and s['evidence'].accepted(key) and s['evidence'].accepted(key+loop._decision_suffix()) else 'bounded_recent_response'
+            audit['response_model']='validated_hypotheses' if proposal.known_conditionals and loop._response_accepted(s['evidence'],key) else 'bounded_recent_response'
+            if audit['response_model']=='validated_hypotheses' and loop.response_adoption=='persona_choice':
+                audit['response_model']='validated_personal_choice'
             rb=compile_batch([rc]);rm=np.array([[[name in s['exact'][k] for name in FEATURES] for k in rb.ids[0]]])
             rb=replace(rb,legal=rb.legal&np.array([[k in s['progress_allowed'] for k in rb.ids[0]]]))
             rb,_=avoid_waste(rb,rm,appraisal=None if s['social_scores'] is None else np.array([[s['social_scores'].get(k,0.) for k in rb.ids[0]]]))
@@ -511,6 +522,12 @@ class DecisionLoop:
     def _decision_suffix(self):
         return ':decision' if self.decision_metric=='purpose' else ':decision:persona-v1'
 
+    def _response_accepted(self,evidence,key):
+        # Probability quality remains a diagnostic. An explicitly selected
+        # alternative can validate the actual choice under ONE frozen personal
+        # appraisal, without calling a miscalibrated probability more accurate.
+        return evidence.accepted(key+self._decision_suffix()) and (self.response_adoption=='persona_choice' or evidence.accepted(key))
+
     def observe(self,ticket,observed,event=None,need_progress=None,maintained=(),completed=(),purpose_feedback=None,social_events=()):
         if self.pending is None or ticket!=self.pending['ticket']:raise ValueError('matching outstanding ticket required')
         memory=copy.deepcopy(self.memory);evidence=copy.deepcopy(self.evidence)
@@ -520,28 +537,52 @@ class DecisionLoop:
         if idx and not any(r['p']>0 and np.allclose(np.asarray(observed)[idx],vector(r)[idx],rtol=0,atol=1e-8) for r in p['prior']):
             raise ValueError('observed outcome violates certified exact effects')
         learning=evidence.compare(key,p['prior'],p['candidate'],observed,b.estimated)
+        reading,decision_comparison=self._response_evidence(evidence,event,observed)
+        predictor=copy.deepcopy(self.predictor);model_update=None
+        if predictor is not None:
+            effect_update=getattr(predictor,'updated_effect',None)
+            if event is None and callable(effect_update):
+                predictor,model_update=effect_update(p['raw'],observed,ticket)
+            else:predictor,model_update=predictor.updated(p['raw'],observed,event,ticket)
+        pressure,pressure_update=self._progress(need_progress,maintained,completed)
+        progress,progress_update=self._purpose(purpose_feedback)
+        social,social_update=self._social(social_events)
+        self.memory=memory;self.evidence=evidence;self.predictor=predictor;self.pending=None;self.pressure=pressure
+        self.progress=progress;self.social=social
+        result=dict(memory=update,learning=learning,reading=reading,decision_comparison=decision_comparison,predictor=model_update)
+        if self.pressure is not None:result['pressure']=pressure_update
+        if self.progress is not None:result['progress']=progress_update
+        if self.social is not None:result['social']=social_update
+        return result
+
+    def _response_evidence(self,evidence,event,observed=None):
+        """Score only the revealed channel; inferred rule effects are not samples."""
+        p=self.pending;b=p['binding']
         reading=None
-        if p['response_trial'] is not None:
+        if p['response_trial'] is not None and event is not None:
             if not isinstance(event,dict) or set(event)!=set(('revealed_action',)):raise ValueError('revealed response required for forecast validation')
             trial=p['response_trial']
             reading=evidence.categorical(trial['key'],trial['prior'],trial['candidate'],event['revealed_action'])
         if p['read'] is not None:
             r=p['read']
             if r['known']:
+                if event is None:
+                    if observed is not None and not any(np.allclose(vector(row),np.asarray(observed),rtol=0,atol=1e-8) for row in r['candidate']):
+                        raise ValueError('observed effect contradicts every declared conditional rule')
+                    return reading,None
                 if not isinstance(event,dict) or set(event)!=set(('revealed_action',)):raise ValueError('revealed response required for forecast validation')
                 if p['response_trial'] is None or p['response_trial']['key']!=r['key']:
                     uniform={k:1/len(r['responses']) for k in r['responses']}
                     reading=evidence.categorical(r['key'],uniform,r['responses'],event['revealed_action'])
                 if event['revealed_action'] not in r['responses']:raise ValueError('revealed conditional response required')
                 row=r['candidate'][list(r['responses']).index(event['revealed_action'])]
-                if not np.allclose(vector(row),np.asarray(observed),rtol=0,atol=1e-8):raise ValueError('revealed outcome contradicts declared conditional rules')
-            else:
+                if observed is not None and not np.allclose(vector(row),np.asarray(observed),rtol=0,atol=1e-8):raise ValueError('revealed outcome contradicts declared conditional rules')
+            elif observed is not None:
                 reading=evidence.compare(r['key'],r['prior'],r['candidate'],observed,b.estimated)
                 root_key=r['key']+':'+digest([b.method,b.situation])
                 reading['root']=evidence.compare(root_key,r['prior'],r['candidate'],observed,b.estimated)
-        predictor=self.predictor;model_update=None
         decision_comparison=None
-        if p['decision_trial'] is not None:
+        if p['decision_trial'] is not None and event is not None:
             trial=p['decision_trial'];j=trial['responses'].index(event['revealed_action'])
             if trial['base_choice']!=trial['candidate_choice']:
                 a=trial['baseline'][j]['objective'];b=trial['candidate'][j]['objective']
@@ -560,18 +601,7 @@ class DecisionLoop:
                 else:
                     decision_comparison=evidence._update(trial['key'],(1-a)/2,(1-b)/2)
                     decision_comparison['kind']='known-rule purpose comparison; not observed unchosen samples'
-        if predictor is not None:
-            predictor,model_update=predictor.updated(p['raw'],observed,event,ticket)
-        pressure,pressure_update=self._progress(need_progress,maintained,completed)
-        progress,progress_update=self._purpose(purpose_feedback)
-        social,social_update=self._social(social_events)
-        self.memory=memory;self.evidence=evidence;self.predictor=predictor;self.pending=None;self.pressure=pressure
-        self.progress=progress;self.social=social
-        result=dict(memory=update,learning=learning,reading=reading,decision_comparison=decision_comparison,predictor=model_update)
-        if self.pressure is not None:result['pressure']=pressure_update
-        if self.progress is not None:result['progress']=progress_update
-        if self.social is not None:result['social']=social_update
-        return result
+        return reading,decision_comparison
 
     def _social(self,events):
         from .social import SocialEvent
@@ -597,18 +627,32 @@ class DecisionLoop:
         elif maintained or completed:raise ValueError('need labels require observed progress')
         return pressure,update
 
-    def abandon(self,ticket,need_progress=None,maintained=(),completed=(),purpose_feedback=None,social_events=()):
+    def abandon(self,ticket,need_progress=None,maintained=(),completed=(),purpose_feedback=None,social_events=(),*,event=None):
         """No effect-vector learning; optionally resolve separate actual need progress.
 
         Game goal progress need not equal an immediate predicted effect vector.
+        An optional actually revealed event can update a predictor explicitly
+        supporting event-only feedback. No effect sample or effect-error score
+        is invented, including when conditional rules imply a possible effect.
         Never insert projected multi-tick effects into immediate OutcomeMemory.
         """
         if self.pending is None or ticket!=self.pending['ticket']:raise ValueError('matching outstanding ticket required')
+        predictor=copy.deepcopy(self.predictor);evidence=copy.deepcopy(self.evidence)
+        if event is not None:
+            if not isinstance(event,dict) or set(event)!={'revealed_action'}:raise ValueError('one actually revealed response required')
+            p=self.pending
+            if predictor is None and p['response_trial'] is None and not (p['read'] is not None and p['read']['known']):
+                raise ValueError('revealed event requires an explicit response consumer')
+            self._response_evidence(evidence,event)
+            if predictor is not None:
+                update=getattr(predictor,'updated_event',None)
+                if not callable(update):raise ValueError('predictor must explicitly support event-only feedback')
+                predictor,_=update(p['raw'],copy.deepcopy(event),ticket)
         pressure,_=self._progress(need_progress,maintained,completed)
         progress,_=self._purpose(purpose_feedback)
         social,_=self._social(social_events)
         self.memory.pending=None;self.memory.last_tick=self.pending['tick'];self.pending=None;self.pressure=pressure
-        self.progress=progress;self.social=social
+        self.progress=progress;self.social=social;self.predictor=predictor;self.evidence=evidence
 
     def record(self):
         if self.pending is not None:raise ValueError('resolve observation before checkpointing')
@@ -621,6 +665,7 @@ class DecisionLoop:
                 entries=[dict(key=k,state=e['state'],gains=list(e['gains'])) for k,e in self.evidence.entries.items()]))
         if self.policy.principle_priority!='lexicographic':result['principle_priority']=self.policy.principle_priority
         if self.decision_metric!='purpose':result['decision_metric']=self.decision_metric
+        if self.response_adoption!='joint':result['response_adoption']=self.response_adoption
         if self.policy.commitments is not None:result['policy_commitments']={self.character:self.policy.commitments[self.character]}
         if self.pressure is not None:result['pressure']=self.pressure.record()
         if self.progress is not None:result['progress']=self.progress.record()
@@ -630,9 +675,11 @@ class DecisionLoop:
         return result
 
     @classmethod
-    def from_record(cls,context,record,policy=None,read_control=None,predictor=None,*,decision_metric=None):
+    def from_record(cls,context,record,policy=None,read_control=None,predictor=None,*,decision_metric=None,response_adoption=None):
         metric=record.get('decision_metric','purpose')
         if decision_metric is not None and decision_metric!=metric:raise ValueError('decision evidence metric changed')
+        adoption=record.get('response_adoption','joint')
+        if response_adoption is not None and response_adoption!=adoption:raise ValueError('response adoption contract changed')
         saved_policy=Policy(record['policy_residual'],principle_priority=record.get('principle_priority','lexicographic'),commitments=record.get('policy_commitments'));saved_control=ReadControl(**record['read_control'])
         if policy is not None:
             if not np.array_equal(policy.residual,saved_policy.residual) or policy.principle_priority!=saved_policy.principle_priority:
@@ -640,7 +687,7 @@ class DecisionLoop:
             if saved_policy.commitments is not None and any(policy.commitments.get(k)!=v for k,v in saved_policy.commitments.items()):
                 raise ValueError('checkpoint policy changed')
         if read_control is not None and read_control!=saved_control:raise ValueError('checkpoint reading budget changed')
-        loop=cls(context,policy or saved_policy,read_control or saved_control,record['memory']['capacity'],predictor,decision_metric=metric)
+        loop=cls(context,policy or saved_policy,read_control or saved_control,record['memory']['capacity'],predictor,decision_metric=metric,response_adoption=adoption)
         if record.get('social') is not None:
             from .social import restore_memory
             loop.social=restore_memory(context,record['social'])
