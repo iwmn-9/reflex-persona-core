@@ -48,7 +48,7 @@ def forecast(c,branches,*,horizon,unit,target,max_regret=.15,discount=None,plan_
     """
     compile_batch([c]);identifier(unit);identifier(target)
     if type(outcome_limit) is not int or not 1<=outcome_limit<=4096:raise ValueError('bounded forecast outcome capacity required')
-    if type(horizon) is not int or not 1<=horizon<=16:raise ValueError('bounded common flow horizon required')
+    if type(horizon) is not int or not 1<=horizon<=256:raise ValueError('bounded common flow horizon required')
     gamma=patience(c) if discount is None else number(discount,0,1)
     number(max_regret,0,2)
     roots={a['id']:a for a in c['actions'] if a['legal'] and not a['known_failure']}

@@ -42,7 +42,7 @@ def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
             policy or Policy(),None if root_allowed is None else root_allowed[0],appraisal=appraisal)
         return select(base,checked,policy,root_allowed,appraisal=appraisal)
     identifier(forecast.target)
-    if type(forecast.horizon) is not int or not 1<=forecast.horizon<=16:raise ValueError('bounded horizon required')
+    if type(forecast.horizon) is not int or not 1<=forecast.horizon<=256:raise ValueError('bounded horizon required')
     if isinstance(forecast.max_regret,bool) or not np.isfinite(forecast.max_regret) or not 0<=forecast.max_regret<=2:
         raise ValueError('bounded purpose regret required')
     if len(forecast.contexts)!=len(base) or not base:raise ValueError('one forecast per actor required')

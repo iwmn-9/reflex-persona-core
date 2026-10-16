@@ -196,6 +196,20 @@ class DecisionLoop:
             if social.owner!=self.owner or social.personality!=self.personality or social.values!=self.values:raise ValueError('social owner or disposition mismatch')
             self.social=copy.deepcopy(social)
 
+    def preview(self,request):
+        """Resolved public context and choice, including this owner's readers.
+
+        Run the ordinary lifecycle on a clone. Search must not build its tree
+        from a pre-reader context while execution selects from a different one.
+        The returned ticket belongs only to the discarded clone.
+        """
+        clone=copy.deepcopy(self);captured=[]
+        def capture(contexts,decisions):
+            captured.append(copy.deepcopy(contexts[0]))
+            return None
+        result=self.decide_batch([(clone,request)],False,capture)[0]
+        return captured[0],result['decision']
+
     def _prepare(self,request):
         if not isinstance(request,Request):raise ValueError('Request required')
         if self.pending is not None:raise ValueError('observe or abandon selected trial before advancing')

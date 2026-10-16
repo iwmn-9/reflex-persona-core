@@ -24,11 +24,11 @@ class ReturnFrame:
         for key,row,root in zip(self.owners,self.effects,self.root_terms):
             if not isinstance(key,str) or len(key)!=64 or any(c not in '0123456789abcdef' for c in key):raise ValueError('owned return frame required')
             if not isinstance(row,tuple) or len(row)!=len(FEATURES):raise ValueError('one return scale per feature required')
-            for scale in (*row,root):number(scale,1,16)
+            for scale in (*row,root):number(scale,1,256)
 
     @classmethod
     def flows(cls,contexts,normalizer,unit,*,endpoint=False):
-        scale=number(normalizer,1,16)
+        scale=number(normalizer,1,256)
         row=(1. if endpoint else scale,)+(scale,)*(len(FEATURES)-1)
         return cls(tuple(owner_key(c) for c in contexts),(row,)*len(contexts),(scale,)*len(contexts),unit)
 

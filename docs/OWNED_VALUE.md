@@ -1,0 +1,56 @@
+# 学ぶ本人と将来の評価
+
+`closed_loop.owned_rollout` は、通常の `DecisionLoop` を使う本人を将来の各分岐へ複製する。固定した性格・価値観・Policyを変えず、分岐内の観測から予測、結果記憶、欲求圧力、進展監視を更新する。実行にも同じ `resolve_feedback` を使う。ゲーム側の合法手・公開状態・条件付き遷移・目的の定義は必要で、コアがルールや勝利条件を発明するものではない。
+
+従来の終局評価の簡略化と異なり、本人の記憶を捨てない。将来の目的得点だけでなく、そこへ至る欲求・価値・様式・費用の相関した経路も運ぶ。目的点は最後に一度だけ評価し、既知の現在点との差で本人の損失評価へ渡す。人格の採点と最強主義の候補集合を維持し、その中で目的の許容幅を適用する。既存の `goal_forecast` と `ReturnFrame` を再使用した。輸送可能な経路長を256手へ拡張したが、分岐木の深さの既定値・通常の即時Policyは変更していない。
+
+「完全な経路」は、宣言された効果列を途中で省かないという意味。経路全体の採点は現在の本人の尺度に従い、将来の欲求・経験・関係の変化は、その時点の選択とゲームから返る効果を通して反映する。未来の各時点の心理効用や関係appraisalを別々に足すモデルではない。効果スキーマと目的の意味は予測区間内で共通にする。この境界を越えた心理・価値の変化を自動的に扱えるとはしない。
+
+## 世界と本人を分ける
+
+実観測後の predictor を複製し、次の予測内の世界法則を作る。この世界法則は予測中は固定した経験を参照するが、公開状態に条件づけた応答確率を返せる。分岐中の本人は別の複製で、想像上の観測から学ぶ。本人の理解が変わっても、それだけで世界法則を変えない。次の実観測の後は必ず実本人から予測器を作り直す。古い本人の状態で作った予測器を再利用するとエラーにする。
+
+入力は `events(public_state, action)` の `PublicEvent` 列。各イベントは公開応答記号、次の公開状態、実1手の効果を持つ。記号集合と予測器の応答集合は一致させる。相手の未公開意図、実世界の乱数、検証用の真確率を渡さない。
+
+固定するのは現在の予測分布であり、未知の相手タイプ・真の確率分布をベイズ事後から経路ごとに引く方式ではない。結果の偶然性は扱うが、「どの世界法則が正しいか」の不確かさを完全な信念状態として表してはいない。想像上の学習を実行できることと、情報獲得の価値を正確に予測することは別になる。
+
+## 読みの省略と適用限界
+
+先頭の全応答を列挙し、その後を共通の独立した予測用乱数列で試走する。既定の将来の本人は通常の即時判断で動き、経験に応じてその判断を変える。外側の長い探索を未来の全手で再帰的に実行するものではない。
+
+`future_planner(person, request, public_state)` を渡せば、予測中にも実際と同じ予定の再計画を実行できる。引数は複製した本人と公開情報で、予測用乱数は渡さない。計画しない時は `None`、計画する時は通常の `DecisionLoop` 用plannerを返す。`future_planner_id` で方式を識別し、`future_planner_limit` で各経路の呼出回数を制限する。内側の探索にさらに同じ仕組みを無制限に入れない。今回の長期主比較はこの追加探索を使わず、独立の予測診断で一度だけ将来の再計画を行った。全探索できる小問題の一致と、有限な将来予測の精度は別に判定する。
+
+途中で打ち切った場合、目的点は明示的にゲーム側の途中評価である。終局の実結果や校正済み勝率と混同しない。未知の相手変化、標本誤差、途中評価の不備は残りうる。全人格の勝率を揃えるための係数変更、ゲーム名に応じた採点分岐は共通コアへ入れない。
+
+## 接続する条件
+
+通常の本人は `DecisionLoop`、公開応答の予測器は `EventReader`（または同じ `frozen_forecaster()` 契約を満たす予測器）を使う。各候補に共通の応答分布を前提とする。選択した手で相手の応答確率が変わるモデル、未観測ルールの発見、独立readerによる後からの上書きはこのAPIの範囲外。単に制限を解除して対応済みにはしない。
+
+```python
+controller = owned_rollout(
+    owner, observe=game.context, events=game.events,
+    terminal=game.terminal, assess=lambda w: game.goal(w).record(),
+    record=lambda w: w, request_for=game.request, feedback=game.feedback,
+    model_id=game.model_id, target=game.target, tail_steps=15,
+)
+request = game.request(game.context(public_world, owner.state))
+result = DecisionLoop.decide_batch(
+    [(owner, request)], False, controller.planner(owner, request, public_world)
+)[0]
+# ゲームが実際に選択を実行し、その観測だけを返す。
+resolve_feedback(owner, result['ticket'], actual_feedback)
+# 次に読む時には、更新済みownerからcontrollerを再構築する。
+```
+
+`PolicyTail.evaluate()` は従来の目的点だけの推定経路として残す。完全な嗜好経路には `trajectories()` を使う。既存の終局点置換用 `PreferenceBasis` と完全な嗜好経路を同時に有効にすると、どの流れを終局点で置き換えるかが曖昧になるため拒否する。今回、その意味を自動推測する機能は足していない。
+
+## 採った研究上の考え方
+
+- Guez et al., [Bayes-Adaptive Simulation-based Search with Value Function Approximation](https://acguez.github.io/files/guez_nips2014.pdf): 物理状態だけでなく履歴・信念を意思決定の状態に含める考え方を参照した。既存のEventLearnerは厳密なベイズ事後分布ではないため、BAMCPの最適性・収束保証を主張しない。
+- Bertsekas, [Model Predictive Control, and Reinforcement Learning: A Unified Framework Based on Dynamic Programming](https://web.mit.edu/dimitrib/www/Bertsekas_NMPC_IFAC.pdf): 現在の方策を実行して継続価値を見積もり、実観測後に再計画するrolloutを参照した。人格の多目的採点、不完全な相手モデル、有限標本を含む本実装には、厳密な単一目的方策改善定理をそのまま適用できない。
+
+## 検証
+
+`tests/test_owned_value_loop.py` は完全な小さい分岐木について、予測の選択、実行後の学習済み本人、復元後の本人、期待目的点を照合する。長い検証は `tools/run_owned_value.py`。競り、設備投資、弾薬と体力を持つ戦闘、賭けと満期のある資産を扱う。資源・負傷・経験は128ターン中に初期化しない。隠れた相手傾向は実世界のrunnerに置き、同じ人格・乱数列・ルールで即時判断、短い流れの評価、本人を含む目的評価を比較する。
+
+採用の判定は部品のテスト件数ではなく、長い実行での目的得点・人格差・適応後の挙動・予測と実結果のずれによる。短い試験や一つの成功例を一般的な知能の証明にしない。

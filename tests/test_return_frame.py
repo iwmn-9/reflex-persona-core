@@ -77,7 +77,7 @@ class ReturnFrameTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'owner'):Policy().decide(compile_batch([changed]),False,return_frame=frame)
         with self.assertRaises(ValueError):replace(frame,effects=[frame.effects[0]])
         with self.assertRaises(ValueError):replace(frame,root_terms=(True,))
-        with self.assertRaises(ValueError):ReturnFrame.flows([c],17.,'steps')
+        with self.assertRaises(ValueError):ReturnFrame.flows([c],257.,'steps')
 
     def test_tiled_return_scoring_is_identical_and_input_is_immutable(self):
         cs=[context(str(i),[action('a',effect(.2)),action('b',effect(-.1))]) for i in range(7)]

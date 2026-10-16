@@ -2,6 +2,8 @@
 
 `ClosedLoop(..., frontier=...)` は、短い条件付き探索の先の目的値を補う任意の接続。通常の反射と、`frontier=None` の探索は従来どおり。採否と実測値は [検証報告](../evidence/frontier_value/REPORT.md) を正本とする。
 
+この文書は目的値だけを補う `evaluate()` の契約を扱う。学ぶ本人と将来の欲求・価値・費用の経路を丸ごと運ぶ `trajectories()` / `tail_preferences=True`、有限の将来再計画は [OWNED_VALUE](OWNED_VALUE.md) を参照。両方式の検証結果と適用範囲を混同しない。
+
 ## 契約
 
 - ゲーム側が公開状態・合法手・遷移・目的の意味を提供する。実ゲームの未来の乱数や未公開の変化を予測器へ渡さない。

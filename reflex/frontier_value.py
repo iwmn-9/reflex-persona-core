@@ -34,14 +34,15 @@ class EndpointEstimate:
 
 
 class PolicyTail:
-    """Sample a resolved clone's reflex continuation beyond the tree frontier.
+    """Continue a resolved owner through its ordinary feedback lifecycle.
 
-    No tree is grown in the tail. The entire actual owner lifecycle still runs.
-    Unsettled samples retain the adapter's running proxy and are counted as such.
-    Tail flows do NOT enter the tree's personality return: this is purpose-value
-    completion only. The reference policy is not the future replanning policy.
+    `evaluate` is the legacy scalar-purpose estimate. `trajectories` also returns
+    the correlated preference flows and can invoke an explicitly bounded future
+    controller. Without that callback, continuation uses the learning reflex
+    policy. Unsettled samples retain the adapter's declared running proxy.
     """
-    def __init__(self,*,observe,advance,terminal,assess,request_for,feedback,model_id,target,seeds=(701,702,703,704),steps=16,record=None,cache_entries=16384):
+    def __init__(self,*,observe,advance,terminal,assess,request_for,feedback,model_id,target,seeds=(701,702,703,704),steps=16,record=None,cache_entries=16384,owner_advance=None,
+                 future_planner=None,future_planner_id=None,future_planner_limit=1):
         if any(not callable(x) for x in (observe,advance,terminal,assess,request_for,feedback)):
             raise ValueError('explicit public continuation callbacks required')
         if not isinstance(model_id,str) or not model_id or not isinstance(target,str) or not target:
@@ -54,10 +55,57 @@ class PolicyTail:
         self.request_for=request_for;self.feedback=feedback;self.target=target;self.seeds=seeds;self.steps=steps
         self.identity=digest(['owned-reflex-purpose-tail-v1',model_id,target,seeds,steps])
         self.record=record;self.cache_entries=cache_entries;self.cache=OrderedDict();self.cache_hits=0
+        if owner_advance is not None and not callable(owner_advance):raise ValueError('explicit owner-conditioned advance required')
+        self.owner_advance=owner_advance
+        self.identity=digest([self.identity,'owner-conditioned' if owner_advance else 'fixed-kernel'])
+        self.simulated_steps=0
+        if future_planner is not None and (not callable(future_planner) or not isinstance(future_planner_id,str) or not future_planner_id):
+            raise ValueError('identified finite future controller required')
+        if type(future_planner_limit) is not int or not 1<=future_planner_limit<=16:
+            raise ValueError('bounded future planning calls required')
+        self.future_planner=future_planner;self.future_planner_limit=future_planner_limit
+        self.future_calls=0
+        self.identity=digest([self.identity,future_planner_id,future_planner_limit])
+
+    def trajectories(self,world,actor):
+        """Full sampled returns from the learning owner, including preferences.
+
+        No scalar endpoint cache is used: it cannot reconstruct correlated
+        needs/value/cost paths. Hypothetical observations stay in each clone.
+        """
+        from .decision_loop import DecisionLoop
+        from .model_observer import resolve_feedback
+        rows=[]
+        if actor.pending is not None:raise ValueError('resolved frontier owner required')
+        for seed in self.seeds:
+            w=copy.deepcopy(world);own=copy.deepcopy(actor);flows=[];actions=[];calls=0
+            for step in range(self.steps):
+                if self.terminal(w):break
+                c=self.observe(copy.deepcopy(w),copy.deepcopy(own.state));req=self.request_for(c)
+                if req.reader is not None or req.value_proposal is not None or (own.predictor is not None and self.owner_advance is None):
+                    raise ValueError('tail requires explicit continuation without advice overrides')
+                planner=None
+                if self.future_planner is not None and calls<self.future_planner_limit:
+                    planner=self.future_planner(copy.deepcopy(own),copy.deepcopy(req),copy.deepcopy(w))
+                    if planner is not None:calls+=1;self.future_calls+=1
+                # Kernels receive the same resolved pre-choice owner as a tree
+                # root, not an actor carrying an unresolved hypothetical ticket.
+                model_owner=copy.deepcopy(own) if self.owner_advance is not None else None
+                result=DecisionLoop.decide_batch([(own,req)],False,planner)[0];key=result['decision']['action_id']
+                after,flow=(self.advance(copy.deepcopy(w),key,seed) if self.owner_advance is None else
+                    self.owner_advance(copy.deepcopy(w),key,seed,model_owner,copy.deepcopy(result['context'])))
+                resolve_feedback(own,result['ticket'],self.feedback(w,after,key,result['context'],flow))
+                self.simulated_steps+=1
+                flows.append(copy.deepcopy(flow));actions.append(key);w=after
+            g=Goal(**self.assess(w));ended=bool(self.terminal(w))
+            if g.target!=self.target or ended!=(g.status!='running'):raise ValueError('same-target coherent tail endpoint required')
+            rows.append((1/len(self.seeds),tuple(flows),tuple(actions),g.record(),ended))
+        return rows
 
     def evaluate(self,world,actor):
         from .closed_loop import reveal
         from .decision_loop import DecisionLoop
+        if self.future_planner is not None:raise ValueError('future planning requires complete preference trajectories')
         if actor.pending is not None:raise ValueError('resolved frontier owner required')
         values={};settled=0
         for seed in self.seeds:
@@ -70,12 +118,13 @@ class PolicyTail:
                         cached=self.cache[stamp];self.cache.move_to_end(stamp);self.cache_hits+=1;break
                     visited.append(stamp)
                 c=self.observe(copy.deepcopy(w),copy.deepcopy(own.state));req=self.request_for(c)
-                if req.reader is not None or req.value_proposal is not None or own.predictor is not None:
+                if req.reader is not None or req.value_proposal is not None or (own.predictor is not None and self.owner_advance is None):
                     raise ValueError('tail requires explicit continuation without advice overrides')
-                effective=own._prepare(req)['effective']
+                model_owner=copy.deepcopy(own) if self.owner_advance is not None else None
                 result=DecisionLoop.decide_batch([(own,req)],False)[0];key=result['decision']['action_id']
-                after,flow=self.advance(copy.deepcopy(w),key,seed)
-                reveal(own,result['ticket'],self.feedback(w,after,key,effective,flow));w=after
+                after,flow=(self.advance(copy.deepcopy(w),key,seed) if self.owner_advance is None else
+                    self.owner_advance(copy.deepcopy(w),key,seed,model_owner,copy.deepcopy(result['context'])))
+                reveal(own,result['ticket'],self.feedback(w,after,key,result['context'],flow));w=after
             g,ended=cached if cached is not None else (Goal(**self.assess(w)),bool(self.terminal(w)))
             if g.target!=self.target or ended!=(g.status!='running'):raise ValueError('same-target coherent tail endpoint required')
             for stamp in reversed(visited):

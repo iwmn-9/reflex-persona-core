@@ -6,6 +6,7 @@ before each reveal, including distributions outside the hypothesis library.
 No action utility, personality coefficient or hidden game state is learned here.
 """
 import copy
+from collections import OrderedDict
 
 from .adaptive_dynamics import EventLearner
 from .core import digest, identifier, MAX_OUTCOMES
@@ -61,6 +62,23 @@ class EventReader:
         # Expert loss is already scored prequentially inside EventLearner.
         # Do not gate the whole mixture against another possibly wrong model.
         return None
+
+    def frozen_forecaster(self):
+        """A detached public world law; imagined actor updates cannot change it.
+
+        Cache only the declared factors, legal symbols and supplied hypotheses.
+        The memory is fixed in this closure, so identical inputs are identical
+        forecasts even when irrelevant public fields (e.g. the clock) change.
+        """
+        frozen=copy.deepcopy(self);cache=OrderedDict()
+        def predict(context):
+            inputs=frozen._inputs(context);key=digest(inputs)
+            if key not in cache:
+                cache[key]=frozen.learner.predict(frozen.memory,*inputs)
+                if len(cache)>256:cache.popitem(last=False)
+            cache.move_to_end(key)
+            return copy.deepcopy(cache[key])
+        return predict
 
     def __call__(self, context, cap):
         probabilities = self.predict(context)
