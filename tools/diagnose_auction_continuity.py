@@ -4,7 +4,7 @@ Exact finite-horizon purpose opportunity given an explicit response law. This
 does not price personality, so its regret cannot be called a personality error.
 It localizes losses at scheduled versus intervening choices and model mismatch.
 """
-import argparse,json,sys
+import argparse,hashlib,json,sys
 from functools import lru_cache
 from pathlib import Path
 import numpy as np
@@ -56,12 +56,13 @@ def diagnose(row):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--sources',nargs='+',required=True);p.add_argument('--output',required=True);a=p.parse_args()
-    result=[]
+    result=[];sources=[]
     for source in a.sources:
-        for line in Path(source).read_text().splitlines():
+        path=Path(source);sources.append(dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
+        for line in path.read_text().splitlines():
             r=json.loads(line)
             if r['game']=='auction':result.append(diagnose(r))
-    Path(a.output).write_text(json.dumps(dict(semantics=__doc__,runs=result),indent=2)+'\n')
+    Path(a.output).write_text(json.dumps(dict(semantics=__doc__,sources=sources,runs=result),indent=2)+'\n')
     print(json.dumps([{k:v for k,v in r.items() if k!='trace'} for r in result]))
 
 

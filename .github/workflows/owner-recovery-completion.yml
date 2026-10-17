@@ -1,0 +1,30 @@
+name: Complete interrupted owned recovery study
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/owner-continuity]
+    paths: [.github/workflows/owner-recovery-completion.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  complete:
+    timeout-minutes: 360
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13.16'
+      - run: python -m pip install -e . numpy==2.5.4
+      - run: gh run download 38994511431 --name owner-recovery-auction-0 --dir interrupted
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - run: python tools/complete_owned_study.py interrupted results/auction-growth --original-run 38994511431
+        timeout-minutes: 350
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: owner-recovery-completion
+          path: results/auction-growth
+          retention-days: 7

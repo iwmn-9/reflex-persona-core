@@ -30,7 +30,12 @@ def compare(studies,comparisons):
             key=tuple(row[k] for k in ('game','profile','seed','regime','turns','tail_steps','offset'))
             arm=row['arm']+'@'+str(row['interval'])
             assert arm not in groups[key],('duplicate execution',key,arm)
-            groups[key][arm]=(row,environment)
+            # The full owner checkpoints have already been hash/audit checked.
+            # Keep only comparison inputs across studies: retaining every full
+            # trajectory scales to gigabytes in the registered long comparison.
+            compact={k:row[k] for k in ('executed','score')}
+            compact['responses']=tuple(t['response'] for t in row['trace'])
+            groups[key][arm]=(compact,environment)
         sources.append(dict(study=str(study),trajectory_sha256=audit['trajectory_sha256'],
             source_manifest_sha256=sha(study/'source_snapshot.json'),stage=registration['stage'],runs=len(rows)))
     pairs=[]
@@ -40,7 +45,7 @@ def compare(studies,comparisons):
             (base,be),(new,ne)=arms[baseline],arms[candidate]
             assert all(be[k]==ne[k] for k in ('python','numpy','system','machine')),'matched execution platform required'
             n=min(base['executed'],new['executed'])
-            assert [t['response'] for t in base['trace'][:n]]==[t['response'] for t in new['trace'][:n]]
+            assert base['responses'][:n]==new['responses'][:n]
             delta=new['score']-base['score']
             pairs.append(dict(zip(('game','profile','seed','regime','turns','tail_steps','offset'),condition),
                 baseline=baseline,candidate=candidate,baseline_score=base['score'],candidate_score=new['score'],delta=delta,

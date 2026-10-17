@@ -57,6 +57,11 @@ class ContinuityDiagnosticTests(unittest.TestCase):
         r=run(('auction',0,11,'outside',4,7,3),'endpoint')
         checked=audit_run(r)
         self.assertEqual(len(checked['cases']),1)
+        self.assertEqual(checked['windows'],dict(eligible=1,evaluated=1,incomplete_actual_window=0))
+        shortened=copy.deepcopy(r);shortened['trace']=shortened['trace'][:1]
+        partial=audit_run(shortened)
+        self.assertEqual(partial['windows'],dict(eligible=1,evaluated=0,incomplete_actual_window=1))
+        self.assertEqual(partial['summary'],{})
         case=checked['cases'][0]
         self.assertEqual(case['actual_actions'],case['reference_actions'])
         self.assertEqual(case['control_contribution'],0.)

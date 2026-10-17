@@ -33,11 +33,12 @@ def audit_run(r):
     if r['arm'] not in ('endpoint','endpoint_posterior','endpoint_segmented','endpoint_persistent','receding','receding_posterior','receding_corrected','receding_recovery'):
         raise ValueError('decomposition requires the registered learned continuation')
     profile=next(p for p in PROFILES if p['id']==r['profile'])
-    g=ContinuingGame(r['game'],profile,r['turns'],r['seed']%2);cases=[]
+    g=ContinuingGame(r['game'],profile,r['turns'],r['seed']%2);cases=[];eligible=0;incomplete=0
     for index,t in enumerate(r['trace']):
         if index%16 or 'checkpoint' not in t or 'forecast_end' not in t or not t['planned']:continue
+        eligible+=1
         stop=t['forecast_end'];segment=r['trace'][index:stop]
-        if len(segment)!=stop-index:continue
+        if len(segment)!=stop-index:incomplete+=1;continue
         w=copy.deepcopy(t['before']);raw=g.context(w)
         segmented=t['checkpoint']['predictor']['memory']['format']=='segmented-events-v1'
         own=DecisionLoop.from_record(raw,t['checkpoint'],predictor=g.actor(raw,learning='segmented' if segmented else 'windows').predictor)
@@ -90,6 +91,7 @@ def audit_run(r):
             actual_actions=actual_actions,reference_actions=reflex_actions))
         assert abs((reference-predicted)+(actual-reference)-(actual-predicted))<1e-12
     return dict(**{k:r[k] for k in ('game','profile','regime','seed','arm','interval')},cases=cases,
+        windows=dict(eligible=eligible,evaluated=len(cases),incomplete_actual_window=incomplete),
         summary={k:float(np.mean([c[k] for c in cases])) for k in
             ('world_and_sampling_residual','control_contribution','total_gap','realized_persona_gain')} if cases else {})
 
