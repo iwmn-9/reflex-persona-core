@@ -12,15 +12,18 @@ from tools.continuing_games import ContinuingGame
 from tools.run_owned_value import law,sample
 
 
-def audit(root,*,allow_abandoned=False):
+def audit(root,*,allow_abandoned=False,allow_superseded=False):
     rows=[json.loads(s) for s in (root/'trajectories.jsonl').read_text().splitlines()]
     reg=json.loads((root/'registration.json').read_text())
     planned=len(reg['jobs'])*len(reg['arms']);complete=len(rows)==planned
     status=None
     if not complete:
-        assert allow_abandoned,'incomplete registered study'
+        assert allow_abandoned or allow_superseded,'incomplete registered study'
         status=json.loads((root/'run_status.json').read_text(encoding='utf-8-sig'))
-        assert reg.get('stage')=='development' and status['status']=='abandoned_after_development_regression'
+        if allow_superseded:
+            assert status['status']=='superseded_by_matched_platform_study' and status['replacement_run']
+        else:
+            assert reg.get('stage')=='development' and status['status']=='abandoned_after_development_regression'
         assert status['completed_rows']==len(rows) and status['planned_rows']==planned and status['reason']
     expected={(g,PROFILES[p]['id'],s,r,a) for g,p,s,r,*_ in reg['jobs'] for a in reg['arms']}
     actual=[tuple(row[k] for k in ('game','profile','seed','regime','arm')) for row in rows]
@@ -98,4 +101,5 @@ def audit(root,*,allow_abandoned=False):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('root');p.add_argument('--allow-abandoned',action='store_true')
-    a=p.parse_args();audit(Path(a.root),allow_abandoned=a.allow_abandoned)
+    p.add_argument('--allow-superseded',action='store_true')
+    a=p.parse_args();audit(Path(a.root),allow_abandoned=a.allow_abandoned,allow_superseded=a.allow_superseded)

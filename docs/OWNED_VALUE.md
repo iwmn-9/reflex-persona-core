@@ -22,6 +22,8 @@
 
 区間モデルの仮定、事前分布、公開特徴や途中の目的評価が間違う可能性は残る。BAMCPの探索・最適性保証を実装したものではなく、正しい仮想更新と実世界での判断改善は別に検査する。
 
+この区別は、次の一手の平均予測が同じでも必要になる。例えば未知の二値確率にBeta(1/2, 1/2)の事前分布を置くと、最初の応答は五分五分だが、同じ傾向から次も応答が出るモデルでは最初と同じ記号が出る予測は3/4になる。平均の五分五分を毎手独立に使う世界では1/2のまま。将来の本人が一回目から学んで二回目を選ぶ利益が異なる。この有限例を全列挙と照合することと、実際の相手にその継続仮定が合うことは別である。
+
 ## 読みの省略と適用限界
 
 先頭の全応答を列挙し、その後を共通の独立した予測用乱数列で試走する。既定の将来の本人は通常の即時判断で動き、経験に応じてその判断を変える。外側の長い探索を未来の全手で再帰的に実行するものではない。
@@ -57,6 +59,7 @@ resolve_feedback(owner, result['ticket'], actual_feedback)
 - Guez et al., [Bayes-Adaptive Simulation-based Search with Value Function Approximation](https://acguez.github.io/files/guez_nips2014.pdf): 物理状態だけでなく履歴・信念を意思決定の状態に含める考え方を参照した。既存のEventLearnerは厳密なベイズ事後分布ではないため、BAMCPの最適性・収束保証を主張しない。
 - Adams & MacKay, [Bayesian Online Changepoint Detection](https://arxiv.org/pdf/0710.3742): 変化点と区間内分布を周辺化する考え方を区間予測器へ用いた。供給仮説との混合、観測特徴別の区間、有限履歴は本実装のモデル化で、論文のコードをそのまま移植したものではない。保持した履歴と宣言した事前分布に対する一致を小問題の全列挙で検査する。
 - Bertsekas, [Model Predictive Control, and Reinforcement Learning: A Unified Framework Based on Dynamic Programming](https://web.mit.edu/dimitrib/www/Bertsekas_NMPC_IFAC.pdf): 現在の方策を実行して継続価値を見積もり、実観測後に再計画するrolloutを参照した。人格の多目的採点、不完全な相手モデル、有限標本を含む本実装には、厳密な単一目的方策改善定理をそのまま適用できない。
+- Kastner et al., [Distributional Model Equivalence for Risk-Sensitive Reinforcement Learning](https://proceedings.neurips.cc/paper_files/paper/2023/file/b0cd0e8027309ea050951e758b70d60e-Paper-Conference.pdf): 平均の価値が合うモデルだけでは、リスクに敏感な判断の一致を保証できないという境界を確認した。人格の採点を平均目的点へ置き換える根拠にはせず、今回も相関した嗜好経路を残す。この論文の分布等価な学習器や保証を実装済みとはしない。
 
 ## 検証
 

@@ -1,0 +1,124 @@
+{
+  "stage": "prospective_confirmation",
+  "chosen_before_results": true,
+  "games": [
+    "auction",
+    "resources",
+    "combat",
+    "gambling"
+  ],
+  "profiles": [
+    "growth",
+    "steady",
+    "care",
+    "ego"
+  ],
+  "world_seeds": [
+    401,
+    547,
+    548
+  ],
+  "regimes": [
+    "outside",
+    "shift-return"
+  ],
+  "turns": 128,
+  "interval": 7,
+  "offset": 0,
+  "tail_steps": 15,
+  "baseline": [
+    "endpoint",
+    "reflex"
+  ],
+  "candidate_pool": [
+    "endpoint_segmented",
+    "endpoint_posterior"
+  ],
+  "candidate_selection": "Development source and results only. If neither candidate consistently improves long control, report the failure rather than tune persona or per-game rules.",
+  "reporting": "Paired realized purpose by game/persona/regime; same public response stream; worst loss; forecast error and post-change recovery. Counts are conditions, not independent human trials or win rates.",
+  "acceptance": "Require auction mean improvement and inspect every other game for losses before recommending. Forecast MSE alone is insufficient. Never hide adverse personas by pooling.",
+  "stress": {
+    "turns": 256,
+    "regime": "irregular",
+    "world_seed": 614,
+    "profiles": [
+      "growth",
+      "steady"
+    ],
+    "games": [
+      "auction",
+      "resources",
+      "combat",
+      "gambling"
+    ]
+  },
+  "unchanged": "Personal axes, value coefficients, known conditional rules and goal definitions; no hidden true probabilities passed to any acting NPC.",
+  "amendments": [
+    {
+      "reason": "Seed parity selects the public rule variant. The original two seeds are both odd, so add an even seed before any candidate confirmation is run. Keep the original seeds and report variants separately.",
+      "added_world_seed": 548,
+      "candidate_confirmation_results_seen": false
+    }
+  ],
+  "candidate_to_evaluate": "endpoint_posterior",
+  "selection_note": "Prospective evaluation, not adoption: explicit conditional world model closes the frozen-mean gap; all four development auction conditions completed. Other-game development continues. No parameter fitting to confirmation results.",
+  "cloud_execution": {
+    "commit": "e1a3d9e",
+    "workflow_run": 38984652879,
+    "platform": "ubuntu-latest, Python 3.13, standard public GitHub-hosted runners",
+    "arms": [
+      "endpoint",
+      "reflex",
+      "endpoint_posterior",
+      "endpoint_persistent"
+    ],
+    "comparison_shards": 24,
+    "stress_shards": 8,
+    "note": "All compared arms run in each shard. Persistent continuation is exploratory: added after the posterior candidate selection, not silently preregistered. No core tuning using confirmation outcomes."
+  },
+  "independent_auction_replication": {
+    "reason": "Initial confirmation has only three real response seeds, and the first two completed auction seeds show opposite aggregate tendencies. Resolve this sampling uncertainty without changing any candidate parameters.",
+    "decision_time": "2026-10-17T09:27:00+09:00",
+    "seeds": [
+      21001,
+      21002,
+      21003,
+      21004,
+      21005,
+      21006,
+      21007,
+      21008,
+      21009,
+      21010,
+      21011,
+      21012,
+      21013,
+      21014,
+      21015,
+      21016
+    ],
+    "games": [
+      "auction"
+    ],
+    "profiles": [
+      "growth",
+      "steady",
+      "care",
+      "ego"
+    ],
+    "regimes": [
+      "outside",
+      "shift-return"
+    ],
+    "arms": [
+      "endpoint",
+      "endpoint_posterior"
+    ],
+    "turns": 128,
+    "interval": 7,
+    "tail_steps": 15,
+    "selection": "Primary posterior candidate unchanged. Persistent remains exploratory and is not selected using these results.",
+    "analysis": "Report all 128 matched conditions and all 16 seed-level means; use seed clusters across profiles/regimes for a descriptive bootstrap interval. Inspect every persona and variant; do not use the condition count as independent sample size.",
+    "additional_results_seen": false
+  }
+}

@@ -26,6 +26,37 @@ def enumerated(sequence,library,k):
 
 
 class SegmentedPredictionTests(unittest.TestCase):
+    def test_conditional_hypotheses_use_each_observed_context(self):
+        # A library hypothesis may change its response with public context.
+        # Enumerate every change partition independently, keeping those past
+        # conditional probabilities distinct from the current query's values.
+        sequence=(0,2,1,2)
+        libraries=(((.8,.1,.1),(.2,.6,.2)),((.1,.2,.7),(.5,.2,.3)),
+                   ((.2,.7,.1),(.1,.3,.6)),((.4,.3,.3),(.1,.1,.8)))
+        current=((.1,.8,.1),(.6,.1,.3));prior=np.array([.25,.25,.5])
+        def segment(start,stop):
+            counts=np.full(3,.5);likelihood=np.ones(3)
+            for i in range(start,stop):
+                z=sequence[i]
+                likelihood[:2]*=[row[z] for row in libraries[i]]
+                likelihood[2]*=counts[z]/sum(counts);counts[z]+=1
+            weight=prior*likelihood
+            prediction=weight@np.array([*current,tuple(counts/sum(counts))])/weight.sum()
+            return weight.sum(),prediction
+        weighted=np.zeros(3);total=0.;base=prior@np.array([*current,(1/3,)*3])
+        for h in HAZARDS:
+            for cuts in itertools.product((0,1),repeat=3):
+                mass=1.;start=0
+                for i,cut in enumerate(cuts,1):
+                    mass*=h if cut else 1-h
+                    if cut:mass*=segment(start,i)[0];start=i
+                mass*=segment(start,4)[0]
+                weighted+=mass*(h*base+(1-h)*segment(start,4)[1]);total+=mass
+        p,_,_=segment_prediction(sequence,libraries,current,3)
+        q,_=persistent_prediction(sequence,libraries,(),(),current,3)
+        np.testing.assert_allclose(p,weighted/total,atol=1e-14)
+        np.testing.assert_allclose(q,p,atol=1e-14)
+
     def test_persistent_uncertainty_is_not_independent_mean_sampling(self):
         # With no factual evidence and no library, integrating a Beta(1/2,1/2)
         # law gives P(a,a)=3/8, not the frozen marginal's 1/4.
