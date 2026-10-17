@@ -294,8 +294,8 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     from .model_observer import ModelFeedback
     if actor.pending is not None or not callable(getattr(actor.predictor,'frozen_forecaster',None)):
         raise ValueError('resolved owner with a public predictive distribution required')
-    if type(tail_steps) is not int or not 1<=tail_steps<=255:
-        raise ValueError('1..255 tail decisions plus one root required')
+    if type(tail_steps) is not int or not 0<=tail_steps<=255:
+        raise ValueError('0..255 tail decisions plus one root required')
     if not callable(events):raise ValueError('known conditional event enumeration required')
     if sampling not in ('independent','stratified'):raise ValueError('known rollout sampling mode required')
     if purpose_estimator not in ('sampled','conditional'):raise ValueError('known purpose mean estimator required')
@@ -345,7 +345,9 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
             if goal.target!=target:raise ValueError('same-target conditional goal required')
             return goal.value
         return math.fsum(row.probability*value(row.state) for row in rows)-value(after)
-    tail=PolicyTail(observe=observe,advance=lambda *a:None,owner_advance=advance,
+    if tail_steps==0 and (future_planner is not None or purpose_estimator!='sampled'):
+        raise ValueError('zero tail has no future planning or sampling correction')
+    tail=None if tail_steps==0 else PolicyTail(observe=observe,advance=lambda *a:None,owner_advance=advance,
         terminal=terminal,assess=assess,request_for=request_for,feedback=feedback,
         model_id=identity,target=target,steps=tail_steps,seeds=seeds,
         future_planner=future_planner,future_planner_id=future_planner_id,future_planner_limit=future_planner_limit,
@@ -355,6 +357,6 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         terminal=terminal,assess=assess,record=record,request_for=request_for,feedback=feedback,
         model_id=identity,unit='owner-decisions',target=target,
         budget=TreeBudget(horizon=1,outcomes=256),max_regret=max_regret,
-        frontier=tail,tail_preferences=True,relative_objective=True,opportunity_regret=True)
+        frontier=tail,tail_preferences=tail is not None,relative_objective=True,opportunity_regret=True)
     ctrl.source_owner=source
     return ctrl

@@ -12,6 +12,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from reflex.core import digest,character_key
 from reflex.laboratory import PROFILES
 from reflex.closed_loop import owned_rollout
+from reflex.purpose_step import purpose_step
 from reflex.actor_model import ActorModel
 from reflex.decision_loop import DecisionLoop
 from reflex.model_observer import resolve_feedback
@@ -45,7 +46,7 @@ def run(job,arm):
     is_reflex=arm in ('reflex','reflex_segmented')
     g=ContinuingGame(game,PROFILES[pid],turns,seed%2);w=g.start();c=g.context(w)
     own=g.actor(c,learned=arm!='endpoint_library',renewal=arm in ('endpoint_renewal','endpoint_both','endpoint_recovery'),
-        learning='segmented' if arm in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented') else 'windows')
+        learning='segmented' if arm in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented','competent','endpoint_competent') else 'windows')
     axes=character_key(c);rng=np.random.default_rng(seed);trace=[];checks=Counter();started=time.monotonic()
     for tick in range(turns):
         if g.terminal(w):break
@@ -54,17 +55,26 @@ def run(job,arm):
         due=tick%interval==offset
         cap={};planner=None;checkpoint=own.record() if not is_reflex and due else None
         if not is_reflex and due:
-            if arm in ('endpoint','short_endpoint','endpoint_library','endpoint_renewal','endpoint_stratified','endpoint_both','endpoint_conditional','endpoint_recovery','endpoint_dense','endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned'):
+            if arm in ('endpoint','short_endpoint','endpoint_library','endpoint_renewal','endpoint_stratified','endpoint_both','endpoint_conditional','endpoint_recovery','endpoint_dense','endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','competent','endpoint_competent'):
+                def future(person,request,state):
+                    return purpose_step(person,state,events=g.events,terminal=g.terminal,
+                        assess=lambda w:g.goal(w).record(),target=g.target)
                 ctrl=owned_rollout(own,observe=g.context,events=g.events,terminal=g.terminal,
                     assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
                     feedback=g.feedback,model_id=g.model_id,target=g.target,
-                    tail_steps=3 if arm=='short_endpoint' else tail_steps,
+                    tail_steps=0 if arm=='competent' else 3 if arm=='short_endpoint' else tail_steps,
+                    future_planner=future if arm=='endpoint_competent' else None,
+                    future_planner_id='purpose-persona-one-step' if arm=='endpoint_competent' else None,
+                    future_planner_limit=16,
                     seeds=tuple(range(701,713)) if arm=='endpoint_dense' else (701,702,703),
                     sampling='stratified' if arm in ('endpoint_stratified','endpoint_both') else 'independent',
                     purpose_estimator='conditional' if arm in ('endpoint_conditional','endpoint_recovery') else 'sampled',
-                    world_model='posterior' if arm in ('endpoint_posterior','endpoint_unpruned') else 'persistent' if arm=='endpoint_persistent' else 'frozen',
+                    world_model='posterior' if arm in ('endpoint_posterior','endpoint_unpruned','endpoint_competent') else 'persistent' if arm=='endpoint_persistent' else 'frozen',
                     max_regret=1. if arm=='endpoint_unpruned' else .15)
                 planner=ctrl.planner(own,req,w,captured=cap)
+                if arm=='competent':
+                    planner=purpose_step(own,w,events=g.events,terminal=g.terminal,
+                        assess=lambda w:g.goal(w).record(),target=g.target,captured=cap)
             elif arm=='flow':
                 def planner(cs,ds):
                     model=ActorModel(own,root_request=req,request_for=g.request,

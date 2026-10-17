@@ -1,0 +1,37 @@
+name: Owner continuity development
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  study:
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        game: [auction, resources, combat, gambling]
+        profile: [0, 1]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -e .
+      - run: >-
+          python tools/run_owned_value.py --root results/frequent
+          --games ${{ matrix.game }} --profiles ${{ matrix.profile }} --seeds 43
+          --regimes outside shift-return --arms endpoint endpoint_posterior
+          --turns 128 --interval 1 --tail-steps 15 --workers 2 --stage development
+      - run: python tools/audit_owned_value.py results/frequent
+      - run: >-
+          python tools/run_owned_value.py --root results/periodic
+          --games ${{ matrix.game }} --profiles ${{ matrix.profile }} --seeds 43
+          --regimes outside shift-return --arms endpoint endpoint_posterior
+          --turns 128 --interval 7 --tail-steps 15 --workers 2 --stage development
+      - run: python tools/audit_owned_value.py results/periodic
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: owner-continuity-${{ matrix.game }}-${{ matrix.profile }}
+          path: results
+          retention-days: 7
