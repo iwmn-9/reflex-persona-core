@@ -41,7 +41,7 @@ def law(t,turns,regime):
     return {str(i):(.8 if i==top else .1) for i in range(3)}
 
 
-def run(job,arm):
+def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8):
     game,pid,seed,regime,turns,interval,tail_steps=job[:7]
     offset=job[7] if len(job)>7 else 0
     is_reflex=arm in ('reflex','reflex_segmented')
@@ -51,7 +51,21 @@ def run(job,arm):
     if arm in ('receding','receding_posterior','receding_corrected','receding_recovery') and (interval!=1 or offset!=0):
         raise ValueError('receding owner requires every decision; no periodic substitution')
     axes=character_key(c);rng=np.random.default_rng(seed);trace=[];checks=Counter();started=time.monotonic()
-    for tick in range(turns):
+    start_tick=0;storage=None
+    if checkpoint is not None:
+        from tools.owned_checkpoint import OwnedCheckpoint
+        storage=OwnedCheckpoint(checkpoint,job,arm,max_decisions=max_decisions,every=checkpoint_every)
+        if storage.saved is not None:
+            saved=storage.saved;w=saved['world'];trace=saved['trace'];checks=Counter(saved['checks'])
+            # The same post-decision owner restoration already used below.
+            # The preceding live context also works at a terminal boundary.
+            c=g.context(trace[-1]['before'])
+            own=DecisionLoop.from_record(c,saved['owner'],predictor=own.predictor)
+            assert own.record()==saved['owner']
+            rng.bit_generator.state=saved['rng'];start_tick=w['tick']
+            started=time.monotonic()-saved['elapsed']
+    elif max_decisions is not None:raise ValueError('a decision slice requires a persistent checkpoint')
+    for tick in range(start_tick,turns):
         if g.terminal(w):break
         c=g.context(w,own.state);req=g.request(c);before=digest(own.record())
         p=own.predictor.predict(c);actual=law(tick,turns,regime)
@@ -125,6 +139,9 @@ def run(job,arm):
             trace[-1]['forecast_end']=min(turns,tick+f.horizon)
             if 'purpose_mean_estimator' in f.audit:trace[-1]['mean_estimator']=f.audit['purpose_mean_estimator']
         w=end
+        if storage is not None:
+            storage.save(w,own,rng,trace,checks,time.monotonic()-started,terminal=g.terminal(w))
+            if storage.stopping(len(trace)) and not g.terminal(w):return None
     for t in trace:
         if t.get('predicted') is not None and 'forecast_end' in t:
             end=trace[min(t['forecast_end'],len(trace))-1]
