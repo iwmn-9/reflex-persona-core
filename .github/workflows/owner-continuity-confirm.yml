@@ -1,0 +1,55 @@
+name: Owner continuity independent confirmation
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/owner-continuity]
+    paths: [.github/workflows/owner-continuity-confirm.yml]
+permissions:
+  contents: read
+jobs:
+  study:
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        world:
+          - {game: auction, seed: 31701}
+          - {game: auction, seed: 31702}
+          - {game: auction, seed: 31703}
+          - {game: auction, seed: 31704}
+          - {game: auction, seed: 31705}
+          - {game: auction, seed: 31706}
+          - {game: auction, seed: 31707}
+          - {game: auction, seed: 31708}
+          - {game: resources, seed: 31701}
+          - {game: resources, seed: 31702}
+          - {game: combat, seed: 31701}
+          - {game: combat, seed: 31702}
+          - {game: gambling, seed: 31701}
+          - {game: gambling, seed: 31702}
+        profile: [0, 1, 2, 3]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -e .
+      - run: >-
+          python tools/run_owned_value.py --root results/frequent
+          --games ${{ matrix.world.game }} --profiles ${{ matrix.profile }} --seeds ${{ matrix.world.seed }}
+          --regimes outside shift-return --arms receding_posterior
+          --turns 128 --interval 1 --tail-steps 15 --workers 2 --stage confirmation
+      - run: python tools/audit_owned_value.py results/frequent
+      - run: >-
+          python tools/run_owned_value.py --root results/periodic
+          --games ${{ matrix.world.game }} --profiles ${{ matrix.profile }} --seeds ${{ matrix.world.seed }}
+          --regimes outside shift-return --arms endpoint
+          --turns 128 --interval 7 --tail-steps 15 --workers 2 --stage confirmation
+      - run: python tools/audit_owned_value.py results/periodic
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: owner-confirm-${{ matrix.world.game }}-${{ matrix.world.seed }}-${{ matrix.profile }}
+          path: results
+          retention-days: 7

@@ -13,6 +13,7 @@ from reflex.core import digest,character_key
 from reflex.laboratory import PROFILES
 from reflex.closed_loop import owned_rollout
 from reflex.purpose_step import purpose_step
+from reflex.receding_owner import RecedingOwner
 from reflex.actor_model import ActorModel
 from reflex.decision_loop import DecisionLoop
 from reflex.model_observer import resolve_feedback
@@ -46,7 +47,9 @@ def run(job,arm):
     is_reflex=arm in ('reflex','reflex_segmented')
     g=ContinuingGame(game,PROFILES[pid],turns,seed%2);w=g.start();c=g.context(w)
     own=g.actor(c,learned=arm!='endpoint_library',renewal=arm in ('endpoint_renewal','endpoint_both','endpoint_recovery'),
-        learning='segmented' if arm in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented','competent','endpoint_competent') else 'windows')
+        learning='segmented' if arm in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented','competent','endpoint_competent','receding_posterior') else 'windows')
+    if arm in ('receding','receding_posterior') and (interval!=1 or offset!=0):
+        raise ValueError('receding owner requires every decision; no periodic substitution')
     axes=character_key(c);rng=np.random.default_rng(seed);trace=[];checks=Counter();started=time.monotonic()
     for tick in range(turns):
         if g.terminal(w):break
@@ -89,7 +92,14 @@ def run(job,arm):
         mirror=ActorModel(own,root_request=req,request_for=g.request,
             feedback=lambda b,e,k,cc:g.feedback(b,e,k,cc,g.transition(b,k,e['signal'])[1]))
         prepared,mreq,_,_=mirror.prepare(w,c,prepared=True);mirror.preview()
-        result=DecisionLoop.decide_batch([(own,req)],False,planner)[0];key=result['decision']['action_id']
+        if arm in ('receding','receding_posterior'):
+            live=RecedingOwner(own,observe=g.context,events=g.events,terminal=g.terminal,
+                assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
+                feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=tail_steps,
+                world_model='posterior' if arm=='receding_posterior' else 'frozen')
+            result=live.decide(w);cap=live.last
+        else:result=DecisionLoop.decide_batch([(own,req)],False,planner)[0]
+        key=result['decision']['action_id']
         mirror.commit_choice(key);mirror.adopt_state(result['decision']['next_state'])
         end,flow=g.transition(w,key,sample(actual,rng.random()))
         resolve_feedback(own,result['ticket'],g.feedback(w,end,key,c,flow));mirror.advance(w,end,key,prepared,mreq)

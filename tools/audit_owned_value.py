@@ -46,7 +46,7 @@ def audit(root,*,allow_abandoned=False,allow_superseded=False):
                 assert t['predicted']==t['forecast'][t['action']]
             if 'checkpoint' in t:
                 c=g.context(w);template=g.actor(c,learned=r['arm']!='endpoint_library',renewal=r['arm'] in ('endpoint_renewal','endpoint_both','endpoint_recovery'),
-                    learning='segmented' if r['arm'] in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented','competent','endpoint_competent') else 'windows')
+                    learning='segmented' if r['arm'] in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented','competent','endpoint_competent','receding_posterior') else 'windows')
                 own=DecisionLoop.from_record(c,t['checkpoint'],predictor=template.predictor)
                 assert digest(own.record())==t['before_owner']
                 req=g.request(c);result=DecisionLoop.decide_batch([(own,req)],False,_counterfactual_roots=(t['action'],))[0]
