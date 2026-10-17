@@ -184,7 +184,7 @@
   "scope": "Actual persistent feedback, fixed persona and rules; one shared candidate across games.",
   "selection": "H32 is fixed before these new world seeds are inspected. H64 remains a development sensitivity check. Do not tune to confirmation outcomes or select successful personas.",
   "primary": "Final declared purpose score paired within game, persona, world seed and response regime. Also inspect 16 turns before the true end and per-persona harms. Never pool different games as a strength score.",
-  "adoption": "Require positive mean candidate change in every game and positive resource change in at least three of four confirmation world seeds. Preserve all losses and diagnose adverse persona/regime groups; personality coefficients and rules must be unchanged. Any candidate change requires new confirmation seeds. No global/default-policy claim.",
+  "adoption": "Require nonnegative mean candidate change in every game, a strictly positive resource mean, and positive resource change in at least three of four confirmation world seeds. Preserve all losses and diagnose adverse persona/regime groups; personality coefficients and rules must be unchanged. Any candidate change requires new confirmation seeds. No global/default-policy claim.",
   "diagnostics": "Conditional realized increments, realized noise, persona action differences, actual/forecast timing and offline auction Bellman account. Diagnostic metrics do not replace the primary.",
   "limits": [
     "Only four independent confirmation world seeds per game; profiles share events and are not independent samples.",
@@ -1865,5 +1865,21 @@
       ]
     }
   ],
-  "registered_runs": 128
+  "registered_runs": 128,
+  "protocol_amendment": {
+    "at": "2026-10-17T23:30:56.096767+00:00",
+    "previous": "Require positive mean candidate change in every game and positive resource change in at least three of four confirmation world seeds. Preserve all losses and diagnose adverse persona/regime groups; personality coefficients and rules must be unchanged. Any candidate change requires new confirmation seeds. No global/default-policy claim.",
+    "reason": "Before either confirmation or stress matrix has started, distinguish required target improvement from non-regression in other games. An unaffected game tying its control should not force artificial behavior changes.",
+    "verified_runs": {
+      "39077553415": {
+        "only_job": "matrix",
+        "status": "queued"
+      },
+      "39077554847": {
+        "only_job": "matrix",
+        "status": "queued"
+      }
+    },
+    "candidate_jobs_seeds_unchanged": true
+  }
 }

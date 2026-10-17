@@ -11,8 +11,9 @@ def realized_account(row):
     """Separate realized one-step noise from observed actions, for diagnosis.
 
     The true response law belongs only to this offline evaluator. Conditional
-    increments include personality, accumulated resources and future effects;
-    they are not a pure intelligence score or an off-policy value estimate.
+    increments include personality and accumulated resources, which can still
+    reflect earlier luck. They are not a pure intelligence score, a removal of
+    all chance effects, or an off-policy value estimate.
     """
     profile=next(p for p in PROFILES if p['id']==row['profile'])
     game=ContinuingGame(row['game'],profile,row['turns'],row['seed']%2)
@@ -98,10 +99,11 @@ def summarize(repo,root,plan,partial=False):
             baseline_actions=dict(Counter(t['action'] for t in lt)),candidate_actions=dict(Counter(t['action'] for t in rt)),
             baseline_source=origins[key[:-1]+(16,)],candidate_source=origins[key]))
     groups=[]
-    for level in ('game','persona','condition'):
+    for level in ('game','world_seed','persona','condition'):
         bins=defaultdict(list)
         for row in comparisons:
             key=(row['game'],row['horizon'])
+            if level=='world_seed':key+=(row['seed'],)
             if level in ('persona','condition'):key+=(row['profile'],)
             if level=='condition':key+=(row['regime'],)
             bins[key].append(row)
@@ -115,7 +117,8 @@ def summarize(repo,root,plan,partial=False):
                 better=sum(d>1e-12 for d in ds),same=sum(abs(d)<=1e-12 for d in ds),worse=sum(d< -1e-12 for d in ds),worst=min(ds)))
     return dict(complete=not missing and not incomplete,registered_runs=plan.get('total_development_runs',len(plan['new_jobs'])),
         collected_runs=len(rows),missing=missing,incomplete=incomplete,comparisons=comparisons,groups=groups,
-        limitation='Development seed only; no cross-game strength mean or significance claim. Partial summaries are not adoption evidence.')
+        stage=plan['stage'],
+        limitation='No cross-game strength mean. Shared-seed personas are not independent world samples. Partial summaries are not adoption evidence. Conditional increments retain earlier luck through the realized states; diagnostic accounts do not replace final purpose scores.')
 
 
 if __name__=='__main__':
