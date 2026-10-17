@@ -1,0 +1,89 @@
+name: Owned recovery independent confirmation
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/owner-continuity]
+    paths: [.github/workflows/owner-recovery-confirm.yml]
+permissions:
+  contents: read
+jobs:
+  primary:
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        world:
+          - {game: auction, seed: 41101}
+          - {game: auction, seed: 41102}
+          - {game: auction, seed: 41103}
+          - {game: auction, seed: 41104}
+          - {game: auction, seed: 41105}
+          - {game: auction, seed: 41106}
+          - {game: auction, seed: 41107}
+          - {game: auction, seed: 41108}
+          - {game: resources, seed: 41101}
+          - {game: resources, seed: 41102}
+          - {game: combat, seed: 41101}
+          - {game: combat, seed: 41102}
+          - {game: gambling, seed: 41101}
+          - {game: gambling, seed: 41102}
+        group:
+          - {name: a, ids: '0 1'}
+          - {name: b, ids: '2 3'}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13.16'
+      - run: python -m pip install -e . numpy==2.5.4
+      - run: >-
+          python tools/run_owned_value.py --root results/candidate
+          --games ${{ matrix.world.game }} --profiles ${{ matrix.group.ids }} --seeds ${{ matrix.world.seed }}
+          --regimes outside shift-return --arms receding_recovery
+          --turns 128 --interval 1 --tail-steps 15 --workers 4 --stage confirmation
+      - run: python tools/audit_owned_value.py results/candidate
+      - run: >-
+          python tools/run_owned_value.py --root results/baseline
+          --games ${{ matrix.world.game }} --profiles ${{ matrix.group.ids }} --seeds ${{ matrix.world.seed }}
+          --regimes outside shift-return --arms endpoint endpoint_posterior
+          --turns 128 --interval 7 --tail-steps 15 --workers 4 --stage confirmation
+      - run: python tools/audit_owned_value.py results/baseline
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: owner-recovery-confirm-${{ matrix.world.game }}-${{ matrix.world.seed }}-${{ matrix.group.name }}
+          path: results
+          retention-days: 7
+
+  stress:
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        game: [auction, resources, combat, gambling]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13.16'
+      - run: python -m pip install -e . numpy==2.5.4
+      - run: >-
+          python tools/run_owned_value.py --root results/candidate
+          --games ${{ matrix.game }} --profiles 0 1 --seeds 41201
+          --regimes irregular --arms receding_recovery
+          --turns 256 --interval 1 --tail-steps 15 --workers 4 --stage stress
+      - run: python tools/audit_owned_value.py results/candidate
+      - run: >-
+          python tools/run_owned_value.py --root results/baseline
+          --games ${{ matrix.game }} --profiles 0 1 --seeds 41201
+          --regimes irregular --arms endpoint endpoint_posterior
+          --turns 256 --interval 7 --tail-steps 15 --workers 4 --stage stress
+      - run: python tools/audit_owned_value.py results/baseline
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: owner-recovery-stress-${{ matrix.game }}
+          path: results
+          retention-days: 7
