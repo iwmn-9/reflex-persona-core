@@ -1,0 +1,107 @@
+name: Resume one frozen owned execution
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: Registered job array (game, profile, seed, regime, turns, interval, tail, offset)
+        type: string
+        required: true
+      arm:
+        description: Registered arm
+        type: string
+        required: true
+      previous_run:
+        description: Previous chunk workflow run, or empty for a fresh missing execution
+        type: string
+        required: false
+      verify_full:
+        description: Operational cross-runner proof only (maximum 32 turns)
+        type: boolean
+        default: false
+permissions:
+  contents: read
+  actions: read
+jobs:
+  chunk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: 6ef8f4996782f8ccff8fd7b0c34a8b840cd4b291
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13.16'
+      - run: python -m pip install -e . numpy==2.5.4
+      - name: Restore the same registered execution
+        env:
+          GH_TOKEN: ${{ github.token }}
+          JOB: ${{ inputs.job }}
+          ARM: ${{ inputs.arm }}
+          PREVIOUS_RUN: ${{ inputs.previous_run }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, re, subprocess
+          from pathlib import Path
+          from tools.owned_checkpoint import OwnedCheckpoint
+          from tools.run_owned_value import law
+          from tools.continuing_games import GAMES
+          from reflex.laboratory import PROFILES
+          job = json.loads(os.environ['JOB']); arm = os.environ['ARM']
+          assert isinstance(job,list) and len(job)==8
+          game,pid,seed,regime,turns,interval,tail,offset = job
+          assert game in GAMES and type(pid) is int and 0<=pid<len(PROFILES)
+          assert type(seed) is int and type(turns) is int and turns>=1
+          assert type(interval) is int and interval>=1 and type(offset) is int and 0<=offset<interval
+          assert type(tail) is int and 0<=tail<=255
+          assert arm in ('receding_recovery','endpoint','endpoint_posterior','receding_corrected')
+          law(0,turns,regime)
+          previous = os.environ['PREVIOUS_RUN']
+          if previous:
+              assert re.fullmatch(r'[0-9]+',previous)
+              subprocess.run(['gh','run','download',previous,'--name','owned-checkpoint','--dir','work'],check=True)
+              assert json.loads(Path('work/job.json').read_text())==job
+              assert Path('work/arm.txt').read_text()==arm
+              assert Path('work/checkpoint.json').is_file()
+          else:
+              Path('work').mkdir()
+              Path('work/job.json').write_text(json.dumps(job)+'\n')
+              Path('work/arm.txt').write_text(arm)
+          assert not Path('work/row.json').exists(), 'already completed; do not rerun'
+          checkpoint = OwnedCheckpoint('work/checkpoint.json',job,arm)
+          print(json.dumps({'resume_at':checkpoint.initial_tick,'turns':turns,'previous_run':previous or None}))
+          PY
+      - name: Continue sixteen decisions without resetting the world
+        timeout-minutes: 340
+        env:
+          ARM: ${{ inputs.arm }}
+        run: >-
+          python tools/run_owned_chunk.py --job-file work/job.json
+          --arm "$ARM" --checkpoint work/checkpoint.json --decisions 16 --output work/row.json
+      - name: Verify a short resumed execution against an uninterrupted one
+        if: ${{ success() && inputs.verify_full }}
+        env:
+          ARM: ${{ inputs.arm }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from tools.run_owned_value import run
+          job=json.loads(Path('work/job.json').read_text())
+          assert job[4]<=32, 'operational proof only; never duplicate a long experiment here'
+          resumed=json.loads(Path('work/row.json').read_text())
+          whole=run(job,Path('work/arm.txt').read_text())
+          resumed.pop('seconds');whole.pop('seconds')
+          assert resumed==whole, 'cross-runner continuation differs from uninterrupted execution'
+          Path('work/cross_runner_verification.json').write_text(json.dumps({
+              'complete':True,'job':job,'all_non_timing_fields_exact':True,'turns':len(whole['trace'])})+'\n')
+          print('All non-timing fields match uninterrupted execution on the second runner.')
+          PY
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: owned-checkpoint
+          path: work
+          retention-days: 7
