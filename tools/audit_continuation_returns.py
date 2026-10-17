@@ -1,6 +1,6 @@
 """Post-hoc decomposition under the benchmark's ACTION-INDEPENDENT event law.
 
-Replay the forecast's learned-reflex continuation on the same revealed event
+Replay the forecast's declared learned continuation on the same revealed event
 sequence, starting with the actual selected root. Future events enter only one
 at a time after each counterfactual decision. This is an evaluator, never advice.
 For action-dependent opponents, reusing their observed responses is NOT valid.
@@ -15,6 +15,7 @@ from reflex.purpose_plan import goal_forecast
 from reflex.decision_loop import DecisionLoop
 from reflex.model_observer import resolve_feedback
 from reflex.laboratory import PROFILES
+from reflex.closed_loop import owned_rollout
 from tools.continuing_games import ContinuingGame
 
 
@@ -29,8 +30,8 @@ def realized_score(g,own,c,root,actions,flows,endpoint):
 
 
 def audit_run(r):
-    if r['arm'] not in ('endpoint','endpoint_posterior','endpoint_segmented','endpoint_persistent','receding','receding_posterior'):
-        raise ValueError('decomposition requires the registered learned-reflex tail')
+    if r['arm'] not in ('endpoint','endpoint_posterior','endpoint_segmented','endpoint_persistent','receding','receding_posterior','receding_corrected','receding_recovery'):
+        raise ValueError('decomposition requires the registered learned continuation')
     profile=next(p for p in PROFILES if p['id']==r['profile'])
     g=ContinuingGame(r['game'],profile,r['turns'],r['seed']%2);cases=[]
     for index,t in enumerate(r['trace']):
@@ -42,6 +43,13 @@ def audit_run(r):
         own=DecisionLoop.from_record(raw,t['checkpoint'],predictor=g.actor(raw,learning='segmented' if segmented else 'windows').predictor)
         assert digest(own.record())==t['before_owner']
         effective=own.preview(g.request(raw))[0];start=copy.deepcopy(own)
+        future=None;future_calls=0
+        if r['arm']=='receding_recovery':
+            continuation=owned_rollout(start,observe=g.context,events=g.events,terminal=g.terminal,
+                assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
+                feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=r['tail_steps'],
+                world_model='posterior',purpose_estimator='conditional',tail_recovery=2)
+            future=continuation.frontier.future_planner
         actual_actions=[];actual_flows=[];reflex_actions=[];reflex_flows=[]
         post_root=(r['trace'][index+1].get('checkpoint') if index+1<len(r['trace']) else None)
         if post_root is not None:
@@ -59,7 +67,11 @@ def audit_run(r):
                 assert digest(own.record())==t['owner']
                 reflex_actions.append(s['action']);reflex_flows.append(actual_flows[-1]);continue
             c=g.context(w,own.state);req=g.request(c)
-            result=DecisionLoop.decide_batch([(own,req)],False,
+            planner=None
+            if j and future is not None and future_calls<continuation.frontier.future_planner_limit:
+                planner=future(copy.deepcopy(own),copy.deepcopy(req),copy.deepcopy(w))
+                if planner is not None:future_calls+=1
+            result=DecisionLoop.decide_batch([(own,req)],False,planner,
                 _counterfactual_roots=(t['action'],) if j==0 else None)[0]
             key=result['decision']['action_id'];after,flow=g.transition(w,key,s['response'])
             resolve_feedback(own,result['ticket'],g.feedback(w,after,key,result['context'],flow))
@@ -71,6 +83,7 @@ def audit_run(r):
         ours=realized_score(g,start,effective,t['action'],actual_actions,actual_flows,segment[-1]['after'])
         theirs=realized_score(g,start,effective,t['action'],reflex_actions,reflex_flows,w)
         cases.append(dict(tick=index,root_owner='actual-checkpoint' if post_root is not None else 'exact-feedback-replay',
+            reference_policy='two-step-recovery-when-no-immediate-gain' if future else 'learned-reflex',future_calls=future_calls,
             predicted=predicted,reflex_replay=reference,executed=actual,
             world_and_sampling_residual=reference-predicted,control_contribution=actual-reference,
             total_gap=actual-predicted,realized_persona_gain=ours-theirs,

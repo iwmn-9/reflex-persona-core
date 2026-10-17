@@ -5,9 +5,43 @@ from tools.continuing_games import ContinuingGame
 from reflex.laboratory import PROFILES
 from tools.run_owned_value import run
 from tools.audit_continuation_returns import audit_run
+from reflex.closed_loop import owned_rollout
+from reflex.decision_loop import DecisionLoop
+from reflex.model_observer import resolve_feedback
+from reflex.core import digest
 
 
 class ContinuityDiagnosticTests(unittest.TestCase):
+    def test_recovery_reference_replay_uses_the_declared_future_controller(self):
+        g=ContinuingGame('combat',PROFILES[1],turns=8,variant=1);w=g.start();w['ammo']=0
+        own=g.actor(g.context(w),learning='segmented')
+        controller=owned_rollout(own,observe=g.context,events=g.events,terminal=g.terminal,
+            assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
+            feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=7,
+            world_model='posterior',purpose_estimator='conditional',tail_recovery=2)
+        trace=[];calls=0
+        for tick in range(8):
+            c=g.context(w,own.state);req=g.request(c);checkpoint=own.record();plan=None
+            if tick:
+                plan=controller.frontier.future_planner(copy.deepcopy(own),req,w)
+                calls+=plan is not None
+            result=DecisionLoop.decide_batch([(own,req)],False,plan,
+                _counterfactual_roots=('guard',) if tick==0 else None)[0]
+            key=result['decision']['action_id'];after,flow=g.transition(w,key,'2')
+            resolve_feedback(own,result['ticket'],g.feedback(w,after,key,result['context'],flow))
+            trace.append(dict(tick=tick,before=w,after=after,action=key,response='2',goal=g.goal(after).value,
+                checkpoint=checkpoint,before_owner=digest(checkpoint),owner=digest(own.record()),
+                planned=True,forecast_end=8,predicted=0.))
+            w=after
+        row=dict(game='combat',profile='steady',seed=11,regime='outside',arm='receding_recovery',
+            turns=8,tail_steps=7,interval=1,trace=trace)
+        checked=audit_run(row)['cases'][0]
+        self.assertGreater(calls,0)
+        self.assertEqual(checked['future_calls'],calls)
+        self.assertEqual(checked['actual_actions'],checked['reference_actions'])
+        self.assertEqual(checked['control_contribution'],0.)
+        self.assertEqual(checked['realized_persona_gain'],0.)
+
     def test_actual_root_checkpoint_matches_exact_replay(self):
         r=run(('auction',0,11,'outside',4,1,3),'receding_posterior')
         stored=audit_run(r)
