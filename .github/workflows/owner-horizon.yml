@@ -1,0 +1,65 @@
+name: Continuing owner horizon comparison
+run-name: Horizon comparison ${{ inputs.label || 'development-43' }}
+on:
+  push:
+    branches: [research/long-horizon]
+    paths: [.github/workflows/owner-horizon.yml]
+  workflow_dispatch:
+    inputs:
+      label:
+        type: string
+        required: true
+      jobs:
+        description: Explicit registered matrix include array; empty uses the committed development plan
+        type: string
+        required: false
+      stage:
+        type: choice
+        options: [development, confirmation, stress, diagnostic]
+        default: development
+permissions:
+  contents: read
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      include: ${{ steps.plan.outputs.include }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - id: plan
+        env:
+          JOBS: ${{ inputs.jobs }}
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          jobs=json.loads(os.environ['JOBS']) if os.environ['JOBS'] else json.loads(Path('evidence/long_horizon/development_plan.json').read_text())['new_jobs']
+          assert isinstance(jobs,list) and 1<=len(jobs)<=256
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('include='+json.dumps(jobs,separators=(',',':'))+'\n')
+          PY
+  study:
+    needs: matrix
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.matrix.outputs.include) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13.16'
+      - run: python -m pip install -e . numpy==2.5.4
+      - name: Run registered persistent world
+        timeout-minutes: 345
+        env:
+          JOB: ${{ toJSON(matrix.job) }}
+          STAGE: ${{ inputs.stage || 'development' }}
+        run: python tools/run_horizon_study.py --root results/horizon --job "$JOB" --stage "$STAGE"
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: horizon-${{ matrix.key }}
+          path: results/horizon
+          retention-days: 14
