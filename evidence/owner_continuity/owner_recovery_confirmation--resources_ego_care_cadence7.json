@@ -1,0 +1,278 @@
+{
+  "runs": 24,
+  "conditions": 8,
+  "sources": [
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-confirm-resources-41101-b\\candidate",
+      "trajectory_sha256": "a11c1550beb4d6899f6ccc4039c20d3d6ff527de56c4c54c75376051cc3ae545",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "confirmation",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-confirm-resources-41101-b\\baseline",
+      "trajectory_sha256": "38bc430e82eb3fd7f02c75d39ffd7986a0aae6fca30a41d375148da8640509e9",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "confirmation",
+      "runs": 8
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-confirm-resources-41102-b\\candidate",
+      "trajectory_sha256": "bed0b61450bc96c876a3a8566729c6165cb0d6f69b0073c53675c23c46a75aba",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "confirmation",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-confirm-resources-41102-b\\baseline",
+      "trajectory_sha256": "59a35b23d264df4aa65c4d2baffcb144ca35a155aa5bfc1c14f875e5c36cf4d4",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "confirmation",
+      "runs": 8
+    }
+  ],
+  "checks": {
+    "world_rng_replay": 3072,
+    "restored_action_feedback": 1328,
+    "physical_replay": 3072,
+    "owner_parity": 3072,
+    "fixed_axes": 3072,
+    "restore": 144
+  },
+  "pairs": [
+    {
+      "game": "resources",
+      "profile": "care",
+      "seed": 41101,
+      "regime": "outside",
+      "turns": 128,
+      "tail_steps": 15,
+      "offset": 0,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "baseline_score": 0.4674479166666667,
+      "candidate_score": 0.5481770833333334,
+      "delta": 0.08072916666666669,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "care",
+      "seed": 41101,
+      "regime": "shift-return",
+      "turns": 128,
+      "tail_steps": 15,
+      "offset": 0,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "baseline_score": 0.5950520833333334,
+      "candidate_score": 0.58203125,
+      "delta": -0.01302083333333337,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "resources",
+      "profile": "care",
+      "seed": 41102,
+      "regime": "outside",
+      "turns": 128,
+      "tail_steps": 15,
+      "offset": 0,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "baseline_score": 0.5338541666666666,
+      "candidate_score": 0.5481770833333334,
+      "delta": 0.01432291666666674,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "care",
+      "seed": 41102,
+      "regime": "shift-return",
+      "turns": 128,
+      "tail_steps": 15,
+      "offset": 0,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "baseline_score": 0.4778645833333333,
+      "candidate_score": 0.5091145833333334,
+      "delta": 0.031250000000000056,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "ego",
+      "seed": 41101,
+      "regime": "outside",
+      "turns": 128,
+      "tail_steps": 15,
+      "offset": 0,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "baseline_score": 0.4674479166666667,
+      "candidate_score": 0.5520833333333334,
+      "delta": 0.08463541666666669,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "ego",
+      "seed": 41101,
+      "regime": "shift-return",
+      "turns": 128,
+      "tail_steps": 15,
+      "offset": 0,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "baseline_score": 0.5833333333333334,
+      "candidate_score": 0.58984375,
+      "delta": 0.00651041666666663,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "ego",
+      "seed": 41102,
+      "regime": "outside",
+      "turns": 128,
+      "tail_steps": 15,
+      "offset": 0,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "baseline_score": 0.5338541666666666,
+      "candidate_score": 0.5481770833333334,
+      "delta": 0.01432291666666674,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "ego",
+      "seed": 41102,
+      "regime": "shift-return",
+      "turns": 128,
+      "tail_steps": 15,
+      "offset": 0,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "baseline_score": 0.5403645833333334,
+      "candidate_score": 0.50390625,
+      "delta": -0.03645833333333337,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    }
+  ],
+  "summaries": [
+    {
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "game": "resources",
+      "group_by": "all",
+      "group": "all",
+      "pairs": 8,
+      "world_seeds": 2,
+      "mean_delta": 0.02278645833333335,
+      "worst": -0.03645833333333337,
+      "better": 6,
+      "same": 0,
+      "worse": 2,
+      "seed_cluster_percentile_95": [
+        0.005859375000000042,
+        0.03971354166666666
+      ]
+    },
+    {
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "game": "resources",
+      "group_by": "profile",
+      "group": "care",
+      "pairs": 4,
+      "world_seeds": 2,
+      "mean_delta": 0.028320312500000028,
+      "worst": -0.01302083333333337,
+      "better": 3,
+      "same": 0,
+      "worse": 1,
+      "seed_cluster_percentile_95": [
+        0.022786458333333398,
+        0.03385416666666666
+      ]
+    },
+    {
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "game": "resources",
+      "group_by": "profile",
+      "group": "ego",
+      "pairs": 4,
+      "world_seeds": 2,
+      "mean_delta": 0.01725260416666667,
+      "worst": -0.03645833333333337,
+      "better": 3,
+      "same": 0,
+      "worse": 1,
+      "seed_cluster_percentile_95": [
+        -0.011067708333333315,
+        0.04557291666666666
+      ]
+    },
+    {
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "game": "resources",
+      "group_by": "regime",
+      "group": "outside",
+      "pairs": 4,
+      "world_seeds": 2,
+      "mean_delta": 0.04850260416666671,
+      "worst": 0.01432291666666674,
+      "better": 4,
+      "same": 0,
+      "worse": 0,
+      "seed_cluster_percentile_95": [
+        0.01432291666666674,
+        0.08268229166666669
+      ]
+    },
+    {
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "game": "resources",
+      "group_by": "regime",
+      "group": "shift-return",
+      "pairs": 4,
+      "world_seeds": 2,
+      "mean_delta": -0.002929687500000014,
+      "worst": -0.03645833333333337,
+      "better": 2,
+      "same": 0,
+      "worse": 2,
+      "seed_cluster_percentile_95": [
+        -0.0032552083333333703,
+        -0.0026041666666666574
+      ]
+    }
+  ],
+  "caveats": [
+    "Only supplied complete studies are included; the caller must verify the full registered study matrix separately.",
+    "Scores are game-defined purpose, not win rate. No pooled cross-game strength score.",
+    "Seed-cluster intervals are descriptive, conditional on these synthetic rules/regimes; few clusters remain weak evidence.",
+    "Unchanged personality axes do not by themselves establish believable behavior or human-level intelligence."
+  ]
+}

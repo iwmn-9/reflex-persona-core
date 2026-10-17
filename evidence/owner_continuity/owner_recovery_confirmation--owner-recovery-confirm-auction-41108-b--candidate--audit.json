@@ -1,0 +1,265 @@
+{
+  "source": "candidate",
+  "source_freeze_verified": true,
+  "checks": {
+    "world_rng_replay": 512,
+    "restored_action_feedback": 512,
+    "physical_replay": 512,
+    "owner_parity": 512,
+    "fixed_axes": 512,
+    "restore": 24
+  },
+  "runs": [
+    {
+      "game": "auction",
+      "profile": "ego",
+      "seed": 41108,
+      "regime": "shift-return",
+      "arm": "receding_recovery",
+      "turns": 128,
+      "executed": 128,
+      "interval": 1,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.245361328125,
+      "final": {
+        "tick": 128,
+        "cash": 1.0,
+        "score": 336.0,
+        "rival": 85.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "bid:3"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bid:2": 29,
+        "bid:4": 10,
+        "bid:1": 39,
+        "bid:3": 33,
+        "bid:0": 17
+      },
+      "forecast_mae": 0.011000364048556224,
+      "forecast_bias": 0.001084796020924434,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.093994140625,
+          "mean_brier": 0.011068602559483
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.024658203125,
+          "mean_brier": 0.15414935915136163
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.0537109375,
+          "mean_brier": 0.08236000632379485
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.071044921875,
+          "mean_brier": 0.10335015223149654
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "seed": 41108,
+      "regime": "shift-return",
+      "arm": "receding_recovery",
+      "turns": 128,
+      "executed": 128,
+      "interval": 1,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.234619140625,
+      "final": {
+        "tick": 128,
+        "cash": 1.0,
+        "score": 335.0,
+        "rival": 95.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "bid:1"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bid:3": 35,
+        "bid:4": 7,
+        "bid:1": 49,
+        "bid:2": 30,
+        "bid:0": 7
+      },
+      "forecast_mae": 0.009847733760017765,
+      "forecast_bias": 0.002443064835206678,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.095703125,
+          "mean_brier": 0.011068602559483
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.017578125,
+          "mean_brier": 0.15414935915136163
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.0419921875,
+          "mean_brier": 0.08236000632379485
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.077392578125,
+          "mean_brier": 0.10335015223149654
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "ego",
+      "seed": 41108,
+      "regime": "outside",
+      "arm": "receding_recovery",
+      "turns": 128,
+      "executed": 128,
+      "interval": 1,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.129150390625,
+      "final": {
+        "tick": 128,
+        "cash": 1.0,
+        "score": 200.0,
+        "rival": 68.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "bid:2"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bid:2": 14,
+        "bid:3": 66,
+        "bid:4": 28,
+        "bid:1": 5,
+        "bid:0": 15
+      },
+      "forecast_mae": 0.007932525384567332,
+      "forecast_bias": -0.004493548897453204,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.03466796875,
+          "mean_brier": 0.06798630726259518
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.02392578125,
+          "mean_brier": 0.007962859677769905
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.022705078125,
+          "mean_brier": 0.0003981336336504912
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.0458984375,
+          "mean_brier": 0.002771395715918369
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "seed": 41108,
+      "regime": "outside",
+      "arm": "receding_recovery",
+      "turns": 128,
+      "executed": 128,
+      "interval": 1,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.125244140625,
+      "final": {
+        "tick": 128,
+        "cash": 1.0,
+        "score": 205.0,
+        "rival": 77.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "bid:3"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bid:3": 70,
+        "bid:4": 24,
+        "bid:0": 10,
+        "bid:2": 17,
+        "bid:1": 7
+      },
+      "forecast_mae": 0.009478567573710354,
+      "forecast_bias": -0.006829837136699957,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.03466796875,
+          "mean_brier": 0.06798630726259518
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.02197265625,
+          "mean_brier": 0.007962859677769905
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.02880859375,
+          "mean_brier": 0.0003981336336504912
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.037841796875,
+          "mean_brier": 0.002771395715918369
+        }
+      ]
+    }
+  ],
+  "comparisons": [],
+  "summaries": [],
+  "trajectory_sha256": "a8fc9d72a7323c1b6dd09c32406b075a0af1f3228511c8d1b9da8ae1b69d93b4",
+  "complete": true,
+  "planned_runs": 4,
+  "completed_runs": 4,
+  "early_stop": null
+}

@@ -1,0 +1,981 @@
+{
+  "sources": [
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-confirm-auction-41102-a\\candidate",
+      "trajectory_sha256": "c4f84e9c4fb053d3dd2098ca184494c6f42a024dc178780ea3d448d7085330fa",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "confirmation",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-confirm-auction-41102-a\\baseline",
+      "trajectory_sha256": "0a6d1c2de94e5ff82b69b8a958746031c84770a4640dc4deed065ec3d731557e",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "confirmation",
+      "runs": 8
+    }
+  ],
+  "pairs": [
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41102,
+      "regime": "outside",
+      "turns": 128,
+      "baseline": "endpoint@7",
+      "candidate": "receding_recovery@1",
+      "total_delta": 0.1357421875,
+      "before_last_forecast_window": 0.1025390625,
+      "last_forecast_window_delta": 0.033203125,
+      "baseline_executed": 128,
+      "candidate_executed": 128,
+      "phases": [
+        {
+          "phase": 0,
+          "start": 0,
+          "end": 64,
+          "half": "early",
+          "purpose_gain_delta": 0.060791015625,
+          "baseline_decisions": 64,
+          "candidate_decisions": 64,
+          "baseline_brier": 0.0253161480585732,
+          "candidate_brier": 0.019373524709985265
+        },
+        {
+          "phase": 0,
+          "start": 64,
+          "end": 128,
+          "half": "late",
+          "purpose_gain_delta": 0.074951171875,
+          "baseline_decisions": 64,
+          "candidate_decisions": 64,
+          "baseline_brier": 0.004266466028280586,
+          "candidate_brier": 0.0018010764127564206
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41102,
+      "regime": "outside",
+      "turns": 128,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "total_delta": 0.1357421875,
+      "before_last_forecast_window": 0.1025390625,
+      "last_forecast_window_delta": 0.033203125,
+      "baseline_executed": 128,
+      "candidate_executed": 128,
+      "phases": [
+        {
+          "phase": 0,
+          "start": 0,
+          "end": 64,
+          "half": "early",
+          "purpose_gain_delta": 0.060791015625,
+          "baseline_decisions": 64,
+          "candidate_decisions": 64,
+          "baseline_brier": 0.019373524709985265,
+          "candidate_brier": 0.019373524709985265
+        },
+        {
+          "phase": 0,
+          "start": 64,
+          "end": 128,
+          "half": "late",
+          "purpose_gain_delta": 0.074951171875,
+          "baseline_decisions": 64,
+          "candidate_decisions": 64,
+          "baseline_brier": 0.0018010764127564206,
+          "candidate_brier": 0.0018010764127564206
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41102,
+      "regime": "shift-return",
+      "turns": 128,
+      "baseline": "endpoint@7",
+      "candidate": "receding_recovery@1",
+      "total_delta": 0.0166015625,
+      "before_last_forecast_window": 0.0166015625,
+      "last_forecast_window_delta": 0.0,
+      "baseline_executed": 128,
+      "candidate_executed": 128,
+      "phases": [
+        {
+          "phase": 0,
+          "start": 0,
+          "end": 16,
+          "half": "early",
+          "purpose_gain_delta": 0.000244140625,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.08717601976368235,
+          "candidate_brier": 0.08553252611982745
+        },
+        {
+          "phase": 0,
+          "start": 16,
+          "end": 32,
+          "half": "late",
+          "purpose_gain_delta": -0.006103515625,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.0030527255937030733,
+          "candidate_brier": 0.01966178115187359
+        },
+        {
+          "phase": 1,
+          "start": 32,
+          "end": 48,
+          "half": "early",
+          "purpose_gain_delta": -0.002685546875,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.48016228992121845,
+          "candidate_brier": 0.31725482477237676
+        },
+        {
+          "phase": 1,
+          "start": 48,
+          "end": 64,
+          "half": "late",
+          "purpose_gain_delta": 0.00439453125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.01692725870492453,
+          "candidate_brier": 0.023608125861665767
+        },
+        {
+          "phase": 2,
+          "start": 64,
+          "end": 80,
+          "half": "early",
+          "purpose_gain_delta": 0.007080078125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.16775114877033873,
+          "candidate_brier": 0.16576903140699395
+        },
+        {
+          "phase": 2,
+          "start": 80,
+          "end": 96,
+          "half": "late",
+          "purpose_gain_delta": 0.010009765625,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.002671271744940463,
+          "candidate_brier": 0.00610260066313133
+        },
+        {
+          "phase": 3,
+          "start": 96,
+          "end": 112,
+          "half": "early",
+          "purpose_gain_delta": 0.003662109375,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.14923267470692017,
+          "candidate_brier": 0.11729520978868686
+        },
+        {
+          "phase": 3,
+          "start": 112,
+          "end": 128,
+          "half": "late",
+          "purpose_gain_delta": 0.0,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.0009968716566875805,
+          "candidate_brier": 0.00540526604621196
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41102,
+      "regime": "shift-return",
+      "turns": 128,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "total_delta": 0.0498046875,
+      "before_last_forecast_window": 0.0498046875,
+      "last_forecast_window_delta": 0.0,
+      "baseline_executed": 128,
+      "candidate_executed": 128,
+      "phases": [
+        {
+          "phase": 0,
+          "start": 0,
+          "end": 16,
+          "half": "early",
+          "purpose_gain_delta": 0.00146484375,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.08553252611982745,
+          "candidate_brier": 0.08553252611982745
+        },
+        {
+          "phase": 0,
+          "start": 16,
+          "end": 32,
+          "half": "late",
+          "purpose_gain_delta": 0.00048828125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.01966178115187359,
+          "candidate_brier": 0.01966178115187359
+        },
+        {
+          "phase": 1,
+          "start": 32,
+          "end": 48,
+          "half": "early",
+          "purpose_gain_delta": 0.005126953125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.31725482477237676,
+          "candidate_brier": 0.31725482477237676
+        },
+        {
+          "phase": 1,
+          "start": 48,
+          "end": 64,
+          "half": "late",
+          "purpose_gain_delta": 0.00634765625,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.023608125861665767,
+          "candidate_brier": 0.023608125861665767
+        },
+        {
+          "phase": 2,
+          "start": 64,
+          "end": 80,
+          "half": "early",
+          "purpose_gain_delta": 0.0263671875,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.16576903140699395,
+          "candidate_brier": 0.16576903140699395
+        },
+        {
+          "phase": 2,
+          "start": 80,
+          "end": 96,
+          "half": "late",
+          "purpose_gain_delta": 0.01025390625,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.00610260066313133,
+          "candidate_brier": 0.00610260066313133
+        },
+        {
+          "phase": 3,
+          "start": 96,
+          "end": 112,
+          "half": "early",
+          "purpose_gain_delta": -0.000244140625,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.11729520978868686,
+          "candidate_brier": 0.11729520978868686
+        },
+        {
+          "phase": 3,
+          "start": 112,
+          "end": 128,
+          "half": "late",
+          "purpose_gain_delta": 0.0,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.00540526604621196,
+          "candidate_brier": 0.00540526604621196
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41102,
+      "regime": "outside",
+      "turns": 128,
+      "baseline": "endpoint@7",
+      "candidate": "receding_recovery@1",
+      "total_delta": 0.030517578125,
+      "before_last_forecast_window": 0.021728515625,
+      "last_forecast_window_delta": 0.0087890625,
+      "baseline_executed": 128,
+      "candidate_executed": 128,
+      "phases": [
+        {
+          "phase": 0,
+          "start": 0,
+          "end": 64,
+          "half": "early",
+          "purpose_gain_delta": 0.010986328125,
+          "baseline_decisions": 64,
+          "candidate_decisions": 64,
+          "baseline_brier": 0.0253161480585732,
+          "candidate_brier": 0.019373524709985265
+        },
+        {
+          "phase": 0,
+          "start": 64,
+          "end": 128,
+          "half": "late",
+          "purpose_gain_delta": 0.01953125,
+          "baseline_decisions": 64,
+          "candidate_decisions": 64,
+          "baseline_brier": 0.004266466028280586,
+          "candidate_brier": 0.0018010764127564206
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41102,
+      "regime": "outside",
+      "turns": 128,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "total_delta": 0.034423828125,
+      "before_last_forecast_window": 0.028564453125,
+      "last_forecast_window_delta": 0.005859375,
+      "baseline_executed": 128,
+      "candidate_executed": 128,
+      "phases": [
+        {
+          "phase": 0,
+          "start": 0,
+          "end": 64,
+          "half": "early",
+          "purpose_gain_delta": 0.010986328125,
+          "baseline_decisions": 64,
+          "candidate_decisions": 64,
+          "baseline_brier": 0.019373524709985265,
+          "candidate_brier": 0.019373524709985265
+        },
+        {
+          "phase": 0,
+          "start": 64,
+          "end": 128,
+          "half": "late",
+          "purpose_gain_delta": 0.0234375,
+          "baseline_decisions": 64,
+          "candidate_decisions": 64,
+          "baseline_brier": 0.0018010764127564206,
+          "candidate_brier": 0.0018010764127564206
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41102,
+      "regime": "shift-return",
+      "turns": 128,
+      "baseline": "endpoint@7",
+      "candidate": "receding_recovery@1",
+      "total_delta": -0.014892578125,
+      "before_last_forecast_window": -0.013916015625,
+      "last_forecast_window_delta": -0.0009765625,
+      "baseline_executed": 128,
+      "candidate_executed": 128,
+      "phases": [
+        {
+          "phase": 0,
+          "start": 0,
+          "end": 16,
+          "half": "early",
+          "purpose_gain_delta": 0.0126953125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.08717601976368235,
+          "candidate_brier": 0.08553252611982745
+        },
+        {
+          "phase": 0,
+          "start": 16,
+          "end": 32,
+          "half": "late",
+          "purpose_gain_delta": -0.007080078125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.0030527255937030733,
+          "candidate_brier": 0.01966178115187359
+        },
+        {
+          "phase": 1,
+          "start": 32,
+          "end": 48,
+          "half": "early",
+          "purpose_gain_delta": -0.0048828125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.48016228992121845,
+          "candidate_brier": 0.31725482477237676
+        },
+        {
+          "phase": 1,
+          "start": 48,
+          "end": 64,
+          "half": "late",
+          "purpose_gain_delta": -0.0185546875,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.01692725870492453,
+          "candidate_brier": 0.023608125861665767
+        },
+        {
+          "phase": 2,
+          "start": 64,
+          "end": 80,
+          "half": "early",
+          "purpose_gain_delta": -0.00634765625,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.16775114877033873,
+          "candidate_brier": 0.16576903140699395
+        },
+        {
+          "phase": 2,
+          "start": 80,
+          "end": 96,
+          "half": "late",
+          "purpose_gain_delta": 0.00830078125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.002671271744940463,
+          "candidate_brier": 0.00610260066313133
+        },
+        {
+          "phase": 3,
+          "start": 96,
+          "end": 112,
+          "half": "early",
+          "purpose_gain_delta": 0.001953125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.14923267470692017,
+          "candidate_brier": 0.11729520978868686
+        },
+        {
+          "phase": 3,
+          "start": 112,
+          "end": 128,
+          "half": "late",
+          "purpose_gain_delta": -0.0009765625,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.0009968716566875805,
+          "candidate_brier": 0.00540526604621196
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41102,
+      "regime": "shift-return",
+      "turns": 128,
+      "baseline": "endpoint_posterior@7",
+      "candidate": "receding_recovery@1",
+      "total_delta": -0.007080078125,
+      "before_last_forecast_window": -0.008056640625,
+      "last_forecast_window_delta": 0.0009765625,
+      "baseline_executed": 128,
+      "candidate_executed": 128,
+      "phases": [
+        {
+          "phase": 0,
+          "start": 0,
+          "end": 16,
+          "half": "early",
+          "purpose_gain_delta": 0.00927734375,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.08553252611982745,
+          "candidate_brier": 0.08553252611982745
+        },
+        {
+          "phase": 0,
+          "start": 16,
+          "end": 32,
+          "half": "late",
+          "purpose_gain_delta": -0.005615234375,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.01966178115187359,
+          "candidate_brier": 0.01966178115187359
+        },
+        {
+          "phase": 1,
+          "start": 32,
+          "end": 48,
+          "half": "early",
+          "purpose_gain_delta": -0.005859375,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.31725482477237676,
+          "candidate_brier": 0.31725482477237676
+        },
+        {
+          "phase": 1,
+          "start": 48,
+          "end": 64,
+          "half": "late",
+          "purpose_gain_delta": -0.00390625,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.023608125861665767,
+          "candidate_brier": 0.023608125861665767
+        },
+        {
+          "phase": 2,
+          "start": 64,
+          "end": 80,
+          "half": "early",
+          "purpose_gain_delta": -0.002685546875,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.16576903140699395,
+          "candidate_brier": 0.16576903140699395
+        },
+        {
+          "phase": 2,
+          "start": 80,
+          "end": 96,
+          "half": "late",
+          "purpose_gain_delta": 0.001220703125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.00610260066313133,
+          "candidate_brier": 0.00610260066313133
+        },
+        {
+          "phase": 3,
+          "start": 96,
+          "end": 112,
+          "half": "early",
+          "purpose_gain_delta": -0.00048828125,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.11729520978868686,
+          "candidate_brier": 0.11729520978868686
+        },
+        {
+          "phase": 3,
+          "start": 112,
+          "end": 128,
+          "half": "late",
+          "purpose_gain_delta": 0.0009765625,
+          "baseline_decisions": 16,
+          "candidate_decisions": 16,
+          "baseline_brier": 0.00540526604621196,
+          "candidate_brier": 0.00540526604621196
+        }
+      ]
+    }
+  ],
+  "profile_regime_groups": [
+    {
+      "game": "auction",
+      "profile": "growth",
+      "regime": "outside",
+      "baseline": "endpoint@7",
+      "world_seeds": 1,
+      "mean_delta": 0.1357421875,
+      "losses": 0,
+      "mean_before_last_window": 0.1025390625,
+      "mean_last_window": 0.033203125,
+      "phases": [
+        {
+          "phase": 0,
+          "half": "early",
+          "start": 0,
+          "end": 64,
+          "mean_gain_delta": 0.060791015625
+        },
+        {
+          "phase": 0,
+          "half": "late",
+          "start": 64,
+          "end": 128,
+          "mean_gain_delta": 0.074951171875
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "regime": "outside",
+      "baseline": "endpoint_posterior@7",
+      "world_seeds": 1,
+      "mean_delta": 0.1357421875,
+      "losses": 0,
+      "mean_before_last_window": 0.1025390625,
+      "mean_last_window": 0.033203125,
+      "phases": [
+        {
+          "phase": 0,
+          "half": "early",
+          "start": 0,
+          "end": 64,
+          "mean_gain_delta": 0.060791015625
+        },
+        {
+          "phase": 0,
+          "half": "late",
+          "start": 64,
+          "end": 128,
+          "mean_gain_delta": 0.074951171875
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "regime": "shift-return",
+      "baseline": "endpoint@7",
+      "world_seeds": 1,
+      "mean_delta": 0.0166015625,
+      "losses": 0,
+      "mean_before_last_window": 0.0166015625,
+      "mean_last_window": 0.0,
+      "phases": [
+        {
+          "phase": 0,
+          "half": "early",
+          "start": 0,
+          "end": 16,
+          "mean_gain_delta": 0.000244140625
+        },
+        {
+          "phase": 0,
+          "half": "late",
+          "start": 16,
+          "end": 32,
+          "mean_gain_delta": -0.006103515625
+        },
+        {
+          "phase": 1,
+          "half": "early",
+          "start": 32,
+          "end": 48,
+          "mean_gain_delta": -0.002685546875
+        },
+        {
+          "phase": 1,
+          "half": "late",
+          "start": 48,
+          "end": 64,
+          "mean_gain_delta": 0.00439453125
+        },
+        {
+          "phase": 2,
+          "half": "early",
+          "start": 64,
+          "end": 80,
+          "mean_gain_delta": 0.007080078125
+        },
+        {
+          "phase": 2,
+          "half": "late",
+          "start": 80,
+          "end": 96,
+          "mean_gain_delta": 0.010009765625
+        },
+        {
+          "phase": 3,
+          "half": "early",
+          "start": 96,
+          "end": 112,
+          "mean_gain_delta": 0.003662109375
+        },
+        {
+          "phase": 3,
+          "half": "late",
+          "start": 112,
+          "end": 128,
+          "mean_gain_delta": 0.0
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "regime": "shift-return",
+      "baseline": "endpoint_posterior@7",
+      "world_seeds": 1,
+      "mean_delta": 0.0498046875,
+      "losses": 0,
+      "mean_before_last_window": 0.0498046875,
+      "mean_last_window": 0.0,
+      "phases": [
+        {
+          "phase": 0,
+          "half": "early",
+          "start": 0,
+          "end": 16,
+          "mean_gain_delta": 0.00146484375
+        },
+        {
+          "phase": 0,
+          "half": "late",
+          "start": 16,
+          "end": 32,
+          "mean_gain_delta": 0.00048828125
+        },
+        {
+          "phase": 1,
+          "half": "early",
+          "start": 32,
+          "end": 48,
+          "mean_gain_delta": 0.005126953125
+        },
+        {
+          "phase": 1,
+          "half": "late",
+          "start": 48,
+          "end": 64,
+          "mean_gain_delta": 0.00634765625
+        },
+        {
+          "phase": 2,
+          "half": "early",
+          "start": 64,
+          "end": 80,
+          "mean_gain_delta": 0.0263671875
+        },
+        {
+          "phase": 2,
+          "half": "late",
+          "start": 80,
+          "end": 96,
+          "mean_gain_delta": 0.01025390625
+        },
+        {
+          "phase": 3,
+          "half": "early",
+          "start": 96,
+          "end": 112,
+          "mean_gain_delta": -0.000244140625
+        },
+        {
+          "phase": 3,
+          "half": "late",
+          "start": 112,
+          "end": 128,
+          "mean_gain_delta": 0.0
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "regime": "outside",
+      "baseline": "endpoint@7",
+      "world_seeds": 1,
+      "mean_delta": 0.030517578125,
+      "losses": 0,
+      "mean_before_last_window": 0.021728515625,
+      "mean_last_window": 0.0087890625,
+      "phases": [
+        {
+          "phase": 0,
+          "half": "early",
+          "start": 0,
+          "end": 64,
+          "mean_gain_delta": 0.010986328125
+        },
+        {
+          "phase": 0,
+          "half": "late",
+          "start": 64,
+          "end": 128,
+          "mean_gain_delta": 0.01953125
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "regime": "outside",
+      "baseline": "endpoint_posterior@7",
+      "world_seeds": 1,
+      "mean_delta": 0.034423828125,
+      "losses": 0,
+      "mean_before_last_window": 0.028564453125,
+      "mean_last_window": 0.005859375,
+      "phases": [
+        {
+          "phase": 0,
+          "half": "early",
+          "start": 0,
+          "end": 64,
+          "mean_gain_delta": 0.010986328125
+        },
+        {
+          "phase": 0,
+          "half": "late",
+          "start": 64,
+          "end": 128,
+          "mean_gain_delta": 0.0234375
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "regime": "shift-return",
+      "baseline": "endpoint@7",
+      "world_seeds": 1,
+      "mean_delta": -0.014892578125,
+      "losses": 1,
+      "mean_before_last_window": -0.013916015625,
+      "mean_last_window": -0.0009765625,
+      "phases": [
+        {
+          "phase": 0,
+          "half": "early",
+          "start": 0,
+          "end": 16,
+          "mean_gain_delta": 0.0126953125
+        },
+        {
+          "phase": 0,
+          "half": "late",
+          "start": 16,
+          "end": 32,
+          "mean_gain_delta": -0.007080078125
+        },
+        {
+          "phase": 1,
+          "half": "early",
+          "start": 32,
+          "end": 48,
+          "mean_gain_delta": -0.0048828125
+        },
+        {
+          "phase": 1,
+          "half": "late",
+          "start": 48,
+          "end": 64,
+          "mean_gain_delta": -0.0185546875
+        },
+        {
+          "phase": 2,
+          "half": "early",
+          "start": 64,
+          "end": 80,
+          "mean_gain_delta": -0.00634765625
+        },
+        {
+          "phase": 2,
+          "half": "late",
+          "start": 80,
+          "end": 96,
+          "mean_gain_delta": 0.00830078125
+        },
+        {
+          "phase": 3,
+          "half": "early",
+          "start": 96,
+          "end": 112,
+          "mean_gain_delta": 0.001953125
+        },
+        {
+          "phase": 3,
+          "half": "late",
+          "start": 112,
+          "end": 128,
+          "mean_gain_delta": -0.0009765625
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "regime": "shift-return",
+      "baseline": "endpoint_posterior@7",
+      "world_seeds": 1,
+      "mean_delta": -0.007080078125,
+      "losses": 1,
+      "mean_before_last_window": -0.008056640625,
+      "mean_last_window": 0.0009765625,
+      "phases": [
+        {
+          "phase": 0,
+          "half": "early",
+          "start": 0,
+          "end": 16,
+          "mean_gain_delta": 0.00927734375
+        },
+        {
+          "phase": 0,
+          "half": "late",
+          "start": 16,
+          "end": 32,
+          "mean_gain_delta": -0.005615234375
+        },
+        {
+          "phase": 1,
+          "half": "early",
+          "start": 32,
+          "end": 48,
+          "mean_gain_delta": -0.005859375
+        },
+        {
+          "phase": 1,
+          "half": "late",
+          "start": 48,
+          "end": 64,
+          "mean_gain_delta": -0.00390625
+        },
+        {
+          "phase": 2,
+          "half": "early",
+          "start": 64,
+          "end": 80,
+          "mean_gain_delta": -0.002685546875
+        },
+        {
+          "phase": 2,
+          "half": "late",
+          "start": 80,
+          "end": 96,
+          "mean_gain_delta": 0.001220703125
+        },
+        {
+          "phase": 3,
+          "half": "early",
+          "start": 96,
+          "end": 112,
+          "mean_gain_delta": -0.00048828125
+        },
+        {
+          "phase": 3,
+          "half": "late",
+          "start": 112,
+          "end": 128,
+          "mean_gain_delta": 0.0009765625
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Post-hoc explanation, not an independent confirmation or a causal estimate of learning.",
+    "Phase scores also reflect resources and injuries inherited from earlier decisions.",
+    "Fewer than two world seeds cannot establish systematic behavior.",
+    "A settled terminal score is carried forward; no post-terminal predictions are invented.",
+    "Improvement before the final forecast window is not proof for an unbounded world."
+  ]
+}

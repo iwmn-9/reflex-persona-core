@@ -1,0 +1,847 @@
+{
+  "sources": [
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-confirm-auction-41101-a\\candidate",
+      "trajectory_sha256": "1f0d04e0b8f0663a0be1c1d7123042aca8d36516bc0a4154dd7ea7191e840b76",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "confirmation",
+      "runs": 4
+    }
+  ],
+  "replay": "results\\owner_recovery_confirmation\\auction_41101_a_continuation.json",
+  "replay_sha256": "afa541b380bc782510378575d630e9fdfed81ceaf56c98d7975eb149bd7ff927",
+  "rule_sha256": "7d3fbc805578c24015db92f9c31821427a44f2a9e8b2befa1755084b809c6bde",
+  "runs": [
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41101,
+      "regime": "shift-return",
+      "arm": "receding_recovery",
+      "interval": 1,
+      "cases": [
+        {
+          "tick": 0,
+          "purpose_delta": 0.00244140625,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 1.5159775448452042,
+              "strongest_value": -0.5612106981292909,
+              "purpose": 0.062744140625,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 1.4193714967137347,
+              "strongest_value": -0.5594776742458207,
+              "purpose": 0.060302734375,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 16,
+          "purpose_delta": -0.000244140625,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.17545509973972911,
+              "strongest_value": 0.0490202115837824,
+              "purpose": 0.127685546875,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.21689885249458984,
+              "strongest_value": 0.07141617130057927,
+              "purpose": 0.1279296875,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 32,
+          "purpose_delta": -0.0029296875,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.3660253730093524,
+              "strongest_value": 0.28023746767152197,
+              "purpose": 0.1279296875,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.32285919313969913,
+              "strongest_value": 0.2507523126558692,
+              "purpose": 0.130859375,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 48,
+          "purpose_delta": -0.0029296875,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.46008946838455556,
+              "strongest_value": -0.09809395257867234,
+              "purpose": 0.149658203125,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.39411255642359516,
+              "strongest_value": -0.30522703026627357,
+              "purpose": 0.152587890625,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 64,
+          "purpose_delta": -0.00537109375,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.6421185523314821,
+              "strongest_value": -0.3601684800152092,
+              "purpose": 0.185791015625,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.5871466628389407,
+              "strongest_value": -0.4896054203748957,
+              "purpose": 0.191162109375,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 80,
+          "purpose_delta": -0.0068359375,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": -0.28631546815921083,
+              "strongest_value": -0.10100804072674459,
+              "purpose": 0.20751953125,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.0021212038271816967,
+              "strongest_value": -0.02159955356261991,
+              "purpose": 0.21435546875,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 96,
+          "purpose_delta": 0.00537109375,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": -0.5973934336237846,
+              "strongest_value": -0.24780509550234014,
+              "purpose": 0.274169921875,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": -0.2281857113496112,
+              "strongest_value": -0.14227094969738507,
+              "purpose": 0.268798828125,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 112,
+          "purpose_delta": 0.00537109375,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.25866517251943366,
+              "strongest_value": 0.0907614909477683,
+              "purpose": 0.32080078125,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.23988525079715747,
+              "strongest_value": 0.08017960448313517,
+              "purpose": 0.3154296875,
+              "purpose_eligible": false
+            }
+          }
+        }
+      ],
+      "selected_counts": {
+        "actual": 3,
+        "reference": 5
+      },
+      "purpose_losing_windows": [
+        {
+          "tick": 16,
+          "delta": -0.000244140625,
+          "selected": "reference"
+        },
+        {
+          "tick": 32,
+          "delta": -0.0029296875,
+          "selected": "reference"
+        },
+        {
+          "tick": 48,
+          "delta": -0.0029296875,
+          "selected": "reference"
+        },
+        {
+          "tick": 64,
+          "delta": -0.00537109375,
+          "selected": "reference"
+        },
+        {
+          "tick": 80,
+          "delta": -0.0068359375,
+          "selected": "reference"
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41101,
+      "regime": "outside",
+      "arm": "receding_recovery",
+      "interval": 1,
+      "cases": [
+        {
+          "tick": 0,
+          "purpose_delta": -0.006103515625,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.26053209082995127,
+              "strongest_value": -0.21963275644158742,
+              "purpose": 0.012939453125,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.3189314566846825,
+              "strongest_value": -0.25061241029518716,
+              "purpose": 0.01904296875,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 16,
+          "purpose_delta": -0.0029296875,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.05797563618815836,
+              "strongest_value": 0.061073038083631154,
+              "purpose": 0.023193359375,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.0503504158880568,
+              "strongest_value": 0.061073038083631154,
+              "purpose": 0.026123046875,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 32,
+          "purpose_delta": 0.004150390625,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.45516863096270443,
+              "strongest_value": -0.2616972043637458,
+              "purpose": 0.039794921875,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.44389444134982137,
+              "strongest_value": -0.2888492023621141,
+              "purpose": 0.03564453125,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 48,
+          "purpose_delta": -0.0126953125,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.20558610719772968,
+              "strongest_value": -0.006549652670590871,
+              "purpose": 0.0478515625,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.23198055627384595,
+              "strongest_value": -0.1012462603319014,
+              "purpose": 0.060546875,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 64,
+          "purpose_delta": 0.0009765625,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.6029559180126706,
+              "strongest_value": -0.16807624365664334,
+              "purpose": 0.073974609375,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.45387524700852905,
+              "strongest_value": -0.3076932973797189,
+              "purpose": 0.072998046875,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 80,
+          "purpose_delta": -0.009521484375,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.2194560412092581,
+              "strongest_value": -0.0071503173844033215,
+              "purpose": 0.0849609375,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.28729546157688224,
+              "strongest_value": -0.0660681205835955,
+              "purpose": 0.094482421875,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 96,
+          "purpose_delta": -0.013427734375,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.2855205537202574,
+              "strongest_value": -0.3133358439455672,
+              "purpose": 0.10107421875,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.4145229050611043,
+              "strongest_value": -0.3654528529505981,
+              "purpose": 0.114501953125,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 112,
+          "purpose_delta": 0.010009765625,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.46773442703085144,
+              "strongest_value": 0.12033816082853993,
+              "purpose": 0.135009765625,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.43488182459753655,
+              "strongest_value": 0.11890196090452212,
+              "purpose": 0.125,
+              "purpose_eligible": false
+            }
+          }
+        }
+      ],
+      "selected_counts": {
+        "reference": 5,
+        "actual": 3
+      },
+      "purpose_losing_windows": [
+        {
+          "tick": 0,
+          "delta": -0.006103515625,
+          "selected": "reference"
+        },
+        {
+          "tick": 16,
+          "delta": -0.0029296875,
+          "selected": "reference"
+        },
+        {
+          "tick": 48,
+          "delta": -0.0126953125,
+          "selected": "reference"
+        },
+        {
+          "tick": 80,
+          "delta": -0.009521484375,
+          "selected": "reference"
+        },
+        {
+          "tick": 96,
+          "delta": -0.013427734375,
+          "selected": "reference"
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41101,
+      "regime": "shift-return",
+      "arm": "receding_recovery",
+      "interval": 1,
+      "cases": [
+        {
+          "tick": 0,
+          "purpose_delta": -0.00146484375,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 1.637054194826977,
+              "strongest_value": 2.126960537849198,
+              "purpose": 0.061279296875,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 1.7208068037678936,
+              "strongest_value": 2.182897467569584,
+              "purpose": 0.062744140625,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 16,
+          "purpose_delta": 0.00146484375,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.41026027647364804,
+              "strongest_value": 1.446553322606454,
+              "purpose": 0.127685546875,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.38980514864608423,
+              "strongest_value": 1.440318658353035,
+              "purpose": 0.126220703125,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 32,
+          "purpose_delta": -0.0078125,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": -0.2552334648141418,
+              "strongest_value": -0.9834450071908808,
+              "purpose": 0.12255859375,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": -0.2913612175925128,
+              "strongest_value": -0.8279280291179467,
+              "purpose": 0.13037109375,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 48,
+          "purpose_delta": 0.00927734375,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 1.5197143555888388,
+              "strongest_value": 1.171178629183196,
+              "purpose": 0.143310546875,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 1.200042830918572,
+              "strongest_value": 0.9872446185076192,
+              "purpose": 0.134033203125,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 64,
+          "purpose_delta": -0.003173828125,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 1.0421496429024435,
+              "strongest_value": 1.3110755391221063,
+              "purpose": 0.165283203125,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 1.0752448560752448,
+              "strongest_value": 1.3569540266569775,
+              "purpose": 0.16845703125,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 80,
+          "purpose_delta": 0.006591796875,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 1.2419306795330096,
+              "strongest_value": 1.1074339050022959,
+              "purpose": 0.194580078125,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 1.2801643181190459,
+              "strongest_value": 1.1209776114634993,
+              "purpose": 0.18798828125,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 96,
+          "purpose_delta": 0.0,
+          "hindsight_selected": "tie",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 1.8720893765567983,
+              "strongest_value": 1.6183741525148239,
+              "purpose": 0.263916015625,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 1.8720893765567983,
+              "strongest_value": 1.6183741525148239,
+              "purpose": 0.263916015625,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 112,
+          "purpose_delta": -0.000732421875,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.4497648035199837,
+              "strongest_value": 1.2218154568420145,
+              "purpose": 0.30615234375,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.3915003777291848,
+              "strongest_value": 1.2652684030682684,
+              "purpose": 0.306884765625,
+              "purpose_eligible": true
+            }
+          }
+        }
+      ],
+      "selected_counts": {
+        "reference": 4,
+        "actual": 3,
+        "tie": 1
+      },
+      "purpose_losing_windows": [
+        {
+          "tick": 0,
+          "delta": -0.00146484375,
+          "selected": "reference"
+        },
+        {
+          "tick": 32,
+          "delta": -0.0078125,
+          "selected": "reference"
+        },
+        {
+          "tick": 64,
+          "delta": -0.003173828125,
+          "selected": "reference"
+        },
+        {
+          "tick": 112,
+          "delta": -0.000732421875,
+          "selected": "reference"
+        }
+      ]
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41101,
+      "regime": "outside",
+      "arm": "receding_recovery",
+      "interval": 1,
+      "cases": [
+        {
+          "tick": 0,
+          "purpose_delta": 0.026611328125,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 1.055950511934847,
+              "strongest_value": 1.2749664794463171,
+              "purpose": 0.024169921875,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.7741366167861148,
+              "strongest_value": 0.8643446333930374,
+              "purpose": -0.00244140625,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 16,
+          "purpose_delta": -0.0068359375,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.16918673176445256,
+              "strongest_value": 0.10146545637281447,
+              "purpose": 0.019775390625,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.20452086502998518,
+              "strongest_value": 0.1714482243100311,
+              "purpose": 0.026611328125,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 32,
+          "purpose_delta": 0.007080078125,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.1196053599994461,
+              "strongest_value": 0.800246838172249,
+              "purpose": 0.028076171875,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.11736378059961469,
+              "strongest_value": 0.7966615368410483,
+              "purpose": 0.02099609375,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 48,
+          "purpose_delta": -0.002197265625,
+          "hindsight_selected": "reference",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 2.0241786467914418,
+              "strongest_value": 1.1410855389132668,
+              "purpose": 0.0439453125,
+              "purpose_eligible": false
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 2.2258356275272613,
+              "strongest_value": 1.2267910326178515,
+              "purpose": 0.046142578125,
+              "purpose_eligible": true
+            }
+          }
+        },
+        {
+          "tick": 64,
+          "purpose_delta": 0.02099609375,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.7177032454420778,
+              "strongest_value": 0.7175488029118167,
+              "purpose": 0.0546875,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.5410460798857182,
+              "strongest_value": 0.5699927110912576,
+              "purpose": 0.03369140625,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 80,
+          "purpose_delta": 0.011474609375,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.7524974486023561,
+              "strongest_value": 0.6858093479649189,
+              "purpose": 0.0634765625,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.7327874861521744,
+              "strongest_value": 0.6955166797862603,
+              "purpose": 0.052001953125,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 96,
+          "purpose_delta": 0.035888671875,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": 0.5607959828418412,
+              "strongest_value": 0.3335953503734814,
+              "purpose": 0.088134765625,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": 0.274653361345757,
+              "strongest_value": 0.14985835459678404,
+              "purpose": 0.05224609375,
+              "purpose_eligible": false
+            }
+          }
+        },
+        {
+          "tick": 112,
+          "purpose_delta": 0.01171875,
+          "hindsight_selected": "actual",
+          "paths": {
+            "actual": {
+              "tier_eligible": true,
+              "score": -1.6862917453889519,
+              "strongest_value": -0.9960485892272165,
+              "purpose": 0.097900390625,
+              "purpose_eligible": true
+            },
+            "reference": {
+              "tier_eligible": true,
+              "score": -1.7016654316962398,
+              "strongest_value": -0.9730553256836295,
+              "purpose": 0.086181640625,
+              "purpose_eligible": false
+            }
+          }
+        }
+      ],
+      "selected_counts": {
+        "actual": 6,
+        "reference": 2
+      },
+      "purpose_losing_windows": [
+        {
+          "tick": 16,
+          "delta": -0.0068359375,
+          "selected": "reference"
+        },
+        {
+          "tick": 48,
+          "delta": -0.002197265625,
+          "selected": "reference"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    "saved root owner identity",
+    "same realized response sequence",
+    "reproduced endpoint values",
+    "proposal label permutation",
+    "identical paths tie",
+    "no mutation of factual owner"
+  ],
+  "limitations": [
+    "Compare two realized continuations with the SAME root person's full selector.\n\nThis evaluator reads already completed replay paths. It is hindsight, not the\nperson's information at decision time or proof that a sacrifice was intentional.\nThe saved replay is valid only for the benchmark's action-independent responses.\n",
+    "Single realized paths do not estimate their ex-ante risk or expected utility.",
+    "Both paths share the actual root. This does not compare alternative initial actions.",
+    "The decision-time person evaluates the complete paths. Later priorities may legitimately differ."
+  ]
+}

@@ -1,0 +1,502 @@
+{
+  "source": "baseline",
+  "source_freeze_verified": true,
+  "checks": {
+    "world_rng_replay": 1024,
+    "restored_action_feedback": 128,
+    "physical_replay": 1024,
+    "owner_parity": 1024,
+    "fixed_axes": 1024,
+    "restore": 48
+  },
+  "runs": [
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 41102,
+      "regime": "outside",
+      "arm": "endpoint",
+      "turns": 128,
+      "executed": 128,
+      "interval": 8,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.4661458333333333,
+      "final": {
+        "tick": 128,
+        "cash": 187.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "2",
+        "last": "bet:2"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bond": 6,
+        "pass": 1,
+        "bet:2": 115,
+        "bet:0": 6
+      },
+      "forecast_mae": 0.017152836851736852,
+      "forecast_bias": -0.01009323138593899,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.11197916666666667,
+          "mean_brier": 0.028777583616294747
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.11718749999999999,
+          "mean_brier": 0.021854712500851657
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.11979166666666666,
+          "mean_brier": 0.006200259501594659
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.1171875,
+          "mean_brier": 0.0023326725549665138
+        }
+      ]
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 41102,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "turns": 128,
+      "executed": 128,
+      "interval": 8,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.4192708333333333,
+      "final": {
+        "tick": 128,
+        "cash": 169.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "bet:0"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bond": 13,
+        "pass": 3,
+        "bet:0": 66,
+        "bet:2": 20,
+        "bet:1": 26
+      },
+      "forecast_mae": 0.020294965325681258,
+      "forecast_bias": -0.0018188700973082988,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.125,
+          "mean_brier": 0.045114372678692706
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.08333333333333334,
+          "mean_brier": 0.24854477431307154
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.08333333333333334,
+          "mean_brier": 0.08521121025763959
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.12760416666666663,
+          "mean_brier": 0.07511477318180387
+        }
+      ]
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 41102,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "turns": 128,
+      "executed": 128,
+      "interval": 8,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.4557291666666667,
+      "final": {
+        "tick": 128,
+        "cash": 183.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "2",
+        "last": "bet:2"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bond": 5,
+        "pass": 1,
+        "bet:2": 117,
+        "bet:0": 5
+      },
+      "forecast_mae": 0.011119859682947021,
+      "forecast_bias": -0.0020052764291537137,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.1171875,
+          "mean_brier": 0.029836736169605325
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.10677083333333334,
+          "mean_brier": 0.008910313250365202
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.11458333333333334,
+          "mean_brier": 0.0029934556732433473
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.1171875,
+          "mean_brier": 0.000608697152269495
+        }
+      ]
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 41102,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "turns": 128,
+      "executed": 128,
+      "interval": 8,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.4453125,
+      "final": {
+        "tick": 128,
+        "cash": 179.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "bet:0"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bond": 13,
+        "pass": 7,
+        "bet:0": 61,
+        "bet:2": 21,
+        "bet:1": 26
+      },
+      "forecast_mae": 0.017195777398474006,
+      "forecast_bias": -0.0076979722389836054,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.12239583333333333,
+          "mean_brier": 0.05259715363585052
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.09114583333333333,
+          "mean_brier": 0.17043147531702124
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.09635416666666666,
+          "mean_brier": 0.08593581603506263
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.13541666666666669,
+          "mean_brier": 0.0613502379174494
+        }
+      ]
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 41102,
+      "regime": "outside",
+      "arm": "endpoint",
+      "turns": 128,
+      "executed": 128,
+      "interval": 8,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.4713541666666667,
+      "final": {
+        "tick": 128,
+        "cash": 189.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "2",
+        "last": "bet:2"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bond": 6,
+        "bet:2": 116,
+        "bet:0": 6
+      },
+      "forecast_mae": 0.017587292537150356,
+      "forecast_bias": -0.010334172593083064,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.1171875,
+          "mean_brier": 0.028777583616294747
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.1171875,
+          "mean_brier": 0.021854712500851657
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.11979166666666669,
+          "mean_brier": 0.006200259501594659
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.1171875,
+          "mean_brier": 0.0023326725549665138
+        }
+      ]
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 41102,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "turns": 128,
+      "executed": 128,
+      "interval": 8,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.4713541666666667,
+      "final": {
+        "tick": 128,
+        "cash": 189.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "2",
+        "last": "bet:2"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bond": 6,
+        "bet:2": 116,
+        "bet:0": 6
+      },
+      "forecast_mae": 0.01016539559506523,
+      "forecast_bias": -0.0036318854125548658,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.12239583333333333,
+          "mean_brier": 0.029836736169605325
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.11718750000000001,
+          "mean_brier": 0.008910313250365202
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.11458333333333334,
+          "mean_brier": 0.0029934556732433473
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.1171875,
+          "mean_brier": 0.000608697152269495
+        }
+      ]
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 41102,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "turns": 128,
+      "executed": 128,
+      "interval": 8,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.4192708333333333,
+      "final": {
+        "tick": 128,
+        "cash": 169.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "bet:0"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bond": 13,
+        "bet:2": 22,
+        "bet:0": 66,
+        "bet:1": 27
+      },
+      "forecast_mae": 0.01956405537597012,
+      "forecast_bias": -0.0018929430465508624,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.12239583333333333,
+          "mean_brier": 0.045114372678692706
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.08072916666666667,
+          "mean_brier": 0.24854477431307154
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.08854166666666669,
+          "mean_brier": 0.08521121025763959
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.12760416666666663,
+          "mean_brier": 0.07511477318180387
+        }
+      ]
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 41102,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "turns": 128,
+      "executed": 128,
+      "interval": 8,
+      "tail_steps": 15,
+      "offset": 0,
+      "score": 0.4401041666666667,
+      "final": {
+        "tick": 128,
+        "cash": 177.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "bet:0"
+      },
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "actions": {
+        "bond": 13,
+        "bet:2": 23,
+        "bet:0": 61,
+        "pass": 5,
+        "bet:1": 26
+      },
+      "forecast_mae": 0.016771044983887824,
+      "forecast_bias": -0.007288290963977364,
+      "blocks": [
+        {
+          "start": 0,
+          "goal_gain": 0.1171875,
+          "mean_brier": 0.05259715363585052
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.09114583333333334,
+          "mean_brier": 0.17043147531702124
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.09635416666666666,
+          "mean_brier": 0.08593581603506263
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.13541666666666669,
+          "mean_brier": 0.0613502379174494
+        }
+      ]
+    }
+  ],
+  "comparisons": [],
+  "summaries": [],
+  "trajectory_sha256": "92f48597ba0185a4afe3d3bc72701218d566a447ea8b7e69cf0811da19c133be",
+  "complete": true,
+  "planned_runs": 8,
+  "completed_runs": 8,
+  "early_stop": null
+}

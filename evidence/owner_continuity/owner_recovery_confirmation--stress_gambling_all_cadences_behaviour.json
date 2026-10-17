@@ -1,0 +1,1660 @@
+{
+  "sources": [
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-stress-gambling\\candidate",
+      "trajectory_sha256": "39b90c8618106647ec0ddc5914388ecb12ff447ee3ce7eb67c08de32e49a2811",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 2
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-stress-gambling\\baseline",
+      "trajectory_sha256": "5dca052883c22cc6881479ff4d2e180d1b4c12b898eec484cf6a0204b1a32e38",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_periodic_eight\\owner-periodic-eight-stress-gambling\\baseline",
+      "trajectory_sha256": "10e8f08746a77efe247fc835be1d983e14b326e517f27e49b101d310dfe78e49",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 4
+    }
+  ],
+  "runs": [
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "score": 0.5078125,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.046875,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 21
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03645833333333333,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18,
+            "bet:2": 1
+          },
+          "planned": 22
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.050781250000000014,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 4,
+            "bond": 5,
+            "bet:2": 23,
+            "pass": 1
+          },
+          "planned": 33
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.08333333333333331,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bet:2": 29,
+            "bond": 5
+          },
+          "planned": 34
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.05989583333333334,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bet:2": 3,
+            "bet:1": 26,
+            "bond": 4
+          },
+          "planned": 33
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.08203125,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 30,
+            "bond": 3
+          },
+          "planned": 33
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.04296875,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 21,
+            "bond": 4
+          },
+          "planned": 28
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0546875,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 25,
+            "bond": 3
+          },
+          "planned": 28
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.013020833333333315,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bond": 2,
+            "bet:0": 4,
+            "bet:2": 6
+          },
+          "planned": 12
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.037760416666666685,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bet:2": 11,
+            "bond": 1
+          },
+          "planned": 12
+        }
+      ],
+      "actions": {
+        "bond": 33,
+        "bet:0": 90,
+        "bet:2": 73,
+        "pass": 1,
+        "bet:1": 59
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "score": 0.4453125,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.046875,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 21
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03385416666666667,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bond": 4,
+            "bet:0": 17,
+            "bet:2": 1
+          },
+          "planned": 22
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.04427083333333333,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 6,
+            "bet:2": 26,
+            "bet:1": 1
+          },
+          "planned": 33
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06901041666666666,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bet:2": 34
+          },
+          "planned": 34
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0546875,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bet:2": 3,
+            "bet:1": 30
+          },
+          "planned": 33
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.07421875000000003,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 33
+          },
+          "planned": 33
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.03776041666666663,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 25
+          },
+          "planned": 28
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.041666666666666685,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 28
+          },
+          "planned": 28
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.015625,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bet:1": 1,
+            "bet:0": 4,
+            "bet:2": 7
+          },
+          "planned": 12
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.02734375,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bet:2": 12
+          },
+          "planned": 12
+        }
+      ],
+      "actions": {
+        "bond": 7,
+        "bet:0": 98,
+        "bet:2": 83,
+        "bet:1": 68
+      },
+      "mode_changes": 3
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "score": 0.4231770833333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.044270833333333336,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bond": 2,
+            "bet:0": 17,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.041666666666666664,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bet:0": 22
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.02083333333333333,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bet:0": 9,
+            "bond": 3,
+            "bet:2": 14,
+            "pass": 7
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06640625000000001,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bet:2": 30,
+            "bond": 2,
+            "pass": 2
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.05338541666666666,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "bet:2": 2,
+            "bond": 2,
+            "pass": 3,
+            "bet:1": 26
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.061197916666666685,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bet:1": 24,
+            "bond": 5,
+            "pass": 4
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.03385416666666663,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 19,
+            "pass": 3,
+            "bond": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.05078125,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bet:0": 24,
+            "pass": 2,
+            "bond": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.014322916666666685,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bet:0": 5,
+            "pass": 1,
+            "bond": 1,
+            "bet:2": 5
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.036458333333333315,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "pass": 2,
+            "bond": 1,
+            "bet:2": 9
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bond": 21,
+        "bet:0": 96,
+        "pass": 26,
+        "bet:2": 60,
+        "bet:1": 53
+      },
+      "mode_changes": 6
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "score": 0.4440104166666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.046875,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03776041666666667,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bond": 4,
+            "bet:0": 18
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.02734375,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bet:0": 12,
+            "bond": 2,
+            "bet:2": 19
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06380208333333333,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bet:2": 30,
+            "bond": 2,
+            "bet:0": 2
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.05598958333333334,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "bet:2": 2,
+            "bond": 1,
+            "bet:1": 29,
+            "bet:0": 1
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.06640624999999997,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bet:1": 27,
+            "bond": 3,
+            "bet:0": 3
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.033854166666666685,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 21,
+            "bond": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0625,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bet:0": 24,
+            "bond": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.013020833333333315,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bet:0": 6,
+            "bond": 1,
+            "bet:2": 5
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.03645833333333337,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "bet:0": 1,
+            "bet:2": 11
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bond": 24,
+        "bet:0": 106,
+        "bet:2": 67,
+        "bet:1": 59
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "score": 0.4283854166666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.044270833333333336,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 2,
+            "bet:0": 17,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03906249999999999,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bet:0": 21,
+            "pass": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.02734375,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 4,
+            "pass": 6,
+            "bet:2": 19,
+            "bond": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.07161458333333333,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "pass": 4,
+            "bond": 3,
+            "bet:2": 27
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.053385416666666685,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bet:2": 2,
+            "bond": 2,
+            "pass": 3,
+            "bet:1": 26
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.05859374999999997,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 23,
+            "bond": 5,
+            "pass": 5
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 2,
+            "pass": 4,
+            "bet:0": 19,
+            "bond": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0546875,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 25,
+            "pass": 2,
+            "bond": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.0078125,
+          "brier": 0.25872328139051,
+          "actions": {
+            "pass": 3,
+            "bet:0": 2,
+            "bet:2": 6,
+            "bond": 1
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.03645833333333337,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "pass": 2,
+            "bond": 1,
+            "bet:2": 9
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bond": 22,
+        "bet:0": 88,
+        "pass": 32,
+        "bet:2": 63,
+        "bet:1": 51
+      },
+      "mode_changes": 3
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "score": 0.4322916666666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.046875,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03385416666666667,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bond": 4,
+            "bet:0": 17,
+            "bet:2": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.03385416666666666,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 7,
+            "bet:2": 22,
+            "pass": 3,
+            "bond": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06901041666666667,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bet:2": 34
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0546875,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bet:2": 3,
+            "bet:1": 30
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.07421875,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 33
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.037760416666666685,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 25
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.04166666666666663,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 28
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.01302083333333337,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bet:1": 1,
+            "pass": 1,
+            "bet:0": 3,
+            "bet:2": 7
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.02734375,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bet:2": 12
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bond": 8,
+        "bet:0": 98,
+        "bet:2": 79,
+        "pass": 4,
+        "bet:1": 67
+      },
+      "mode_changes": 8
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "score": 0.4466145833333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.037760416666666664,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.049479166666666664,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bet:0": 19,
+            "bond": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.020833333333333343,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bet:0": 12,
+            "bond": 4,
+            "bet:2": 17
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06380208333333333,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bet:2": 30,
+            "bet:0": 2,
+            "bond": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.06901041666666666,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "bet:0": 2,
+            "bet:2": 1,
+            "bond": 1,
+            "bet:1": 29
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.06901041666666666,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bet:1": 29,
+            "bond": 2,
+            "bet:0": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.04036458333333337,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 22,
+            "bond": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.05859375,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bet:0": 25,
+            "bond": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.005208333333333315,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bond": 2,
+            "bet:0": 6,
+            "bet:2": 4
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.032552083333333315,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "bet:2": 11,
+            "bet:0": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bond": 23,
+        "bet:0": 109,
+        "bet:2": 63,
+        "bet:1": 61
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "score": 0.4309895833333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.040364583333333336,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bond": 2,
+            "bet:0": 17,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.036458333333333336,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bet:0": 19,
+            "bond": 2,
+            "pass": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.022135416666666657,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bet:0": 6,
+            "pass": 10,
+            "bond": 4,
+            "bet:2": 13
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06640625000000001,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bet:2": 30,
+            "pass": 2,
+            "bond": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.06640625,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "pass": 5,
+            "bet:2": 1,
+            "bond": 3,
+            "bet:1": 24
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.07031249999999997,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bet:1": 27,
+            "bond": 3,
+            "pass": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.04036458333333337,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 23,
+            "bond": 1,
+            "pass": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.046875,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bet:0": 24,
+            "bond": 2,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.0078125,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bond": 2,
+            "bet:0": 4,
+            "pass": 2,
+            "bet:2": 4
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.03385416666666663,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "bet:2": 11,
+            "pass": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bond": 21,
+        "bet:0": 93,
+        "pass": 29,
+        "bet:2": 59,
+        "bet:1": 54
+      },
+      "mode_changes": 4
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "score": 0.44140625,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.040364583333333336,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 2,
+            "bet:0": 17,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.033854166666666664,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bet:0": 18,
+            "bond": 2,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.03255208333333333,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 4,
+            "pass": 6,
+            "bet:2": 19,
+            "bond": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06901041666666667,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bet:2": 28,
+            "pass": 3,
+            "bond": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.06640625,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "pass": 5,
+            "bet:2": 1,
+            "bond": 3,
+            "bet:1": 24
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.06901041666666669,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 28,
+            "bond": 2,
+            "pass": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.0390625,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 2,
+            "pass": 3,
+            "bet:0": 22,
+            "bond": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.046875,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 24,
+            "bond": 2,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.016927083333333315,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bond": 1,
+            "pass": 3,
+            "bet:0": 2,
+            "bet:2": 6
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.02734375,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bet:2": 12
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bond": 20,
+        "bet:0": 87,
+        "pass": 29,
+        "bet:2": 66,
+        "bet:1": 54
+      },
+      "mode_changes": 4
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "score": 0.4583333333333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.037760416666666664,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.045572916666666664,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bet:0": 18,
+            "bond": 3,
+            "bet:2": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 8,
+            "bet:2": 20,
+            "bond": 3,
+            "pass": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.058593750000000014,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bet:2": 31,
+            "bond": 2,
+            "bet:0": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.06901041666666666,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bet:0": 2,
+            "bet:2": 1,
+            "bond": 1,
+            "bet:1": 29
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.07161458333333331,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 31,
+            "bond": 1,
+            "bet:0": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.04036458333333337,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 22,
+            "bond": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.05859375,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 25,
+            "bond": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.01432291666666663,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bond": 1,
+            "pass": 1,
+            "bet:0": 4,
+            "bet:2": 6
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.02734375,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bet:2": 12
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bond": 20,
+        "bet:0": 99,
+        "bet:2": 71,
+        "pass": 3,
+        "bet:1": 63
+      },
+      "mode_changes": 4
+    }
+  ],
+  "personality_action_differences": [
+    {
+      "game": "gambling",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.10546875
+    },
+    {
+      "game": "gambling",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.1015625
+    },
+    {
+      "game": "gambling",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.1640625
+    },
+    {
+      "game": "gambling",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.11328125
+    },
+    {
+      "game": "gambling",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.1015625
+    }
+  ],
+  "limitations": [
+    "Post-hoc phase review, not an independent acceptance test or causal estimate of learning.",
+    "Personality runs share exogenous responses but can visit different states. Action frequency difference is not psychological validity.",
+    "A regime can span the entire run. Improvement between its halves also reflects resource changes and public time."
+  ]
+}

@@ -1,9 +1,6 @@
 name: Owned recovery independent confirmation
 on:
   workflow_dispatch:
-  push:
-    branches: [research/owner-continuity]
-    paths: [.github/workflows/owner-recovery-confirm.yml]
 permissions:
   contents: read
 jobs:

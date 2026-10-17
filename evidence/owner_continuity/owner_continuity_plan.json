@@ -1,0 +1,122 @@
+{
+  "scope": "Improve persistent auction control after prediction errors while retaining personality and checking other rule families.",
+  "fixed": [
+    "personality and value axes",
+    "Policy coefficients",
+    "known conditional game rules",
+    "public goal definitions",
+    "actual world response streams"
+  ],
+  "initial_development": {
+    "run": 38991598577,
+    "source": "1f856da605be31729c01eabf27a2cac226eea11d",
+    "conditions": 16,
+    "runs": 64,
+    "seed": 43,
+    "factorial": "old/segmented-posterior world and interval 7/1",
+    "status": "Completed all 64 runs with original-platform audits. All four combat conditions reject cadence-only adoption."
+  },
+  "cancelled_confirmation": {
+    "run": 38992195728,
+    "source": "b3e8c506c3a82fed994db552a6f67ed0878b0221",
+    "planned_runs": 224,
+    "status": "cancelled after development combat regression; partial results excluded from acceptance",
+    "exposed_seeds": [
+      31701,
+      31702,
+      31703,
+      31704,
+      31705,
+      31706,
+      31707,
+      31708
+    ]
+  },
+  "current_development": {
+    "run": 38994511431,
+    "source": "1870d409798ebd5bf9acc5a485b159a8ee108e5f",
+    "seed": 43,
+    "games": [
+      "auction",
+      "resources",
+      "combat",
+      "gambling"
+    ],
+    "profiles": [
+      0,
+      1
+    ],
+    "regimes": [
+      "outside",
+      "shift-return"
+    ],
+    "turns": 128,
+    "interval": 1,
+    "tail_steps": 15,
+    "arms": [
+      "receding_corrected",
+      "receding_recovery"
+    ],
+    "conditions": 16,
+    "runs": 32,
+    "mechanism": "All actual decisions replan from the updated owner. Candidate tail owners invoke exact two-step recovery when no action offers positive immediate expected purpose. Existing conditional-mean correction is the ablation control.",
+    "restriction": "No game/action-name bonuses or per-persona coefficient fitting.",
+    "status_at_this_record": "28 audited runs, 3 completed rows preserved, 1 whole execution restarted after the 180-minute runner limit; no quality adoption",
+    "audited_shards_at_this_record": [
+      "owner-recovery-auction-1",
+      "owner-recovery-combat-0",
+      "owner-recovery-combat-1",
+      "owner-recovery-gambling-0",
+      "owner-recovery-gambling-1",
+      "owner-recovery-resources-0",
+      "owner-recovery-resources-1"
+    ],
+    "operational_completion": {
+      "run": 39006156056,
+      "source": "4d7a7149394a92be92397a34144ea668fc71d3ea",
+      "runtime_source": "1870d409798ebd5bf9acc5a485b159a8ee108e5f",
+      "original_rows_preserved": 3,
+      "missing_execution": [
+        "auction",
+        "growth",
+        43,
+        "outside",
+        "receding_recovery"
+      ]
+    }
+  },
+  "next_confirmation": {
+    "source": "032e16a97ebee5436517aaf55327db9923366537",
+    "unused_seed_pool": [
+      41101,
+      41102,
+      41103,
+      41104,
+      41105,
+      41106,
+      41107,
+      41108
+    ],
+    "profiles": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "regimes": [
+      "outside",
+      "shift-return"
+    ],
+    "turns": 128,
+    "decision": "Require real auction purpose improvement across independent world seeds, inspect every other game and persona, and investigate systematic regressions. Prediction accuracy or unit test count alone cannot pass. No claim that every random outcome, human opponent or arbitrary game is improved.",
+    "matrix": "evidence/owner_continuity/confirmation_plan.json: 336 primary plus 24 stress runs, fixed before launch",
+    "prior_launch_order": "Originally scheduled after the complete development matrix; changed before confirmation to run concurrently with the single time-limited execution. Full development acceptance gates remain unchanged.",
+    "run": 39006204279,
+    "baselines": [
+      "endpoint@7",
+      "endpoint_posterior@7"
+    ],
+    "status": "running"
+  },
+  "recorded_at": "2026-10-17T05:27:25.229705+00:00"
+}

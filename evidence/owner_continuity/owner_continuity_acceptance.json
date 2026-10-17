@@ -1,0 +1,1451 @@
+{
+  "adopted": true,
+  "confirmation_complete": true,
+  "stress_complete": true,
+  "periodic_eight_complete": true,
+  "decision": "Adopt the explicit receding_recovery configuration as an optional quality-first path. Keep existing defaults and fixed personalities; do not claim universal intelligence or equal-compute superiority.",
+  "criterion": "Auction purpose improves across independent seeds; inspect every game/persona and investigate systematic loss. Fixed traits and rule adapters; no coefficients fitted to these results.",
+  "candidate": {
+    "arm": "receding_recovery@1",
+    "reader": "segmented",
+    "world_model": "posterior",
+    "purpose_estimator": "conditional",
+    "tail_recovery": 2,
+    "tail_steps": 15,
+    "seeds": [
+      701,
+      702,
+      703
+    ],
+    "future_planner_limit_per_path": 16
+  },
+  "counts": {
+    "development_runs": 96,
+    "primary_runs": 560,
+    "primary_conditions": 112,
+    "stress_runs": 40,
+    "stress_conditions": 8,
+    "primary_turns": 128,
+    "stress_turns": 256
+  },
+  "primary_all_game_comparisons": [
+    {
+      "game": "auction",
+      "baseline": "endpoint@7",
+      "observed_score": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": 0.0451507568359375,
+        "worst": -0.050537109375,
+        "best": 0.139404296875,
+        "better": 53,
+        "same": 0,
+        "worse": 11,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.04742431640625
+          },
+          {
+            "seed": 41102,
+            "mean": 0.052215576171875
+          },
+          {
+            "seed": 41103,
+            "mean": 0.026611328125
+          },
+          {
+            "seed": 41104,
+            "mean": 0.049896240234375
+          },
+          {
+            "seed": 41105,
+            "mean": 0.052734375
+          },
+          {
+            "seed": 41106,
+            "mean": 0.044921875
+          },
+          {
+            "seed": 41107,
+            "mean": 0.047943115234375
+          },
+          {
+            "seed": 41108,
+            "mean": 0.039459228515625
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.038974761962890625,
+          0.049862289428710904
+        ]
+      },
+      "oracle_adjusted_return": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": 0.0483182041057326,
+        "worst": -0.006569421320949481,
+        "best": 0.15260612573738458,
+        "better": 62,
+        "same": 0,
+        "worse": 2,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.04173771805389517
+          },
+          {
+            "seed": 41102,
+            "mean": 0.061860597066442036
+          },
+          {
+            "seed": 41103,
+            "mean": 0.03676373956432538
+          },
+          {
+            "seed": 41104,
+            "mean": 0.052616932000333655
+          },
+          {
+            "seed": 41105,
+            "mean": 0.0539626558877572
+          },
+          {
+            "seed": 41106,
+            "mean": 0.04747613014340798
+          },
+          {
+            "seed": 41107,
+            "mean": 0.05185778388426546
+          },
+          {
+            "seed": 41108,
+            "mean": 0.040270076245433856
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.04301037945661955,
+          0.053700594570854916
+        ]
+      },
+      "innovation": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": -0.0031674472697950937,
+        "worst": -0.06042246823334155,
+        "best": 0.05303704230609105,
+        "better": 27,
+        "same": 0,
+        "worse": 37,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.005686598352354829
+          },
+          {
+            "seed": 41102,
+            "mean": -0.009645020894567041
+          },
+          {
+            "seed": 41103,
+            "mean": -0.010152411439325371
+          },
+          {
+            "seed": 41104,
+            "mean": -0.002720691765958662
+          },
+          {
+            "seed": 41105,
+            "mean": -0.0012282808877572046
+          },
+          {
+            "seed": 41106,
+            "mean": -0.0025542551434079817
+          },
+          {
+            "seed": 41107,
+            "mean": -0.0039146686498904605
+          },
+          {
+            "seed": 41108,
+            "mean": -0.0008108477298088578
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          -0.0063162001935067255,
+          8.126614565400815e-05
+        ]
+      }
+    },
+    {
+      "game": "auction",
+      "baseline": "endpoint@8",
+      "observed_score": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": 0.056880950927734375,
+        "worst": -0.03173828125,
+        "best": 0.175537109375,
+        "better": 56,
+        "same": 1,
+        "worse": 7,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.0499267578125
+          },
+          {
+            "seed": 41102,
+            "mean": 0.07794189453125
+          },
+          {
+            "seed": 41103,
+            "mean": 0.034271240234375
+          },
+          {
+            "seed": 41104,
+            "mean": 0.068939208984375
+          },
+          {
+            "seed": 41105,
+            "mean": 0.047607421875
+          },
+          {
+            "seed": 41106,
+            "mean": 0.063720703125
+          },
+          {
+            "seed": 41107,
+            "mean": 0.05242919921875
+          },
+          {
+            "seed": 41108,
+            "mean": 0.060211181640625
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.048122406005859375,
+          0.0656398773193359
+        ]
+      },
+      "oracle_adjusted_return": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": 0.0557298049239209,
+        "worst": -0.0026513100910412757,
+        "best": 0.168874130805382,
+        "better": 61,
+        "same": 0,
+        "worse": 3,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.0526558092329466
+          },
+          {
+            "seed": 41102,
+            "mean": 0.06589194787884449
+          },
+          {
+            "seed": 41103,
+            "mean": 0.04272706412355916
+          },
+          {
+            "seed": 41104,
+            "mean": 0.05937984788765997
+          },
+          {
+            "seed": 41105,
+            "mean": 0.051760318529259164
+          },
+          {
+            "seed": 41106,
+            "mean": 0.06419611714486992
+          },
+          {
+            "seed": 41107,
+            "mean": 0.058402590540128245
+          },
+          {
+            "seed": 41108,
+            "mean": 0.05082474405409962
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.05075196368084915,
+          0.06049859504094413
+        ]
+      },
+      "innovation": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": 0.0011511460038134782,
+        "worst": -0.04791839940922191,
+        "best": 0.05289789868021011,
+        "better": 31,
+        "same": 0,
+        "worse": 33,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": -0.0027290514204466017
+          },
+          {
+            "seed": 41102,
+            "mean": 0.012049946652405507
+          },
+          {
+            "seed": 41103,
+            "mean": -0.008455823889184158
+          },
+          {
+            "seed": 41104,
+            "mean": 0.009559361096715024
+          },
+          {
+            "seed": 41105,
+            "mean": -0.0041528966542591665
+          },
+          {
+            "seed": 41106,
+            "mean": -0.00047541401986991253
+          },
+          {
+            "seed": 41107,
+            "mean": -0.005973391321378243
+          },
+          {
+            "seed": 41108,
+            "mean": 0.009386437586525378
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          -0.0038133546954455446,
+          0.0064831758150439385
+        ]
+      }
+    },
+    {
+      "game": "auction",
+      "baseline": "endpoint_posterior@7",
+      "observed_score": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": 0.045429229736328125,
+        "worst": -0.0341796875,
+        "best": 0.143310546875,
+        "better": 54,
+        "same": 0,
+        "worse": 10,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.041748046875
+          },
+          {
+            "seed": 41102,
+            "mean": 0.0595703125
+          },
+          {
+            "seed": 41103,
+            "mean": 0.025909423828125
+          },
+          {
+            "seed": 41104,
+            "mean": 0.06036376953125
+          },
+          {
+            "seed": 41105,
+            "mean": 0.05328369140625
+          },
+          {
+            "seed": 41106,
+            "mean": 0.03460693359375
+          },
+          {
+            "seed": 41107,
+            "mean": 0.0498046875
+          },
+          {
+            "seed": 41108,
+            "mean": 0.03814697265625
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.037364959716796875,
+          0.05307769775390625
+        ]
+      },
+      "oracle_adjusted_return": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": 0.04627720659686223,
+        "worst": -0.01152832551345409,
+        "best": 0.15422942752108693,
+        "better": 62,
+        "same": 0,
+        "worse": 2,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.041789807428118546
+          },
+          {
+            "seed": 41102,
+            "mean": 0.06048424606856828
+          },
+          {
+            "seed": 41103,
+            "mean": 0.03248000676053388
+          },
+          {
+            "seed": 41104,
+            "mean": 0.04921440292787045
+          },
+          {
+            "seed": 41105,
+            "mean": 0.04998147032482757
+          },
+          {
+            "seed": 41106,
+            "mean": 0.045956802584028095
+          },
+          {
+            "seed": 41107,
+            "mean": 0.05235919626873206
+          },
+          {
+            "seed": 41108,
+            "mean": 0.037951720412218934
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.040568542158313486,
+          0.05198024115310405
+        ]
+      },
+      "innovation": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": -0.0008479768605341039,
+        "worst": -0.04826734339218382,
+        "best": 0.05328510508408246,
+        "better": 28,
+        "same": 0,
+        "worse": 36,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": -4.176055311854777e-05
+          },
+          {
+            "seed": 41102,
+            "mean": -0.000913933568568284
+          },
+          {
+            "seed": 41103,
+            "mean": -0.006570582932408877
+          },
+          {
+            "seed": 41104,
+            "mean": 0.011149366603379542
+          },
+          {
+            "seed": 41105,
+            "mean": 0.0033022210814224336
+          },
+          {
+            "seed": 41106,
+            "mean": -0.011349868990278091
+          },
+          {
+            "seed": 41107,
+            "mean": -0.002554508768732063
+          },
+          {
+            "seed": 41108,
+            "mean": 0.00019525224403105874
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          -0.005099553711490693,
+          0.0033741697383856857
+        ]
+      }
+    },
+    {
+      "game": "auction",
+      "baseline": "endpoint_posterior@8",
+      "observed_score": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": 0.056797027587890625,
+        "worst": -0.029541015625,
+        "best": 0.176513671875,
+        "better": 59,
+        "same": 0,
+        "worse": 5,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.042144775390625
+          },
+          {
+            "seed": 41102,
+            "mean": 0.08026123046875
+          },
+          {
+            "seed": 41103,
+            "mean": 0.03033447265625
+          },
+          {
+            "seed": 41104,
+            "mean": 0.072784423828125
+          },
+          {
+            "seed": 41105,
+            "mean": 0.053314208984375
+          },
+          {
+            "seed": 41106,
+            "mean": 0.06378173828125
+          },
+          {
+            "seed": 41107,
+            "mean": 0.051116943359375
+          },
+          {
+            "seed": 41108,
+            "mean": 0.060638427734375
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.0463714599609375,
+          0.06695175170898438
+        ]
+      },
+      "oracle_adjusted_return": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": 0.05476305531202108,
+        "worst": -0.005698779596193748,
+        "best": 0.15804619405589126,
+        "better": 60,
+        "same": 0,
+        "worse": 4,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.04976565427287802
+          },
+          {
+            "seed": 41102,
+            "mean": 0.0674585855612089
+          },
+          {
+            "seed": 41103,
+            "mean": 0.04177567065614916
+          },
+          {
+            "seed": 41104,
+            "mean": 0.06728871320904864
+          },
+          {
+            "seed": 41105,
+            "mean": 0.052422740000722126
+          },
+          {
+            "seed": 41106,
+            "mean": 0.057884828497511545
+          },
+          {
+            "seed": 41107,
+            "mean": 0.05550831025864664
+          },
+          {
+            "seed": 41108,
+            "mean": 0.0459999400400037
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.04887544547676992,
+          0.06063451632128418
+        ]
+      },
+      "innovation": {
+        "pairs": 64,
+        "world_seeds": 8,
+        "mean": 0.002033972275869535,
+        "worst": -0.03662067478858047,
+        "best": 0.05281029974067901,
+        "better": 31,
+        "same": 0,
+        "worse": 33,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": -0.007620878882253021
+          },
+          {
+            "seed": 41102,
+            "mean": 0.012802644907541098
+          },
+          {
+            "seed": 41103,
+            "mean": -0.011441197999899155
+          },
+          {
+            "seed": 41104,
+            "mean": 0.0054957106190763536
+          },
+          {
+            "seed": 41105,
+            "mean": 0.0008914689836528773
+          },
+          {
+            "seed": 41106,
+            "mean": 0.005896909783738455
+          },
+          {
+            "seed": 41107,
+            "mean": -0.004391366899271627
+          },
+          {
+            "seed": 41108,
+            "mean": 0.014638487694371295
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          -0.004034505614704409,
+          0.008111028195086245
+        ]
+      }
+    },
+    {
+      "game": "combat",
+      "baseline": "endpoint@7",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.11787923177083331,
+        "worst": 0.07877604166666669,
+        "best": 0.15690104166666663,
+        "better": 16,
+        "same": 0,
+        "worse": 0,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.11686197916666666
+          },
+          {
+            "seed": 41102,
+            "mean": 0.11889648437499997
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.11686197916666666,
+          0.11889648437499997
+        ]
+      }
+    },
+    {
+      "game": "combat",
+      "baseline": "endpoint@8",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.1712646484375,
+        "worst": 0.11458333333333337,
+        "best": 0.21093749999999997,
+        "better": 16,
+        "same": 0,
+        "worse": 0,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.17545572916666669
+          },
+          {
+            "seed": 41102,
+            "mean": 0.16707356770833331
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.16707356770833331,
+          0.17545572916666669
+        ]
+      }
+    },
+    {
+      "game": "combat",
+      "baseline": "endpoint_posterior@7",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.10957845052083331,
+        "worst": 0.07096354166666669,
+        "best": 0.14908854166666663,
+        "better": 16,
+        "same": 0,
+        "worse": 0,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.10807291666666666
+          },
+          {
+            "seed": 41102,
+            "mean": 0.11108398437499997
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.10807291666666666,
+          0.11108398437499997
+        ]
+      }
+    },
+    {
+      "game": "combat",
+      "baseline": "endpoint_posterior@8",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.1619873046875,
+        "worst": 0.09375,
+        "best": 0.19986979166666669,
+        "better": 16,
+        "same": 0,
+        "worse": 0,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.17252604166666669
+          },
+          {
+            "seed": 41102,
+            "mean": 0.15144856770833334
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.15144856770833334,
+          0.17252604166666669
+        ]
+      }
+    },
+    {
+      "game": "gambling",
+      "baseline": "endpoint@7",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.04654947916666667,
+        "worst": 0.015625,
+        "best": 0.09375,
+        "better": 16,
+        "same": 0,
+        "worse": 0,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.04231770833333335
+          },
+          {
+            "seed": 41102,
+            "mean": 0.05078124999999999
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.04231770833333335,
+          0.05078124999999999
+        ]
+      }
+    },
+    {
+      "game": "gambling",
+      "baseline": "endpoint@8",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.055175781250000014,
+        "worst": 0.0234375,
+        "best": 0.10156250000000006,
+        "better": 16,
+        "same": 0,
+        "worse": 0,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.06673177083333337
+          },
+          {
+            "seed": 41102,
+            "mean": 0.04361979166666666
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.04361979166666666,
+          0.06673177083333337
+        ]
+      }
+    },
+    {
+      "game": "gambling",
+      "baseline": "endpoint_posterior@7",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.04231770833333333,
+        "worst": 0.026041666666666685,
+        "best": 0.078125,
+        "better": 16,
+        "same": 0,
+        "worse": 0,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.036458333333333336
+          },
+          {
+            "seed": 41102,
+            "mean": 0.04817708333333332
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.036458333333333336,
+          0.04817708333333332
+        ]
+      }
+    },
+    {
+      "game": "gambling",
+      "baseline": "endpoint_posterior@8",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.0498046875,
+        "worst": 0.020833333333333315,
+        "best": 0.08072916666666669,
+        "better": 16,
+        "same": 0,
+        "worse": 0,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.06477864583333334
+          },
+          {
+            "seed": 41102,
+            "mean": 0.03483072916666665
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.03483072916666665,
+          0.06477864583333334
+        ]
+      }
+    },
+    {
+      "game": "resources",
+      "baseline": "endpoint@7",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.036946614583333356,
+        "worst": -0.0026041666666666574,
+        "best": 0.10807291666666669,
+        "better": 14,
+        "same": 1,
+        "worse": 1,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.047526041666666685
+          },
+          {
+            "seed": 41102,
+            "mean": 0.026367187500000028
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.026367187500000028,
+          0.047526041666666685
+        ]
+      }
+    },
+    {
+      "game": "resources",
+      "baseline": "endpoint@8",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.059244791666666685,
+        "worst": 0.0013020833333333426,
+        "best": 0.12109375000000006,
+        "better": 16,
+        "same": 0,
+        "worse": 0,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.06933593750000003
+          },
+          {
+            "seed": 41102,
+            "mean": 0.04915364583333334
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.04915364583333334,
+          0.06933593750000003
+        ]
+      }
+    },
+    {
+      "game": "resources",
+      "baseline": "endpoint_posterior@7",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.023274739583333346,
+        "worst": -0.03645833333333337,
+        "best": 0.08463541666666669,
+        "better": 14,
+        "same": 0,
+        "worse": 2,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.034993489583333336
+          },
+          {
+            "seed": 41102,
+            "mean": 0.011555989583333356
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.011555989583333356,
+          0.034993489583333336
+        ]
+      }
+    },
+    {
+      "game": "resources",
+      "baseline": "endpoint_posterior@8",
+      "observed_score": {
+        "pairs": 16,
+        "world_seeds": 2,
+        "mean": 0.049316406250000014,
+        "worst": 0.006510416666666685,
+        "best": 0.10677083333333337,
+        "better": 16,
+        "same": 0,
+        "worse": 0,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.0685221354166667
+          },
+          {
+            "seed": 41102,
+            "mean": 0.030110677083333332
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.030110677083333332,
+          0.0685221354166667
+        ]
+      }
+    }
+  ],
+  "negative_observed_joint_groups": [
+    {
+      "game": "auction",
+      "profile": "steady",
+      "regime": "shift-return",
+      "baseline": "endpoint@7",
+      "observed_score": {
+        "pairs": 8,
+        "world_seeds": 8,
+        "mean": -0.004180908203125,
+        "worst": -0.050537109375,
+        "best": 0.039794921875,
+        "better": 3,
+        "same": 0,
+        "worse": 5,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.0205078125
+          },
+          {
+            "seed": 41102,
+            "mean": -0.014892578125
+          },
+          {
+            "seed": 41103,
+            "mean": -0.00830078125
+          },
+          {
+            "seed": 41104,
+            "mean": -0.050537109375
+          },
+          {
+            "seed": 41105,
+            "mean": 0.002197265625
+          },
+          {
+            "seed": 41106,
+            "mean": 0.039794921875
+          },
+          {
+            "seed": 41107,
+            "mean": -0.01611328125
+          },
+          {
+            "seed": 41108,
+            "mean": -0.006103515625
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          -0.021240234375,
+          0.01312255859375
+        ]
+      },
+      "oracle_adjusted_return": {
+        "pairs": 8,
+        "world_seeds": 8,
+        "mean": 0.010548358029469854,
+        "worst": -0.006569421320949481,
+        "best": 0.03411801531982328,
+        "better": 7,
+        "same": 0,
+        "worse": 1,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.03411801531982328
+          },
+          {
+            "seed": 41102,
+            "mean": 0.004148396396139342
+          },
+          {
+            "seed": 41103,
+            "mean": 0.014139695920432405
+          },
+          {
+            "seed": 41104,
+            "mean": 0.00988535885834152
+          },
+          {
+            "seed": 41105,
+            "mean": 0.004239395404205704
+          },
+          {
+            "seed": 41106,
+            "mean": 0.022437235406052303
+          },
+          {
+            "seed": 41107,
+            "mean": -0.006569421320949481
+          },
+          {
+            "seed": 41108,
+            "mean": 0.001988188251713763
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.002771393013276363,
+          0.019157930050333907
+        ]
+      },
+      "innovation": {
+        "pairs": 8,
+        "world_seeds": 8,
+        "mean": -0.014729266232594851,
+        "worst": -0.06042246823334155,
+        "best": 0.017357686468947697,
+        "better": 1,
+        "same": 0,
+        "worse": 7,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": -0.01361020281982328
+          },
+          {
+            "seed": 41102,
+            "mean": -0.019040974521139342
+          },
+          {
+            "seed": 41103,
+            "mean": -0.02244047717043235
+          },
+          {
+            "seed": 41104,
+            "mean": -0.06042246823334155
+          },
+          {
+            "seed": 41105,
+            "mean": -0.0020421297792057036
+          },
+          {
+            "seed": 41106,
+            "mean": 0.017357686468947697
+          },
+          {
+            "seed": 41107,
+            "mean": -0.009543859929050519
+          },
+          {
+            "seed": 41108,
+            "mean": -0.008091703876713763
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          -0.03014821662719944,
+          -0.0015192372021747627
+        ]
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "regime": "shift-return",
+      "baseline": "endpoint_posterior@7",
+      "observed_score": {
+        "pairs": 8,
+        "world_seeds": 8,
+        "mean": -0.0040283203125,
+        "worst": -0.0341796875,
+        "best": 0.015869140625,
+        "better": 4,
+        "same": 0,
+        "worse": 4,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.007568359375
+          },
+          {
+            "seed": 41102,
+            "mean": -0.007080078125
+          },
+          {
+            "seed": 41103,
+            "mean": 0.015869140625
+          },
+          {
+            "seed": 41104,
+            "mean": -0.0341796875
+          },
+          {
+            "seed": 41105,
+            "mean": 0.010498046875
+          },
+          {
+            "seed": 41106,
+            "mean": 0.015380859375
+          },
+          {
+            "seed": 41107,
+            "mean": -0.016845703125
+          },
+          {
+            "seed": 41108,
+            "mean": -0.0234375
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          -0.016632080078125,
+          0.007965087890625
+        ]
+      },
+      "oracle_adjusted_return": {
+        "pairs": 8,
+        "world_seeds": 8,
+        "mean": 0.0072301600347259715,
+        "worst": -0.009083489428128255,
+        "best": 0.015852990032247993,
+        "better": 7,
+        "same": 0,
+        "worse": 1,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.005638257347815145
+          },
+          {
+            "seed": 41102,
+            "mean": 0.015852990032247993
+          },
+          {
+            "seed": 41103,
+            "mean": 0.014691839640985027
+          },
+          {
+            "seed": 41104,
+            "mean": 0.012073824328234284
+          },
+          {
+            "seed": 41105,
+            "mean": 0.0016487272295588884
+          },
+          {
+            "seed": 41106,
+            "mean": 0.015501634685968935
+          },
+          {
+            "seed": 41107,
+            "mean": 0.001517496441125754
+          },
+          {
+            "seed": 41108,
+            "mean": -0.009083489428128255
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          0.001146766216307965,
+          0.012593928512660432
+        ]
+      },
+      "innovation": {
+        "pairs": 8,
+        "world_seeds": 8,
+        "mean": -0.011258480347225975,
+        "worst": -0.04625351182823431,
+        "best": 0.008849319645441112,
+        "better": 3,
+        "same": 0,
+        "worse": 5,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.0019301020271848546
+          },
+          {
+            "seed": 41102,
+            "mean": -0.022933068157247993
+          },
+          {
+            "seed": 41103,
+            "mean": 0.0011773009840150006
+          },
+          {
+            "seed": 41104,
+            "mean": -0.04625351182823431
+          },
+          {
+            "seed": 41105,
+            "mean": 0.008849319645441112
+          },
+          {
+            "seed": 41106,
+            "mean": -0.00012077531096893468
+          },
+          {
+            "seed": 41107,
+            "mean": -0.018363199566125754
+          },
+          {
+            "seed": 41108,
+            "mean": -0.014354010571871773
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          -0.02353453358638411,
+          -0.000504889503903128
+        ]
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "ego",
+      "regime": "shift-return",
+      "baseline": "endpoint_posterior@7",
+      "observed_score": {
+        "pairs": 2,
+        "world_seeds": 2,
+        "mean": -0.01497395833333337,
+        "worst": -0.03645833333333337,
+        "best": 0.00651041666666663,
+        "better": 1,
+        "same": 0,
+        "worse": 1,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.00651041666666663
+          },
+          {
+            "seed": 41102,
+            "mean": -0.03645833333333337
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          -0.03645833333333337,
+          0.00651041666666663
+        ]
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "regime": "shift-return",
+      "baseline": "endpoint@7",
+      "observed_score": {
+        "pairs": 2,
+        "world_seeds": 2,
+        "mean": -0.0013020833333333287,
+        "worst": -0.0026041666666666574,
+        "best": 0.0,
+        "better": 0,
+        "same": 1,
+        "worse": 1,
+        "seed_means": [
+          {
+            "seed": 41101,
+            "mean": 0.0
+          },
+          {
+            "seed": 41102,
+            "mean": -0.0026041666666666574
+          }
+        ],
+        "seed_cluster_percentile_95": [
+          -0.0026041666666666574,
+          0.0
+        ]
+      }
+    }
+  ],
+  "audit_counts": {
+    "primary": {
+      "world_rng_replay": 71680,
+      "restored_action_feedback": 22176,
+      "physical_replay": 71680,
+      "owner_parity": 71680,
+      "fixed_axes": 71680,
+      "restore": 3360
+    },
+    "stress": {
+      "world_rng_replay": 10240,
+      "restored_action_feedback": 3152,
+      "physical_replay": 10240,
+      "owner_parity": 10240,
+      "fixed_axes": 10240,
+      "restore": 480
+    }
+  },
+  "gains": [
+    "Replan from the resolved owner after real feedback.",
+    "Represent bounded recovery by the learning future owner, rather than assuming exclusively reflex continuation.",
+    "All four game averages and persona averages improve against all four controls; all eight auction world-seed averages improve."
+  ],
+  "costs": [
+    "Every-turn heavy planning and additional short lookahead inside predicted trajectories.",
+    "Remaining finite-horizon investment misses and model/sampling uncertainty."
+  ],
+  "preserved": [
+    "Fixed traits, principles and policy coefficients.",
+    "Game rule adapters and fast baseline policy.",
+    "Independent real and imagined owner state and information boundaries."
+  ],
+  "limitations": [
+    "Four supplied-rule worlds; eight auction world seeds, only two per other primary game and one per stress game.",
+    "Four negative persona-by-regime observed means are retained, not erased by post-hoc Bellman accounting.",
+    "No universal human-level, reactive-opponent, indefinite-world, psychological-validity or equal-compute claim.",
+    "Only the registered configuration is adopted; no global default switch."
+  ],
+  "supplemental_findings": {
+    "resource_growth_shift_endpoint7": {
+      "seeds": [
+        41101,
+        41102
+      ],
+      "score_deltas": [
+        0,
+        -0.0026041666666666574
+      ],
+      "conditional_increment_deltas": [
+        0.004296874999999978,
+        0.006380208333333359
+      ],
+      "innovation_deltas": [
+        -0.004296874999999999,
+        -0.008984375000000008
+      ],
+      "interpretation": "This small observed loss is not assigned to personality. Conditional increments alone do not prove future policy value."
+    }
+  },
+  "analysis_files": [
+    "owner_continuity_development_phases.json",
+    "owner_continuity_behaviour_all.json",
+    "owner_recovery_auction_steady_bellman.json",
+    "owner_recovery_auction_steady_replay.json",
+    "owner_auction_steady80_bank701.json",
+    "owner_auction_steady80_bank1701.json",
+    "owner_auction_steady80_bank2701.json",
+    "owner_recovery_confirmation/resource_ego_41102_roots.json",
+    "owner_recovery_confirmation/resource_ego_41102_tail31.json",
+    "owner_recovery_confirmation/resource_ego_41102_tail63.json",
+    "owner_recovery_confirmation/stress_gambling_all_cadences_phases.json",
+    "owner_recovery_confirmation/stress_gambling_all_cadences_behaviour.json",
+    "owner_recovery_confirmation/stress_gambling_all_cadences_increments.json",
+    "owner_recovery_confirmation/gambling_growth_41201_root192.json",
+    "owner_recovery_confirmation/auction_41101_a_increments.json",
+    "owner_recovery_confirmation/gambling_primary_cadence7_increments.json",
+    "owner_recovery_confirmation/auction_41102_a_phases.json",
+    "owner_recovery_confirmation/auction_41102_a_increments.json",
+    "owner_recovery_confirmation/auction_41101_41102_a_bellman.json",
+    "owner_recovery_confirmation/resources_ego_care_cadence7.json",
+    "owner_recovery_confirmation/resources_ego_care_cadence7_phases.json",
+    "owner_recovery_confirmation/resources_ego_care_cadence7_increments.json",
+    "owner_recovery_confirmation/resource_ego_41102_root64_bank1701.json",
+    "owner_recovery_confirmation/resource_ego_41102_root64_bank2701.json",
+    "owner_recovery_confirmation/auction_41104_a_phases.json",
+    "owner_recovery_confirmation/auction_41104_a_increments.json",
+    "owner_recovery_confirmation/auction_steady_41104_shift_bellman.json",
+    "owner_recovery_confirmation/auction_41108_a_phases.json",
+    "owner_recovery_confirmation/auction_41108_a_increments.json",
+    "owner_recovery_confirmation/auction_steady_41108_shift_bellman.json",
+    "owner_recovery_confirmation/auction_steady_41104_41108_continuation.json",
+    "owner_recovery_confirmation/auction_steady_41104_41108_preferences.json",
+    "owner_recovery_confirmation/auction_41101_a_preferences.json",
+    "owner_recovery_confirmation/stress_combat_preferences.json",
+    "owner_recovery_confirmation/stress_resources_gambling_preferences.json",
+    "owner_recovery_confirmation/auction_41104_return_accounting.json",
+    "owner_periodic_eight/primary_all_cadences.json",
+    "owner_periodic_eight/stress_all_cadences.json",
+    "owner_periodic_eight/primary_complete_phases.json",
+    "owner_periodic_eight/primary_complete_behaviour.json",
+    "owner_periodic_eight/primary_complete_increments.json",
+    "owner_periodic_eight/primary_auction_bellman.json",
+    "owner_periodic_eight/primary_auction_return_accounting.json",
+    "owner_periodic_eight/primary_joint_groups.json",
+    "owner_periodic_eight/stress_complete_evaluation.json",
+    "owner_periodic_eight/stress_complete_phases.json",
+    "owner_periodic_eight/stress_complete_behaviour.json",
+    "owner_continuity_verification/atomic-output-ci.json",
+    "owner_continuity_verification/atomic-output-tests.log",
+    "owner_continuity_verification/release_source_checks.json"
+  ],
+  "test_evidence": {
+    "current_numeric_core_matches_registration": true,
+    "numeric_core_files": 159,
+    "fixed_personality_scorer_and_rules_unchanged": true,
+    "ci_run": 39017434526,
+    "ci_commit": "6ef8f4996782f8ccff8fd7b0c34a8b840cd4b291",
+    "tests_per_matrix": 1146,
+    "passed_per_matrix": 1129,
+    "optional_mahjong_skipped_per_matrix": 17,
+    "platforms": [
+      "test (ubuntu-latest, 3.12)",
+      "test (windows-latest, 3.13)",
+      "test (windows-latest, 3.12)",
+      "test (ubuntu-latest, 3.13)"
+    ],
+    "final_publication_ci": "Requires the exact final main commit; not yet performed."
+  }
+}

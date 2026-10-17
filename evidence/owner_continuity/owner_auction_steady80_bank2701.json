@@ -1,0 +1,100 @@
+{
+  "game": "auction",
+  "profile": "steady",
+  "seed": 43,
+  "regime": "shift-return",
+  "registered_tail_steps": 15,
+  "diagnostic_tail_steps": 15,
+  "diagnostic_model_seeds": [
+    2701,
+    2702,
+    2703
+  ],
+  "source": "results\\owner_recovery_cloud\\owner-recovery-auction-1\\trajectories.jsonl",
+  "source_sha256": "0e6402f4b37b5249d6d294666eb0a249df625bf8fd9e5257aa6e660f2d262af1",
+  "cases": [
+    {
+      "tick": 80,
+      "saved_action": "bid:3",
+      "recomputed_action": "bid:3",
+      "world": {
+        "tick": 80,
+        "cash": 5.0,
+        "score": 196.0,
+        "rival": 51.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "1",
+        "last": "bid:2"
+      },
+      "root_valuation": {
+        "discount": 0.73875,
+        "rows": [
+          {
+            "plan": "flow-plan-000",
+            "eligible": true,
+            "score": 0.1961793994354043,
+            "objective": 0.00023219546158723158,
+            "primary_need": 0.08764639226216776,
+            "strongest_value": 0.08764639226216776,
+            "loss": 0.0,
+            "action": "bid:0",
+            "purpose_mean": 0.15823002249474455
+          },
+          {
+            "plan": "flow-plan-001",
+            "eligible": true,
+            "score": 0.1873116267823976,
+            "objective": 0.0002414952093253398,
+            "primary_need": 0.0884465171069066,
+            "strongest_value": 0.0884465171069066,
+            "loss": 0.0,
+            "action": "bid:1",
+            "purpose_mean": 0.1594776210204283
+          },
+          {
+            "plan": "flow-plan-002",
+            "eligible": true,
+            "score": 0.184699343900376,
+            "objective": 0.00031151034104629426,
+            "primary_need": 0.08054695815525456,
+            "strongest_value": 0.08054695815525456,
+            "loss": 0.0,
+            "action": "bid:2",
+            "purpose_mean": 0.16562652255526789
+          },
+          {
+            "plan": "flow-plan-003",
+            "eligible": true,
+            "score": -0.030314221921136284,
+            "objective": 0.0003960982022798056,
+            "primary_need": -0.02873072677156345,
+            "strongest_value": -0.02873072677156345,
+            "loss": 0.02657641985250826,
+            "action": "bid:3",
+            "purpose_mean": 0.17135143980727202
+          },
+          {
+            "plan": "flow-plan-004",
+            "eligible": true,
+            "score": -0.8124472925318966,
+            "objective": 0.0003394993213222762,
+            "primary_need": -0.2237853758556496,
+            "strongest_value": -0.2237853758556496,
+            "loss": 0.4100680340854999,
+            "action": "bid:4",
+            "purpose_mean": 0.16767301658105133
+          }
+        ]
+      },
+      "seconds": 38.360000000015134
+    }
+  ],
+  "limitations": [
+    "Post-hoc valuation under the declared model, not proof that its future is correct.",
+    "The core, personality coefficients, and benchmark rules are not modified.",
+    "Cross-platform recomputation is reported alongside the original saved action."
+  ]
+}

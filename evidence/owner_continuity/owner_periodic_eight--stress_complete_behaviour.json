@@ -1,0 +1,6732 @@
+{
+  "sources": [
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-stress-auction\\candidate",
+      "trajectory_sha256": "5513bceebf2f66cecfc6eeea32c1022a108d446c6b0aa38855d3c794993f0f69",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 2
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-stress-auction\\baseline",
+      "trajectory_sha256": "76a520ce949a02948fd40279f884c203a2d2c46f95ef58600d0efed68fde650b",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_periodic_eight\\owner-periodic-eight-stress-auction\\baseline",
+      "trajectory_sha256": "9a06ef1e6960ec0d5997d414ae36ecaea0d1f2d63076eba664245675a1e1e5cc",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-stress-resources\\candidate",
+      "trajectory_sha256": "bf4107f2b2773ebb849df1e9f0041ce0f9722c59b06a0f545accf06a8c627fdf",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 2
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-stress-resources\\baseline",
+      "trajectory_sha256": "595ef0eabc542cac95ad1872f9acf92d38e5d021aebd32c37b847abf0f777fba",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_periodic_eight\\owner-periodic-eight-stress-resources\\baseline",
+      "trajectory_sha256": "373d42b8b0d320a89255e86a5c8b3b6d5a5a38d31b35e7ae33b9cabbbabeeed9",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-stress-combat\\candidate",
+      "trajectory_sha256": "3d018d3bb20fe4e518806f008a8c798efbd64c504ad81b736545847155c75453",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 2
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-stress-combat\\baseline",
+      "trajectory_sha256": "332715cf8b8904bf1f5ba8ef990b68803ddaed837bf1bf5e0dcb1586d14b5d47",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_periodic_eight\\owner-periodic-eight-stress-combat\\baseline",
+      "trajectory_sha256": "b33633c667239c7a7b2d8e2491628e647bec6b120494f54eaf2f355832c12402",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-stress-gambling\\candidate",
+      "trajectory_sha256": "39b90c8618106647ec0ddc5914388ecb12ff447ee3ce7eb67c08de32e49a2811",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 2
+    },
+    {
+      "study": "results\\owner_recovery_confirmation\\owner-recovery-stress-gambling\\baseline",
+      "trajectory_sha256": "5dca052883c22cc6881479ff4d2e180d1b4c12b898eec484cf6a0204b1a32e38",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 4
+    },
+    {
+      "study": "results\\owner_periodic_eight\\owner-periodic-eight-stress-gambling\\baseline",
+      "trajectory_sha256": "10e8f08746a77efe247fc835be1d983e14b326e517f27e49b101d310dfe78e49",
+      "source_manifest_sha256": "6b81980ca617488035af8423d57aec841fc9e6905ce80a6fe4b857541914f8d2",
+      "stage": "stress",
+      "runs": 4
+    }
+  ],
+  "runs": [
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "score": 0.2205810546875,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.0330810546875,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bid:3": 2,
+            "bid:1": 17,
+            "bid:2": 1,
+            "bid:0": 1
+          },
+          "planned": 21
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.032958984375,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bid:3": 6,
+            "bid:1": 12,
+            "bid:0": 3,
+            "bid:2": 1
+          },
+          "planned": 22
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.0089111328125,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bid:0": 6,
+            "bid:1": 2,
+            "bid:3": 19,
+            "bid:4": 3,
+            "bid:2": 3
+          },
+          "planned": 33
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.0260009765625,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bid:3": 20,
+            "bid:0": 7,
+            "bid:4": 7
+          },
+          "planned": 34
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0186767578125,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bid:3": 5,
+            "bid:0": 7,
+            "bid:2": 17,
+            "bid:4": 4
+          },
+          "planned": 33
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.0257568359375,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bid:2": 14,
+            "bid:3": 10,
+            "bid:0": 8,
+            "bid:1": 1
+          },
+          "planned": 33
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.0341796875,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bid:3": 4,
+            "bid:0": 5,
+            "bid:2": 1,
+            "bid:1": 18
+          },
+          "planned": 28
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.028076171875,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bid:1": 15,
+            "bid:0": 5,
+            "bid:3": 4,
+            "bid:2": 4
+          },
+          "planned": 28
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.002685546875,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bid:3": 5,
+            "bid:2": 1,
+            "bid:1": 3,
+            "bid:4": 2,
+            "bid:0": 1
+          },
+          "planned": 12
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.00927734375,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bid:4": 4,
+            "bid:0": 2,
+            "bid:3": 6
+          },
+          "planned": 12
+        }
+      ],
+      "actions": {
+        "bid:3": 81,
+        "bid:1": 68,
+        "bid:2": 42,
+        "bid:0": 45,
+        "bid:4": 20
+      },
+      "mode_changes": 23
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "score": 0.2056884765625,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.0325927734375,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bid:4": 2,
+            "bid:0": 1,
+            "bid:1": 16,
+            "bid:3": 1,
+            "bid:2": 1
+          },
+          "planned": 21
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.031494140625,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bid:1": 18,
+            "bid:3": 4
+          },
+          "planned": 22
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.005615234375,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bid:1": 5,
+            "bid:2": 6,
+            "bid:3": 17,
+            "bid:4": 3,
+            "bid:0": 2
+          },
+          "planned": 33
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.0120849609375,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bid:3": 16,
+            "bid:0": 2,
+            "bid:4": 7,
+            "bid:2": 2,
+            "bid:1": 7
+          },
+          "planned": 34
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0220947265625,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bid:1": 3,
+            "bid:0": 5,
+            "bid:3": 10,
+            "bid:2": 14,
+            "bid:4": 1
+          },
+          "planned": 33
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.030517578125,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bid:2": 18,
+            "bid:3": 8,
+            "bid:1": 2,
+            "bid:4": 2,
+            "bid:0": 3
+          },
+          "planned": 33
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.0347900390625,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bid:3": 2,
+            "bid:2": 4,
+            "bid:0": 1,
+            "bid:1": 20,
+            "bid:4": 1
+          },
+          "planned": 28
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0269775390625,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bid:1": 19,
+            "bid:0": 3,
+            "bid:3": 5,
+            "bid:2": 1
+          },
+          "planned": 28
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": -0.000244140625,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bid:3": 3,
+            "bid:2": 4,
+            "bid:1": 2,
+            "bid:4": 2,
+            "bid:0": 1
+          },
+          "planned": 12
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.0087890625,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bid:4": 4,
+            "bid:2": 1,
+            "bid:3": 5,
+            "bid:0": 2
+          },
+          "planned": 12
+        }
+      ],
+      "actions": {
+        "bid:4": 22,
+        "bid:0": 20,
+        "bid:1": 92,
+        "bid:3": 71,
+        "bid:2": 51
+      },
+      "mode_changes": 33
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "score": 0.1416015625,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.032958984375,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bid:4": 1,
+            "bid:3": 2,
+            "bid:1": 16,
+            "bid:2": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03125,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bid:2": 3,
+            "bid:1": 16,
+            "bid:3": 2,
+            "bid:0": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.0013427734375,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bid:1": 7,
+            "bid:3": 11,
+            "bid:4": 6,
+            "bid:2": 7,
+            "bid:0": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": -0.0072021484375,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bid:1": 11,
+            "bid:3": 13,
+            "bid:4": 6,
+            "bid:2": 4
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.005859375,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "bid:2": 16,
+            "bid:1": 5,
+            "bid:4": 2,
+            "bid:3": 9,
+            "bid:0": 1
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.0137939453125,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bid:2": 13,
+            "bid:3": 10,
+            "bid:0": 1,
+            "bid:1": 9
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.037841796875,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bid:3": 3,
+            "bid:0": 1,
+            "bid:2": 5,
+            "bid:1": 19
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0247802734375,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bid:1": 23,
+            "bid:2": 4,
+            "bid:3": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.00146484375,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bid:4": 3,
+            "bid:0": 3,
+            "bid:2": 2,
+            "bid:3": 3,
+            "bid:1": 1
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": -0.00146484375,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "bid:4": 3,
+            "bid:0": 2,
+            "bid:2": 3,
+            "bid:3": 4
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bid:4": 21,
+        "bid:3": 58,
+        "bid:1": 107,
+        "bid:2": 59,
+        "bid:0": 11
+      },
+      "mode_changes": 29
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "score": 0.1466064453125,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.032958984375,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bid:3": 2,
+            "bid:4": 1,
+            "bid:1": 16,
+            "bid:2": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.0302734375,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bid:2": 5,
+            "bid:1": 13,
+            "bid:3": 2,
+            "bid:0": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.0032958984375,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bid:1": 7,
+            "bid:3": 12,
+            "bid:4": 6,
+            "bid:2": 7,
+            "bid:0": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": -0.0062255859375,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bid:1": 9,
+            "bid:2": 5,
+            "bid:3": 14,
+            "bid:4": 6
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.005859375,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bid:2": 16,
+            "bid:1": 5,
+            "bid:4": 2,
+            "bid:3": 9,
+            "bid:0": 1
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.0137939453125,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bid:2": 13,
+            "bid:3": 10,
+            "bid:0": 1,
+            "bid:1": 9
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.037841796875,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bid:3": 3,
+            "bid:0": 1,
+            "bid:2": 5,
+            "bid:1": 19
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.024658203125,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bid:1": 22,
+            "bid:2": 5,
+            "bid:3": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.000244140625,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bid:3": 6,
+            "bid:2": 3,
+            "bid:4": 2,
+            "bid:1": 1
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.0029296875,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bid:4": 4,
+            "bid:1": 2,
+            "bid:3": 4,
+            "bid:0": 1,
+            "bid:2": 1
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bid:3": 63,
+        "bid:4": 21,
+        "bid:1": 103,
+        "bid:2": 62,
+        "bid:0": 7
+      },
+      "mode_changes": 27
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "score": 0.197998046875,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.0303955078125,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bid:3": 3,
+            "bid:2": 1,
+            "bid:4": 1,
+            "bid:0": 4,
+            "bid:1": 12
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.0291748046875,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bid:0": 4,
+            "bid:1": 13,
+            "bid:3": 5
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.0107421875,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bid:0": 8,
+            "bid:1": 5,
+            "bid:4": 5,
+            "bid:3": 15
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.009033203125,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bid:3": 18,
+            "bid:0": 5,
+            "bid:4": 5,
+            "bid:1": 4,
+            "bid:2": 2
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0166015625,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "bid:3": 11,
+            "bid:0": 6,
+            "bid:2": 15,
+            "bid:1": 1
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.0303955078125,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bid:2": 18,
+            "bid:3": 10,
+            "bid:0": 2,
+            "bid:4": 1,
+            "bid:1": 2
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.03369140625,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bid:3": 5,
+            "bid:0": 8,
+            "bid:2": 3,
+            "bid:1": 12
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.02001953125,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bid:1": 15,
+            "bid:0": 7,
+            "bid:3": 3,
+            "bid:2": 2,
+            "bid:4": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.0086669921875,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bid:3": 6,
+            "bid:1": 1,
+            "bid:2": 1,
+            "bid:4": 3,
+            "bid:0": 1
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.00830078125,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "bid:4": 3,
+            "bid:0": 2,
+            "bid:3": 7
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bid:3": 83,
+        "bid:2": 42,
+        "bid:4": 19,
+        "bid:0": 47,
+        "bid:1": 65
+      },
+      "mode_changes": 39
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "score": 0.217041015625,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.0303955078125,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bid:3": 3,
+            "bid:2": 1,
+            "bid:4": 1,
+            "bid:0": 4,
+            "bid:1": 12
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.0301513671875,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bid:0": 5,
+            "bid:1": 13,
+            "bid:4": 1,
+            "bid:3": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.005859375,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bid:0": 8,
+            "bid:1": 3,
+            "bid:4": 5,
+            "bid:3": 15,
+            "bid:2": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.01953125,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bid:3": 17,
+            "bid:1": 4,
+            "bid:4": 6,
+            "bid:0": 7
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.03076171875,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bid:3": 12,
+            "bid:0": 4,
+            "bid:2": 15,
+            "bid:1": 2
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.025146484375,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bid:2": 19,
+            "bid:3": 9,
+            "bid:0": 5
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.04052734375,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bid:3": 5,
+            "bid:2": 3,
+            "bid:0": 8,
+            "bid:1": 11,
+            "bid:4": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0228271484375,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bid:1": 15,
+            "bid:0": 6,
+            "bid:3": 6,
+            "bid:2": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.00390625,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bid:2": 1,
+            "bid:0": 2,
+            "bid:3": 4,
+            "bid:1": 2,
+            "bid:4": 3
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.0069580078125,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bid:3": 8,
+            "bid:2": 1,
+            "bid:0": 1,
+            "bid:4": 2
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bid:3": 82,
+        "bid:2": 43,
+        "bid:4": 19,
+        "bid:0": 50,
+        "bid:1": 62
+      },
+      "mode_changes": 35
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "score": 0.1383056640625,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.032958984375,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bid:4": 1,
+            "bid:3": 2,
+            "bid:1": 16,
+            "bid:2": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.0272216796875,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bid:2": 4,
+            "bid:1": 16,
+            "bid:3": 1,
+            "bid:0": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": -0.00439453125,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bid:1": 10,
+            "bid:2": 7,
+            "bid:3": 10,
+            "bid:4": 6
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": -0.0028076171875,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bid:1": 5,
+            "bid:2": 8,
+            "bid:3": 12,
+            "bid:4": 7,
+            "bid:0": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0098876953125,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "bid:2": 16,
+            "bid:1": 6,
+            "bid:4": 1,
+            "bid:3": 9,
+            "bid:0": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.00146484375,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bid:3": 10,
+            "bid:1": 9,
+            "bid:2": 12,
+            "bid:0": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.037353515625,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bid:3": 4,
+            "bid:0": 2,
+            "bid:2": 4,
+            "bid:1": 18
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.026611328125,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bid:1": 21,
+            "bid:2": 6,
+            "bid:3": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.006103515625,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bid:3": 7,
+            "bid:2": 3,
+            "bid:4": 2
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.0029296875,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "bid:4": 4,
+            "bid:2": 3,
+            "bid:3": 4,
+            "bid:0": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bid:4": 21,
+        "bid:3": 60,
+        "bid:1": 101,
+        "bid:2": 65,
+        "bid:0": 9
+      },
+      "mode_changes": 35
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "score": 0.1378173828125,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.032958984375,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bid:3": 2,
+            "bid:4": 1,
+            "bid:1": 16,
+            "bid:2": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.0316162109375,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bid:2": 4,
+            "bid:1": 16,
+            "bid:3": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": -0.00341796875,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bid:1": 9,
+            "bid:2": 7,
+            "bid:3": 11,
+            "bid:4": 6
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": -0.0028076171875,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bid:1": 8,
+            "bid:2": 6,
+            "bid:3": 12,
+            "bid:4": 7,
+            "bid:0": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0098876953125,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bid:2": 16,
+            "bid:1": 6,
+            "bid:4": 1,
+            "bid:3": 9,
+            "bid:0": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.00146484375,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bid:3": 10,
+            "bid:1": 9,
+            "bid:2": 12,
+            "bid:0": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.037353515625,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bid:3": 4,
+            "bid:0": 2,
+            "bid:2": 4,
+            "bid:1": 18
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.026611328125,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bid:1": 21,
+            "bid:2": 6,
+            "bid:3": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.000244140625,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bid:3": 6,
+            "bid:2": 2,
+            "bid:4": 2,
+            "bid:1": 2
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.0029296875,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bid:4": 4,
+            "bid:2": 2,
+            "bid:3": 4,
+            "bid:1": 2
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bid:3": 61,
+        "bid:4": 21,
+        "bid:1": 107,
+        "bid:2": 61,
+        "bid:0": 6
+      },
+      "mode_changes": 35
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "score": 0.206298828125,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.0303955078125,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bid:3": 3,
+            "bid:2": 1,
+            "bid:4": 1,
+            "bid:0": 4,
+            "bid:1": 12
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.0223388671875,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bid:1": 11,
+            "bid:3": 4,
+            "bid:0": 6,
+            "bid:4": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.0098876953125,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bid:0": 8,
+            "bid:1": 4,
+            "bid:4": 4,
+            "bid:3": 17
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.0128173828125,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bid:4": 7,
+            "bid:0": 7,
+            "bid:3": 16,
+            "bid:1": 2,
+            "bid:2": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.022216796875,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "bid:3": 11,
+            "bid:1": 2,
+            "bid:0": 3,
+            "bid:2": 16,
+            "bid:4": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.029296875,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bid:2": 20,
+            "bid:4": 2,
+            "bid:0": 3,
+            "bid:3": 7,
+            "bid:1": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.0421142578125,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bid:3": 4,
+            "bid:1": 15,
+            "bid:2": 2,
+            "bid:0": 7
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0225830078125,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bid:3": 5,
+            "bid:1": 17,
+            "bid:0": 5,
+            "bid:2": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.0048828125,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bid:1": 1,
+            "bid:0": 2,
+            "bid:3": 5,
+            "bid:2": 1,
+            "bid:4": 3
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.0087890625,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "bid:4": 3,
+            "bid:3": 8,
+            "bid:0": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bid:3": 80,
+        "bid:2": 43,
+        "bid:4": 22,
+        "bid:0": 46,
+        "bid:1": 65
+      },
+      "mode_changes": 39
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "score": 0.21630859375,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.0303955078125,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bid:3": 3,
+            "bid:2": 1,
+            "bid:4": 1,
+            "bid:0": 4,
+            "bid:1": 12
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.0262451171875,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bid:1": 10,
+            "bid:3": 5,
+            "bid:0": 6,
+            "bid:4": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.0042724609375,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bid:0": 9,
+            "bid:1": 2,
+            "bid:4": 3,
+            "bid:3": 17,
+            "bid:2": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.0211181640625,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bid:3": 19,
+            "bid:4": 7,
+            "bid:0": 8
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.023681640625,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bid:3": 10,
+            "bid:0": 4,
+            "bid:2": 18,
+            "bid:1": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.035400390625,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bid:2": 19,
+            "bid:3": 10,
+            "bid:0": 3,
+            "bid:4": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.0379638671875,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bid:3": 6,
+            "bid:1": 13,
+            "bid:2": 2,
+            "bid:0": 7
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0260009765625,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bid:1": 15,
+            "bid:0": 7,
+            "bid:3": 5,
+            "bid:2": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.0,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bid:2": 1,
+            "bid:0": 2,
+            "bid:1": 2,
+            "bid:4": 2,
+            "bid:3": 5
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.01025390625,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bid:4": 3,
+            "bid:3": 8,
+            "bid:2": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bid:3": 88,
+        "bid:2": 45,
+        "bid:4": 18,
+        "bid:0": 50,
+        "bid:1": 55
+      },
+      "mode_changes": 35
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "score": 0.6595052083333334,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.022786458333333332,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "trade": 1,
+            "invest": 2,
+            "crop:0": 18
+          },
+          "planned": 21
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.04166666666666667,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "crop:0": 20,
+            "invest": 1,
+            "crop:2": 1
+          },
+          "planned": 22
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.06510416666666666,
+          "brier": 0.170753326557437,
+          "actions": {
+            "crop:0": 6,
+            "invest": 1,
+            "crop:2": 26
+          },
+          "planned": 33
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.11002604166666669,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "crop:2": 34
+          },
+          "planned": 34
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.09244791666666666,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "crop:2": 3,
+            "crop:1": 30
+          },
+          "planned": 33
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.115234375,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "crop:1": 33
+          },
+          "planned": 33
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.068359375,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "crop:1": 3,
+            "crop:0": 25
+          },
+          "planned": 28
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.07291666666666663,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "crop:0": 28
+          },
+          "planned": 28
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.02864583333333337,
+          "brier": 0.25872328139051,
+          "actions": {
+            "crop:1": 1,
+            "crop:0": 4,
+            "crop:2": 7
+          },
+          "planned": 12
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.04231770833333337,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "crop:2": 12
+          },
+          "planned": 12
+        }
+      ],
+      "actions": {
+        "trade": 1,
+        "invest": 4,
+        "crop:0": 101,
+        "crop:2": 83,
+        "crop:1": 67
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "score": 0.21940104166666666,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.020833333333333332,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "trade": 1,
+            "crop:0": 20
+          },
+          "planned": 21
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.020182291666666668,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "crop:0": 21,
+            "trade": 1
+          },
+          "planned": 22
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.018229166666666664,
+          "brier": 0.170753326557437,
+          "actions": {
+            "crop:0": 3,
+            "trade": 14,
+            "crop:2": 16
+          },
+          "planned": 33
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.03320312500000001,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "trade": 2,
+            "crop:2": 32
+          },
+          "planned": 34
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.027994791666666657,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "crop:2": 2,
+            "trade": 2,
+            "crop:1": 29
+          },
+          "planned": 33
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.03645833333333333,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "crop:1": 32,
+            "trade": 1
+          },
+          "planned": 33
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.01953125,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "crop:1": 2,
+            "trade": 2,
+            "crop:0": 24
+          },
+          "planned": 28
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.020182291666666685,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "crop:0": 27,
+            "trade": 1
+          },
+          "planned": 28
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.009765625,
+          "brier": 0.25872328139051,
+          "actions": {
+            "trade": 6,
+            "crop:0": 1,
+            "crop:2": 5
+          },
+          "planned": 12
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.013020833333333315,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "crop:2": 11,
+            "trade": 1
+          },
+          "planned": 12
+        }
+      ],
+      "actions": {
+        "trade": 31,
+        "crop:0": 96,
+        "crop:2": 66,
+        "crop:1": 63
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "score": 0.623046875,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.012369791666666666,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "trade": 13,
+            "invest": 2,
+            "crop:0": 6
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.038411458333333336,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "crop:0": 20,
+            "invest": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.046875,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "crop:0": 12,
+            "crop:2": 21
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.11002604166666666,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "crop:2": 34
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.09244791666666666,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "crop:2": 3,
+            "crop:1": 30
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.115234375,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "crop:1": 33
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.068359375,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "crop:1": 3,
+            "crop:0": 25
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.07291666666666669,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "crop:0": 28
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.02408854166666663,
+          "brier": 0.371055369839481,
+          "actions": {
+            "crop:0": 6,
+            "crop:2": 6
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.04231770833333337,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "crop:2": 12
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "trade": 13,
+        "invest": 4,
+        "crop:0": 97,
+        "crop:2": 76,
+        "crop:1": 66
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "score": 0.6282552083333334,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.011067708333333334,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "trade": 19,
+            "crop:0": 1,
+            "invest": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.02734375,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "invest": 3,
+            "crop:0": 18,
+            "trade": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.06315104166666666,
+          "brier": 0.170753326557437,
+          "actions": {
+            "crop:0": 6,
+            "crop:2": 25,
+            "trade": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.11002604166666666,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "crop:2": 34
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.09244791666666666,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "crop:2": 3,
+            "crop:1": 30
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.115234375,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "crop:1": 33
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.068359375,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "crop:1": 3,
+            "crop:0": 25
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.07291666666666669,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "crop:0": 28
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.025390625,
+          "brier": 0.25872328139051,
+          "actions": {
+            "crop:1": 1,
+            "trade": 1,
+            "crop:0": 3,
+            "crop:2": 7
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.04231770833333337,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "crop:2": 12
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "trade": 23,
+        "crop:0": 81,
+        "invest": 4,
+        "crop:2": 81,
+        "crop:1": 67
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "score": 0.2109375,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.020182291666666668,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "trade": 2,
+            "crop:0": 19
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.020833333333333332,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "crop:0": 22
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.013671875,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "crop:0": 4,
+            "trade": 27,
+            "crop:2": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.02799479166666667,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "trade": 13,
+            "crop:2": 21
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.02864583333333333,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "crop:2": 1,
+            "trade": 4,
+            "crop:1": 28
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.03645833333333334,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "crop:1": 32,
+            "trade": 1
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.020182291666666657,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "crop:1": 2,
+            "trade": 4,
+            "crop:0": 22
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.01953125,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "crop:0": 26,
+            "trade": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.009765625,
+          "brier": 0.371055369839481,
+          "actions": {
+            "trade": 9,
+            "crop:2": 3
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.013671875,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "crop:2": 12
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "trade": 62,
+        "crop:0": 93,
+        "crop:2": 39,
+        "crop:1": 62
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "score": 0.21614583333333334,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.01953125,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "trade": 3,
+            "crop:0": 18
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.020833333333333336,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "crop:0": 19,
+            "trade": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.01888020833333333,
+          "brier": 0.170753326557437,
+          "actions": {
+            "crop:0": 2,
+            "trade": 28,
+            "crop:2": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.029296875000000007,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "trade": 11,
+            "crop:2": 23
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.02669270833333333,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "crop:2": 1,
+            "trade": 7,
+            "crop:1": 25
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.037109375,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "crop:1": 30,
+            "trade": 3
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.020833333333333343,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "crop:1": 2,
+            "trade": 6,
+            "crop:0": 20
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.01953125,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "crop:0": 23,
+            "trade": 5
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.010416666666666657,
+          "brier": 0.25872328139051,
+          "actions": {
+            "trade": 8,
+            "crop:2": 4
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.013020833333333343,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "crop:2": 11,
+            "trade": 1
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "trade": 75,
+        "crop:0": 82,
+        "crop:2": 42,
+        "crop:1": 57
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "score": 0.6236979166666666,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.011067708333333334,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "trade": 14,
+            "invest": 2,
+            "crop:0": 5
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.043619791666666664,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "crop:0": 21,
+            "invest": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.04361979166666667,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "crop:0": 11,
+            "invest": 1,
+            "crop:2": 21
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.11002604166666667,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "crop:2": 34
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.09244791666666666,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "crop:2": 3,
+            "crop:1": 30
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.115234375,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "crop:1": 33
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.068359375,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "crop:1": 3,
+            "crop:0": 25
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.07291666666666663,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "crop:0": 28
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.02408854166666674,
+          "brier": 0.371055369839481,
+          "actions": {
+            "crop:0": 6,
+            "crop:2": 6
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.04231770833333326,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "crop:2": 12
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "trade": 14,
+        "invest": 4,
+        "crop:0": 96,
+        "crop:2": 76,
+        "crop:1": 66
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "score": 0.5345052083333334,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.011067708333333334,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "trade": 19,
+            "crop:0": 1,
+            "invest": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.029947916666666664,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "trade": 3,
+            "crop:0": 17,
+            "invest": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.05143229166666667,
+          "brier": 0.170753326557437,
+          "actions": {
+            "crop:0": 4,
+            "trade": 5,
+            "crop:2": 24
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.09114583333333333,
+          "brier": 0.0103151666810503,
+          "actions": {
+            "crop:2": 34
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.07356770833333331,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "crop:2": 3,
+            "trade": 1,
+            "crop:1": 29
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.095703125,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "crop:1": 33
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.05598958333333337,
+          "brier": 0.08707199598147009,
+          "actions": {
+            "crop:1": 3,
+            "crop:0": 25
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.059895833333333315,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "crop:0": 28
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.0234375,
+          "brier": 0.25872328139051,
+          "actions": {
+            "invest": 1,
+            "trade": 2,
+            "crop:0": 2,
+            "crop:2": 7
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.04231770833333337,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "crop:2": 12
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "trade": 30,
+        "crop:0": 77,
+        "invest": 4,
+        "crop:2": 80,
+        "crop:1": 65
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "score": 0.21419270833333334,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.020182291666666668,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "trade": 2,
+            "crop:0": 19
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.020833333333333332,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "crop:0": 22
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.014322916666666664,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "crop:0": 4,
+            "trade": 26,
+            "crop:2": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.029296875000000007,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "trade": 11,
+            "crop:2": 23
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.02864583333333333,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "crop:2": 1,
+            "trade": 4,
+            "crop:1": 28
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.03645833333333334,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "crop:1": 32,
+            "trade": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.020182291666666657,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "crop:1": 2,
+            "trade": 4,
+            "crop:0": 22
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.020833333333333343,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "crop:0": 25,
+            "trade": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.010416666666666657,
+          "brier": 0.371055369839481,
+          "actions": {
+            "trade": 8,
+            "crop:2": 4
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.013020833333333343,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "crop:2": 11,
+            "trade": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "trade": 60,
+        "crop:0": 92,
+        "crop:2": 42,
+        "crop:1": 62
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "score": 0.21549479166666666,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.01953125,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "trade": 3,
+            "crop:0": 18
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.018880208333333336,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "trade": 3,
+            "crop:0": 19
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.01953125,
+          "brier": 0.170753326557437,
+          "actions": {
+            "crop:0": 2,
+            "trade": 27,
+            "crop:2": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.029296874999999993,
+          "brier": 0.0103151666810503,
+          "actions": {
+            "trade": 11,
+            "crop:2": 23
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.026692708333333343,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "crop:2": 1,
+            "trade": 7,
+            "crop:1": 25
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.037109374999999986,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "crop:1": 30,
+            "trade": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.020182291666666685,
+          "brier": 0.08707199598147009,
+          "actions": {
+            "crop:1": 2,
+            "trade": 7,
+            "crop:0": 19
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.020833333333333315,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "crop:0": 22,
+            "trade": 6
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.010416666666666685,
+          "brier": 0.25872328139051,
+          "actions": {
+            "trade": 8,
+            "crop:2": 4
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.013020833333333315,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "crop:2": 11,
+            "trade": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "trade": 76,
+        "crop:0": 80,
+        "crop:2": 43,
+        "crop:1": 57
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "score": 0.4518229166666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.037434895833333336,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "strike:1": 1,
+            "strike:0": 12,
+            "reload": 5,
+            "guard": 3
+          },
+          "planned": 21
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.044596354166666664,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "strike:0": 12,
+            "reload": 5,
+            "guard": 5
+          },
+          "planned": 22
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.04264322916666667,
+          "brier": 0.170753326557437,
+          "actions": {
+            "reload": 8,
+            "strike:0": 3,
+            "guard": 7,
+            "strike:2": 15
+          },
+          "planned": 33
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06803385416666667,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "reload": 10,
+            "strike:2": 19,
+            "guard": 5
+          },
+          "planned": 34
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0517578125,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "strike:2": 1,
+            "guard": 8,
+            "reload": 7,
+            "strike:1": 17
+          },
+          "planned": 33
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.06835937499999997,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "reload": 10,
+            "strike:1": 19,
+            "guard": 4
+          },
+          "planned": 33
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.044921875,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "strike:1": 1,
+            "reload": 6,
+            "guard": 6,
+            "strike:0": 15
+          },
+          "planned": 28
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.04524739583333337,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "strike:0": 16,
+            "guard": 5,
+            "reload": 7
+          },
+          "planned": 28
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.020833333333333315,
+          "brier": 0.25872328139051,
+          "actions": {
+            "guard": 3,
+            "strike:0": 2,
+            "reload": 2,
+            "strike:2": 5
+          },
+          "planned": 12
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.027994791666666685,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "guard": 3,
+            "strike:2": 7,
+            "reload": 2
+          },
+          "planned": 12
+        }
+      ],
+      "actions": {
+        "strike:1": 38,
+        "strike:0": 60,
+        "reload": 62,
+        "guard": 49,
+        "strike:2": 47
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "combat",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "score": 0.4046223958333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.045572916666666664,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "guard": 3,
+            "strike:0": 13,
+            "reload": 5
+          },
+          "planned": 21
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.036458333333333336,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "reload": 5,
+            "guard": 6,
+            "strike:0": 11
+          },
+          "planned": 22
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.03255208333333333,
+          "brier": 0.170753326557437,
+          "actions": {
+            "strike:0": 2,
+            "guard": 10,
+            "reload": 7,
+            "strike:2": 14
+          },
+          "planned": 33
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.051757812500000014,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "guard": 7,
+            "reload": 9,
+            "strike:2": 18
+          },
+          "planned": 34
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0625,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "reload": 8,
+            "strike:2": 1,
+            "guard": 6,
+            "strike:1": 18
+          },
+          "planned": 33
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.05891927083333334,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "strike:1": 17,
+            "reload": 9,
+            "guard": 7
+          },
+          "planned": 33
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.0400390625,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "guard": 7,
+            "strike:1": 1,
+            "reload": 7,
+            "strike:0": 13
+          },
+          "planned": 28
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.03580729166666663,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "strike:0": 15,
+            "reload": 8,
+            "guard": 5
+          },
+          "planned": 28
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.01497395833333337,
+          "brier": 0.25872328139051,
+          "actions": {
+            "guard": 4,
+            "strike:0": 2,
+            "reload": 3,
+            "strike:2": 3
+          },
+          "planned": 12
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.02604166666666663,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "strike:2": 8,
+            "reload": 2,
+            "guard": 2
+          },
+          "planned": 12
+        }
+      ],
+      "actions": {
+        "guard": 57,
+        "strike:0": 56,
+        "reload": 63,
+        "strike:2": 44,
+        "strike:1": 36
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "score": 0.3147786458333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "reload": 3,
+            "strike:0": 9,
+            "guard": 9
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.023111979166666664,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "reload": 4,
+            "strike:0": 9,
+            "guard": 9
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.031575520833333336,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "strike:0": 5,
+            "guard": 14,
+            "reload": 4,
+            "strike:2": 10
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.0390625,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "guard": 14,
+            "reload": 5,
+            "strike:2": 15
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.03743489583333334,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "guard": 14,
+            "reload": 5,
+            "strike:1": 14
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.04296875,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "strike:1": 13,
+            "guard": 15,
+            "reload": 5
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.032552083333333315,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "strike:1": 2,
+            "guard": 12,
+            "strike:0": 10,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.03385416666666666,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "strike:0": 12,
+            "guard": 12,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.017252604166666685,
+          "brier": 0.371055369839481,
+          "actions": {
+            "guard": 5,
+            "strike:0": 3,
+            "reload": 1,
+            "strike:2": 3
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.021809895833333315,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "guard": 4,
+            "reload": 2,
+            "strike:2": 6
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "reload": 37,
+        "strike:0": 48,
+        "guard": 108,
+        "strike:2": 34,
+        "strike:1": 29
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "combat",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "score": 0.3225911458333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.03125,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "strike:0": 8,
+            "guard": 11,
+            "reload": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.023111979166666664,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "reload": 4,
+            "strike:0": 9,
+            "guard": 9
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.026367187500000007,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "strike:0": 5,
+            "guard": 14,
+            "reload": 4,
+            "strike:2": 10
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.04427083333333333,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "guard": 14,
+            "reload": 5,
+            "strike:2": 15
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "guard": 15,
+            "reload": 5,
+            "strike:1": 13
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.04915364583333334,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "strike:1": 14,
+            "guard": 14,
+            "reload": 5
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.036458333333333315,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "strike:1": 2,
+            "guard": 12,
+            "strike:0": 10,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.03776041666666666,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "strike:0": 12,
+            "guard": 12,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.017252604166666685,
+          "brier": 0.371055369839481,
+          "actions": {
+            "guard": 5,
+            "strike:0": 3,
+            "reload": 1,
+            "strike:2": 3
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.021809895833333315,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "guard": 4,
+            "reload": 2,
+            "strike:2": 6
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "strike:0": 47,
+        "guard": 110,
+        "reload": 36,
+        "strike:2": 34,
+        "strike:1": 29
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "score": 0.3186848958333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "reload": 3,
+            "strike:0": 9,
+            "guard": 9
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.023111979166666664,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "reload": 4,
+            "strike:0": 9,
+            "guard": 9
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.035481770833333336,
+          "brier": 0.170753326557437,
+          "actions": {
+            "strike:0": 5,
+            "guard": 14,
+            "reload": 4,
+            "strike:2": 10
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.0390625,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "guard": 14,
+            "reload": 5,
+            "strike:2": 15
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.03743489583333334,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "guard": 14,
+            "reload": 5,
+            "strike:1": 14
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.04296875,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "strike:1": 13,
+            "guard": 15,
+            "reload": 5
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.032552083333333315,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "strike:1": 2,
+            "guard": 12,
+            "strike:0": 10,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.03385416666666666,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "strike:0": 12,
+            "guard": 12,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.017252604166666685,
+          "brier": 0.25872328139051,
+          "actions": {
+            "guard": 5,
+            "strike:0": 3,
+            "reload": 1,
+            "strike:2": 3
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.021809895833333315,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "guard": 4,
+            "reload": 2,
+            "strike:2": 6
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "reload": 37,
+        "strike:0": 48,
+        "guard": 108,
+        "strike:2": 34,
+        "strike:1": 29
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "combat",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "score": 0.3304036458333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "reload": 3,
+            "strike:0": 9,
+            "guard": 9
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.027018229166666664,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "reload": 4,
+            "strike:0": 9,
+            "guard": 9
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.026367187500000007,
+          "brier": 0.170753326557437,
+          "actions": {
+            "strike:0": 3,
+            "guard": 15,
+            "strike:2": 11,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.04427083333333333,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "guard": 14,
+            "reload": 5,
+            "strike:2": 15
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "guard": 15,
+            "reload": 5,
+            "strike:1": 13
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.04915364583333334,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "strike:1": 14,
+            "guard": 14,
+            "reload": 5
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.03645833333333334,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "strike:1": 1,
+            "guard": 12,
+            "strike:0": 11,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.03776041666666663,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "strike:0": 12,
+            "guard": 12,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.017252604166666685,
+          "brier": 0.25872328139051,
+          "actions": {
+            "guard": 6,
+            "strike:0": 1,
+            "strike:2": 4,
+            "reload": 1
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.021809895833333315,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "guard": 4,
+            "reload": 2,
+            "strike:2": 6
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "reload": 37,
+        "strike:0": 45,
+        "guard": 110,
+        "strike:2": 36,
+        "strike:1": 28
+      },
+      "mode_changes": 0
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "score": 0.2838541666666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "reload": 3,
+            "strike:0": 9,
+            "guard": 9
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.02962239583333333,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "guard": 11,
+            "reload": 3,
+            "strike:0": 8
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.01953125,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "strike:0": 2,
+            "guard": 17,
+            "reload": 4,
+            "strike:2": 10
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.04850260416666667,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "strike:2": 13,
+            "guard": 17,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "guard": 17,
+            "reload": 4,
+            "strike:1": 12
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.04166666666666666,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "guard": 17,
+            "reload": 4,
+            "strike:1": 12
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.0283203125,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "reload": 4,
+            "strike:1": 1,
+            "guard": 13,
+            "strike:0": 10
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.022460937500000028,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "strike:0": 10,
+            "guard": 15,
+            "reload": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.01139322916666663,
+          "brier": 0.371055369839481,
+          "actions": {
+            "reload": 2,
+            "guard": 4,
+            "strike:0": 3,
+            "strike:2": 3
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.01204427083333337,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "guard": 8,
+            "reload": 1,
+            "strike:2": 3
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "reload": 32,
+        "strike:0": 42,
+        "guard": 128,
+        "strike:2": 29,
+        "strike:1": 25
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "combat",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "score": 0.2916666666666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.03125,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "strike:0": 8,
+            "guard": 11,
+            "reload": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.02734375,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "guard": 12,
+            "reload": 3,
+            "strike:0": 7
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.02604166666666667,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "strike:0": 4,
+            "guard": 16,
+            "reload": 4,
+            "strike:2": 9
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.04427083333333333,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "guard": 17,
+            "strike:2": 13,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "guard": 17,
+            "reload": 4,
+            "strike:1": 12
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.04166666666666666,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "guard": 17,
+            "reload": 4,
+            "strike:1": 12
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.03255208333333334,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "reload": 4,
+            "guard": 13,
+            "strike:1": 1,
+            "strike:0": 10
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.029947916666666685,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "strike:0": 10,
+            "guard": 15,
+            "reload": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.013020833333333315,
+          "brier": 0.371055369839481,
+          "actions": {
+            "reload": 2,
+            "guard": 5,
+            "strike:0": 2,
+            "strike:2": 3
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.010416666666666685,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "strike:2": 4,
+            "guard": 7,
+            "reload": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "strike:0": 41,
+        "guard": 130,
+        "reload": 31,
+        "strike:2": 29,
+        "strike:1": 25
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "score": 0.2955729166666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "reload": 3,
+            "strike:0": 9,
+            "guard": 9
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.02962239583333333,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "guard": 11,
+            "reload": 3,
+            "strike:0": 8
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.02734375,
+          "brier": 0.170753326557437,
+          "actions": {
+            "strike:0": 2,
+            "guard": 17,
+            "reload": 4,
+            "strike:2": 10
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.04850260416666667,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "strike:2": 13,
+            "guard": 17,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "guard": 17,
+            "reload": 4,
+            "strike:1": 12
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.04166666666666666,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "guard": 17,
+            "reload": 4,
+            "strike:1": 12
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.0283203125,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "reload": 4,
+            "strike:1": 1,
+            "guard": 13,
+            "strike:0": 10
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.022460937500000028,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "strike:0": 10,
+            "guard": 15,
+            "reload": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.01529947916666663,
+          "brier": 0.25872328139051,
+          "actions": {
+            "reload": 2,
+            "guard": 4,
+            "strike:0": 2,
+            "strike:2": 4
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.01204427083333337,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "guard": 8,
+            "reload": 1,
+            "strike:2": 3
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "reload": 32,
+        "strike:0": 41,
+        "guard": 128,
+        "strike:2": 30,
+        "strike:1": 25
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "combat",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "score": 0.2916666666666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "reload": 3,
+            "strike:0": 9,
+            "guard": 9
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.02962239583333333,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "guard": 11,
+            "reload": 3,
+            "strike:0": 8
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.027669270833333343,
+          "brier": 0.170753326557437,
+          "actions": {
+            "strike:0": 2,
+            "guard": 17,
+            "reload": 4,
+            "strike:2": 10
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.04036458333333333,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "guard": 17,
+            "strike:2": 13,
+            "reload": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.03125,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "guard": 17,
+            "reload": 4,
+            "strike:1": 12
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.04166666666666666,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "guard": 17,
+            "reload": 4,
+            "strike:1": 12
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.03255208333333334,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "reload": 4,
+            "guard": 13,
+            "strike:1": 1,
+            "strike:0": 10
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.029947916666666685,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "strike:0": 10,
+            "guard": 15,
+            "reload": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.013020833333333315,
+          "brier": 0.25872328139051,
+          "actions": {
+            "reload": 2,
+            "guard": 5,
+            "strike:0": 2,
+            "strike:2": 3
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.010416666666666685,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "strike:2": 4,
+            "guard": 7,
+            "reload": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "reload": 32,
+        "strike:0": 41,
+        "guard": 128,
+        "strike:2": 30,
+        "strike:1": 25
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "score": 0.5078125,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.046875,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 21
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03645833333333333,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18,
+            "bet:2": 1
+          },
+          "planned": 22
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.050781250000000014,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 4,
+            "bond": 5,
+            "bet:2": 23,
+            "pass": 1
+          },
+          "planned": 33
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.08333333333333331,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bet:2": 29,
+            "bond": 5
+          },
+          "planned": 34
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.05989583333333334,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bet:2": 3,
+            "bet:1": 26,
+            "bond": 4
+          },
+          "planned": 33
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.08203125,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 30,
+            "bond": 3
+          },
+          "planned": 33
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.04296875,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 21,
+            "bond": 4
+          },
+          "planned": 28
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0546875,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 25,
+            "bond": 3
+          },
+          "planned": 28
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.013020833333333315,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bond": 2,
+            "bet:0": 4,
+            "bet:2": 6
+          },
+          "planned": 12
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.037760416666666685,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bet:2": 11,
+            "bond": 1
+          },
+          "planned": 12
+        }
+      ],
+      "actions": {
+        "bond": 33,
+        "bet:0": 90,
+        "bet:2": 73,
+        "pass": 1,
+        "bet:1": 59
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "score": 0.4453125,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.046875,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 21
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03385416666666667,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bond": 4,
+            "bet:0": 17,
+            "bet:2": 1
+          },
+          "planned": 22
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.04427083333333333,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 6,
+            "bet:2": 26,
+            "bet:1": 1
+          },
+          "planned": 33
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06901041666666666,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bet:2": 34
+          },
+          "planned": 34
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0546875,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bet:2": 3,
+            "bet:1": 30
+          },
+          "planned": 33
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.07421875000000003,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 33
+          },
+          "planned": 33
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.03776041666666663,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 25
+          },
+          "planned": 28
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.041666666666666685,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 28
+          },
+          "planned": 28
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.015625,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bet:1": 1,
+            "bet:0": 4,
+            "bet:2": 7
+          },
+          "planned": 12
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.02734375,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bet:2": 12
+          },
+          "planned": 12
+        }
+      ],
+      "actions": {
+        "bond": 7,
+        "bet:0": 98,
+        "bet:2": 83,
+        "bet:1": 68
+      },
+      "mode_changes": 3
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "score": 0.4231770833333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.044270833333333336,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bond": 2,
+            "bet:0": 17,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.041666666666666664,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bet:0": 22
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.02083333333333333,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bet:0": 9,
+            "bond": 3,
+            "bet:2": 14,
+            "pass": 7
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06640625000000001,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bet:2": 30,
+            "bond": 2,
+            "pass": 2
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.05338541666666666,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "bet:2": 2,
+            "bond": 2,
+            "pass": 3,
+            "bet:1": 26
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.061197916666666685,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bet:1": 24,
+            "bond": 5,
+            "pass": 4
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.03385416666666663,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 19,
+            "pass": 3,
+            "bond": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.05078125,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bet:0": 24,
+            "pass": 2,
+            "bond": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.014322916666666685,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bet:0": 5,
+            "pass": 1,
+            "bond": 1,
+            "bet:2": 5
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.036458333333333315,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "pass": 2,
+            "bond": 1,
+            "bet:2": 9
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bond": 21,
+        "bet:0": 96,
+        "pass": 26,
+        "bet:2": 60,
+        "bet:1": 53
+      },
+      "mode_changes": 6
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "score": 0.4440104166666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.046875,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03776041666666667,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bond": 4,
+            "bet:0": 18
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.02734375,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bet:0": 12,
+            "bond": 2,
+            "bet:2": 19
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06380208333333333,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bet:2": 30,
+            "bond": 2,
+            "bet:0": 2
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.05598958333333334,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "bet:2": 2,
+            "bond": 1,
+            "bet:1": 29,
+            "bet:0": 1
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.06640624999999997,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bet:1": 27,
+            "bond": 3,
+            "bet:0": 3
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.033854166666666685,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 21,
+            "bond": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0625,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bet:0": 24,
+            "bond": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.013020833333333315,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bet:0": 6,
+            "bond": 1,
+            "bet:2": 5
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.03645833333333337,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "bet:0": 1,
+            "bet:2": 11
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bond": 24,
+        "bet:0": 106,
+        "bet:2": 67,
+        "bet:1": 59
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "score": 0.4283854166666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.044270833333333336,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 2,
+            "bet:0": 17,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03906249999999999,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bet:0": 21,
+            "pass": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.02734375,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 4,
+            "pass": 6,
+            "bet:2": 19,
+            "bond": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.07161458333333333,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "pass": 4,
+            "bond": 3,
+            "bet:2": 27
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.053385416666666685,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bet:2": 2,
+            "bond": 2,
+            "pass": 3,
+            "bet:1": 26
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.05859374999999997,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 23,
+            "bond": 5,
+            "pass": 5
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 2,
+            "pass": 4,
+            "bet:0": 19,
+            "bond": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.0546875,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 25,
+            "pass": 2,
+            "bond": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.0078125,
+          "brier": 0.25872328139051,
+          "actions": {
+            "pass": 3,
+            "bet:0": 2,
+            "bet:2": 6,
+            "bond": 1
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.03645833333333337,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "pass": 2,
+            "bond": 1,
+            "bet:2": 9
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bond": 22,
+        "bet:0": 88,
+        "pass": 32,
+        "bet:2": 63,
+        "bet:1": 51
+      },
+      "mode_changes": 3
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "score": 0.4322916666666667,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.046875,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.03385416666666667,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bond": 4,
+            "bet:0": 17,
+            "bet:2": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.03385416666666666,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 7,
+            "bet:2": 22,
+            "pass": 3,
+            "bond": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06901041666666667,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bet:2": 34
+          },
+          "planned": 5
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.0546875,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bet:2": 3,
+            "bet:1": 30
+          },
+          "planned": 5
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.07421875,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 33
+          },
+          "planned": 5
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.037760416666666685,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 25
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.04166666666666663,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 28
+          },
+          "planned": 4
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.01302083333333337,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bet:1": 1,
+            "pass": 1,
+            "bet:0": 3,
+            "bet:2": 7
+          },
+          "planned": 1
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.02734375,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bet:2": 12
+          },
+          "planned": 2
+        }
+      ],
+      "actions": {
+        "bond": 8,
+        "bet:0": 98,
+        "bet:2": 79,
+        "pass": 4,
+        "bet:1": 67
+      },
+      "mode_changes": 8
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "score": 0.4466145833333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.037760416666666664,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.049479166666666664,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bet:0": 19,
+            "bond": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.020833333333333343,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bet:0": 12,
+            "bond": 4,
+            "bet:2": 17
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06380208333333333,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bet:2": 30,
+            "bet:0": 2,
+            "bond": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.06901041666666666,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "bet:0": 2,
+            "bet:2": 1,
+            "bond": 1,
+            "bet:1": 29
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.06901041666666666,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bet:1": 29,
+            "bond": 2,
+            "bet:0": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.04036458333333337,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 22,
+            "bond": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.05859375,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bet:0": 25,
+            "bond": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.005208333333333315,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bond": 2,
+            "bet:0": 6,
+            "bet:2": 4
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.032552083333333315,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "bet:2": 11,
+            "bet:0": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bond": 23,
+        "bet:0": 109,
+        "bet:2": 63,
+        "bet:1": 61
+      },
+      "mode_changes": 2
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "score": 0.4309895833333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.040364583333333336,
+          "brier": 0.014957506376533702,
+          "actions": {
+            "bond": 2,
+            "bet:0": 17,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.036458333333333336,
+          "brier": 0.0018930454918140056,
+          "actions": {
+            "bet:0": 19,
+            "bond": 2,
+            "pass": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.022135416666666657,
+          "brier": 0.2707081917769736,
+          "actions": {
+            "bet:0": 6,
+            "pass": 10,
+            "bond": 4,
+            "bet:2": 13
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06640625000000001,
+          "brier": 0.01660917653373546,
+          "actions": {
+            "bet:2": 30,
+            "pass": 2,
+            "bond": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.06640625,
+          "brier": 0.0831850434829093,
+          "actions": {
+            "pass": 5,
+            "bet:2": 1,
+            "bond": 3,
+            "bet:1": 24
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.07031249999999997,
+          "brier": 0.0033763248761834027,
+          "actions": {
+            "bet:1": 27,
+            "bond": 3,
+            "pass": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.04036458333333337,
+          "brier": 0.09031054242151636,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 23,
+            "bond": 1,
+            "pass": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.046875,
+          "brier": 0.003127034732756899,
+          "actions": {
+            "bet:0": 24,
+            "bond": 2,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.0078125,
+          "brier": 0.371055369839481,
+          "actions": {
+            "bond": 2,
+            "bet:0": 4,
+            "pass": 2,
+            "bet:2": 4
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.03385416666666663,
+          "brier": 0.008670197627586468,
+          "actions": {
+            "bet:2": 11,
+            "pass": 1
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bond": 21,
+        "bet:0": 93,
+        "pass": 29,
+        "bet:2": 59,
+        "bet:1": 54
+      },
+      "mode_changes": 4
+    },
+    {
+      "game": "gambling",
+      "profile": "steady",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "score": 0.44140625,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.040364583333333336,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 2,
+            "bet:0": 17,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.033854166666666664,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bet:0": 18,
+            "bond": 2,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.03255208333333333,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 4,
+            "pass": 6,
+            "bet:2": 19,
+            "bond": 4
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.06901041666666667,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bet:2": 28,
+            "pass": 3,
+            "bond": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.06640625,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "pass": 5,
+            "bet:2": 1,
+            "bond": 3,
+            "bet:1": 24
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.06901041666666669,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 28,
+            "bond": 2,
+            "pass": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.0390625,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 2,
+            "pass": 3,
+            "bet:0": 22,
+            "bond": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.046875,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 24,
+            "bond": 2,
+            "pass": 2
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.016927083333333315,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bond": 1,
+            "pass": 3,
+            "bet:0": 2,
+            "bet:2": 6
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.02734375,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bet:2": 12
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bond": 20,
+        "bet:0": 87,
+        "pass": 29,
+        "bet:2": 66,
+        "bet:1": 54
+      },
+      "mode_changes": 4
+    },
+    {
+      "game": "gambling",
+      "profile": "growth",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "score": 0.4583333333333333,
+      "phases": [
+        {
+          "start": 0,
+          "end": 21,
+          "phase_start": 0,
+          "half": "early",
+          "gain": 0.037760416666666664,
+          "brier": 0.01547156993124239,
+          "actions": {
+            "bond": 3,
+            "bet:0": 18
+          },
+          "planned": 3
+        },
+        {
+          "start": 21,
+          "end": 43,
+          "phase_start": 0,
+          "half": "late",
+          "gain": 0.045572916666666664,
+          "brier": 0.01515152275025066,
+          "actions": {
+            "bet:0": 18,
+            "bond": 3,
+            "bet:2": 1
+          },
+          "planned": 3
+        },
+        {
+          "start": 43,
+          "end": 76,
+          "phase_start": 43,
+          "half": "early",
+          "gain": 0.03515625,
+          "brier": 0.170753326557437,
+          "actions": {
+            "bet:0": 8,
+            "bet:2": 20,
+            "bond": 3,
+            "pass": 2
+          },
+          "planned": 4
+        },
+        {
+          "start": 76,
+          "end": 110,
+          "phase_start": 43,
+          "half": "late",
+          "gain": 0.058593750000000014,
+          "brier": 0.010315166681050302,
+          "actions": {
+            "bet:2": 31,
+            "bond": 2,
+            "bet:0": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "phase_start": 110,
+          "half": "early",
+          "gain": 0.06901041666666666,
+          "brier": 0.08347558683912175,
+          "actions": {
+            "bet:0": 2,
+            "bet:2": 1,
+            "bond": 1,
+            "bet:1": 29
+          },
+          "planned": 4
+        },
+        {
+          "start": 143,
+          "end": 176,
+          "phase_start": 110,
+          "half": "late",
+          "gain": 0.07161458333333331,
+          "brier": 0.0070658265362085046,
+          "actions": {
+            "bet:1": 31,
+            "bond": 1,
+            "bet:0": 1
+          },
+          "planned": 4
+        },
+        {
+          "start": 176,
+          "end": 204,
+          "phase_start": 176,
+          "half": "early",
+          "gain": 0.04036458333333337,
+          "brier": 0.0870719959814701,
+          "actions": {
+            "bet:1": 3,
+            "bet:0": 22,
+            "bond": 3
+          },
+          "planned": 4
+        },
+        {
+          "start": 204,
+          "end": 232,
+          "phase_start": 176,
+          "half": "late",
+          "gain": 0.05859375,
+          "brier": 0.008899502643216737,
+          "actions": {
+            "bet:0": 25,
+            "bond": 3
+          },
+          "planned": 3
+        },
+        {
+          "start": 232,
+          "end": 244,
+          "phase_start": 232,
+          "half": "early",
+          "gain": 0.01432291666666663,
+          "brier": 0.25872328139051,
+          "actions": {
+            "bond": 1,
+            "pass": 1,
+            "bet:0": 4,
+            "bet:2": 6
+          },
+          "planned": 2
+        },
+        {
+          "start": 244,
+          "end": 256,
+          "phase_start": 232,
+          "half": "late",
+          "gain": 0.02734375,
+          "brier": 0.007836340310040811,
+          "actions": {
+            "bet:2": 12
+          },
+          "planned": 1
+        }
+      ],
+      "actions": {
+        "bond": 20,
+        "bet:0": 99,
+        "bet:2": 71,
+        "pass": 3,
+        "bet:1": 63
+      },
+      "mode_changes": 4
+    }
+  ],
+  "personality_action_differences": [
+    {
+      "game": "auction",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.13671875
+    },
+    {
+      "game": "auction",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.23828125
+    },
+    {
+      "game": "auction",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.2421875
+    },
+    {
+      "game": "auction",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.2265625
+    },
+    {
+      "game": "auction",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.27734375
+    },
+    {
+      "game": "resources",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.1171875
+    },
+    {
+      "game": "resources",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.19140625
+    },
+    {
+      "game": "resources",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.20703125
+    },
+    {
+      "game": "resources",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.1796875
+    },
+    {
+      "game": "resources",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.19140625
+    },
+    {
+      "game": "combat",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.03515625
+    },
+    {
+      "game": "combat",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.0078125
+    },
+    {
+      "game": "combat",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.015625
+    },
+    {
+      "game": "combat",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.0078125
+    },
+    {
+      "game": "combat",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.0
+    },
+    {
+      "game": "gambling",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "receding_recovery@1",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.10546875
+    },
+    {
+      "game": "gambling",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@7",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.1015625
+    },
+    {
+      "game": "gambling",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@7",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.1640625
+    },
+    {
+      "game": "gambling",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint@8",
+      "profiles": [
+        "growth",
+        "steady"
+      ],
+      "action_frequency_distance": 0.11328125
+    },
+    {
+      "game": "gambling",
+      "seed": 41201,
+      "regime": "irregular",
+      "turns": 256,
+      "arm": "endpoint_posterior@8",
+      "profiles": [
+        "steady",
+        "growth"
+      ],
+      "action_frequency_distance": 0.1015625
+    }
+  ],
+  "limitations": [
+    "Post-hoc phase review, not an independent acceptance test or causal estimate of learning.",
+    "Personality runs share exogenous responses but can visit different states. Action frequency difference is not psychological validity.",
+    "A regime can span the entire run. Improvement between its halves also reflects resource changes and public time."
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "cases": [
+    {
+      "profile": "growth",
+      "tick": 64,
+      "source": "results/owner_recovery_cloud/owner-recovery-resources-0/trajectories.jsonl",
+      "source_sha256": "cd8573408006250705382d8c6b7aad05d63d49a74e94cb47a3eca0ad857f8bae",
+      "saved_action": "crop:2",
+      "recomputed_action": "crop:2",
+      "world": {
+        "tick": 64,
+        "cash": 81.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "crop:2"
+      },
+      "root_valuation": {
+        "discount": 0.7725,
+        "rows": [
+          {
+            "plan": "flow-plan-000",
+            "eligible": true,
+            "score": 0.6102276166074926,
+            "objective": 0.00039197240714598607,
+            "primary_need": 0.3272909231220345,
+            "strongest_value": 0.3272909231220345,
+            "loss": 0.0,
+            "action": "crop:0",
+            "purpose_mean": 0.11545701072062241
+          },
+          {
+            "plan": "flow-plan-001",
+            "eligible": true,
+            "score": 0.5297723891083514,
+            "objective": 0.00038447776186678167,
+            "primary_need": 0.28121397238909657,
+            "strongest_value": 0.28121397238909657,
+            "loss": 0.0,
+            "action": "crop:1",
+            "purpose_mean": 0.11509703454302132
+          },
+          {
+            "plan": "flow-plan-002",
+            "eligible": true,
+            "score": 1.0484673107367146,
+            "objective": 0.000432795746497063,
+            "primary_need": 0.5782721138199978,
+            "strongest_value": 0.5782721138199978,
+            "loss": 0.0,
+            "action": "crop:2",
+            "purpose_mean": 0.11741780127295023
+          },
+          {
+            "plan": "flow-plan-003",
+            "eligible": false,
+            "score": -0.44045633902707104,
+            "objective": 0.00046550394605380244,
+            "primary_need": -0.2117833324962966,
+            "strongest_value": -0.2117833324962966,
+            "loss": 0.31022366535196555,
+            "action": "invest",
+            "purpose_mean": 0.11903370269483361
+          },
+          {
+            "plan": "flow-plan-004",
+            "eligible": true,
+            "score": 1.001306726439834,
+            "objective": 0.0004301911343715595,
+            "primary_need": 0.5622590031103764,
+            "strongest_value": 0.5622590031103764,
+            "loss": 0.0,
+            "action": "trade",
+            "purpose_mean": 0.11729269884553131
+          }
+        ]
+      },
+      "seconds": 28.312000000005355
+    },
+    {
+      "profile": "steady",
+      "tick": 64,
+      "source": "results/owner_recovery_cloud/owner-recovery-resources-1/trajectories.jsonl",
+      "source_sha256": "9af6145f742c19d1f8976b23afbcf9217cf277a0e027ed15cee31ea07477c2ad",
+      "saved_action": "crop:2",
+      "recomputed_action": "crop:2",
+      "world": {
+        "tick": 64,
+        "cash": 141.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 3,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "crop:2"
+      },
+      "root_valuation": {
+        "discount": 0.87,
+        "rows": [
+          {
+            "plan": "flow-plan-000",
+            "eligible": true,
+            "score": 1.0359385880290164,
+            "objective": 0.0068122600248548305,
+            "primary_need": 2.2865020840931782,
+            "strongest_value": 0.0,
+            "loss": 0.0,
+            "action": "crop:0",
+            "purpose_mean": 0.23429293814731317
+          },
+          {
+            "plan": "flow-plan-001",
+            "eligible": true,
+            "score": 0.9809229298531109,
+            "objective": 0.006723115936892584,
+            "primary_need": 2.1943481826273024,
+            "strongest_value": 0.0,
+            "loss": 0.011460189753593518,
+            "action": "crop:1",
+            "purpose_mean": 0.23357298579211105
+          },
+          {
+            "plan": "flow-plan-002",
+            "eligible": true,
+            "score": 1.2700370061321282,
+            "objective": 0.00729782794948,
+            "primary_need": 2.7884644654891044,
+            "strongest_value": 0.0,
+            "loss": 0.011460189753593518,
+            "action": "crop:2",
+            "purpose_mean": 0.2382145192519689
+          },
+          {
+            "plan": "flow-plan-003",
+            "eligible": true,
+            "score": 0.7610462403047876,
+            "objective": 0.00711145549544023,
+            "primary_need": 1.8051798965578103,
+            "strongest_value": 0.0,
+            "loss": 0.032526615808597496,
+            "action": "invest",
+            "purpose_mean": 0.2370965871095578
+          },
+          {
+            "plan": "flow-plan-004",
+            "eligible": true,
+            "score": 1.1143814360656918,
+            "objective": 0.0069444013037424715,
+            "primary_need": 2.4231049107365283,
+            "strongest_value": 0.0,
+            "loss": 3.6076105092516454e-05,
+            "action": "trade",
+            "purpose_mean": 0.23536014773046438
+          }
+        ]
+      },
+      "seconds": 27.29700000002049
+    }
+  ],
+  "limitations": [
+    "Post-hoc valuation under the declared model, not proof that its future is correct.",
+    "Profiles reached different public states. This is not a same-state causal comparison of personalities.",
+    "All candidate actions are evaluated before the personality tier; the audit does not weaken that tier."
+  ]
+}

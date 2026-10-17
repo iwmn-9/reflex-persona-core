@@ -60,7 +60,9 @@ resolve_feedback(owner, result['ticket'], actual_feedback)
 
 この再構築を毎回の実行境界としてまとめた任意の入口が `reflex.receding_owner.RecedingOwner`。上記と同じゲーム側のコールバックを渡し、`result = controller.decide(public_world)`、実行後に `controller.resolve(result['ticket'], actual_feedback)` と呼ぶ。予測は解決済みの本人から毎回作り直す。未解決の結果を残した次の判断や、終局後の判断、不完全な予測から暗黙に即時判断へ戻る動作は拒否する。保存する本人は通常の `DecisionLoop.record()` で、復元後に同じ設定のwrapperを再構築する。
 
-毎回読むこと自体が品質向上を保証するわけではない。未来の本人が立て直せない近似や標本誤差があると、繰り返すほど現在の選択を悪くする場合がある。既定の予測方式・通常Policyは変更せず、採否は [継続と長期判断の比較](../evidence/owner_continuity/REPORT.md) で判定する。
+毎回読むこと自体が品質向上を保証するわけではない。未来の本人が立て直せない近似や標本誤差があると、繰り返すほど現在の選択を悪くする場合がある。下記の回復まで含む構成は、4ルールの独立確認と長期ストレスを終え、品質優先の任意構成として採用した。既定の予測方式・通常Policyは変更しない。改善範囲と残る損は [継続と長期判断の比較](../evidence/owner_continuity/REPORT.md) を参照。
+
+この比較の `receding_recovery@1` は、`EventReader(learning='segmented')` を持つ本人に、`RecedingOwner(..., world_model='posterior', purpose_estimator='conditional', tail_recovery=2, tail_steps=15, seeds=(701, 702, 703))` を接続し、実結果を解決するたびに再計画する構成である。名前だけで同じ構成になるわけではなく、これらの引数とゲーム側の接続契約を合わせる。wrapperの既定値は引き続き `world_model='frozen'`、`purpose_estimator='sampled'`、`tail_recovery=0`。既定の呼出しがこの任意構成と同じ挙動をすると解釈しない。
 
 `PolicyTail.evaluate()` は従来の目的点だけの推定経路として残す。完全な嗜好経路には `trajectories()` を使う。既存の終局点置換用 `PreferenceBasis` と完全な嗜好経路を同時に有効にすると、どの流れを終局点で置き換えるかが曖昧になるため拒否する。今回、その意味を自動推測する機能は足していない。
 

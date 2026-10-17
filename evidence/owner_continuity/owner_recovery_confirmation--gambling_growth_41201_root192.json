@@ -1,0 +1,100 @@
+{
+  "game": "gambling",
+  "profile": "growth",
+  "seed": 41201,
+  "regime": "irregular",
+  "registered_tail_steps": 15,
+  "diagnostic_tail_steps": 15,
+  "diagnostic_model_seeds": [
+    701,
+    702,
+    703
+  ],
+  "source": "results\\owner_recovery_confirmation\\owner-recovery-stress-gambling\\candidate\\trajectories.jsonl",
+  "source_sha256": "39b90c8618106647ec0ddc5914388ecb12ff447ee3ce7eb67c08de32e49a2811",
+  "cases": [
+    {
+      "tick": 192,
+      "saved_action": "bet:0",
+      "recomputed_action": "bet:0",
+      "world": {
+        "tick": 192,
+        "cash": 273.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "bet:0"
+      },
+      "root_valuation": {
+        "discount": 0.7725,
+        "rows": [
+          {
+            "plan": "flow-plan-000",
+            "eligible": true,
+            "score": 2.903634126849635,
+            "objective": 0.0005964541261635878,
+            "primary_need": 1.6059848216303414,
+            "strongest_value": 1.6059848216303414,
+            "loss": 0.05796669879848661,
+            "action": "bet:0",
+            "purpose_mean": 0.3718605440169111
+          },
+          {
+            "plan": "flow-plan-001",
+            "eligible": false,
+            "score": 1.7255535168036973,
+            "objective": 0.0005409861462160786,
+            "primary_need": 0.9239524414218673,
+            "strongest_value": 0.9239524414218673,
+            "loss": 0.028746173118432517,
+            "action": "bet:1",
+            "purpose_mean": 0.3691963550317217
+          },
+          {
+            "plan": "flow-plan-002",
+            "eligible": false,
+            "score": 1.7178538022316914,
+            "objective": 0.0005406371759058342,
+            "primary_need": 0.9196615144484451,
+            "strongest_value": 0.9196615144484451,
+            "loss": 0.029220525680054094,
+            "action": "bet:2",
+            "purpose_mean": 0.36917959359823177
+          },
+          {
+            "plan": "flow-plan-003",
+            "eligible": false,
+            "score": 0.45749872435343725,
+            "objective": 0.0006349788542550772,
+            "primary_need": 0.29154336271011533,
+            "strongest_value": 0.29154336271011533,
+            "loss": 0.29372819890075585,
+            "action": "bond",
+            "purpose_mean": 0.37394590978798875
+          },
+          {
+            "plan": "flow-plan-004",
+            "eligible": true,
+            "score": 2.095716647722091,
+            "objective": 0.0005593591494284998,
+            "primary_need": 1.1498662591668833,
+            "strongest_value": 1.1498662591668833,
+            "loss": 0.018447515556130084,
+            "action": "pass",
+            "purpose_mean": 0.3700788308822882
+          }
+        ]
+      },
+      "seconds": 32.437999999994645
+    }
+  ],
+  "limitations": [
+    "Post-hoc valuation under the declared model, not proof that its future is correct.",
+    "The core, personality coefficients, and benchmark rules are not modified.",
+    "Cross-platform recomputation is reported alongside the original saved action."
+  ]
+}

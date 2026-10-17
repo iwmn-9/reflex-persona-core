@@ -4,6 +4,10 @@ Replay the forecast's declared learned continuation on the same revealed event
 sequence, starting with the actual selected root. Future events enter only one
 at a time after each counterfactual decision. This is an evaluator, never advice.
 For action-dependent opponents, reusing their observed responses is NOT valid.
+
+realized_persona_gain compares risk-adjusted scalar path scores at the root.
+Each path is scored alone: this does NOT compare the strongest-value eligibility
+tier across alternatives and is not a complete ordering of the person's choices.
 """
 import argparse,copy,json,sys,hashlib
 from pathlib import Path
