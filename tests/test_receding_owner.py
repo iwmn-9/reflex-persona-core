@@ -1,5 +1,6 @@
 import copy
 import unittest
+from unittest.mock import patch,Mock
 from reflex.receding_owner import RecedingOwner
 from reflex.closed_loop import owned_rollout
 from reflex.decision_loop import DecisionLoop
@@ -9,6 +10,36 @@ from tools.continuing_games import ContinuingGame,GAMES
 
 
 class RecedingOwnerTests(unittest.TestCase):
+    def test_replanning_crosses_retained_history_boundary(self):
+        g=ContinuingGame('auction',PROFILES[0],turns=140);w=g.start();own=g.actor(g.context(w),learning='segmented')
+        args=dict(observe=g.context,events=g.events,terminal=g.terminal,
+            assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
+            feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=3,seeds=(701,),world_model='posterior')
+        for tick in range(131):
+            c=g.context(w,own.state)
+            if tick<127:result=DecisionLoop.decide_batch([(own,g.request(c))],False)[0]
+            else:
+                loop=RecedingOwner(own,**args);result=loop.decide(w)
+                self.assertTrue(result['deliberation']['adopted'])
+            k=result['decision']['action_id'];after,flow=g.transition(w,k,'0' if tick<100 else '2')
+            resolve_feedback(own,result['ticket'],g.feedback(w,after,k,c,flow));w=after
+        record=own.record()
+        self.assertEqual(record['predictor']['memory']['observations'],131)
+        self.assertEqual(len(record['predictor']['memory']['history']),128)
+        restored=DecisionLoop.from_record(g.context(w),record,predictor=g.actor(g.context(w),learning='segmented').predictor)
+        self.assertEqual(RecedingOwner(own,**args).decide(w)['decision'],RecedingOwner(restored,**args).decide(w)['decision'])
+
+    def test_incomplete_forecast_never_silently_commits_reflex(self):
+        g=ContinuingGame('auction',PROFILES[0],turns=3);w=g.start();own=g.actor(g.context(w))
+        loop=RecedingOwner(own,observe=g.context,events=g.events,terminal=g.terminal,
+            assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
+            feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=1)
+        saved=own.record();stub=Mock();stub.planner.return_value=lambda cs,ds:None
+        with patch('reflex.receding_owner.owned_rollout',return_value=stub):
+            with self.assertRaises(ValueError):loop.decide(w)
+        self.assertEqual(own.record(),saved)
+        self.assertIsNone(own.pending)
+
     def test_every_decision_matches_fresh_manual_controller_after_feedback(self):
         for game in GAMES:
             g=ContinuingGame(game,PROFILES[0],turns=4);w=g.start();own=g.actor(g.context(w),learning='segmented')

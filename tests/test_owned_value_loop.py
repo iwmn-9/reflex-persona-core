@@ -37,6 +37,35 @@ def controller(g,*,steps,tail_seeds=(701,702,703),future_choices='planned',tail_
 
 
 class OwnedValueLoopTests(unittest.TestCase):
+    def test_exact_reflex_continuation_pruning_preserves_full_tree_value(self):
+        for game in ('auction','combat'):
+            g=ContinuingGame(game,PROFILES[1],turns=3);w=g.start();c=g.context(w);own=g.actor(c,learning='segmented')
+            args=dict(observe=g.context,events=g.events,terminal=g.terminal,assess=lambda w:g.goal(w).record(),
+                record=lambda w:w,request_for=g.request,feedback=g.feedback,model_id=g.model_id,target=g.target)
+            ctrl=owned_rollout(own,**args,tail_steps=0,tree_steps=2,future_choices='reflex');rq=g.request(c);cap={}
+            effective=own.preview(rq)[0];ctrl.planner(own,rq,w,captured=cap)([effective],[])
+            law=own.predictor.frozen_forecaster();f=cap['node']['forecast']
+            for plan,(key,) in f.roots.items():
+                expected=0.
+                for z,p in law(effective).items():
+                    child=copy.deepcopy(own);first=DecisionLoop.decide_batch([(child,rq)],False,_counterfactual_roots=(key,))[0]
+                    state,flow=g.transition(w,key,z);resolve_feedback(child,first['ticket'],g.feedback(w,state,key,effective,flow))
+                    cc=g.context(state,child.state);last=DecisionLoop.decide_batch([(child,g.request(cc))],False)[0]
+                    expected+=p*sum(q*g.goal(g.transition(state,last['decision']['action_id'],symbol)[0]).value
+                        for symbol,q in law(last['context']).items())
+                self.assertAlmostEqual(f.purpose[plan],expected,places=13)
+
+    def test_imagined_owner_can_recover_without_a_positive_immediate_action(self):
+        g=ContinuingGame('combat',PROFILES[1],turns=16);w=g.start();w['ammo']=0;own=g.actor(g.context(w),learning='segmented')
+        args=dict(observe=g.context,events=g.events,terminal=g.terminal,assess=lambda w:g.goal(w).record(),
+            record=lambda w:w,request_for=g.request,feedback=g.feedback,model_id=g.model_id,target=g.target,
+            tail_steps=8,seeds=(701,),world_model='posterior')
+        saved=own.record();plain=owned_rollout(own,**args);recovered=owned_rollout(own,**args,tail_recovery=2)
+        a=plain.frontier.trajectories(w,own);b=recovered.frontier.trajectories(w,own)
+        self.assertGreater(recovered.frontier.future_calls,0)
+        self.assertGreater(sum(p*goal['value'] for p,_,_,goal,_ in b),sum(p*goal['value'] for p,_,_,goal,_ in a))
+        self.assertEqual(own.record(),saved)
+
     def test_conditional_mean_matches_exact_tree_without_erasing_sampled_risk(self):
         g=ContinuingGame('gambling',PROFILES[1],turns=2);w=g.start();c=g.context(w);actor=g.actor(c)
         args=dict(observe=g.context,events=g.events,terminal=g.terminal,

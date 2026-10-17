@@ -47,8 +47,8 @@ def run(job,arm):
     is_reflex=arm in ('reflex','reflex_segmented')
     g=ContinuingGame(game,PROFILES[pid],turns,seed%2);w=g.start();c=g.context(w)
     own=g.actor(c,learned=arm!='endpoint_library',renewal=arm in ('endpoint_renewal','endpoint_both','endpoint_recovery'),
-        learning='segmented' if arm in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented','competent','endpoint_competent','receding_posterior') else 'windows')
-    if arm in ('receding','receding_posterior') and (interval!=1 or offset!=0):
+        learning='segmented' if arm in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented','competent','endpoint_competent','receding_posterior','receding_corrected','receding_recovery') else 'windows')
+    if arm in ('receding','receding_posterior','receding_corrected','receding_recovery') and (interval!=1 or offset!=0):
         raise ValueError('receding owner requires every decision; no periodic substitution')
     axes=character_key(c);rng=np.random.default_rng(seed);trace=[];checks=Counter();started=time.monotonic()
     for tick in range(turns):
@@ -92,11 +92,13 @@ def run(job,arm):
         mirror=ActorModel(own,root_request=req,request_for=g.request,
             feedback=lambda b,e,k,cc:g.feedback(b,e,k,cc,g.transition(b,k,e['signal'])[1]))
         prepared,mreq,_,_=mirror.prepare(w,c,prepared=True);mirror.preview()
-        if arm in ('receding','receding_posterior'):
+        if arm in ('receding','receding_posterior','receding_corrected','receding_recovery'):
             live=RecedingOwner(own,observe=g.context,events=g.events,terminal=g.terminal,
                 assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
                 feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=tail_steps,
-                world_model='posterior' if arm=='receding_posterior' else 'frozen')
+                world_model='frozen' if arm=='receding' else 'posterior',
+                purpose_estimator='conditional' if arm in ('receding_corrected','receding_recovery') else 'sampled',
+                tail_recovery=2 if arm=='receding_recovery' else 0)
             result=live.decide(w);cap=live.last
         else:result=DecisionLoop.decide_batch([(own,req)],False,planner)[0]
         key=result['decision']['action_id']

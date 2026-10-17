@@ -14,14 +14,16 @@ from .model_observer import resolve_feedback
 class RecedingOwner:
     def __init__(self, actor, *, observe, events, terminal, assess, record,
                  request_for, feedback, model_id, target, tail_steps=15,
-                 seeds=(701,702,703), world_model='frozen', max_regret=.15):
+                 seeds=(701,702,703), world_model='frozen', max_regret=.15,
+                 purpose_estimator='sampled',tail_recovery=0):
         if not isinstance(actor,DecisionLoop) or actor.pending is not None:
             raise ValueError('one resolved DecisionLoop owner required')
         self.actor=actor
         self.observe=observe;self.request_for=request_for
         self.options=dict(observe=observe,events=events,terminal=terminal,assess=assess,
             record=record,request_for=request_for,feedback=feedback,model_id=model_id,
-            target=target,tail_steps=tail_steps,seeds=tuple(seeds),world_model=world_model,max_regret=max_regret)
+            target=target,tail_steps=tail_steps,seeds=tuple(seeds),world_model=world_model,max_regret=max_regret,
+            purpose_estimator=purpose_estimator,tail_recovery=tail_recovery)
         # Validate the entire configuration before any real decision is pending.
         owned_rollout(actor,**self.options)
         self.last=None
@@ -29,6 +31,7 @@ class RecedingOwner:
     def decide(self, public):
         if self.actor.pending is not None:raise ValueError('resolve actual feedback before the next decision')
         if self.options['terminal'](public):raise ValueError('cannot decide in a terminal world')
+        self.last=None
         req=self.request_for(self.observe(copy.deepcopy(public),copy.deepcopy(self.actor.state)))
         ctrl=owned_rollout(self.actor,**self.options);captured={}
         planner=ctrl.planner(self.actor,req,copy.deepcopy(public),captured=captured)

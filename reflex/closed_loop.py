@@ -134,7 +134,9 @@ class ClosedLoop:
         # contract: an unseen post-planner override would invalidate its tree.
         if request.reader is not None or request.value_proposal is not None or (actor.predictor is not None and self.owner_transitions is None):
             raise ValueError('tree requires an explicit joint planner without external advice overrides')
-        c=(actor._prepare(request)['effective'] if self.owner_transitions is None else actor.preview(request)[0])
+        baseline=None
+        if self.owner_transitions is None:c=actor._prepare(request)['effective']
+        else:c,baseline=actor.preview(request)
         compile_batch([c])
         identity=[self.model_id,self.target,self.unit,self.max_regret,self.record(world),actor.record(),asdict(request),c,remaining,
             actor.policy.principle_priority,actor.policy.residual.tolist(),actor.policy.commitments,self.future_choices,
@@ -147,9 +149,16 @@ class ClosedLoop:
         if self.work>self.budget.nodes:raise WorkLimit('node capacity')
         if stamp in self.cache:self.hits+=1;return self.cache[stamp]
         paths={};audit={};children={};dependencies={stamp};frontiers=[]
+        fixed_leaf=self.future_choices=='reflex' and not root and remaining==1 and self.frontier is None
         return_horizon=remaining+(self.frontier.steps if self.tail_preferences else 0)
         if return_horizon>256:raise ValueError('bounded complete return horizon required')
-        for key in sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure']):
+        keys=sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure'])
+        if self.future_choices=='reflex' and not root:
+            # A fixed continuation needs its actual action, not a decision tree
+            # for alternatives that this continuation will never select.
+            if baseline is None:baseline=actor.preview(request)[1]
+            keys=[baseline['action_id']]
+        for key in keys:
             options=(self.transitions(copy.deepcopy(world),key) if self.owner_transitions is None else
                 self.owner_transitions(copy.deepcopy(world),key,copy.deepcopy(actor),copy.deepcopy(c)))
             if not isinstance(options,(tuple,list)) or not options:raise ValueError('nonempty public transition distribution required')
@@ -168,6 +177,19 @@ class ClosedLoop:
             options=list(merged.values())
             paths[key]=[];audit[key]=[];children[key]=[]
             for transition in options:
+                if fixed_leaf:
+                    # After the last fixed-policy action, no later choice or
+                    # actor-dependent evaluator consumes the updated learner.
+                    # Preserve every physical outcome/flow; omit only that
+                    # unused post-horizon owner update (and do not claim its hash).
+                    ended=bool(self.terminal(transition.state));g=Goal(**self.assess(transition.state))
+                    if g.target!=self.target or ended!=(g.status!='running'):raise ValueError('coherent fixed continuation endpoint required')
+                    paths[key].append(Branch(transition.probability,(copy.deepcopy(transition.flow),),(1.,)))
+                    audit[key].append(dict(actions=[key],terminal=ended,assessment=g.record(),terminal_coverage=ended))
+                    children[key].append(dict(probability=transition.probability,public=self.record(transition.state),
+                        owner=None,child=None,post_horizon_owner_omitted=True))
+                    if len(paths[key])>self.budget.outcomes:raise WorkLimit('return distribution capacity')
+                    continue
                 mean_estimates=None
                 clone=copy.deepcopy(actor)
                 forced=DecisionLoop.decide_batch([(clone,request)],False,_counterfactual_roots=(key,))[0]
@@ -213,7 +235,9 @@ class ClosedLoop:
                     if len(paths[key])>self.budget.outcomes:raise WorkLimit('return distribution capacity')
                 children[key].append(dict(probability=transition.probability,public=self.record(transition.state),
                     owner=digest(clone.record()),child=child_key,feedback=fb,flow=transition.flow,state=transition.state))
-        forecast=goal_forecast(c,paths,audit,horizon=return_horizon,unit=self.unit,target=self.target,policy=actor.policy,
+        valuation=copy.deepcopy(c)
+        valuation['actions']=[a for a in valuation['actions'] if a['id'] in paths]
+        forecast=goal_forecast(valuation,paths,audit,horizon=return_horizon,unit=self.unit,target=self.target,policy=actor.policy,
             max_regret=self.max_regret,settlement_weight='absolute',outcome_limit=self.budget.outcomes,preference_basis=self.preference_basis,
             opportunity_regret=self.opportunity_regret,
             objective_origin=Goal(**self.assess(world)) if self.relative_objective else None)
@@ -221,16 +245,16 @@ class ClosedLoop:
             forecast.audit['frontier']=dict(identity=self.frontier.identity,
                 semantics=('full sampled owner continuation and preference flows; running cutoff retained' if self.tail_preferences else
                     'estimated purpose beyond cutoff under reference continuation; prefix personality flows only; running state retained'))
-        chosen=copy.deepcopy(actor)
+        chosen=None if fixed_leaf else copy.deepcopy(actor)
         planner=None if self.future_choices=='reflex' and not root else lambda cs,ds:forecast
-        result=DecisionLoop.decide_batch([(chosen,request)],False,planner)[0]
+        result=dict(decision=baseline) if fixed_leaf else DecisionLoop.decide_batch([(chosen,request)],False,planner)[0]
         key=result['decision']['action_id'];returns=[]
         for branch,row in zip(paths[key],audit[key]):
             count=len(row['actions']);returns.append((branch.probability,branch.effects[:count],tuple(row['actions']),row['assessment'],row['terminal']))
         # Audit the lifecycle which the future tree assumed. This catches lost
         # social/need/learning/progress state instead of silently using a model
         # of a different person after a planned choice.
-        for item in children[key]:
+        for item in (() if fixed_leaf else children[key]):
             actual=copy.deepcopy(chosen);reveal(actual,result['ticket'],item['feedback'])
             if digest(actual.record())!=item['owner']:raise ValueError('planned and counterfactual owner continuation disagree')
         node=dict(stamp=stamp,forecast=forecast,returns=returns,action=key,decision=result['decision'],dependencies=frozenset(dependencies),
@@ -273,7 +297,7 @@ class ClosedLoop:
 def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feedback,
                   model_id,target,tail_steps=15,seeds=(701,702,703),max_regret=.15,
                   future_planner=None,future_planner_id=None,future_planner_limit=1,
-                  sampling='independent',purpose_estimator='sampled',world_model='frozen'):
+                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0):
     """Rebuild after real feedback: root world model + evolving owned rollout.
 
     `events(public_state, action)` enumerates known conditional PublicEvents.
@@ -296,6 +320,10 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         raise ValueError('resolved owner with a public predictive distribution required')
     if type(tail_steps) is not int or not 0<=tail_steps<=255:
         raise ValueError('0..255 tail decisions plus one root required')
+    TreeBudget(horizon=tree_steps)
+    if tree_steps+tail_steps>256:raise ValueError('bounded combined return horizon required')
+    if type(tail_recovery) is not int or tail_recovery not in (0,2):raise ValueError('disabled or two-step continuation recovery required')
+    if tail_recovery and (future_planner is not None or tail_steps==0):raise ValueError('one identified tail controller required')
     if not callable(events):raise ValueError('known conditional event enumeration required')
     if sampling not in ('independent','stratified'):raise ValueError('known rollout sampling mode required')
     if purpose_estimator not in ('sampled','conditional'):raise ValueError('known purpose mean estimator required')
@@ -307,7 +335,7 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     source=digest(actor.record());predict=actor.predictor.frozen_forecaster()
     posterior=None
     if world_model!='frozen':
-        posterior=actor.predictor.predictive_continuation(steps=tail_steps+1,persistent=world_model=='persistent')
+        posterior=actor.predictor.predictive_continuation(steps=tail_steps+tree_steps,persistent=world_model=='persistent')
     identity=digest(['owned-rollout-v1',model_id,source])
     if sampling!='independent':identity=digest([identity,sampling,seeds])
     if posterior is not None:identity=digest([identity,'retained-root-segment-posterior-v1'])
@@ -345,6 +373,23 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
             if goal.target!=target:raise ValueError('same-target conditional goal required')
             return goal.value
         return math.fsum(row.probability*value(row.state) for row in rows)-value(after)
+    if tail_recovery:
+        def recover(person,request,state):
+            context=person.preview(request)[0];probabilities=person.predictor.predict(context)
+            origin=Goal(**assess(state)).value
+            expected=[]
+            for action in context['actions']:
+                if not action['legal'] or action['known_failure']:continue
+                rows=events(copy.deepcopy(state),action['id'])
+                if len({e.symbol for e in rows})!=len(rows) or {e.symbol for e in rows}!=set(probabilities):
+                    raise ValueError('complete conditional response coverage required')
+                expected.append(math.fsum(probabilities[e.symbol]*Goal(**assess(e.public)).value for e in rows))
+            if max(expected)>origin+1e-12:return None
+            inner=owned_rollout(person,observe=observe,events=events,terminal=terminal,assess=assess,
+                record=record,request_for=request_for,feedback=feedback,model_id=model_id,target=target,
+                tail_steps=0,tree_steps=2,future_choices='reflex',world_model=world_model,max_regret=max_regret)
+            return inner.planner(person,request,state)
+        future_planner=recover;future_planner_id='no-immediate-purpose-gain-two-step-owner-recovery-v1';future_planner_limit=16
     if tail_steps==0 and (future_planner is not None or purpose_estimator!='sampled'):
         raise ValueError('zero tail has no future planning or sampling correction')
     tail=None if tail_steps==0 else PolicyTail(observe=observe,advance=lambda *a:None,owner_advance=advance,
@@ -356,7 +401,7 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     ctrl=ClosedLoop(observe=observe,transitions=lambda *a:None,owner_transitions=transitions,
         terminal=terminal,assess=assess,record=record,request_for=request_for,feedback=feedback,
         model_id=identity,unit='owner-decisions',target=target,
-        budget=TreeBudget(horizon=1,outcomes=256),max_regret=max_regret,
+        budget=TreeBudget(horizon=tree_steps,outcomes=256),max_regret=max_regret,future_choices=future_choices,
         frontier=tail,tail_preferences=tail is not None,relative_objective=True,opportunity_regret=True)
     ctrl.source_owner=source
     return ctrl
