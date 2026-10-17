@@ -1,0 +1,62 @@
+{
+  "case": {
+    "game": "combat",
+    "profile": "steady",
+    "seed": 43,
+    "regime": "shift-return",
+    "tick": 64,
+    "tail_steps": 63,
+    "source_sha256": "1269ea1c243979b56cfe3c543e50de7eb5b8ade9644e349e9bc95918ce6a7d0e"
+  },
+  "old": {
+    "controller_counts": {
+      "declined": 2224,
+      "planned": 591,
+      "budget-skipped": 20
+    },
+    "paths": 45,
+    "capped_paths": 3,
+    "selected_action": "strike:2",
+    "seconds": 315.594000000041
+  },
+  "expanded": {
+    "controller_counts": {
+      "declined": 2243,
+      "planned": 592
+    },
+    "paths": 45,
+    "capped_paths": 0,
+    "selected_action": "strike:2",
+    "seconds": 322.405999999959
+  },
+  "changed_paths": [
+    {
+      "distribution": 10,
+      "seed": "701",
+      "actions": [
+        [
+          121,
+          "guard",
+          "reload"
+        ],
+        [
+          124,
+          "guard",
+          "strike:1"
+        ],
+        [
+          125,
+          "guard",
+          "strike:1"
+        ],
+        [
+          127,
+          "guard",
+          "strike:1"
+        ]
+      ],
+      "endpoint_delta": 0.015625
+    }
+  ],
+  "interpretation": "Diagnostic model continuation, not a realized long-run improvement; the root action did not change."
+}
