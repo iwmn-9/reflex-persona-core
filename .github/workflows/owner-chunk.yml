@@ -1,5 +1,8 @@
 name: Resume one frozen owned execution
 on:
+  push:
+    branches: [research/owner-continuity]
+    paths: [.github/workflows/owner-chunk.yml]
   workflow_dispatch:
     inputs:
       job:
@@ -37,7 +40,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           JOB: ${{ inputs.job }}
-          ARM: ${{ inputs.arm }}
+          ARM: ${{ inputs.arm || 'receding_recovery' }}
           PREVIOUS_RUN: ${{ inputs.previous_run }}
         shell: bash
         run: |
@@ -48,7 +51,8 @@ jobs:
           from tools.run_owned_value import law
           from tools.continuing_games import GAMES
           from reflex.laboratory import PROFILES
-          job = json.loads(os.environ['JOB']); arm = os.environ['ARM']
+          job = json.loads(os.environ['JOB']) if os.environ['JOB'] else ['combat',1,41903,'shift-return',26,1,3,0]
+          arm = os.environ['ARM']
           assert isinstance(job,list) and len(job)==8
           game,pid,seed,regime,turns,interval,tail,offset = job
           assert game in GAMES and type(pid) is int and 0<=pid<len(PROFILES)
@@ -75,14 +79,14 @@ jobs:
       - name: Continue sixteen decisions without resetting the world
         timeout-minutes: 340
         env:
-          ARM: ${{ inputs.arm }}
+          ARM: ${{ inputs.arm || 'receding_recovery' }}
         run: >-
           python tools/run_owned_chunk.py --job-file work/job.json
           --arm "$ARM" --checkpoint work/checkpoint.json --decisions 16 --output work/row.json
       - name: Verify a short resumed execution against an uninterrupted one
         if: ${{ success() && inputs.verify_full }}
         env:
-          ARM: ${{ inputs.arm }}
+          ARM: ${{ inputs.arm || 'receding_recovery' }}
         shell: bash
         run: |
           python - <<'PY'
