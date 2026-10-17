@@ -21,7 +21,9 @@ def main():
     saved=json.loads(Path(a.checkpoint).read_text(encoding='utf8'))['payload']
     if result is not None:
         output.parent.mkdir(parents=True,exist_ok=True)
-        output.write_text(json.dumps(result,separators=(',',':'))+'\n',encoding='utf8')
+        temporary=output.with_name(output.name+'.new')
+        temporary.write_text(json.dumps(result,separators=(',',':'))+'\n',encoding='utf8')
+        temporary.replace(output)
     print(json.dumps(dict(complete=result is not None,executed=len(saved['trace']),
         turns=job[4],checkpoint=str(a.checkpoint),output=str(output) if result is not None else None)),flush=True)
 
