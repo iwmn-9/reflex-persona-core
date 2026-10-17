@@ -3,7 +3,7 @@
 The hidden response law is used ONLY by the real world and diagnostic scores.
 All control parameters are shared across the four rule families.
 """
-import argparse,copy,json,sys,time
+import argparse,copy,json,sys,time,platform
 from pathlib import Path
 from collections import Counter
 from concurrent.futures import ProcessPoolExecutor,as_completed
@@ -45,7 +45,7 @@ def run(job,arm):
     is_reflex=arm in ('reflex','reflex_segmented')
     g=ContinuingGame(game,PROFILES[pid],turns,seed%2);w=g.start();c=g.context(w)
     own=g.actor(c,learned=arm!='endpoint_library',renewal=arm in ('endpoint_renewal','endpoint_both','endpoint_recovery'),
-        learning='segmented' if arm in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','reflex_segmented') else 'windows')
+        learning='segmented' if arm in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented') else 'windows')
     axes=character_key(c);rng=np.random.default_rng(seed);trace=[];checks=Counter();started=time.monotonic()
     for tick in range(turns):
         if g.terminal(w):break
@@ -54,7 +54,7 @@ def run(job,arm):
         due=tick%interval==offset
         cap={};planner=None;checkpoint=own.record() if not is_reflex and due else None
         if not is_reflex and due:
-            if arm in ('endpoint','short_endpoint','endpoint_library','endpoint_renewal','endpoint_stratified','endpoint_both','endpoint_conditional','endpoint_recovery','endpoint_dense','endpoint_segmented','endpoint_posterior','endpoint_persistent'):
+            if arm in ('endpoint','short_endpoint','endpoint_library','endpoint_renewal','endpoint_stratified','endpoint_both','endpoint_conditional','endpoint_recovery','endpoint_dense','endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned'):
                 ctrl=owned_rollout(own,observe=g.context,events=g.events,terminal=g.terminal,
                     assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
                     feedback=g.feedback,model_id=g.model_id,target=g.target,
@@ -62,7 +62,8 @@ def run(job,arm):
                     seeds=tuple(range(701,713)) if arm=='endpoint_dense' else (701,702,703),
                     sampling='stratified' if arm in ('endpoint_stratified','endpoint_both') else 'independent',
                     purpose_estimator='conditional' if arm in ('endpoint_conditional','endpoint_recovery') else 'sampled',
-                    world_model='posterior' if arm=='endpoint_posterior' else 'persistent' if arm=='endpoint_persistent' else 'frozen')
+                    world_model='posterior' if arm in ('endpoint_posterior','endpoint_unpruned') else 'persistent' if arm=='endpoint_persistent' else 'frozen',
+                    max_regret=1. if arm=='endpoint_unpruned' else .15)
                 planner=ctrl.planner(own,req,w,captured=cap)
             elif arm=='flow':
                 def planner(cs,ds):
@@ -132,6 +133,8 @@ def main():
         for k in ('games','profiles','regimes','seeds','arms'):args+=['--'+k,*map(str,getattr(a,k))]
         dispatch(root,Path(__file__).name,args);return
     root.mkdir(parents=True,exist_ok=True)
+    (root/'environment.json').write_text(json.dumps(dict(python=sys.version,numpy=np.__version__,
+        system=platform.system(),release=platform.release(),machine=platform.machine()),indent=2)+'\n',encoding='utf8')
     if not 0<=a.offset<a.interval:raise ValueError('planning offset must be within the interval')
     jobs=[(g,i,s,r,a.turns,a.interval,a.tail_steps,a.offset) for g in a.games for i in a.profiles for s in a.seeds for r in a.regimes]
     (root/'registration.json').write_text(json.dumps(dict(jobs=jobs,arms=a.arms,

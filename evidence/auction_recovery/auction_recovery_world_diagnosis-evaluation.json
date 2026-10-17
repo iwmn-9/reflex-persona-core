@@ -1,0 +1,179 @@
+{
+  "cases": [
+    {
+      "game": "auction",
+      "profile": "care",
+      "seed": 401,
+      "regime": "outside",
+      "tick": 14,
+      "observed_choice": "bid:2",
+      "without_purpose_narrowing": "bid:1",
+      "public_state": {
+        "tick": 14,
+        "cash": 2.0,
+        "score": 28.0,
+        "rival": 9.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "2",
+        "last": "bid:1"
+      },
+      "purpose": {
+        "bid:0": 0.0173906777998787,
+        "bid:1": 0.018043130803224568,
+        "bid:2": 0.018253260337711852
+      },
+      "persona_scores": {
+        "bid:0": 0.09562975632761352,
+        "bid:1": 0.1096810874240832,
+        "bid:2": 0.1051549801153551
+      },
+      "purpose_allowance": 0.00012938738067497251,
+      "predictor": {
+        "0": 0.10689790006818699,
+        "1": 0.1308824628353292,
+        "2": 0.7622196370964839
+      },
+      "world_contrast": {
+        "frozen": {
+          "choice": "bid:2",
+          "purpose": {
+            "bid:0": 0.0173906777998787,
+            "bid:1": 0.018043130803224568,
+            "bid:2": 0.018253260337711852
+          }
+        },
+        "persistent": {
+          "choice": "bid:2",
+          "purpose": {
+            "bid:0": 0.017390677799878698,
+            "bid:1": 0.018043130803224564,
+            "bid:2": 0.01825326033771185
+          }
+        }
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "seed": 548,
+      "regime": "outside",
+      "tick": 14,
+      "observed_choice": "bid:1",
+      "without_purpose_narrowing": "bid:0",
+      "public_state": {
+        "tick": 14,
+        "cash": 1.0,
+        "score": 35.0,
+        "rival": 14.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "bid:2"
+      },
+      "purpose": {
+        "bid:0": 0.031996122211818794,
+        "bid:1": 0.03348034231395032
+      },
+      "persona_scores": {
+        "bid:0": 0.2719308183317901,
+        "bid:1": 0.2075161112055425
+      },
+      "purpose_allowance": 0.00022263301531972901,
+      "predictor": {
+        "0": 0.5285460381994413,
+        "1": 0.1534452597714857,
+        "2": 0.3180087020290729
+      },
+      "world_contrast": {
+        "frozen": {
+          "choice": "bid:0",
+          "purpose": {
+            "bid:0": 0.036244320461716564,
+            "bid:1": 0.035427069914370425
+          }
+        },
+        "persistent": {
+          "choice": "bid:1",
+          "purpose": {
+            "bid:0": 0.029383486437856286,
+            "bid:1": 0.036010297201007
+          }
+        }
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "shift-return",
+      "tick": 21,
+      "observed_choice": "crop:0",
+      "without_purpose_narrowing": "crop:0",
+      "public_state": {
+        "tick": 21,
+        "cash": 29.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 0,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "trade"
+      },
+      "purpose": {
+        "crop:0": 0.048491223115516464,
+        "crop:1": 0.046146159193064126,
+        "crop:2": 0.045987617691419375,
+        "invest": 0.0481015621987578,
+        "trade": 0.048177083333333336
+      },
+      "persona_scores": {
+        "crop:0": 0.5652012809366433,
+        "crop:1": 0.41913080754274334,
+        "crop:2": 0.4092554979718167,
+        "invest": 0.18352721576605951,
+        "trade": 0.5576339905715417
+      },
+      "purpose_allowance": 0.00037554081361456347,
+      "predictor": {
+        "0": 0.7470864509055523,
+        "1": 0.14675008675775203,
+        "2": 0.10616346233669569
+      },
+      "world_contrast": {
+        "frozen": {
+          "choice": "invest",
+          "purpose": {
+            "crop:0": 0.048491223115516464,
+            "crop:1": 0.046146159193064126,
+            "crop:2": 0.045987617691419375,
+            "invest": 0.051955946105245,
+            "trade": 0.048177083333333336
+          }
+        },
+        "persistent": {
+          "choice": "invest",
+          "purpose": {
+            "crop:0": 0.048491223115516464,
+            "crop:1": 0.046146159193064126,
+            "crop:2": 0.045987617691419375,
+            "invest": 0.052441839976535586,
+            "trade": 0.048177083333333336
+          }
+        }
+      }
+    }
+  ],
+  "source_sha256": {
+    "C:\\Users\\iwakura\\Documents\\Project(Gemini)\\Colabo\\github-preview\\reflex-persona-core\\results\\auction_recovery_cloud\\comparison-auction-401-2 3\\trajectories.jsonl": "ef3a3a817162da0f6202e5da92c8428f40a362d297c9ed28b336a831c8d3c626",
+    "C:\\Users\\iwakura\\Documents\\Project(Gemini)\\Colabo\\github-preview\\reflex-persona-core\\results\\auction_recovery_cloud\\comparison-auction-548-2 3\\trajectories.jsonl": "d58d491f136577054b259214b668e13e33ffad92e04c3f530ac178a2f6e2c483",
+    "C:\\Users\\iwakura\\Documents\\Project(Gemini)\\Colabo\\github-preview\\reflex-persona-core\\results\\auction_recovery_cloud\\comparison-resources-401-0 1\\trajectories.jsonl": "ae32fb5eb413963f454850cf5a92e446a2748b0994458028b2a6d391d0e7d055"
+  },
+  "interpretation": "Post-hoc same-forecast selector ablation and optional same-owner world-model contrast. This probe runs no alternate long trajectory, so a different choice does not establish better play. These cases were selected after observing losses."
+}

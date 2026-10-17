@@ -1,0 +1,703 @@
+{
+  "checks": {
+    "world_rng_replay": 2048,
+    "physical_replay": 2048,
+    "owner_parity": 2048,
+    "fixed_axes": 2048,
+    "restore": 96,
+    "restored_action_feedback": 228,
+    "matched_observation_prediction": 512
+  },
+  "complete": true,
+  "early_stop": null,
+  "pairs": [
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "reflex",
+      "delta": 0.0026041666666666297,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "endpoint_posterior",
+      "delta": 0.0078125,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "endpoint_persistent",
+      "delta": 0.0078125,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "reflex",
+      "delta": -0.049479166666666685,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "endpoint_persistent",
+      "delta": -0.0078125,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "endpoint_posterior",
+      "delta": 0.002604166666666685,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "reflex",
+      "delta": -0.0078125,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "endpoint_posterior",
+      "delta": 0.002604166666666685,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "endpoint_persistent",
+      "delta": 0.002604166666666685,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "reflex",
+      "delta": -0.049479166666666685,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "endpoint_posterior",
+      "delta": 0.0,
+      "better": 0,
+      "same": 1,
+      "worse": 0
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "endpoint_persistent",
+      "delta": -0.010416666666666685,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    }
+  ],
+  "summaries": [
+    {
+      "candidate": "endpoint_persistent",
+      "game": "gambling",
+      "pairs": 4,
+      "better": 2,
+      "same": 0,
+      "worse": 2,
+      "mean_delta": -0.001953125,
+      "worst": -0.010416666666666685
+    },
+    {
+      "candidate": "endpoint_persistent",
+      "game": "all",
+      "pairs": 4,
+      "better": 2,
+      "same": 0,
+      "worse": 2,
+      "mean_delta": -0.001953125,
+      "worst": -0.010416666666666685
+    },
+    {
+      "candidate": "endpoint_posterior",
+      "game": "gambling",
+      "pairs": 4,
+      "better": 3,
+      "same": 1,
+      "worse": 0,
+      "mean_delta": 0.0032552083333333426,
+      "worst": 0.0
+    },
+    {
+      "candidate": "endpoint_posterior",
+      "game": "all",
+      "pairs": 4,
+      "better": 3,
+      "same": 1,
+      "worse": 0,
+      "mean_delta": 0.0032552083333333426,
+      "worst": 0.0
+    },
+    {
+      "candidate": "reflex",
+      "game": "gambling",
+      "pairs": 4,
+      "better": 1,
+      "same": 0,
+      "worse": 3,
+      "mean_delta": -0.026041666666666685,
+      "worst": -0.049479166666666685
+    },
+    {
+      "candidate": "reflex",
+      "game": "all",
+      "pairs": 4,
+      "better": 1,
+      "same": 0,
+      "worse": 3,
+      "mean_delta": -0.026041666666666685,
+      "worst": -0.049479166666666685
+    }
+  ],
+  "predictions": [
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.0546875,
+          "brier": 0.06762606012502283
+        }
+      ],
+      "brier": 0.036162697811361305,
+      "forecast_mae": null,
+      "prediction_movement": 0.04587100128674578,
+      "actions": {
+        "pass": 1,
+        "bet:2": 126,
+        "bet:0": 1
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.044270833333333336,
+          "brier": 0.06762606012502283
+        }
+      ],
+      "brier": 0.036162697811361305,
+      "forecast_mae": 0.013721929246047926,
+      "prediction_movement": 0.04587100128674578,
+      "actions": {
+        "bond": 7,
+        "pass": 2,
+        "bet:2": 111,
+        "bet:0": 8
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.044270833333333336,
+          "brier": 0.07396121954592264
+        }
+      ],
+      "brier": 0.021543627118467433,
+      "forecast_mae": 0.012856280005436977,
+      "prediction_movement": 0.034799968601330965,
+      "actions": {
+        "bond": 7,
+        "pass": 2,
+        "bet:2": 112,
+        "bet:0": 7
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.044270833333333336,
+          "brier": 0.07396121954592264
+        }
+      ],
+      "brier": 0.021543627118467433,
+      "forecast_mae": 0.01270388569775145,
+      "prediction_movement": 0.034799968601330965,
+      "actions": {
+        "bond": 7,
+        "pass": 2,
+        "bet:2": 112,
+        "bet:0": 7
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.0234375,
+          "brier": 0.0879073762032082
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.013020833333333343,
+          "brier": 0.22578919230905312
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.015625,
+          "brier": 0.22322627405092
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.020833333333333343,
+          "brier": 0.286050739908362
+        }
+      ],
+      "brier": 0.11961904776083879,
+      "forecast_mae": null,
+      "prediction_movement": 0.07764244747005339,
+      "actions": {
+        "pass": 10,
+        "bet:0": 60,
+        "bet:2": 27,
+        "bet:1": 31
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.020833333333333332,
+          "brier": 0.0879073762032082
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.013020833333333329,
+          "brier": 0.22578919230905312
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.018229166666666657,
+          "brier": 0.22322627405092
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.031249999999999972,
+          "brier": 0.286050739908362
+        }
+      ],
+      "brier": 0.11961904776083879,
+      "forecast_mae": 0.02515725840784659,
+      "prediction_movement": 0.07764244747005339,
+      "actions": {
+        "bond": 15,
+        "bet:0": 60,
+        "pass": 8,
+        "bet:2": 20,
+        "bet:1": 25
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.018229166666666668,
+          "brier": 0.10849137536598846
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.015625,
+          "brier": 0.22582699596399958
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.0,
+          "brier": 0.24772416868159908
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.044270833333333315,
+          "brier": 0.2358616371088636
+        }
+      ],
+      "brier": 0.13178822066209572,
+      "forecast_mae": 0.02773409058361284,
+      "prediction_movement": 0.10220019435255531,
+      "actions": {
+        "bond": 15,
+        "bet:0": 63,
+        "bet:1": 24,
+        "bet:2": 21,
+        "pass": 5
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "care",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.018229166666666668,
+          "brier": 0.10849137536598846
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.015625,
+          "brier": 0.22582699596399958
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.0,
+          "brier": 0.24772416868159908
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.0546875,
+          "brier": 0.2358616371088636
+        }
+      ],
+      "brier": 0.13178822066209572,
+      "forecast_mae": 0.022551748671981637,
+      "prediction_movement": 0.10220019435255531,
+      "actions": {
+        "bond": 16,
+        "bet:0": 63,
+        "bet:1": 23,
+        "bet:2": 21,
+        "pass": 5
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.0546875,
+          "brier": 0.06762606012502283
+        }
+      ],
+      "brier": 0.036162697811361305,
+      "forecast_mae": null,
+      "prediction_movement": 0.04587100128674578,
+      "actions": {
+        "pass": 1,
+        "bet:2": 126,
+        "bet:0": 1
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.0546875,
+          "brier": 0.06762606012502283
+        }
+      ],
+      "brier": 0.036162697811361305,
+      "forecast_mae": 0.014257221443915878,
+      "prediction_movement": 0.04587100128674578,
+      "actions": {
+        "bond": 7,
+        "bet:2": 113,
+        "bet:0": 8
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.049479166666666664,
+          "brier": 0.07396121954592264
+        }
+      ],
+      "brier": 0.021543627118467433,
+      "forecast_mae": 0.013137784946094508,
+      "prediction_movement": 0.034799968601330965,
+      "actions": {
+        "bond": 7,
+        "bet:2": 113,
+        "pass": 1,
+        "bet:0": 7
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.049479166666666664,
+          "brier": 0.07396121954592264
+        }
+      ],
+      "brier": 0.021543627118467433,
+      "forecast_mae": 0.012940091994731007,
+      "prediction_movement": 0.034799968601330965,
+      "actions": {
+        "bond": 7,
+        "bet:2": 113,
+        "pass": 1,
+        "bet:0": 7
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.0234375,
+          "brier": 0.0879073762032082
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.010416666666666671,
+          "brier": 0.22578919230905312
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.015625,
+          "brier": 0.22322627405092
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.020833333333333315,
+          "brier": 0.286050739908362
+        }
+      ],
+      "brier": 0.11961904776083879,
+      "forecast_mae": null,
+      "prediction_movement": 0.07764244747005339,
+      "actions": {
+        "pass": 8,
+        "bet:0": 60,
+        "bet:1": 32,
+        "bet:2": 28
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.020833333333333332,
+          "brier": 0.0879073762032082
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.010416666666666671,
+          "brier": 0.22578919230905312
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.018229166666666657,
+          "brier": 0.22322627405092
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.03125,
+          "brier": 0.286050739908362
+        }
+      ],
+      "brier": 0.11961904776083879,
+      "forecast_mae": 0.025453403796918524,
+      "prediction_movement": 0.07764244747005339,
+      "actions": {
+        "bond": 15,
+        "bet:0": 60,
+        "pass": 6,
+        "bet:1": 26,
+        "bet:2": 21
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.018229166666666668,
+          "brier": 0.10849137536598846
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.015625,
+          "brier": 0.22582699596399958
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.0,
+          "brier": 0.24772416868159908
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.0546875,
+          "brier": 0.2358616371088636
+        }
+      ],
+      "brier": 0.13178822066209572,
+      "forecast_mae": 0.022584493647185466,
+      "prediction_movement": 0.10220019435255531,
+      "actions": {
+        "bond": 16,
+        "bet:0": 63,
+        "bet:1": 23,
+        "bet:2": 21,
+        "pass": 5
+      }
+    },
+    {
+      "game": "gambling",
+      "profile": "ego",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.018229166666666668,
+          "brier": 0.10849137536598846
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.015625,
+          "brier": 0.22582699596399958
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.0,
+          "brier": 0.24772416868159908
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.044270833333333315,
+          "brier": 0.2358616371088636
+        }
+      ],
+      "brier": 0.13178822066209572,
+      "forecast_mae": 0.02779171394321046,
+      "prediction_movement": 0.10220019435255531,
+      "actions": {
+        "bond": 15,
+        "bet:0": 63,
+        "bet:1": 24,
+        "bet:2": 21,
+        "pass": 5
+      }
+    }
+  ],
+  "caveat": "Paired condition counts share real seeds. Endpoint proxy and finite policy continuation remain assumptions."
+}

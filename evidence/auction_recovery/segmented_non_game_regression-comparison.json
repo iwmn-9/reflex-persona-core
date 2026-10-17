@@ -1,0 +1,1641 @@
+{
+  "streams": 96,
+  "observations": 49152,
+  "groups": [
+    {
+      "size": 3,
+      "regime": "cue-reversal",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.016981503672395263,
+          "logloss": 0.5956876164909193
+        },
+        "segmented": {
+          "mse": 0.010903810745441382,
+          "logloss": 0.5765429543901903
+        }
+      },
+      "better_mse": 8
+    },
+    {
+      "size": 3,
+      "regime": "noise",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.006104051412047917,
+          "logloss": 1.1320002598187122
+        },
+        "segmented": {
+          "mse": 0.0038957886055314035,
+          "logloss": 1.1213527044821188
+        }
+      },
+      "better_mse": 8
+    },
+    {
+      "size": 3,
+      "regime": "outlier",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.003437399394415015,
+          "logloss": 0.5822934614595
+        },
+        "segmented": {
+          "mse": 0.0028700833444969273,
+          "logloss": 0.5807497847099106
+        }
+      },
+      "better_mse": 7
+    },
+    {
+      "size": 3,
+      "regime": "outside",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.004734385448818861,
+          "logloss": 0.5368622662578724
+        },
+        "segmented": {
+          "mse": 0.0027069376026405186,
+          "logloss": 0.5263648075025834
+        }
+      },
+      "better_mse": 8
+    },
+    {
+      "size": 3,
+      "regime": "shift-return",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.012354146767462725,
+          "logloss": 0.5794757817893647
+        },
+        "segmented": {
+          "mse": 0.012800511527295402,
+          "logloss": 0.5802798980104771
+        }
+      },
+      "better_mse": 3
+    },
+    {
+      "size": 3,
+      "regime": "stable",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.0034165234157689994,
+          "logloss": 0.5781097673089414
+        },
+        "segmented": {
+          "mse": 0.002864134465978226,
+          "logloss": 0.5767623359474341
+        }
+      },
+      "better_mse": 6
+    },
+    {
+      "size": 5,
+      "regime": "cue-reversal",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.011224784669931353,
+          "logloss": 0.7226799253694611
+        },
+        "segmented": {
+          "mse": 0.006973954162216668,
+          "logloss": 0.6952816870980493
+        }
+      },
+      "better_mse": 8
+    },
+    {
+      "size": 5,
+      "regime": "noise",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.003722631257703827,
+          "logloss": 1.6532525099024953
+        },
+        "segmented": {
+          "mse": 0.002836076268620846,
+          "logloss": 1.6421472115070341
+        }
+      },
+      "better_mse": 8
+    },
+    {
+      "size": 5,
+      "regime": "outlier",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.002116602708275313,
+          "logloss": 0.7014456460418903
+        },
+        "segmented": {
+          "mse": 0.0021417467534382067,
+          "logloss": 0.7097548721538997
+        }
+      },
+      "better_mse": 5
+    },
+    {
+      "size": 5,
+      "regime": "outside",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.003216128065402197,
+          "logloss": 0.6476786357120772
+        },
+        "segmented": {
+          "mse": 0.0017963005708237206,
+          "logloss": 0.6365093543029734
+        }
+      },
+      "better_mse": 8
+    },
+    {
+      "size": 5,
+      "regime": "shift-return",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.007886521769950831,
+          "logloss": 0.7058486192850728
+        },
+        "segmented": {
+          "mse": 0.007863686179257496,
+          "logloss": 0.7104866793169007
+        }
+      },
+      "better_mse": 5
+    },
+    {
+      "size": 5,
+      "regime": "stable",
+      "streams": 8,
+      "means": {
+        "recovery": {
+          "mse": 0.002102699735123894,
+          "logloss": 0.6958208455021618
+        },
+        "segmented": {
+          "mse": 0.002150545420759139,
+          "logloss": 0.7046198083976447
+        }
+      },
+      "better_mse": 3
+    }
+  ],
+  "runs": [
+    {
+      "seed": 211,
+      "size": 3,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.0025115977747985213,
+          "logloss": 0.5346704330337206
+        },
+        "segmented": {
+          "mse": 0.0025497964365903667,
+          "logloss": 0.5365964453886556
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 3,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.01170532707100556,
+          "logloss": 0.5368154408362912
+        },
+        "segmented": {
+          "mse": 0.01312053709922838,
+          "logloss": 0.5420533919548629
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 3,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.0047409298204513905,
+          "logloss": 0.5477866386279734
+        },
+        "segmented": {
+          "mse": 0.0022376238545490676,
+          "logloss": 0.5355868489620401
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 3,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.002495834571990443,
+          "logloss": 0.5404072215198495
+        },
+        "segmented": {
+          "mse": 0.0024914916383729792,
+          "logloss": 0.5423119264497874
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 3,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.004716462725365863,
+          "logloss": 1.1320172816146619
+        },
+        "segmented": {
+          "mse": 0.002758936678780663,
+          "logloss": 1.1193950621476414
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 3,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.014900316753135393,
+          "logloss": 0.567071065830678
+        },
+        "segmented": {
+          "mse": 0.010511212945493282,
+          "logloss": 0.5507824791287756
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 5,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.0017247396262481218,
+          "logloss": 0.6406448400845167
+        },
+        "segmented": {
+          "mse": 0.0024826528196814817,
+          "logloss": 0.6526553739882136
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 5,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.006977675316186448,
+          "logloss": 0.670017711528373
+        },
+        "segmented": {
+          "mse": 0.007886926746523902,
+          "logloss": 0.6748736219373678
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 5,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.0028860209565890636,
+          "logloss": 0.6643994542256763
+        },
+        "segmented": {
+          "mse": 0.0014643427777617582,
+          "logloss": 0.6505778175171371
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 5,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.0017063091000368202,
+          "logloss": 0.6478161917850151
+        },
+        "segmented": {
+          "mse": 0.0024601634675479093,
+          "logloss": 0.6600976463689587
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 5,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.0031582807010341503,
+          "logloss": 1.6567989093929956
+        },
+        "segmented": {
+          "mse": 0.0023675847654284284,
+          "logloss": 1.6450032009720164
+        }
+      }
+    },
+    {
+      "seed": 211,
+      "size": 5,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.010484851477789688,
+          "logloss": 0.7026762011207455
+        },
+        "segmented": {
+          "mse": 0.006541323094385106,
+          "logloss": 0.6630451617546436
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 3,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.002409391407294722,
+          "logloss": 0.5253224033309619
+        },
+        "segmented": {
+          "mse": 0.0022085120184516965,
+          "logloss": 0.5256197481674256
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 3,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.015526159410512854,
+          "logloss": 0.6071333772361809
+        },
+        "segmented": {
+          "mse": 0.015825508580747633,
+          "logloss": 0.621893940883843
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 3,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.004975047615491683,
+          "logloss": 0.5477255398697005
+        },
+        "segmented": {
+          "mse": 0.0028256157699760157,
+          "logloss": 0.5409670134799422
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 3,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.002432338551248694,
+          "logloss": 0.5299972155024049
+        },
+        "segmented": {
+          "mse": 0.002288130732787959,
+          "logloss": 0.529654345598797
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 3,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.006276302404167638,
+          "logloss": 1.1301046161248245
+        },
+        "segmented": {
+          "mse": 0.0037780729446931028,
+          "logloss": 1.1219653265230334
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 3,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.011879434271584013,
+          "logloss": 0.4763318857454239
+        },
+        "segmented": {
+          "mse": 0.009458159187461372,
+          "logloss": 0.4578634961919419
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 5,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.0012161697564394916,
+          "logloss": 0.633796970006869
+        },
+        "segmented": {
+          "mse": 0.0015793241189741606,
+          "logloss": 0.6421655436161224
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 5,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.00908756271849521,
+          "logloss": 0.7253581458685768
+        },
+        "segmented": {
+          "mse": 0.008967502313557373,
+          "logloss": 0.7439241653780211
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 5,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.0031354770072440463,
+          "logloss": 0.6670508557435799
+        },
+        "segmented": {
+          "mse": 0.0016328284434539658,
+          "logloss": 0.6561711816600629
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 5,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.0011845346297142446,
+          "logloss": 0.6396565348178751
+        },
+        "segmented": {
+          "mse": 0.0015130144222999565,
+          "logloss": 0.6470111267554417
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 5,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.0035825804232582246,
+          "logloss": 1.6542258245218424
+        },
+        "segmented": {
+          "mse": 0.002891953510415213,
+          "logloss": 1.6440127720618025
+        }
+      }
+    },
+    {
+      "seed": 307,
+      "size": 5,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.008647563406617051,
+          "logloss": 0.570303924199615
+        },
+        "segmented": {
+          "mse": 0.0056188875903986696,
+          "logloss": 0.542335503867628
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 3,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.0026930967475594443,
+          "logloss": 0.5971257898418533
+        },
+        "segmented": {
+          "mse": 0.0021436460444366466,
+          "logloss": 0.5959821323887297
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 3,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.008957436917185538,
+          "logloss": 0.537223637348827
+        },
+        "segmented": {
+          "mse": 0.009907949177294241,
+          "logloss": 0.5312635653857827
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 3,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.005167256696099984,
+          "logloss": 0.470272473655041
+        },
+        "segmented": {
+          "mse": 0.0038316447185608718,
+          "logloss": 0.46459342583099045
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 3,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.002756318535434278,
+          "logloss": 0.6013653167859836
+        },
+        "segmented": {
+          "mse": 0.002158687143352152,
+          "logloss": 0.6004704396425099
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 3,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.005189361617221704,
+          "logloss": 1.13311280870944
+        },
+        "segmented": {
+          "mse": 0.0027171415500719014,
+          "logloss": 1.1223709298248288
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 3,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.019783510917325355,
+          "logloss": 0.6204257555190112
+        },
+        "segmented": {
+          "mse": 0.010687245517916694,
+          "logloss": 0.5973998677242246
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 5,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.0017813279248009377,
+          "logloss": 0.7245635926905751
+        },
+        "segmented": {
+          "mse": 0.0018877531752810705,
+          "logloss": 0.7353427511123547
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 5,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.0056944113678828465,
+          "logloss": 0.6410022469003401
+        },
+        "segmented": {
+          "mse": 0.005800496583480067,
+          "logloss": 0.6368231812224606
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 5,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.0025298736575727126,
+          "logloss": 0.5661693246042574
+        },
+        "segmented": {
+          "mse": 0.0016936207387456927,
+          "logloss": 0.5555187751696747
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 5,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.0018205360870792407,
+          "logloss": 0.730516555141759
+        },
+        "segmented": {
+          "mse": 0.0018147378570503919,
+          "logloss": 0.7411936123037455
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 5,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.003292487563677483,
+          "logloss": 1.6592915563126571
+        },
+        "segmented": {
+          "mse": 0.0018249367160118627,
+          "logloss": 1.6464031355761213
+        }
+      }
+    },
+    {
+      "seed": 401,
+      "size": 5,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.011646826747667082,
+          "logloss": 0.752984008969321
+        },
+        "segmented": {
+          "mse": 0.006535887045944143,
+          "logloss": 0.7170761493026614
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 3,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.002436044361683072,
+          "logloss": 0.5896359895929612
+        },
+        "segmented": {
+          "mse": 0.0016773145956879103,
+          "logloss": 0.5851357676717022
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 3,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.009883217134753666,
+          "logloss": 0.5970875361963177
+        },
+        "segmented": {
+          "mse": 0.009764010999953986,
+          "logloss": 0.597693936783385
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 3,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.004706655616698505,
+          "logloss": 0.5548733653783318
+        },
+        "segmented": {
+          "mse": 0.0023031913279942143,
+          "logloss": 0.5443946736511074
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 3,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.0024658692048618205,
+          "logloss": 0.5897756663146442
+        },
+        "segmented": {
+          "mse": 0.0017085520770574606,
+          "logloss": 0.5851331088097104
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 3,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.007826721567554826,
+          "logloss": 1.1340522463694007
+        },
+        "segmented": {
+          "mse": 0.004136641616185147,
+          "logloss": 1.125237540135252
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 3,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.01688560458744971,
+          "logloss": 0.65725342992581
+        },
+        "segmented": {
+          "mse": 0.009934156410424926,
+          "logloss": 0.6373480880907778
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 5,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.0017603391273966558,
+          "logloss": 0.710414292696819
+        },
+        "segmented": {
+          "mse": 0.0015681077488869592,
+          "logloss": 0.7190832317886027
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 5,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.008417688553237752,
+          "logloss": 0.7486311798634688
+        },
+        "segmented": {
+          "mse": 0.007438555545018214,
+          "logloss": 0.7553164857696567
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 5,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.004293204308129777,
+          "logloss": 0.6667314222387375
+        },
+        "segmented": {
+          "mse": 0.001966129222924179,
+          "logloss": 0.6570392183983748
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 5,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.001782300840598407,
+          "logloss": 0.7105559617207199
+        },
+        "segmented": {
+          "mse": 0.0015741279912492234,
+          "logloss": 0.7187695807022587
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 5,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.0033324812487642223,
+          "logloss": 1.6553729909796486
+        },
+        "segmented": {
+          "mse": 0.0017951424747105517,
+          "logloss": 1.6460689548621477
+        }
+      }
+    },
+    {
+      "seed": 503,
+      "size": 5,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.012186124372837953,
+          "logloss": 0.7832182901660019
+        },
+        "segmented": {
+          "mse": 0.006838437738495226,
+          "logloss": 0.7691287940502708
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 3,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.004045067569074998,
+          "logloss": 0.574906554289748
+        },
+        "segmented": {
+          "mse": 0.004180284521133402,
+          "logloss": 0.5759911207819134
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 3,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.01496107894086202,
+          "logloss": 0.5884218514376002
+        },
+        "segmented": {
+          "mse": 0.014741547291878028,
+          "logloss": 0.5859120228264925
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 3,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.004145229968992035,
+          "logloss": 0.5235025274853622
+        },
+        "segmented": {
+          "mse": 0.0025325785897103163,
+          "logloss": 0.5105452741875133
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 3,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.004054834534535226,
+          "logloss": 0.5799543511612671
+        },
+        "segmented": {
+          "mse": 0.004162083396033391,
+          "logloss": 0.580786732738723
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 3,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.004894622437007375,
+          "logloss": 1.1296542764532027
+        },
+        "segmented": {
+          "mse": 0.0033184046594990743,
+          "logloss": 1.118142856079138
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 3,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.016154351417495206,
+          "logloss": 0.5676830251651735
+        },
+        "segmented": {
+          "mse": 0.010170770842265931,
+          "logloss": 0.549888302972095
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 5,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.0023845991444577737,
+          "logloss": 0.6933804068735276
+        },
+        "segmented": {
+          "mse": 0.002477820357470792,
+          "logloss": 0.7017261098637894
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 5,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.008779080450824237,
+          "logloss": 0.7296277044790808
+        },
+        "segmented": {
+          "mse": 0.008602217524969454,
+          "logloss": 0.7264966784099316
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 5,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.002937062014720227,
+          "logloss": 0.6307396887912428
+        },
+        "segmented": {
+          "mse": 0.0018946966638549684,
+          "logloss": 0.6185490504379654
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 5,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.002401244018337539,
+          "logloss": 0.700003470068337
+        },
+        "segmented": {
+          "mse": 0.0024599639707467286,
+          "logloss": 0.7074638327968932
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 5,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.0047354795249678686,
+          "logloss": 1.6408754144117903
+        },
+        "segmented": {
+          "mse": 0.003905703389229942,
+          "logloss": 1.6299285438469737
+        }
+      }
+    },
+    {
+      "seed": 601,
+      "size": 5,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.009790618218306601,
+          "logloss": 0.6933261827745453
+        },
+        "segmented": {
+          "mse": 0.006582875666765672,
+          "logloss": 0.6681372169864467
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 3,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.004959626492461442,
+          "logloss": 0.6109714716515493
+        },
+        "segmented": {
+          "mse": 0.004110372826486682,
+          "logloss": 0.6079514385604436
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 3,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.014920982023330032,
+          "logloss": 0.6393995582647469
+        },
+        "segmented": {
+          "mse": 0.014773642557936976,
+          "logloss": 0.637905805956361
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 3,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.004987658721637028,
+          "logloss": 0.5780294232959456
+        },
+        "segmented": {
+          "mse": 0.002401832401435546,
+          "logloss": 0.5647983878793633
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 3,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.004934595596878173,
+          "logloss": 0.6154233975997829
+        },
+        "segmented": {
+          "mse": 0.004011248281964605,
+          "logloss": 0.61135884259155
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 3,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.005713829106475794,
+          "logloss": 1.1342977178312896
+        },
+        "segmented": {
+          "mse": 0.004730058736301368,
+          "logloss": 1.1231064848358439
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 3,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.020211991333700455,
+          "logloss": 0.6739974735074412
+        },
+        "segmented": {
+          "mse": 0.01278495972925505,
+          "logloss": 0.6507044469490306
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 5,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.0027357845765893893,
+          "logloss": 0.7388014002864434
+        },
+        "segmented": {
+          "mse": 0.002813554679526558,
+          "logloss": 0.7496452617025842
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 5,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.009484905513822268,
+          "logloss": 0.7641299622168927
+        },
+        "segmented": {
+          "mse": 0.009223941484204278,
+          "logloss": 0.7700366114306504
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 5,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.0034759222973697783,
+          "logloss": 0.7013637102030236
+        },
+        "segmented": {
+          "mse": 0.0016969171326399058,
+          "logloss": 0.6882352715820337
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 5,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.0027196632034028013,
+          "logloss": 0.7462721649540531
+        },
+        "segmented": {
+          "mse": 0.00271641912052202,
+          "logloss": 0.7555059424579609
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 5,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.0032045170362519242,
+          "logloss": 1.6503295240716145
+        },
+        "segmented": {
+          "mse": 0.0030124030053284056,
+          "logloss": 1.6367811487396093
+        }
+      }
+    },
+    {
+      "seed": 701,
+      "size": 5,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.013881398777487555,
+          "logloss": 0.8244360926948652
+        },
+        "segmented": {
+          "mse": 0.008103704281966826,
+          "logloss": 0.7955204791535412
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 3,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.004973794444599568,
+          "logloss": 0.6349745415700616
+        },
+        "segmented": {
+          "mse": 0.003605365770331172,
+          "logloss": 0.6284870165228887
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 3,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.01176752304914846,
+          "logloss": 0.5873512093053176
+        },
+        "segmented": {
+          "mse": 0.012073829058694079,
+          "logloss": 0.5877400222301715
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 3,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.004182352254101561,
+          "logloss": 0.5174938325178962
+        },
+        "segmented": {
+          "mse": 0.003089450225925765,
+          "logloss": 0.5047445069576022
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 3,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.005009374554407526,
+          "logloss": 0.6391030568304857
+        },
+        "segmented": {
+          "mse": 0.003660093619134072,
+          "logloss": 0.632331833378695
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 3,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.005868180626843353,
+          "logloss": 1.1302887279737426
+        },
+        "segmented": {
+          "mse": 0.004598392736355718,
+          "logloss": 1.1173892828942733
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 3,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.020795163249375224,
+          "logloss": 0.5970678695969021
+        },
+        "segmented": {
+          "mse": 0.013805846651150387,
+          "logloss": 0.5818265584803659
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 5,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.0032786407957624084,
+          "logloss": 0.757707796925597
+        },
+        "segmented": {
+          "mse": 0.0026645922718989894,
+          "logloss": 0.7626461632427012
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 5,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.0077911729437569275,
+          "logloss": 0.731907916115469
+        },
+        "segmented": {
+          "mse": 0.0072322610623546625,
+          "logloss": 0.7294483459907976
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 5,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.0027707842893201903,
+          "logloss": 0.6194257811998422
+        },
+        "segmented": {
+          "mse": 0.002130926026048268,
+          "logloss": 0.6060572242025729
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 5,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.0033610649913320863,
+          "logloss": 0.7628757025227219
+        },
+        "segmented": {
+          "mse": 0.002801958229109502,
+          "logloss": 0.7670749998822124
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 5,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.003661840659615303,
+          "logloss": 1.6493139361659794
+        },
+        "segmented": {
+          "mse": 0.0031689317712608575,
+          "logloss": 1.638158514983071
+        }
+      }
+    },
+    {
+      "seed": 809,
+      "size": 5,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.013286187560814285,
+          "logloss": 0.7271971803453994
+        },
+        "segmented": {
+          "mse": 0.009016761778238572,
+          "logloss": 0.7014464954788986
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 3,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.003303568528680228,
+          "logloss": 0.5572709551606753
+        },
+        "segmented": {
+          "mse": 0.00243778351470793,
+          "logloss": 0.558335018097714
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 3,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.011111449592903678,
+          "logloss": 0.5423736436896356
+        },
+        "segmented": {
+          "mse": 0.012197067452629901,
+          "logloss": 0.5377764980629185
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 3,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.004969952897078706,
+          "logloss": 0.5552143292327287
+        },
+        "segmented": {
+          "mse": 0.0024335639329723505,
+          "logloss": 0.5452883290721082
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 3,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.003350029605963958,
+          "logloss": 0.5623214659615823
+        },
+        "segmented": {
+          "mse": 0.0024803798672727983,
+          "logloss": 0.5639510484695117
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 3,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.008346930811746783,
+          "logloss": 1.1324744034731358
+        },
+        "segmented": {
+          "mse": 0.005128659922364253,
+          "logloss": 1.1232141534169402
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 3,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.015241656849096752,
+          "logloss": 0.6056704266369138
+        },
+        "segmented": {
+          "mse": 0.009878134679563418,
+          "logloss": 0.5865303955843114
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 5,
+      "regime": "stable",
+      "arms": {
+        "recovery": {
+          "mse": 0.0019399969292963732,
+          "logloss": 0.6672574644529466
+        },
+        "segmented": {
+          "mse": 0.0017305581943531003,
+          "logloss": 0.6736940318667893
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 5,
+      "regime": "shift-return",
+      "arms": {
+        "recovery": {
+          "mse": 0.0068596772954009596,
+          "logloss": 0.6361140873083808
+        },
+        "segmented": {
+          "mse": 0.007757588173952021,
+          "logloss": 0.6469743443963202
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 5,
+      "regime": "outside",
+      "arms": {
+        "recovery": {
+          "mse": 0.0037006799922717805,
+          "logloss": 0.665548848690258
+        },
+        "segmented": {
+          "mse": 0.0018909435611610271,
+          "logloss": 0.6599262954559659
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 5,
+      "regime": "outlier",
+      "arms": {
+        "recovery": {
+          "mse": 0.001957168795701366,
+          "logloss": 0.6738685873246417
+        },
+        "segmented": {
+          "mse": 0.0017935889689799232,
+          "logloss": 0.6809222359637261
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 5,
+      "regime": "noise",
+      "arms": {
+        "recovery": {
+          "mse": 0.004813382904061441,
+          "logloss": 1.659811923363435
+        },
+        "segmented": {
+          "mse": 0.003721954516581505,
+          "logloss": 1.6508214210145318
+        }
+      }
+    },
+    {
+      "seed": 907,
+      "size": 5,
+      "regime": "cue-reversal",
+      "arms": {
+        "recovery": {
+          "mse": 0.009874706797930606,
+          "logloss": 0.7272975226851958
+        },
+        "segmented": {
+          "mse": 0.006553756101539127,
+          "logloss": 0.705563696190304
+        }
+      }
+    }
+  ],
+  "notes": "Existing regression streams, extended to the new predictor; MSE is distance to true probabilities divided by alphabet size. Not live game judgment or an independent newly sampled confirmation set."
+}

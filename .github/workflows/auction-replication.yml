@@ -1,8 +1,5 @@
 name: Auction recovery independent replication
-on:
-  push:
-    branches: ['research/auction-replication']
-  workflow_dispatch:
+on: workflow_dispatch
 permissions:
   contents: read
 jobs:

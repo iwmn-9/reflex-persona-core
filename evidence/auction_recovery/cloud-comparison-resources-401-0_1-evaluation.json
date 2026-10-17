@@ -1,0 +1,689 @@
+{
+  "checks": {
+    "world_rng_replay": 2048,
+    "physical_replay": 2048,
+    "owner_parity": 2048,
+    "fixed_axes": 2048,
+    "restore": 96,
+    "restored_action_feedback": 228,
+    "matched_observation_prediction": 512
+  },
+  "complete": true,
+  "early_stop": null,
+  "pairs": [
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "reflex",
+      "delta": -0.0013020833333333426,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "endpoint_posterior",
+      "delta": 0.005208333333333315,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "endpoint_persistent",
+      "delta": 0.005208333333333315,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "reflex",
+      "delta": 0.00390625,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "endpoint_posterior",
+      "delta": 0.005208333333333315,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "endpoint_persistent",
+      "delta": 0.005208333333333315,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "reflex",
+      "delta": -0.22916666666666666,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "endpoint_posterior",
+      "delta": -0.014322916666666685,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "outside",
+      "candidate": "endpoint_persistent",
+      "delta": 0.0390625,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "reflex",
+      "delta": -0.22916666666666669,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "endpoint_persistent",
+      "delta": -0.022135416666666685,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "shift-return",
+      "candidate": "endpoint_posterior",
+      "delta": -0.13541666666666669,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    }
+  ],
+  "summaries": [
+    {
+      "candidate": "endpoint_persistent",
+      "game": "resources",
+      "pairs": 4,
+      "better": 3,
+      "same": 0,
+      "worse": 1,
+      "mean_delta": 0.006835937499999986,
+      "worst": -0.022135416666666685
+    },
+    {
+      "candidate": "endpoint_persistent",
+      "game": "all",
+      "pairs": 4,
+      "better": 3,
+      "same": 0,
+      "worse": 1,
+      "mean_delta": 0.006835937499999986,
+      "worst": -0.022135416666666685
+    },
+    {
+      "candidate": "endpoint_posterior",
+      "game": "resources",
+      "pairs": 4,
+      "better": 2,
+      "same": 0,
+      "worse": 2,
+      "mean_delta": -0.034830729166666685,
+      "worst": -0.13541666666666669
+    },
+    {
+      "candidate": "endpoint_posterior",
+      "game": "all",
+      "pairs": 4,
+      "better": 2,
+      "same": 0,
+      "worse": 2,
+      "mean_delta": -0.034830729166666685,
+      "worst": -0.13541666666666669
+    },
+    {
+      "candidate": "reflex",
+      "game": "resources",
+      "pairs": 4,
+      "better": 1,
+      "same": 0,
+      "worse": 3,
+      "mean_delta": -0.11393229166666667,
+      "worst": -0.22916666666666669
+    },
+    {
+      "candidate": "reflex",
+      "game": "all",
+      "pairs": 4,
+      "better": 1,
+      "same": 0,
+      "worse": 3,
+      "mean_delta": -0.11393229166666667,
+      "worst": -0.22916666666666669
+    }
+  ],
+  "predictions": [
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.022135416666666668,
+          "brier": 0.06762606012502283
+        }
+      ],
+      "brier": 0.036162697811361305,
+      "forecast_mae": null,
+      "prediction_movement": 0.04587100128674578,
+      "actions": {
+        "trade": 82,
+        "crop:2": 46
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.022135416666666668,
+          "brier": 0.06762606012502283
+        }
+      ],
+      "brier": 0.036162697811361305,
+      "forecast_mae": 0.003909550183142798,
+      "prediction_movement": 0.04587100128674578,
+      "actions": {
+        "trade": 75,
+        "crop:2": 53
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.022135416666666668,
+          "brier": 0.07396121954592262
+        }
+      ],
+      "brier": 0.021543627118467433,
+      "forecast_mae": 0.003873829402374279,
+      "prediction_movement": 0.03479996860133096,
+      "actions": {
+        "trade": 62,
+        "crop:2": 66
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.022135416666666668,
+          "brier": 0.07396121954592262
+        }
+      ],
+      "brier": 0.021543627118467433,
+      "forecast_mae": 0.003806790700683945,
+      "prediction_movement": 0.03479996860133096,
+      "actions": {
+        "trade": 62,
+        "crop:2": 66
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.01953125,
+          "brier": 0.0879073762032082
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.022135416666666664,
+          "brier": 0.22578919230905312
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.01692708333333333,
+          "brier": 0.22322627405092
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.016927083333333343,
+          "brier": 0.286050739908362
+        }
+      ],
+      "brier": 0.11961904776083879,
+      "forecast_mae": null,
+      "prediction_movement": 0.07764244747005339,
+      "actions": {
+        "trade": 84,
+        "crop:0": 24,
+        "crop:2": 10,
+        "crop:1": 10
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.01953125,
+          "brier": 0.0879073762032082
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.022135416666666664,
+          "brier": 0.22578919230905312
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.01692708333333333,
+          "brier": 0.22322627405092
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.014322916666666671,
+          "brier": 0.286050739908362
+        }
+      ],
+      "brier": 0.11961904776083879,
+      "forecast_mae": 0.004902980972844484,
+      "prediction_movement": 0.07764244747005339,
+      "actions": {
+        "trade": 81,
+        "crop:0": 25,
+        "crop:2": 10,
+        "crop:1": 12
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.01953125,
+          "brier": 0.10849137536598846
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.022135416666666664,
+          "brier": 0.22582699596399958
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.022135416666666657,
+          "brier": 0.24772416868159908
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.013020833333333343,
+          "brier": 0.23586163710886357
+        }
+      ],
+      "brier": 0.13178822066209572,
+      "forecast_mae": 0.003497098856327819,
+      "prediction_movement": 0.1022001943525553,
+      "actions": {
+        "trade": 101,
+        "crop:0": 20,
+        "crop:2": 2,
+        "crop:1": 5
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "growth",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.01953125,
+          "brier": 0.10849137536598846
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.022135416666666664,
+          "brier": 0.22582699596399958
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.022135416666666657,
+          "brier": 0.24772416868159908
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.013020833333333343,
+          "brier": 0.23586163710886357
+        }
+      ],
+      "brier": 0.13178822066209572,
+      "forecast_mae": 0.004408142427325269,
+      "prediction_movement": 0.1022001943525553,
+      "actions": {
+        "trade": 101,
+        "crop:0": 20,
+        "crop:2": 2,
+        "crop:1": 5
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.01953125,
+          "brier": 0.06762606012502283
+        }
+      ],
+      "brier": 0.036162697811361305,
+      "forecast_mae": null,
+      "prediction_movement": 0.04587100128674578,
+      "actions": {
+        "trade": 126,
+        "crop:2": 2
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.009114583333333334,
+          "brier": 0.06762606012502283
+        }
+      ],
+      "brier": 0.036162697811361305,
+      "forecast_mae": 0.010670054918787005,
+      "prediction_movement": 0.04587100128674578,
+      "actions": {
+        "trade": 12,
+        "invest": 4,
+        "crop:2": 111,
+        "crop:0": 1
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.005208333333333333,
+          "brier": 0.07396121954592262
+        }
+      ],
+      "brier": 0.021543627118467433,
+      "forecast_mae": 0.010436233132754432,
+      "prediction_movement": 0.03479996860133096,
+      "actions": {
+        "trade": 14,
+        "invest": 3,
+        "crop:2": 111
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.020833333333333332,
+          "brier": 0.0879073762032082
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.018229166666666668,
+          "brier": 0.22578919230905312
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.05208333333333333,
+          "brier": 0.22322627405092
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.052083333333333315,
+          "brier": 0.286050739908362
+        }
+      ],
+      "brier": 0.11961904776083879,
+      "forecast_mae": 0.020047294460290042,
+      "prediction_movement": 0.07764244747005339,
+      "actions": {
+        "trade": 38,
+        "invest": 4,
+        "crop:0": 31,
+        "crop:2": 22,
+        "crop:1": 33
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.020833333333333332,
+          "brier": 0.0879073762032082
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.020833333333333336,
+          "brier": 0.22578919230905312
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.01822916666666667,
+          "brier": 0.22322627405092
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.02083333333333333,
+          "brier": 0.286050739908362
+        }
+      ],
+      "brier": 0.11961904776083879,
+      "forecast_mae": null,
+      "prediction_movement": 0.07764244747005339,
+      "actions": {
+        "trade": 127,
+        "crop:2": 1
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "outside",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.005208333333333333,
+          "brier": 0.07396121954592262
+        }
+      ],
+      "brier": 0.021543627118467433,
+      "forecast_mae": 0.010822260780525346,
+      "prediction_movement": 0.03479996860133096,
+      "actions": {
+        "trade": 13,
+        "invest": 3,
+        "crop:2": 112
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.020833333333333332,
+          "brier": 0.10849137536598846
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.026041666666666668,
+          "brier": 0.22582699596399958
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.03645833333333334,
+          "brier": 0.24772416868159908
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.05208333333333334,
+          "brier": 0.23586163710886357
+        }
+      ],
+      "brier": 0.13178822066209572,
+      "forecast_mae": 0.02004454350890361,
+      "prediction_movement": 0.1022001943525553,
+      "actions": {
+        "trade": 39,
+        "invest": 4,
+        "crop:0": 33,
+        "crop:2": 26,
+        "crop:1": 26
+      }
+    },
+    {
+      "game": "resources",
+      "profile": "steady",
+      "seed": 401,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.020833333333333332,
+          "brier": 0.10849137536598846
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.01692708333333333,
+          "brier": 0.22582699596399958
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.02604166666666667,
+          "brier": 0.24772416868159908
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.020833333333333343,
+          "brier": 0.23586163710886357
+        }
+      ],
+      "brier": 0.13178822066209572,
+      "forecast_mae": 0.014656995916699792,
+      "prediction_movement": 0.1022001943525553,
+      "actions": {
+        "trade": 57,
+        "crop:0": 26,
+        "invest": 3,
+        "crop:2": 20,
+        "crop:1": 22
+      }
+    }
+  ],
+  "caveat": "Paired condition counts share real seeds. Endpoint proxy and finite policy continuation remain assumptions."
+}

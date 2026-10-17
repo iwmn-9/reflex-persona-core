@@ -1,0 +1,55 @@
+{
+  "jobs": [
+    [
+      "auction",
+      2,
+      401,
+      "outside",
+      128,
+      7,
+      15,
+      0
+    ],
+    [
+      "auction",
+      2,
+      401,
+      "shift-return",
+      128,
+      7,
+      15,
+      0
+    ],
+    [
+      "auction",
+      3,
+      401,
+      "outside",
+      128,
+      7,
+      15,
+      0
+    ],
+    [
+      "auction",
+      3,
+      401,
+      "shift-return",
+      128,
+      7,
+      15,
+      0
+    ]
+  ],
+  "arms": [
+    "endpoint",
+    "reflex",
+    "endpoint_posterior",
+    "endpoint_persistent"
+  ],
+  "world_seeds": [
+    401
+  ],
+  "stage": "confirmation",
+  "semantics": "One persistent world: learned owner + endpoint evaluation + real replanning.\n\nThe hidden response law is used ONLY by the real world and diagnostic scores.\nAll control parameters are shared across the four rule families.\n"
+}

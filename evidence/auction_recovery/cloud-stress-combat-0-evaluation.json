@@ -1,0 +1,286 @@
+{
+  "checks": {
+    "world_rng_replay": 1024,
+    "physical_replay": 1024,
+    "owner_parity": 1024,
+    "fixed_axes": 1024,
+    "restore": 48,
+    "restored_action_feedback": 111,
+    "matched_observation_prediction": 256
+  },
+  "complete": true,
+  "early_stop": null,
+  "pairs": [
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 614,
+      "regime": "irregular",
+      "candidate": "reflex",
+      "delta": -0.2314453125,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 614,
+      "regime": "irregular",
+      "candidate": "endpoint_posterior",
+      "delta": 0.00390625,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 614,
+      "regime": "irregular",
+      "candidate": "endpoint_persistent",
+      "delta": 0.00390625,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    }
+  ],
+  "summaries": [
+    {
+      "candidate": "endpoint_persistent",
+      "game": "combat",
+      "pairs": 1,
+      "better": 1,
+      "same": 0,
+      "worse": 0,
+      "mean_delta": 0.00390625,
+      "worst": 0.00390625
+    },
+    {
+      "candidate": "endpoint_persistent",
+      "game": "all",
+      "pairs": 1,
+      "better": 1,
+      "same": 0,
+      "worse": 0,
+      "mean_delta": 0.00390625,
+      "worst": 0.00390625
+    },
+    {
+      "candidate": "endpoint_posterior",
+      "game": "combat",
+      "pairs": 1,
+      "better": 1,
+      "same": 0,
+      "worse": 0,
+      "mean_delta": 0.00390625,
+      "worst": 0.00390625
+    },
+    {
+      "candidate": "endpoint_posterior",
+      "game": "all",
+      "pairs": 1,
+      "better": 1,
+      "same": 0,
+      "worse": 0,
+      "mean_delta": 0.00390625,
+      "worst": 0.00390625
+    },
+    {
+      "candidate": "reflex",
+      "game": "combat",
+      "pairs": 1,
+      "better": 0,
+      "same": 0,
+      "worse": 1,
+      "mean_delta": -0.2314453125,
+      "worst": -0.2314453125
+    },
+    {
+      "candidate": "reflex",
+      "game": "all",
+      "pairs": 1,
+      "better": 0,
+      "same": 0,
+      "worse": 1,
+      "mean_delta": -0.2314453125,
+      "worst": -0.2314453125
+    }
+  ],
+  "predictions": [
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 614,
+      "regime": "irregular",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.006510416666666667,
+          "brier": 0.030291494063812218
+        },
+        {
+          "start": 43,
+          "goal_gain": 0.0,
+          "brier": 0.303090972461578
+        },
+        {
+          "start": 110,
+          "goal_gain": 0.0,
+          "brier": 0.1385852289524588
+        },
+        {
+          "start": 176,
+          "goal_gain": 0.0,
+          "brier": 0.35238086254610573
+        },
+        {
+          "start": 232,
+          "goal_gain": 0.0,
+          "brier": 0.31718029041795126
+        }
+      ],
+      "brier": 0.09279861468926112,
+      "forecast_mae": null,
+      "prediction_movement": 0.05253103321613504,
+      "actions": {
+        "strike:0": 2,
+        "guard": 254
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 614,
+      "regime": "irregular",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.0087890625,
+          "brier": 0.030291494063812218
+        },
+        {
+          "start": 43,
+          "goal_gain": 0.014322916666666664,
+          "brier": 0.303090972461578
+        },
+        {
+          "start": 110,
+          "goal_gain": 0.01953125,
+          "brier": 0.1385852289524588
+        },
+        {
+          "start": 176,
+          "goal_gain": 0.01171875,
+          "brier": 0.35238086254610573
+        },
+        {
+          "start": 232,
+          "goal_gain": 0.01953125,
+          "brier": 0.31718029041795126
+        }
+      ],
+      "brier": 0.09279861468926112,
+      "forecast_mae": 0.0065464085416607285,
+      "prediction_movement": 0.05253103321613504,
+      "actions": {
+        "reload": 37,
+        "strike:0": 43,
+        "guard": 108,
+        "strike:2": 36,
+        "strike:1": 32
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 614,
+      "regime": "irregular",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.0087890625,
+          "brier": 0.04027526474729236
+        },
+        {
+          "start": 43,
+          "goal_gain": 0.018229166666666664,
+          "brier": 0.21459009416674665
+        },
+        {
+          "start": 110,
+          "goal_gain": 0.01953125,
+          "brier": 0.14026239680604888
+        },
+        {
+          "start": 176,
+          "goal_gain": 0.01171875,
+          "brier": 0.34058135259669775
+        },
+        {
+          "start": 232,
+          "goal_gain": 0.0234375,
+          "brier": 0.2028383189742637
+        }
+      ],
+      "brier": 0.08126662347296978,
+      "forecast_mae": 0.006435824653914493,
+      "prediction_movement": 0.0676590843820723,
+      "actions": {
+        "reload": 37,
+        "strike:0": 40,
+        "guard": 108,
+        "strike:2": 39,
+        "strike:1": 32
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "growth",
+      "seed": 614,
+      "regime": "irregular",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.0087890625,
+          "brier": 0.04027526474729236
+        },
+        {
+          "start": 43,
+          "goal_gain": 0.018229166666666664,
+          "brier": 0.21459009416674665
+        },
+        {
+          "start": 110,
+          "goal_gain": 0.01953125,
+          "brier": 0.14026239680604888
+        },
+        {
+          "start": 176,
+          "goal_gain": 0.01171875,
+          "brier": 0.34058135259669775
+        },
+        {
+          "start": 232,
+          "goal_gain": 0.0234375,
+          "brier": 0.2028383189742637
+        }
+      ],
+      "brier": 0.08126662347296978,
+      "forecast_mae": 0.006251353150013439,
+      "prediction_movement": 0.0676590843820723,
+      "actions": {
+        "reload": 37,
+        "strike:0": 40,
+        "guard": 108,
+        "strike:2": 39,
+        "strike:1": 32
+      }
+    }
+  ],
+  "caveat": "Paired condition counts share real seeds. Endpoint proxy and finite policy continuation remain assumptions."
+}

@@ -12,6 +12,8 @@
 
 入力は `events(public_state, action)` の `PublicEvent` 列。各イベントは公開応答記号、次の公開状態、実1手の効果を持つ。記号集合と予測器の応答集合は一致させる。相手の未公開意図、実世界の乱数、検証用の真確率を渡さない。
 
+`posterior` / `persistent` では、各イベントの純粋な `feedback` が対応する `event={'revealed_action': symbol}` を必ず返す必要がある。公開応答の欠落や取り違えを黙って世界の条件付き履歴から消さないため、標本に選ばれなかった応答も含めて照合し、接続不整合は拒否する。応答を観測できないPOMDPの潜在履歴を積分するAPIではない。
+
 既定の `world_model='frozen'` で固定するのは現在の予測分布であり、未知の相手タイプ・真の確率分布をベイズ事後から経路ごとに引く方式ではない。結果の偶然性は扱うが、「どの世界法則が正しいか」の不確かさを完全な信念状態として表してはいない。想像上の学習を実行できることと、情報獲得の価値を正確に予測することは別になる。
 
 `EventReader(..., learning='segmented')` には、明示した区間生成モデルに基づく別の継続を用意した。`world_model='posterior'` は実観測時点の履歴と生成モデルを固定し、各経路で得る公開応答に条件づけて次の世界応答を予測する。本人の好みや効用を世界法則へ流し込まない。ある傾向が続く世界と、途中で変わる世界を周辺化するため、各手を現在の平均確率から独立に発生させる既定方式とは、未来の観測列の相関が異なる。世界の真確率は入力しない。
@@ -55,6 +57,8 @@ resolve_feedback(owner, result['ticket'], actual_feedback)
 `PolicyTail.evaluate()` は従来の目的点だけの推定経路として残す。完全な嗜好経路には `trajectories()` を使う。既存の終局点置換用 `PreferenceBasis` と完全な嗜好経路を同時に有効にすると、どの流れを終局点で置き換えるかが曖昧になるため拒否する。今回、その意味を自動推測する機能は足していない。
 
 ## 採った研究上の考え方
+
+比較再現用に、旧窓予測器へ変化点予測を重ねる `EventReader(renewal=True)`、`owned_rollout(sampling='stratified')`、`purpose_estimator='conditional'` も保持する。いずれも標準には採用していない。区間予測器とrenewalの重ね合わせは拒否する。層化は各手の周辺確率を覆うための方法で、経路差の分散低減は保証しない。conditionalはモデル内の条件付き目的平均による制御変量で、実際の標本経路・リスク採点・学習イベントを替えず、世界モデルの誤りを直す機能ではない。詳細と失敗結果は [auction_recovery](../evidence/auction_recovery/REPORT.md)。
 
 - Guez et al., [Bayes-Adaptive Simulation-based Search with Value Function Approximation](https://acguez.github.io/files/guez_nips2014.pdf): 物理状態だけでなく履歴・信念を意思決定の状態に含める考え方を参照した。既存のEventLearnerは厳密なベイズ事後分布ではないため、BAMCPの最適性・収束保証を主張しない。
 - Adams & MacKay, [Bayesian Online Changepoint Detection](https://arxiv.org/pdf/0710.3742): 変化点と区間内分布を周辺化する考え方を区間予測器へ用いた。供給仮説との混合、観測特徴別の区間、有限履歴は本実装のモデル化で、論文のコードをそのまま移植したものではない。保持した履歴と宣言した事前分布に対する一致を小問題の全列挙で検査する。

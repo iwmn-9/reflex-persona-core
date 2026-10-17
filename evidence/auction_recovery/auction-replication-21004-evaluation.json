@@ -1,0 +1,631 @@
+{
+  "checks": {
+    "world_rng_replay": 2048,
+    "restored_action_feedback": 304,
+    "physical_replay": 2048,
+    "owner_parity": 2048,
+    "fixed_axes": 2048,
+    "restore": 96
+  },
+  "complete": true,
+  "early_stop": null,
+  "pairs": [
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 21004,
+      "regime": "outside",
+      "candidate": "endpoint_posterior",
+      "delta": -0.00390625,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 21004,
+      "regime": "shift-return",
+      "candidate": "endpoint_posterior",
+      "delta": -0.005859375,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 21004,
+      "regime": "outside",
+      "candidate": "endpoint_posterior",
+      "delta": -0.00537109375,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 21004,
+      "regime": "shift-return",
+      "candidate": "endpoint_posterior",
+      "delta": -0.006103515625,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "seed": 21004,
+      "regime": "outside",
+      "candidate": "endpoint_posterior",
+      "delta": -0.0068359375,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "seed": 21004,
+      "regime": "shift-return",
+      "candidate": "endpoint_posterior",
+      "delta": -0.01416015625,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "auction",
+      "profile": "ego",
+      "seed": 21004,
+      "regime": "outside",
+      "candidate": "endpoint_posterior",
+      "delta": -0.0107421875,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "auction",
+      "profile": "ego",
+      "seed": 21004,
+      "regime": "shift-return",
+      "candidate": "endpoint_posterior",
+      "delta": 0.033935546875,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    }
+  ],
+  "summaries": [
+    {
+      "candidate": "endpoint_posterior",
+      "game": "auction",
+      "pairs": 8,
+      "better": 1,
+      "same": 0,
+      "worse": 7,
+      "mean_delta": -0.00238037109375,
+      "worst": -0.01416015625
+    },
+    {
+      "candidate": "endpoint_posterior",
+      "game": "all",
+      "pairs": 8,
+      "better": 1,
+      "same": 0,
+      "worse": 7,
+      "mean_delta": -0.00238037109375,
+      "worst": -0.01416015625
+    }
+  ],
+  "predictions": [
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 21004,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.019775390625,
+          "brier": 0.10602388679976713
+        }
+      ],
+      "brier": 0.02372826787571445,
+      "forecast_mae": 0.008500086654456252,
+      "prediction_movement": 0.03348142717041937,
+      "actions": {
+        "bid:2": 33,
+        "bid:4": 23,
+        "bid:3": 41,
+        "bid:1": 26,
+        "bid:0": 5
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 21004,
+      "regime": "outside",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.019775390625,
+          "brier": 0.0963146965084064
+        }
+      ],
+      "brier": 0.02841498644175143,
+      "forecast_mae": 0.009409464561897347,
+      "prediction_movement": 0.04549911379177193,
+      "actions": {
+        "bid:2": 33,
+        "bid:4": 24,
+        "bid:3": 40,
+        "bid:1": 24,
+        "bid:0": 7
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 21004,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.032470703125,
+          "brier": 0.05658782960416506
+        },
+        {
+          "start": 32,
+          "goal_gain": -0.00341796875,
+          "brier": 0.24960072624590665
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.016357421875,
+          "brier": 0.1830491478211529
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.05078125,
+          "brier": 0.07896017837424438
+        }
+      ],
+      "brier": 0.08576036551209734,
+      "forecast_mae": 0.018877700450319747,
+      "prediction_movement": 0.059384278929187274,
+      "actions": {
+        "bid:2": 32,
+        "bid:4": 10,
+        "bid:3": 23,
+        "bid:1": 55,
+        "bid:0": 8
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "growth",
+      "seed": 21004,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.032470703125,
+          "brier": 0.08460285677492989
+        },
+        {
+          "start": 32,
+          "goal_gain": -0.00146484375,
+          "brier": 0.17407373787455488
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.016357421875,
+          "brier": 0.24270266281962993
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.05078125,
+          "brier": 0.05900651051820167
+        }
+      ],
+      "brier": 0.08642187391453195,
+      "forecast_mae": 0.015968470983329847,
+      "prediction_movement": 0.08635846415502044,
+      "actions": {
+        "bid:2": 36,
+        "bid:4": 11,
+        "bid:3": 21,
+        "bid:1": 56,
+        "bid:0": 4
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 21004,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.021484375,
+          "brier": 0.10602388679976713
+        }
+      ],
+      "brier": 0.02372826787571445,
+      "forecast_mae": 0.003920018313780333,
+      "prediction_movement": 0.03348142717041937,
+      "actions": {
+        "bid:1": 6,
+        "bid:4": 25,
+        "bid:3": 69,
+        "bid:0": 25,
+        "bid:2": 3
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 21004,
+      "regime": "outside",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.0244140625,
+          "brier": 0.0963146965084064
+        }
+      ],
+      "brier": 0.02841498644175143,
+      "forecast_mae": 0.004338611846379171,
+      "prediction_movement": 0.04549911379177193,
+      "actions": {
+        "bid:1": 6,
+        "bid:4": 21,
+        "bid:3": 72,
+        "bid:0": 27,
+        "bid:2": 2
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 21004,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.01416015625,
+          "brier": 0.05658782960416506
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.013916015625,
+          "brier": 0.24960072624590665
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.01611328125,
+          "brier": 0.1830491478211529
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.04736328125,
+          "brier": 0.07896017837424438
+        }
+      ],
+      "brier": 0.08576036551209734,
+      "forecast_mae": 0.012155476447941885,
+      "prediction_movement": 0.059384278929187274,
+      "actions": {
+        "bid:1": 37,
+        "bid:4": 7,
+        "bid:3": 37,
+        "bid:0": 27,
+        "bid:2": 20
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "steady",
+      "seed": 21004,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.01416015625,
+          "brier": 0.08460285677492989
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.01953125,
+          "brier": 0.17407373787455488
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.020751953125,
+          "brier": 0.24270266281962993
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.04248046875,
+          "brier": 0.05900651051820167
+        }
+      ],
+      "brier": 0.08642187391453195,
+      "forecast_mae": 0.009367987558411409,
+      "prediction_movement": 0.08635846415502044,
+      "actions": {
+        "bid:1": 30,
+        "bid:4": 7,
+        "bid:3": 39,
+        "bid:0": 32,
+        "bid:2": 20
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "seed": 21004,
+      "regime": "outside",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.017822265625,
+          "brier": 0.0963146965084064
+        }
+      ],
+      "brier": 0.02841498644175143,
+      "forecast_mae": 0.00742435437367906,
+      "prediction_movement": 0.04549911379177193,
+      "actions": {
+        "bid:3": 54,
+        "bid:4": 23,
+        "bid:0": 19,
+        "bid:2": 21,
+        "bid:1": 11
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "seed": 21004,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.017822265625,
+          "brier": 0.10602388679976713
+        }
+      ],
+      "brier": 0.02372826787571445,
+      "forecast_mae": 0.006343319673849787,
+      "prediction_movement": 0.03348142717041937,
+      "actions": {
+        "bid:3": 52,
+        "bid:4": 24,
+        "bid:0": 17,
+        "bid:2": 25,
+        "bid:1": 10
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "seed": 21004,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.03759765625,
+          "brier": 0.08460285677492989
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.003662109375,
+          "brier": 0.17407373787455488
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.009521484375,
+          "brier": 0.24270266281962993
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.052734375,
+          "brier": 0.05900651051820167
+        }
+      ],
+      "brier": 0.08642187391453195,
+      "forecast_mae": 0.013925937145635073,
+      "prediction_movement": 0.08635846415502044,
+      "actions": {
+        "bid:3": 28,
+        "bid:4": 6,
+        "bid:2": 41,
+        "bid:0": 23,
+        "bid:1": 30
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "care",
+      "seed": 21004,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.02978515625,
+          "brier": 0.05658782960416506
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.00244140625,
+          "brier": 0.24960072624590665
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.0185546875,
+          "brier": 0.1830491478211529
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.04833984375,
+          "brier": 0.07896017837424438
+        }
+      ],
+      "brier": 0.08576036551209734,
+      "forecast_mae": 0.013166903502028853,
+      "prediction_movement": 0.059384278929187274,
+      "actions": {
+        "bid:3": 34,
+        "bid:4": 7,
+        "bid:2": 37,
+        "bid:0": 22,
+        "bid:1": 28
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "ego",
+      "seed": 21004,
+      "regime": "outside",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.015869140625,
+          "brier": 0.0963146965084064
+        }
+      ],
+      "brier": 0.02841498644175143,
+      "forecast_mae": 0.007919410236852198,
+      "prediction_movement": 0.04549911379177193,
+      "actions": {
+        "bid:2": 25,
+        "bid:4": 22,
+        "bid:3": 48,
+        "bid:0": 18,
+        "bid:1": 15
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "ego",
+      "seed": 21004,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.015869140625,
+          "brier": 0.10602388679976713
+        }
+      ],
+      "brier": 0.02372826787571445,
+      "forecast_mae": 0.007071562535147936,
+      "prediction_movement": 0.03348142717041937,
+      "actions": {
+        "bid:2": 27,
+        "bid:4": 23,
+        "bid:3": 45,
+        "bid:0": 19,
+        "bid:1": 14
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "ego",
+      "seed": 21004,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.03759765625,
+          "brier": 0.08460285677492989
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.00341796875,
+          "brier": 0.17407373787455488
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.008544921875,
+          "brier": 0.24270266281962993
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.054443359375,
+          "brier": 0.05900651051820167
+        }
+      ],
+      "brier": 0.08642187391453195,
+      "forecast_mae": 0.013474823007263057,
+      "prediction_movement": 0.08635846415502044,
+      "actions": {
+        "bid:2": 31,
+        "bid:4": 7,
+        "bid:3": 33,
+        "bid:0": 23,
+        "bid:1": 34
+      }
+    },
+    {
+      "game": "auction",
+      "profile": "ego",
+      "seed": 21004,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.02978515625,
+          "brier": 0.05658782960416506
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.002197265625,
+          "brier": 0.24960072624590665
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.001708984375,
+          "brier": 0.1830491478211529
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.05029296875,
+          "brier": 0.07896017837424438
+        }
+      ],
+      "brier": 0.08576036551209734,
+      "forecast_mae": 0.01361638675996145,
+      "prediction_movement": 0.059384278929187274,
+      "actions": {
+        "bid:2": 32,
+        "bid:4": 7,
+        "bid:3": 34,
+        "bid:0": 16,
+        "bid:1": 39
+      }
+    }
+  ],
+  "caveat": "Paired condition counts share real seeds. Endpoint proxy and finite policy continuation remain assumptions."
+}

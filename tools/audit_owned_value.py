@@ -46,7 +46,7 @@ def audit(root,*,allow_abandoned=False,allow_superseded=False):
                 assert t['predicted']==t['forecast'][t['action']]
             if 'checkpoint' in t:
                 c=g.context(w);template=g.actor(c,learned=r['arm']!='endpoint_library',renewal=r['arm'] in ('endpoint_renewal','endpoint_both','endpoint_recovery'),
-                    learning='segmented' if r['arm'] in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','reflex_segmented') else 'windows')
+                    learning='segmented' if r['arm'] in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented') else 'windows')
                 own=DecisionLoop.from_record(c,t['checkpoint'],predictor=template.predictor)
                 assert digest(own.record())==t['before_owner']
                 req=g.request(c);result=DecisionLoop.decide_batch([(own,req)],False,_counterfactual_roots=(t['action'],))[0]
@@ -57,11 +57,11 @@ def audit(root,*,allow_abandoned=False,allow_superseded=False):
         assert g.terminal(w) and w==r['final'] and g.goal(w).value==r['score']
         assert r['checks']['owner_parity']==r['executed']==r['checks']['fixed_axes']
         for k,v in r['checks'].items():checks[k]+=v
-        planned=[t for t in r['trace'] if t.get('forecast_error') is not None]
+        forecasts=[t for t in r['trace'] if t.get('forecast_error') is not None]
         brief.append({**{k:v for k,v in r.items() if k not in ('trace','seconds')},
             'actions':dict(Counter(t['action'] for t in r['trace'])),
-            'forecast_mae':float(np.mean([abs(t['forecast_error']) for t in planned])) if planned else None,
-            'forecast_bias':float(np.mean([t['forecast_error'] for t in planned])) if planned else None,
+            'forecast_mae':float(np.mean([abs(t['forecast_error']) for t in forecasts])) if forecasts else None,
+            'forecast_bias':float(np.mean([t['forecast_error'] for t in forecasts])) if forecasts else None,
             'blocks':[dict(start=i,goal_gain=r['trace'][min(i+32,len(r['trace']))-1]['goal']-
                 (r['trace'][i-1]['goal'] if i else g.goal(g.start()).value),
                 mean_brier=float(np.mean([t['brier'] for t in r['trace'][i:i+32]]))) for i in range(0,len(r['trace']),32)]})

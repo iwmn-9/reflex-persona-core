@@ -1,0 +1,700 @@
+{
+  "checks": {
+    "world_rng_replay": 2048,
+    "physical_replay": 2048,
+    "owner_parity": 2048,
+    "fixed_axes": 2048,
+    "restore": 96,
+    "restored_action_feedback": 228,
+    "matched_observation_prediction": 512
+  },
+  "complete": true,
+  "early_stop": null,
+  "pairs": [
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "outside",
+      "candidate": "reflex",
+      "delta": -0.31966145833333337,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "outside",
+      "candidate": "endpoint_posterior",
+      "delta": 0.015625,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "outside",
+      "candidate": "endpoint_persistent",
+      "delta": 0.015625,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "shift-return",
+      "candidate": "reflex",
+      "delta": -0.34309895833333337,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "shift-return",
+      "candidate": "endpoint_persistent",
+      "delta": 0.0078125,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "shift-return",
+      "candidate": "endpoint_posterior",
+      "delta": 0.0078125,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "outside",
+      "candidate": "reflex",
+      "delta": -0.31966145833333337,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "outside",
+      "candidate": "endpoint_posterior",
+      "delta": 0.015625,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "outside",
+      "candidate": "endpoint_persistent",
+      "delta": 0.015625,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "shift-return",
+      "candidate": "reflex",
+      "delta": -0.34309895833333337,
+      "better": 0,
+      "same": 0,
+      "worse": 1
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "shift-return",
+      "candidate": "endpoint_posterior",
+      "delta": 0.0078125,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "shift-return",
+      "candidate": "endpoint_persistent",
+      "delta": 0.0078125,
+      "better": 1,
+      "same": 0,
+      "worse": 0
+    }
+  ],
+  "summaries": [
+    {
+      "candidate": "endpoint_persistent",
+      "game": "combat",
+      "pairs": 4,
+      "better": 4,
+      "same": 0,
+      "worse": 0,
+      "mean_delta": 0.01171875,
+      "worst": 0.0078125
+    },
+    {
+      "candidate": "endpoint_persistent",
+      "game": "all",
+      "pairs": 4,
+      "better": 4,
+      "same": 0,
+      "worse": 0,
+      "mean_delta": 0.01171875,
+      "worst": 0.0078125
+    },
+    {
+      "candidate": "endpoint_posterior",
+      "game": "combat",
+      "pairs": 4,
+      "better": 4,
+      "same": 0,
+      "worse": 0,
+      "mean_delta": 0.01171875,
+      "worst": 0.0078125
+    },
+    {
+      "candidate": "endpoint_posterior",
+      "game": "all",
+      "pairs": 4,
+      "better": 4,
+      "same": 0,
+      "worse": 0,
+      "mean_delta": 0.01171875,
+      "worst": 0.0078125
+    },
+    {
+      "candidate": "reflex",
+      "game": "combat",
+      "pairs": 4,
+      "better": 0,
+      "same": 0,
+      "worse": 4,
+      "mean_delta": -0.33138020833333337,
+      "worst": -0.34309895833333337
+    },
+    {
+      "candidate": "reflex",
+      "game": "all",
+      "pairs": 4,
+      "better": 0,
+      "same": 0,
+      "worse": 4,
+      "mean_delta": -0.33138020833333337,
+      "worst": -0.34309895833333337
+    }
+  ],
+  "predictions": [
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "outside",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.005208333333333333,
+          "brier": 0.14839053177112266
+        }
+      ],
+      "brier": 0.033448690250061405,
+      "forecast_mae": null,
+      "prediction_movement": 0.0429440862719372,
+      "actions": {
+        "strike:0": 2,
+        "guard": 126
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "outside",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.14839053177112266
+        }
+      ],
+      "brier": 0.033448690250061405,
+      "forecast_mae": 0.021254081393111628,
+      "prediction_movement": 0.0429440862719372,
+      "actions": {
+        "reload": 19,
+        "strike:0": 1,
+        "guard": 54,
+        "strike:2": 53,
+        "strike:1": 1
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.15430887192866943
+        }
+      ],
+      "brier": 0.02472473535289577,
+      "forecast_mae": 0.021427494015474103,
+      "prediction_movement": 0.032455134726907905,
+      "actions": {
+        "reload": 19,
+        "strike:0": 1,
+        "guard": 54,
+        "strike:2": 54
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "outside",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.15430887192866943
+        }
+      ],
+      "brier": 0.02472473535289577,
+      "forecast_mae": 0.021278399348735478,
+      "prediction_movement": 0.032455134726907905,
+      "actions": {
+        "reload": 19,
+        "strike:0": 1,
+        "guard": 54,
+        "strike:2": 54
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "shift-return",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.013020833333333334,
+          "brier": 0.024287307155266957
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.0,
+          "brier": 0.2875356892057002
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.0,
+          "brier": 0.15612959806890558
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.0,
+          "brier": 0.194806217433617
+        }
+      ],
+      "brier": 0.0866829162521342,
+      "forecast_mae": null,
+      "prediction_movement": 0.040013049462652585,
+      "actions": {
+        "strike:0": 2,
+        "guard": 126
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.024287307155266957
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.03190104166666667,
+          "brier": 0.2875356892057002
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.046875,
+          "brier": 0.15612959806890558
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.03125,
+          "brier": 0.194806217433617
+        }
+      ],
+      "brier": 0.0866829162521342,
+      "forecast_mae": 0.02332074440498273,
+      "prediction_movement": 0.040013049462652585,
+      "actions": {
+        "reload": 19,
+        "strike:0": 30,
+        "guard": 54,
+        "strike:2": 12,
+        "strike:1": 13
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "shift-return",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.02762976986292723
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.03190104166666667,
+          "brier": 0.20614820193471706
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.046875,
+          "brier": 0.15678704242306318
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.0390625,
+          "brier": 0.1705328478770301
+        }
+      ],
+      "brier": 0.0766338760292281,
+      "forecast_mae": 0.022948607776750854,
+      "prediction_movement": 0.054275652470121796,
+      "actions": {
+        "reload": 19,
+        "strike:0": 28,
+        "guard": 54,
+        "strike:2": 14,
+        "strike:1": 13
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "care",
+      "seed": 547,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.02762976986292723
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.03190104166666667,
+          "brier": 0.20614820193471706
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.046875,
+          "brier": 0.15678704242306318
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.0390625,
+          "brier": 0.1705328478770301
+        }
+      ],
+      "brier": 0.0766338760292281,
+      "forecast_mae": 0.02334107074637493,
+      "prediction_movement": 0.054275652470121796,
+      "actions": {
+        "reload": 19,
+        "strike:0": 28,
+        "guard": 54,
+        "strike:2": 14,
+        "strike:1": 13
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "outside",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.005208333333333333,
+          "brier": 0.14839053177112266
+        }
+      ],
+      "brier": 0.033448690250061405,
+      "forecast_mae": null,
+      "prediction_movement": 0.0429440862719372,
+      "actions": {
+        "strike:0": 2,
+        "guard": 126
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "outside",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.14839053177112266
+        }
+      ],
+      "brier": 0.033448690250061405,
+      "forecast_mae": 0.02128409784048005,
+      "prediction_movement": 0.0429440862719372,
+      "actions": {
+        "reload": 19,
+        "strike:0": 1,
+        "guard": 54,
+        "strike:2": 53,
+        "strike:1": 1
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "outside",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.15430887192866943
+        }
+      ],
+      "brier": 0.02472473535289577,
+      "forecast_mae": 0.021427494015474103,
+      "prediction_movement": 0.032455134726907905,
+      "actions": {
+        "reload": 19,
+        "strike:0": 1,
+        "guard": 54,
+        "strike:2": 54
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "outside",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.15430887192866943
+        }
+      ],
+      "brier": 0.02472473535289577,
+      "forecast_mae": 0.021278399348735478,
+      "prediction_movement": 0.032455134726907905,
+      "actions": {
+        "reload": 19,
+        "strike:0": 1,
+        "guard": 54,
+        "strike:2": 54
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "shift-return",
+      "arm": "reflex",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.013020833333333334,
+          "brier": 0.024287307155266957
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.0,
+          "brier": 0.2875356892057002
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.0,
+          "brier": 0.15612959806890558
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.0,
+          "brier": 0.194806217433617
+        }
+      ],
+      "brier": 0.0866829162521342,
+      "forecast_mae": null,
+      "prediction_movement": 0.040013049462652585,
+      "actions": {
+        "strike:0": 2,
+        "guard": 126
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "shift-return",
+      "arm": "endpoint",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.024287307155266957
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.03190104166666667,
+          "brier": 0.2875356892057002
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.046875,
+          "brier": 0.15612959806890558
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.03125,
+          "brier": 0.194806217433617
+        }
+      ],
+      "brier": 0.0866829162521342,
+      "forecast_mae": 0.02335076085235115,
+      "prediction_movement": 0.040013049462652585,
+      "actions": {
+        "reload": 19,
+        "strike:0": 30,
+        "guard": 54,
+        "strike:2": 12,
+        "strike:1": 13
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "shift-return",
+      "arm": "endpoint_posterior",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.02762976986292723
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.03190104166666667,
+          "brier": 0.20614820193471706
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.046875,
+          "brier": 0.15678704242306318
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.0390625,
+          "brier": 0.1705328478770301
+        }
+      ],
+      "brier": 0.0766338760292281,
+      "forecast_mae": 0.02333127698662499,
+      "prediction_movement": 0.054275652470121796,
+      "actions": {
+        "reload": 19,
+        "strike:0": 28,
+        "guard": 54,
+        "strike:2": 14,
+        "strike:1": 13
+      }
+    },
+    {
+      "game": "combat",
+      "profile": "ego",
+      "seed": 547,
+      "regime": "shift-return",
+      "arm": "endpoint_persistent",
+      "segments": [
+        {
+          "start": 0,
+          "goal_gain": 0.043619791666666664,
+          "brier": 0.02762976986292723
+        },
+        {
+          "start": 32,
+          "goal_gain": 0.03190104166666667,
+          "brier": 0.20614820193471706
+        },
+        {
+          "start": 64,
+          "goal_gain": 0.046875,
+          "brier": 0.15678704242306318
+        },
+        {
+          "start": 96,
+          "goal_gain": 0.0390625,
+          "brier": 0.1705328478770301
+        }
+      ],
+      "brier": 0.0766338760292281,
+      "forecast_mae": 0.02293881401700092,
+      "prediction_movement": 0.054275652470121796,
+      "actions": {
+        "reload": 19,
+        "strike:0": 28,
+        "guard": 54,
+        "strike:2": 14,
+        "strike:1": 13
+      }
+    }
+  ],
+  "caveat": "Paired condition counts share real seeds. Endpoint proxy and finite policy continuation remain assumptions."
+}

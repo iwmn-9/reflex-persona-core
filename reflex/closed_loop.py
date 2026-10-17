@@ -291,6 +291,7 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     import numpy as np
     from .frontier_value import PolicyTail
     from .adaptive_dynamics import PublicEvent
+    from .model_observer import ModelFeedback
     if actor.pending is not None or not callable(getattr(actor.predictor,'frozen_forecaster',None)):
         raise ValueError('resolved owner with a public predictive distribution required')
     if type(tail_steps) is not int or not 1<=tail_steps<=255:
@@ -316,6 +317,15 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         if (not isinstance(rows,(tuple,list)) or not rows or any(not isinstance(e,PublicEvent) for e in rows)
                 or len({e.symbol for e in rows})!=len(rows) or {e.symbol for e in rows}!=set(p)):
             raise ValueError('one known conditional event per predicted public response required')
+        if posterior is not None:
+            # The conditional world reads future evidence from the detached
+            # observer. Silently omitting or relabeling an event would instead
+            # generate a different joint process while claiming the same model.
+            # Callbacks are pure; validate even events a finite sample may miss.
+            for e in rows:
+                observed=feedback(copy.deepcopy(w),copy.deepcopy(e.public),key,copy.deepcopy(c),copy.deepcopy(e.flow))
+                if not isinstance(observed,ModelFeedback) or observed.event!={'revealed_action':e.symbol}:
+                    raise ValueError('posterior world requires matching public response feedback for every event')
         return [Transition(p[e.symbol],copy.deepcopy(e.public),copy.deepcopy(e.flow)) for e in rows if p[e.symbol]>0]
     def advance(w,key,seed,own,c):
         rows=transitions(w,key,own,c)

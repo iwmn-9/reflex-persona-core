@@ -78,7 +78,7 @@
   },
   "independent_auction_replication": {
     "reason": "Initial confirmation has only three real response seeds, and the first two completed auction seeds show opposite aggregate tendencies. Resolve this sampling uncertainty without changing any candidate parameters.",
-    "decision_time": "2026-10-17T09:27:00+09:00",
+    "decision_time": "2026-10-17T09:26:05+09:00",
     "seeds": [
       21001,
       21002,
@@ -119,6 +119,37 @@
     "tail_steps": 15,
     "selection": "Primary posterior candidate unchanged. Persistent remains exploratory and is not selected using these results.",
     "analysis": "Report all 128 matched conditions and all 16 seed-level means; use seed clusters across profiles/regimes for a descriptive bootstrap interval. Inspect every persona and variant; do not use the condition count as independent sample size.",
-    "additional_results_seen": false
+    "additional_results_seen": false,
+    "registration_commit": "462d6a6",
+    "workflow_run": 38986353085
+  },
+  "posthoc_gate_ablation": {
+    "reason": "Two care auction losses locally reverse when purpose-only pruning is removed, while the resource investment loss does not. Test the simplification in all four rule families and all four fixed personas before drawing a behavioral conclusion.",
+    "seeds": [
+      401
+    ],
+    "profiles": [
+      "growth",
+      "steady",
+      "care",
+      "ego"
+    ],
+    "games": [
+      "auction",
+      "resources",
+      "combat",
+      "gambling"
+    ],
+    "regimes": [
+      "outside",
+      "shift-return"
+    ],
+    "turns": 128,
+    "interval": 7,
+    "tail_steps": 15,
+    "arm": "endpoint_unpruned",
+    "difference": "Existing max_regret=1 rather than .15; same full preference scoring, strongest-principle tier, posterior model and learning.",
+    "stage": "post-hoc development; seed 401 was already examined, not independent confirmation",
+    "frozen_source_manifest_sha256": "bbd4f11ae5bf6b634cd8a19fe39b1e5a0f287036455c5b24c8214aeeddd2ca90"
   }
 }

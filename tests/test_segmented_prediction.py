@@ -26,6 +26,22 @@ def enumerated(sequence,library,k):
 
 
 class SegmentedPredictionTests(unittest.TestCase):
+    def test_posterior_rollout_rejects_missing_or_wrong_public_feedback(self):
+        from dataclasses import replace
+        from tools.continuing_games import ContinuingGame
+        from reflex.laboratory import PROFILES
+        from reflex.closed_loop import owned_rollout
+        g=ContinuingGame('gambling',PROFILES[1],turns=3);w=g.start()
+        for event in (None,{'revealed_action':'0'}):
+            own=g.actor(g.context(w),learning='segmented');rq=g.request(g.context(w));before=own.record()
+            ctrl=owned_rollout(own,observe=g.context,events=g.events,terminal=g.terminal,
+                assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
+                feedback=lambda *args:replace(g.feedback(*args),event=event),
+                model_id=g.model_id,target=g.target,tail_steps=2,seeds=(701,),world_model='posterior')
+            with self.assertRaisesRegex(ValueError,'public response feedback'):
+                ctrl.planner(own,rq,w)([own.preview(rq)[0]],[])
+            self.assertEqual(own.record(),before)
+
     def test_conditional_hypotheses_use_each_observed_context(self):
         # A library hypothesis may change its response with public context.
         # Enumerate every change partition independently, keeping those past
