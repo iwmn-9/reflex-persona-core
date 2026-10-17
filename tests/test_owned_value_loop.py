@@ -37,6 +37,49 @@ def controller(g,*,steps,tail_seeds=(701,702,703),future_choices='planned',tail_
 
 
 class OwnedValueLoopTests(unittest.TestCase):
+    def test_long_tail_can_keep_replanning_after_sixteen_updates(self):
+        g=ContinuingGame('gambling',PROFILES[1],turns=20);w=g.start();own=g.actor(g.context(w),learning='segmented')
+        args=dict(observe=g.context,events=g.events,terminal=g.terminal,assess=lambda w:g.goal(w).record(),
+            record=lambda w:w,request_for=g.request,feedback=g.feedback,model_id=g.model_id,target=g.target)
+        seen=[]
+        def future(person,request,world):
+            seen.append((world['tick'],person.predictor.observations))
+            return owned_rollout(person,**args,tail_steps=0,world_model='posterior').planner(person,request,world)
+        saved=own.record()
+        ctrl=owned_rollout(own,**args,tail_steps=20,seeds=(701,),world_model='posterior',
+            future_planner=future,future_planner_id='test-every-step-one-step',future_planner_limit=20)
+        full=ctrl.frontier.distribution(w,own)
+        self.assertEqual(seen,[(i,i) for i in range(20)])
+        self.assertEqual(ctrl.frontier.future_calls,20)
+        self.assertEqual(own.record(),saved)
+        self.assertTrue(full.trajectories[0][-1])
+        seen.clear()
+        capped=owned_rollout(own,**args,tail_steps=20,seeds=(701,),world_model='posterior',
+            future_planner=future,future_planner_id='test-every-step-one-step',future_planner_limit=16)
+        short=capped.frontier.distribution(w,own)
+        self.assertEqual(seen,[(i,i) for i in range(16)])
+        self.assertEqual(full.trajectories[0][2][:16],short.trajectories[0][2][:16])
+        self.assertNotEqual(ctrl.frontier.identity,capped.frontier.identity)
+
+    def test_recovery_budget_is_explicit_and_default_is_unchanged(self):
+        g=ContinuingGame('combat',PROFILES[1],turns=5);w=g.start();own=g.actor(g.context(w),learning='segmented')
+        args=dict(observe=g.context,events=g.events,terminal=g.terminal,assess=lambda w:g.goal(w).record(),
+            record=lambda w:w,request_for=g.request,feedback=g.feedback,model_id=g.model_id,target=g.target,
+            tail_steps=4,seeds=(701,),tail_recovery=2,world_model='posterior')
+        default=owned_rollout(own,**args);explicit=owned_rollout(own,**args,tail_recovery_limit=16)
+        self.assertEqual(default.frontier.identity,explicit.frontier.identity)
+        self.assertEqual(default.frontier.distribution(w,own),explicit.frontier.distribution(w,own))
+        from reflex.receding_owner import RecedingOwner
+        wrapped=RecedingOwner(copy.deepcopy(own),**args,tail_recovery_limit=64)
+        direct=copy.deepcopy(own);req=g.request(g.context(w));ctrl=owned_rollout(direct,**args,tail_recovery_limit=64)
+        expected=DecisionLoop.decide_batch([(direct,req)],False,ctrl.planner(direct,req,w))[0]
+        actual=wrapped.decide(w)
+        self.assertEqual(actual['decision'],expected['decision'])
+        for bad in (0,257,True,1.5):
+            with self.assertRaises(ValueError):owned_rollout(own,**args,tail_recovery_limit=bad)
+        args['tail_recovery']=0
+        with self.assertRaises(ValueError):owned_rollout(own,**args,tail_recovery_limit=64)
+
     def test_exact_reflex_continuation_pruning_preserves_full_tree_value(self):
         for game in ('auction','combat'):
             g=ContinuingGame(game,PROFILES[1],turns=3);w=g.start();c=g.context(w);own=g.actor(c,learning='segmented')

@@ -68,7 +68,7 @@ class PolicyTail:
         self.simulated_steps=0
         if future_planner is not None and (not callable(future_planner) or not isinstance(future_planner_id,str) or not future_planner_id):
             raise ValueError('identified finite future controller required')
-        if type(future_planner_limit) is not int or not 1<=future_planner_limit<=16:
+        if type(future_planner_limit) is not int or not 1<=future_planner_limit<=256:
             raise ValueError('bounded future planning calls required')
         self.future_planner=future_planner;self.future_planner_limit=future_planner_limit
         self.future_calls=0

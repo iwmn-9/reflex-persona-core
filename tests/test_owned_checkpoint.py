@@ -8,6 +8,19 @@ def without_time(row):return {k:v for k,v in row.items() if k!='seconds'}
 
 
 class OwnedCheckpointTests(unittest.TestCase):
+    def test_recovery_budget_survives_resume_and_cannot_change_mid_world(self):
+        job=('gambling',1,41907,'outside',3,1,2,0)
+        expected=run(job,'receding_recovery',tail_recovery_limit=64)
+        with tempfile.TemporaryDirectory() as d:
+            checkpoint=Path(d)/'execution.json'
+            self.assertIsNone(run(job,'receding_recovery',checkpoint=checkpoint,max_decisions=1,tail_recovery_limit=64))
+            original=checkpoint.read_bytes()
+            with self.assertRaisesRegex(ValueError,'contract changed'):
+                run(job,'receding_recovery',checkpoint=checkpoint,max_decisions=1)
+            self.assertEqual(checkpoint.read_bytes(),original)
+            actual=run(job,'receding_recovery',checkpoint=checkpoint,tail_recovery_limit=64)
+            self.assertEqual(without_time(actual),without_time(expected))
+
     def test_planning_learning_and_world_rng_survive_multiple_pauses(self):
         job=('gambling',2,41901,'shift-return',4,1,1,0)
         expected=run(job,'receding_recovery')

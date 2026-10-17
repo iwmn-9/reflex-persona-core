@@ -41,7 +41,10 @@ def law(t,turns,regime):
     return {str(i):(.8 if i==top else .1) for i in range(3)}
 
 
-def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8):
+def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16):
+    if type(tail_recovery_limit) is not int or not 1<=tail_recovery_limit<=256:raise ValueError('bounded recovery budget required')
+    if tail_recovery_limit!=16 and arm!='receding_recovery':raise ValueError('recovery budget requires the recovery arm')
+    configuration={'tail_recovery_limit':tail_recovery_limit} if tail_recovery_limit!=16 else None
     game,pid,seed,regime,turns,interval,tail_steps=job[:7]
     offset=job[7] if len(job)>7 else 0
     is_reflex=arm in ('reflex','reflex_segmented')
@@ -54,7 +57,7 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8):
     start_tick=0;storage=None
     if checkpoint is not None:
         from tools.owned_checkpoint import OwnedCheckpoint
-        storage=OwnedCheckpoint(checkpoint,job,arm,max_decisions=max_decisions,every=checkpoint_every)
+        storage=OwnedCheckpoint(checkpoint,job,arm,max_decisions=max_decisions,every=checkpoint_every,configuration=configuration)
         if storage.saved is not None:
             saved=storage.saved;w=saved['world'];trace=saved['trace'];checks=Counter(saved['checks'])
             # The same post-decision owner restoration already used below.
@@ -112,7 +115,7 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8):
                 feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=tail_steps,
                 world_model='frozen' if arm=='receding' else 'posterior',
                 purpose_estimator='conditional' if arm in ('receding_corrected','receding_recovery') else 'sampled',
-                tail_recovery=2 if arm=='receding_recovery' else 0)
+                tail_recovery=2 if arm=='receding_recovery' else 0,tail_recovery_limit=tail_recovery_limit)
             result=live.decide(w);cap=live.last
         else:result=DecisionLoop.decide_batch([(own,req)],False,planner)[0]
         key=result['decision']['action_id']
@@ -149,7 +152,8 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8):
             t['forecast_error']=t['predicted']-end['goal']
     return dict(game=game,profile=PROFILES[pid]['id'],seed=seed,regime=regime,arm=arm,
         turns=turns,executed=len(trace),interval=interval,tail_steps=tail_steps,offset=offset,
-        score=g.goal(w).value,final=w,checks=dict(checks),trace=trace,seconds=time.monotonic()-started)
+        score=g.goal(w).value,final=w,checks=dict(checks),trace=trace,seconds=time.monotonic()-started,
+        **(configuration or {}))
 
 
 def evaluate(job,arms):return [run(job,arm) for arm in arms]

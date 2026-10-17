@@ -14,7 +14,7 @@ def sha(data):return hashlib.sha256(data).hexdigest()
 
 
 class OwnedCheckpoint:
-    def __init__(self,path,job,arm,*,max_decisions=None,every=8):
+    def __init__(self,path,job,arm,*,max_decisions=None,every=8,configuration=None):
         if max_decisions is not None and (type(max_decisions) is not int or max_decisions<1):
             raise ValueError('positive decision slice required')
         if type(every) is not int or every<1:raise ValueError('positive checkpoint cadence required')
@@ -25,6 +25,9 @@ class OwnedCheckpoint:
         self.contract=dict(version='owned-execution-v1',job=list(job),arm=arm,
             sources={n:sha((root/n).read_bytes()) for n in sorted(names)},
             runtime=dict(python=sys.version,numpy=np.__version__,system=platform.system(),machine=platform.machine()))
+        if configuration is not None:
+            if not isinstance(configuration,dict) or not configuration:raise ValueError('explicit nonempty execution configuration required')
+            self.contract['configuration']=json.loads(encoded(configuration))
         self.saved=None
         if self.path.exists():
             envelope=json.loads(self.path.read_text(encoding='utf8'));saved=envelope['payload']

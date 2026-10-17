@@ -297,7 +297,7 @@ class ClosedLoop:
 def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feedback,
                   model_id,target,tail_steps=15,seeds=(701,702,703),max_regret=.15,
                   future_planner=None,future_planner_id=None,future_planner_limit=1,
-                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0):
+                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0,tail_recovery_limit=16):
     """Rebuild after real feedback: root world model + evolving owned rollout.
 
     `events(public_state, action)` enumerates known conditional PublicEvents.
@@ -323,6 +323,9 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     TreeBudget(horizon=tree_steps)
     if tree_steps+tail_steps>256:raise ValueError('bounded combined return horizon required')
     if type(tail_recovery) is not int or tail_recovery not in (0,2):raise ValueError('disabled or two-step continuation recovery required')
+    if type(tail_recovery_limit) is not int or not 1<=tail_recovery_limit<=256:
+        raise ValueError('1..256 future recovery calls required')
+    if not tail_recovery and tail_recovery_limit!=16:raise ValueError('recovery budget requires a recovery controller')
     if tail_recovery and (future_planner is not None or tail_steps==0):raise ValueError('one identified tail controller required')
     if not callable(events):raise ValueError('known conditional event enumeration required')
     if sampling not in ('independent','stratified'):raise ValueError('known rollout sampling mode required')
@@ -389,7 +392,7 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
                 record=record,request_for=request_for,feedback=feedback,model_id=model_id,target=target,
                 tail_steps=0,tree_steps=2,future_choices='reflex',world_model=world_model,max_regret=max_regret)
             return inner.planner(person,request,state)
-        future_planner=recover;future_planner_id='no-immediate-purpose-gain-two-step-owner-recovery-v1';future_planner_limit=16
+        future_planner=recover;future_planner_id='no-immediate-purpose-gain-two-step-owner-recovery-v1';future_planner_limit=tail_recovery_limit
     if tail_steps==0 and (future_planner is not None or purpose_estimator!='sampled'):
         raise ValueError('zero tail has no future planning or sampling correction')
     tail=None if tail_steps==0 else PolicyTail(observe=observe,advance=lambda *a:None,owner_advance=advance,

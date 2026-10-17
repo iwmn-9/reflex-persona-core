@@ -1,9 +1,6 @@
 name: Continuing owner horizon comparison
 run-name: Horizon comparison ${{ inputs.label || 'development-43' }}
 on:
-  push:
-    branches: [research/long-horizon]
-    paths: [.github/workflows/owner-horizon.yml]
   workflow_dispatch:
     inputs:
       label:
@@ -56,7 +53,8 @@ jobs:
         env:
           JOB: ${{ toJSON(matrix.job) }}
           STAGE: ${{ inputs.stage || 'development' }}
-        run: python tools/run_horizon_study.py --root results/horizon --job "$JOB" --stage "$STAGE"
+          RECOVERY_LIMIT: ${{ matrix.recovery_limit || 16 }}
+        run: python tools/run_horizon_study.py --root results/horizon --job "$JOB" --stage "$STAGE" --recovery-limit "$RECOVERY_LIMIT"
       - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
