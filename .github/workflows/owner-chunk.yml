@@ -1,10 +1,12 @@
 name: Resume one frozen owned execution
+run-name: Owned execution ${{ inputs.request_id }}
 on:
-  push:
-    branches: [research/owner-continuity]
-    paths: [.github/workflows/owner-chunk.yml]
   workflow_dispatch:
     inputs:
+      request_id:
+        description: Unique operational request identity
+        type: string
+        required: true
       job:
         description: Registered job array (game, profile, seed, regime, turns, interval, tail, offset)
         type: string
