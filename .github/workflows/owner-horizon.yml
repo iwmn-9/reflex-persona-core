@@ -16,6 +16,7 @@ on:
         default: development
 permissions:
   contents: read
+  actions: read
 jobs:
   matrix:
     runs-on: ubuntu-latest
@@ -48,13 +49,33 @@ jobs:
         with:
           python-version: '3.13.16'
       - run: python -m pip install -e . numpy==2.5.4
+      - name: Restore the registered frozen execution when requested
+        if: ${{ matrix.resume_run }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREVIOUS_RUN: ${{ matrix.resume_run }}
+          ARTIFACT: ${{ matrix.resume_artifact }}
+        run: |
+          python - <<'PY'
+          import os,re,subprocess
+          previous=os.environ['PREVIOUS_RUN'];artifact=os.environ['ARTIFACT']
+          assert re.fullmatch(r'[0-9]+',previous) and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]+',artifact)
+          subprocess.run(['gh','run','download',previous,'--name',artifact,'--dir','results/horizon'],check=True)
+          PY
       - name: Run registered persistent world
         timeout-minutes: 345
         env:
           JOB: ${{ toJSON(matrix.job) }}
           STAGE: ${{ inputs.stage || 'development' }}
           RECOVERY_LIMIT: ${{ matrix.recovery_limit || 16 }}
-        run: python tools/run_horizon_study.py --root results/horizon --job "$JOB" --stage "$STAGE" --recovery-limit "$RECOVERY_LIMIT"
+          RESUME_MANIFEST: ${{ matrix.resume_manifest }}
+          RESUME_RUN: ${{ matrix.resume_run }}
+        run: |
+          if [ -n "$RESUME_RUN" ]; then
+            python tools/resume_horizon_study.py --root results/horizon --job "$JOB" --manifest "$RESUME_MANIFEST"
+          else
+            python tools/run_horizon_study.py --root results/horizon --job "$JOB" --stage "$STAGE" --recovery-limit "$RECOVERY_LIMIT"
+          fi
       - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:

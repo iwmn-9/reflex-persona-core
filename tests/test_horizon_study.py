@@ -1,9 +1,42 @@
-import json,subprocess,sys,tempfile,unittest
+import hashlib,json,subprocess,sys,tempfile,unittest
 from pathlib import Path
 from tools.run_owned_value import run
 
 
 class HorizonStudyTests(unittest.TestCase):
+    def test_frozen_resume_keeps_experience_and_rejects_wrong_source(self):
+        from unittest.mock import patch
+        from tools.freeze_experiment import dispatch
+        from tools.resume_horizon_study import resume
+        job=['gambling',1,52993,'outside',3,1,2,0]
+        expected=run(job,'receding_recovery',tail_recovery_limit=64)
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)/'study'
+            with patch('tools.freeze_experiment.subprocess.run'):
+                dispatch(root,'run_horizon_study.py',[])
+            program='''import json,sys
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+from tools.run_horizon_study import __doc__ as semantics
+from tools.run_owned_value import run
+root=Path(sys.argv[2]);job=json.loads(sys.argv[3])
+registration=dict(jobs=[job],arms=['receding_recovery'],world_seeds=[job[2]],stage='diagnostic',semantics=semantics,configuration={'tail_recovery_limit':64})
+(root/'registration.json').write_text(json.dumps(registration))
+assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisions=1,tail_recovery_limit=64) is None
+'''
+            subprocess.run([sys.executable,'-c',program,str(root/'_source'),str(root),json.dumps(job)],check=True,capture_output=True)
+            manifest=hashlib.sha256((root/'source_snapshot.json').read_bytes()).hexdigest()
+            before=(root/'checkpoint.json').read_bytes()
+            with self.assertRaisesRegex(AssertionError,'wrong frozen source'):resume(root,'0'*64,job)
+            source=root/'_source/reflex/core.py';original=source.read_bytes();source.write_bytes(original+b'\n')
+            with self.assertRaisesRegex(AssertionError,'source changed'):resume(root,manifest,job)
+            source.write_bytes(original);self.assertEqual((root/'checkpoint.json').read_bytes(),before)
+            proof=resume(root,manifest,job)
+            self.assertEqual(proof['resume_at'],1);self.assertTrue(proof['original_prefix_unchanged'])
+            actual=json.loads((root/'trajectories.jsonl').read_text());actual.pop('seconds');expected.pop('seconds')
+            self.assertEqual(actual,expected)
+            with self.assertRaisesRegex(AssertionError,'already complete'):resume(root,manifest,job)
+
     def test_read_only_instrumentation_reproduces_saved_choice(self):
         from tools.diagnose_owner_horizon import diagnose,prefix_choice
         job=['combat',1,47,'outside',3,1,2,0]
