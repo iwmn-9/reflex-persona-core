@@ -4,6 +4,37 @@ from tools.run_owned_value import run
 
 
 class HorizonStudyTests(unittest.TestCase):
+    def test_offline_accounts_are_zero_mean_over_exhaustive_public_events(self):
+        from itertools import product
+        from tools.continuing_games import ContinuingGame,GAMES
+        from tools.run_owned_value import law
+        from tools.summarize_horizon_study import realized_account
+        from reflex.laboratory import PROFILES
+        for game in GAMES:
+            for variant in (0,1):
+                g=ContinuingGame(game,PROFILES[0],3,variant)
+                residual=bellman=mass=0.;expected_score=conditional_score=0.
+                for symbols in product(('0','1','2'),repeat=3):
+                    w=g.start();trace=[];probability=1.
+                    for tick,symbol in enumerate(symbols):
+                        truth=law(tick,3,'shift-return');probability*=truth[symbol]
+                        keys=g.keys(w);key=keys[(tick+int(w['cash']))%len(keys)]
+                        after,_=g.transition(w,key,symbol)
+                        trace.append(dict(tick=tick,before=w,after=after,action=key,truth=truth))
+                        w=after
+                    row=dict(game=game,profile='growth',seed=variant,turns=3,regime='shift-return',
+                             trace=trace,score=g.goal(w).value)
+                    before=json.dumps(row,sort_keys=True);account=realized_account(row)
+                    self.assertEqual(json.dumps(row,sort_keys=True),before)
+                    mass+=probability;residual+=probability*account['residual']
+                    expected_score+=probability*row['score']
+                    conditional_score+=probability*(account['initial']+account['conditional_increments'])
+                    if game=='auction':bellman+=probability*account['bellman']['residual']
+                self.assertAlmostEqual(mass,1.,places=12)
+                self.assertAlmostEqual(residual,0.,places=12)
+                self.assertAlmostEqual(bellman,0.,places=12)
+                self.assertAlmostEqual(expected_score,conditional_score,places=12)
+
     def test_frozen_resume_keeps_experience_and_rejects_wrong_source(self):
         from unittest.mock import patch
         from tools.freeze_experiment import dispatch
