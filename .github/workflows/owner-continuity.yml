@@ -1,5 +1,9 @@
 name: Owner continuity development
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/owner-continuity]
+    paths: [.github/workflows/owner-continuity.yml]
 permissions:
   contents: read
 jobs:
