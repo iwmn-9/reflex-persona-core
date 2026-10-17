@@ -114,6 +114,8 @@ class ClosedLoop:
         if type(tail_preferences) is not bool or tail_preferences and (frontier is None or not callable(getattr(frontier,'trajectories',None))):
             raise ValueError('explicit complete tail trajectory provider required')
         self.tail_preferences=tail_preferences
+        if getattr(frontier,'purpose_adjustment',None) is not None and (not tail_preferences or self.budget.horizon!=1):
+            raise ValueError('conditional purpose mean currently requires one root plus full owner tail')
         if tail_preferences and preference_basis is not None:
             raise ValueError('full preference trajectories cannot replace whole channels with endpoint purpose')
         self.source_owner=None
@@ -166,6 +168,7 @@ class ClosedLoop:
             options=list(merged.values())
             paths[key]=[];audit[key]=[];children[key]=[]
             for transition in options:
+                mean_estimates=None
                 clone=copy.deepcopy(actor)
                 forced=DecisionLoop.decide_batch([(clone,request)],False,_counterfactual_roots=(key,))[0]
                 fb=self.feedback(world,transition.state,key,c,transition.flow)
@@ -177,7 +180,10 @@ class ClosedLoop:
                     tails=[(1.,(),(),g.record(),ended)]
                     child_key=None
                     if not ended and self.tail_preferences:
-                        tails=self.frontier.trajectories(copy.deepcopy(transition.state),copy.deepcopy(clone))
+                        if getattr(self.frontier,'purpose_adjustment',None) is not None:
+                            distribution=self.frontier.distribution(copy.deepcopy(transition.state),copy.deepcopy(clone))
+                            tails=distribution.trajectories;mean_estimates=distribution.purpose_estimates
+                        else:tails=self.frontier.trajectories(copy.deepcopy(transition.state),copy.deepcopy(clone))
                         terminal_coverage=all(t[-1] for t in tails)
                         frontiers.append(dict(root=key,public=self.record(transition.state),supported=True,
                             source=self.frontier.identity,settled_fraction=sum(t[0] for t in tails if t[-1])))
@@ -198,11 +204,12 @@ class ClosedLoop:
                     child=self._node(transition.state,clone,self.request_for(cc),remaining-1)
                     dependencies.update(child['dependencies'])
                     tails=child['returns'];child_key=child['stamp']
-                for p,flows,actions,goal,settled in tails:
+                for index,(p,flows,actions,goal,settled) in enumerate(tails):
                     probability=transition.probability*p;actual=(copy.deepcopy(transition.flow),)+flows
                     path=(key,)+actions
                     paths[key].append(Branch(probability,actual+(effect(),)*(return_horizon-len(actual)),(1.,)*return_horizon))
                     audit[key].append(dict(actions=list(path),terminal=settled,assessment=goal,terminal_coverage=terminal_coverage))
+                    if mean_estimates is not None:audit[key][-1]['purpose_mean_estimate']=mean_estimates[index]
                     if len(paths[key])>self.budget.outcomes:raise WorkLimit('return distribution capacity')
                 children[key].append(dict(probability=transition.probability,public=self.record(transition.state),
                     owner=digest(clone.record()),child=child_key,feedback=fb,flow=transition.flow,state=transition.state))
@@ -265,7 +272,8 @@ class ClosedLoop:
 
 def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feedback,
                   model_id,target,tail_steps=15,seeds=(701,702,703),max_regret=.15,
-                  future_planner=None,future_planner_id=None,future_planner_limit=1):
+                  future_planner=None,future_planner_id=None,future_planner_limit=1,
+                  sampling='independent',purpose_estimator='sampled',world_model='frozen'):
     """Rebuild after real feedback: root world model + evolving owned rollout.
 
     `events(public_state, action)` enumerates known conditional PublicEvents.
@@ -276,6 +284,9 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     one endpoint purpose, then reuses the existing persona selector. Tail choice
     defaults to the immediate owner policy. An identified future_planner can
     reproduce scheduled replanning, up to the declared finite call limit.
+    `world_model='posterior'` instead integrates the explicit segmented world's
+    conditional continuation from the factual root plus public future events.
+    This changes the modeled joint distribution, not the person's preferences.
     """
     import numpy as np
     from .frontier_value import PolicyTail
@@ -285,25 +296,51 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     if type(tail_steps) is not int or not 1<=tail_steps<=255:
         raise ValueError('1..255 tail decisions plus one root required')
     if not callable(events):raise ValueError('known conditional event enumeration required')
+    if sampling not in ('independent','stratified'):raise ValueError('known rollout sampling mode required')
+    if purpose_estimator not in ('sampled','conditional'):raise ValueError('known purpose mean estimator required')
+    if world_model not in ('frozen','posterior','persistent'):raise ValueError('explicit world continuation model required')
+    seeds=tuple(seeds)
+    if sampling=='stratified':
+        from .rollout_sampling import stratified_uniforms
+        stratified_uniforms(seeds,0)
     source=digest(actor.record());predict=actor.predictor.frozen_forecaster()
+    posterior=None
+    if world_model!='frozen':
+        posterior=actor.predictor.predictive_continuation(steps=tail_steps+1,persistent=world_model=='persistent')
     identity=digest(['owned-rollout-v1',model_id,source])
+    if sampling!='independent':identity=digest([identity,sampling,seeds])
+    if posterior is not None:identity=digest([identity,'retained-root-segment-posterior-v1'])
+    if world_model=='persistent':identity=digest([identity,'persistent-current-regime-v1'])
     def transitions(w,key,own,c):
-        rows=events(w,key);p=predict(c)
+        rows=events(w,key);p=predict(c) if posterior is None else posterior(own.predictor,c)
         if (not isinstance(rows,(tuple,list)) or not rows or any(not isinstance(e,PublicEvent) for e in rows)
                 or len({e.symbol for e in rows})!=len(rows) or {e.symbol for e in rows}!=set(p)):
             raise ValueError('one known conditional event per predicted public response required')
         return [Transition(p[e.symbol],copy.deepcopy(e.public),copy.deepcopy(e.flow)) for e in rows if p[e.symbol]>0]
     def advance(w,key,seed,own,c):
         rows=transitions(w,key,own,c)
-        u=np.random.default_rng(np.random.SeedSequence([seed,c['tick']])).random();total=0.
+        u=(stratified_uniforms(seeds,c['tick'])[seeds.index(seed)] if sampling=='stratified' else
+            np.random.default_rng(np.random.SeedSequence([seed,c['tick']])).random())
+        total=0.
         for row in rows:
             total+=row.probability
             if u<total:return row.state,row.flow
         return rows[-1].state,rows[-1].flow
+    def adjustment(w,key,own,c,after):
+        rows=transitions(w,key,own,c)
+        # Martingale difference under the declared MODEL, not a correction for
+        # an incorrect world model. Keep actual samples for risk and learning.
+        def value(state):
+            goal=Goal(**assess(state))
+            if goal.target!=target:raise ValueError('same-target conditional goal required')
+            return goal.value
+        return math.fsum(row.probability*value(row.state) for row in rows)-value(after)
     tail=PolicyTail(observe=observe,advance=lambda *a:None,owner_advance=advance,
         terminal=terminal,assess=assess,request_for=request_for,feedback=feedback,
         model_id=identity,target=target,steps=tail_steps,seeds=seeds,
-        future_planner=future_planner,future_planner_id=future_planner_id,future_planner_limit=future_planner_limit)
+        future_planner=future_planner,future_planner_id=future_planner_id,future_planner_limit=future_planner_limit,
+        purpose_adjustment=adjustment if purpose_estimator=='conditional' else None,
+        purpose_adjustment_id='conditional-public-goal-martingale-v1' if purpose_estimator=='conditional' else None)
     ctrl=ClosedLoop(observe=observe,transitions=lambda *a:None,owner_transitions=transitions,
         terminal=terminal,assess=assess,record=record,request_for=request_for,feedback=feedback,
         model_id=identity,unit='owner-decisions',target=target,

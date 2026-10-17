@@ -21,11 +21,29 @@ def _labels(values, maximum):
             and all(isinstance(v, str) and 0 < len(v) <= 128 for v in values))
 
 
+def _copy_predictive_record(value,memo):
+    # Valid records contain only immutable primitives/records. Sharing these
+    # does not share a mutable learner: observe always returns a new state.
+    if value._shareable:return value
+    # Preserve defensive deepcopy behavior even for malformed caller-created
+    # records. Validation still belongs to EventLearner._check.
+    result=object.__new__(type(value));memo[id(value)]=result
+    for key,item in vars(value).items():object.__setattr__(result,key,copy.deepcopy(item,memo))
+    return result
+
+
 @dataclass(frozen=True)
 class Evidence:
     context: tuple
     legal: tuple
     outcome: str
+
+    def __post_init__(self):
+        safe=(type(self.context) is tuple and type(self.legal) is tuple and
+              all(type(v) is str for v in self.context+self.legal) and type(self.outcome) is str)
+        object.__setattr__(self,'_shareable',safe)
+
+    __deepcopy__=_copy_predictive_record
 
 
 @dataclass(frozen=True)
@@ -34,6 +52,14 @@ class PredictiveState:
     weights: tuple
     history: tuple = ()
     observations: int = 0
+
+    def __post_init__(self):
+        safe=(type(self.identity) is str and type(self.observations) is int and
+            type(self.weights) is tuple and all(type(v) in (int,float) for v in self.weights) and
+            type(self.history) is tuple and all(type(v) is Evidence and v._shareable for v in self.history))
+        object.__setattr__(self,'_shareable',safe)
+
+    __deepcopy__=_copy_predictive_record
 
 
 class EventLearner:
@@ -46,7 +72,7 @@ class EventLearner:
     Legal alphabets are separate strata to avoid learning from censored actions.
     """
     def __init__(self, *, factors=(), names=(), owner, model_id,
-                 windows=(8, 32, 128), share=.02, smoothing=.02, learned=True):
+                 windows=(8, 32, 128), share=.02, smoothing=.02, learned=True,renewal=False):
         self.factors, self.names = tuple(factors), tuple(names)
         self.windows = tuple(windows)
         if not _labels(self.factors, 4) or not _labels(self.names, 16):
@@ -62,14 +88,19 @@ class EventLearner:
             raise ValueError('identified observer and observation semantics required')
         masks = [c for n in range(len(self.factors)+1) for c in combinations(range(len(self.factors)), n)]
         self.experts = tuple((mask, window) for mask in masks for window in self.windows) if learned else ()
+        if type(renewal) is not bool or renewal and not learned:
+            raise ValueError('renewal prediction requires learned public observations')
+        self.renewal=renewal
+        self.renewal_experts=self.experts if renewal else ()
         self.share, self.smoothing, self.learned = float(share), float(smoothing), learned
-        prior = [2.**-len(mask) for mask, _ in self.experts]
+        prior = [2.**-len(mask) for mask, _ in self.experts+self.renewal_experts]
         total = sum(prior)
         mass = .5 if self.names and self.experts else 1.
         self.prior = tuple([mass/len(self.names)]*len(self.names) if self.names else ())
         self.prior += tuple(mass*p/total for p in prior)
         self.identity = digest(['event-learner-v1', self.factors, self.names, owner, model_id,
                                 self.windows, self.share, self.smoothing, learned])
+        if renewal:self.identity=digest([self.identity,'categorical-renewal-v1'])
 
     def start(self):
         return PredictiveState(self.identity, self.prior)
@@ -115,6 +146,13 @@ class EventLearner:
                     counts[row.outcome] += 1.
             total = math.fsum(counts.values())
             rows.append(tuple(counts[k]/total for k in legal))
+        if self.renewal_experts:
+            from .renewal_prediction import categorical_renewal
+            labels={k:i for i,k in enumerate(legal)}
+            for mask,scale in self.renewal_experts:
+                sequence=tuple(labels[row.outcome] for row in state.history
+                    if row.legal==legal and all(row.context[i]==context[i] for i in mask))
+                rows.append(categorical_renewal(sequence,len(legal),1./scale))
         prediction = [math.fsum(w*r[j] for w, r in zip(state.weights, rows)) for j in range(len(legal))]
         total = math.fsum(prediction)
         return rows, dict(zip(legal, (p/total for p in prediction)))
@@ -138,11 +176,15 @@ class EventLearner:
     def diagnostics(self, state):
         self._check(state)
         n = len(self.names)
-        return dict(observations=state.observations, library_weight=sum(state.weights[:n]),
+        result=dict(observations=state.observations, library_weight=sum(state.weights[:n]),
                     learned_weight=sum(state.weights[n:]),
                     experts=[dict(factors=[self.factors[i] for i in mask], window=window, weight=w)
                              for (mask, window), w in zip(self.experts, state.weights[n:])],
                     interpretation='predictive mixture weights; not probability of a true cause')
+        if self.renewal:
+            result['renewal_experts']=[dict(factors=[self.factors[i] for i in mask],hazard=1./scale,weight=w)
+                for (mask,scale),w in zip(self.renewal_experts,state.weights[n+len(self.experts):])]
+        return result
 
     def record(self, state):
         self._check(state)

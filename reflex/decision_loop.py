@@ -59,7 +59,11 @@ class EvidenceGate:
         if a is None: return dict(scored=False,reason='no comparable observed dimensions')
         # Compare distributions, not just this realized loss. Equal forecasts
         # must not pad the sample count or prevent revocation of a bad model.
-        signature=lambda rows: tuple(float(sum(r['p']*(vector(r)[FEATURES.index(f)]<=t) for r in rows)) for f in names for t in THRESHOLDS)
+        def signature(rows):
+            # Keep the original summation order and exact equality contract.
+            # Convert each outcome once, rather than once per feature/threshold.
+            samples=[(r['p'],vector(r)) for r in rows]
+            return tuple(float(sum(p*(v[FEATURES.index(f)]<=t) for p,v in samples)) for f in names for t in THRESHOLDS)
         if signature(prior)==signature(candidate): return dict(scored=False,reason='identical forecasts')
         return self._update(key,a,b)
 

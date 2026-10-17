@@ -24,7 +24,7 @@ class EventReader:
     """
     def __init__(self, scope, names, models_for, outcome_for, *, legal_for,
                  model_id, known_conditionals, factors=(), features_for=None,
-                 learned=True, key='event-response'):
+                 learned=True, key='event-response',renewal=False,learning='windows'):
         if known_conditionals is not True:
             raise ValueError('explicit known conditional effects required')
         if not all(callable(f) for f in (models_for, outcome_for, legal_for)):
@@ -35,8 +35,14 @@ class EventReader:
             raise ValueError('public feature callback required')
         identifier(key)
         self.owner = digest(scope)
-        self.learner = EventLearner(factors=factors, names=names, owner=self.owner,
-                                    model_id=model_id, learned=learned)
+        if learning=='segmented':
+            if learned is not True or renewal:raise ValueError('segmented prediction replaces window experts; it is not stacked on them')
+            from .segmented_prediction import SegmentedEventLearner
+            self.learner=SegmentedEventLearner(factors=factors,names=names,owner=self.owner,model_id=model_id)
+        elif learning=='windows':
+            self.learner = EventLearner(factors=factors, names=names, owner=self.owner,
+                                        model_id=model_id, learned=learned,renewal=renewal)
+        else:raise ValueError('known owned learning model required')
         self.memory = self.learner.start()
         self.models_for, self.outcome_for = models_for, outcome_for
         self.legal_for, self.features_for = legal_for, features_for
@@ -78,6 +84,45 @@ class EventReader:
                 if len(cache)>256:cache.popitem(last=False)
             cache.move_to_end(key)
             return copy.deepcopy(cache[key])
+        return predict
+
+    def predictive_continuation(self,*,steps=None,persistent=False):
+        """Posterior world prediction from a fixed root and public future events.
+
+        Only the segmented learner has the explicit generative model required
+        here. Its factual root history is retained throughout a forecast, even
+        when the imagined person's bounded memory forgets older observations.
+        We integrate possible laws, not freeze their mean or replace physics
+        with the person's preference/utility updates. This is conditional on
+        the declared segment prior; it does not reveal the real world's law.
+        """
+        from .segmented_prediction import SegmentedEventLearner,SegmentMemory
+        if not isinstance(self.learner,SegmentedEventLearner):
+            raise ValueError('posterior world continuation requires a generative segmented model')
+        if type(persistent) is not bool:raise ValueError('explicit future regime assumption required')
+        root=copy.deepcopy(self);model=copy.deepcopy(root.learner)
+        limit=min(root.learner.window,512-len(root.memory.history))
+        steps=limit if steps is None else steps
+        if type(steps) is not int or not 1<=steps<=limit:
+            raise ValueError('forecast must fit the branch and retained-root world memories')
+        model.window=512;model.identity=digest(['predictive-world-v1',root.record()])
+        def predict(branch,context):
+            if not isinstance(branch,EventReader) or branch.learner.identity!=root.learner.identity:
+                raise ValueError('same observed public process required')
+            branch.learner._check(branch.memory)
+            added=branch.observations-root.observations
+            if not 0<=added<=steps:
+                raise ValueError('future evidence must fit the branch observation memory')
+            prefix=branch.memory.history[:-added] if added else branch.memory.history
+            if prefix and prefix!=root.memory.history[-len(prefix):]:
+                raise ValueError('future observation branch does not extend this factual root')
+            future=branch.memory.history[-added:] if added else ()
+            if persistent:
+                return root.learner.persistent_continuation(root.memory,future,*root._inputs(context))
+            history=root.memory.history+future
+            if len(history)>512:raise ValueError('bounded world history required')
+            memory=SegmentMemory(model.identity,history,len(history))
+            return model.predict(memory,*root._inputs(context))
         return predict
 
     def __call__(self, context, cap):

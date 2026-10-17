@@ -6,6 +6,7 @@ No win probability calibration, universal game score or learning is claimed.
 """
 from dataclasses import dataclass,replace,asdict
 import copy
+import math
 from .core import Policy,compile_batch,identifier,number
 from .intertemporal import forecast
 from .progress import ProgressWatch,ProgressConfig
@@ -60,12 +61,12 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
         raise ValueError('supported real roots required')
     encoded_regret=max_regret if opportunity_regret or objective_unit==1. else max_regret*objective_unit
     f=forecast(c,paths,horizon=horizon,unit=unit,target=target,max_regret=encoded_regret,plan_roots=plan_roots,outcome_limit=outcome_limit)
-    fc=copy.deepcopy(f.contexts[0]);purpose={};endpoint={}
+    fc=copy.deepcopy(f.contexts[0]);purpose={};endpoint={};mean_audit={}
     if set(rollout_audit)!=set(paths):raise ValueError('endpoint coverage must match all viable roots')
     for a in fc['actions']:
         root=f.roots[a['id']][0];proposal=f.audit['plans'][a['id']].get('proposal',root);rows=rollout_audit[proposal]
         if len(rows)!=len(paths[proposal]):raise ValueError('one endpoint per coherent branch required')
-        goals=[];expected=0.
+        goals=[];expected=0.;mean_correction=0.;adjusted=False
         for out,trace,branch in zip(a['outcomes'],rows,paths[proposal]):
             g=Goal(**trace['assessment'])
             if preference_basis is not None:
@@ -103,9 +104,20 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
                 entry=dict(g.record(),settlement_step=len(steps),positive_confidence=confidence,
                     reference_origin=objective_origin.value,gain_confidence=gain_confidence)
             goals.append(entry)
+            if 'purpose_mean_estimate' in trace:
+                estimate=trace['purpose_mean_estimate']
+                if isinstance(estimate,bool) or not isinstance(estimate,(int,float)) or not math.isfinite(estimate):
+                    raise ValueError('finite estimated purpose mean required')
+                if a['confidence']!=1. or any(v!=1. for v in branch.confidence):
+                    raise ValueError('conditional mean correction requires fully supported model probabilities')
+                mean_correction+=out['p']*(estimate-g.value);adjusted=True
         # Valid bounded atoms can sum to 1 + one rounding unit. Preserve the
         # strict selector contract without masking a materially invalid score.
         if 1. < abs(expected) <= 1.+1e-12:expected=1. if expected>0 else -1.
+        if adjusted:
+            corrected=expected+mean_correction
+            mean_audit[a['id']]=dict(sampled=expected,unprojected=corrected,projected=not -1<=corrected<=1)
+            expected=max(-1.,min(1.,corrected))
         purpose[a['id']]=expected
         endpoint[a['id']]=goals
     # Preserving the tier before the purpose gate prevents a competence band
@@ -120,6 +132,9 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
     metadata=copy.deepcopy(f.audit);metadata.update(endpoint=endpoint,original_tier_plans=sorted(retained),
         endpoint_semantics='settled result OR explicit nonterminal proxy; not calibrated win EV',
         readiness_learned=False,return_frame=frame.record())
+    if mean_audit:
+        metadata['purpose_mean_estimator']=dict(kind='conditional public goal control variate',roots=mean_audit,
+            semantics='only the competence mean is adjusted; sampled preferences, risk and physical feedback stay intact; model bias remains; bounded projection may bias finite estimates')
     if preference_basis is not None:metadata['preference_basis']=preference_basis.identity
     if settlement_weight=='absolute':metadata['subjective_settlement_semantics']='absolute terminal outcome once; running cutoff proxy and preference flows still discounted'
     if objective_origin is not None or objective_unit!=1.:

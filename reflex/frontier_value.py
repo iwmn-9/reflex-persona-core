@@ -33,6 +33,12 @@ class EndpointEstimate:
             raise ValueError('explicit modeled settlement coverage required')
 
 
+@dataclass(frozen=True)
+class TailDistribution:
+    trajectories: tuple
+    purpose_estimates: tuple
+
+
 class PolicyTail:
     """Continue a resolved owner through its ordinary feedback lifecycle.
 
@@ -42,7 +48,8 @@ class PolicyTail:
     policy. Unsettled samples retain the adapter's declared running proxy.
     """
     def __init__(self,*,observe,advance,terminal,assess,request_for,feedback,model_id,target,seeds=(701,702,703,704),steps=16,record=None,cache_entries=16384,owner_advance=None,
-                 future_planner=None,future_planner_id=None,future_planner_limit=1):
+                 future_planner=None,future_planner_id=None,future_planner_limit=1,
+                 purpose_adjustment=None,purpose_adjustment_id=None):
         if any(not callable(x) for x in (observe,advance,terminal,assess,request_for,feedback)):
             raise ValueError('explicit public continuation callbacks required')
         if not isinstance(model_id,str) or not model_id or not isinstance(target,str) or not target:
@@ -66,8 +73,15 @@ class PolicyTail:
         self.future_planner=future_planner;self.future_planner_limit=future_planner_limit
         self.future_calls=0
         self.identity=digest([self.identity,future_planner_id,future_planner_limit])
+        if purpose_adjustment is not None and (not callable(purpose_adjustment) or not isinstance(purpose_adjustment_id,str) or not purpose_adjustment_id):
+            raise ValueError('identified conditional-mean adjustment required')
+        self.purpose_adjustment=purpose_adjustment
+        if purpose_adjustment is not None:self.identity=digest([self.identity,purpose_adjustment_id])
 
     def trajectories(self,world,actor):
+        return list(self.distribution(world,actor).trajectories)
+
+    def distribution(self,world,actor):
         """Full sampled returns from the learning owner, including preferences.
 
         No scalar endpoint cache is used: it cannot reconstruct correlated
@@ -75,10 +89,10 @@ class PolicyTail:
         """
         from .decision_loop import DecisionLoop
         from .model_observer import resolve_feedback
-        rows=[]
+        rows=[];estimates=[]
         if actor.pending is not None:raise ValueError('resolved frontier owner required')
         for seed in self.seeds:
-            w=copy.deepcopy(world);own=copy.deepcopy(actor);flows=[];actions=[];calls=0
+            w=copy.deepcopy(world);own=copy.deepcopy(actor);flows=[];actions=[];calls=0;adjustment=0.
             for step in range(self.steps):
                 if self.terminal(w):break
                 c=self.observe(copy.deepcopy(w),copy.deepcopy(own.state));req=self.request_for(c)
@@ -94,18 +108,24 @@ class PolicyTail:
                 result=DecisionLoop.decide_batch([(own,req)],False,planner)[0];key=result['decision']['action_id']
                 after,flow=(self.advance(copy.deepcopy(w),key,seed) if self.owner_advance is None else
                     self.owner_advance(copy.deepcopy(w),key,seed,model_owner,copy.deepcopy(result['context'])))
+                if self.purpose_adjustment is not None:
+                    delta=self.purpose_adjustment(copy.deepcopy(w),key,model_owner,copy.deepcopy(result['context']),copy.deepcopy(after))
+                    if isinstance(delta,bool) or not isinstance(delta,(int,float)) or not math.isfinite(delta):
+                        raise ValueError('finite conditional-mean correction required')
+                    adjustment+=delta
                 resolve_feedback(own,result['ticket'],self.feedback(w,after,key,result['context'],flow))
                 self.simulated_steps+=1
                 flows.append(copy.deepcopy(flow));actions.append(key);w=after
             g=Goal(**self.assess(w));ended=bool(self.terminal(w))
             if g.target!=self.target or ended!=(g.status!='running'):raise ValueError('same-target coherent tail endpoint required')
             rows.append((1/len(self.seeds),tuple(flows),tuple(actions),g.record(),ended))
-        return rows
+            estimates.append(g.value+adjustment)
+        return TailDistribution(tuple(rows),tuple(estimates))
 
     def evaluate(self,world,actor):
         from .closed_loop import reveal
         from .decision_loop import DecisionLoop
-        if self.future_planner is not None:raise ValueError('future planning requires complete preference trajectories')
+        if self.future_planner is not None or self.purpose_adjustment is not None:raise ValueError('future planning or mean correction requires complete preference trajectories')
         if actor.pending is not None:raise ValueError('resolved frontier owner required')
         values={};settled=0
         for seed in self.seeds:

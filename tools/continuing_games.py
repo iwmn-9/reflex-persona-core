@@ -131,8 +131,8 @@ class ContinuingGame:
             maintained=('safety',) if flow['needs']['safety']==0 else (),observed=vector(flow),
             event={'revealed_action':n['signal']})
 
-    def actor(self,c,learned=True):
+    def actor(self,c,learned=True,renewal=False,learning='windows'):
         reader=EventReader(c['scope'],('0','1'),self.models,self.outcome,legal_for=lambda c:('0','1','2'),
-            model_id=self.model_id,known_conditionals=True,learned=learned)
+            model_id=self.model_id,known_conditionals=True,learned=learned,renewal=renewal,learning=learning)
         return DecisionLoop(c,policy=Policy(principle_priority='personal',commitments={character_key(c):.5}),
             predictor=reader,read_control=ReadControl(max_nodes=64),pressure=NeedPressure(c['scope']),progress=ProgressWatch(c['scope']))

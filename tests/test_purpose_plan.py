@@ -19,6 +19,21 @@ def fixture(horizon=2):
 
 
 class PurposePlanTests(unittest.TestCase):
+    def test_conditional_mean_projection_and_support_are_explicit(self):
+        c,paths,audit=fixture()
+        audit['prepare'][0]['purpose_mean_estimate']=1.2
+        f=goal_forecast(c,paths,audit,horizon=2,unit='ticks',target='mission')
+        key=next(k for k,v in f.roots.items() if v==('prepare',))
+        self.assertEqual(f.purpose[key],1.)
+        record=f.audit['purpose_mean_estimator']['roots'][key]
+        self.assertEqual(record['sampled'],0.);self.assertEqual(record['unprojected'],1.2)
+        self.assertTrue(record['projected'])
+        # Confidence discounts depend on the sign of the outcome: a generic
+        # linear correction cannot silently be reused through that nonlinearity.
+        paths['prepare']=(Branch(1.,paths['prepare'][0].effects,(.5,1.)),)
+        with self.assertRaisesRegex(ValueError,'fully supported'):
+            goal_forecast(c,paths,audit,horizon=2,unit='ticks',target='mission')
+
     def test_draw_cannot_keep_unfinished_progress_and_numeric_contract(self):
         for args in (('goal','draw',.5),('goal','failure',0.),('goal','success',.9),('goal','running',True),('goal','scored',float('nan'))):
             with self.assertRaises(ValueError):Goal(*args)

@@ -12,13 +12,19 @@ from tools.continuing_games import ContinuingGame
 from tools.run_owned_value import law,sample
 
 
-def audit(root):
+def audit(root,*,allow_abandoned=False):
     rows=[json.loads(s) for s in (root/'trajectories.jsonl').read_text().splitlines()]
     reg=json.loads((root/'registration.json').read_text())
-    assert len(rows)==len(reg['jobs'])*len(reg['arms']),'incomplete registered study'
+    planned=len(reg['jobs'])*len(reg['arms']);complete=len(rows)==planned
+    status=None
+    if not complete:
+        assert allow_abandoned,'incomplete registered study'
+        status=json.loads((root/'run_status.json').read_text(encoding='utf-8-sig'))
+        assert reg.get('stage')=='development' and status['status']=='abandoned_after_development_regression'
+        assert status['completed_rows']==len(rows) and status['planned_rows']==planned and status['reason']
     expected={(g,PROFILES[p]['id'],s,r,a) for g,p,s,r,*_ in reg['jobs'] for a in reg['arms']}
     actual=[tuple(row[k] for k in ('game','profile','seed','regime','arm')) for row in rows]
-    assert len(set(actual))==len(actual) and set(actual)==expected,'duplicate or missing conditions'
+    assert len(set(actual))==len(actual) and (set(actual)==expected if complete else set(actual)<expected),'duplicate or unregistered conditions'
     snapshot=json.loads((root/'source_snapshot.json').read_text())
     assert all(hashlib.sha256((root/'_source'/name).read_bytes()).hexdigest()==sha for name,sha in snapshot.items())
     checks=Counter();brief=[]
@@ -36,7 +42,8 @@ def audit(root):
             if t.get('planned') and t['forecast']:
                 assert t['predicted']==t['forecast'][t['action']]
             if 'checkpoint' in t:
-                c=g.context(w);template=g.actor(c,learned=r['arm']!='endpoint_library')
+                c=g.context(w);template=g.actor(c,learned=r['arm']!='endpoint_library',renewal=r['arm'] in ('endpoint_renewal','endpoint_both','endpoint_recovery'),
+                    learning='segmented' if r['arm'] in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','reflex_segmented') else 'windows')
                 own=DecisionLoop.from_record(c,t['checkpoint'],predictor=template.predictor)
                 assert digest(own.record())==t['before_owner']
                 req=g.request(c);result=DecisionLoop.decide_batch([(own,req)],False,_counterfactual_roots=(t['action'],))[0]
@@ -82,11 +89,13 @@ def audit(root):
                 **{x:sum(p[x] for p in ps) for x in ('better','same','worse')},
                 mean_delta=float(np.mean([p['delta'] for p in ps])),worst=min(p['delta'] for p in ps)))
     result=dict(source=root.name,source_freeze_verified=True,checks=dict(checks),runs=brief,comparisons=comparisons,summaries=summaries,
-        trajectory_sha256=hashlib.sha256((root/'trajectories.jsonl').read_bytes()).hexdigest())
+        trajectory_sha256=hashlib.sha256((root/'trajectories.jsonl').read_bytes()).hexdigest(),
+        complete=complete,planned_runs=planned,completed_runs=len(rows),early_stop=status)
     (root/'audit.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf8')
     print(json.dumps(dict(checks=result['checks'],summaries=summaries),indent=2))
     return result
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('root');a=p.parse_args();audit(Path(a.root))
+    p=argparse.ArgumentParser();p.add_argument('root');p.add_argument('--allow-abandoned',action='store_true')
+    a=p.parse_args();audit(Path(a.root),allow_abandoned=a.allow_abandoned)

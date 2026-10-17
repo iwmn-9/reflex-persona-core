@@ -37,6 +37,52 @@ def controller(g,*,steps,tail_seeds=(701,702,703),future_choices='planned',tail_
 
 
 class OwnedValueLoopTests(unittest.TestCase):
+    def test_conditional_mean_matches_exact_tree_without_erasing_sampled_risk(self):
+        g=ContinuingGame('gambling',PROFILES[1],turns=2);w=g.start();c=g.context(w);actor=g.actor(c)
+        args=dict(observe=g.context,events=g.events,terminal=g.terminal,
+            assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
+            feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=1,seeds=(817,))
+        rq=g.request(c);effective=actor.preview(rq)[0];captures=[]
+        for estimator in ('sampled','conditional'):
+            ctrl=owned_rollout(actor,**args,purpose_estimator=estimator);cap={}
+            ctrl.planner(actor,rq,w,captured=cap)([effective],[]);captures.append(cap)
+        raw,corrected=[x['node']['forecast'] for x in captures]
+        # Only the mean used by the competence gate changes. Adverse branches
+        # remain visible to the personality's risk evaluation.
+        self.assertEqual(raw.contexts,corrected.contexts)
+        self.assertEqual(raw.audit['endpoint'],corrected.audit['endpoint'])
+        law=actor.predictor.frozen_forecaster();p=law(c)
+        for plan,root in corrected.roots.items():
+            expected=0.
+            for z,weight in p.items():
+                person=copy.deepcopy(actor)
+                result=DecisionLoop.decide_batch([(person,rq)],False,_counterfactual_roots=(root[0],))[0]
+                after,flow=g.transition(w,root[0],z)
+                resolve_feedback(person,result['ticket'],g.feedback(w,after,root[0],c,flow))
+                cc=g.context(after,person.state);future=person.preview(g.request(cc))[1]['action_id']
+                expected+=weight*sum(prob*g.goal(g.transition(after,future,symbol)[0]).value for symbol,prob in law(cc).items())
+            self.assertAlmostEqual(corrected.purpose[plan],expected,places=13)
+        self.assertTrue(any(abs(raw.purpose[k]-corrected.purpose[k])>1e-8 for k in corrected.purpose))
+
+    def test_new_prediction_and_sampling_use_same_real_owner_lifecycle(self):
+        g=ContinuingGame('auction',PROFILES[2],turns=5);w=g.start();c=g.context(w)
+        own=g.actor(c,renewal=True);saved=own.record();rq=g.request(c)
+        args=dict(observe=g.context,events=g.events,terminal=g.terminal,
+            assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
+            feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=4,sampling='stratified',purpose_estimator='conditional')
+        ctrl=owned_rollout(own,**args);cap={};effective=own.preview(rq)[0]
+        ctrl.planner(own,rq,w,captured=cap)([effective],[])
+        self.assertEqual(own.record(),saved)
+        clone=DecisionLoop.from_record(c,saved,predictor=g.actor(c,renewal=True).predictor)
+        other=owned_rollout(clone,**args);cap2={}
+        other.planner(clone,rq,w,captured=cap2)([effective],[])
+        self.assertEqual(cap['node']['forecast'].purpose,cap2['node']['forecast'].purpose)
+        result=DecisionLoop.decide_batch([(own,rq)],False,ctrl.planner(own,rq,w))[0]
+        key=result['decision']['action_id'];end,flow=g.transition(w,key,'2')
+        resolve_feedback(own,result['ticket'],g.feedback(w,end,key,c,flow))
+        expected=next(x['owner'] for x in cap['node']['children'][key] if x['public']==end)
+        self.assertEqual(digest(own.record()),expected)
+
     def test_exact_augmented_tree_replays_learning_owner_on_every_branch(self):
         g=ContinuingGame('gambling',PROFILES[0],turns=2)
         w=g.start();c=g.context(w);actor=g.actor(c)

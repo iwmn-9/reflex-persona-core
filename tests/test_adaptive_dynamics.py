@@ -3,7 +3,7 @@ import json
 import unittest
 from dataclasses import replace
 
-from reflex.adaptive_dynamics import EventLearner, AdaptiveKernel, PublicEvent
+from reflex.adaptive_dynamics import EventLearner, AdaptiveKernel, PublicEvent,Evidence,PredictiveState
 from reflex.belief_planning import UnsupportedObservation
 from reflex.core import digest
 from reflex.examples import effect
@@ -18,6 +18,19 @@ def learner(**kw):
 
 
 class AdaptiveDynamicsTests(unittest.TestCase):
+    def test_immutable_history_copy_cannot_share_mutable_experience(self):
+        m=learner();s=m.observe(m.start(),(),LEGAL,LIBRARY,'c')
+        saved=m.record(s);clone=copy.deepcopy(s)
+        self.assertIs(clone,s)
+        learned=m.observe(clone,(),LEGAL,LIBRARY,'a')
+        self.assertNotEqual(learned,s);self.assertEqual(m.record(s),saved)
+        self.assertEqual(learned.observations,s.observations+1)
+        malformed=Evidence(['mutable'],LEGAL,'c')
+        state=PredictiveState('bad',(1.,),(malformed,))
+        copied=copy.deepcopy(state);copied.history[0].context.append('changed')
+        self.assertEqual(state.history[0].context,['mutable'])
+        with self.assertRaises(ValueError):m.record(state)
+
     def test_learns_behavior_absent_from_all_named_hypotheses(self):
         m = learner(); s = m.start(); original = s
         for _ in range(40): s = m.observe(s, (), LEGAL, LIBRARY, 'c')

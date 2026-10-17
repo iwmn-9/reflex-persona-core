@@ -1,0 +1,64 @@
+name: Auction recovery longitudinal experiment
+on:
+  push:
+    branches: ['research/auction-recovery']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  comparison:
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        game: [auction, resources, combat, gambling]
+        seed: [401, 547, 548]
+        profiles: ['0 1', '2 3']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -e .
+      - name: Matched long executions
+        run: >-
+          python tools/run_owned_value.py --root results/comparison
+          --games ${{ matrix.game }} --seeds ${{ matrix.seed }}
+          --profiles ${{ matrix.profiles }} --regimes outside shift-return
+          --arms endpoint reflex endpoint_posterior endpoint_persistent
+          --turns 128 --interval 7 --tail-steps 15 --workers 2 --stage confirmation
+      - run: python tools/audit_auction_recovery.py results/comparison
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: comparison-${{ matrix.game }}-${{ matrix.seed }}-${{ matrix.profiles }}
+          path: results/comparison
+          retention-days: 7
+  stress:
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        game: [auction, resources, combat, gambling]
+        profile: [0, 1]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -e .
+      - name: Irregular changes beyond retained memory
+        run: >-
+          python tools/run_owned_value.py --root results/stress
+          --games ${{ matrix.game }} --seeds 614 --profiles ${{ matrix.profile }}
+          --regimes irregular --arms endpoint reflex endpoint_posterior endpoint_persistent
+          --turns 256 --interval 7 --tail-steps 15 --workers 2 --stage stress
+      - run: python tools/audit_auction_recovery.py results/stress
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: stress-${{ matrix.game }}-${{ matrix.profile }}
+          path: results/stress
+          retention-days: 7
