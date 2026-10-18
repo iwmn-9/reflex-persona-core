@@ -97,21 +97,9 @@ def summarize(repo,root,plan,partial=False,additional_roots=()):
             assert snapshots[0]==snapshots[1],'paired source drift'
             paired_host=pair_records[0]['pair_id']
             if pair_records[0].get('host_segments') is not None:
-                host_segments=pair_records[0]['host_segments']
-                assert host_segments[0]['start']==0 and host_segments[-1]['end']==right['turns']
-                assert all(a['end']==b['start'] for a,b in zip(host_segments,host_segments[1:]))
-                assert all(0<=s['start']<=s['end']<=right['turns'] and s['execution_id'] for s in host_segments)
+                from tools.resume_horizon_pair import verify_segmented_result
                 for side,k in enumerate((baseline_key,key)):
-                    child=Path(origins[k]).parent
-                    boundary=json.loads((child/'boundary_provenance.json').read_text())
-                    resumed=json.loads((child/'resume_provenance.json').read_text())
-                    assert resumed['complete'] and resumed['original_prefix_unchanged']
-                    assert resumed['resume_at']==boundary['resume_at']==pair_records[0]['continuation']['boundary']
-                    assert resumed['original_checkpoint_sha256']==boundary['rewritten_checkpoint_sha256']
-                    assert boundary['original_checkpoint_sha256']==pair_records[0]['continuation']['inputs'][side]['checkpoint_sha256']
-                    prefix=[{name:v for name,v in t.items() if name not in ('forecast_error','realized_at_forecast_end')}
-                            for t in rows[k]['trace'][:boundary['resume_at']]]
-                    assert hashlib.sha256(json.dumps(prefix,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf8')).hexdigest()==boundary['retained_prefix_sha256']
+                    host_segments=verify_segmented_result(Path(origins[k]).parent,rows[k],pair_records[0],side)
         assert left['turns']==right['turns'] and left['interval']==right['interval']==1
         for a,b in zip(lt,rt):assert a['response']==b['response'] and a['truth']==b['truth'],'unmatched world events'
         for k in (baseline_key,key):

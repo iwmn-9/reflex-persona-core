@@ -1,0 +1,115 @@
+name: Continue interrupted cumulative value pairs
+run-name: Value contract continuation ${{ inputs.label }}
+on:
+  push:
+    branches: [research/long-horizon]
+    paths: [.github/workflows/owner-value-contract-resume.yml]
+  workflow_dispatch:
+    inputs:
+      label:
+        type: string
+        required: true
+      batches:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+jobs:
+  matrix:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    outputs:
+      include: ${{ steps.plan.outputs.include }}
+    steps:
+      - id: plan
+        env:
+          BATCHES: ${{ inputs.batches }}
+        run: |
+          python - <<'PY'
+          import json,os,re
+          batches=json.loads(os.environ['BATCHES']);seen=set()
+          assert isinstance(batches,list) and 1<=len(batches)<=64
+          for batch in batches:
+              assert 1<=len(batch['pairs'])<=2
+              for pair in batch['pairs']:
+                  assert len(pair['jobs'])==len(pair['inputs'])==len(pair['keys'])==2
+                  assert pair['jobs'][0]==pair['jobs'][1]
+                  for key,item in zip(pair['keys'],pair['inputs']):
+                      assert key not in seen and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]+',key)
+                      seen.add(key)
+                      assert re.fullmatch(r'[0-9]+',str(item['run']))
+                      assert re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]+',item['artifact'])
+                      assert all(re.fullmatch(r'[a-f0-9]{64}',item[k]) for k in ('manifest','checkpoint'))
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('include='+json.dumps(batches,separators=(',',':'))+'\n')
+          PY
+  study:
+    needs: matrix
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.matrix.outputs.include) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13.16'
+      - run: python -m pip install -e . numpy==2.5.4
+      - name: Restore both original immutable executions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAIRS: ${{ toJSON(matrix.pairs) }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          for index,pair in enumerate(json.loads(os.environ['PAIRS'])):
+              for side,item in enumerate(pair['inputs']):
+                  subprocess.run(['gh','run','download',str(item['run']),'--name',item['artifact'],
+                      '--dir',f'results/input/p{index}/a{side}'],check=True)
+          PY
+      - name: Resume at each pair's common experience boundary
+        timeout-minutes: 345
+        env:
+          PAIRS: ${{ toJSON(matrix.pairs) }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess,sys
+          from concurrent.futures import ThreadPoolExecutor
+          pairs=json.loads(os.environ['PAIRS'])
+          def execute(entry):
+              index,pair=entry
+              return subprocess.run([sys.executable,'tools/resume_horizon_pair.py','--value-contract',
+                  '--root',f'results/value-contract/pair{index}',
+                  '--inputs',json.dumps([f'results/input/p{index}/a{s}' for s in range(2)]),
+                  '--jobs',json.dumps(pair['jobs']),
+                  '--manifests',json.dumps([x['manifest'] for x in pair['inputs']]),
+                  '--checkpoints',json.dumps([x['checkpoint'] for x in pair['inputs']])],check=False).returncode
+          with ThreadPoolExecutor(max_workers=2) as pool:codes=list(pool.map(execute,enumerate(pairs)))
+          if any(codes):raise SystemExit('Incomplete continuations retained with original source and experience')
+          PY
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.pairs[0] }}
+        with:
+          name: value-contract-${{ matrix.pairs[0].keys[0] }}
+          path: results/value-contract/pair0/baseline
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.pairs[0] }}
+        with:
+          name: value-contract-${{ matrix.pairs[0].keys[1] }}
+          path: results/value-contract/pair0/candidate
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.pairs[1] }}
+        with:
+          name: value-contract-${{ matrix.pairs[1].keys[0] }}
+          path: results/value-contract/pair1/baseline
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.pairs[1] }}
+        with:
+          name: value-contract-${{ matrix.pairs[1].keys[1] }}
+          path: results/value-contract/pair1/candidate
+          retention-days: 14

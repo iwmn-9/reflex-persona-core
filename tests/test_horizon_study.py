@@ -177,6 +177,39 @@ assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisio
             self.assertTrue(proof['previous']['complete'])
             self.assertTrue(proof['original_prefix_unchanged'])
 
+    def test_audit_recovery_accepts_actual_death_without_padding_the_world(self):
+        from tools.freeze_experiment import freeze
+        from tools.resume_horizon_study import resume
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)/'death';freeze(root)
+            job=['combat',0,52996,'outside',128,1,1,0]
+            # Deliberately losing fixture controller. The ordinary world,
+            # learning updates and frozen replay auditor remain real.
+            program='''import json,sys
+from pathlib import Path
+from unittest.mock import patch
+sys.path.insert(0,sys.argv[1])
+from reflex.decision_loop import DecisionLoop
+from tools.run_owned_value import run
+root=Path(sys.argv[2]);job=json.loads(sys.argv[3])
+def losing(self,world):
+ c=self.observe(world,self.actor.state);request=self.request_for(c)
+ key='strike:0' if world['ammo'] else 'reload';self.last={}
+ return DecisionLoop.decide_batch([(self.actor,request)],False,_counterfactual_roots=(key,))[0]
+with patch('reflex.receding_owner.RecedingOwner.decide',losing):
+ row=run(job,'receding_recovery',checkpoint=root/'checkpoint.json')
+assert row['final']['hp']<=0 and row['executed']<job[4]
+(root/'registration.json').write_text(json.dumps(dict(jobs=[job],arms=['receding_recovery'],stage='diagnostic')))
+(root/'trajectories.jsonl').write_text(json.dumps(row)+'\\n')
+'''
+            subprocess.run([sys.executable,'-c',program,str(root/'_source'),str(root),json.dumps(job)],check=True,capture_output=True)
+            raw=(root/'trajectories.jsonl').read_bytes();row=json.loads(raw)
+            proof=resume(root,hashlib.sha256((root/'source_snapshot.json').read_bytes()).hexdigest(),job)
+            self.assertTrue(proof['complete'] and proof['audit_only'])
+            self.assertEqual(proof['completed_turns'],row['executed'])
+            self.assertLess(proof['completed_turns'],job[4])
+            self.assertEqual((root/'trajectories.jsonl').read_bytes(),raw)
+
     def test_read_only_instrumentation_reproduces_saved_choice(self):
         from tools.diagnose_owner_horizon import diagnose,prefix_choice
         job=['combat',1,47,'outside',3,1,2,0]

@@ -39,7 +39,9 @@ def resume(root,expected_manifest,job):
         args+=['--cumulative-achievement']
     if audit_only:
         completed=json.loads(trajectory.read_text())
-        assert len(prefix)==saved['world']['tick']==job[4]==completed['executed']==len(completed['trace']),'unfinished execution cannot use audit-only recovery'
+        assert 0<len(prefix)==saved['world']['tick']==completed['executed']==len(completed['trace'])<=job[4],'stored execution boundary mismatch'
+        # The original frozen auditor proves actual termination, including
+        # death before the scheduled horizon. No later decisions are invented.
         assert completed['final']==saved['world'] and completed['checks']==saved['checks']
         assert all(all(new[k]==value for k,value in old.items()) for old,new in zip(prefix,completed['trace'])),'stored trajectory differs from checkpoint'
         original_trajectory=trajectory.read_bytes()

@@ -1,27 +1,33 @@
 import hashlib,json,subprocess,sys,tempfile,unittest
 from pathlib import Path
 from tools.freeze_experiment import freeze
-from tools.resume_horizon_pair import prepare,run_pair
+from tools.resume_horizon_pair import prepare,run_pair,verify_segmented_result
 from tools.run_owned_value import run
 
 
 class PairContinuationTests(unittest.TestCase):
-    def fixture(self,root,game='gambling',tails=(1,2)):
+    def fixture(self,root,game='gambling',tails=(1,2),*,value_contract=False):
         jobs=[[game,1,52997,'shift-return',5,1,tail,0] for tail in tails]
         pair=dict(version='same-host-horizon-pair-v1',pair_id='original-host',jobs=jobs,
             profile='steady',stage='diagnostic',recovery_limit=16,complete=False)
+        if value_contract:
+            pair=dict(version='same-host-value-contract-v1',pair_id='original-host',job=jobs[0],complete=False,
+                configurations={'baseline':{},'candidate':{'cumulative_achievement':True}},plan_sha256='a'*64)
         inputs=[]
         for index,job in enumerate(jobs):
             child=root/f'input{index}';freeze(child);inputs.append(str(child))
-            (child/'pair_execution.json').write_text(json.dumps(pair))
-            self.advance(child,job,index+1,register=True)
+            if value_contract:
+                snapshot=json.loads((child/'source_snapshot.json').read_text())
+                pair['sources']={k:v for k,v in snapshot.items() if k.endswith('.py')}
+            (child/('contract_pair.json' if value_contract else 'pair_execution.json')).write_text(json.dumps(pair))
+            self.advance(child,job,index+1,register=True,cumulative=value_contract and index==1)
         return inputs,jobs,*self.hashes(inputs)
 
     def hashes(self,inputs):
         return [[hashlib.sha256((Path(p)/name).read_bytes()).hexdigest() for p in inputs]
                 for name in ('source_snapshot.json','checkpoint.json')]
 
-    def advance(self,child,job,count,register=False):
+    def advance(self,child,job,count,register=False,cumulative=False):
         program='''import json,sys
 from pathlib import Path
 sys.path.insert(0,sys.argv[1])
@@ -29,10 +35,44 @@ from tools.run_owned_value import run
 from tools.run_horizon_study import __doc__ as semantics
 child=Path(sys.argv[2]);job=json.loads(sys.argv[3])
 if sys.argv[5]=='1':
- (child/'registration.json').write_text(json.dumps(dict(jobs=[job],arms=['receding_recovery'],world_seeds=[job[2]],stage='diagnostic',semantics=semantics)))
-assert run(job,'receding_recovery',checkpoint=child/'checkpoint.json',max_decisions=int(sys.argv[4])) is None
+ reg=dict(jobs=[job],arms=['receding_recovery'],world_seeds=[job[2]],stage='diagnostic',semantics=semantics)
+ if sys.argv[6]=='1':reg['configuration']={'cumulative_achievement':True}
+ (child/'registration.json').write_text(json.dumps(reg))
+configuration=json.loads((child/'registration.json').read_text()).get('configuration',{})
+assert run(job,'receding_recovery',checkpoint=child/'checkpoint.json',max_decisions=int(sys.argv[4]),**configuration) is None
 '''
-        subprocess.run([sys.executable,'-c',program,str(child/'_source'),str(child),json.dumps(job),str(count),str(int(register))],check=True,capture_output=True)
+        subprocess.run([sys.executable,'-c',program,str(child/'_source'),str(child),json.dumps(job),str(count),str(int(register)),str(int(cumulative))],check=True,capture_output=True)
+
+    def test_value_contract_pair_retains_distinct_owners_and_cumulative_configuration(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);inputs,jobs,manifests,checkpoints=self.fixture(root,'resources',tails=(2,2),value_contract=True)
+            with self.assertRaises(AssertionError):
+                prepare(root/'swapped',inputs[::-1],jobs,manifests[::-1],checkpoints[::-1],value_contract=True)
+            self.assertFalse((root/'swapped').exists())
+            proof=run_pair(root/'continued',inputs,jobs,manifests,checkpoints,value_contract=True)
+            self.assertTrue(proof['complete']);self.assertEqual(proof['continuation']['boundary'],1)
+            for enabled,name in enumerate(('baseline','candidate')):
+                child=root/'continued'/name;actual=json.loads((child/'trajectories.jsonl').read_text())
+                expected=run(jobs[0],'receding_recovery',cumulative_achievement=bool(enabled))
+                actual.pop('seconds');expected.pop('seconds');self.assertEqual(actual,expected)
+                self.assertEqual(json.loads((child/'contract_pair.json').read_text()),proof)
+                verify_segmented_result(child,actual,proof,enabled)
+            # Both worlds can finish before a killed coordinator writes its
+            # final pair marker. Re-audit them without adding real decisions.
+            proof['complete']=False;proof['host_segments'][-1]['end']=None
+            finished=[str(root/'continued'/name) for name in ('baseline','candidate')]
+            for p in finished:(Path(p)/'contract_pair.json').write_text(json.dumps(proof))
+            final=run_pair(root/'finalized',finished,jobs,*self.hashes(finished),value_contract=True)
+            self.assertTrue(final['continuation']['no_new_decisions'])
+            self.assertEqual(final['continuation']['boundary'],5)
+            for name in ('baseline','candidate'):
+                before=json.loads((root/'continued'/name/'trajectories.jsonl').read_text())
+                after=json.loads((root/'finalized'/name/'trajectories.jsonl').read_text())
+                before.pop('seconds');after.pop('seconds');self.assertEqual(before,after)
+                verify_segmented_result(root/'finalized'/name,after,final,int(name=='candidate'))
+            bad=root/'finalized/candidate/boundary_provenance.json'
+            boundary=json.loads(bad.read_text());boundary['retained_prefix_sha256']='0'*64;bad.write_text(json.dumps(boundary))
+            with self.assertRaises(AssertionError):verify_segmented_result(bad.parent,after,final,1)
 
     def test_common_boundary_continuation_matches_uninterrupted_decisions(self):
         with tempfile.TemporaryDirectory() as d:
