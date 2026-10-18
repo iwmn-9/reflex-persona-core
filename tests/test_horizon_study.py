@@ -129,7 +129,7 @@ assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisio
         from tools.freeze_experiment import dispatch
         from tools.resume_horizon_study import resume
         job=['gambling',1,52993,'outside',3,1,2,0]
-        expected=run(job,'receding_recovery',tail_recovery_limit=64,model_seeds=(801,802),sampling_standard_errors=2.)
+        expected=run(job,'receding_recovery',tail_recovery_limit=64,model_seeds=(801,802),sampling_standard_errors=2.,cumulative_achievement=True)
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)/'study'
             with patch('tools.freeze_experiment.subprocess.run'):
@@ -140,9 +140,9 @@ sys.path.insert(0,sys.argv[1])
 from tools.run_horizon_study import __doc__ as semantics
 from tools.run_owned_value import run
 root=Path(sys.argv[2]);job=json.loads(sys.argv[3])
-registration=dict(jobs=[job],arms=['receding_recovery'],world_seeds=[job[2]],stage='diagnostic',semantics=semantics,configuration={'tail_recovery_limit':64,'model_seeds':[801,802],'sampling_standard_errors':2.})
+registration=dict(jobs=[job],arms=['receding_recovery'],world_seeds=[job[2]],stage='diagnostic',semantics=semantics,configuration={'tail_recovery_limit':64,'model_seeds':[801,802],'sampling_standard_errors':2.,'cumulative_achievement':True})
 (root/'registration.json').write_text(json.dumps(registration))
-assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisions=1,tail_recovery_limit=64,model_seeds=(801,802),sampling_standard_errors=2.) is None
+assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisions=1,tail_recovery_limit=64,model_seeds=(801,802),sampling_standard_errors=2.,cumulative_achievement=True) is None
 '''
             subprocess.run([sys.executable,'-c',program,str(root/'_source'),str(root),json.dumps(job)],check=True,capture_output=True)
             manifest=hashlib.sha256((root/'source_snapshot.json').read_bytes()).hexdigest()

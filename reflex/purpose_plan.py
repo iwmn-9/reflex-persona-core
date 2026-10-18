@@ -33,10 +33,11 @@ class Goal:
 
 def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,plan_roots=None,policy=None,settlement_weight='discounted',
                   objective_origin=None,objective_unit=1.,opportunity_regret=False,competence_support=None,outcome_limit=8,
-                  preference_basis=None):
+                  preference_basis=None,cumulative_preference=None):
     """Use one endpoint per coherent branch for objective and competence.
 
-    Needs/values/style/cost retain their discounted flow treatment. Subjective
+    Intrinsic needs/values/style/cost retain their discounted flow treatment;
+    explicitly cumulative values use their declared endpoint difference. Subjective
     goal return is discounted by default; absolute mode does not time-discount
     settled outcomes, while retaining cutoff-proxy/flow time weights. The
     competence endpoint is not diluted by horizon length or periodic income.
@@ -51,6 +52,11 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
             raise ValueError('matching declared preference basis required')
         if horizon!=1 or objective_origin is not None or objective_unit!=1.:
             raise ValueError('preference basis currently requires one immediate flow and absolute purpose units')
+    if cumulative_preference is not None:
+        from .cumulative_preference import CumulativePreference
+        if (not isinstance(cumulative_preference,CumulativePreference) or cumulative_preference.target!=target
+            or preference_basis is not None or objective_origin is None):
+            raise ValueError('matching cumulative declaration with factual origin and no terminal preference substitution required')
     number(objective_unit,.125,1.)
     number(max_regret,0.,2.)
     if objective_origin is not None and (not isinstance(objective_origin,Goal) or objective_origin.target!=target):
@@ -69,6 +75,11 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
         goals=[];expected=0.;mean_correction=0.;adjusted=False
         for out,trace,branch in zip(a['outcomes'],rows,paths[proposal]):
             g=Goal(**trace['assessment'])
+            if cumulative_preference is not None:
+                if any(x!=1. for x in branch.confidence):
+                    raise ValueError('cumulative values require explicit branch probabilities, not extra branch-confidence scaling')
+                resolved=cumulative_preference.resolve(out,g.value,objective_origin.value,target=g.target)
+                out.clear();out.update(resolved)
             if preference_basis is not None:
                 if any(x!=1. for x in branch.confidence):
                     raise ValueError('preference basis requires explicit outcome probabilities, not additional branch-confidence scaling')
@@ -126,6 +137,7 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
     if objective_origin is not None or objective_unit!=1.:
         objective_scale=(2. if objective_origin is not None else 1.)/objective_unit
         frame=replace(frame,effects=tuple((objective_scale,)+row[1:] for row in frame.effects))
+    if cumulative_preference is not None:frame=cumulative_preference.reframe(frame)
     b=compile_batch([fc],outcome_limit=outcome_limit);d=(policy or Policy()).decide(b,False,return_frame=frame)
     retained={key for key,yes in zip(b.ids[0],d.eligible[0]) if yes}
     fc['actions']=[a for a in fc['actions'] if a['id'] in retained]
@@ -136,7 +148,14 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
         metadata['purpose_mean_estimator']=dict(kind='conditional public goal control variate',roots=mean_audit,
             semantics='only the competence mean is adjusted; sampled preferences, risk and physical feedback stay intact; model bias remains; bounded projection may bias finite estimates')
     if preference_basis is not None:metadata['preference_basis']=preference_basis.identity
+    if cumulative_preference is not None:
+        metadata['cumulative_preference']=dict(identity=cumulative_preference.identity,
+            channels=[list(row) for row in cumulative_preference.channels],unit=cumulative_preference.unit,
+            origin=objective_origin.record(),
+            semantics='declared cumulative goal change per sampled outcome; intrinsic flows retain their time weights; model uncertainty and cutoff bias remain')
     if settlement_weight=='absolute':metadata['subjective_settlement_semantics']='absolute terminal outcome once; running cutoff proxy and preference flows still discounted'
+    if settlement_weight=='absolute' and cumulative_preference is not None:
+        metadata['subjective_settlement_semantics']+='; explicitly cumulative value channels use undiscounted sampled goal changes'
     if objective_origin is not None or objective_unit!=1.:
         metadata['objective_basis']=dict(origin=None if objective_origin is None else objective_origin.record(),unit=objective_unit,
             configured_regret=max_regret,encoded_regret=encoded_regret,

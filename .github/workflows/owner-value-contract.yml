@@ -1,0 +1,116 @@
+name: Cumulative value contract comparison
+run-name: Value contract ${{ inputs.label }}
+on:
+  push:
+    branches: [research/long-horizon]
+    paths: [.github/workflows/owner-value-contract.yml]
+  workflow_dispatch:
+    inputs:
+      label:
+        type: string
+        required: true
+      plan:
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  matrix:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    outputs:
+      include: ${{ steps.plan.outputs.include }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - id: plan
+        env:
+          PLAN: ${{ inputs.plan }}
+        run: |
+          python - <<'PY'
+          import json,os,re
+          from pathlib import Path
+          path=Path(os.environ['PLAN']).resolve()
+          assert path.is_relative_to(Path('evidence/long_horizon').resolve())
+          plan=json.loads(path.read_text());cases=plan['cases']
+          assert 1<=len(cases)<=64 and len({s['key'] for s in cases})==len(cases)
+          assert all(re.fullmatch(r'[a-z0-9-]+',s['key']) for s in cases)
+          groups=[{'cases':cases[i:i+2]} for i in range(0,len(cases),2)]
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('include='+json.dumps(groups,separators=(',',':'))+'\n')
+          PY
+  study:
+    needs: matrix
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.matrix.outputs.include) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13.16'
+      - run: python -m pip install -e . numpy==2.5.4
+      - name: Compare the same persistent world and fixed person
+        timeout-minutes: 345
+        env:
+          SPEC: ${{ toJSON(matrix) }}
+          PLAN: ${{ inputs.plan }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,platform,subprocess,sys,uuid
+          from concurrent.futures import ThreadPoolExecutor
+          from pathlib import Path
+          import numpy as np
+          specs=json.loads(os.environ['SPEC'])['cases'];p=Path(os.environ['PLAN']);plan=json.loads(p.read_text())
+          assert 1<=len(specs)<=2 and all(spec in plan['cases'] for spec in specs)
+          manifest={str(f).replace('\\','/'):hashlib.sha256(f.read_bytes()).hexdigest() for folder in ('reflex','tools') for f in Path(folder).glob('*.py')}
+          assert manifest==plan['sources'],'registered source changed'
+          root=Path('results/value-contract');root.mkdir(parents=True)
+          proofs=[dict(version='same-host-value-contract-v1',pair_id=uuid.uuid4().hex,job=spec['job'],
+              python=sys.version,numpy=np.__version__,system=platform.system(),machine=platform.machine(),
+              plan_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),sources=manifest,complete=False,
+              configurations={'baseline':{},'candidate':{'cumulative_achievement':True}}) for spec in specs]
+          def save():
+              for i,proof in enumerate(proofs):
+                  for name in ('baseline','candidate'):
+                      child=root/f'pair{i}'/name;child.mkdir(parents=True,exist_ok=True)
+                      (child/'contract_pair.json').write_text(json.dumps(proof,indent=2)+'\n')
+          save()
+          def execute(item):
+              i,name=item
+              args=[sys.executable,'tools/run_horizon_study.py','--root',str(root/f'pair{i}'/name),
+                    '--job',json.dumps(specs[i]['job']),'--stage',plan['stage']]
+              if name=='candidate':args+=['--cumulative-achievement']
+              return subprocess.run(args,check=False).returncode
+          tasks=[(i,name) for i in range(len(specs)) for name in ('baseline','candidate')]
+          with ThreadPoolExecutor(max_workers=len(tasks)) as pool:codes=list(pool.map(execute,tasks))
+          for i,proof in enumerate(proofs):
+              pair_codes=codes[i*2:i*2+2];proof.update(return_codes=pair_codes,complete=pair_codes==[0,0])
+          save()
+          if any(codes):raise SystemExit('Incomplete paired worlds preserved')
+          PY
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() }}
+        with:
+          name: value-contract-${{ matrix.cases[0].key }}-baseline
+          path: results/value-contract/pair0/baseline
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() }}
+        with:
+          name: value-contract-${{ matrix.cases[0].key }}-candidate
+          path: results/value-contract/pair0/candidate
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.cases[1] }}
+        with:
+          name: value-contract-${{ matrix.cases[1].key }}-baseline
+          path: results/value-contract/pair1/baseline
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.cases[1] }}
+        with:
+          name: value-contract-${{ matrix.cases[1].key }}-candidate
+          path: results/value-contract/pair1/candidate
+          retention-days: 14

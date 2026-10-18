@@ -21,14 +21,16 @@ from reflex.model_observer import resolve_feedback
 from reflex.laboratory import PROFILES
 from reflex.closed_loop import owned_rollout
 from tools.continuing_games import ContinuingGame
+from tools.run_owned_value import cumulative_basis
 
 
-def realized_score(g,own,c,root,actions,flows,endpoint):
+def realized_score(g,own,c,root,actions,flows,endpoint,*,cumulative_preference=None):
     c=copy.deepcopy(c);c['actions']=[a for a in c['actions'] if a['id']==root]
     f=goal_forecast(c,{root:[Branch(1.,tuple(flows),(1.,)*len(flows))]},
         {root:[dict(actions=actions,terminal=g.terminal(endpoint),assessment=g.goal(endpoint).record())]},
         horizon=len(flows),unit='owner-decisions',target=g.target,policy=own.policy,
-        settlement_weight='absolute',objective_origin=g.goal(g.world(c)),opportunity_regret=True)
+        settlement_weight='absolute',objective_origin=g.goal(g.world(c)),opportunity_regret=True,
+        cumulative_preference=cumulative_preference)
     b=compile_batch(f.contexts,outcome_limit=256)
     return float(own.policy.decide(b,False,return_frame=f.return_frame).scores[0,0])
 
@@ -38,6 +40,7 @@ def audit_run(r,*,ticks=None):
         raise ValueError('decomposition requires the registered learned continuation')
     profile=next(p for p in PROFILES if p['id']==r['profile'])
     g=ContinuingGame(r['game'],profile,r['turns'],r['seed']%2);cases=[];eligible=0;incomplete=0
+    cumulative=cumulative_basis(g,r.get('cumulative_achievement',False))
     for index,t in enumerate(r['trace']):
         if (index%16 if ticks is None else index not in ticks) or 'checkpoint' not in t or 'forecast_end' not in t or not t['planned']:continue
         eligible+=1
@@ -55,7 +58,7 @@ def audit_run(r,*,ticks=None):
                 feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=r['tail_steps'],
                 world_model='posterior',purpose_estimator='conditional',tail_recovery=2,
                 tail_recovery_limit=r.get('tail_recovery_limit',16),seeds=tuple(r.get('model_seeds',(701,702,703))),
-                sampling_standard_errors=r.get('sampling_standard_errors'))
+                sampling_standard_errors=r.get('sampling_standard_errors'),cumulative_preference=cumulative)
             future=continuation.frontier.future_planner
         actual_actions=[];actual_flows=[];reflex_actions=[];reflex_flows=[]
         post_root=(r['trace'][index+1].get('checkpoint') if index+1<len(r['trace']) else None)
@@ -87,8 +90,8 @@ def audit_run(r,*,ticks=None):
         predicted=t['predicted'];reference=g.goal(w).value;actual=segment[-1]['goal']
         # Score complete realized paths with the SAME decision-time person.
         # These ex-post scores are diagnostics, not expected-utility guarantees.
-        ours=realized_score(g,start,effective,t['action'],actual_actions,actual_flows,segment[-1]['after'])
-        theirs=realized_score(g,start,effective,t['action'],reflex_actions,reflex_flows,w)
+        ours=realized_score(g,start,effective,t['action'],actual_actions,actual_flows,segment[-1]['after'],cumulative_preference=cumulative)
+        theirs=realized_score(g,start,effective,t['action'],reflex_actions,reflex_flows,w,cumulative_preference=cumulative)
         cases.append(dict(tick=index,root_owner='actual-checkpoint' if post_root is not None else 'exact-feedback-replay',
             reference_policy='two-step-recovery-when-no-immediate-gain' if future else 'learned-reflex',future_calls=future_calls,
             predicted=predicted,reflex_replay=reference,executed=actual,

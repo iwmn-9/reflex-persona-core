@@ -91,7 +91,7 @@ class SampledKernel:
 class ClosedLoop:
     def __init__(self,*,observe,transitions,terminal,assess,record,request_for,feedback,unit,target,
                  model_id,budget=None,max_regret=.15,future_choices='planned',frontier=None,preference_basis=None,owner_transitions=None,
-                 opportunity_regret=False,relative_objective=False,tail_preferences=False,sampling_standard_errors=None):
+                 opportunity_regret=False,relative_objective=False,tail_preferences=False,sampling_standard_errors=None,cumulative_preference=None):
         if any(not callable(x) for x in (observe,transitions,terminal,assess,record,request_for,feedback)):
             raise ValueError('explicit public model callbacks required')
         if not isinstance(model_id,str) or not model_id:raise ValueError('model identity required')
@@ -105,6 +105,7 @@ class ClosedLoop:
         self.future_choices=future_choices
         self.frontier=frontier
         self.preference_basis=preference_basis
+        self.cumulative_preference=cumulative_preference
         if owner_transitions is not None and not callable(owner_transitions):
             raise ValueError('explicit owner-conditioned public kernel required')
         self.owner_transitions=owner_transitions
@@ -114,6 +115,11 @@ class ClosedLoop:
         if type(tail_preferences) is not bool or tail_preferences and (frontier is None or not callable(getattr(frontier,'trajectories',None))):
             raise ValueError('explicit complete tail trajectory provider required')
         self.tail_preferences=tail_preferences
+        if cumulative_preference is not None:
+            from .cumulative_preference import CumulativePreference
+            if (not isinstance(cumulative_preference,CumulativePreference) or cumulative_preference.target!=target
+                or not relative_objective or preference_basis is not None or (frontier is not None and not tail_preferences)):
+                raise ValueError('cumulative values require a factual origin and complete declared preference paths')
         self.sampling_standard_errors=sampling_standard_errors
         if sampling_standard_errors is not None:
             from .frontier_value import PolicyTail
@@ -151,6 +157,7 @@ class ClosedLoop:
             root if self.future_choices=='reflex' else False,self.opportunity_regret,self.relative_objective,self.tail_preferences]
         if self.frontier is not None:identity.append(self.frontier.identity)
         if self.preference_basis is not None:identity.append(self.preference_basis.identity)
+        if self.cumulative_preference is not None:identity.append(self.cumulative_preference.identity)
         if self.sampling_standard_errors is not None:identity.append(['paired-purpose-sampling-v1',self.sampling_standard_errors])
         stamp=digest(identity)
         self._used.update(self.cache[stamp]['dependencies'] if stamp in self.cache else (stamp,))
@@ -255,6 +262,7 @@ class ClosedLoop:
         forecast=goal_forecast(valuation,paths,audit,horizon=return_horizon,unit=self.unit,target=self.target,policy=actor.policy,
             max_regret=self.max_regret,settlement_weight='absolute',outcome_limit=self.budget.outcomes,preference_basis=self.preference_basis,
             opportunity_regret=self.opportunity_regret,
+            cumulative_preference=self.cumulative_preference,
             objective_origin=Goal(**self.assess(world)) if self.relative_objective else None)
         if self.sampling_standard_errors is not None:
             from .sampling_band import PurposeSampling
@@ -317,7 +325,7 @@ class ClosedLoop:
 def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feedback,
                   model_id,target,tail_steps=15,seeds=(701,702,703),max_regret=.15,
                   future_planner=None,future_planner_id=None,future_planner_limit=1,
-                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0,tail_recovery_limit=16,sampling_standard_errors=None):
+                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0,tail_recovery_limit=16,sampling_standard_errors=None,cumulative_preference=None):
     """Rebuild after real feedback: root world model + evolving owned rollout.
 
     `events(public_state, action)` enumerates known conditional PublicEvents.
@@ -365,6 +373,11 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     if sampling!='independent':identity=digest([identity,sampling,seeds])
     if posterior is not None:identity=digest([identity,'retained-root-segment-posterior-v1'])
     if world_model=='persistent':identity=digest([identity,'persistent-current-regime-v1'])
+    if cumulative_preference is not None:
+        from .cumulative_preference import CumulativePreference
+        if not isinstance(cumulative_preference,CumulativePreference) or cumulative_preference.target!=target:
+            raise ValueError('matching explicit cumulative preference required')
+        identity=digest([identity,cumulative_preference.identity])
     def transitions(w,key,own,c):
         rows=events(w,key);p=predict(c) if posterior is None else posterior(own.predictor,c)
         if (not isinstance(rows,(tuple,list)) or not rows or any(not isinstance(e,PublicEvent) for e in rows)
@@ -412,7 +425,8 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
             if max(expected)>origin+1e-12:return None
             inner=owned_rollout(person,observe=observe,events=events,terminal=terminal,assess=assess,
                 record=record,request_for=request_for,feedback=feedback,model_id=model_id,target=target,
-                tail_steps=0,tree_steps=2,future_choices='reflex',world_model=world_model,max_regret=max_regret)
+                tail_steps=0,tree_steps=2,future_choices='reflex',world_model=world_model,max_regret=max_regret,
+                cumulative_preference=cumulative_preference)
             return inner.planner(person,request,state)
         future_planner=recover;future_planner_id='no-immediate-purpose-gain-two-step-owner-recovery-v1';future_planner_limit=tail_recovery_limit
     if tail_steps==0 and (future_planner is not None or purpose_estimator!='sampled'):
@@ -428,6 +442,6 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         model_id=identity,unit='owner-decisions',target=target,
         budget=TreeBudget(horizon=tree_steps,outcomes=256),max_regret=max_regret,future_choices=future_choices,
         frontier=tail,tail_preferences=tail is not None,relative_objective=True,opportunity_regret=True,
-        sampling_standard_errors=sampling_standard_errors)
+        sampling_standard_errors=sampling_standard_errors,cumulative_preference=cumulative_preference)
     ctrl.source_owner=source
     return ctrl

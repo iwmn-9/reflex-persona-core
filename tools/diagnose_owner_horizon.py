@@ -8,6 +8,7 @@ from reflex.core import digest
 from reflex.decision_loop import DecisionLoop
 from reflex.laboratory import PROFILES
 from tools.continuing_games import ContinuingGame
+from tools.run_owned_value import cumulative_basis
 
 
 def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
@@ -22,7 +23,8 @@ def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
         assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
         feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=tail,
         world_model='posterior',purpose_estimator='conditional',tail_recovery=2,tail_recovery_limit=recovery_limit,seeds=seeds,
-        sampling_standard_errors=row.get('sampling_standard_errors'))
+        sampling_standard_errors=row.get('sampling_standard_errors'),
+        cumulative_preference=cumulative_basis(g,row.get('cumulative_achievement',False)))
     frontier=ctrl.frontier;distribute=frontier.distribution;plan=frontier.future_planner;advance=frontier.owner_advance
     adjust=frontier.purpose_adjustment
     traces=[];active=None;pending=None;latest=None
@@ -66,7 +68,8 @@ def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
         capped_paths=sum(any(s['controller']=='budget-skipped' for s in steps) for steps in paths),
         first_skipped_tick=min((s['tick'] for steps in paths for s in steps if s['controller']=='budget-skipped'),default=None),
         distributions=traces,forecast=forecast.audit,frontiers=capture['node']['frontiers'],children=capture['node']['children'],
-        **({'sampling_standard_errors':row['sampling_standard_errors']} if 'sampling_standard_errors' in row else {}))
+        **({'sampling_standard_errors':row['sampling_standard_errors']} if 'sampling_standard_errors' in row else {}),
+        **({'cumulative_achievement':True} if row.get('cumulative_achievement') else {}))
 
 
 def pool_diagnostics(diagnostics):
@@ -81,7 +84,7 @@ def pool_diagnostics(diagnostics):
     if not first.get('owner_digest') and not first.get('source_sha256'):
         raise ValueError('owner or saved trajectory identity required')
     for d in diagnostics:
-        for key in ('tick','tail_steps','recovery_limit','children','core_sources','owner_digest','source_sha256','game','profile','regime','seed','sampling_standard_errors'):
+        for key in ('tick','tail_steps','recovery_limit','children','core_sources','owner_digest','source_sha256','game','profile','regime','seed','sampling_standard_errors','cumulative_achievement'):
             if d.get(key)!=first.get(key):raise ValueError('identical owner, model and horizon required')
         seeds=d.get('seeds')
         if seeds is None and d['distributions']:seeds=list(map(int,d['distributions'][0]['paths']))
@@ -92,6 +95,7 @@ def pool_diagnostics(diagnostics):
     keys=[(f['root'],digest(f['public'])) for f in first['frontiers']]
     result={k:copy.deepcopy(first[k]) for k in ('tick','tail_steps','recovery_limit','children')}
     if 'sampling_standard_errors' in first:result['sampling_standard_errors']=first['sampling_standard_errors']
+    if first.get('cumulative_achievement'):result['cumulative_achievement']=True
     result.update(seeds=union,frontiers=[dict(root=f['root'],public=copy.deepcopy(f['public'])) for f in first['frontiers']],distributions=[])
     for d in diagnostics:
         if [(f['root'],digest(f['public'])) for f in d['frontiers']]!=keys:
@@ -121,6 +125,8 @@ def prefix_choice(row,tick,diagnostic,horizon):
     from reflex.purpose_plan import goal_forecast
     if row.get('sampling_standard_errors')!=diagnostic.get('sampling_standard_errors'):
         raise ValueError('matching sampling-margin configuration required')
+    if row.get('cumulative_achievement',False)!=diagnostic.get('cumulative_achievement',False):
+        raise ValueError('matching cumulative preference configuration required')
     assert 1<=horizon<=diagnostic['tail_steps']+1 and tick==diagnostic['tick']
     g=ContinuingGame(row['game'],next(p for p in PROFILES if p['id']==row['profile']),row['turns'],row['seed']%2)
     w=copy.deepcopy(row['trace'][tick]['before']);c=g.context(w)
@@ -176,7 +182,8 @@ def prefix_choice(row,tick,diagnostic,horizon):
     effective['actions']=[a for a in effective['actions'] if a['id'] in paths]
     forecast=goal_forecast(effective,paths,audit,horizon=horizon,unit='owner-decisions',target=g.target,
         policy=own.policy,max_regret=.15,settlement_weight='absolute',outcome_limit=256,
-        objective_origin=g.goal(w),opportunity_regret=True)
+        objective_origin=g.goal(w),opportunity_regret=True,
+        cumulative_preference=cumulative_basis(g,row.get('cumulative_achievement',False)))
     if sampling_margin is not None:
         from dataclasses import replace
         from reflex.sampling_band import PurposeSampling

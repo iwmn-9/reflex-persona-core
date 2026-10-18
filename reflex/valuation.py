@@ -24,7 +24,11 @@ class ReturnFrame:
         for key,row,root in zip(self.owners,self.effects,self.root_terms):
             if not isinstance(key,str) or len(key)!=64 or any(c not in '0123456789abcdef' for c in key):raise ValueError('owned return frame required')
             if not isinstance(row,tuple) or len(row)!=len(FEATURES):raise ValueError('one return scale per feature required')
-            for scale in (*row,root):number(scale,1,256)
+            # A cumulative potential delta spans two bounded endpoint units;
+            # its declared conversion may be 256. Temporal windows and root
+            # terms retain their separate 256-step bound.
+            for scale in row:number(scale,1,512)
+            number(root,1,256)
 
     @classmethod
     def flows(cls,contexts,normalizer,unit,*,endpoint=False):

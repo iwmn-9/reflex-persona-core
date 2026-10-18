@@ -41,7 +41,14 @@ def law(t,turns,regime):
     return {str(i):(.8 if i==top else .1) for i in range(3)}
 
 
-def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703),sampling_standard_errors=None):
+def cumulative_basis(game,enabled):
+    if type(enabled) is not bool:raise ValueError('explicit cumulative achievement mode required')
+    if not enabled:return None
+    from reflex.cumulative_preference import CumulativePreference
+    return CumulativePreference(game.target,'public-score-per-decision',(('values.achievement',float(game.turns)),))
+
+
+def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703),sampling_standard_errors=None,cumulative_achievement=False):
     if type(tail_recovery_limit) is not int or not 1<=tail_recovery_limit<=256:raise ValueError('bounded recovery budget required')
     if tail_recovery_limit!=16 and arm!='receding_recovery':raise ValueError('recovery budget requires the recovery arm')
     if (not isinstance(model_seeds,tuple) or not 1<=len(model_seeds)<=32
@@ -51,15 +58,19 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
         raise ValueError('model seed override requires a receding owner')
     if sampling_standard_errors is not None and arm not in ('receding_corrected','receding_recovery'):
         raise ValueError('sampling margin requires a conditional receding owner')
+    if type(cumulative_achievement) is not bool or cumulative_achievement and arm!='receding_recovery':
+        raise ValueError('explicit cumulative achievement on the registered recovery owner required')
     configuration={}
     if tail_recovery_limit!=16:configuration['tail_recovery_limit']=tail_recovery_limit
     if model_seeds!=(701,702,703):configuration['model_seeds']=list(model_seeds)
     if sampling_standard_errors is not None:configuration['sampling_standard_errors']=sampling_standard_errors
+    if cumulative_achievement:configuration['cumulative_achievement']=True
     configuration=configuration or None
     game,pid,seed,regime,turns,interval,tail_steps=job[:7]
     offset=job[7] if len(job)>7 else 0
     is_reflex=arm in ('reflex','reflex_segmented')
     g=ContinuingGame(game,PROFILES[pid],turns,seed%2);w=g.start();c=g.context(w)
+    cumulative=cumulative_basis(g,cumulative_achievement)
     own=g.actor(c,learned=arm!='endpoint_library',renewal=arm in ('endpoint_renewal','endpoint_both','endpoint_recovery'),
         learning='segmented' if arm in ('endpoint_segmented','endpoint_posterior','endpoint_persistent','endpoint_unpruned','reflex_segmented','competent','endpoint_competent','receding_posterior','receding_corrected','receding_recovery') else 'windows')
     if arm in ('receding','receding_posterior','receding_corrected','receding_recovery') and (interval!=1 or offset!=0):
@@ -127,7 +138,7 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
                 world_model='frozen' if arm=='receding' else 'posterior',
                 purpose_estimator='conditional' if arm in ('receding_corrected','receding_recovery') else 'sampled',
                 tail_recovery=2 if arm=='receding_recovery' else 0,tail_recovery_limit=tail_recovery_limit,seeds=model_seeds,
-                sampling_standard_errors=sampling_standard_errors)
+                sampling_standard_errors=sampling_standard_errors,cumulative_preference=cumulative)
             result=live.decide(w);cap=live.last
         else:result=DecisionLoop.decide_batch([(own,req)],False,planner)[0]
         key=result['decision']['action_id']
@@ -154,6 +165,7 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
             trace[-1]['forecast_end']=min(turns,tick+f.horizon)
             if 'purpose_mean_estimator' in f.audit:trace[-1]['mean_estimator']=f.audit['purpose_mean_estimator']
             if 'purpose_sampling' in diag:trace[-1]['purpose_sampling']=diag['purpose_sampling']
+            if 'cumulative_preference' in f.audit:trace[-1]['cumulative_preference']=f.audit['cumulative_preference']
         w=end
         if storage is not None:
             storage.save(w,own,rng,trace,checks,time.monotonic()-started,terminal=g.terminal(w))

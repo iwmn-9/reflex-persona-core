@@ -15,7 +15,7 @@ class RecedingOwner:
     def __init__(self, actor, *, observe, events, terminal, assess, record,
                  request_for, feedback, model_id, target, tail_steps=15,
                  seeds=(701,702,703), world_model='frozen', max_regret=.15,
-                 purpose_estimator='sampled',tail_recovery=0,tail_recovery_limit=16,sampling_standard_errors=None):
+                 purpose_estimator='sampled',tail_recovery=0,tail_recovery_limit=16,sampling_standard_errors=None,cumulative_preference=None):
         if not isinstance(actor,DecisionLoop) or actor.pending is not None:
             raise ValueError('one resolved DecisionLoop owner required')
         self.actor=actor
@@ -25,6 +25,7 @@ class RecedingOwner:
             target=target,tail_steps=tail_steps,seeds=tuple(seeds),world_model=world_model,max_regret=max_regret,
             purpose_estimator=purpose_estimator,tail_recovery=tail_recovery,tail_recovery_limit=tail_recovery_limit)
         if sampling_standard_errors is not None:self.options['sampling_standard_errors']=sampling_standard_errors
+        if cumulative_preference is not None:self.options['cumulative_preference']=cumulative_preference
         # Validate the entire configuration before any real decision is pending.
         owned_rollout(actor,**self.options)
         self.last=None
