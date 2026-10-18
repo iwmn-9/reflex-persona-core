@@ -45,6 +45,9 @@ def realized_account(row):
         result['bellman']=dict(initial_perfect_information=start,purpose_opportunity_loss=loss,
                               residual=noise,residual_removed=start-loss,
                               reconstruction_error=start-loss+noise-row['score'])
+    elif row['game']=='combat':
+        from tools.combat_reference import account
+        result['bellman']=account(row)
     return result
 
 

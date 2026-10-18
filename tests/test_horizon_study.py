@@ -4,6 +4,26 @@ from tools.run_owned_value import run
 
 
 class HorizonStudyTests(unittest.TestCase):
+    def test_combat_reference_matches_exhaustive_rules_with_death_and_reloading(self):
+        from tools.combat_reference import reference
+        from tools.continuing_games import ContinuingGame
+        from tools.run_owned_value import law
+        from reflex.laboratory import PROFILES
+        for end,start in ((3,0),(10,7)):
+            g=ContinuingGame('combat',PROFILES[0],end)
+            value,choices=reference(end,lambda t:tuple(law(t,end,'shift-return').values()))
+            def brute(w):
+                if g.terminal(w):return g.goal(w).value
+                return max(sum(p*brute(g.transition(w,k,z)[0]) for z,p in law(w['tick'],end,'shift-return').items()) for k in g.keys(w))
+            for hp in (0.,.25,1.,11.75,12.):
+                for ammo in (0,1,3):
+                    w=g.start();w.update(tick=start,hp=hp,ammo=ammo)
+                    self.assertAlmostEqual(value(w),brute(w),places=12)
+                    q=choices(w);self.assertEqual(set(q),set(g.keys(w)))
+                    for k in q:
+                        expected=sum(p*brute(g.transition(w,k,z)[0]) for z,p in law(start,end,'shift-return').items())
+                        self.assertAlmostEqual(q[k],expected,places=12)
+
     def test_same_host_pair_matches_independent_worlds_and_keeps_profile_identity(self):
         from tools.run_horizon_pair import run_pair
         jobs=[['gambling',3,52994,'outside',3,1,tail,0] for tail in (1,2)]
@@ -49,7 +69,7 @@ class HorizonStudyTests(unittest.TestCase):
                     mass+=probability;residual+=probability*account['residual']
                     expected_score+=probability*row['score']
                     conditional_score+=probability*(account['initial']+account['conditional_increments'])
-                    if game=='auction':bellman+=probability*account['bellman']['residual']
+                    if 'bellman' in account:bellman+=probability*account['bellman']['residual']
                 self.assertAlmostEqual(mass,1.,places=12)
                 self.assertAlmostEqual(residual,0.,places=12)
                 self.assertAlmostEqual(bellman,0.,places=12)
@@ -94,6 +114,7 @@ assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisio
         row=run(job,'receding_recovery')
         original=json.dumps(row,sort_keys=True)
         result=diagnose(row,0,2)
+        self.assertEqual(result['seeds'],[701,702,703])
         self.assertEqual(result['selected_action'],row['trace'][0]['action'])
         self.assertEqual(json.dumps(row,sort_keys=True),original)
         self.assertEqual(result['capped_paths'],0)
@@ -110,6 +131,20 @@ assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisio
             self.assertAlmostEqual(shortened['purpose'][key],value['unprojected'],places=12)
         legacy=json.loads(json.dumps(result));legacy.pop('children')
         self.assertEqual(prefix_choice(row,0,legacy,2)['action'],shortened['action'])
+        alternate=diagnose(row,0,1,seeds=(911,))
+        self.assertEqual(alternate['seeds'],[911])
+        self.assertEqual({s for d in alternate['distributions'] for s in d['paths']},{'911'})
+        from tools.diagnose_owner_horizon import pool_diagnostics
+        other=diagnose(row,0,1,seeds=(912,));together=diagnose(row,0,1,seeds=(911,912))
+        pooled=prefix_choice(row,0,pool_diagnostics([alternate,other]),2)
+        direct=prefix_choice(row,0,together,2)
+        self.assertEqual(pooled,direct)
+        with self.assertRaisesRegex(ValueError,'overlapping'):pool_diagnostics([alternate,alternate])
+        mismatched=json.loads(json.dumps(other));mismatched['owner_digest']='different owner'
+        with self.assertRaisesRegex(ValueError,'identical owner'):pool_diagnostics([alternate,mismatched])
+        from tools.audit_continuation_returns import audit_run
+        self.assertEqual(audit_run(row),audit_run(row,ticks=(0,)))
+        self.assertEqual([x['tick'] for x in audit_run(row,ticks=(1,))['cases']],[1])
 
     def test_frozen_checkpointed_study_preserves_execution_and_rejects_overwrite(self):
         job=['resources',2,43,'outside',3,1,1,0]

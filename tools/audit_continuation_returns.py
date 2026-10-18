@@ -33,13 +33,13 @@ def realized_score(g,own,c,root,actions,flows,endpoint):
     return float(own.policy.decide(b,False,return_frame=f.return_frame).scores[0,0])
 
 
-def audit_run(r):
+def audit_run(r,*,ticks=None):
     if r['arm'] not in ('endpoint','endpoint_posterior','endpoint_segmented','endpoint_persistent','receding','receding_posterior','receding_corrected','receding_recovery'):
         raise ValueError('decomposition requires the registered learned continuation')
     profile=next(p for p in PROFILES if p['id']==r['profile'])
     g=ContinuingGame(r['game'],profile,r['turns'],r['seed']%2);cases=[];eligible=0;incomplete=0
     for index,t in enumerate(r['trace']):
-        if index%16 or 'checkpoint' not in t or 'forecast_end' not in t or not t['planned']:continue
+        if (index%16 if ticks is None else index not in ticks) or 'checkpoint' not in t or 'forecast_end' not in t or not t['planned']:continue
         eligible+=1
         stop=t['forecast_end'];segment=r['trace'][index:stop]
         if len(segment)!=stop-index:incomplete+=1;continue
