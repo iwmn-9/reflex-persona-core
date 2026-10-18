@@ -1898,6 +1898,31 @@
       ]
     },
     "reason": "Reduce per-pair platform differences after a development pair showed world-probability differences up to 2.22e-16 despite identical Python/NumPy/OS labels. No primary/stress studies had started or outcomes been inspected. Use available host CPUs for the two independent arms.",
-    "failed_or_partial_side": "Keep artifacts and checkpoints; never count as a completed pair. Any continuation on another host must be identified separately."
+    "failed_or_partial_side": "Keep artifacts and checkpoints; never count as a completed pair. Any continuation on another host must be identified separately.",
+    "host_grouping": {
+      "at": "2026-10-18T00:45:06.430277+00:00",
+      "previous_run": 39081836338,
+      "previous_state": {
+        "conclusion": "",
+        "jobs": [
+          {
+            "completedAt": "0001-01-01T00:00:00Z",
+            "conclusion": "",
+            "databaseId": 117540208140,
+            "name": "matrix",
+            "startedAt": "2026-10-18T00:11:23Z",
+            "status": "queued",
+            "steps": [],
+            "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39081836338/job/117540208140"
+          }
+        ],
+        "status": "queued"
+      },
+      "individual_jobs_unchanged": true,
+      "pairs_per_host": 2,
+      "reason": "Use the public runner's four CPUs for four independent world subprocesses. The pending confirmation matrix had no steps or artifacts. Keep each H16/H32 comparison on one host, separate actor/RNG/cache/checkpoints, and all registered seeds and acceptance criteria unchanged.",
+      "hardware_reference": "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
+      "local_smoke": "results/long_horizon_group_smoke: two pairs/four frozen worlds/eight audited actual decisions"
+    }
   }
 }
