@@ -24,6 +24,7 @@ class JointForecast:
     replan_check: object=None
     return_frame: object=None
     outcome_limit: int=8
+    purpose_sampling: object=None
 
 
 def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
@@ -76,6 +77,12 @@ def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
         return None,dict(target='modeled-horizon',adopted=False,horizon=forecast.horizon,
             reason='no joint plan with supported progress roots',plans=len(names),metadata=copy.deepcopy(forecast.audit or {}),**coverage)
     best=float(np.max(purpose[supported]));allowed=supported&(purpose>=best-forecast.max_regret-1e-12)
+    sampling_audit=None
+    if forecast.purpose_sampling is not None:
+        from .sampling_band import PurposeSampling
+        if not isinstance(forecast.purpose_sampling,PurposeSampling):raise ValueError('explicit aligned purpose samples required')
+        allowed,sampling_audit=forecast.purpose_sampling.mask(names,purpose,supported,forecast.max_regret)
+        allowed=np.asarray(allowed,dtype=bool)
     contexts=[]
     for fc in forecast.contexts:
         c=copy.deepcopy(fc);by={a['id']:a for a in c['actions']};c['actions']=[by[k] for k in names];contexts.append(c)
@@ -116,4 +123,5 @@ def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
         plans=len(names),purpose_excluded=int((~allowed).sum()),tier_agreement=int(votes[j]),actors=len(base),
         subjective_regret=float(regret[j]),metadata=copy.deepcopy(forecast.audit or {}))
     if continuity is not None:audit['continuity']=continuity
+    if sampling_audit is not None:audit['purpose_sampling']=sampling_audit
     return decisions,audit

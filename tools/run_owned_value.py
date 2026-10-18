@@ -41,7 +41,7 @@ def law(t,turns,regime):
     return {str(i):(.8 if i==top else .1) for i in range(3)}
 
 
-def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703)):
+def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703),sampling_standard_errors=None):
     if type(tail_recovery_limit) is not int or not 1<=tail_recovery_limit<=256:raise ValueError('bounded recovery budget required')
     if tail_recovery_limit!=16 and arm!='receding_recovery':raise ValueError('recovery budget requires the recovery arm')
     if (not isinstance(model_seeds,tuple) or not 1<=len(model_seeds)<=32
@@ -49,9 +49,12 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
         raise ValueError('explicit independent model seeds required')
     if model_seeds!=(701,702,703) and arm not in ('receding','receding_posterior','receding_corrected','receding_recovery'):
         raise ValueError('model seed override requires a receding owner')
+    if sampling_standard_errors is not None and arm not in ('receding_corrected','receding_recovery'):
+        raise ValueError('sampling margin requires a conditional receding owner')
     configuration={}
     if tail_recovery_limit!=16:configuration['tail_recovery_limit']=tail_recovery_limit
     if model_seeds!=(701,702,703):configuration['model_seeds']=list(model_seeds)
+    if sampling_standard_errors is not None:configuration['sampling_standard_errors']=sampling_standard_errors
     configuration=configuration or None
     game,pid,seed,regime,turns,interval,tail_steps=job[:7]
     offset=job[7] if len(job)>7 else 0
@@ -123,7 +126,8 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
                 feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=tail_steps,
                 world_model='frozen' if arm=='receding' else 'posterior',
                 purpose_estimator='conditional' if arm in ('receding_corrected','receding_recovery') else 'sampled',
-                tail_recovery=2 if arm=='receding_recovery' else 0,tail_recovery_limit=tail_recovery_limit,seeds=model_seeds)
+                tail_recovery=2 if arm=='receding_recovery' else 0,tail_recovery_limit=tail_recovery_limit,seeds=model_seeds,
+                sampling_standard_errors=sampling_standard_errors)
             result=live.decide(w);cap=live.last
         else:result=DecisionLoop.decide_batch([(own,req)],False,planner)[0]
         key=result['decision']['action_id']
@@ -149,6 +153,7 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
             trace[-1]['future_coverage']=[v['settled_fraction'] for v in node.get('frontiers',[])]
             trace[-1]['forecast_end']=min(turns,tick+f.horizon)
             if 'purpose_mean_estimator' in f.audit:trace[-1]['mean_estimator']=f.audit['purpose_mean_estimator']
+            if 'purpose_sampling' in diag:trace[-1]['purpose_sampling']=diag['purpose_sampling']
         w=end
         if storage is not None:
             storage.save(w,own,rng,trace,checks,time.monotonic()-started,terminal=g.terminal(w))

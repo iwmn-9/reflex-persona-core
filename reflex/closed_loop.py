@@ -6,7 +6,7 @@ probabilities; sampled kernels approximate them. Neither supplies actual RNG.
 Complete return distributions retain loss aversion instead of averaging away
 bad outcomes. Work limits decline the WHOLE proposal, never selected roots.
 """
-from dataclasses import dataclass,asdict
+from dataclasses import dataclass,asdict,replace
 import copy
 import math
 from .core import digest,compile_batch
@@ -91,7 +91,7 @@ class SampledKernel:
 class ClosedLoop:
     def __init__(self,*,observe,transitions,terminal,assess,record,request_for,feedback,unit,target,
                  model_id,budget=None,max_regret=.15,future_choices='planned',frontier=None,preference_basis=None,owner_transitions=None,
-                 opportunity_regret=False,relative_objective=False,tail_preferences=False):
+                 opportunity_regret=False,relative_objective=False,tail_preferences=False,sampling_standard_errors=None):
         if any(not callable(x) for x in (observe,transitions,terminal,assess,record,request_for,feedback)):
             raise ValueError('explicit public model callbacks required')
         if not isinstance(model_id,str) or not model_id:raise ValueError('model identity required')
@@ -114,6 +114,14 @@ class ClosedLoop:
         if type(tail_preferences) is not bool or tail_preferences and (frontier is None or not callable(getattr(frontier,'trajectories',None))):
             raise ValueError('explicit complete tail trajectory provider required')
         self.tail_preferences=tail_preferences
+        self.sampling_standard_errors=sampling_standard_errors
+        if sampling_standard_errors is not None:
+            from .frontier_value import PolicyTail
+            from .sampling_band import PurposeSampling
+            if (not tail_preferences or self.budget.horizon!=1 or not isinstance(frontier,PolicyTail)
+                or frontier.purpose_adjustment is None):
+                raise ValueError('sampling margin requires one exact root and a complete conditional owner tail')
+            PurposeSampling(frontier.seeds,(('validate',tuple(0. for _ in frontier.seeds)),),frontier.identity,sampling_standard_errors)
         if getattr(frontier,'purpose_adjustment',None) is not None and (not tail_preferences or self.budget.horizon!=1):
             raise ValueError('conditional purpose mean currently requires one root plus full owner tail')
         if tail_preferences and preference_basis is not None:
@@ -143,12 +151,13 @@ class ClosedLoop:
             root if self.future_choices=='reflex' else False,self.opportunity_regret,self.relative_objective,self.tail_preferences]
         if self.frontier is not None:identity.append(self.frontier.identity)
         if self.preference_basis is not None:identity.append(self.preference_basis.identity)
+        if self.sampling_standard_errors is not None:identity.append(['paired-purpose-sampling-v1',self.sampling_standard_errors])
         stamp=digest(identity)
         self._used.update(self.cache[stamp]['dependencies'] if stamp in self.cache else (stamp,))
         self.work=len(self._used)
         if self.work>self.budget.nodes:raise WorkLimit('node capacity')
         if stamp in self.cache:self.hits+=1;return self.cache[stamp]
-        paths={};audit={};children={};dependencies={stamp};frontiers=[]
+        paths={};audit={};children={};dependencies={stamp};frontiers=[];purpose_samples={}
         fixed_leaf=self.future_choices=='reflex' and not root and remaining==1 and self.frontier is None
         return_horizon=remaining+(self.frontier.steps if self.tail_preferences else 0)
         if return_horizon>256:raise ValueError('bounded complete return horizon required')
@@ -176,6 +185,7 @@ class ClosedLoop:
                 else:merged[signature]=t
             options=list(merged.values())
             paths[key]=[];audit[key]=[];children[key]=[]
+            if self.sampling_standard_errors is not None:purpose_samples[key]=[0. for _ in self.frontier.seeds]
             for transition in options:
                 if fixed_leaf:
                     # After the last fixed-policy action, no later choice or
@@ -226,6 +236,11 @@ class ClosedLoop:
                     child=self._node(transition.state,clone,self.request_for(cc),remaining-1)
                     dependencies.update(child['dependencies'])
                     tails=child['returns'];child_key=child['stamp']
+                if self.sampling_standard_errors is not None:
+                    estimates=(g.value,)*len(self.frontier.seeds) if ended else mean_estimates
+                    if estimates is None or len(estimates)!=len(self.frontier.seeds):
+                        raise ValueError('complete aligned conditional-root sample estimates required')
+                    for i,value in enumerate(estimates):purpose_samples[key][i]+=transition.probability*value
                 for index,(p,flows,actions,goal,settled) in enumerate(tails):
                     probability=transition.probability*p;actual=(copy.deepcopy(transition.flow),)+flows
                     path=(key,)+actions
@@ -241,6 +256,11 @@ class ClosedLoop:
             max_regret=self.max_regret,settlement_weight='absolute',outcome_limit=self.budget.outcomes,preference_basis=self.preference_basis,
             opportunity_regret=self.opportunity_regret,
             objective_origin=Goal(**self.assess(world)) if self.relative_objective else None)
+        if self.sampling_standard_errors is not None:
+            from .sampling_band import PurposeSampling
+            aligned=tuple((plan,tuple(purpose_samples[roots[0]])) for plan,roots in forecast.roots.items())
+            forecast=replace(forecast,purpose_sampling=PurposeSampling(self.frontier.seeds,aligned,
+                self.frontier.identity,self.sampling_standard_errors))
         if self.frontier is not None:
             forecast.audit['frontier']=dict(identity=self.frontier.identity,
                 semantics=('full sampled owner continuation and preference flows; running cutoff retained' if self.tail_preferences else
@@ -297,7 +317,7 @@ class ClosedLoop:
 def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feedback,
                   model_id,target,tail_steps=15,seeds=(701,702,703),max_regret=.15,
                   future_planner=None,future_planner_id=None,future_planner_limit=1,
-                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0,tail_recovery_limit=16):
+                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0,tail_recovery_limit=16,sampling_standard_errors=None):
     """Rebuild after real feedback: root world model + evolving owned rollout.
 
     `events(public_state, action)` enumerates known conditional PublicEvents.
@@ -329,6 +349,8 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     if tail_recovery and (future_planner is not None or tail_steps==0):raise ValueError('one identified tail controller required')
     if not callable(events):raise ValueError('known conditional event enumeration required')
     if sampling not in ('independent','stratified'):raise ValueError('known rollout sampling mode required')
+    if sampling_standard_errors is not None and (sampling!='independent' or purpose_estimator!='conditional' or tail_steps==0 or tree_steps!=1):
+        raise ValueError('paired sampling margin requires independent samples and a one-root conditional tail')
     if purpose_estimator not in ('sampled','conditional'):raise ValueError('known purpose mean estimator required')
     if world_model not in ('frozen','posterior','persistent'):raise ValueError('explicit world continuation model required')
     seeds=tuple(seeds)
@@ -405,6 +427,7 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         terminal=terminal,assess=assess,record=record,request_for=request_for,feedback=feedback,
         model_id=identity,unit='owner-decisions',target=target,
         budget=TreeBudget(horizon=tree_steps,outcomes=256),max_regret=max_regret,future_choices=future_choices,
-        frontier=tail,tail_preferences=tail is not None,relative_objective=True,opportunity_regret=True)
+        frontier=tail,tail_preferences=tail is not None,relative_objective=True,opportunity_regret=True,
+        sampling_standard_errors=sampling_standard_errors)
     ctrl.source_owner=source
     return ctrl

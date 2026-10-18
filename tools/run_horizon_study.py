@@ -10,11 +10,14 @@ def main():
     p.add_argument('--job',required=True);p.add_argument('--stage',default='development')
     p.add_argument('--recovery-limit',type=int,default=16)
     p.add_argument('--model-seeds',type=int,nargs='+',default=[701,702,703])
+    p.add_argument('--sampling-standard-errors',type=float)
     p.add_argument('--frozen',action='store_true');a=p.parse_args()
     root=Path(a.root).resolve();job=json.loads(a.job)
     if not a.frozen:
         from tools.freeze_experiment import dispatch
-        dispatch(root,Path(__file__).name,['--job',a.job,'--stage',a.stage,'--recovery-limit',str(a.recovery_limit),'--model-seeds',*map(str,a.model_seeds)]);return
+        args=['--job',a.job,'--stage',a.stage,'--recovery-limit',str(a.recovery_limit),'--model-seeds',*map(str,a.model_seeds)]
+        if a.sampling_standard_errors is not None:args+=['--sampling-standard-errors',str(a.sampling_standard_errors)]
+        dispatch(root,Path(__file__).name,args);return
     from tools.run_owned_value import run,law
     from tools.continuing_games import GAMES
     from reflex.laboratory import PROFILES
@@ -31,6 +34,7 @@ def main():
     configuration={}
     if a.recovery_limit!=16:configuration['tail_recovery_limit']=a.recovery_limit
     if a.model_seeds!=[701,702,703]:configuration['model_seeds']=a.model_seeds
+    if a.sampling_standard_errors is not None:configuration['sampling_standard_errors']=a.sampling_standard_errors
     if configuration:registration['configuration']=configuration
     reg=root/'registration.json'
     if reg.exists():assert json.loads(reg.read_text())==registration,'cannot change a resumed study'
@@ -40,7 +44,7 @@ def main():
     if not env.exists():env.write_text(json.dumps(environment,indent=2)+'\n',encoding='utf8')
     output=root/'trajectories.jsonl'
     if output.exists():raise FileExistsError('completed study must not be repeated')
-    result=run(job,'receding_recovery',checkpoint=root/'checkpoint.json',checkpoint_every=4,tail_recovery_limit=a.recovery_limit,model_seeds=tuple(a.model_seeds))
+    result=run(job,'receding_recovery',checkpoint=root/'checkpoint.json',checkpoint_every=4,tail_recovery_limit=a.recovery_limit,model_seeds=tuple(a.model_seeds),sampling_standard_errors=a.sampling_standard_errors)
     assert result is not None
     temporary=output.with_suffix('.new')
     temporary.write_text(json.dumps(result,separators=(',',':'))+'\n',encoding='utf8');temporary.replace(output)

@@ -1,0 +1,806 @@
+{
+  "stage": "selected-root diagnosis, not played-world confirmation",
+  "cases": [
+    {
+      "case": "resources",
+      "alternative": "invest",
+      "incumbent": "crop:2",
+      "samples": 12,
+      "mean_purpose_difference": 0.012223051343563454,
+      "paired_mc_standard_error": 0.0005566302323973934,
+      "positive_banks": 4,
+      "negative_banks": 0,
+      "source_forecasts": [
+        {
+          "path": "results\\long_horizon_diagnostics\\resource-ego-41102-64-h32-bank701.json",
+          "sha256": "d4326a4bbba5393a09c18803b54472dd0a16c72a7a7a559c22f63afcc46a12b7"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\resource-ego-41102-64-h32-bank1701.json",
+          "sha256": "74c58f7d4f9cac72eec75456b6eb46f9c61366109a2b78e88c41ca194e9a4e19"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\resource-ego-41102-64-h32-bank2701.json",
+          "sha256": "e8c30055378bcf14b2525bea88f8a95f14a19e84ebdffa51a276a29967aab2f1"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\resource-ego-41102-64-h32-bank3701.json",
+          "sha256": "1c54c5ae1d185a1d80caaabd0bc22ef6df2f4a32170a0f9aeb7cd7721f008237"
+        }
+      ],
+      "bank_actions": [
+        {
+          "seeds": [
+            "701",
+            "702",
+            "703"
+          ],
+          "action": "invest",
+          "difference": 0.011676983818582065
+        },
+        {
+          "seeds": [
+            "1701",
+            "1702",
+            "1703"
+          ],
+          "action": "invest",
+          "difference": 0.011878587266382135
+        },
+        {
+          "seeds": [
+            "2701",
+            "2702",
+            "2703"
+          ],
+          "action": "invest",
+          "difference": 0.013518694417045563
+        },
+        {
+          "seeds": [
+            "3701",
+            "3702",
+            "3703"
+          ],
+          "action": "invest",
+          "difference": 0.011817939872244054
+        }
+      ],
+      "horizon_choices": [
+        {
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "crop:2"
+            },
+            {
+              "horizon": 32,
+              "action": "invest"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "crop:2"
+            },
+            {
+              "horizon": 32,
+              "action": "invest"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "crop:2"
+            },
+            {
+              "horizon": 32,
+              "action": "invest"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            3701,
+            3702,
+            3703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "crop:2"
+            },
+            {
+              "horizon": 32,
+              "action": "invest"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            701,
+            702,
+            703,
+            1701,
+            1702,
+            1703,
+            2701,
+            2702,
+            2703,
+            3701,
+            3702,
+            3703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "crop:2"
+            },
+            {
+              "horizon": 32,
+              "action": "invest"
+            }
+          ]
+        }
+      ],
+      "no_gate": [
+        {
+          "samples": 3,
+          "ordinary_action": "invest",
+          "no_purpose_pruning_action": "crop:2"
+        },
+        {
+          "samples": 12,
+          "ordinary_action": "invest",
+          "no_purpose_pruning_action": "crop:2"
+        }
+      ],
+      "two_standard_errors": [
+        {
+          "samples": 3,
+          "ordinary": "invest",
+          "uncertainty_intervention": "invest",
+          "retained": [
+            "invest"
+          ]
+        },
+        {
+          "samples": 12,
+          "ordinary": "invest",
+          "uncertainty_intervention": "invest",
+          "retained": [
+            "invest"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "combat_reload",
+      "alternative": "reload",
+      "incumbent": "guard",
+      "samples": 12,
+      "mean_purpose_difference": 0.0024098001162025998,
+      "paired_mc_standard_error": 0.0012864108332130346,
+      "positive_banks": 3,
+      "negative_banks": 1,
+      "source_forecasts": [
+        {
+          "path": "results\\long_horizon_diagnostics\\combat-steady-43-21-h32.json",
+          "sha256": "6ee9afde119f2a245701f4932a4469c27971b84e8b5dfe6f232c89389a449dff"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\combat-steady-43-21-h32-bank1701.json",
+          "sha256": "b06cec408aa6481d0f80741a29339a16d6c62a1b2d15db03364c98114a50fa2a"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\combat-steady-43-21-h32-bank2701.json",
+          "sha256": "4202695abc3310678879b530dc4710561c581d663855c758b30849dbfd4ceb19"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\combat-steady-43-21-h32-bank3701.json",
+          "sha256": "9ea8ee67bc1e6ce3c8c978f1c2338dc8deb5c2929bbac62c8ac2ca4f5fc43839"
+        }
+      ],
+      "bank_actions": [
+        {
+          "seeds": [
+            "701",
+            "702",
+            "703"
+          ],
+          "action": "guard",
+          "difference": -0.0009887163878971224
+        },
+        {
+          "seeds": [
+            "1701",
+            "1702",
+            "1703"
+          ],
+          "action": "reload",
+          "difference": 0.006084225799781462
+        },
+        {
+          "seeds": [
+            "2701",
+            "2702",
+            "2703"
+          ],
+          "action": "reload",
+          "difference": 0.004119664279794155
+        },
+        {
+          "seeds": [
+            "3701",
+            "3702",
+            "3703"
+          ],
+          "action": "reload",
+          "difference": 0.00042402677313190434
+        }
+      ],
+      "horizon_choices": [
+        {
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "reload"
+            },
+            {
+              "horizon": 32,
+              "action": "guard"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "reload"
+            },
+            {
+              "horizon": 32,
+              "action": "reload"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "reload"
+            },
+            {
+              "horizon": 32,
+              "action": "reload"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            3701,
+            3702,
+            3703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "reload"
+            },
+            {
+              "horizon": 32,
+              "action": "reload"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            701,
+            702,
+            703,
+            1701,
+            1702,
+            1703,
+            2701,
+            2702,
+            2703,
+            3701,
+            3702,
+            3703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "reload"
+            },
+            {
+              "horizon": 32,
+              "action": "reload"
+            }
+          ]
+        }
+      ],
+      "no_gate": [
+        {
+          "samples": 3,
+          "ordinary_action": "guard",
+          "no_purpose_pruning_action": "reload"
+        },
+        {
+          "samples": 12,
+          "ordinary_action": "reload",
+          "no_purpose_pruning_action": "reload"
+        }
+      ],
+      "two_standard_errors": [
+        {
+          "samples": 3,
+          "ordinary": "guard",
+          "uncertainty_intervention": "reload",
+          "retained": [
+            "guard",
+            "reload"
+          ]
+        },
+        {
+          "samples": 12,
+          "ordinary": "reload",
+          "uncertainty_intervention": "reload",
+          "retained": [
+            "guard",
+            "reload"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "combat_attack",
+      "alternative": "strike:2",
+      "incumbent": "reload",
+      "samples": 12,
+      "mean_purpose_difference": 7.97125774317393e-05,
+      "paired_mc_standard_error": 0.0014535366525102705,
+      "positive_banks": 3,
+      "negative_banks": 1,
+      "source_forecasts": [
+        {
+          "path": "results\\long_horizon_diagnostics\\combat-steady-43-43-h32.json",
+          "sha256": "f44e219cb648c49ecaeb1b658d0c51d8a2847fcdc05eba967d75125e54f80b0b"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\combat-steady-43-43-h32-bank1701.json",
+          "sha256": "9381bf496b1e122b4de1fd92deaa146fafe7d2590ae5227102ffb77a44be51d1"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\combat-steady-43-43-h32-bank2701.json",
+          "sha256": "6f7a8d98cef807afd4879578b1cdc600294d45ada6106cc8fc05943b71a447f0"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\combat-steady-43-43-h32-bank3701.json",
+          "sha256": "535c01eae93db1fb2b818a7cf276e5a24e8624cecc9568eab95b48e92ebb174e"
+        }
+      ],
+      "bank_actions": [
+        {
+          "seeds": [
+            "701",
+            "702",
+            "703"
+          ],
+          "action": "reload",
+          "difference": -0.0028609049995906854
+        },
+        {
+          "seeds": [
+            "1701",
+            "1702",
+            "1703"
+          ],
+          "action": "strike:2",
+          "difference": 0.0010613288206057596
+        },
+        {
+          "seeds": [
+            "2701",
+            "2702",
+            "2703"
+          ],
+          "action": "strike:2",
+          "difference": 0.00056845315643649
+        },
+        {
+          "seeds": [
+            "3701",
+            "3702",
+            "3703"
+          ],
+          "action": "strike:2",
+          "difference": 0.0015499733322753932
+        }
+      ],
+      "horizon_choices": [
+        {
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "reload"
+            },
+            {
+              "horizon": 32,
+              "action": "reload"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "strike:2"
+            },
+            {
+              "horizon": 32,
+              "action": "strike:2"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "guard"
+            },
+            {
+              "horizon": 32,
+              "action": "strike:2"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            3701,
+            3702,
+            3703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "strike:2"
+            },
+            {
+              "horizon": 32,
+              "action": "strike:2"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            701,
+            702,
+            703,
+            1701,
+            1702,
+            1703,
+            2701,
+            2702,
+            2703,
+            3701,
+            3702,
+            3703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "strike:2"
+            },
+            {
+              "horizon": 32,
+              "action": "strike:2"
+            }
+          ]
+        }
+      ],
+      "no_gate": [
+        {
+          "samples": 3,
+          "ordinary_action": "reload",
+          "no_purpose_pruning_action": "strike:2"
+        },
+        {
+          "samples": 12,
+          "ordinary_action": "strike:2",
+          "no_purpose_pruning_action": "strike:2"
+        }
+      ],
+      "two_standard_errors": [
+        {
+          "samples": 3,
+          "ordinary": "reload",
+          "uncertainty_intervention": "strike:2",
+          "retained": [
+            "guard",
+            "reload",
+            "strike:2"
+          ]
+        },
+        {
+          "samples": 12,
+          "ordinary": "strike:2",
+          "uncertainty_intervention": "strike:2",
+          "retained": [
+            "guard",
+            "reload",
+            "strike:2"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "auction_growth",
+      "alternative": "bid:2",
+      "incumbent": "bid:3",
+      "samples": 12,
+      "mean_purpose_difference": -0.00012243969252804382,
+      "paired_mc_standard_error": 0.0014975528864189897,
+      "positive_banks": 2,
+      "negative_banks": 2,
+      "source_forecasts": [
+        {
+          "path": "results\\long_horizon_diagnostics\\auction-growth-43-91-h32.json",
+          "sha256": "6fe92cec83331225f14f85aff1f5cf1c020daa1f0d4fd9fb44d7ca544e6c5dae"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\auction-growth-43-91-h32-bank1701.json",
+          "sha256": "f141385f2777a28464311b10b94cbcbc75d567bc1c67a1be80df4d53233203b6"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\auction-growth-43-91-h32-bank2701.json",
+          "sha256": "2630e3092610e784adfc032adbfd215c2080549bd6342551b0da3df08707d532"
+        },
+        {
+          "path": "results\\long_horizon_diagnostics\\auction-growth-43-91-h32-bank3701.json",
+          "sha256": "6143b28afcb2c06932163625bc6a79d1c2aa3520e3649e4344a8a6df6028e04e"
+        }
+      ],
+      "bank_actions": [
+        {
+          "seeds": [
+            "701",
+            "702",
+            "703"
+          ],
+          "action": "bid:3",
+          "difference": -0.000500350585519523
+        },
+        {
+          "seeds": [
+            "1701",
+            "1702",
+            "1703"
+          ],
+          "action": "bid:2",
+          "difference": 0.003710531894081983
+        },
+        {
+          "seeds": [
+            "2701",
+            "2702",
+            "2703"
+          ],
+          "action": "bid:3",
+          "difference": -0.0040796934606497455
+        },
+        {
+          "seeds": [
+            "3701",
+            "3702",
+            "3703"
+          ],
+          "action": "bid:2",
+          "difference": 0.00037975338197511016
+        }
+      ],
+      "horizon_choices": [
+        {
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "bid:2"
+            },
+            {
+              "horizon": 32,
+              "action": "bid:3"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "bid:2"
+            },
+            {
+              "horizon": 32,
+              "action": "bid:2"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "bid:3"
+            },
+            {
+              "horizon": 32,
+              "action": "bid:3"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            3701,
+            3702,
+            3703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "bid:2"
+            },
+            {
+              "horizon": 32,
+              "action": "bid:2"
+            }
+          ]
+        },
+        {
+          "seeds": [
+            701,
+            702,
+            703,
+            1701,
+            1702,
+            1703,
+            2701,
+            2702,
+            2703,
+            3701,
+            3702,
+            3703
+          ],
+          "choices": [
+            {
+              "horizon": 16,
+              "action": "bid:2"
+            },
+            {
+              "horizon": 32,
+              "action": "bid:2"
+            }
+          ]
+        }
+      ],
+      "no_gate": [
+        {
+          "samples": 3,
+          "ordinary_action": "bid:3",
+          "no_purpose_pruning_action": "bid:2"
+        },
+        {
+          "samples": 12,
+          "ordinary_action": "bid:2",
+          "no_purpose_pruning_action": "bid:2"
+        }
+      ],
+      "two_standard_errors": [
+        {
+          "samples": 3,
+          "ordinary": "bid:3",
+          "uncertainty_intervention": "bid:2",
+          "retained": [
+            "bid:2",
+            "bid:3"
+          ]
+        },
+        {
+          "samples": 12,
+          "ordinary": "bid:2",
+          "uncertainty_intervention": "bid:2",
+          "retained": [
+            "bid:2",
+            "bid:3"
+          ]
+        }
+      ]
+    }
+  ],
+  "mechanism": "Compare paired whole-future-seed purpose estimates under one declared model. Keep full personality tier and outcome/risk flows. Add a fixed two empirical Monte Carlo standard errors to the ordinary purpose exclusion band.",
+  "limitations": [
+    "These known roots motivated a candidate; they cannot confirm its long-run benefit.",
+    "With three or twelve samples, empirical errors are not calibrated confidence or model-accuracy bounds.",
+    "No-purpose-gate ablation loses the resource investment decision; horizon-disagreement-only resampling misses the combat attack case.",
+    "No margin multiplier sweep. New candidate needs fresh long-run confirmation."
+  ],
+  "sources": [
+    {
+      "path": "results/long_horizon_diagnostics/paired_sampling_error.json",
+      "sha256": "fed7a87e74e1b7b9f06b71286e5aad56c5cef6c26c87a22933b475d8f93fc330"
+    },
+    {
+      "path": "results/long_horizon_diagnostics/horizon_sampling_disagreement.json",
+      "sha256": "03434d9177de50030e1fec6af7bf22f80fbe69694a32247f4f27de42cac02253"
+    },
+    {
+      "path": "results/long_horizon_diagnostics/purpose_gate_ablation.json",
+      "sha256": "cc80733641ac9ce520db5f74152745daf40c8505f53318d89990bb5fd5b30dbe"
+    },
+    {
+      "path": "results/long_horizon_diagnostics/uncertainty_band_intervention.json",
+      "sha256": "eb1fdb3450dfd7ebcdcb8e5047d8e759ac3011d07828dc84eab9a0f89d529f29"
+    }
+  ]
+}

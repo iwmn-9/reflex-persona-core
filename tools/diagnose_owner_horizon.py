@@ -21,7 +21,8 @@ def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
     ctrl=owned_rollout(own,observe=g.context,events=g.events,terminal=g.terminal,
         assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
         feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=tail,
-        world_model='posterior',purpose_estimator='conditional',tail_recovery=2,tail_recovery_limit=recovery_limit,seeds=seeds)
+        world_model='posterior',purpose_estimator='conditional',tail_recovery=2,tail_recovery_limit=recovery_limit,seeds=seeds,
+        sampling_standard_errors=row.get('sampling_standard_errors'))
     frontier=ctrl.frontier;distribute=frontier.distribution;plan=frontier.future_planner;advance=frontier.owner_advance
     adjust=frontier.purpose_adjustment
     traces=[];active=None;pending=None;latest=None
@@ -64,7 +65,8 @@ def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
         seconds=time.monotonic()-start,controller_counts=dict(counts),paths=len(paths),
         capped_paths=sum(any(s['controller']=='budget-skipped' for s in steps) for steps in paths),
         first_skipped_tick=min((s['tick'] for steps in paths for s in steps if s['controller']=='budget-skipped'),default=None),
-        distributions=traces,forecast=forecast.audit,frontiers=capture['node']['frontiers'],children=capture['node']['children'])
+        distributions=traces,forecast=forecast.audit,frontiers=capture['node']['frontiers'],children=capture['node']['children'],
+        **({'sampling_standard_errors':row['sampling_standard_errors']} if 'sampling_standard_errors' in row else {}))
 
 
 def pool_diagnostics(diagnostics):
@@ -79,7 +81,7 @@ def pool_diagnostics(diagnostics):
     if not first.get('owner_digest') and not first.get('source_sha256'):
         raise ValueError('owner or saved trajectory identity required')
     for d in diagnostics:
-        for key in ('tick','tail_steps','recovery_limit','children','core_sources','owner_digest','source_sha256','game','profile','regime','seed'):
+        for key in ('tick','tail_steps','recovery_limit','children','core_sources','owner_digest','source_sha256','game','profile','regime','seed','sampling_standard_errors'):
             if d.get(key)!=first.get(key):raise ValueError('identical owner, model and horizon required')
         seeds=d.get('seeds')
         if seeds is None and d['distributions']:seeds=list(map(int,d['distributions'][0]['paths']))
@@ -89,6 +91,7 @@ def pool_diagnostics(diagnostics):
     if len(set(union))!=len(union):raise ValueError('overlapping banks are not independent samples')
     keys=[(f['root'],digest(f['public'])) for f in first['frontiers']]
     result={k:copy.deepcopy(first[k]) for k in ('tick','tail_steps','recovery_limit','children')}
+    if 'sampling_standard_errors' in first:result['sampling_standard_errors']=first['sampling_standard_errors']
     result.update(seeds=union,frontiers=[dict(root=f['root'],public=copy.deepcopy(f['public'])) for f in first['frontiers']],distributions=[])
     for d in diagnostics:
         if [(f['root'],digest(f['public'])) for f in d['frontiers']]!=keys:
@@ -116,11 +119,16 @@ def prefix_choice(row,tick,diagnostic,horizon):
     from reflex.examples import effect
     from reflex.flow_rollout import Branch
     from reflex.purpose_plan import goal_forecast
+    if row.get('sampling_standard_errors')!=diagnostic.get('sampling_standard_errors'):
+        raise ValueError('matching sampling-margin configuration required')
     assert 1<=horizon<=diagnostic['tail_steps']+1 and tick==diagnostic['tick']
     g=ContinuingGame(row['game'],next(p for p in PROFILES if p['id']==row['profile']),row['turns'],row['seed']%2)
     w=copy.deepcopy(row['trace'][tick]['before']);c=g.context(w)
     own=DecisionLoop.from_record(c,row['trace'][tick]['checkpoint'],predictor=g.actor(c,learning='segmented').predictor)
-    req=g.request(c);effective=own.preview(req)[0];paths={};audit={}
+    req=g.request(c);effective=own.preview(req)[0];paths={};audit={};purpose_samples={}
+    sampling_margin=row.get('sampling_standard_errors')
+    seeds=diagnostic.get('seeds')
+    if sampling_margin is not None and seeds is None:raise ValueError('explicit aligned model seeds required')
     mapping={(f['root'],digest(f['public'])):d for f,d in zip(diagnostic['frontiers'],diagnostic['distributions'])}
     children_by_root=diagnostic.get('children')
     if children_by_root is None:
@@ -135,6 +143,7 @@ def prefix_choice(row,tick,diagnostic,horizon):
         assert all(offsets[k]==len(v) for k,v in plans.items()),'legacy recording omits terminal children'
     for key,children in children_by_root.items():
         paths[key]=[];audit[key]=[]
+        if sampling_margin is not None:purpose_samples[key]=[0. for _ in seeds]
         for child in children:
             public=child['public'];event=next(e for e in g.events(w,key) if e.public==public)
             if g.terminal(public):
@@ -142,6 +151,7 @@ def prefix_choice(row,tick,diagnostic,horizon):
             else:
                 recorded=mapping[key,digest(public)]
                 assert recorded['start']==public
+                if sampling_margin is not None:assert list(recorded['paths'])==list(map(str,seeds))
                 tails=recorded['trajectories'];details=list(recorded['paths'].values())
             truncated=[]
             for (p,flows,actions,goal,ended),steps in zip(tails,details):
@@ -150,6 +160,12 @@ def prefix_choice(row,tick,diagnostic,horizon):
                     status='scored' if steps[count-1]['after_terminal'] else 'running',value=steps[count-1]['after_goal'])
                 ended=goal['status']!='running'
                 mean=goal['value']+sum(s['purpose_adjustment'] for s in steps[:count])
+                if sampling_margin is not None:
+                    if g.terminal(public):
+                        for i in range(len(seeds)):purpose_samples[key][i]+=child['probability']*mean
+                    else:
+                        index=len(truncated)
+                        purpose_samples[key][index]+=child['probability']*mean
                 effects=(event.flow,)+tuple(flows[:count])+(effect(),)*(horizon-count-1)
                 branch=Branch(child['probability']*p,effects,(1.,)*horizon)
                 record=dict(actions=[key]+list(actions[:count]),terminal=ended,assessment=goal,purpose_mean_estimate=mean)
@@ -161,6 +177,12 @@ def prefix_choice(row,tick,diagnostic,horizon):
     forecast=goal_forecast(effective,paths,audit,horizon=horizon,unit='owner-decisions',target=g.target,
         policy=own.policy,max_regret=.15,settlement_weight='absolute',outcome_limit=256,
         objective_origin=g.goal(w),opportunity_regret=True)
+    if sampling_margin is not None:
+        from dataclasses import replace
+        from reflex.sampling_band import PurposeSampling
+        forecast=replace(forecast,purpose_sampling=PurposeSampling(tuple(seeds),
+            tuple((plan,tuple(purpose_samples[roots[0]])) for plan,roots in forecast.roots.items()),
+            'recorded-prefix',sampling_margin))
     result=DecisionLoop.decide_batch([(own,req)],False,lambda *args:forecast)[0]
     return dict(horizon=horizon,action=result['decision']['action_id'],
         purpose={forecast.roots[k][0]:v for k,v in forecast.purpose.items()},audit=forecast.audit)

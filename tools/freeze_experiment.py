@@ -7,7 +7,8 @@ import subprocess
 import sys
 
 
-def dispatch(root,script,arguments):
+def freeze(root):
+    """Capture immutable source once, also for studies scheduled later."""
     root=Path(root).resolve();root.mkdir(parents=True,exist_ok=True)
     base=Path(__file__).resolve().parents[1];snapshot=root/'_source'
     if snapshot.exists():raise FileExistsError('fresh experiment source directory required')
@@ -18,4 +19,9 @@ def dispatch(root,script,arguments):
         relative=p.relative_to(base);target=snapshot/relative;target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copyfile(p,target);fingerprints[relative.as_posix()]=hashlib.sha256(target.read_bytes()).hexdigest()
     (root/'source_snapshot.json').write_text(json.dumps(fingerprints,indent=2)+'\n',encoding='utf-8')
+    return snapshot
+
+
+def dispatch(root,script,arguments):
+    root=Path(root).resolve();snapshot=freeze(root)
     subprocess.run([sys.executable,str(snapshot/'tools'/script),'--root',str(root),'--frozen',*arguments],check=True)

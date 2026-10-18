@@ -24,10 +24,11 @@ def resume(root,expected_manifest,job):
           '--job',json.dumps(job),'--stage',registration['stage'],'--frozen']
     configuration=registration.get('configuration',{})
     assert saved['contract'].get('configuration',{})==configuration
-    assert set(configuration)<= {'tail_recovery_limit','model_seeds'}
+    assert set(configuration)<= {'tail_recovery_limit','model_seeds','sampling_standard_errors'}
     if 'tail_recovery_limit' in configuration:
         args+=['--recovery-limit',str(configuration['tail_recovery_limit'])]
     if 'model_seeds' in configuration:args+=['--model-seeds',*map(str,configuration['model_seeds'])]
+    if 'sampling_standard_errors' in configuration:args+=['--sampling-standard-errors',str(configuration['sampling_standard_errors'])]
     provenance=dict(resume_at=len(prefix),source_manifest_sha256=expected_manifest,
         original_checkpoint_sha256=hashlib.sha256(original).hexdigest(),complete=False)
     record=root/'resume_provenance.json'
