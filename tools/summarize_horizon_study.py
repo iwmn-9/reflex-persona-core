@@ -48,6 +48,9 @@ def realized_account(row):
     elif row['game']=='combat':
         from tools.combat_reference import account
         result['bellman']=account(row)
+    elif row['game']=='resources':
+        from tools.resource_reference import account
+        result['bellman']=account(row)
     return result
 
 
