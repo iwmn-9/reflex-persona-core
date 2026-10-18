@@ -1,4 +1,4 @@
-import hashlib,json,subprocess,sys,tempfile,unittest
+import hashlib,json,os,subprocess,sys,tempfile,unittest
 from pathlib import Path
 from tools.freeze_experiment import freeze
 from tools.resume_horizon_pair import prepare,run_pair,verify_segmented_result
@@ -83,6 +83,26 @@ assert run(job,'receding_recovery',checkpoint=child/'checkpoint.json',max_decisi
             self.assertEqual(proof['job'],jobs[1])
             for index,name in enumerate(('baseline','candidate')):
                 child=root/'continued'/name;actual=json.loads((child/'trajectories.jsonl').read_text())
+                expected=run(jobs[index],'receding_recovery',cumulative_achievement=bool(index))
+                actual.pop('seconds');expected.pop('seconds');self.assertEqual(actual,expected)
+                verify_segmented_result(child,actual,proof,index)
+
+    def test_value_contract_cli_resumes_from_outside_repository_without_pythonpath(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);inputs,jobs,manifests,checkpoints=self.fixture(root,value_contract=True)
+            originals=[(Path(p)/'checkpoint.json').read_bytes() for p in inputs]
+            target=root/'continued';script=Path(__file__).resolve().parents[1]/'tools/resume_horizon_pair.py'
+            env=os.environ.copy();env.pop('PYTHONPATH',None)
+            command=[sys.executable,str(script),'--root',str(target),'--value-contract']
+            for name,value in (('inputs',inputs),('jobs',jobs),('manifests',manifests),('checkpoints',checkpoints)):
+                command+=['--'+name,json.dumps(value)]
+            result=subprocess.run(command,cwd=root,env=env,capture_output=True,text=True,encoding='utf8')
+            self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+            proof=json.loads((target/'contract_pair.json').read_text());self.assertTrue(proof['complete'])
+            self.assertEqual([(Path(p)/'checkpoint.json').read_bytes() for p in inputs],originals)
+            self.assertEqual(proof['jobs'],dict(zip(('baseline','candidate'),jobs)))
+            for index,name in enumerate(('baseline','candidate')):
+                child=target/name;actual=json.loads((child/'trajectories.jsonl').read_text())
                 expected=run(jobs[index],'receding_recovery',cumulative_achievement=bool(index))
                 actual.pop('seconds');expected.pop('seconds');self.assertEqual(actual,expected)
                 verify_segmented_result(child,actual,proof,index)
