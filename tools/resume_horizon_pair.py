@@ -85,7 +85,8 @@ def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False):
     assert runtime==left['saved']['contract']['runtime'],'continuation runtime changed'
     assert left['registration']['stage']==right['registration']['stage']
     if value_contract:
-        assert prior['configurations']=={'baseline':{},'candidate':{'cumulative_achievement':True}}
+        from tools.value_contract_config import configurations
+        assert prior['configurations']==configurations(prior)
         assert prior['sources']=={k:v for k,v in left['files'].items() if k.endswith('.py')}
         assert len(prior['plan_sha256'])==64
         for name,item in zip(names,data):assert item['registration'].get('configuration',{})==prior['configurations'][name]

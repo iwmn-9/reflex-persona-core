@@ -1,20 +1,24 @@
 """Compare registered complete worlds; do not turn partial data into acceptance."""
 import argparse,hashlib,json,sys
+from itertools import combinations
 from collections import Counter,defaultdict
 from pathlib import Path
 R=Path(__file__).resolve().parents[1];sys.path.insert(0,str(R))
 from reflex.laboratory import PROFILES
 from tools.continuing_games import ContinuingGame
 from tools.summarize_horizon_study import realized_account
+from tools.value_contract_config import configurations
 
 
 def read_run(path,job,enabled,plan,plan_hash):
+    configuration=configurations(plan)['candidate' if enabled else 'baseline']
     source=path/'trajectories.jsonl';audit=json.loads((path/'audit.json').read_text())
     assert audit['complete'] and audit['source_freeze_verified'] and audit['completed_runs']==1
     assert audit['trajectory_sha256']==hashlib.sha256(source.read_bytes()).hexdigest()
     proof=json.loads((path/'contract_pair.json').read_text())
     assert proof['complete'] and proof['return_codes']==[0,0] and proof['job']==job
     assert proof['sources']==plan['sources'] and proof['plan_sha256']==plan_hash
+    assert proof['configurations']==configurations(plan)
     manifest=json.loads((path/'source_snapshot.json').read_text())
     assert {k:v for k,v in manifest.items() if k.endswith('.py')}==plan['sources']
     for k,v in manifest.items():assert hashlib.sha256((path/'_source'/k).read_bytes()).hexdigest()==v
@@ -22,18 +26,19 @@ def read_run(path,job,enabled,plan,plan_hash):
     from tools.audit_recorded_forecasts import verify_receipt
     recipe=verify_receipt(path,audit,row)
     assert [row[k] for k in ('game','profile','seed','regime','turns','interval','tail_steps','offset')]==[g,PROFILES[p]['id'],s,r,t,i,h,o]
-    assert row.get('cumulative_achievement',False)==enabled
+    for key in ('cumulative_achievement','tail_goal_refinement'):
+        assert row.get(key,False)==configuration.get(key,False)
     assert 'sampling_standard_errors' not in row and 'model_seeds' not in row and 'tail_recovery_limit' not in row
     reg=json.loads((path/'registration.json').read_text())
     assert reg['jobs']==[job] and reg['stage']==plan['stage']
-    assert reg.get('configuration',{})==({'cumulative_achievement':True} if enabled else {})
+    assert reg.get('configuration',{})==configuration
     assert 0<len(row['trace'])==row['executed']<=t
     for k in ('world_rng_replay','restored_action_feedback','physical_replay','owner_parity','fixed_axes'):
         assert audit['checks'][k]==row['executed']
     game=ContinuingGame(g,PROFILES[p],t,s%2)
     assert game.terminal(row['final']) and row['trace'][-1]['after']==row['final']
     for step in row['trace']:
-        if enabled:
+        if configuration.get('cumulative_achievement',False):
             basis=step['cumulative_preference']
             assert basis['channels']==[['values.achievement',float(t)]]
             assert basis['origin']==game.goal(step['before']).record()
@@ -110,15 +115,14 @@ def main(root,plan_path,partial,additional_roots=()):
     for key,(a,b) in rows.items():same_world[a['game'],a['seed'],a['regime']].append((a,b))
     for key,items in same_world.items():
         if len(items)<2:continue
-        assert len(items)==2
-        left,right=items
-        assert left[0]['trace'][0]['before']==right[0]['trace'][0]['before']
-        persona.append(dict(world=key,profiles=[left[0]['profile'],right[0]['profile']],
-            baseline_action_differences=sum(x['action']!=y['action'] for x,y in zip(left[0]['trace'],right[0]['trace'])),
-            candidate_action_differences=sum(x['action']!=y['action'] for x,y in zip(left[1]['trace'],right[1]['trace'])),
-            baseline_shared_ticks=min(len(left[0]['trace']),len(right[0]['trace'])),
-            candidate_shared_ticks=min(len(left[1]['trace']),len(right[1]['trace'])),
-            limitation='Different responses to identical initial world and external event stream; not a claim of human believability or a requirement to choose different acts when interests agree.'))
+        for left,right in combinations(items,2):
+            assert left[0]['trace'][0]['before']==right[0]['trace'][0]['before']
+            persona.append(dict(world=key,profiles=[left[0]['profile'],right[0]['profile']],
+                baseline_action_differences=sum(x['action']!=y['action'] for x,y in zip(left[0]['trace'],right[0]['trace'])),
+                candidate_action_differences=sum(x['action']!=y['action'] for x,y in zip(left[1]['trace'],right[1]['trace'])),
+                baseline_shared_ticks=min(len(left[0]['trace']),len(right[0]['trace'])),
+                candidate_shared_ticks=min(len(left[1]['trace']),len(right[1]['trace'])),
+                limitation='All profile pairs within the same world, not independent world samples. Different behavior is not required when interests agree; not a claim of human believability.'))
     if not partial:assert not pending,pending
     result=dict(complete=not pending,stage=plan['stage'],plan_sha256=plan_hash,registered_conditions=len(plan['cases']),
         completed_conditions=len(pairs),pending=pending,comparisons=pairs,groups=groups,persona_differences=persona,

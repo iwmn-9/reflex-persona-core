@@ -25,6 +25,7 @@ class JointForecast:
     return_frame: object=None
     outcome_limit: int=8
     purpose_sampling: object=None
+    goal_ties: object=None
 
 
 def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
@@ -43,6 +44,11 @@ def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
             policy or Policy(),None if root_allowed is None else root_allowed[0],appraisal=appraisal)
         return select(base,checked,policy,root_allowed,appraisal=appraisal)
     identifier(forecast.target)
+    if forecast.goal_ties is not None:
+        from .goal_ties import GoalTieRefinement
+        if not isinstance(forecast.goal_ties,GoalTieRefinement) or appraisal is not None:
+            raise ValueError('explicit single-owner goal tie refinement without social offsets required')
+        forecast.goal_ties.validate(forecast)
     if type(forecast.horizon) is not int or not 1<=forecast.horizon<=256:raise ValueError('bounded horizon required')
     if isinstance(forecast.max_regret,bool) or not np.isfinite(forecast.max_regret) or not 0<=forecast.max_regret<=2:
         raise ValueError('bounded purpose regret required')
@@ -109,6 +115,9 @@ def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
     j=int(np.argmax(np.where(eligible,regret,-np.inf)));key=names[j]
     if forecast.continuity is not None:
         j=forecast.continuity.resolve_tie(names,eligible,regret,purpose,j);key=names[j]
+    tie_audit=None
+    if forecast.goal_ties is not None:
+        j,tie_audit=forecast.goal_ties.resolve(contexts[0],names,eligible,regret,j);key=names[j]
     records=replace(d,action=np.full(len(base),j,dtype=int)).records(b)
     decisions=[]
     for i,(c,root,record) in enumerate(zip(base,forecast.roots[key],records)):
@@ -124,4 +133,5 @@ def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
         subjective_regret=float(regret[j]),metadata=copy.deepcopy(forecast.audit or {}))
     if continuity is not None:audit['continuity']=continuity
     if sampling_audit is not None:audit['purpose_sampling']=sampling_audit
+    if tie_audit is not None:audit['goal_ties']=tie_audit
     return decisions,audit

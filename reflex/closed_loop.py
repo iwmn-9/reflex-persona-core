@@ -325,7 +325,7 @@ class ClosedLoop:
 def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feedback,
                   model_id,target,tail_steps=15,seeds=(701,702,703),max_regret=.15,
                   future_planner=None,future_planner_id=None,future_planner_limit=1,
-                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0,tail_recovery_limit=16,sampling_standard_errors=None,cumulative_preference=None):
+                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0,tail_recovery_limit=16,sampling_standard_errors=None,cumulative_preference=None,tail_goal_refinement=False):
     """Rebuild after real feedback: root world model + evolving owned rollout.
 
     `events(public_state, action)` enumerates known conditional PublicEvents.
@@ -348,6 +348,8 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         raise ValueError('resolved owner with a public predictive distribution required')
     if type(tail_steps) is not int or not 0<=tail_steps<=255:
         raise ValueError('0..255 tail decisions plus one root required')
+    if type(tail_goal_refinement) is not bool or tail_goal_refinement and tail_steps==0:
+        raise ValueError('explicit goal refinement on a nonempty tail required')
     TreeBudget(horizon=tree_steps)
     if tree_steps+tail_steps>256:raise ValueError('bounded combined return horizon required')
     if type(tail_recovery) is not int or tail_recovery not in (0,2):raise ValueError('disabled or two-step continuation recovery required')
@@ -378,6 +380,7 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         if not isinstance(cumulative_preference,CumulativePreference) or cumulative_preference.target!=target:
             raise ValueError('matching explicit cumulative preference required')
         identity=digest([identity,cumulative_preference.identity])
+    if tail_goal_refinement:identity=digest([identity,'public-purpose-coarse-tie-v1'])
     def transitions(w,key,own,c):
         rows=events(w,key);p=predict(c) if posterior is None else posterior(own.predictor,c)
         if (not isinstance(rows,(tuple,list)) or not rows or any(not isinstance(e,PublicEvent) for e in rows)
@@ -431,12 +434,18 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         future_planner=recover;future_planner_id='no-immediate-purpose-gain-two-step-owner-recovery-v1';future_planner_limit=tail_recovery_limit
     if tail_steps==0 and (future_planner is not None or purpose_estimator!='sampled'):
         raise ValueError('zero tail has no future planning or sampling correction')
+    refinement=None
+    if tail_goal_refinement:
+        from .goal_ties import reflex_goal_planner
+        def refinement(person,request,state):
+            return reflex_goal_planner(person,request,state,events=events,assess=assess,target=target)
     tail=None if tail_steps==0 else PolicyTail(observe=observe,advance=lambda *a:None,owner_advance=advance,
         terminal=terminal,assess=assess,request_for=request_for,feedback=feedback,
         model_id=identity,target=target,steps=tail_steps,seeds=seeds,
         future_planner=future_planner,future_planner_id=future_planner_id,future_planner_limit=future_planner_limit,
         purpose_adjustment=adjustment if purpose_estimator=='conditional' else None,
-        purpose_adjustment_id='conditional-public-goal-martingale-v1' if purpose_estimator=='conditional' else None)
+        purpose_adjustment_id='conditional-public-goal-martingale-v1' if purpose_estimator=='conditional' else None,
+        reflex_planner=refinement,reflex_planner_id='public-purpose-coarse-tie-v1' if tail_goal_refinement else None)
     ctrl=ClosedLoop(observe=observe,transitions=lambda *a:None,owner_transitions=transitions,
         terminal=terminal,assess=assess,record=record,request_for=request_for,feedback=feedback,
         model_id=identity,unit='owner-decisions',target=target,

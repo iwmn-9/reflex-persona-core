@@ -48,7 +48,7 @@ def cumulative_basis(game,enabled):
     return CumulativePreference(game.target,'public-score-per-decision',(('values.achievement',float(game.turns)),))
 
 
-def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703),sampling_standard_errors=None,cumulative_achievement=False):
+def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703),sampling_standard_errors=None,cumulative_achievement=False,tail_goal_refinement=False):
     if type(tail_recovery_limit) is not int or not 1<=tail_recovery_limit<=256:raise ValueError('bounded recovery budget required')
     if tail_recovery_limit!=16 and arm!='receding_recovery':raise ValueError('recovery budget requires the recovery arm')
     if (not isinstance(model_seeds,tuple) or not 1<=len(model_seeds)<=32
@@ -61,6 +61,9 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
     if type(cumulative_achievement) is not bool or cumulative_achievement and arm!='receding_recovery':
         raise ValueError('explicit cumulative achievement on the registered recovery owner required')
     configuration={}
+    if type(tail_goal_refinement) is not bool or tail_goal_refinement and arm!='receding_recovery':
+        raise ValueError('explicit goal refinement on the recovery owner required')
+    if tail_goal_refinement:configuration['tail_goal_refinement']=True
     if tail_recovery_limit!=16:configuration['tail_recovery_limit']=tail_recovery_limit
     if model_seeds!=(701,702,703):configuration['model_seeds']=list(model_seeds)
     if sampling_standard_errors is not None:configuration['sampling_standard_errors']=sampling_standard_errors
@@ -138,7 +141,7 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
                 world_model='frozen' if arm=='receding' else 'posterior',
                 purpose_estimator='conditional' if arm in ('receding_corrected','receding_recovery') else 'sampled',
                 tail_recovery=2 if arm=='receding_recovery' else 0,tail_recovery_limit=tail_recovery_limit,seeds=model_seeds,
-                sampling_standard_errors=sampling_standard_errors,cumulative_preference=cumulative)
+                sampling_standard_errors=sampling_standard_errors,cumulative_preference=cumulative,tail_goal_refinement=tail_goal_refinement)
             result=live.decide(w);cap=live.last
         else:result=DecisionLoop.decide_batch([(own,req)],False,planner)[0]
         key=result['decision']['action_id']

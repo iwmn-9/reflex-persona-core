@@ -49,7 +49,8 @@ class PolicyTail:
     """
     def __init__(self,*,observe,advance,terminal,assess,request_for,feedback,model_id,target,seeds=(701,702,703,704),steps=16,record=None,cache_entries=16384,owner_advance=None,
                  future_planner=None,future_planner_id=None,future_planner_limit=1,
-                 purpose_adjustment=None,purpose_adjustment_id=None):
+                 purpose_adjustment=None,purpose_adjustment_id=None,
+                 reflex_planner=None,reflex_planner_id=None):
         if any(not callable(x) for x in (observe,advance,terminal,assess,request_for,feedback)):
             raise ValueError('explicit public continuation callbacks required')
         if not isinstance(model_id,str) or not model_id or not isinstance(target,str) or not target:
@@ -77,6 +78,10 @@ class PolicyTail:
             raise ValueError('identified conditional-mean adjustment required')
         self.purpose_adjustment=purpose_adjustment
         if purpose_adjustment is not None:self.identity=digest([self.identity,purpose_adjustment_id])
+        if reflex_planner is not None and (not callable(reflex_planner) or not isinstance(reflex_planner_id,str) or not reflex_planner_id):
+            raise ValueError('identified immediate reflex refinement required')
+        self.reflex_planner=reflex_planner;self.refinement_calls=0
+        if reflex_planner is not None:self.identity=digest([self.identity,reflex_planner_id])
 
     def trajectories(self,world,actor):
         return list(self.distribution(world,actor).trajectories)
@@ -102,6 +107,9 @@ class PolicyTail:
                 if self.future_planner is not None and calls<self.future_planner_limit:
                     planner=self.future_planner(copy.deepcopy(own),copy.deepcopy(req),copy.deepcopy(w))
                     if planner is not None:calls+=1;self.future_calls+=1
+                if planner is None and self.reflex_planner is not None:
+                    planner=self.reflex_planner(copy.deepcopy(own),copy.deepcopy(req),copy.deepcopy(w))
+                    if planner is not None:self.refinement_calls+=1
                 # Kernels receive the same resolved pre-choice owner as a tree
                 # root, not an actor carrying an unresolved hypothetical ticket.
                 model_owner=copy.deepcopy(own) if self.owner_advance is not None else None
@@ -125,7 +133,7 @@ class PolicyTail:
     def evaluate(self,world,actor):
         from .closed_loop import reveal
         from .decision_loop import DecisionLoop
-        if self.future_planner is not None or self.purpose_adjustment is not None:raise ValueError('future planning or mean correction requires complete preference trajectories')
+        if self.future_planner is not None or self.purpose_adjustment is not None or self.reflex_planner is not None:raise ValueError('future planning or mean correction requires complete preference trajectories')
         if actor.pending is not None:raise ValueError('resolved frontier owner required')
         values={};settled=0
         for seed in self.seeds:

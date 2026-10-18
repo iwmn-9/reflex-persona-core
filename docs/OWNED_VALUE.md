@@ -123,3 +123,29 @@ resolve_feedback(owner, result['ticket'], actual_feedback)
 保存した予測を作り直すと、同じPython/NumPyでも確率の末尾に丸め差が出る場合がある。通常の監査は従来どおり完全一致を求める。これで完走後の監査だけが失敗した場合に限り、明示した `--recorded-predictions` により `tools/audit_recorded_forecasts.py` を使える。再計算した各確率と当時の記録を固定の8 ULP以内で照合し、**当時実際に用いた予測**への結果として学習を再生する。最終的な本人の各hash、物理結果、世界乱数、固定軸には近似一致を認めない。8 ULPは監査の数値誤差上限であり、予測精度や環境をまたぐ完全再現の保証ではない。
 
 この別方式は行動を選び直す検証ではない。元の実行ソース・経験・軌跡を変更せず、監査方式・差の全記録・軌跡とソースのhashを `recorded_forecast_replay.json` に残し、集計でも照合する。方式を隠した集計、上限を超える予測差、本人のhash不一致は拒否する。プロセスを再起動した後の再計算が完全一致したと報告しない。検査は `tests/test_recorded_forecast_audit.py`。
+# Optional refinement of coarse immediate ties
+
+`owned_rollout(..., tail_goal_refinement=True)` lets a simulated future owner
+use its own public-response beliefs to distinguish immediate actions whose
+entire coarse effect vector is constant and identical. The selected action's
+equivalence class must also share target, confidence, familiarity and reading
+offset, with zero switching cost. Different intrinsic preferences remain
+outside that comparison. The ordinary persona tier and progress mask still
+decide eligibility; social appraisal and external advice currently decline
+this refinement. Defaults are unchanged.
+
+Only a first-order dominant one-step purpose lottery can resolve such a tie.
+Crossing risk distributions are not ranked by their mean. This adopts the
+finite-distribution comparison described in [MIT's stochastic dominance
+notes](https://ocw.mit.edu/courses/14-123-microeconomic-theory-iii-spring-2015/875150f8deb05a910756a02a4f9f78a5_MIT14_123S15_Chap4.pdf).
+Its application here is deliberately limited: dominance of the immediate
+declared purpose is **not** dominance of future states, knowledge or options.
+An inaccurate purpose proxy or response belief can still mislead it.
+
+The callback runs only when the separately budgeted future recovery planner
+declines or has exhausted its budget. It does not spend additional recovery
+calls, change world dynamics, create empirical experience or update the real
+owner. It adds conditional event enumeration to the imagined reflex and may
+cost more CPU time. Cache identities and registered experiment configurations
+include the option. Long-run adoption remains subject to separate validation.
+
