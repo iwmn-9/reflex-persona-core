@@ -12,6 +12,15 @@ on:
       plan:
         type: string
         required: true
+      actor_ref:
+        description: Frozen acting source; defaults to the workflow commit
+        type: string
+        required: false
+      case_keys:
+        description: Optional JSON array selecting unchanged registered cases
+        type: string
+        required: false
+        default: '[]'
 permissions:
   contents: read
 jobs:
@@ -25,6 +34,7 @@ jobs:
       - id: plan
         env:
           PLAN: ${{ inputs.plan }}
+          CASE_KEYS: ${{ inputs.case_keys }}
         run: |
           python - <<'PY'
           import json,os,re
@@ -34,6 +44,10 @@ jobs:
           plan=json.loads(path.read_text());cases=plan['cases']
           assert 1<=len(cases)<=64 and len({s['key'] for s in cases})==len(cases)
           assert all(re.fullmatch(r'[a-z0-9-]+',s['key']) for s in cases)
+          keys=json.loads(os.environ.get('CASE_KEYS') or '[]')
+          assert isinstance(keys,list) and all(isinstance(k,str) for k in keys)
+          assert len(set(keys))==len(keys) and set(keys)<={s['key'] for s in cases}
+          if keys:cases=[s for s in cases if s['key'] in keys]
           groups=[{'cases':cases[i:i+2]} for i in range(0,len(cases),2)]
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('include='+json.dumps(groups,separators=(',',':'))+'\n')
           PY
@@ -47,10 +61,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ inputs.actor_ref || github.sha }}
+          path: frozen-input
       - uses: actions/setup-python@v7.0.0
         with:
           python-version: '3.13.16'
-      - run: python -m pip install -e . numpy==2.5.4
+      - run: python -m pip install -e frozen-input numpy==2.5.4
       - name: Compare the same persistent world and fixed person
         timeout-minutes: 345
         env:
@@ -64,7 +82,8 @@ jobs:
           import numpy as np
           specs=json.loads(os.environ['SPEC'])['cases'];p=Path(os.environ['PLAN']);plan=json.loads(p.read_text())
           assert 1<=len(specs)<=2 and all(spec in plan['cases'] for spec in specs)
-          manifest={str(f).replace('\\','/'):hashlib.sha256(f.read_bytes()).hexdigest() for folder in ('reflex','tools') for f in Path(folder).glob('*.py')}
+          actor=Path('frozen-input').resolve()
+          manifest={f.relative_to(actor).as_posix():hashlib.sha256(f.read_bytes()).hexdigest() for folder in ('reflex','tools') for f in (actor/folder).glob('*.py')}
           assert manifest==plan['sources'],'registered source changed'
           root=Path('results/value-contract');root.mkdir(parents=True)
           proofs=[dict(version='same-host-value-contract-v1',pair_id=uuid.uuid4().hex,job=spec['job'],
@@ -79,7 +98,7 @@ jobs:
           save()
           def execute(item):
               i,name=item
-              args=[sys.executable,'tools/run_horizon_study.py','--root',str(root/f'pair{i}'/name),
+              args=[sys.executable,str(actor/'tools/run_horizon_study.py'),'--root',str(root/f'pair{i}'/name),
                     '--job',json.dumps(specs[i]['job']),'--stage',plan['stage']]
               if name=='candidate':args+=['--cumulative-achievement']
               return subprocess.run(args,check=False).returncode
