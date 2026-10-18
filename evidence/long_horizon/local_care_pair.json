@@ -1,0 +1,225 @@
+{
+  "case": {
+    "game": "resources",
+    "profile": "care",
+    "seed": 41102,
+    "regime": "shift-return",
+    "turns": 128
+  },
+  "same_frozen_source": true,
+  "same_runtime": true,
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.3.5",
+    "system": "Windows",
+    "release": "11",
+    "machine": "AMD64"
+  },
+  "sources": [
+    {
+      "path": "results/long_horizon_counterexample/resource-ego-41102-h16",
+      "trajectory_sha256": "6f3cb2f7baa43823f18e5c97e56c65305208e7dabcfdb8b94afbc77f4cac3a75",
+      "source_manifest_sha256": "73e080d766f302f8566a550cffe6fe1ef1a992a87aa5137acbd9ee8715b142cf"
+    },
+    {
+      "path": "results/long_horizon_counterexample/resource-ego-41102-h32",
+      "trajectory_sha256": "757844599baee5eaa12cc4f23a511a25b4a50a72f97e4092f39b31e12ac9a15b",
+      "source_manifest_sha256": "73e080d766f302f8566a550cffe6fe1ef1a992a87aa5137acbd9ee8715b142cf"
+    }
+  ],
+  "score_delta": 0.08984375,
+  "final_cash_delta": 69.0,
+  "arms": [
+    {
+      "horizon": 16,
+      "score": 0.5091145833333334,
+      "final": {
+        "tick": 128,
+        "cash": 399.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 4,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "crop:0"
+      },
+      "investments": [
+        5,
+        12,
+        34,
+        98
+      ],
+      "seconds": 3169.2660000000033,
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "account": {
+        "initial": 0.0,
+        "conditional_increments": 0.498177083333333,
+        "residual": 0.010937500000000377,
+        "reconstruction_error": 0.0
+      }
+    },
+    {
+      "horizon": 32,
+      "score": 0.5989583333333334,
+      "final": {
+        "tick": 128,
+        "cash": 468.0,
+        "score": 0.0,
+        "rival": 0.0,
+        "plant": 4,
+        "hp": 12.0,
+        "ammo": 2,
+        "investment": 0,
+        "signal": "0",
+        "last": "crop:0"
+      },
+      "investments": [
+        0,
+        7,
+        14,
+        21
+      ],
+      "seconds": 4930.891000000003,
+      "checks": {
+        "owner_parity": 128,
+        "fixed_axes": 128,
+        "restore": 6
+      },
+      "account": {
+        "initial": 0.0,
+        "conditional_increments": 0.5929687499999996,
+        "residual": 0.00598958333333377,
+        "reconstruction_error": 0.0
+      }
+    }
+  ],
+  "identical_responses": 128,
+  "identical_world_predictions": 128,
+  "changed_actions": [
+    {
+      "tick": 0,
+      "baseline": "trade",
+      "candidate": "invest"
+    },
+    {
+      "tick": 5,
+      "baseline": "invest",
+      "candidate": "trade"
+    },
+    {
+      "tick": 7,
+      "baseline": "crop:0",
+      "candidate": "invest"
+    },
+    {
+      "tick": 12,
+      "baseline": "invest",
+      "candidate": "crop:0"
+    },
+    {
+      "tick": 14,
+      "baseline": "crop:0",
+      "candidate": "invest"
+    },
+    {
+      "tick": 18,
+      "baseline": "trade",
+      "candidate": "crop:0"
+    },
+    {
+      "tick": 21,
+      "baseline": "crop:0",
+      "candidate": "invest"
+    },
+    {
+      "tick": 34,
+      "baseline": "invest",
+      "candidate": "crop:0"
+    },
+    {
+      "tick": 98,
+      "baseline": "invest",
+      "candidate": "crop:0"
+    }
+  ],
+  "timeline": [
+    {
+      "tick": 8,
+      "baseline_score": 0.006510416666666667,
+      "candidate_score": -0.0013020833333333333,
+      "baseline_plant": 0,
+      "candidate_plant": 1
+    },
+    {
+      "tick": 16,
+      "baseline_score": 0.018229166666666668,
+      "candidate_score": 0.015625,
+      "baseline_plant": 1,
+      "candidate_plant": 2
+    },
+    {
+      "tick": 24,
+      "baseline_score": 0.04296875,
+      "candidate_score": 0.036458333333333336,
+      "baseline_plant": 2,
+      "candidate_plant": 3
+    },
+    {
+      "tick": 32,
+      "baseline_score": 0.07161458333333333,
+      "candidate_score": 0.07682291666666667,
+      "baseline_plant": 2,
+      "candidate_plant": 4
+    },
+    {
+      "tick": 48,
+      "baseline_score": 0.09895833333333333,
+      "candidate_score": 0.11979166666666667,
+      "baseline_plant": 3,
+      "candidate_plant": 4
+    },
+    {
+      "tick": 64,
+      "baseline_score": 0.1875,
+      "candidate_score": 0.2265625,
+      "baseline_plant": 3,
+      "candidate_plant": 4
+    },
+    {
+      "tick": 80,
+      "baseline_score": 0.23697916666666666,
+      "candidate_score": 0.2877604166666667,
+      "baseline_plant": 3,
+      "candidate_plant": 4
+    },
+    {
+      "tick": 96,
+      "baseline_score": 0.3255208333333333,
+      "candidate_score": 0.39453125,
+      "baseline_plant": 3,
+      "candidate_plant": 4
+    },
+    {
+      "tick": 112,
+      "baseline_score": 0.4114583333333333,
+      "candidate_score": 0.5013020833333334,
+      "baseline_plant": 4,
+      "candidate_plant": 4
+    },
+    {
+      "tick": 128,
+      "baseline_score": 0.5091145833333334,
+      "candidate_score": 0.5989583333333334,
+      "baseline_plant": 4,
+      "candidate_plant": 4
+    }
+  ],
+  "limitation": "Same-runtime paired execution of the care persona on a development world seed. An initial profile-index error selected care (index2), not ego (index3). Legacy directory names say ego; stored job/profile are authoritative. These are valid paired data, but not a reproduction of the named ego failure, an independent holdout, or all-game adoption. Elapsed times overlap other local work and are not a controlled performance benchmark.",
+  "classification": "Supplementary care persona, seed41102; not the original ego failure."
+}

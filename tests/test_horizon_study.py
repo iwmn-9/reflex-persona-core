@@ -4,6 +4,26 @@ from tools.run_owned_value import run
 
 
 class HorizonStudyTests(unittest.TestCase):
+    def test_same_host_pair_matches_independent_worlds_and_keeps_profile_identity(self):
+        from tools.run_horizon_pair import run_pair
+        jobs=[['gambling',3,52994,'outside',3,1,tail,0] for tail in (1,2)]
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)/'pair'
+            mismatch=[list(j) for j in jobs];mismatch[1][2]+=1
+            with self.assertRaisesRegex(ValueError,'same world'):run_pair(root,mismatch,'diagnostic')
+            self.assertFalse(root.exists())
+            proof=run_pair(root,jobs,'diagnostic')
+            self.assertTrue(proof['complete']);self.assertTrue(proof['same_source'])
+            self.assertEqual(proof['profile'],'ego')
+            for job in jobs:
+                child=root/f'h{job[6]+1}'
+                self.assertEqual(json.loads((child/'pair_execution.json').read_text()),proof)
+                actual=json.loads((child/'trajectories.jsonl').read_text())
+                expected=run(job,'receding_recovery')
+                actual.pop('seconds');expected.pop('seconds')
+                self.assertEqual(actual,expected)
+            with self.assertRaises(FileExistsError):run_pair(root,jobs,'diagnostic')
+
     def test_offline_accounts_are_zero_mean_over_exhaustive_public_events(self):
         from itertools import product
         from tools.continuing_games import ContinuingGame,GAMES

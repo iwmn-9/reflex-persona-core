@@ -76,6 +76,13 @@ def summarize(repo,root,plan,partial=False):
     for key,right in sorted(rows.items()):
         if key[-1]==16 or key[:-1]+(16,) not in rows:continue
         baseline_key=key[:-1]+(16,);left=rows[baseline_key];lt=left['trace'];rt=right['trace']
+        paired_host=None
+        if plan.get('execution_pairing'):
+            pair_records=[json.loads((Path(origins[k]).parent/'pair_execution.json').read_text()) for k in (baseline_key,key)]
+            assert pair_records[0]==pair_records[1] and pair_records[0]['complete'] and pair_records[0]['same_source'],'incomplete or unmatched host pairing'
+            snapshots=[json.loads((Path(origins[k]).parent/'source_snapshot.json').read_text()) for k in (baseline_key,key)]
+            assert snapshots[0]==snapshots[1],'paired source drift'
+            paired_host=pair_records[0]['pair_id']
         assert left['turns']==right['turns'] and left['interval']==right['interval']==1
         for a,b in zip(lt,rt):assert a['response']==b['response'] and a['truth']==b['truth'],'unmatched world events'
         for k in (baseline_key,key):
@@ -95,6 +102,9 @@ def summarize(repo,root,plan,partial=False):
             **gains,
             phase_gains=[dict(tick=t,delta=score_at(rt,t)-score_at(lt,t)) for t in sorted({max(1,right['turns']*i//4) for i in range(1,5)})],
             baseline_executed=len(lt),candidate_executed=len(rt),
+            same_host_pair_id=paired_host,
+            identical_world_prediction_steps=sum(a['law']==b['law'] for a,b in zip(lt,rt)),
+            max_world_prediction_difference=max(abs(a['law'][z]-b['law'][z]) for a,b in zip(lt,rt) for z in a['law']),
             action_changes=sum(a['action']!=b['action'] for a,b in zip(lt,rt)),
             baseline_actions=dict(Counter(t['action'] for t in lt)),candidate_actions=dict(Counter(t['action'] for t in rt)),
             baseline_source=origins[key[:-1]+(16,)],candidate_source=origins[key]))

@@ -33,6 +33,9 @@ jobs:
           from pathlib import Path
           jobs=json.loads(os.environ['JOBS']) if os.environ['JOBS'] else json.loads(Path('evidence/long_horizon/development_plan.json').read_text())['new_jobs']
           assert isinstance(jobs,list) and 1<=len(jobs)<=256
+          for spec in jobs:
+              if 'partner_job' in spec:
+                  assert [spec['job'][6],spec['partner_job'][6]]==[15,31], 'paired artifact layout requires H16/H32'
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('include='+json.dumps(jobs,separators=(',',':'))+'\n')
           PY
   study:
@@ -70,15 +73,31 @@ jobs:
           RECOVERY_LIMIT: ${{ matrix.recovery_limit || 16 }}
           RESUME_MANIFEST: ${{ matrix.resume_manifest }}
           RESUME_RUN: ${{ matrix.resume_run }}
+          PARTNER_JOB: ${{ matrix.partner_job && toJSON(matrix.partner_job) || '' }}
         run: |
-          if [ -n "$RESUME_RUN" ]; then
+          if [ -n "$PARTNER_JOB" ]; then
+            test -z "$RESUME_RUN"
+            python tools/run_horizon_pair.py --root results/horizon --job "$JOB" --partner-job "$PARTNER_JOB" --stage "$STAGE" --recovery-limit "$RECOVERY_LIMIT"
+          elif [ -n "$RESUME_RUN" ]; then
             python tools/resume_horizon_study.py --root results/horizon --job "$JOB" --manifest "$RESUME_MANIFEST"
           else
             python tools/run_horizon_study.py --root results/horizon --job "$JOB" --stage "$STAGE" --recovery-limit "$RECOVERY_LIMIT"
           fi
       - uses: actions/upload-artifact@v7.0.2
-        if: always()
+        if: ${{ always() && !matrix.partner_job }}
         with:
           name: horizon-${{ matrix.key }}
           path: results/horizon
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.partner_job }}
+        with:
+          name: horizon-${{ matrix.key }}-h16
+          path: results/horizon/h16
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.partner_job }}
+        with:
+          name: horizon-${{ matrix.key }}-h32
+          path: results/horizon/h32
           retention-days: 14

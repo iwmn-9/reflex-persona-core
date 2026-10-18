@@ -1881,5 +1881,23 @@
       }
     },
     "candidate_jobs_seeds_unchanged": true
+  },
+  "execution_pairing": {
+    "at": "2026-10-18T00:10:52.004403+00:00",
+    "kind": "two independent frozen subprocesses per same-host pair",
+    "jobs_unchanged": true,
+    "old_run": 39077553415,
+    "old_run_at_cancel": {
+      "status": "queued",
+      "jobs": [
+        {
+          "name": "matrix",
+          "status": "queued",
+          "conclusion": ""
+        }
+      ]
+    },
+    "reason": "Reduce per-pair platform differences after a development pair showed world-probability differences up to 2.22e-16 despite identical Python/NumPy/OS labels. No primary/stress studies had started or outcomes been inspected. Use available host CPUs for the two independent arms.",
+    "failed_or_partial_side": "Keep artifacts and checkpoints; never count as a completed pair. Any continuation on another host must be identified separately."
   }
 }
