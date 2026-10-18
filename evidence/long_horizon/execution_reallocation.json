@@ -12,8 +12,20 @@
     "Original artifacts and execution provenance are retained, and resumption must verify the original prefix unchanged."
   ],
   "pre_review": "results/long_horizon_development/pre-priority-review.json",
-  "status": "prepared; original run not yet cancelled",
+  "status": "original operationally cancelled; all 40 produced artifacts collected; continuation prepared",
   "local_validation": "Four 3-step worlds, two resumed from distinct prefix lengths and two fresh: all complete rows excluding elapsed time exactly match uninterrupted execution; original frozen manifests and prefixes retained. 1 test passed in 52.357 seconds.",
   "primary_artifacts_before_change": 0,
-  "stress_artifacts_before_change": 0
+  "stress_artifacts_before_change": 0,
+  "cancelled": "2026-10-18T02:21:36Z",
+  "prepared": "2026-10-18T02:25:07.611626+00:00",
+  "completed": 21,
+  "resume_checkpoints": 19,
+  "no_checkpoint": [
+    "combat-3-43-shift-return-h64"
+  ],
+  "not_started": 39,
+  "continuing_worlds": 59,
+  "batches": 15,
+  "collection": "results/long_horizon_development/collection.json",
+  "continuation_plan": "evidence/long_horizon/development_continuation_plan.json"
 }
