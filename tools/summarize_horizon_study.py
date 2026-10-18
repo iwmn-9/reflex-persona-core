@@ -69,6 +69,11 @@ def summarize(repo,root,plan,partial=False,additional_roots=()):
     for job in plan['new_jobs']:
         candidates=[base/('horizon-'+job['key']) for base in (root,*additional_roots)]
         finished=[p for p in candidates if (p/'trajectories.jsonl').exists() and (p/'audit.json').exists()]
+        if plan.get('execution_pairing'):
+            # An orphaned finished arm is retained as incomplete pair evidence.
+            # A later, explicitly paired continuation can supersede it without
+            # selecting between two completed pairs by their scores.
+            finished=[p for p in finished if json.loads((p/'pair_execution.json').read_text()).get('complete')]
         assert len(finished)<=1,('duplicate completed execution',job['key'])
         if not finished:
             (incomplete if any(p.exists() for p in candidates) else missing).append(job['key']);continue
@@ -84,13 +89,29 @@ def summarize(repo,root,plan,partial=False,additional_roots=()):
     for key,right in sorted(rows.items()):
         if key[-1]==16 or key[:-1]+(16,) not in rows:continue
         baseline_key=key[:-1]+(16,);left=rows[baseline_key];lt=left['trace'];rt=right['trace']
-        paired_host=None
+        paired_host=None;host_segments=None
         if plan.get('execution_pairing'):
             pair_records=[json.loads((Path(origins[k]).parent/'pair_execution.json').read_text()) for k in (baseline_key,key)]
             assert pair_records[0]==pair_records[1] and pair_records[0]['complete'] and pair_records[0]['same_source'],'incomplete or unmatched host pairing'
             snapshots=[json.loads((Path(origins[k]).parent/'source_snapshot.json').read_text()) for k in (baseline_key,key)]
             assert snapshots[0]==snapshots[1],'paired source drift'
             paired_host=pair_records[0]['pair_id']
+            if pair_records[0].get('host_segments') is not None:
+                host_segments=pair_records[0]['host_segments']
+                assert host_segments[0]['start']==0 and host_segments[-1]['end']==right['turns']
+                assert all(a['end']==b['start'] for a,b in zip(host_segments,host_segments[1:]))
+                assert all(0<=s['start']<=s['end']<=right['turns'] and s['execution_id'] for s in host_segments)
+                for side,k in enumerate((baseline_key,key)):
+                    child=Path(origins[k]).parent
+                    boundary=json.loads((child/'boundary_provenance.json').read_text())
+                    resumed=json.loads((child/'resume_provenance.json').read_text())
+                    assert resumed['complete'] and resumed['original_prefix_unchanged']
+                    assert resumed['resume_at']==boundary['resume_at']==pair_records[0]['continuation']['boundary']
+                    assert resumed['original_checkpoint_sha256']==boundary['rewritten_checkpoint_sha256']
+                    assert boundary['original_checkpoint_sha256']==pair_records[0]['continuation']['inputs'][side]['checkpoint_sha256']
+                    prefix=[{name:v for name,v in t.items() if name not in ('forecast_error','realized_at_forecast_end')}
+                            for t in rows[k]['trace'][:boundary['resume_at']]]
+                    assert hashlib.sha256(json.dumps(prefix,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf8')).hexdigest()==boundary['retained_prefix_sha256']
         assert left['turns']==right['turns'] and left['interval']==right['interval']==1
         for a,b in zip(lt,rt):assert a['response']==b['response'] and a['truth']==b['truth'],'unmatched world events'
         for k in (baseline_key,key):
@@ -111,6 +132,7 @@ def summarize(repo,root,plan,partial=False,additional_roots=()):
             phase_gains=[dict(tick=t,delta=score_at(rt,t)-score_at(lt,t)) for t in sorted({max(1,right['turns']*i//4) for i in range(1,5)})],
             baseline_executed=len(lt),candidate_executed=len(rt),
             same_host_pair_id=paired_host,
+            **({'execution_host_segments':host_segments} if host_segments is not None else {}),
             identical_world_prediction_steps=sum(a['law']==b['law'] for a,b in zip(lt,rt)),
             max_world_prediction_difference=max(abs(a['law'][z]-b['law'][z]) for a,b in zip(lt,rt) for z in a['law']),
             action_changes=sum(a['action']!=b['action'] for a,b in zip(lt,rt)),
