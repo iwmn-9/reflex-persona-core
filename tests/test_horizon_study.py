@@ -4,6 +4,43 @@ from tools.run_owned_value import run
 
 
 class HorizonStudyTests(unittest.TestCase):
+    def test_independent_batch_preserves_partial_worlds_and_fresh_execution(self):
+        from unittest.mock import patch
+        from tools.freeze_experiment import dispatch
+        from tools.run_horizon_batch import run_batch
+        jobs=[[g,p,52990+p,'outside',3,1,1+p%2,0]
+              for g,p in (('gambling',1),('resources',3),('combat',0),('auction',2))]
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)/'batch';specs=[];prefixes={}
+            for index,job in enumerate(jobs):
+                spec=dict(key=f'case-{index}',job=job);specs.append(spec)
+                if index>=2:continue
+                child=root/f'study{index}'
+                with patch('tools.freeze_experiment.subprocess.run'):dispatch(child,'run_horizon_study.py',[])
+                program='''import json,sys
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+from tools.run_horizon_study import __doc__ as semantics
+from tools.run_owned_value import run
+root=Path(sys.argv[2]);job=json.loads(sys.argv[3])
+(root/'registration.json').write_text(json.dumps(dict(jobs=[job],arms=['receding_recovery'],world_seeds=[job[2]],stage='diagnostic',semantics=semantics)))
+assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisions=int(sys.argv[4])) is None
+'''
+                subprocess.run([sys.executable,'-c',program,str(child/'_source'),str(child),json.dumps(job),str(index+1)],check=True,capture_output=True)
+                spec['resume_manifest']=hashlib.sha256((child/'source_snapshot.json').read_bytes()).hexdigest()
+                prefixes[index]=json.loads((child/'checkpoint.json').read_text())['payload']['trace']
+            source=Path(__file__).resolve().parents[1]
+            result=run_batch(root,specs,source,'diagnostic')
+            self.assertTrue(result['complete']);self.assertTrue(result['same_source'])
+            for index,job in enumerate(jobs):
+                child=root/f'study{index}';actual=json.loads((child/'trajectories.jsonl').read_text())
+                expected=run(job,'receding_recovery');actual.pop('seconds');expected.pop('seconds')
+                self.assertEqual(actual,expected)
+                if index in prefixes:
+                    self.assertTrue(json.loads((child/'resume_provenance.json').read_text())['original_prefix_unchanged'])
+                    self.assertEqual(len(prefixes[index]),index+1)
+            with self.assertRaisesRegex(FileExistsError,'fresh batch'):run_batch(root,specs,source,'diagnostic')
+
     def test_combat_reference_matches_exhaustive_rules_with_death_and_reloading(self):
         from tools.combat_reference import reference
         from tools.continuing_games import ContinuingGame

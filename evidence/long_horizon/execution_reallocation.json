@@ -1,0 +1,19 @@
+{
+  "created": "2026-10-18T02:20:53.670616+00:00",
+  "original_run": 39073306018,
+  "original_source": "52e123548c7016bf42251ae92bcef190ac27fe0c",
+  "reason": "The development run occupies twenty hosts with one independent world per four-CPU host while primary confirmation and stress are queued. Preserve completed and partial artifacts, then continue every unfinished registered world in batches of up to four independent subprocesses per host. This frees the queue for independent confirmation and avoids dropping any registered condition.",
+  "invariants": [
+    "All 80 original new jobs and 16 retained baselines remain registered.",
+    "Reuse all completed worlds. Resume partial worlds using their original frozen sources, complete learner, world RNG and horizon.",
+    "Fresh queued worlds use the original source revision, not the newer analysis checkout.",
+    "No change to primary/stress seeds, source, candidate or numerical acceptance criteria.",
+    "Operational cancellation is not a quality failure; unfinished worlds remain incomplete until continued and audited.",
+    "Original artifacts and execution provenance are retained, and resumption must verify the original prefix unchanged."
+  ],
+  "pre_review": "results/long_horizon_development/pre-priority-review.json",
+  "status": "prepared; original run not yet cancelled",
+  "local_validation": "Four 3-step worlds, two resumed from distinct prefix lengths and two fresh: all complete rows excluding elapsed time exactly match uninterrupted execution; original frozen manifests and prefixes retained. 1 test passed in 52.357 seconds.",
+  "primary_artifacts_before_change": 0,
+  "stress_artifacts_before_change": 0
+}

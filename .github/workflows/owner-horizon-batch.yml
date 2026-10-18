@@ -1,0 +1,104 @@
+name: Resume and group registered horizon studies
+run-name: Horizon continuation ${{ inputs.label }}
+on:
+  push:
+    branches: [research/long-horizon]
+    paths: [.github/workflows/owner-horizon-batch.yml]
+  workflow_dispatch:
+    inputs:
+      label:
+        type: string
+        required: true
+      batches:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+jobs:
+  matrix:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    outputs:
+      include: ${{ steps.plan.outputs.include }}
+    steps:
+      - id: plan
+        env:
+          BATCHES: ${{ inputs.batches }}
+        run: |
+          python - <<'PY'
+          import json,os,re
+          batches=json.loads(os.environ['BATCHES'])
+          assert isinstance(batches,list) and 1<=len(batches)<=64
+          seen=set()
+          for batch in batches:
+              assert re.fullmatch(r'[a-f0-9]{40}',batch['source_ref'])
+              assert 1<=len(batch['studies'])<=4
+              for study in batch['studies']:
+                  assert study['key'] not in seen
+                  seen.add(study['key'])
+                  if 'resume_run' in study:
+                      assert re.fullmatch(r'[0-9]+',str(study['resume_run']))
+                      assert re.fullmatch(r'[a-f0-9]{64}',study['resume_manifest'])
+                      assert re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]+',study['resume_artifact'])
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('include='+json.dumps(batches,separators=(',',':'))+'\n')
+          PY
+  study:
+    needs: matrix
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.matrix.outputs.include) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ matrix.source_ref }}
+          path: frozen-input
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13.16'
+      - run: python -m pip install -e frozen-input numpy==2.5.4
+      - name: Restore original incomplete executions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STUDIES: ${{ toJSON(matrix.studies) }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          for index,study in enumerate(json.loads(os.environ['STUDIES'])):
+              if 'resume_run' in study:
+                  subprocess.run(['gh','run','download',str(study['resume_run']),
+                      '--name',study['resume_artifact'],'--dir',f'results/horizon/study{index}'],check=True)
+          PY
+      - name: Continue registered worlds from their own frozen sources
+        timeout-minutes: 345
+        env:
+          STUDIES: ${{ toJSON(matrix.studies) }}
+        run: python tools/run_horizon_batch.py --root results/horizon --studies "$STUDIES" --fresh-source frozen-input --stage development
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.studies[0] }}
+        with:
+          name: horizon-${{ matrix.studies[0].key }}
+          path: results/horizon/study0
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.studies[1] }}
+        with:
+          name: horizon-${{ matrix.studies[1].key }}
+          path: results/horizon/study1
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.studies[2] }}
+        with:
+          name: horizon-${{ matrix.studies[2].key }}
+          path: results/horizon/study2
+          retention-days: 14
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() && matrix.studies[3] }}
+        with:
+          name: horizon-${{ matrix.studies[3].key }}
+          path: results/horizon/study3
+          retention-days: 14
