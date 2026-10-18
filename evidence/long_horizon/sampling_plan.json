@@ -99,5 +99,13 @@
         3703
       ]
     }
-  ]
+  ],
+  "prior_negative_evidence": {
+    "report": "evidence/auction_recovery/REPORT.md",
+    "result": "Earlier periodic endpoint_dense with 12 model samples: 0 better, 2 tied, 2 worse in four auction development conditions. That controller lacked the current posterior/conditional/recovery/every-step integration.",
+    "reason_to_retest": "Current selected-state diagnostics expose sample-dependent choices and pooled-path changes. The long-run test checks whether those local changes survive actual learning and repeated control. It does not assume the older failure has disappeared.",
+    "stop_rule": "Do not sweep sample counts or choose a lucky bank if this matched diagnostic does not improve realized outcomes. Preserve negatives and investigate the world/future-owner approximation instead.",
+    "documented": "2026-10-18T01:52:09.943638+00:00",
+    "execution_contract": "Added explanation only; jobs, seeds, core identity and acceptance scope match the original plan captured in results/long_horizon_sampling/execution.json before execution."
+  }
 }
