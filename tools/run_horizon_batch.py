@@ -38,6 +38,7 @@ def run_batch(root,studies,fresh_source,stage):
             assert registration['stage']==stage and registration['jobs']==[spec['job']]
             args=[sys.executable,str(Path(__file__).with_name('resume_horizon_study.py')),
                 '--root',str(child),'--manifest',spec['resume_manifest'],'--job',json.dumps(spec['job'])]
+            if spec.get('recorded_predictions') is True:args+=['--recorded-predictions']
         else:
             args=[sys.executable,str(fresh_source/'tools/run_horizon_study.py'),
                 '--root',str(child),'--job',json.dumps(spec['job']),'--stage',stage]

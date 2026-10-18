@@ -75,7 +75,7 @@ def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False):
     assert all(not root.is_relative_to(x['path']) for x in data),'continuation output must be outside original inputs'
     left,right=data;prior=left['pair']
     assert prior==right['pair'],'different original pair'
-    assert not prior['complete'],'pair already complete'
+    assert not prior.get('complete',False),'pair already complete'
     versions=('same-host-value-contract-v1','segmented-same-host-value-contract-v1') if value_contract else ('same-host-horizon-pair-v1','segmented-same-host-horizon-pair-v1')
     assert prior['version'] in versions,'unknown pair execution contract'
     assert prior['job']==jobs[0] if value_contract else prior['jobs']==jobs,'different original pair'
@@ -136,18 +136,22 @@ def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False):
     return header
 
 
-def run_pair(root,inputs,jobs,manifests,checkpoints,*,value_contract=False):
+def run_pair(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,recorded_predictions=False):
+    assert type(recorded_predictions) is bool
     header=prepare(root,inputs,jobs,manifests,checkpoints,value_contract=value_contract);root=Path(root).resolve()
     names=('baseline','candidate') if value_contract else tuple(f'h{j[6]+1}' for j in jobs)
     pair_file='contract_pair.json' if value_contract else 'pair_execution.json'
     script=Path(__file__).with_name('resume_horizon_study.py')
     def execute(item):
         name,job,manifest=item;child=root/name
-        return subprocess.run([sys.executable,str(script),'--root',str(child),
-            '--job',json.dumps(job),'--manifest',manifest],check=False).returncode
+        args=[sys.executable,str(script),'--root',str(child),
+            '--job',json.dumps(job),'--manifest',manifest]
+        if recorded_predictions:args+=['--recorded-predictions']
+        return subprocess.run(args,check=False).returncode
     with ThreadPoolExecutor(max_workers=2) as pool:
         codes=list(pool.map(execute,zip(names,jobs,manifests)))
     header.update(return_codes=codes,complete=codes==[0,0])
+    if recorded_predictions:header['recorded_prediction_replay_permitted']=True
     if header['complete']:
         header['host_segments'][-1]['end']=jobs[0][4]
         added=[]
@@ -189,5 +193,5 @@ def verify_segmented_result(path,row,header,side):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',required=True)
     for name in ('inputs','jobs','manifests','checkpoints'):p.add_argument('--'+name,required=True)
-    p.add_argument('--value-contract',action='store_true')
-    a=p.parse_args();print(json.dumps(run_pair(a.root,*[json.loads(getattr(a,k)) for k in ('inputs','jobs','manifests','checkpoints')],value_contract=a.value_contract)))
+    p.add_argument('--value-contract',action='store_true');p.add_argument('--recorded-predictions',action='store_true')
+    a=p.parse_args();print(json.dumps(run_pair(a.root,*[json.loads(getattr(a,k)) for k in ('inputs','jobs','manifests','checkpoints')],value_contract=a.value_contract,recorded_predictions=a.recorded_predictions)))

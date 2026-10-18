@@ -35,6 +35,7 @@ jobs:
               for pair in batch['pairs']:
                   assert len(pair['jobs'])==len(pair['inputs'])==len(pair['keys'])==2
                   assert [j[6] for j in pair['jobs']]==[15,31]
+                  assert type(pair.get('recorded_predictions',False)) is bool
                   for key,item in zip(pair['keys'],pair['inputs']):
                       assert key not in seen and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]+',key)
                       seen.add(key)
@@ -80,12 +81,14 @@ jobs:
           pairs=json.loads(os.environ['PAIRS'])
           def execute(entry):
               index,pair=entry
-              return subprocess.run([sys.executable,'tools/resume_horizon_pair.py',
+              args=[sys.executable,'tools/resume_horizon_pair.py',
                   '--root',f'results/horizon/pair{index}',
                   '--inputs',json.dumps([f'results/input/p{index}/a{s}' for s in range(2)]),
                   '--jobs',json.dumps(pair['jobs']),
                   '--manifests',json.dumps([x['manifest'] for x in pair['inputs']]),
-                  '--checkpoints',json.dumps([x['checkpoint'] for x in pair['inputs']])],check=False).returncode
+                  '--checkpoints',json.dumps([x['checkpoint'] for x in pair['inputs']])]
+              if pair.get('recorded_predictions'):args+=['--recorded-predictions']
+              return subprocess.run(args,check=False).returncode
           with ThreadPoolExecutor(max_workers=2) as pool:codes=list(pool.map(execute,enumerate(pairs)))
           if any(codes):raise SystemExit('Incomplete continuations retained with original source and experience')
           PY

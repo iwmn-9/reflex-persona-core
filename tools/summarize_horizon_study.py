@@ -82,6 +82,8 @@ def summarize(repo,root,plan,partial=False,additional_roots=()):
         assert audit['complete'] and audit['source_freeze_verified'] and audit['completed_runs']==1
         assert audit['trajectory_sha256']==hashlib.sha256(source.read_bytes()).hexdigest()
         row=json.loads(source.read_text());g,p,s,r,turns,interval,tail,offset=job['job']
+        from tools.audit_recorded_forecasts import verify_receipt
+        verify_receipt(path,audit,row)
         assert [row['game'],row['profile'],row['seed'],row['regime'],row['turns'],row['interval'],row['tail_steps'],row['offset']]==[g,PROFILES[p]['id'],s,r,turns,interval,tail,offset]
         add(row,source)
     if not partial:assert not missing and not incomplete,(missing,incomplete)

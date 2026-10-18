@@ -77,6 +77,10 @@ assert run(job,'receding_recovery',checkpoint=child/'checkpoint.json',max_decisi
     def test_common_boundary_continuation_matches_uninterrupted_decisions(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);inputs,jobs,manifests,checkpoints=self.fixture(root,tails=(15,31))
+            # A killed original coordinator never writes its final marker.
+            for source in inputs:
+                marker=Path(source)/'pair_execution.json';record=json.loads(marker.read_text())
+                record.pop('complete');marker.write_text(json.dumps(record))
             first=Path(inputs[0])
             subprocess.run([sys.executable,str(first/'_source/tools/run_horizon_study.py'),
                 '--root',str(first),'--job',json.dumps(jobs[0]),'--stage','diagnostic','--frozen'],check=True,capture_output=True)

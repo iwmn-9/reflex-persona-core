@@ -2,9 +2,11 @@
 import argparse,hashlib,json,platform,subprocess,sys
 from pathlib import Path
 import numpy as np
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 
 
-def resume(root,expected_manifest,job):
+def resume(root,expected_manifest,job,*,recorded_predictions=False):
+    assert type(recorded_predictions) is bool
     root=Path(root).resolve();manifest=root/'source_snapshot.json'
     assert hashlib.sha256(manifest.read_bytes()).hexdigest()==expected_manifest,'wrong frozen source manifest'
     source=(root/'_source').resolve();files=json.loads(manifest.read_text())
@@ -48,18 +50,28 @@ def resume(root,expected_manifest,job):
         args=[sys.executable,str(source/'tools/audit_owned_value.py'),str(root)]
     provenance=dict(resume_at=len(prefix),source_manifest_sha256=expected_manifest,
         original_checkpoint_sha256=hashlib.sha256(original).hexdigest(),complete=False)
+    if recorded_predictions:provenance['recorded_prediction_replay_permitted']=True
     if audit_only:provenance.update(audit_only=True,original_trajectory_sha256=hashlib.sha256(original_trajectory).hexdigest())
     record=root/'resume_provenance.json'
     if record.exists():provenance['previous']=json.loads(record.read_text())
     record.write_text(json.dumps(provenance,indent=2)+'\n')
     print(json.dumps(dict(resume_at=len(prefix),turns=job[4])),flush=True)
-    subprocess.run(args,check=True)
+    try:
+        subprocess.run(args,check=True)
+    except subprocess.CalledProcessError:
+        # Never hide an interrupted world or change any of its decisions.
+        # The opt-in alternate auditor still requires exact resulting owners.
+        if not recorded_predictions or not trajectory.exists() or audit_path.exists():raise
+        subprocess.run([sys.executable,str(Path(__file__).with_name('audit_recorded_forecasts.py')),str(root)],check=True)
     if audit_only:
         assert trajectory.read_bytes()==original_trajectory and checkpoint.read_bytes()==original,'audit changed execution evidence'
     completed=json.loads((root/'trajectories.jsonl').read_text())
     assert len(completed['trace'])>=len(prefix)
     assert all(all(new[k]==value for k,value in old.items()) for old,new in zip(prefix,completed['trace'])),'prior experience changed'
     audit=json.loads((root/'audit.json').read_text());assert audit['complete'] and audit['source_freeze_verified']
+    from tools.audit_recorded_forecasts import verify_receipt
+    recipe=verify_receipt(root,audit,completed)
+    if recipe is not None:provenance['audit_recipe']=recipe
     provenance.update(complete=True,original_prefix_unchanged=True,completed_turns=completed['executed'])
     record.write_text(json.dumps(provenance,indent=2)+'\n')
     return provenance
@@ -67,5 +79,5 @@ def resume(root,expected_manifest,job):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--manifest',required=True)
-    p.add_argument('--job',required=True);a=p.parse_args()
-    resume(a.root,a.manifest,json.loads(a.job))
+    p.add_argument('--job',required=True);p.add_argument('--recorded-predictions',action='store_true');a=p.parse_args()
+    resume(a.root,a.manifest,json.loads(a.job),recorded_predictions=a.recorded_predictions)
