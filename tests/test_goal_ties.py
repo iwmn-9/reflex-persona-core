@@ -106,5 +106,19 @@ class GoalTieTests(unittest.TestCase):
         self.assertIsNone(planner([c],[{'action_id':'a'}]))
         events.assert_not_called();person.predictor.predict.assert_not_called()
 
+    def test_declared_negative_purpose_value_declines_monotone_refinement(self):
+        from reflex.laboratory import PROFILES
+        from reflex.closed_loop import owned_rollout
+        from reflex.cumulative_preference import CumulativePreference
+        from tools.continuing_games import ContinuingGame
+        g=ContinuingGame('gambling',PROFILES[0],3);owner=g.actor(g.context(g.start()),learning='segmented')
+        args=dict(observe=g.context,events=g.events,terminal=g.terminal,assess=lambda w:g.goal(w).record(),
+            record=lambda w:w,request_for=g.request,feedback=g.feedback,model_id=g.model_id,target=g.target,
+            tail_steps=2,tail_goal_refinement=True)
+        positive=owned_rollout(owner,**args,cumulative_preference=CumulativePreference(g.target,'unit',(('values.achievement',1.),)))
+        negative=owned_rollout(owner,**args,cumulative_preference=CumulativePreference(g.target,'unit',(('values.achievement',-1.),)))
+        self.assertIsNotNone(positive.frontier.reflex_planner)
+        self.assertIsNone(negative.frontier.reflex_planner)
+
 
 if __name__=='__main__':unittest.main()

@@ -11,8 +11,9 @@ class PairContinuationTests(unittest.TestCase):
         pair=dict(version='same-host-horizon-pair-v1',pair_id='original-host',jobs=jobs,
             profile='steady',stage='diagnostic',recovery_limit=16,complete=False)
         if value_contract:
-            pair=dict(version='same-host-value-contract-v1',pair_id='original-host',job=jobs[0],complete=False,
+            pair=dict(version='same-host-value-contract-v1',pair_id='original-host',job=jobs[1],complete=False,
                 configurations={'baseline':{},'candidate':{'cumulative_achievement':True}},plan_sha256='a'*64)
+            if jobs[0]!=jobs[1]:pair['jobs']=dict(zip(('baseline','candidate'),jobs))
         inputs=[]
         for index,job in enumerate(jobs):
             child=root/f'input{index}';freeze(child);inputs.append(str(child))
@@ -73,6 +74,18 @@ assert run(job,'receding_recovery',checkpoint=child/'checkpoint.json',max_decisi
             bad=root/'finalized/candidate/boundary_provenance.json'
             boundary=json.loads(bad.read_text());boundary['retained_prefix_sha256']='0'*64;bad.write_text(json.dumps(boundary))
             with self.assertRaises(AssertionError):verify_segmented_result(bad.parent,after,final,1)
+
+    def test_value_contract_resume_preserves_each_registered_horizon(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);inputs,jobs,manifests,checkpoints=self.fixture(root,tails=(1,2),value_contract=True)
+            proof=run_pair(root/'continued',inputs,jobs,manifests,checkpoints,value_contract=True)
+            self.assertEqual(proof['jobs'],dict(zip(('baseline','candidate'),jobs)))
+            self.assertEqual(proof['job'],jobs[1])
+            for index,name in enumerate(('baseline','candidate')):
+                child=root/'continued'/name;actual=json.loads((child/'trajectories.jsonl').read_text())
+                expected=run(jobs[index],'receding_recovery',cumulative_achievement=bool(index))
+                actual.pop('seconds');expected.pop('seconds');self.assertEqual(actual,expected)
+                verify_segmented_result(child,actual,proof,index)
 
     def test_common_boundary_continuation_matches_uninterrupted_decisions(self):
         with tempfile.TemporaryDirectory() as d:

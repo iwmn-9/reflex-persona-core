@@ -123,7 +123,7 @@ resolve_feedback(owner, result['ticket'], actual_feedback)
 保存した予測を作り直すと、同じPython/NumPyでも確率の末尾に丸め差が出る場合がある。通常の監査は従来どおり完全一致を求める。これで完走後の監査だけが失敗した場合に限り、明示した `--recorded-predictions` により `tools/audit_recorded_forecasts.py` を使える。再計算した各確率と当時の記録を固定の8 ULP以内で照合し、**当時実際に用いた予測**への結果として学習を再生する。最終的な本人の各hash、物理結果、世界乱数、固定軸には近似一致を認めない。8 ULPは監査の数値誤差上限であり、予測精度や環境をまたぐ完全再現の保証ではない。
 
 この別方式は行動を選び直す検証ではない。元の実行ソース・経験・軌跡を変更せず、監査方式・差の全記録・軌跡とソースのhashを `recorded_forecast_replay.json` に残し、集計でも照合する。方式を隠した集計、上限を超える予測差、本人のhash不一致は拒否する。プロセスを再起動した後の再計算が完全一致したと報告しない。検査は `tests/test_recorded_forecast_audit.py`。
-# Optional refinement of coarse immediate ties
+## Optional refinement of coarse immediate ties
 
 `owned_rollout(..., tail_goal_refinement=True)` lets a simulated future owner
 use its own public-response beliefs to distinguish immediate actions whose
@@ -148,4 +148,16 @@ calls, change world dynamics, create empirical experience or update the real
 owner. It adds conditional event enumeration to the imagined reflex and may
 cost more CPU time. Cache identities and registered experiment configurations
 include the option. Long-run adoption remains subject to separate validation.
+
+累積チャネルを併用する場合、この比較を使うのは宣言した換算がすべて正のときだけである。負の換算には目的点の低下を好む意味があり、目的点の増加を根拠に同点を解消しない。
+
+## 独立した予測群での判断確認（任意・検証中）
+
+`RecedingOwner(..., sampling_check=DecisionSampling())` は、同じ実際の本人を複製して、独立した予測乱数の組A・Bと、両組をまとめた予測で判断する。三つの選択が一致すれば統合した6標本を使い、食い違えば第三の独立した組Cを加えた9標本で判断する。初期値は各組3標本。組・標本数は明示的に指定でき、有限の上限を検査する。
+
+統合するのは、欲求・価値・危険・費用の相関を保った経路そのもの。多数決や、人格により候補を落とした後の得点平均は使わない。元と同じ人格の優先順位と目的の許容幅で、まとめた経路を再評価する。判断の一致は標本に対する再現性の確認であり、統計的な信頼区間や正しさの保証ではない。同じ世界モデルの誤り、読みの打ち切り、想像した将来の本人の近似は残る。
+
+同じ実際の判断中だけ、公開状態・将来の本人・予測組が一致する経路を再利用する。実際の経験更新をまたぐキャッシュは持たない。各試行は実際の本人から切り離し、最後に採用する予測の入力が実際の判断入力と完全一致することを検査して、一つの通常の未解決判断を作る。結果は従来どおり `resolve()` で学習する。未完の予測を黙って採用することもない。
+
+得るものは、少ない標本に偶然有利だった手を一度確かめる機会。支払うものは通常2〜3組分の予測と再採点の計算量である。設定・各段階の選択・採用標本・追加した組・再利用数を実行記録に残す。既定は無効。`tests/test_sampling_check.py` で、新しく全標本を計算した場合との一致、4ルールの通常結果学習、途中再開、キャッシュ分離、試行失敗時の本人保全を検査する。
 

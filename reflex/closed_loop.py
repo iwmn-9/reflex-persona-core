@@ -435,7 +435,7 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     if tail_steps==0 and (future_planner is not None or purpose_estimator!='sampled'):
         raise ValueError('zero tail has no future planning or sampling correction')
     refinement=None
-    if tail_goal_refinement:
+    if tail_goal_refinement and (cumulative_preference is None or all(conversion>0 for _,conversion in cumulative_preference.channels)):
         from .goal_ties import reflex_goal_planner
         def refinement(person,request,state):
             return reflex_goal_planner(person,request,state,events=events,assess=assess,target=target)

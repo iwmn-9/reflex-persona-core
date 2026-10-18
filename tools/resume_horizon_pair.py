@@ -69,7 +69,7 @@ def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False):
     assert type(value_contract) is bool
     pair_file='contract_pair.json' if value_contract else 'pair_execution.json'
     names=('baseline','candidate') if value_contract else tuple(f'h{j[6]+1}' for j in jobs)
-    if value_contract:assert jobs[0]==jobs[1]
+    if value_contract:assert jobs[0][:6]==jobs[1][:6] and jobs[0][7:]==jobs[1][7:]
     else:assert jobs[0][:6]==jobs[1][:6] and jobs[0][7:]==jobs[1][7:] and jobs[0][6]!=jobs[1][6]
     data=[inspect(*args,pair_file=pair_file) for args in zip(inputs,manifests,checkpoints,jobs)]
     assert all(not root.is_relative_to(x['path']) for x in data),'continuation output must be outside original inputs'
@@ -78,7 +78,10 @@ def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False):
     assert not prior.get('complete',False),'pair already complete'
     versions=('same-host-value-contract-v1','segmented-same-host-value-contract-v1') if value_contract else ('same-host-horizon-pair-v1','segmented-same-host-horizon-pair-v1')
     assert prior['version'] in versions,'unknown pair execution contract'
-    assert prior['job']==jobs[0] if value_contract else prior['jobs']==jobs,'different original pair'
+    if value_contract:
+        assert prior['job']==jobs[1]
+        assert prior.get('jobs',dict(baseline=prior['job'],candidate=prior['job']))==dict(zip(names,jobs)),'different original pair'
+    else:assert prior['jobs']==jobs,'different original pair'
     assert left['files']==right['files'],'paired source drift'
     assert left['saved']['contract']['runtime']==right['saved']['contract']['runtime'],'paired runtime drift'
     runtime=dict(python=sys.version,numpy=np.__version__,system=platform.system(),machine=platform.machine())

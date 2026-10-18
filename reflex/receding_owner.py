@@ -15,7 +15,7 @@ class RecedingOwner:
     def __init__(self, actor, *, observe, events, terminal, assess, record,
                  request_for, feedback, model_id, target, tail_steps=15,
                  seeds=(701,702,703), world_model='frozen', max_regret=.15,
-                 purpose_estimator='sampled',tail_recovery=0,tail_recovery_limit=16,sampling_standard_errors=None,cumulative_preference=None,tail_goal_refinement=False):
+                 purpose_estimator='sampled',tail_recovery=0,tail_recovery_limit=16,sampling_standard_errors=None,cumulative_preference=None,tail_goal_refinement=False,sampling_check=None):
         if not isinstance(actor,DecisionLoop) or actor.pending is not None:
             raise ValueError('one resolved DecisionLoop owner required')
         self.actor=actor
@@ -27,6 +27,12 @@ class RecedingOwner:
         if sampling_standard_errors is not None:self.options['sampling_standard_errors']=sampling_standard_errors
         if cumulative_preference is not None:self.options['cumulative_preference']=cumulative_preference
         if tail_goal_refinement is not False:self.options['tail_goal_refinement']=tail_goal_refinement
+        if sampling_check is not None:
+            from .sampling_check import DecisionSampling
+            if (not isinstance(sampling_check,DecisionSampling) or tuple(seeds)!=sampling_check.banks[0]
+                or tail_steps<1 or sampling_standard_errors is not None):
+                raise ValueError('independent bank check requires its first seed bank and an unmodified purpose corridor')
+        self.sampling_check=sampling_check
         # Validate the entire configuration before any real decision is pending.
         owned_rollout(actor,**self.options)
         self.last=None
@@ -35,6 +41,9 @@ class RecedingOwner:
         if self.actor.pending is not None:raise ValueError('resolve actual feedback before the next decision')
         if self.options['terminal'](public):raise ValueError('cannot decide in a terminal world')
         self.last=None
+        if self.sampling_check is not None:
+            from .sampling_check import checked_decide
+            return checked_decide(self,public,self.sampling_check)
         req=self.request_for(self.observe(copy.deepcopy(public),copy.deepcopy(self.actor.state)))
         ctrl=owned_rollout(self.actor,**self.options);captured={}
         planner=ctrl.planner(self.actor,req,copy.deepcopy(public),captured=captured)

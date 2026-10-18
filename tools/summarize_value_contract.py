@@ -7,26 +7,29 @@ R=Path(__file__).resolve().parents[1];sys.path.insert(0,str(R))
 from reflex.laboratory import PROFILES
 from tools.continuing_games import ContinuingGame
 from tools.summarize_horizon_study import realized_account
-from tools.value_contract_config import configurations
+from tools.value_contract_config import configurations,jobs
 
 
 def read_run(path,job,enabled,plan,plan_hash):
-    configuration=configurations(plan)['candidate' if enabled else 'baseline']
+    side='candidate' if enabled else 'baseline'
+    configuration=configurations(plan)[side];paired_jobs=jobs({'job':job},plan)
     source=path/'trajectories.jsonl';audit=json.loads((path/'audit.json').read_text())
     assert audit['complete'] and audit['source_freeze_verified'] and audit['completed_runs']==1
     assert audit['trajectory_sha256']==hashlib.sha256(source.read_bytes()).hexdigest()
     proof=json.loads((path/'contract_pair.json').read_text())
     assert proof['complete'] and proof['return_codes']==[0,0] and proof['job']==job
+    assert proof.get('jobs',dict(baseline=job,candidate=job))==paired_jobs
     assert proof['sources']==plan['sources'] and proof['plan_sha256']==plan_hash
     assert proof['configurations']==configurations(plan)
     manifest=json.loads((path/'source_snapshot.json').read_text())
     assert {k:v for k,v in manifest.items() if k.endswith('.py')}==plan['sources']
     for k,v in manifest.items():assert hashlib.sha256((path/'_source'/k).read_bytes()).hexdigest()==v
+    job=paired_jobs[side]
     row=json.loads(source.read_text());g,p,s,r,t,i,h,o=job
     from tools.audit_recorded_forecasts import verify_receipt
     recipe=verify_receipt(path,audit,row)
     assert [row[k] for k in ('game','profile','seed','regime','turns','interval','tail_steps','offset')]==[g,PROFILES[p]['id'],s,r,t,i,h,o]
-    for key in ('cumulative_achievement','tail_goal_refinement'):
+    for key in ('cumulative_achievement','tail_goal_refinement','sampling_check'):
         assert row.get(key,False)==configuration.get(key,False)
     assert 'sampling_standard_errors' not in row and 'model_seeds' not in row and 'tail_recovery_limit' not in row
     reg=json.loads((path/'registration.json').read_text())

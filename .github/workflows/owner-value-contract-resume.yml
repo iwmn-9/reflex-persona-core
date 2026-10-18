@@ -34,7 +34,7 @@ jobs:
               assert 1<=len(batch['pairs'])<=2
               for pair in batch['pairs']:
                   assert len(pair['jobs'])==len(pair['inputs'])==len(pair['keys'])==2
-                  assert pair['jobs'][0]==pair['jobs'][1]
+                  assert pair['jobs'][0][:6]==pair['jobs'][1][:6] and pair['jobs'][0][7:]==pair['jobs'][1][7:]
                   assert type(pair.get('recorded_predictions',False)) is bool
                   for key,item in zip(pair['keys'],pair['inputs']):
                       assert key not in seen and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]+',key)

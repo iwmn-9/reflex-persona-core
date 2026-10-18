@@ -13,6 +13,8 @@ from tools.run_owned_value import cumulative_basis
 
 def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
     recovery_limit=row.get('tail_recovery_limit',16) if recovery_limit is None else recovery_limit
+    if seeds is None and row.get('sampling_check'):
+        seeds=tuple(row['trace'][tick]['sampling_check']['stages'][-1]['seeds'])
     seeds=tuple(row.get('model_seeds',(701,702,703))) if seeds is None else seeds
     t=row['trace'][tick];assert t['tick']==tick
     g=ContinuingGame(row['game'],next(p for p in PROFILES if p['id']==row['profile']),row['turns'],row['seed']%2)
@@ -71,7 +73,8 @@ def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
         distributions=traces,forecast=forecast.audit,frontiers=capture['node']['frontiers'],children=capture['node']['children'],
         **({'sampling_standard_errors':row['sampling_standard_errors']} if 'sampling_standard_errors' in row else {}),
         **({'cumulative_achievement':True} if row.get('cumulative_achievement') else {}),
-        **({'tail_goal_refinement':True,'refinement_calls':frontier.refinement_calls} if row.get('tail_goal_refinement') else {}))
+        **({'tail_goal_refinement':True,'refinement_calls':frontier.refinement_calls} if row.get('tail_goal_refinement') else {}),
+        **({'sampling_check':True,'sampling_check_replay':'fixed final bank only; not a replay of the adaptive bank-selection stages'} if row.get('sampling_check') else {}))
 
 
 def pool_diagnostics(diagnostics):
@@ -86,7 +89,7 @@ def pool_diagnostics(diagnostics):
     if not first.get('owner_digest') and not first.get('source_sha256'):
         raise ValueError('owner or saved trajectory identity required')
     for d in diagnostics:
-        for key in ('tick','tail_steps','recovery_limit','children','core_sources','owner_digest','source_sha256','game','profile','regime','seed','sampling_standard_errors','cumulative_achievement','tail_goal_refinement'):
+        for key in ('tick','tail_steps','recovery_limit','children','core_sources','owner_digest','source_sha256','game','profile','regime','seed','sampling_standard_errors','cumulative_achievement','tail_goal_refinement','sampling_check'):
             if d.get(key)!=first.get(key):raise ValueError('identical owner, model and horizon required')
         seeds=d.get('seeds')
         if seeds is None and d['distributions']:seeds=list(map(int,d['distributions'][0]['paths']))
@@ -99,6 +102,7 @@ def pool_diagnostics(diagnostics):
     if 'sampling_standard_errors' in first:result['sampling_standard_errors']=first['sampling_standard_errors']
     if first.get('cumulative_achievement'):result['cumulative_achievement']=True
     if first.get('tail_goal_refinement'):result['tail_goal_refinement']=True
+    if first.get('sampling_check'):result['sampling_check']=True
     result.update(seeds=union,frontiers=[dict(root=f['root'],public=copy.deepcopy(f['public'])) for f in first['frontiers']],distributions=[])
     for d in diagnostics:
         if [(f['root'],digest(f['public'])) for f in d['frontiers']]!=keys:

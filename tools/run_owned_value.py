@@ -48,7 +48,7 @@ def cumulative_basis(game,enabled):
     return CumulativePreference(game.target,'public-score-per-decision',(('values.achievement',float(game.turns)),))
 
 
-def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703),sampling_standard_errors=None,cumulative_achievement=False,tail_goal_refinement=False):
+def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703),sampling_standard_errors=None,cumulative_achievement=False,tail_goal_refinement=False,sampling_check=False):
     if type(tail_recovery_limit) is not int or not 1<=tail_recovery_limit<=256:raise ValueError('bounded recovery budget required')
     if tail_recovery_limit!=16 and arm!='receding_recovery':raise ValueError('recovery budget requires the recovery arm')
     if (not isinstance(model_seeds,tuple) or not 1<=len(model_seeds)<=32
@@ -64,6 +64,12 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
     if type(tail_goal_refinement) is not bool or tail_goal_refinement and arm!='receding_recovery':
         raise ValueError('explicit goal refinement on the recovery owner required')
     if tail_goal_refinement:configuration['tail_goal_refinement']=True
+    if type(sampling_check) is not bool or sampling_check and (arm!='receding_recovery' or model_seeds!=(701,702,703) or sampling_standard_errors is not None):
+        raise ValueError('explicit bank check on the registered recovery owner and base model seeds required')
+    check=None
+    if sampling_check:
+        from reflex.sampling_check import DecisionSampling
+        check=DecisionSampling();configuration['sampling_check']=True
     if tail_recovery_limit!=16:configuration['tail_recovery_limit']=tail_recovery_limit
     if model_seeds!=(701,702,703):configuration['model_seeds']=list(model_seeds)
     if sampling_standard_errors is not None:configuration['sampling_standard_errors']=sampling_standard_errors
@@ -141,7 +147,7 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
                 world_model='frozen' if arm=='receding' else 'posterior',
                 purpose_estimator='conditional' if arm in ('receding_corrected','receding_recovery') else 'sampled',
                 tail_recovery=2 if arm=='receding_recovery' else 0,tail_recovery_limit=tail_recovery_limit,seeds=model_seeds,
-                sampling_standard_errors=sampling_standard_errors,cumulative_preference=cumulative,tail_goal_refinement=tail_goal_refinement)
+                sampling_standard_errors=sampling_standard_errors,cumulative_preference=cumulative,tail_goal_refinement=tail_goal_refinement,sampling_check=check)
             result=live.decide(w);cap=live.last
         else:result=DecisionLoop.decide_batch([(own,req)],False,planner)[0]
         key=result['decision']['action_id']
@@ -161,6 +167,7 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
             before_owner=before,needs=own.pressure.debt,
             forecast={}))
         if checkpoint is not None:trace[-1]['checkpoint']=checkpoint
+        if 'sampling_check' in result:trace[-1]['sampling_check']=result['sampling_check']
         if 'node' in cap:
             node=cap['node'];f=node['forecast']
             trace[-1]['forecast']={f.roots[k][0]:v for k,v in f.purpose.items()}
