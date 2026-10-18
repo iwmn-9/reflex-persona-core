@@ -1,0 +1,60 @@
+{
+  "stage": "diagnostic",
+  "purpose": "Follow up the newly completed auction growth development regression. H32 worsened final purpose by 0.0234375; its tick91 choice is sample-dependent and pooled paths select the lower bid without changing persona gates.",
+  "baseline": "H32 with three model seeds",
+  "candidate": "Same H32 and owner with twelve model seeds. Combine paths before personality gates; no action voting.",
+  "rules": "No personality, purpose band, world model, future policy, horizon or game-rule changes. Actual world seed and events matched; both arms run on the same host with separate frozen sources, RNGs and learners.",
+  "selection": "These two known development conditions are diagnosis, not fresh confirmation or evidence of universal superiority. Inspect final purpose, evaluator-only Bellman opportunity loss, all adverse choices and persona gates. Do not replace the fixed primary H32/three-seed candidate or reuse its confirmation outcomes to accept a changed candidate.",
+  "core_identity": "c4ba5f1de651416f5dbbb143979f2760022a0bb99710c702f4e1ffbd185a8890",
+  "fixed_rules_sha256": "7d3fbc805578c24015db92f9c31821427a44f2a9e8b2befa1755084b809c6bde",
+  "created": "2026-10-18T01:56:19.244228+00:00",
+  "parent_plan": "evidence/long_horizon/sampling_plan.json",
+  "scope": "Additional known development condition, not a replacement of the four ongoing studies and not independent confirmation. Freeze this comparison before its long-run outcomes.",
+  "jobs": [
+    {
+      "key": "auction-growth-43-m3",
+      "job": [
+        "auction",
+        0,
+        43,
+        "shift-return",
+        128,
+        1,
+        31,
+        0
+      ],
+      "model_seeds": [
+        701,
+        702,
+        703
+      ]
+    },
+    {
+      "key": "auction-growth-43-m12",
+      "job": [
+        "auction",
+        0,
+        43,
+        "shift-return",
+        128,
+        1,
+        31,
+        0
+      ],
+      "model_seeds": [
+        701,
+        702,
+        703,
+        1701,
+        1702,
+        1703,
+        2701,
+        2702,
+        2703,
+        3701,
+        3702,
+        3703
+      ]
+    }
+  ]
+}
