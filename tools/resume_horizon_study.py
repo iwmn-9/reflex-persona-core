@@ -1,6 +1,7 @@
 """Resume a verified frozen study without changing its configuration or history."""
-import argparse,hashlib,json,subprocess,sys
+import argparse,hashlib,json,platform,subprocess,sys
 from pathlib import Path
+import numpy as np
 
 
 def resume(root,expected_manifest,job):
@@ -14,12 +15,16 @@ def resume(root,expected_manifest,job):
         assert hashlib.sha256(target.read_bytes()).hexdigest()==sha,('source changed',name)
     registration=json.loads((root/'registration.json').read_text())
     assert registration['jobs']==[job] and registration['arms']==['receding_recovery']
-    assert not (root/'trajectories.jsonl').exists(),'already complete; never repeat a world'
+    trajectory=root/'trajectories.jsonl';audit_path=root/'audit.json'
+    audit_only=trajectory.exists()
+    assert not (audit_only and audit_path.exists() and json.loads(audit_path.read_text())['complete']),'already complete; never repeat a world'
     checkpoint=root/'checkpoint.json';original=checkpoint.read_bytes()
     envelope=json.loads(original);saved=envelope['payload'];prefix=saved['trace']
     encoded=json.dumps(saved,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf8')
     assert hashlib.sha256(encoded).hexdigest()==envelope['sha256'],'corrupt checkpoint'
     assert saved['contract']['job']==job and saved['contract']['arm']=='receding_recovery'
+    assert saved['contract']['runtime']==dict(python=sys.version,numpy=np.__version__,system=platform.system(),machine=platform.machine()),'continuation runtime changed'
+    assert all(files[k]==v for k,v in saved['contract']['sources'].items()),'execution source mismatch'
     args=[sys.executable,str(source/'tools/run_horizon_study.py'),'--root',str(root),
           '--job',json.dumps(job),'--stage',registration['stage'],'--frozen']
     configuration=registration.get('configuration',{})
@@ -32,13 +37,23 @@ def resume(root,expected_manifest,job):
     if 'cumulative_achievement' in configuration:
         assert configuration['cumulative_achievement'] is True
         args+=['--cumulative-achievement']
+    if audit_only:
+        completed=json.loads(trajectory.read_text())
+        assert len(prefix)==saved['world']['tick']==job[4]==completed['executed']==len(completed['trace']),'unfinished execution cannot use audit-only recovery'
+        assert completed['final']==saved['world'] and completed['checks']==saved['checks']
+        assert all(all(new[k]==value for k,value in old.items()) for old,new in zip(prefix,completed['trace'])),'stored trajectory differs from checkpoint'
+        original_trajectory=trajectory.read_bytes()
+        args=[sys.executable,str(source/'tools/audit_owned_value.py'),str(root)]
     provenance=dict(resume_at=len(prefix),source_manifest_sha256=expected_manifest,
         original_checkpoint_sha256=hashlib.sha256(original).hexdigest(),complete=False)
+    if audit_only:provenance.update(audit_only=True,original_trajectory_sha256=hashlib.sha256(original_trajectory).hexdigest())
     record=root/'resume_provenance.json'
     if record.exists():provenance['previous']=json.loads(record.read_text())
     record.write_text(json.dumps(provenance,indent=2)+'\n')
     print(json.dumps(dict(resume_at=len(prefix),turns=job[4])),flush=True)
     subprocess.run(args,check=True)
+    if audit_only:
+        assert trajectory.read_bytes()==original_trajectory and checkpoint.read_bytes()==original,'audit changed execution evidence'
     completed=json.loads((root/'trajectories.jsonl').read_text())
     assert len(completed['trace'])>=len(prefix)
     assert all(all(new[k]==value for k,value in old.items()) for old,new in zip(prefix,completed['trace'])),'prior experience changed'

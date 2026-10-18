@@ -20,7 +20,8 @@ def run_batch(root,studies,fresh_source,stage):
     children=[root/f'study{i}' for i in range(len(studies))]
     for child,spec in zip(children,studies):
         if 'resume_manifest' in spec:
-            if not (child/'checkpoint.json').is_file() or (child/'trajectories.jsonl').exists():
+            audit=child/'audit.json'
+            if not (child/'checkpoint.json').is_file() or (audit.exists() and json.loads(audit.read_text())['complete']):
                 raise ValueError('restored incomplete checkpoint required')
         elif child.exists():raise FileExistsError('fresh study must not overwrite prior work')
     root.mkdir(parents=True,exist_ok=True)

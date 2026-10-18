@@ -69,6 +69,8 @@ basis = CumulativePreference(
 
 これは目的点の代理評価自体を正しくする仕組みではない。目的の定義、打ち切り、相手予測、有限標本、将来の本人の近似が間違えば損は残る。[Ng, Harada, Russell (1999)](https://people.eecs.berkeley.edu/~russell/papers/icml99-shaping.pdf) の潜在値の差分という考え方を参照したが、非線形な人格の多目的判断に論文の方策不変性保証を主張しない。検査は `tests/test_cumulative_preference.py` にまとめる。
 
+報酬を一定範囲へ切り詰めると目的や行動が変わる問題は [van Hasselt et al., Learning values across many orders of magnitude (2016)](https://arxiv.org/abs/1602.07714) にもある。同論文の PopArt は学習対象を正規化しつつ元の出力を保つ方法。本実装は学習器の PopArt を導入せず、既存の `ReturnFrame` で元の評価単位を復元する。正規化の都合で大きな成果を消さないという区別を参考にしている。
+
 通常の本人は `DecisionLoop`、公開応答の予測器は `EventReader`（または同じ `frozen_forecaster()` 契約を満たす予測器）を使う。各候補に共通の応答分布を前提とする。選択した手で相手の応答確率が変わるモデル、未観測ルールの発見、独立readerによる後からの上書きはこのAPIの範囲外。単に制限を解除して対応済みにはしない。
 
 ```python

@@ -20,8 +20,9 @@
 
 ## 検証の位置づけ
 
-- 読みの長さだけを変える既存の開発・独立確認・256ターン試行は、元の凍結ソースと登録条件で継続する。[development_plan](development_plan.json)、[confirmation_plan](confirmation_plan.json)、[stress_plan](stress_plan.json)。
+- 読みの長さだけを変える既存試行は [development_plan](development_plan.json)、[confirmation_plan](confirmation_plan.json)、[stress_plan](stress_plan.json)。累積採点の不整合を確認後、開発群と独立確認群を途中保存して計算枠を修正版へ回した。未完了条件を成功・失敗へ数えず、元の登録条件と完了分・途中状態を残す。256ターン試行は継続中。
 - 累積価値の比較は [cumulative_diagnostic_plan](cumulative_diagnostic_plan.json)。既知の難しい4条件について、同一ホスト・同一外部乱数で従来版と修正版を128/256ターン動かす。これは原因を調べる比較で、独立した確認群ではない。
+- 独立確認は [cumulative_confirmation_plan](cumulative_confirmation_plan.json)。新しい世界乱数4種・4分野・4人格の32組64世界を登録し、長期結果を得る前に判断基準を固定した。分野間で悪化を相殺しない。
 - 途中の資源、人格、経験を初期化せず、実観測の再現、所有者の復元、固定軸、目的点と評価用の機会損失を照合する。独立した確認と全4人格の検証を終えるまで採用しない。
 - 保存した同一人物への反実仮想診断では、賭けの192ターン時点で即時の賭けから満期資産へ選択が変わった。資源管理の64ターン時点では、H32の投資判断を維持した。これは予測内の選択で、長期の実利益が改善した証明ではない。
 

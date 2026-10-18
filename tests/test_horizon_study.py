@@ -27,6 +27,10 @@ root=Path(sys.argv[2]);job=json.loads(sys.argv[3])
 assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisions=int(sys.argv[4])) is None
 '''
                 subprocess.run([sys.executable,'-c',program,str(child/'_source'),str(child),json.dumps(job),str(index+1)],check=True,capture_output=True)
+                if index==0:
+                    subprocess.run([sys.executable,str(child/'_source/tools/run_horizon_study.py'),
+                        '--root',str(child),'--job',json.dumps(job),'--stage','diagnostic','--frozen'],check=True,capture_output=True)
+                    (child/'audit.json').unlink()
                 spec['resume_manifest']=hashlib.sha256((child/'source_snapshot.json').read_bytes()).hexdigest()
                 prefixes[index]=json.loads((child/'checkpoint.json').read_text())['payload']['trace']
             source=Path(__file__).resolve().parents[1]
@@ -38,7 +42,8 @@ assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisio
                 self.assertEqual(actual,expected)
                 if index in prefixes:
                     self.assertTrue(json.loads((child/'resume_provenance.json').read_text())['original_prefix_unchanged'])
-                    self.assertEqual(len(prefixes[index]),index+1)
+                    self.assertEqual(len(prefixes[index]),job[4] if index==0 else index+1)
+                    if index==0:self.assertTrue(json.loads((child/'resume_provenance.json').read_text())['audit_only'])
             with self.assertRaisesRegex(FileExistsError,'fresh batch'):run_batch(root,specs,source,'diagnostic')
             # Original partial artifacts remain beside audited continuations;
             # collect each registered world once, without dropping the partials.
@@ -156,6 +161,21 @@ assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisio
             actual=json.loads((root/'trajectories.jsonl').read_text());actual.pop('seconds');expected.pop('seconds')
             self.assertEqual(actual,expected)
             with self.assertRaisesRegex(AssertionError,'already complete'):resume(root,manifest,job)
+            # A cancelled upload can contain the entire world but no final
+            # audit. Finish only that frozen auditor, never replay decisions.
+            (root/'audit.json').unlink()
+            trajectory=(root/'trajectories.jsonl').read_bytes();checkpoint=(root/'checkpoint.json').read_bytes()
+            with patch('tools.resume_horizon_study.platform.system',return_value='different'):
+                with self.assertRaisesRegex(AssertionError,'runtime changed'):resume(root,manifest,job)
+            with patch('tools.resume_horizon_study.subprocess.run',wraps=subprocess.run) as calls:
+                proof=resume(root,manifest,job)
+            self.assertEqual(len(calls.call_args_list),1)
+            self.assertTrue(calls.call_args.args[0][1].endswith('audit_owned_value.py'))
+            self.assertTrue(proof['audit_only']);self.assertEqual(proof['resume_at'],3)
+            self.assertEqual((root/'trajectories.jsonl').read_bytes(),trajectory)
+            self.assertEqual((root/'checkpoint.json').read_bytes(),checkpoint)
+            self.assertTrue(proof['previous']['complete'])
+            self.assertTrue(proof['original_prefix_unchanged'])
 
     def test_read_only_instrumentation_reproduces_saved_choice(self):
         from tools.diagnose_owner_horizon import diagnose,prefix_choice
