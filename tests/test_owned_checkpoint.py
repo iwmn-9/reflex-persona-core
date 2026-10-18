@@ -8,6 +8,23 @@ def without_time(row):return {k:v for k,v in row.items() if k!='seconds'}
 
 
 class OwnedCheckpointTests(unittest.TestCase):
+    def test_model_samples_survive_resume_and_cannot_change_mid_world(self):
+        job=('gambling',1,41908,'outside',3,1,2,0);seeds=(701,702,1701,1702)
+        expected=run(job,'receding_recovery',model_seeds=seeds)
+        with tempfile.TemporaryDirectory() as d:
+            checkpoint=Path(d)/'execution.json'
+            self.assertIsNone(run(job,'receding_recovery',checkpoint=checkpoint,max_decisions=1,model_seeds=seeds))
+            original=checkpoint.read_bytes()
+            with self.assertRaisesRegex(ValueError,'contract changed'):
+                run(job,'receding_recovery',checkpoint=checkpoint)
+            self.assertEqual(checkpoint.read_bytes(),original)
+            actual=run(job,'receding_recovery',checkpoint=checkpoint,model_seeds=seeds)
+            self.assertEqual(without_time(actual),without_time(expected))
+            from tools.diagnose_owner_horizon import diagnose
+            diagnostic=diagnose(actual,0,2)
+            self.assertEqual(diagnostic['seeds'],list(seeds))
+            self.assertEqual(diagnostic['selected_action'],actual['trace'][0]['action'])
+
     def test_recovery_budget_survives_resume_and_cannot_change_mid_world(self):
         job=('gambling',1,41907,'outside',3,1,2,0)
         expected=run(job,'receding_recovery',tail_recovery_limit=64)

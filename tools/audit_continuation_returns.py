@@ -53,7 +53,8 @@ def audit_run(r,*,ticks=None):
             continuation=owned_rollout(start,observe=g.context,events=g.events,terminal=g.terminal,
                 assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
                 feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=r['tail_steps'],
-                world_model='posterior',purpose_estimator='conditional',tail_recovery=2)
+                world_model='posterior',purpose_estimator='conditional',tail_recovery=2,
+                tail_recovery_limit=r.get('tail_recovery_limit',16),seeds=tuple(r.get('model_seeds',(701,702,703))))
             future=continuation.frontier.future_planner
         actual_actions=[];actual_flows=[];reflex_actions=[];reflex_flows=[]
         post_root=(r['trace'][index+1].get('checkpoint') if index+1<len(r['trace']) else None)

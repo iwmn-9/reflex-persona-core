@@ -10,7 +10,9 @@ from reflex.laboratory import PROFILES
 from tools.continuing_games import ContinuingGame
 
 
-def diagnose(row,tick,tail,recovery_limit=16,*,seeds=(701,702,703)):
+def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
+    recovery_limit=row.get('tail_recovery_limit',16) if recovery_limit is None else recovery_limit
+    seeds=tuple(row.get('model_seeds',(701,702,703))) if seeds is None else seeds
     t=row['trace'][tick];assert t['tick']==tick
     g=ContinuingGame(row['game'],next(p for p in PROFILES if p['id']==row['profile']),row['turns'],row['seed']%2)
     w=copy.deepcopy(t['before']);c=g.context(w)
@@ -167,13 +169,13 @@ def prefix_choice(row,tick,diagnostic,horizon):
 def main():
     p=argparse.ArgumentParser();p.add_argument('study');p.add_argument('--profile',required=True)
     p.add_argument('--regime',required=True);p.add_argument('--tick',type=int,required=True)
-    p.add_argument('--tail',type=int,default=63);p.add_argument('--recovery-limit',type=int,default=16)
-    p.add_argument('--seeds',type=int,nargs='+',default=[701,702,703])
+    p.add_argument('--tail',type=int,default=63);p.add_argument('--recovery-limit',type=int)
+    p.add_argument('--seeds',type=int,nargs='+')
     p.add_argument('--output',required=True);a=p.parse_args()
     source=Path(a.study)/'trajectories.jsonl'
     row=next(x for x in map(json.loads,source.read_text().splitlines())
         if x['arm']=='receding_recovery' and x['profile']==a.profile and x['regime']==a.regime)
-    result=diagnose(row,a.tick,a.tail,a.recovery_limit,seeds=tuple(a.seeds))
+    result=diagnose(row,a.tick,a.tail,a.recovery_limit,seeds=tuple(a.seeds) if a.seeds is not None else None)
     result.update(game=row['game'],profile=row['profile'],regime=row['regime'],seed=row['seed'],
         source=str(source),source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
         core_sources={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (Path(__file__).resolve().parents[1]/'reflex').glob('*.py')},

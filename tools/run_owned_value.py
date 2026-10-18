@@ -41,10 +41,18 @@ def law(t,turns,regime):
     return {str(i):(.8 if i==top else .1) for i in range(3)}
 
 
-def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16):
+def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703)):
     if type(tail_recovery_limit) is not int or not 1<=tail_recovery_limit<=256:raise ValueError('bounded recovery budget required')
     if tail_recovery_limit!=16 and arm!='receding_recovery':raise ValueError('recovery budget requires the recovery arm')
-    configuration={'tail_recovery_limit':tail_recovery_limit} if tail_recovery_limit!=16 else None
+    if (not isinstance(model_seeds,tuple) or not 1<=len(model_seeds)<=32
+        or any(type(s) is not int for s in model_seeds) or len(set(model_seeds))!=len(model_seeds)):
+        raise ValueError('explicit independent model seeds required')
+    if model_seeds!=(701,702,703) and arm not in ('receding','receding_posterior','receding_corrected','receding_recovery'):
+        raise ValueError('model seed override requires a receding owner')
+    configuration={}
+    if tail_recovery_limit!=16:configuration['tail_recovery_limit']=tail_recovery_limit
+    if model_seeds!=(701,702,703):configuration['model_seeds']=list(model_seeds)
+    configuration=configuration or None
     game,pid,seed,regime,turns,interval,tail_steps=job[:7]
     offset=job[7] if len(job)>7 else 0
     is_reflex=arm in ('reflex','reflex_segmented')
@@ -115,7 +123,7 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
                 feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=tail_steps,
                 world_model='frozen' if arm=='receding' else 'posterior',
                 purpose_estimator='conditional' if arm in ('receding_corrected','receding_recovery') else 'sampled',
-                tail_recovery=2 if arm=='receding_recovery' else 0,tail_recovery_limit=tail_recovery_limit)
+                tail_recovery=2 if arm=='receding_recovery' else 0,tail_recovery_limit=tail_recovery_limit,seeds=model_seeds)
             result=live.decide(w);cap=live.last
         else:result=DecisionLoop.decide_batch([(own,req)],False,planner)[0]
         key=result['decision']['action_id']
