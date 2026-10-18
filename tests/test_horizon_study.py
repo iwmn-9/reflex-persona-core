@@ -40,6 +40,18 @@ assert run(job,'receding_recovery',checkpoint=root/'checkpoint.json',max_decisio
                     self.assertTrue(json.loads((child/'resume_provenance.json').read_text())['original_prefix_unchanged'])
                     self.assertEqual(len(prefixes[index]),index+1)
             with self.assertRaisesRegex(FileExistsError,'fresh batch'):run_batch(root,specs,source,'diagnostic')
+            # Original partial artifacts remain beside audited continuations;
+            # collect each registered world once, without dropping the partials.
+            import shutil
+            from tools.summarize_horizon_study import summarize
+            initial=root/'initial';continued=root/'continued'
+            (initial/'horizon-case-0').mkdir(parents=True)
+            for index,spec in enumerate(specs):shutil.copytree(root/f'study{index}',continued/('horizon-'+spec['key']))
+            plan=dict(retained_baselines=[],new_jobs=specs,stage='diagnostic')
+            summary=summarize(source,initial,plan,additional_roots=(continued,))
+            self.assertTrue(summary['complete']);self.assertEqual(summary['collected_runs'],4)
+            with self.assertRaisesRegex(AssertionError,'duplicate completed'):
+                summarize(source,initial,plan,additional_roots=(continued,continued))
 
     def test_combat_reference_matches_exhaustive_rules_with_death_and_reloading(self):
         from tools.combat_reference import reference

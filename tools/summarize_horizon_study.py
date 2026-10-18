@@ -51,7 +51,7 @@ def realized_account(row):
     return result
 
 
-def summarize(repo,root,plan,partial=False):
+def summarize(repo,root,plan,partial=False,additional_roots=()):
     rows={};origins={};missing=[];incomplete=[];accounts={}
     def add(row,origin):
         key=tuple(row[k] for k in ('game','profile','seed','regime'))+(row['tail_steps']+1,)
@@ -64,10 +64,12 @@ def summarize(repo,root,plan,partial=False):
         assert sorted([r['game'],r['profile'],r['regime']] for r in selected)==sorted(old['conditions'])
         for row in selected:add(row,source)
     for job in plan['new_jobs']:
-        path=root/('horizon-'+job['key']);source=path/'trajectories.jsonl'
-        if not source.exists():
-            (incomplete if path.exists() else missing).append(job['key']);continue
-        if not (path/'audit.json').exists():incomplete.append(job['key']);continue
+        candidates=[base/('horizon-'+job['key']) for base in (root,*additional_roots)]
+        finished=[p for p in candidates if (p/'trajectories.jsonl').exists() and (p/'audit.json').exists()]
+        assert len(finished)<=1,('duplicate completed execution',job['key'])
+        if not finished:
+            (incomplete if any(p.exists() for p in candidates) else missing).append(job['key']);continue
+        path=finished[0];source=path/'trajectories.jsonl'
         audit=json.loads((path/'audit.json').read_text())
         assert audit['complete'] and audit['source_freeze_verified'] and audit['completed_runs']==1
         assert audit['trajectory_sha256']==hashlib.sha256(source.read_bytes()).hexdigest()
@@ -136,9 +138,10 @@ def summarize(repo,root,plan,partial=False):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',default='results/long_horizon_development')
+    p.add_argument('--additional-roots',nargs='*',default=[])
     p.add_argument('--plan',default='evidence/long_horizon/development_plan.json');p.add_argument('--partial',action='store_true')
     p.add_argument('--output',default='results/long_horizon_development/summary.json');a=p.parse_args()
-    result=summarize(Path('.'),Path(a.root),json.loads(Path(a.plan).read_text()),a.partial)
+    result=summarize(Path('.'),Path(a.root),json.loads(Path(a.plan).read_text()),a.partial,tuple(map(Path,a.additional_roots)))
     Path(a.output).write_text(json.dumps(result,indent=2)+'\n',encoding='utf8')
     print(json.dumps({k:v for k,v in result.items() if k not in ('missing','incomplete','comparisons','groups')}))
     print(json.dumps([x for x in result['groups'] if x['level']=='game'],indent=2))
