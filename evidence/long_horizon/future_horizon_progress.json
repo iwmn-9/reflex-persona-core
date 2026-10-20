@@ -76,31 +76,31 @@
       },
       {
         "case": "combat-2-53103-shift-return",
-        "completed_roots": 40,
+        "completed_roots": 68,
         "complete": false,
         "input": {
           "key": "combat-2-53103-shift-return",
           "path": "results/long_horizon_sampling_check_local_combat/value-contract-combat-2-53103-shift-return-candidate/trajectories.jsonl",
           "sha256": "a61dcaea88cd11db0592ae1b645305d158df0358997ce0a50754b65d4a9c92b6"
         },
-        "agreement": 14,
-        "fixed_axes": 40,
-        "unchanged_factual_owners": 40,
-        "seconds": 1006.844000000041
+        "agreement": 27,
+        "fixed_axes": 68,
+        "unchanged_factual_owners": 68,
+        "seconds": 1831.4839999999967
       },
       {
         "case": "combat-0-53103-shift-return",
-        "completed_roots": 36,
+        "completed_roots": 65,
         "complete": false,
         "input": {
           "key": "combat-0-53103-shift-return",
           "path": "results/long_horizon_sampling_check_known_combat_local/value-contract-combat-0-53103-shift-return-candidate/trajectories.jsonl",
           "sha256": "9aba74ba8c4e0feea6edf2121adfcb141d6b7dfd6c803d506a2bd4eac1ed2877"
         },
-        "agreement": 15,
-        "fixed_axes": 36,
-        "unchanged_factual_owners": 36,
-        "seconds": 882.2970000000205
+        "agreement": 23,
+        "fixed_axes": 65,
+        "unchanged_factual_owners": 65,
+        "seconds": 1694.265000000014
       }
     ],
     "terminal_extraction_repair": {
@@ -118,6 +118,12 @@
     "registration_sha256": "7af2bb90abf962c2d21fdd4f0c0bc9001ab55ccffa4ba4b5fcbf9bbd60691912",
     "runs": [
       {
+        "case": "delay-11-shock-0",
+        "mode": "2",
+        "turns": 102,
+        "complete": false
+      },
+      {
         "case": "delay-3-shock-0",
         "mode": "16",
         "turns": 128,
@@ -132,8 +138,8 @@
       {
         "case": "delay-3-shock-1",
         "mode": "16",
-        "turns": 111,
-        "complete": false
+        "turns": 128,
+        "complete": true
       },
       {
         "case": "delay-3-shock-1",
@@ -144,11 +150,23 @@
       {
         "case": "delay-7-shock-0",
         "mode": "16",
-        "turns": 66,
-        "complete": false
+        "turns": 128,
+        "complete": true
       },
       {
         "case": "delay-7-shock-0",
+        "mode": "2",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-7-shock-1",
+        "mode": "16",
+        "turns": 32,
+        "complete": false
+      },
+      {
+        "case": "delay-7-shock-1",
         "mode": "2",
         "turns": 128,
         "complete": true
@@ -387,7 +405,7 @@
     "root": "results/oracle_law_probe",
     "manifest_sha256": "78f6ad5860db113cc27605fb7ddd677da8710df26c71915d066718936ba1ff82",
     "registration_sha256": "4c5b54d165a8bee0422c47c1abe37277dca18d41032668c8ca92d45336165197",
-    "completed": 3,
+    "completed": 4,
     "registered": 4,
     "results": [
       {
@@ -539,9 +557,146 @@
             723
           ]
         }
+      },
+      {
+        "input": {
+          "case": "combat-0-56101-outside",
+          "tick": 20,
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-candidate/trajectories.jsonl",
+          "sha256": "7d0cf3c87dee93e354bc3a4f540813e306f064c80d5466e1494a5e6583885b24"
+        },
+        "recorded": "reload",
+        "reproduction_drift": 0.0,
+        "reproduced": {
+          "action": "reload",
+          "values": {
+            "reload": 0.13555620490434808
+          },
+          "seconds": 276.0470000000205,
+          "owner_unchanged": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713
+          ]
+        },
+        "oracle_world": {
+          "action": "strike:2",
+          "values": {
+            "guard": 0.16299913194444463,
+            "reload": 0.16360677083333353,
+            "strike:2": 0.1650303819444446
+          },
+          "seconds": 250.88999999995576,
+          "owner_unchanged": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713
+          ]
+        }
       }
     ],
     "limit": "Evaluator-only future response law; not actual actor knowledge or implementable perfect prediction."
+  },
+  "forecast_assumptions": {
+    "root": "results/forecast_assumptions_probe",
+    "registration_sha256": "a840d305acccc3a3a5dc791b775438009665da79b9bc793daf785f6f2e17186f",
+    "registration": {
+      "original_registration_sha256": "4c5b54d165a8bee0422c47c1abe37277dca18d41032668c8ca92d45336165197",
+      "source_manifest_sha256": "78f6ad5860db113cc27605fb7ddd677da8710df26c71915d066718936ba1ff82",
+      "original_results_sha256": "9243049e08b9a825ee89823c41383c98d41160eb843ac68dae060c171bcb356b",
+      "driver_sha256": "1b29f2afaad3c7b9b3b2ce1052c56cdaa47149a5963cd827d555a06c6b454855",
+      "inputs": [
+        {
+          "case": "auction-3-56102-shift-return",
+          "tick": 31,
+          "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-candidate/trajectories.jsonl",
+          "sha256": "813db302bcee07e7b98b2035832dad2cf4bfa660b10302c27b09a527a5fb0879"
+        },
+        {
+          "case": "auction-3-56102-shift-return",
+          "tick": 61,
+          "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-candidate/trajectories.jsonl",
+          "sha256": "813db302bcee07e7b98b2035832dad2cf4bfa660b10302c27b09a527a5fb0879"
+        },
+        {
+          "case": "combat-0-56101-outside",
+          "tick": 13,
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-candidate/trajectories.jsonl",
+          "sha256": "7d0cf3c87dee93e354bc3a4f540813e306f064c80d5466e1494a5e6583885b24"
+        },
+        {
+          "case": "combat-0-56101-outside",
+          "tick": 20,
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-candidate/trajectories.jsonl",
+          "sha256": "7d0cf3c87dee93e354bc3a4f540813e306f064c80d5466e1494a5e6583885b24"
+        }
+      ],
+      "interventions": [
+        "current-law-held-constant",
+        "outer-persistent"
+      ],
+      "constant_law_reuse": "Reuse the completed true-future-law results when the declared world law is constant throughout the evaluated horizon.",
+      "invariants": "Same factual root, persona, learned owner and final sample bank. Only outer simulated world law changes; future actors retain original posterior-policy learning.",
+      "interpretation": "Separate current-law error from assumptions about unobserved future changes.\n\nPost-hoc diagnosis on the SAME four roots as oracle_law_probe. No actual world,\nowner, personality, or learner update is changed. Outer-persistent is an existing\nimplementable forecast assumption; current-law is evaluator-only knowledge.\nNeither saved-root change establishes long-play improvement.\n"
+    },
+    "completed": 1,
+    "registered": 8,
+    "results": [
+      {
+        "input": {
+          "case": "auction-3-56102-shift-return",
+          "tick": 31,
+          "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-candidate/trajectories.jsonl",
+          "sha256": "813db302bcee07e7b98b2035832dad2cf4bfa660b10302c27b09a527a5fb0879"
+        },
+        "mode": "current-law-held-constant",
+        "original_result_sha256": "74e4df2bb077bc30a7987edaca63517f54825baa3f6d1db7b5db55a65acafbfb",
+        "original_action": "bid:4",
+        "result": {
+          "action": "bid:4",
+          "values": {
+            "bid:0": 0.16624593098958348,
+            "bid:1": 0.1696638997395835,
+            "bid:2": 0.16854085286458353,
+            "bid:3": 0.1689880371093752,
+            "bid:4": 0.17091064453125024
+          },
+          "seconds": 101.59400000004098,
+          "owner_unchanged": true,
+          "fixed_axes": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713
+          ],
+          "root_prediction": {
+            "0": 0.7018228129483538,
+            "1": 0.15810386175424782,
+            "2": 0.14007332529739844
+          },
+          "actual_current_law": {
+            "0": 0.8,
+            "1": 0.1,
+            "2": 0.1
+          },
+          "selected_purpose": 0.17091064453125024,
+          "purpose_excluded": 4
+        },
+        "reused_constant_law": false
+      }
+    ],
+    "limit": "Same four post-hoc roots. Outer world only; original future people. Current true law is evaluator-only. Persistent model is an existing assumption, not a demonstrated long-play improvement. Two constant-law results reused without rerunning."
   },
   "invalidated_diagnostic": {
     "corrected_root": "results/compound_window_diagnostic_v2",
