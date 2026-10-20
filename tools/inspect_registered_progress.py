@@ -91,6 +91,19 @@ def check(task, checks_by_head):
     assert saved, 'no validated input checkpoints'
     prior = task['history'][-1]['boundary'] if task['history'] else 0
     current = next((s for s in saved if s['run'] == task['run']), None)
+    collected_advance=None
+    if len(saved)>=2:
+        collected_advance=dict(from_tick=saved[-2]['common_boundary'],to_tick=saved[-1]['common_boundary'],
+                               added=saved[-1]['common_boundary']-saved[-2]['common_boundary'])
+    if live:
+        for arm in live['arms']:
+            cp=arm.get('checkpoint')
+            if cp:
+                side='baseline' if arm['key'].endswith('-baseline') else 'candidate'
+                reference=next(c for c in saved[-1]['checkpoints'] if c['side']==side)
+                reference_root=ROOT/reference['path']
+                assert cp['source_manifest_sha256']==sha(reference_root.parent/'source_snapshot.json')
+                assert prior<=cp['ticks']<=spec['job'][4]
     steps = job['steps'] if job else []
     active = [s for s in steps if s['status'] == 'in_progress']
     resume = next((s for s in steps if s['name'] == "Resume at each pair's common experience boundary"), None)
@@ -107,6 +120,7 @@ def check(task, checks_by_head):
                 last_verified_saved=saved[-1],
                 current_run_saved_progress=current,
                 current_run_resolved_advance=None if current is None else current['common_boundary']-prior,
+                latest_collected_advance=collected_advance,
                 live=live,
                 proof_scope='Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.',
                 live_progress='unknown_until_artifact' if current is None else 'saved_boundary_verified')
@@ -115,10 +129,11 @@ def check(task, checks_by_head):
 def display(output):
     lines=['# 長期検証の実行状態','',f"取得時刻: {output['checked_at']}",'',
            '完走数は監査済みの組数。途中手数・CPU稼働は採用の証拠には数えない。','']
+    names={'confirmation':'独立確認','diagnostic':'従来診断','future_replanning':'新診断'}
     for name,value in output['counts'].items():
-        lines.append(f"- {name}: {value['completed_conditions']}/{value['registered_conditions']}")
-    lines+=['','| 条件 | 最後に回収・照合した共通手数 | 今回のクラウド報告（基準 / 変更） | 直近の前進確認 | 状態 |',
-            '|---|---:|---|---|---|']
+        lines.append(f"- {names.get(name,name)}: {value['completed_conditions']}/{value['registered_conditions']}")
+    lines+=['','| 条件 | 回収・照合済み手数 | 回収で確認した前進 | 現在のクラウド報告（基準 / 変更） | 現区間で前進を観測した時刻 | 状態 |',
+            '|---|---:|---|---|---|---|']
     for row in output['pending']:
         live=row['live'];tick='未取得';last='未確認';phase='実行中の内部進捗は未確認'
         if live:
@@ -131,10 +146,13 @@ def display(output):
             phase=' / '.join(a['phase'] for a in arms)
             if live['stale']:phase='監視情報が5分以上古い: '+phase
             if live['segment_ended']:phase='区間終了: '+phase
-        lines.append(f"| {row['key']} | {row['last_verified_saved']['common_boundary']}/{row['requested_turns']} | {tick} | {last} | {phase} |")
+        advance=row['latest_collected_advance']
+        change=f"{advance['from_tick']}→{advance['to_tick']} (+{advance['added']})" if advance else '今回の再開後は未回収'
+        lines.append(f"| {row['key']} | {row['last_verified_saved']['common_boundary']}/{row['requested_turns']} | {change} | {tick} | {last} | {phase} |")
     lines+=['','`computing_no_new_checkpoint`: CPU使用は増加、保存手数はまだ同じ。',
             '`suspected_stall_no_cpu_or_checkpoint_15m`: CPUと保存手数が15分増えず、要調査。自動で実験を捨てない。',
             '`failed` / `observation_error`: 実行失敗 / 観測失敗。完走・品質改善とは区別する。','']
+    lines+=['監視情報は約60秒ごとに公開・取得。凍結済み実験の保存間隔は4手ごとのままなので、計算中でも保存手数はしばらく変わらない。','']
     (ROOT/'results/registered_execution_progress.md').write_text('\n'.join(lines),encoding='utf8')
 
 
