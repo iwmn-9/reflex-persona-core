@@ -1,0 +1,18 @@
+{
+  "initial_run": {
+    "complete": false,
+    "passed_decisions": 12804,
+    "original_corpus_passed": 5124,
+    "completed_continuous_runs": 60,
+    "failure": "initial_reduction_failure.json",
+    "reason": "Sequential floating reduction reversed a nearly tied deterministic choice."
+  },
+  "resolved_by": "Fixed two-lane non-FMA reduction; zero-padding to per-observation outcome capacity; no altered Python policy or acceptance criteria.",
+  "final_local": {
+    "result": "result.json",
+    "lifecycle_tests_passed": 10,
+    "clippy_warnings": 0
+  },
+  "promotion": "pending Windows/Linux CI",
+  "reference_core_sha256": "b1cfd38170f7bcb89079d8b32e528b452cf411a5c2e836c11fc1efb0952b2336"
+}

@@ -12,7 +12,7 @@
 
 接続前の急所は [長期NPCの比較](evidence/long_lived/REPORT.md)、能力・資源・途中参戦は [非対称性の検証](evidence/asymmetry/REPORT.md) を参照。新しい任意構成を、全ゲームの標準や完成した汎用知能とは扱わない。
 
-実験・比較はPythonを維持し、小さくても完成形として成立し、ほぼ変わらなくなった実行単位をRustへ移す方針。通常採点の小試作は5,124判断でPythonと選択・乱数が一致したが、これは移植可能性の確認であり、完成単位の認定や正式なRust実行ライブラリではない。[移植する境界と確認範囲](docs/RUST_BOUNDARY.md)。
+実験・比較と長期判断の改善はPythonを維持する。即時判断には入力検証・実行確定・人物別の保存復元を備えたRust crateを用意し、Pythonとの継続実行の一致を確認している。学習・社会評価・先読みまで移したものではない。[移植する境界](docs/RUST_BOUNDARY.md)、[APIと使用例](rust/reflex-immediate/README.md)、[実測と採否](evidence/rust_port/immediate/REPORT.md)。
 
 過去の方式の比較・不採用理由は [開発方針の根拠](docs/PROJECT_DIRECTION.md#主要な根拠と接続契約) と各 evidence の報告を参照。既往の実行結果は保存し、この入口には履歴の要約を積み重ねない。
 
@@ -122,7 +122,8 @@ python -m reflex.cli root-collision
 
 | 用途 | 依存 | 扱い |
 | --- | --- | --- |
-| 判断コア・数値バッチ | NumPy `>=1.26,<3` | 唯一の必須外部実行依存。[BSD 3-Clause](https://numpy.org/doc/stable/license.html) |
+| Python判断コア・数値バッチ | NumPy `>=1.26,<3` | Pythonの必須実行依存。[BSD 3-Clause](https://numpy.org/doc/stable/license.html) |
+| 独立Rust即時判断 | Serde・serde_json・sha2 | 型付き入出力・個体乱数の種・保存破損検知。版は `rust/Cargo.lock` で固定。Python実行には不要 |
 | 麻雀のルール環境 | RiichiEnv `==0.4.10` | 任意。[Apache 2.0](https://github.com/smly/RiichiEnv/blob/v0.4.10/LICENSE) |
 | パッケージのビルド | setuptools `>=68` | ビルド時のみ |
 
