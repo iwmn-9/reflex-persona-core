@@ -30,5 +30,25 @@
     80
   ],
   "recovery": "Resume both frozen actors from their common boundary on the same host. Recompute already lived actions, require exact original action/observation/learner state, retain original diagnostics, normalize only factual probabilities within the existing eight-ULP audit bound. Any behavioral change fails before saving. No private future information is supplied to the actor.",
-  "quality_status": "Not an improvement or completed pair. Original 40/8/8 registration and adoption criteria unchanged."
+  "quality_status": "Not an improvement or completed pair. Original 40/8/8 registration and adoption criteria unchanged.",
+  "implementation": "aafd049bfc3f499bd756d5cc7f789edaaf61c6b4",
+  "validation": {
+    "local_tests_passed": 12,
+    "new_guard_tests_included": 3,
+    "log": "results/retained_history_tests_final.log",
+    "ci_run": 39458231973,
+    "ci_status": "in_progress"
+  },
+  "resumed_runs": [
+    {
+      "case": "auction-0-56101-outside",
+      "run": 39458666251,
+      "boundary": 72
+    },
+    {
+      "case": "auction-3-56101-outside",
+      "run": 39458689868,
+      "boundary": 80
+    }
+  ]
 }
