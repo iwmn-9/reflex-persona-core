@@ -26,6 +26,7 @@ def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
         feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=tail,
         world_model='posterior',purpose_estimator='conditional',tail_recovery=2,tail_recovery_limit=recovery_limit,seeds=seeds,
         tail_recovery_mode='always' if row.get('tail_replanning') else 'stalled',
+        tail_recovery_horizon=row.get('tail_replanning_horizon',2),
         sampling_standard_errors=row.get('sampling_standard_errors'),
         cumulative_preference=cumulative_basis(g,row.get('cumulative_achievement',False)),
         tail_goal_refinement=row.get('tail_goal_refinement',False))
@@ -76,6 +77,7 @@ def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
         **({'cumulative_achievement':True} if row.get('cumulative_achievement') else {}),
         **({'tail_goal_refinement':True,'refinement_calls':frontier.refinement_calls} if row.get('tail_goal_refinement') else {}),
         **({'tail_replanning':True} if row.get('tail_replanning') else {}),
+        **({'tail_replanning_horizon':row['tail_replanning_horizon']} if 'tail_replanning_horizon' in row else {}),
         **({'sampling_check':True,'sampling_check_replay':'fixed final bank only; not a replay of the adaptive bank-selection stages'} if row.get('sampling_check') else {}))
 
 
@@ -91,7 +93,7 @@ def pool_diagnostics(diagnostics):
     if not first.get('owner_digest') and not first.get('source_sha256'):
         raise ValueError('owner or saved trajectory identity required')
     for d in diagnostics:
-        for key in ('tick','tail_steps','recovery_limit','children','core_sources','owner_digest','source_sha256','game','profile','regime','seed','sampling_standard_errors','cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning'):
+        for key in ('tick','tail_steps','recovery_limit','children','core_sources','owner_digest','source_sha256','game','profile','regime','seed','sampling_standard_errors','cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning','tail_replanning_horizon'):
             if d.get(key)!=first.get(key):raise ValueError('identical owner, model and horizon required')
         seeds=d.get('seeds')
         if seeds is None and d['distributions']:seeds=list(map(int,d['distributions'][0]['paths']))
@@ -105,6 +107,7 @@ def pool_diagnostics(diagnostics):
     if first.get('cumulative_achievement'):result['cumulative_achievement']=True
     if first.get('tail_goal_refinement'):result['tail_goal_refinement']=True
     if first.get('tail_replanning'):result['tail_replanning']=True
+    if 'tail_replanning_horizon' in first:result['tail_replanning_horizon']=first['tail_replanning_horizon']
     if first.get('sampling_check'):result['sampling_check']=True
     result.update(seeds=union,frontiers=[dict(root=f['root'],public=copy.deepcopy(f['public'])) for f in first['frontiers']],distributions=[])
     for d in diagnostics:
@@ -126,7 +129,7 @@ def pool_diagnostics(diagnostics):
 def prefix_choice(row,tick,diagnostic,horizon):
     """Revalue a recorded prefix; no extra simulation or different model sample.
 
-    Valid only for this fixed two-step recovery continuation. Extending its tail
+    Valid only for this fixed future-policy configuration. Extending its tail
     changes neither earlier predictions nor earlier owner choices. This is not
     a general truncation rule for arbitrary horizon-dependent future planners.
     """
@@ -139,6 +142,8 @@ def prefix_choice(row,tick,diagnostic,horizon):
         raise ValueError('matching cumulative preference configuration required')
     if row.get('tail_replanning',False)!=diagnostic.get('tail_replanning',False):
         raise ValueError('matching future replanning configuration required')
+    if row.get('tail_replanning_horizon',2)!=diagnostic.get('tail_replanning_horizon',2):
+        raise ValueError('matching future policy horizon required')
     assert 1<=horizon<=diagnostic['tail_steps']+1 and tick==diagnostic['tick']
     g=ContinuingGame(row['game'],next(p for p in PROFILES if p['id']==row['profile']),row['turns'],row['seed']%2)
     w=copy.deepcopy(row['trace'][tick]['before']);c=g.context(w)

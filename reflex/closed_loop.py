@@ -325,7 +325,7 @@ class ClosedLoop:
 def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feedback,
                   model_id,target,tail_steps=15,seeds=(701,702,703),max_regret=.15,
                   future_planner=None,future_planner_id=None,future_planner_limit=1,
-                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0,tail_recovery_limit=16,tail_recovery_mode='stalled',sampling_standard_errors=None,cumulative_preference=None,tail_goal_refinement=False):
+                  sampling='independent',purpose_estimator='sampled',world_model='frozen',tree_steps=1,future_choices='planned',tail_recovery=0,tail_recovery_limit=16,tail_recovery_mode='stalled',tail_recovery_horizon=2,sampling_standard_errors=None,cumulative_preference=None,tail_goal_refinement=False):
     """Rebuild after real feedback: root world model + evolving owned rollout.
 
     `events(public_state, action)` enumerates known conditional PublicEvents.
@@ -343,6 +343,10 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     including when a positive immediate gain exists. It requires a budget for
     the entire tail: silently switching back to reflex would change the policy
     being valued. This is still a finite approximation of the real controller.
+    A longer `tail_recovery_horizon` uses an exact first response followed by
+    sampled learning-owner continuations. Its inner model seeds are separate
+    from the outer evaluation bank. This is one finite policy-improvement
+    level, not recursive perfect foresight or a promise to discover all plans.
     """
     import numpy as np
     from .frontier_value import PolicyTail
@@ -365,6 +369,10 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         raise ValueError('explicit stalled or always future recovery mode required')
     if tail_recovery_mode=='always' and (tail_recovery!=2 or tail_recovery_limit<tail_steps):
         raise ValueError('always replanning requires two-step recovery throughout the tail')
+    if type(tail_recovery_horizon) is not int or not 2<=tail_recovery_horizon<=128:
+        raise ValueError('2..128 future policy decisions required')
+    if tail_recovery_horizon!=2 and (tail_recovery!=2 or tail_recovery_mode!='always'):
+        raise ValueError('longer future policy requires complete-tail replanning')
     if not callable(events):raise ValueError('known conditional event enumeration required')
     if sampling not in ('independent','stratified'):raise ValueError('known rollout sampling mode required')
     if sampling_standard_errors is not None and (sampling!='independent' or purpose_estimator!='conditional' or tail_steps==0 or tree_steps!=1):
@@ -372,6 +380,8 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     if purpose_estimator not in ('sampled','conditional'):raise ValueError('known purpose mean estimator required')
     if world_model not in ('frozen','posterior','persistent'):raise ValueError('explicit world continuation model required')
     seeds=tuple(seeds)
+    if tail_recovery_horizon>2 and set(seeds).intersection((1701,1702,1703)):
+        raise ValueError('future policy search seeds must be separate from outer evaluation seeds')
     if sampling=='stratified':
         from .rollout_sampling import stratified_uniforms
         stratified_uniforms(seeds,0)
@@ -435,10 +445,17 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
                         raise ValueError('complete conditional response coverage required')
                     expected.append(math.fsum(probabilities[e.symbol]*Goal(**assess(e.public)).value for e in rows))
                 if max(expected)>origin+1e-12:return None
+            # Preserve the registered two-step policy exactly. Longer policies
+            # sample a complete tail instead of enumerating an exponential
+            # response tree. No action is rewarded merely for being preparation.
+            longer=tail_recovery_horizon>2
             inner=owned_rollout(person,observe=observe,events=events,terminal=terminal,assess=assess,
                 record=record,request_for=request_for,feedback=feedback,model_id=model_id,target=target,
-                tail_steps=0,tree_steps=2,future_choices='reflex',world_model=world_model,max_regret=max_regret,
-                cumulative_preference=cumulative_preference)
+                tail_steps=tail_recovery_horizon-1 if longer else 0,tree_steps=1 if longer else 2,
+                seeds=(1701,1702,1703),purpose_estimator='conditional' if longer else 'sampled',
+                future_choices='reflex',world_model=world_model,max_regret=max_regret,
+                cumulative_preference=cumulative_preference,
+                tail_goal_refinement=tail_goal_refinement if longer else False)
             planner=inner.planner(person,request,state)
             if tail_recovery_mode=='stalled':return planner
             def complete(contexts,decisions):
@@ -449,6 +466,9 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         future_planner=recover
         future_planner_id=('no-immediate-purpose-gain-two-step-owner-recovery-v1' if tail_recovery_mode=='stalled'
                            else 'every-decision-two-step-owner-replanning-v1')
+        if tail_recovery_horizon!=2:
+            future_planner_id=digest(['every-decision-long-owner-replanning-v1',tail_recovery_horizon,
+                                      (1701,1702,1703),tail_goal_refinement])
         future_planner_limit=tail_recovery_limit
     if tail_steps==0 and (future_planner is not None or purpose_estimator!='sampled'):
         raise ValueError('zero tail has no future planning or sampling correction')

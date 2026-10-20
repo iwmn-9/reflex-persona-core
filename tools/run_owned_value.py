@@ -48,7 +48,7 @@ def cumulative_basis(game,enabled):
     return CumulativePreference(game.target,'public-score-per-decision',(('values.achievement',float(game.turns)),))
 
 
-def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703),sampling_standard_errors=None,cumulative_achievement=False,tail_goal_refinement=False,sampling_check=False,tail_replanning=False):
+def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_recovery_limit=16,model_seeds=(701,702,703),sampling_standard_errors=None,cumulative_achievement=False,tail_goal_refinement=False,sampling_check=False,tail_replanning=False,tail_replanning_horizon=2):
     if type(tail_recovery_limit) is not int or not 1<=tail_recovery_limit<=256:raise ValueError('bounded recovery budget required')
     if tail_recovery_limit!=16 and arm!='receding_recovery':raise ValueError('recovery budget requires the recovery arm')
     if (not isinstance(model_seeds,tuple) or not 1<=len(model_seeds)<=32
@@ -64,6 +64,10 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
     if type(tail_replanning) is not bool or tail_replanning and (arm!='receding_recovery' or tail_recovery_limit!=16):
         raise ValueError('explicit complete-tail replanning on the recovery owner required')
     if tail_replanning:configuration['tail_replanning']=True
+    if (type(tail_replanning_horizon) is not int or not 2<=tail_replanning_horizon<=128
+        or tail_replanning_horizon!=2 and not tail_replanning):
+        raise ValueError('bounded future horizon requires complete-tail replanning')
+    if tail_replanning_horizon!=2:configuration['tail_replanning_horizon']=tail_replanning_horizon
     if type(tail_goal_refinement) is not bool or tail_goal_refinement and arm!='receding_recovery':
         raise ValueError('explicit goal refinement on the recovery owner required')
     if tail_goal_refinement:configuration['tail_goal_refinement']=True
@@ -152,6 +156,7 @@ def run(job,arm,*,checkpoint=None,max_decisions=None,checkpoint_every=8,tail_rec
                 tail_recovery=2 if arm=='receding_recovery' else 0,
                 tail_recovery_limit=tail_steps if tail_replanning else tail_recovery_limit,
                 tail_recovery_mode='always' if tail_replanning else 'stalled',seeds=model_seeds,
+                tail_recovery_horizon=tail_replanning_horizon,
                 sampling_standard_errors=sampling_standard_errors,cumulative_preference=cumulative,tail_goal_refinement=tail_goal_refinement,sampling_check=check)
             result=live.decide(w);cap=live.last
         else:result=DecisionLoop.decide_batch([(own,req)],False,planner)[0]

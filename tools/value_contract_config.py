@@ -7,14 +7,24 @@ def configurations(plan):
     if not isinstance(value,dict) or set(value)!={'baseline','candidate'}:
         raise ValueError('two named registered configurations required')
     for row in value.values():
-        if not isinstance(row,dict) or set(row)-{'cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning'} or any(v is not True for v in row.values()):
+        booleans={'cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning'}
+        if (not isinstance(row,dict) or set(row)-booleans-{'tail_replanning_horizon'}
+            or any(v is not True for k,v in row.items() if k in booleans)):
             raise ValueError('explicit supported enabled mechanisms required')
+        if 'tail_replanning_horizon' in row:
+            h=row['tail_replanning_horizon']
+            if type(h) is not int or not 3<=h<=128 or row.get('tail_replanning') is not True:
+                raise ValueError('explicit longer future horizon with complete-tail replanning required')
     if value['baseline']==value['candidate']:raise ValueError('distinct paired configurations required')
     return copy.deepcopy(value)
 
 
 def arguments(configuration):
-    return ['--'+key.replace('_','-') for key in sorted(configuration)]
+    args=[]
+    for key in sorted(configuration):
+        args.append('--'+key.replace('_','-'))
+        if key=='tail_replanning_horizon':args.append(str(configuration[key]))
+    return args
 
 
 def jobs(spec,plan):

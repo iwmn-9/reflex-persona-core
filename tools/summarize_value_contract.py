@@ -31,6 +31,7 @@ def read_run(path,job,enabled,plan,plan_hash):
     assert [row[k] for k in ('game','profile','seed','regime','turns','interval','tail_steps','offset')]==[g,PROFILES[p]['id'],s,r,t,i,h,o]
     for key in ('cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning'):
         assert row.get(key,False)==configuration.get(key,False)
+    assert row.get('tail_replanning_horizon',2)==configuration.get('tail_replanning_horizon',2)
     assert 'sampling_standard_errors' not in row and 'model_seeds' not in row and 'tail_recovery_limit' not in row
     reg=json.loads((path/'registration.json').read_text())
     assert reg['jobs']==[job] and reg['stage']==plan['stage']

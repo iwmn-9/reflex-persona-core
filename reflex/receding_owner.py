@@ -15,7 +15,7 @@ class RecedingOwner:
     def __init__(self, actor, *, observe, events, terminal, assess, record,
                  request_for, feedback, model_id, target, tail_steps=15,
                  seeds=(701,702,703), world_model='frozen', max_regret=.15,
-                 purpose_estimator='sampled',tail_recovery=0,tail_recovery_limit=16,tail_recovery_mode='stalled',sampling_standard_errors=None,cumulative_preference=None,tail_goal_refinement=False,sampling_check=None):
+                 purpose_estimator='sampled',tail_recovery=0,tail_recovery_limit=16,tail_recovery_mode='stalled',tail_recovery_horizon=2,sampling_standard_errors=None,cumulative_preference=None,tail_goal_refinement=False,sampling_check=None):
         if not isinstance(actor,DecisionLoop) or actor.pending is not None:
             raise ValueError('one resolved DecisionLoop owner required')
         self.actor=actor
@@ -28,6 +28,8 @@ class RecedingOwner:
         if cumulative_preference is not None:self.options['cumulative_preference']=cumulative_preference
         if tail_goal_refinement is not False:self.options['tail_goal_refinement']=tail_goal_refinement
         if tail_recovery_mode!='stalled':self.options['tail_recovery_mode']=tail_recovery_mode
+        if type(tail_recovery_horizon) is not int or tail_recovery_horizon!=2:
+            self.options['tail_recovery_horizon']=tail_recovery_horizon
         if sampling_check is not None:
             from .sampling_check import DecisionSampling
             if (not isinstance(sampling_check,DecisionSampling) or tuple(seeds)!=sampling_check.banks[0]

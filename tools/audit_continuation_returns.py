@@ -59,6 +59,7 @@ def audit_run(r,*,ticks=None):
                 world_model='posterior',purpose_estimator='conditional',tail_recovery=2,
                 tail_recovery_limit=r['tail_steps'] if r.get('tail_replanning') else r.get('tail_recovery_limit',16),
                 tail_recovery_mode='always' if r.get('tail_replanning') else 'stalled',
+                tail_recovery_horizon=r.get('tail_replanning_horizon',2),
                 seeds=tuple(r.get('model_seeds',(701,702,703))),
                 sampling_standard_errors=r.get('sampling_standard_errors'),cumulative_preference=cumulative,
                 tail_goal_refinement=r.get('tail_goal_refinement',False))
@@ -99,7 +100,8 @@ def audit_run(r,*,ticks=None):
         ours=realized_score(g,start,effective,t['action'],actual_actions,actual_flows,segment[-1]['after'],cumulative_preference=cumulative)
         theirs=realized_score(g,start,effective,t['action'],reflex_actions,reflex_flows,w,cumulative_preference=cumulative)
         cases.append(dict(tick=index,root_owner='actual-checkpoint' if post_root is not None else 'exact-feedback-replay',
-            reference_policy=('two-step-every-future-decision' if r.get('tail_replanning') else
+            reference_policy=(f"long-rollout-{r['tail_replanning_horizon']}-every-future-decision" if r.get('tail_replanning_horizon',2)>2 else
+                              'two-step-every-future-decision' if r.get('tail_replanning') else
                               'two-step-recovery-when-no-immediate-gain' if future else 'learned-reflex'),
             tail_goal_refinement=bool(refinement),future_calls=future_calls,
             predicted=predicted,reflex_replay=reference,executed=actual,

@@ -31,7 +31,7 @@ def resume(root,expected_manifest,job,*,recorded_predictions=False):
           '--job',json.dumps(job),'--stage',registration['stage'],'--frozen']
     configuration=registration.get('configuration',{})
     assert saved['contract'].get('configuration',{})==configuration
-    assert set(configuration)<= {'tail_recovery_limit','model_seeds','sampling_standard_errors','cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning'}
+    assert set(configuration)<= {'tail_recovery_limit','model_seeds','sampling_standard_errors','cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning','tail_replanning_horizon'}
     if 'tail_recovery_limit' in configuration:
         args+=['--recovery-limit',str(configuration['tail_recovery_limit'])]
     if 'model_seeds' in configuration:args+=['--model-seeds',*map(str,configuration['model_seeds'])]
@@ -48,6 +48,10 @@ def resume(root,expected_manifest,job,*,recorded_predictions=False):
     if 'tail_replanning' in configuration:
         assert configuration['tail_replanning'] is True
         args+=['--tail-replanning']
+    if 'tail_replanning_horizon' in configuration:
+        horizon=configuration['tail_replanning_horizon']
+        assert configuration.get('tail_replanning') is True and type(horizon) is int and 3<=horizon<=128
+        args+=['--tail-replanning-horizon',str(horizon)]
     if audit_only:
         completed=json.loads(trajectory.read_text())
         assert 0<len(prefix)==saved['world']['tick']==completed['executed']==len(completed['trace'])<=job[4],'stored execution boundary mismatch'
