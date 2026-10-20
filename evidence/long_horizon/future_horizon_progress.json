@@ -1,0 +1,311 @@
+{
+  "status": "research-only; registered cloud cohorts and adopted main unchanged",
+  "candidate_source": "bc61977acefa917b0432906cb6599565649e37e4",
+  "limits": [
+    "Saved-root fidelity is not judgment quality.",
+    "Deterministic preparation environments are mechanism diagnostics, not independent game-family confirmation.",
+    "No comparison can replace the unfinished registered 40 confirmation,8 original diagnostic,8 future-replanning cases."
+  ],
+  "future_fidelity": {
+    "root": "results/lf32",
+    "manifest_sha256": "53d628acb763840b07eb8263dbe85abf4c36ed57f77be37c492f1e1bee659c39",
+    "registration_sha256": "a1f9cf21cc970d58e496a3eeb90045271ac5c1f5c2ae3f03d071fae2bb5f8cfe",
+    "registered_roots": 768,
+    "results": [
+      {
+        "case": "gambling-0-53101-outside",
+        "completed_roots": 79,
+        "complete": false,
+        "input": {
+          "key": "gambling-0-53101-outside",
+          "path": "results/long_horizon_sampling_check_local/value-contract-gambling-0-53101-outside-candidate/trajectories.jsonl",
+          "sha256": "ba906006dc700fa070471eba2169c5a74e23aa5832439d44b126118b25d41dcc"
+        },
+        "agreement": 79,
+        "fixed_axes": 79,
+        "unchanged_factual_owners": 79,
+        "seconds": 2834.6719999999623
+      },
+      {
+        "case": "resources-0-53101-outside",
+        "completed_roots": 90,
+        "complete": false,
+        "input": {
+          "key": "resources-0-53101-outside",
+          "path": "results/long_horizon_sampling_check_local/value-contract-resources-0-53101-outside-candidate/trajectories.jsonl",
+          "sha256": "f6441c23a8917ae2921e7b945f933780f3e8afa9edf0b4c0aa9d683d1ed01ca2"
+        },
+        "agreement": 90,
+        "fixed_axes": 90,
+        "unchanged_factual_owners": 90,
+        "seconds": 2855.4689999999828
+      },
+      {
+        "case": "resources-2-53103-shift-return",
+        "completed_roots": 89,
+        "complete": false,
+        "input": {
+          "key": "resources-2-53103-shift-return",
+          "path": "results/long_horizon_sampling_check_local_resources/value-contract-resources-2-53103-shift-return-candidate/trajectories.jsonl",
+          "sha256": "937b5aa8eaa799dcd82c8e60bf047c5d5be86ae74db53e32d54b880df8af1357"
+        },
+        "agreement": 89,
+        "fixed_axes": 89,
+        "unchanged_factual_owners": 89,
+        "seconds": 2845.905999999959
+      },
+      {
+        "case": "auction-0-53103-shift-return",
+        "completed_roots": 89,
+        "complete": false,
+        "input": {
+          "key": "auction-0-53103-shift-return",
+          "path": "results/long_horizon_sampling_check_local_auction/value-contract-auction-0-53103-shift-return-candidate/trajectories.jsonl",
+          "sha256": "ab429ae5203553e3369f12739c2d853f0a7bb97d9e9a5549f2ae0a9d9926c1c8"
+        },
+        "agreement": 65,
+        "fixed_axes": 89,
+        "unchanged_factual_owners": 89,
+        "seconds": 2818.0619999999763
+      },
+      {
+        "case": "combat-2-53103-shift-return",
+        "completed_roots": 0
+      },
+      {
+        "case": "combat-0-53103-shift-return",
+        "completed_roots": 0
+      }
+    ]
+  },
+  "delayed_yield": {
+    "root": "results/preparation_horizon_diagnostic",
+    "manifest_sha256": "b355e101a2ccf5264eb1f0a7fdc8bd424a1bc6f4c7b0954955dcdd32700877b0",
+    "registration_sha256": "7af2bb90abf962c2d21fdd4f0c0bc9001ab55ccffa4ba4b5fcbf9bbd60691912",
+    "runs": [
+      {
+        "case": "delay-3-shock-0",
+        "mode": "16",
+        "turns": 92,
+        "complete": false
+      },
+      {
+        "case": "delay-3-shock-0",
+        "mode": "2",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-3-shock-1",
+        "mode": "16",
+        "turns": 73,
+        "complete": false
+      },
+      {
+        "case": "delay-3-shock-1",
+        "mode": "2",
+        "turns": 128,
+        "complete": true
+      }
+    ]
+  },
+  "compound_preparation": {
+    "root": "results/compound_window_diagnostic_v2",
+    "manifest_sha256": "78f6ad5860db113cc27605fb7ddd677da8710df26c71915d066718936ba1ff82",
+    "registration_sha256": "eeb9f55ea912ca9886b0c25004b7b20cf4b63b2ced32ce45bdc464793adb929e",
+    "runs": [
+      {
+        "case": "length-3-shock-0",
+        "mode": "rolling",
+        "turns": 111,
+        "complete": false
+      },
+      {
+        "case": "length-3-shock-1",
+        "mode": "rolling",
+        "turns": 115,
+        "complete": false
+      }
+    ]
+  },
+  "adverse_continuation_account": {
+    "source": "results\\adverse_future_account\\summary.json",
+    "source_sha256": "dceb9c958e01c08d94b8ee4524cd19a0867f0efb0a0b7cea2a5790a0e51e14ef",
+    "results": [
+      {
+        "game": "auction",
+        "profile": "steady",
+        "seed": 56101,
+        "side": "baseline",
+        "source": {
+          "case": "auction-1-56101-outside",
+          "side": "baseline",
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-auction-1-56101-outside-baseline/trajectories.jsonl",
+          "sha256": "60b880328f686695899375ba8274356a563cbc1499a5eabebcca64dba3ab6093"
+        },
+        "arm": "receding_recovery",
+        "windows": 8,
+        "world_and_sampling_residual": -0.0016835339673690083,
+        "control_contribution": -3.0517578125e-05,
+        "total_gap": -0.0017140515454940083,
+        "realized_persona_gain": 0.10491909818658697
+      },
+      {
+        "game": "auction",
+        "profile": "steady",
+        "seed": 56101,
+        "side": "candidate",
+        "source": {
+          "case": "auction-1-56101-outside",
+          "side": "candidate",
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-auction-1-56101-outside-candidate/trajectories.jsonl",
+          "sha256": "632e97b5eac706fe20ae442fd8d27426688cd7a606309fe8bdc4f08ec0e57f8e"
+        },
+        "arm": "receding_recovery",
+        "windows": 8,
+        "world_and_sampling_residual": -0.0037959620626327748,
+        "control_contribution": -0.0015869140625,
+        "total_gap": -0.005382876125132775,
+        "realized_persona_gain": 0.05655683719298721
+      },
+      {
+        "game": "auction",
+        "profile": "ego",
+        "seed": 56102,
+        "side": "baseline",
+        "source": {
+          "case": "auction-3-56102-shift-return",
+          "side": "baseline",
+          "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-baseline/trajectories.jsonl",
+          "sha256": "de94284d46a92046025aedf7b436b71e67d1d22af0a47bb6a7f42db70d440c8b"
+        },
+        "arm": "receding_recovery",
+        "windows": 8,
+        "world_and_sampling_residual": 0.002516976152209011,
+        "control_contribution": 0.0042724609375,
+        "total_gap": 0.006789437089709012,
+        "realized_persona_gain": 0.03581968599209523
+      },
+      {
+        "game": "auction",
+        "profile": "ego",
+        "seed": 56102,
+        "side": "candidate",
+        "source": {
+          "case": "auction-3-56102-shift-return",
+          "side": "candidate",
+          "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-candidate/trajectories.jsonl",
+          "sha256": "813db302bcee07e7b98b2035832dad2cf4bfa660b10302c27b09a527a5fb0879"
+        },
+        "arm": "receding_recovery",
+        "windows": 8,
+        "world_and_sampling_residual": 0.0016845146542416797,
+        "control_contribution": 0.001678466796875,
+        "total_gap": 0.0033629814511166797,
+        "realized_persona_gain": 0.01980943190629228
+      },
+      {
+        "game": "combat",
+        "profile": "growth",
+        "seed": 56101,
+        "side": "baseline",
+        "source": {
+          "case": "combat-0-56101-outside",
+          "side": "baseline",
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-baseline/trajectories.jsonl",
+          "sha256": "ba9c4bf1e6511d106af5e05063821719020587961f7df4e075ff3d80981dfdcd"
+        },
+        "arm": "receding_recovery",
+        "windows": 8,
+        "world_and_sampling_residual": 0.007773050150462359,
+        "control_contribution": -0.0028483072916666696,
+        "total_gap": 0.004924742858795689,
+        "realized_persona_gain": -0.15627092393377617
+      },
+      {
+        "game": "combat",
+        "profile": "growth",
+        "seed": 56101,
+        "side": "candidate",
+        "source": {
+          "case": "combat-0-56101-outside",
+          "side": "candidate",
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-candidate/trajectories.jsonl",
+          "sha256": "7d0cf3c87dee93e354bc3a4f540813e306f064c80d5466e1494a5e6583885b24"
+        },
+        "arm": "receding_recovery",
+        "windows": 8,
+        "world_and_sampling_residual": 0.002805834153470568,
+        "control_contribution": 0.004720052083333327,
+        "total_gap": 0.007525886236803895,
+        "realized_persona_gain": 0.853386842468417
+      }
+    ],
+    "limit": "Overlapping windows; unequal arm horizons. Actual-vs-reference continuation decomposition, not action-ranking causality or independent samples."
+  },
+  "oracle_law": {
+    "root": "results/oracle_law_probe",
+    "manifest_sha256": "78f6ad5860db113cc27605fb7ddd677da8710df26c71915d066718936ba1ff82",
+    "registration_sha256": "4c5b54d165a8bee0422c47c1abe37277dca18d41032668c8ca92d45336165197",
+    "completed": 1,
+    "registered": 4,
+    "results": [
+      {
+        "input": {
+          "case": "auction-3-56102-shift-return",
+          "tick": 31,
+          "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-candidate/trajectories.jsonl",
+          "sha256": "813db302bcee07e7b98b2035832dad2cf4bfa660b10302c27b09a527a5fb0879"
+        },
+        "recorded": "bid:4",
+        "reproduction_drift": 0.0,
+        "reproduced": {
+          "action": "bid:4",
+          "values": {
+            "bid:0": 0.15963896021599303,
+            "bid:1": 0.16254538047910672,
+            "bid:2": 0.16224201199232396,
+            "bid:3": 0.1622634448301662,
+            "bid:4": 0.1643455112808383
+          },
+          "seconds": 182.5470000000205,
+          "owner_unchanged": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713
+          ]
+        },
+        "oracle_world": {
+          "action": "bid:1",
+          "values": {
+            "bid:0": 0.09340698242187513,
+            "bid:1": 0.09612182617187516,
+            "bid:2": 0.08978393554687517,
+            "bid:3": 0.09116780598958345,
+            "bid:4": 0.09380371093750019
+          },
+          "seconds": 650.8279999999795,
+          "owner_unchanged": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713
+          ]
+        }
+      }
+    ],
+    "limit": "Evaluator-only future response law; not actual actor knowledge or implementable perfect prediction."
+  },
+  "invalidated_diagnostic": {
+    "corrected_root": "results/compound_window_diagnostic_v2",
+    "reason": "Diagnostic adapter used initial self.payout instead of observed public world payout; shock had no effect. Incomplete run rejected; retained original sources and resolved checkpoints. Registered auction/combat runs unaffected.",
+    "accepted": false
+  }
+}
