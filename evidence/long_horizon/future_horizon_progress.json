@@ -76,31 +76,31 @@
       },
       {
         "case": "combat-2-53103-shift-return",
-        "completed_roots": 68,
-        "complete": false,
+        "completed_roots": 128,
+        "complete": true,
         "input": {
           "key": "combat-2-53103-shift-return",
           "path": "results/long_horizon_sampling_check_local_combat/value-contract-combat-2-53103-shift-return-candidate/trajectories.jsonl",
           "sha256": "a61dcaea88cd11db0592ae1b645305d158df0358997ce0a50754b65d4a9c92b6"
         },
-        "agreement": 27,
-        "fixed_axes": 68,
-        "unchanged_factual_owners": 68,
-        "seconds": 1831.4839999999967
+        "agreement": 56,
+        "fixed_axes": 128,
+        "unchanged_factual_owners": 128,
+        "seconds": 3103.9530000000377
       },
       {
         "case": "combat-0-53103-shift-return",
-        "completed_roots": 65,
-        "complete": false,
+        "completed_roots": 128,
+        "complete": true,
         "input": {
           "key": "combat-0-53103-shift-return",
           "path": "results/long_horizon_sampling_check_known_combat_local/value-contract-combat-0-53103-shift-return-candidate/trajectories.jsonl",
           "sha256": "9aba74ba8c4e0feea6edf2121adfcb141d6b7dfd6c803d506a2bd4eac1ed2877"
         },
-        "agreement": 23,
-        "fixed_axes": 65,
-        "unchanged_factual_owners": 65,
-        "seconds": 1694.265000000014
+        "agreement": 49,
+        "fixed_axes": 128,
+        "unchanged_factual_owners": 128,
+        "seconds": 3013.4990000000107
       }
     ],
     "terminal_extraction_repair": {
@@ -110,6 +110,249 @@
       "correction": "Only terminal output extraction: exact endpoint forecasts have no purpose_mean_estimator. Use captured forecast.purpose. Preserve every original prefix and original source; no actor/seed/world/owner changes.",
       "observed_error": "KeyError('purpose_mean_estimator')",
       "expected_roots": 768
+    },
+    "completed_audit": {
+      "complete": true,
+      "roots": 768,
+      "agreement2": 636,
+      "agreement32": 587,
+      "results": [
+        {
+          "case": "gambling-0-53101-outside",
+          "always2": 110,
+          "always32": 128,
+          "roots": 128,
+          "seconds32": 4273.8429999999935,
+          "seconds_old_both": 81.73399999999674,
+          "source": {
+            "key": "gambling-0-53101-outside",
+            "path": "results/long_horizon_sampling_check_local/value-contract-gambling-0-53101-outside-candidate/trajectories.jsonl",
+            "sha256": "ba906006dc700fa070471eba2169c5a74e23aa5832439d44b126118b25d41dcc"
+          },
+          "full_prefix_preserved": true,
+          "actual_input_roots_checked": 128,
+          "disagreements": []
+        },
+        {
+          "case": "resources-0-53101-outside",
+          "always2": 123,
+          "always32": 128,
+          "roots": 128,
+          "seconds32": 3763.2179999999935,
+          "seconds_old_both": 77.56199999997625,
+          "source": {
+            "key": "resources-0-53101-outside",
+            "path": "results/long_horizon_sampling_check_local/value-contract-resources-0-53101-outside-candidate/trajectories.jsonl",
+            "sha256": "f6441c23a8917ae2921e7b945f933780f3e8afa9edf0b4c0aa9d683d1ed01ca2"
+          },
+          "full_prefix_preserved": true,
+          "actual_input_roots_checked": 128,
+          "disagreements": []
+        },
+        {
+          "case": "resources-2-53103-shift-return",
+          "always2": 124,
+          "always32": 128,
+          "roots": 128,
+          "seconds32": 3807.375,
+          "seconds_old_both": 78.125,
+          "source": {
+            "key": "resources-2-53103-shift-return",
+            "path": "results/long_horizon_sampling_check_local_resources/value-contract-resources-2-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "937b5aa8eaa799dcd82c8e60bf047c5d5be86ae74db53e32d54b880df8af1357"
+          },
+          "full_prefix_preserved": true,
+          "actual_input_roots_checked": 128,
+          "disagreements": []
+        },
+        {
+          "case": "auction-0-53103-shift-return",
+          "always2": 91,
+          "always32": 98,
+          "roots": 128,
+          "seconds32": 3639.079000000027,
+          "seconds_old_both": 85.07799999997951,
+          "source": {
+            "key": "auction-0-53103-shift-return",
+            "path": "results/long_horizon_sampling_check_local_auction/value-contract-auction-0-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "ab429ae5203553e3369f12739c2d853f0a7bb97d9e9a5549f2ae0a9d9926c1c8"
+          },
+          "full_prefix_preserved": true,
+          "actual_input_roots_checked": 128,
+          "disagreements": [
+            {
+              "actual": "bid:1",
+              "predicted": "bid:2",
+              "count": 8
+            },
+            {
+              "actual": "bid:1",
+              "predicted": "bid:0",
+              "count": 4
+            },
+            {
+              "actual": "bid:3",
+              "predicted": "bid:2",
+              "count": 4
+            },
+            {
+              "actual": "bid:2",
+              "predicted": "bid:3",
+              "count": 4
+            },
+            {
+              "actual": "bid:4",
+              "predicted": "bid:3",
+              "count": 3
+            },
+            {
+              "actual": "bid:0",
+              "predicted": "bid:1",
+              "count": 3
+            },
+            {
+              "actual": "bid:2",
+              "predicted": "bid:1",
+              "count": 2
+            },
+            {
+              "actual": "bid:3",
+              "predicted": "bid:1",
+              "count": 1
+            },
+            {
+              "actual": "bid:3",
+              "predicted": "bid:0",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "case": "combat-2-53103-shift-return",
+          "always2": 92,
+          "always32": 56,
+          "roots": 128,
+          "seconds32": 3103.9530000000377,
+          "seconds_old_both": 90.59399999998277,
+          "source": {
+            "key": "combat-2-53103-shift-return",
+            "path": "results/long_horizon_sampling_check_local_combat/value-contract-combat-2-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "a61dcaea88cd11db0592ae1b645305d158df0358997ce0a50754b65d4a9c92b6"
+          },
+          "full_prefix_preserved": true,
+          "actual_input_roots_checked": 128,
+          "disagreements": [
+            {
+              "actual": "strike:0",
+              "predicted": "reload",
+              "count": 22
+            },
+            {
+              "actual": "guard",
+              "predicted": "reload",
+              "count": 18
+            },
+            {
+              "actual": "strike:2",
+              "predicted": "reload",
+              "count": 11
+            },
+            {
+              "actual": "strike:1",
+              "predicted": "reload",
+              "count": 10
+            },
+            {
+              "actual": "guard",
+              "predicted": "strike:0",
+              "count": 4
+            },
+            {
+              "actual": "strike:0",
+              "predicted": "guard",
+              "count": 3
+            },
+            {
+              "actual": "strike:2",
+              "predicted": "guard",
+              "count": 3
+            },
+            {
+              "actual": "strike:1",
+              "predicted": "guard",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "case": "combat-0-53103-shift-return",
+          "always2": 96,
+          "always32": 49,
+          "roots": 128,
+          "seconds32": 3013.4990000000107,
+          "seconds_old_both": 87.42200000002049,
+          "source": {
+            "key": "combat-0-53103-shift-return",
+            "path": "results/long_horizon_sampling_check_known_combat_local/value-contract-combat-0-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "9aba74ba8c4e0feea6edf2121adfcb141d6b7dfd6c803d506a2bd4eac1ed2877"
+          },
+          "full_prefix_preserved": true,
+          "actual_input_roots_checked": 128,
+          "disagreements": [
+            {
+              "actual": "strike:0",
+              "predicted": "reload",
+              "count": 21
+            },
+            {
+              "actual": "guard",
+              "predicted": "reload",
+              "count": 18
+            },
+            {
+              "actual": "strike:1",
+              "predicted": "reload",
+              "count": 13
+            },
+            {
+              "actual": "strike:2",
+              "predicted": "reload",
+              "count": 13
+            },
+            {
+              "actual": "strike:0",
+              "predicted": "guard",
+              "count": 6
+            },
+            {
+              "actual": "strike:2",
+              "predicted": "guard",
+              "count": 3
+            },
+            {
+              "actual": "guard",
+              "predicted": "strike:0",
+              "count": 2
+            },
+            {
+              "actual": "guard",
+              "predicted": "strike:2",
+              "count": 1
+            },
+            {
+              "actual": "strike:1",
+              "predicted": "guard",
+              "count": 1
+            },
+            {
+              "actual": "guard",
+              "predicted": "strike:1",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      "scope": "Fidelity to identical saved factual owners/actions, not policy quality. The longer policy changes more than depth: a sampled reflex tail approximates its later choices."
     }
   },
   "delayed_yield": {
@@ -119,9 +362,27 @@
     "runs": [
       {
         "case": "delay-11-shock-0",
+        "mode": "16",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-11-shock-0",
         "mode": "2",
-        "turns": 102,
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-11-shock-1",
+        "mode": "16",
+        "turns": 58,
         "complete": false
+      },
+      {
+        "case": "delay-11-shock-1",
+        "mode": "2",
+        "turns": 128,
+        "complete": true
       },
       {
         "case": "delay-3-shock-0",
@@ -162,8 +423,8 @@
       {
         "case": "delay-7-shock-1",
         "mode": "16",
-        "turns": 32,
-        "complete": false
+        "turns": 128,
+        "complete": true
       },
       {
         "case": "delay-7-shock-1",
@@ -647,7 +908,7 @@
       "invariants": "Same factual root, persona, learned owner and final sample bank. Only outer simulated world law changes; future actors retain original posterior-policy learning.",
       "interpretation": "Separate current-law error from assumptions about unobserved future changes.\n\nPost-hoc diagnosis on the SAME four roots as oracle_law_probe. No actual world,\nowner, personality, or learner update is changed. Outer-persistent is an existing\nimplementable forecast assumption; current-law is evaluator-only knowledge.\nNeither saved-root change establishes long-play improvement.\n"
     },
-    "completed": 1,
+    "completed": 8,
     "registered": 8,
     "results": [
       {
@@ -692,6 +953,293 @@
           },
           "selected_purpose": 0.17091064453125024,
           "purpose_excluded": 4
+        },
+        "reused_constant_law": false
+      },
+      {
+        "input": {
+          "case": "auction-3-56102-shift-return",
+          "tick": 31,
+          "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-candidate/trajectories.jsonl",
+          "sha256": "813db302bcee07e7b98b2035832dad2cf4bfa660b10302c27b09a527a5fb0879"
+        },
+        "mode": "outer-persistent",
+        "original_result_sha256": "74e4df2bb077bc30a7987edaca63517f54825baa3f6d1db7b5db55a65acafbfb",
+        "original_action": "bid:4",
+        "result": {
+          "action": "bid:4",
+          "values": {
+            "bid:0": 0.1602292354104391,
+            "bid:1": 0.16317443052084302,
+            "bid:2": 0.16245792976419643,
+            "bid:3": 0.16304387845465496,
+            "bid:4": 0.16497610989575706
+          },
+          "seconds": 181.76499999995576,
+          "owner_unchanged": true,
+          "fixed_axes": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713
+          ],
+          "root_prediction": {
+            "0": 0.7018228129483538,
+            "1": 0.15810386175424782,
+            "2": 0.14007332529739844
+          },
+          "actual_current_law": {
+            "0": 0.8,
+            "1": 0.1,
+            "2": 0.1
+          },
+          "selected_purpose": 0.16497610989575706,
+          "purpose_excluded": 4
+        },
+        "reused_constant_law": false
+      },
+      {
+        "input": {
+          "case": "auction-3-56102-shift-return",
+          "tick": 61,
+          "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-candidate/trajectories.jsonl",
+          "sha256": "813db302bcee07e7b98b2035832dad2cf4bfa660b10302c27b09a527a5fb0879"
+        },
+        "mode": "current-law-held-constant",
+        "original_result_sha256": "ccebf03bf7c2db3578337c70cc7fe3b1c2ad38491c4ed55fc7e611b8a55b9c2d",
+        "original_action": "bid:4",
+        "result": {
+          "action": "bid:4",
+          "values": {
+            "bid:0": 0.11280069986979187,
+            "bid:1": 0.1137414550781252,
+            "bid:2": 0.11335530598958354,
+            "bid:3": 0.11848347981770851,
+            "bid:4": 0.12066202799479182
+          },
+          "seconds": 539.0779999999795,
+          "owner_unchanged": true,
+          "fixed_axes": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713
+          ],
+          "root_prediction": {
+            "0": 0.16631446102828776,
+            "1": 0.11891874027354357,
+            "2": 0.7147667986981687
+          },
+          "actual_current_law": {
+            "0": 0.1,
+            "1": 0.1,
+            "2": 0.8
+          },
+          "selected_purpose": 0.12066202799479182,
+          "purpose_excluded": 4
+        },
+        "reused_constant_law": false
+      },
+      {
+        "input": {
+          "case": "auction-3-56102-shift-return",
+          "tick": 61,
+          "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-candidate/trajectories.jsonl",
+          "sha256": "813db302bcee07e7b98b2035832dad2cf4bfa660b10302c27b09a527a5fb0879"
+        },
+        "mode": "outer-persistent",
+        "original_result_sha256": "ccebf03bf7c2db3578337c70cc7fe3b1c2ad38491c4ed55fc7e611b8a55b9c2d",
+        "original_action": "bid:4",
+        "result": {
+          "action": "bid:4",
+          "values": {
+            "bid:0": 0.11974857564173771,
+            "bid:1": 0.1200230417540483,
+            "bid:2": 0.11976342980918732,
+            "bid:3": 0.12482765426284145,
+            "bid:4": 0.12688523771385174
+          },
+          "seconds": 519.0470000000205,
+          "owner_unchanged": true,
+          "fixed_axes": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713
+          ],
+          "root_prediction": {
+            "0": 0.16631446102828776,
+            "1": 0.11891874027354357,
+            "2": 0.7147667986981687
+          },
+          "actual_current_law": {
+            "0": 0.1,
+            "1": 0.1,
+            "2": 0.8
+          },
+          "selected_purpose": 0.12688523771385174,
+          "purpose_excluded": 4
+        },
+        "reused_constant_law": false
+      },
+      {
+        "input": {
+          "case": "combat-0-56101-outside",
+          "tick": 13,
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-candidate/trajectories.jsonl",
+          "sha256": "7d0cf3c87dee93e354bc3a4f540813e306f064c80d5466e1494a5e6583885b24"
+        },
+        "mode": "current-law-held-constant",
+        "original_result_sha256": "7bdcce40b0d42cc11dfde11592dba18685d88e11382b58cd5ee5514496cf80bb",
+        "original_action": "reload",
+        "result": {
+          "action": "strike:2",
+          "values": {
+            "guard": 0.1570978009259261,
+            "reload": 0.15623842592592613,
+            "strike:2": 0.15788483796296315
+          },
+          "seconds": 368.93800000002375,
+          "owner_unchanged": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713,
+            721,
+            722,
+            723
+          ]
+        },
+        "reused_constant_law": true
+      },
+      {
+        "input": {
+          "case": "combat-0-56101-outside",
+          "tick": 13,
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-candidate/trajectories.jsonl",
+          "sha256": "7d0cf3c87dee93e354bc3a4f540813e306f064c80d5466e1494a5e6583885b24"
+        },
+        "mode": "outer-persistent",
+        "original_result_sha256": "7bdcce40b0d42cc11dfde11592dba18685d88e11382b58cd5ee5514496cf80bb",
+        "original_action": "reload",
+        "result": {
+          "action": "strike:2",
+          "values": {
+            "guard": 0.1486953687720128,
+            "reload": 0.14857668128142634,
+            "strike:2": 0.14930228940518794
+          },
+          "seconds": 353.76600000000326,
+          "owner_unchanged": true,
+          "fixed_axes": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713,
+            721,
+            722,
+            723
+          ],
+          "root_prediction": {
+            "0": 0.047656607305403276,
+            "1": 0.23740226172828996,
+            "2": 0.7149411309663068
+          },
+          "actual_current_law": {
+            "0": 0.1,
+            "1": 0.1,
+            "2": 0.8
+          },
+          "selected_purpose": 0.14930228940518794,
+          "purpose_excluded": 2
+        },
+        "reused_constant_law": false
+      },
+      {
+        "input": {
+          "case": "combat-0-56101-outside",
+          "tick": 20,
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-candidate/trajectories.jsonl",
+          "sha256": "7d0cf3c87dee93e354bc3a4f540813e306f064c80d5466e1494a5e6583885b24"
+        },
+        "mode": "current-law-held-constant",
+        "original_result_sha256": "451fbd0e2531b2480042e53faaa316b3d72b7dc1807befc4f75a85adc9fe5b23",
+        "original_action": "reload",
+        "result": {
+          "action": "strike:2",
+          "values": {
+            "guard": 0.16299913194444463,
+            "reload": 0.16360677083333353,
+            "strike:2": 0.1650303819444446
+          },
+          "seconds": 250.88999999995576,
+          "owner_unchanged": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713
+          ]
+        },
+        "reused_constant_law": true
+      },
+      {
+        "input": {
+          "case": "combat-0-56101-outside",
+          "tick": 20,
+          "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-candidate/trajectories.jsonl",
+          "sha256": "7d0cf3c87dee93e354bc3a4f540813e306f064c80d5466e1494a5e6583885b24"
+        },
+        "mode": "outer-persistent",
+        "original_result_sha256": "451fbd0e2531b2480042e53faaa316b3d72b7dc1807befc4f75a85adc9fe5b23",
+        "original_action": "reload",
+        "result": {
+          "action": "strike:2",
+          "values": {
+            "guard": 0.14442028669159412,
+            "reload": 0.14173435897534784,
+            "strike:2": 0.14525054731024023
+          },
+          "seconds": 229.0779999999795,
+          "owner_unchanged": true,
+          "fixed_axes": true,
+          "seeds": [
+            701,
+            702,
+            703,
+            711,
+            712,
+            713
+          ],
+          "root_prediction": {
+            "0": 0.08671993088209429,
+            "1": 0.2665822770474963,
+            "2": 0.6466977920704093
+          },
+          "actual_current_law": {
+            "0": 0.1,
+            "1": 0.1,
+            "2": 0.8
+          },
+          "selected_purpose": 0.14525054731024023,
+          "purpose_excluded": 2
         },
         "reused_constant_law": false
       }
