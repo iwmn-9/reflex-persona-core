@@ -41,6 +41,14 @@ class TailReplanningTests(unittest.TestCase):
         self.assertEqual(chosen['decision']['action_id'],'reload')
         self.assertEqual(own.record(),saved)
         self.assertNotEqual(old.frontier.identity,new.frontier.identity)
+        # Preparation is a choice, not a bonus or a mandatory action. With
+        # that capacity already available, spending it can be preferable.
+        ready=g.start();ready['ammo']=3;cc=g.context(ready)
+        person=g.actor(cc,learning='segmented');request=g.request(cc)
+        controller=owned_rollout(person,**options(g,tail_recovery_mode='always'))
+        choice=DecisionLoop.decide_batch([(person,request)],False,
+            controller.frontier.future_planner(person,request,ready))[0]
+        self.assertTrue(choice['decision']['action_id'].startswith('strike:'))
 
     def test_every_future_step_learns_and_uses_same_fixed_person_in_all_families(self):
         for game in GAMES:

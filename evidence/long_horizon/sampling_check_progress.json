@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-10-20T10:31:31.106049+00:00",
+  "as_of": "2026-10-20T12:14:06.149925+00:00",
   "actor": "8c9568f8056c22be4bee1fbc115b5f879b9b2dac",
   "adopted": false,
   "scope": "Partial registered cohorts; no pooling across cohorts, no equal-compute comparison, no claim of arbitrary-game or human-level intelligence.",
@@ -9,55 +9,50 @@
       "stage": "confirmation",
       "plan_sha256": "1f95e005ca2421b91051d0283c6ff71842459bfc93081c57bb047bc938d96d0d",
       "registered_conditions": 40,
-      "completed_conditions": 27,
+      "completed_conditions": 33,
       "pending": [
         "auction-0-56101-outside",
-        "auction-1-56101-outside",
         "auction-2-56101-outside",
         "auction-3-56101-outside",
         "auction-2-56102-shift-return",
-        "auction-3-56102-shift-return",
-        "combat-0-56101-outside",
-        "combat-1-56101-outside",
         "combat-2-56101-outside",
         "combat-3-56101-outside",
-        "combat-1-56102-shift-return",
-        "combat-2-56102-shift-return",
-        "combat-3-56102-shift-return"
+        "combat-1-56102-shift-return"
       ],
-      "source_summary_sha256": "080243a63fc98103e269329d13cd22aafecc1fab2c454870fdf5ae968f5dc7a8",
       "groups": [
         {
           "level": "game",
           "key": [
             "auction"
           ],
-          "conditions": 2,
+          "conditions": 4,
           "world_seeds": [
+            56101,
             56102
           ],
-          "mean_delta": 0.0054931640625,
-          "mean_conditional_increment_delta": 0.006274414062499956,
+          "mean_delta": -0.01190185546875,
+          "mean_conditional_increment_delta": -0.007745361328125023,
           "better": 1,
           "same": 1,
-          "worse": 0,
-          "worst": 0.0
+          "worse": 2,
+          "worst": -0.0361328125
         },
         {
           "level": "game",
           "key": [
             "combat"
           ],
-          "conditions": 1,
+          "conditions": 5,
           "world_seeds": [
+            56101,
             56102
           ],
-          "mean_delta": -0.0006510416666666297,
-          "mean_conditional_increment_delta": 0.00039062500000014433,
-          "better": 0,
+          "mean_delta": 0.01679687499999999,
+          "mean_conditional_increment_delta": 0.016380208333333323,
+          "better": 3,
           "same": 0,
-          "worse": 1,
-          "worst": -0.0006510416666666297
+          "worse": 2,
+          "worst": -0.020182291666666685
         },
         {
           "level": "game",
@@ -99,18 +94,52 @@
           "level": "world_seed",
           "key": [
             "auction",
+            56101
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            56101
+          ],
+          "mean_delta": -0.0224609375,
+          "mean_conditional_increment_delta": -0.015209960937500003,
+          "better": 0,
+          "same": 0,
+          "worse": 1,
+          "worst": -0.0224609375
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "auction",
             56102
           ],
-          "conditions": 2,
+          "conditions": 3,
           "world_seeds": [
             56102
           ],
-          "mean_delta": 0.0054931640625,
-          "mean_conditional_increment_delta": 0.006274414062499956,
+          "mean_delta": -0.008382161458333334,
+          "mean_conditional_increment_delta": -0.005257161458333363,
           "better": 1,
           "same": 1,
-          "worse": 0,
-          "worst": 0.0
+          "worse": 1,
+          "worst": -0.0361328125
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "combat",
+            56101
+          ],
+          "conditions": 2,
+          "world_seeds": [
+            56101
+          ],
+          "mean_delta": 0.014648437499999972,
+          "mean_conditional_increment_delta": 0.01985677083333323,
+          "better": 1,
+          "same": 0,
+          "worse": 1,
+          "worst": -0.020182291666666685
         },
         {
           "level": "world_seed",
@@ -118,13 +147,13 @@
             "combat",
             56102
           ],
-          "conditions": 1,
+          "conditions": 3,
           "world_seeds": [
             56102
           ],
-          "mean_delta": -0.0006510416666666297,
-          "mean_conditional_increment_delta": 0.00039062500000014433,
-          "better": 0,
+          "mean_delta": 0.018229166666666668,
+          "mean_conditional_increment_delta": 0.014062500000000052,
+          "better": 2,
           "same": 0,
           "worse": 1,
           "worst": -0.0006510416666666297
@@ -232,6 +261,7 @@
           "worst": 0.05859375
         }
       ],
+      "source_summary_sha256": "c63d5d957f125f4432262fab7cc85f33fe506a3a9dcc41fe03e8eb82a672a7e1",
       "comparisons": [
         {
           "condition": "gambling-0-56101-outside",
@@ -260,6 +290,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56101-outside-baseline/trajectories.jsonl",
             "sha256": "846838253a285425b565c36a40561d1efa14e4e712c5c35b6b8c4b13c25172f3",
@@ -315,6 +346,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56101-outside-baseline/trajectories.jsonl",
             "sha256": "213615636c4180e4c12fb4d046784d74a50dbad7076ffa170dae4deea7b9fe7e",
@@ -370,6 +402,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56101-outside-baseline/trajectories.jsonl",
             "sha256": "583930e8f3ffde69938b17528cc8463d0091d50b9f91aeff690ec218d9daced5",
@@ -425,6 +458,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_infrastructure_retry/value-contract-gambling-3-56101-outside-baseline/trajectories.jsonl",
             "sha256": "8b0b351ae10e11a8ad6eabb82856bb76718057253415839fb820bd9081686ff1",
@@ -482,6 +516,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "ce98bb0590b820d11a13df808091f11db485459acdfcd0482dff75cab4e9f734",
@@ -539,6 +574,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "c0dd3135fbf076f3c113038d83b00b18210473b20db60a4373bd336279ef604f",
@@ -596,6 +632,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "4eca98ae690ec79cabceea4ba89afe54e44d32d8e2c3651c31ea79ae01f1ff1f",
@@ -653,6 +690,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-3-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "c172c7ae55ba8de40ae158e0fd6e47ec1f6f88f335a74fbc15c28fe986ace4c8",
@@ -710,6 +748,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56103-shift-return-baseline/trajectories.jsonl",
             "sha256": "8575b24e1fd8583b8cbb42685abae04a1f3cd5a61f4ebbb06c4fd40c4413070f",
@@ -767,6 +806,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56103-shift-return-baseline/trajectories.jsonl",
             "sha256": "f1e186efade55de338cc6f09e205d675b9226101428731f232d3bb971a0bae7e",
@@ -824,6 +864,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56103-shift-return-baseline/trajectories.jsonl",
             "sha256": "ac57041b20265e9f3901f7718750c0f63f5be42f6d6cbb9a7284b80b248d9f3b",
@@ -881,6 +922,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-3-56103-shift-return-baseline/trajectories.jsonl",
             "sha256": "6cb6c7da7d966074aefa7b6759734bdc1ea93838e7d2e87b38664461d89d7d45",
@@ -936,6 +978,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56104-outside-baseline/trajectories.jsonl",
             "sha256": "1178a6e62f69f47f5df3b8333be5d15dcbf1700e534c76b195bd8538f00131fd",
@@ -991,6 +1034,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56104-outside-baseline/trajectories.jsonl",
             "sha256": "ed748cce4dfb22668bf10e01819f79564139842313512a2a5b6d1837e6eb2916",
@@ -1046,6 +1090,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56104-outside-baseline/trajectories.jsonl",
             "sha256": "444a0383084b6db98862a302f37ae06f9467c6678bbf69b56a8430cb0e54a83a",
@@ -1101,6 +1146,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-3-56104-outside-baseline/trajectories.jsonl",
             "sha256": "6cdeb1ba27e766878d06292eaa7db382730cbcb0cce63e6ea1a60d91f2d8e2eb",
@@ -1155,6 +1201,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-0-56101-outside-baseline/trajectories.jsonl",
             "sha256": "774cd945184b7492aeb59436afa26267689799b094b9b550990cdf4694a2d891",
@@ -1212,6 +1259,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-1-56101-outside-baseline/trajectories.jsonl",
             "sha256": "e14dce67462fc298ed80b45de24d0839ca7fac2a114df2068bfeb4d26650504c",
@@ -1269,6 +1317,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-2-56101-outside-baseline/trajectories.jsonl",
             "sha256": "5b75f7df40270f2ca40b0a67bcb1cff9f9ecf9f30c4541d7ab150f659fbe3688",
@@ -1326,6 +1375,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-3-56101-outside-baseline/trajectories.jsonl",
             "sha256": "3b0692c598cc1df28e4a566b5f2ac0440b37462a259d8a8a9198c3f5523fc01e",
@@ -1386,6 +1436,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-0-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "9138274f1a0f396649012db5d60efc30e481778ed33a766f8bba8f3ef10523a0",
@@ -1447,6 +1498,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-1-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "8147f7863e62ddfe9c91d589d94d672f91b8a1100b22aed1a2a93dee915b52ef",
@@ -1508,6 +1560,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-2-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "337639df01a3640739dab0111bf64bab561838c352f7660e396969ed5e483601",
@@ -1569,6 +1622,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-3-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "2d9e5e814e4da1ca77e2115f4ff09c1c068399d087136a1bc3778ce4aa79fa13",
@@ -1598,6 +1652,68 @@
           "pair_id": "c9369e983fa64d40ab74c50d040c1687",
           "bellman_residual_removed_delta": 0.10976463732420516,
           "bellman_residual_delta": -0.00038963732420510544
+        },
+        {
+          "condition": "auction-1-56101-outside",
+          "game": "auction",
+          "profile": "steady",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.160400390625,
+          "candidate_score": 0.137939453125,
+          "delta": -0.0224609375,
+          "conditional_increment_delta": -0.015209960937500003,
+          "realized_residual_delta": -0.007250976562499997,
+          "changed_actions": 55,
+          "baseline_actions": {
+            "bid:3": 71,
+            "bid:2": 9,
+            "bid:4": 18,
+            "bid:0": 29,
+            "bid:1": 1
+          },
+          "candidate_actions": {
+            "bid:3": 69,
+            "bid:2": 5,
+            "bid:4": 18,
+            "bid:1": 8,
+            "bid:0": 28
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-auction-1-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "60b880328f686695899375ba8274356a563cbc1499a5eabebcca64dba3ab6093",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-auction-1-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "632e97b5eac706fe20ae442fd8d27426688cd7a606309fe8bdc4f08ec0e57f8e",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "041eed81a0214f2e98f94e8691129802",
+          "bellman_residual_removed_delta": -0.0004491476774318437,
+          "bellman_residual_delta": -0.02201178982256813
         },
         {
           "condition": "auction-0-56102-shift-return",
@@ -1630,6 +1746,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-auction-0-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "5750bd153e3b557db7cd8dffd151f12105324cd606c2e69b7bdb09f9d4840119",
@@ -1691,6 +1808,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation/value-contract-auction-1-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "e126f205f1cc73955b2bee02d03dd7157c2297964d03ed371cb089ca65a861df",
@@ -1720,6 +1838,212 @@
           "pair_id": "835cd422f3ea4ec2a7f3e357d26803e1",
           "bellman_residual_removed_delta": 0.005461572249424285,
           "bellman_residual_delta": 0.005524755875575604
+        },
+        {
+          "condition": "auction-3-56102-shift-return",
+          "game": "auction",
+          "profile": "ego",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.27880859375,
+          "candidate_score": 0.24267578125,
+          "delta": -0.0361328125,
+          "conditional_increment_delta": -0.0283203125,
+          "realized_residual_delta": -0.0078125,
+          "changed_actions": 44,
+          "baseline_actions": {
+            "bid:2": 24,
+            "bid:3": 39,
+            "bid:4": 6,
+            "bid:1": 48,
+            "bid:0": 11
+          },
+          "candidate_actions": {
+            "bid:3": 36,
+            "bid:2": 25,
+            "bid:4": 8,
+            "bid:0": 16,
+            "bid:1": 43
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "de94284d46a92046025aedf7b436b71e67d1d22af0a47bb6a7f42db70d440c8b",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": {
+              "version": "recorded-forecast-replay-v1",
+              "accepted": true,
+              "max_allowed_ulps": 8,
+              "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+              "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+              "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+              "trajectory_sha256": "de94284d46a92046025aedf7b436b71e67d1d22af0a47bb6a7f42db70d440c8b",
+              "checked_forecasts": 128,
+              "exact_owner_hashes": 128,
+              "max_observed_ulps": 3.0,
+              "max_absolute_difference": 2.220446049250313e-16
+            }
+          },
+          "candidate": {
+            "path": "results/rwc/39416515858/value-contract-auction-3-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "813db302bcee07e7b98b2035832dad2cf4bfa660b10302c27b09a527a5fb0879",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": {
+              "version": "recorded-forecast-replay-v1",
+              "accepted": true,
+              "max_allowed_ulps": 8,
+              "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+              "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+              "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+              "trajectory_sha256": "813db302bcee07e7b98b2035832dad2cf4bfa660b10302c27b09a527a5fb0879",
+              "checked_forecasts": 128,
+              "exact_owner_hashes": 128,
+              "max_observed_ulps": 3.0,
+              "max_absolute_difference": 2.220446049250313e-16
+            }
+          },
+          "pair_id": "13977f99f188432b87d256d5e72e57c8",
+          "bellman_residual_removed_delta": -0.013856234182244076,
+          "bellman_residual_delta": -0.022276578317756063
+        },
+        {
+          "condition": "combat-0-56101-outside",
+          "game": "combat",
+          "profile": "growth",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.423828125,
+          "candidate_score": 0.4036458333333333,
+          "delta": -0.020182291666666685,
+          "conditional_increment_delta": -0.005598958333333459,
+          "realized_residual_delta": -0.014583333333333226,
+          "changed_actions": 71,
+          "baseline_actions": {
+            "strike:1": 2,
+            "reload": 30,
+            "strike:2": 70,
+            "guard": 26
+          },
+          "candidate_actions": {
+            "strike:1": 2,
+            "strike:2": 68,
+            "reload": 33,
+            "guard": 25
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "ba9c4bf1e6511d106af5e05063821719020587961f7df4e075ff3d80981dfdcd",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-0-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "7d0cf3c87dee93e354bc3a4f540813e306f064c80d5466e1494a5e6583885b24",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "47fa9b95e9044009b9bc1b59d8b2390e",
+          "bellman_residual_removed_delta": -0.006657851030233586,
+          "bellman_residual_delta": -0.0135244406364331
+        },
+        {
+          "condition": "combat-1-56101-outside",
+          "game": "combat",
+          "profile": "steady",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.4010416666666667,
+          "candidate_score": 0.4505208333333333,
+          "delta": 0.04947916666666663,
+          "conditional_increment_delta": 0.04531249999999992,
+          "realized_residual_delta": 0.004166666666666763,
+          "changed_actions": 64,
+          "baseline_actions": {
+            "guard": 31,
+            "strike:2": 67,
+            "strike:1": 1,
+            "reload": 29
+          },
+          "candidate_actions": {
+            "strike:0": 1,
+            "guard": 26,
+            "strike:2": 74,
+            "reload": 27
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-1-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "a11a6f90439b8d80a6918a0ce70b770861ec46f2a93f2cffbd934535f0826e38",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-1-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "c7da47d92433b9bf630a1f09f66146fb2af6f1c8085609eaf5c2debda452b423",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "c624bda2f55b4d96b236bcb4a34f1506",
+          "bellman_residual_removed_delta": 0.04668089429754557,
+          "bellman_residual_delta": 0.0027982723691210576
         },
         {
           "condition": "combat-0-56102-shift-return",
@@ -1752,6 +2076,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_confirmation_audit/value-contract-combat-0-56102-shift-return-baseline/trajectories.jsonl",
             "sha256": "a24ce7489306f89a397eac70ff2bde695347c46df82c830310fc965f73d77ee0",
@@ -1805,6 +2130,178 @@
           "pair_id": "16432253ef714c68a038c85bc0f2d1a2",
           "bellman_residual_removed_delta": 0.00045416712260559766,
           "bellman_residual_delta": -0.0011052087892722273
+        },
+        {
+          "condition": "combat-2-56102-shift-return",
+          "game": "combat",
+          "profile": "care",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.3639322916666667,
+          "candidate_score": 0.4036458333333333,
+          "delta": 0.03971354166666663,
+          "conditional_increment_delta": 0.014713541666666718,
+          "realized_residual_delta": 0.02499999999999991,
+          "changed_actions": 80,
+          "baseline_actions": {
+            "strike:1": 16,
+            "reload": 33,
+            "guard": 26,
+            "strike:0": 37,
+            "strike:2": 16
+          },
+          "candidate_actions": {
+            "strike:1": 18,
+            "strike:2": 19,
+            "guard": 24,
+            "reload": 30,
+            "strike:0": 37
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/rwc/p-39404741708-6b1b846b-a-result/value-contract-combat-2-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "0d55e0973b1efa7ba0c69a009d129a5850ee132d3b1e66fd1f712ca4426a115d",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": {
+              "version": "recorded-forecast-replay-v1",
+              "accepted": true,
+              "max_allowed_ulps": 8,
+              "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+              "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+              "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+              "trajectory_sha256": "0d55e0973b1efa7ba0c69a009d129a5850ee132d3b1e66fd1f712ca4426a115d",
+              "checked_forecasts": 128,
+              "exact_owner_hashes": 128,
+              "max_observed_ulps": 3.0,
+              "max_absolute_difference": 1.1102230246251565e-16
+            }
+          },
+          "candidate": {
+            "path": "results/rwc/p-39404741708-6b1b846b-a-result/value-contract-combat-2-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "f6de90db35d89d6f0752fa17655b8b0f873f6a03798140968f6930cfa58d9df7",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": {
+              "version": "recorded-forecast-replay-v1",
+              "accepted": true,
+              "max_allowed_ulps": 8,
+              "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+              "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+              "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+              "trajectory_sha256": "f6de90db35d89d6f0752fa17655b8b0f873f6a03798140968f6930cfa58d9df7",
+              "checked_forecasts": 128,
+              "exact_owner_hashes": 128,
+              "max_observed_ulps": 3.0,
+              "max_absolute_difference": 1.1102230246251565e-16
+            }
+          },
+          "pair_id": "d255b1d94e474cb2b4abc16ff6e326f1",
+          "bellman_residual_removed_delta": 0.014753156279199708,
+          "bellman_residual_delta": 0.02496038538746692
+        },
+        {
+          "condition": "combat-3-56102-shift-return",
+          "game": "combat",
+          "profile": "ego",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4114583333333333,
+          "candidate_score": 0.4270833333333333,
+          "delta": 0.015625,
+          "conditional_increment_delta": 0.027083333333333293,
+          "realized_residual_delta": -0.011458333333333293,
+          "changed_actions": 53,
+          "baseline_actions": {
+            "strike:1": 18,
+            "reload": 31,
+            "guard": 24,
+            "strike:0": 38,
+            "strike:2": 17
+          },
+          "candidate_actions": {
+            "reload": 29,
+            "strike:2": 20,
+            "guard": 23,
+            "strike:0": 37,
+            "strike:1": 19
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/rwc/p-39404741708-628eb422-a-result/value-contract-combat-3-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "59bfeaddc21e6fed1af4dadcf6cb1121c71e9d27a465c83205ed5151d0cb2c57",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": {
+              "version": "recorded-forecast-replay-v1",
+              "accepted": true,
+              "max_allowed_ulps": 8,
+              "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+              "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+              "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+              "trajectory_sha256": "59bfeaddc21e6fed1af4dadcf6cb1121c71e9d27a465c83205ed5151d0cb2c57",
+              "checked_forecasts": 128,
+              "exact_owner_hashes": 128,
+              "max_observed_ulps": 3.0,
+              "max_absolute_difference": 2.220446049250313e-16
+            }
+          },
+          "candidate": {
+            "path": "results/rwc/p-39404741708-628eb422-a-result/value-contract-combat-3-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "de6e296a6ca805167442c9f8ab640ad6b7ea04b2b2eb043f9dd0ad9ecfb444b0",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": {
+              "version": "recorded-forecast-replay-v1",
+              "accepted": true,
+              "max_allowed_ulps": 8,
+              "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+              "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+              "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+              "trajectory_sha256": "de6e296a6ca805167442c9f8ab640ad6b7ea04b2b2eb043f9dd0ad9ecfb444b0",
+              "checked_forecasts": 128,
+              "exact_owner_hashes": 128,
+              "max_observed_ulps": 3.0,
+              "max_absolute_difference": 2.220446049250313e-16
+            }
+          },
+          "pair_id": "92a8fe0fbf97473b997a396a22b72f68",
+          "bellman_residual_removed_delta": 0.02663113194568978,
+          "bellman_residual_delta": -0.011006131945689779
         }
       ]
     },
@@ -1813,12 +2310,10 @@
       "stage": "diagnostic",
       "plan_sha256": "be8949c420cfd2ae77ef93a0af7af8bde9cd2697c7904ec8e19068b4c5f07684",
       "registered_conditions": 8,
-      "completed_conditions": 6,
+      "completed_conditions": 7,
       "pending": [
-        "auction-2-53101-outside",
-        "combat-0-53101-outside"
+        "auction-2-53101-outside"
       ],
-      "source_summary_sha256": "d10b92f1dac64ce4f99ffe776b552b9ca363e5ce895d435ced12756070a23c67",
       "groups": [
         {
           "level": "game",
@@ -1841,13 +2336,14 @@
           "key": [
             "combat"
           ],
-          "conditions": 1,
+          "conditions": 2,
           "world_seeds": [
+            53101,
             53103
           ],
-          "mean_delta": 0.0078125,
-          "mean_conditional_increment_delta": 0.0057291666666666186,
-          "better": 1,
+          "mean_delta": 0.028971354166666685,
+          "mean_conditional_increment_delta": 0.009179687500000089,
+          "better": 2,
           "same": 0,
           "worse": 0,
           "worst": 0.0078125
@@ -1902,6 +2398,23 @@
           "same": 0,
           "worse": 0,
           "worst": 0.0048828125
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "combat",
+            53101
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53101
+          ],
+          "mean_delta": 0.05013020833333337,
+          "mean_conditional_increment_delta": 0.012630208333333559,
+          "better": 1,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.05013020833333337
         },
         {
           "level": "world_seed",
@@ -1989,6 +2502,7 @@
           "worst": 0.0
         }
       ],
+      "source_summary_sha256": "fa8fc1678ae606df3ea4b1a98a330b03f63d33e5ffd131da3c841e5cec5abec2",
       "comparisons": [
         {
           "condition": "gambling-0-53101-outside",
@@ -2015,6 +2529,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_local/value-contract-gambling-0-53101-outside-baseline/trajectories.jsonl",
             "sha256": "bd580dc8cbf57de1cafdcbbe286fd05d407b27d048063bd3892e9de63882471a",
@@ -2072,6 +2587,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_diagnostic/value-contract-gambling-2-53103-shift-return-baseline/trajectories.jsonl",
             "sha256": "8083d5e8998576f3267c9c9813721e92b538fcf6ffbd959743f09cfc0f114b51",
@@ -2127,6 +2643,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_local/value-contract-resources-0-53101-outside-baseline/trajectories.jsonl",
             "sha256": "8dcffff91e4952738797adea4d54a2e368a9295d208cea43bc8347125145cbcf",
@@ -2188,6 +2705,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_local_resources/value-contract-resources-2-53103-shift-return-baseline/trajectories.jsonl",
             "sha256": "64d108e54ad11cd3df4caa7116b074c2e1738a3b15cb1c9b7f5cdd3dcf656f9d",
@@ -2249,6 +2767,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_local_auction/value-contract-auction-0-53103-shift-return-baseline/trajectories.jsonl",
             "sha256": "3879e61e956881a80fd9f67f3031057d3db2b09c75d49de84fef74bcb4992614",
@@ -2278,6 +2797,66 @@
           "pair_id": "257d703fba794a3fa6635e0baef9772a",
           "bellman_residual_removed_delta": 0.019433625125169662,
           "bellman_residual_delta": -0.01455081262516994
+        },
+        {
+          "condition": "combat-0-53101-outside",
+          "game": "combat",
+          "profile": "growth",
+          "seed": 53101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.4466145833333333,
+          "candidate_score": 0.4967447916666667,
+          "delta": 0.05013020833333337,
+          "conditional_increment_delta": 0.012630208333333559,
+          "realized_residual_delta": 0.037499999999999756,
+          "changed_actions": 56,
+          "baseline_actions": {
+            "strike:1": 1,
+            "strike:2": 72,
+            "reload": 33,
+            "guard": 22
+          },
+          "candidate_actions": {
+            "strike:1": 1,
+            "strike:2": 75,
+            "reload": 32,
+            "guard": 20
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_diagnostic_continuation/value-contract-combat-0-53101-outside-baseline/trajectories.jsonl",
+            "sha256": "7c49208a520a858eb1f39624d96be745120b8072e2499b7364ddaf06fffba87d",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_diagnostic_continuation/value-contract-combat-0-53101-outside-candidate/trajectories.jsonl",
+            "sha256": "d564e43ff640bf0cddf3565ce60f1a446d83bdd2fb324ffa1f8fcce710f2e81b",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "f052e4988e02485380a27f6e0284793d",
+          "bellman_residual_removed_delta": 0.013531669094601795,
+          "bellman_residual_delta": 0.036598539238731576
         },
         {
           "condition": "combat-2-53103-shift-return",
@@ -2310,6 +2889,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_local_combat/value-contract-combat-2-53103-shift-return-baseline/trajectories.jsonl",
             "sha256": "4b0fc1fe59c53c3fb79bf627a7f0411fd1ec4568b0ec95e3508ff607142e4e88",
@@ -2349,7 +2929,6 @@
       "registered_conditions": 1,
       "completed_conditions": 1,
       "pending": [],
-      "source_summary_sha256": "e49cc2b36808ae85b8a80636004b83c4227b89f1151fb675194b831e484aa415",
       "groups": [
         {
           "level": "game",
@@ -2385,6 +2964,7 @@
           "worst": 0.0
         }
       ],
+      "source_summary_sha256": "e49cc2b36808ae85b8a80636004b83c4227b89f1151fb675194b831e484aa415",
       "comparisons": [
         {
           "condition": "combat-0-53103-shift-return",
@@ -2417,6 +2997,7 @@
           "paired_external_events": 128,
           "baseline_executed": 128,
           "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
           "baseline": {
             "path": "results/long_horizon_sampling_check_known_combat_local/value-contract-combat-0-53103-shift-return-baseline/trajectories.jsonl",
             "sha256": "75194f9cd4c8c554869e60ea1ce977f10966e721c078c02175435a0723d8a4d6",
@@ -2705,5 +3286,263 @@
       "flow-plan-002": 0.16858655517091448
     },
     "scope": "Known tick20, same original bankA three seeds. Existing custom future planner applies exact two-step owner choice at every modeled step. Counterfactual only."
+  },
+  "tail_replanning_diagnosis": {
+    "as_of": "2026-10-20T12:03:00.437147+00:00",
+    "actor": "0a84cca01f4e72f2ee96c078e8e3ab9a7b694d5b",
+    "long_run_complete": false,
+    "root_probes": [
+      {
+        "tick": 1,
+        "baseline": "strike:2",
+        "action": "strike:2",
+        "seconds": 2068.6870000000345,
+        "sampling": {
+          "kind": "independent-decision-banks-v1",
+          "stages": [
+            {
+              "seeds": [
+                701,
+                702,
+                703
+              ],
+              "action": "strike:2"
+            },
+            {
+              "seeds": [
+                711,
+                712,
+                713
+              ],
+              "action": "reload"
+            },
+            {
+              "seeds": [
+                701,
+                702,
+                703,
+                711,
+                712,
+                713
+              ],
+              "action": "strike:2"
+            },
+            {
+              "seeds": [
+                701,
+                702,
+                703,
+                711,
+                712,
+                713,
+                721,
+                722,
+                723
+              ],
+              "action": "strike:2"
+            }
+          ],
+          "agreement": false,
+          "expanded": true,
+          "selected_samples": 9,
+          "cache_hits": 60,
+          "computed_bank_frontiers": 45,
+          "semantics": "Complete paths pooled before persona and purpose gates; agreement is not a statistical confidence guarantee. World-model and horizon bias remain."
+        },
+        "original_owner_unchanged": true,
+        "sha256": "70113fbe4d56653c34a70cc8067e5e180fdc2f52526fa838df44c3b59ac59475"
+      },
+      {
+        "tick": 5,
+        "baseline": "reload",
+        "action": "strike:0",
+        "seconds": 1384.234999999986,
+        "sampling": {
+          "kind": "independent-decision-banks-v1",
+          "stages": [
+            {
+              "seeds": [
+                701,
+                702,
+                703
+              ],
+              "action": "strike:0"
+            },
+            {
+              "seeds": [
+                711,
+                712,
+                713
+              ],
+              "action": "strike:0"
+            },
+            {
+              "seeds": [
+                701,
+                702,
+                703,
+                711,
+                712,
+                713
+              ],
+              "action": "strike:0"
+            }
+          ],
+          "agreement": true,
+          "expanded": false,
+          "selected_samples": 6,
+          "cache_hits": 30,
+          "computed_bank_frontiers": 30,
+          "semantics": "Complete paths pooled before persona and purpose gates; agreement is not a statistical confidence guarantee. World-model and horizon bias remain."
+        },
+        "original_owner_unchanged": true,
+        "sha256": "a0422927e41b1cdf537132bb906a0c6bfcf574b9d3494099de42eb4653e23251"
+      },
+      {
+        "tick": 20,
+        "baseline": "reload",
+        "action": "strike:0",
+        "seconds": 1445.8279999999795,
+        "sampling": {
+          "kind": "independent-decision-banks-v1",
+          "stages": [
+            {
+              "seeds": [
+                701,
+                702,
+                703
+              ],
+              "action": "strike:0"
+            },
+            {
+              "seeds": [
+                711,
+                712,
+                713
+              ],
+              "action": "strike:0"
+            },
+            {
+              "seeds": [
+                701,
+                702,
+                703,
+                711,
+                712,
+                713
+              ],
+              "action": "strike:0"
+            }
+          ],
+          "agreement": true,
+          "expanded": false,
+          "selected_samples": 6,
+          "cache_hits": 30,
+          "computed_bank_frontiers": 30,
+          "semantics": "Complete paths pooled before persona and purpose gates; agreement is not a statistical confidence guarantee. World-model and horizon bias remain."
+        },
+        "original_owner_unchanged": true,
+        "sha256": "cc49ded3ad9796d2824e4185daec1f4c4016983efa2ed8a862cf3dfb3294b345"
+      }
+    ],
+    "future_policy_fidelity": {
+      "complete": true,
+      "results": [
+        {
+          "source": {
+            "key": "resources-0-53101-outside",
+            "path": "results/long_horizon_sampling_check_local/value-contract-resources-0-53101-outside-candidate/trajectories.jsonl",
+            "sha256": "f6441c23a8917ae2921e7b945f933780f3e8afa9edf0b4c0aa9d683d1ed01ca2"
+          },
+          "seconds": 77.56199999997625,
+          "agreement": {
+            "stalled": 123,
+            "always": 123
+          },
+          "fixed_axes": 128,
+          "unchanged_factual_owners": 128
+        },
+        {
+          "source": {
+            "key": "resources-2-53103-shift-return",
+            "path": "results/long_horizon_sampling_check_local_resources/value-contract-resources-2-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "937b5aa8eaa799dcd82c8e60bf047c5d5be86ae74db53e32d54b880df8af1357"
+          },
+          "seconds": 78.125,
+          "agreement": {
+            "stalled": 118,
+            "always": 124
+          },
+          "fixed_axes": 128,
+          "unchanged_factual_owners": 128
+        },
+        {
+          "source": {
+            "key": "gambling-0-53101-outside",
+            "path": "results/long_horizon_sampling_check_local/value-contract-gambling-0-53101-outside-candidate/trajectories.jsonl",
+            "sha256": "ba906006dc700fa070471eba2169c5a74e23aa5832439d44b126118b25d41dcc"
+          },
+          "seconds": 81.73399999999674,
+          "agreement": {
+            "stalled": 110,
+            "always": 110
+          },
+          "fixed_axes": 128,
+          "unchanged_factual_owners": 128
+        },
+        {
+          "source": {
+            "key": "auction-0-53103-shift-return",
+            "path": "results/long_horizon_sampling_check_local_auction/value-contract-auction-0-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "ab429ae5203553e3369f12739c2d853f0a7bb97d9e9a5549f2ae0a9d9926c1c8"
+          },
+          "seconds": 85.07799999997951,
+          "agreement": {
+            "stalled": 80,
+            "always": 91
+          },
+          "fixed_axes": 128,
+          "unchanged_factual_owners": 128
+        },
+        {
+          "source": {
+            "key": "combat-0-53103-shift-return",
+            "path": "results/long_horizon_sampling_check_known_combat_local/value-contract-combat-0-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "9aba74ba8c4e0feea6edf2121adfcb141d6b7dfd6c803d506a2bd4eac1ed2877"
+          },
+          "seconds": 87.42200000002049,
+          "agreement": {
+            "stalled": 94,
+            "always": 96
+          },
+          "fixed_axes": 128,
+          "unchanged_factual_owners": 128
+        },
+        {
+          "source": {
+            "key": "combat-2-53103-shift-return",
+            "path": "results/long_horizon_sampling_check_local_combat/value-contract-combat-2-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "a61dcaea88cd11db0592ae1b645305d158df0358997ce0a50754b65d4a9c92b6"
+          },
+          "seconds": 90.59399999998277,
+          "agreement": {
+            "stalled": 89,
+            "always": 92
+          },
+          "fixed_axes": 128,
+          "unchanged_factual_owners": 128
+        }
+      ]
+    },
+    "limits": [
+      "Selected roots are diagnostic only, not actual long-play evidence.",
+      "Matching the current controller is not strength: its choices can be wrong.",
+      "Every future owner gets two-step planning; six-step preparation is still outside that inner horizon."
+    ],
+    "active_run": 39412321707,
+    "completed_conditions": 0,
+    "registered_conditions": 8,
+    "long_run_groups": [],
+    "long_run_comparisons": []
   }
 }
