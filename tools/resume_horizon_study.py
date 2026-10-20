@@ -69,6 +69,8 @@ def resume(root,expected_manifest,job,*,recorded_predictions=False):
     if record.exists():provenance['previous']=json.loads(record.read_text())
     record.write_text(json.dumps(provenance,indent=2)+'\n')
     print(json.dumps(dict(resume_at=len(prefix),turns=job[4])),flush=True)
+    if (root/'retained_execution.json').exists() and not audit_only:
+        args=[sys.executable,str(Path(__file__).with_name('guard_retained_history.py')),*args[1:]]
     try:
         subprocess.run(args,check=True)
     except subprocess.CalledProcessError:

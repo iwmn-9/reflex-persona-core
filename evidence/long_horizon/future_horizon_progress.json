@@ -375,8 +375,8 @@
       {
         "case": "delay-11-shock-1",
         "mode": "16",
-        "turns": 66,
-        "complete": false
+        "turns": 128,
+        "complete": true
       },
       {
         "case": "delay-11-shock-1",
@@ -432,7 +432,218 @@
         "turns": 128,
         "complete": true
       }
-    ]
+    ],
+    "summary": {
+      "complete": true,
+      "source_sha256": "36234e12c74f532129418cf30dbd837d86d496ccf72d37d18b9e0629980b06cd",
+      "comparisons": [
+        {
+          "delay": 3,
+          "shock": false,
+          "baseline": 0.5,
+          "candidate": 0.5,
+          "delta": 0.0,
+          "seconds": [
+            276.829000000027,
+            2348.6720000000205
+          ]
+        },
+        {
+          "delay": 3,
+          "shock": true,
+          "baseline": 0.4166666666666667,
+          "candidate": 0.4166666666666667,
+          "delta": 0.0,
+          "seconds": [
+            354.125,
+            3676.4369999999763
+          ]
+        },
+        {
+          "delay": 7,
+          "shock": false,
+          "baseline": 0.4166666666666667,
+          "candidate": 0.4166666666666667,
+          "delta": 0.0,
+          "seconds": [
+            318.68800000002375,
+            1605.8589999999967
+          ]
+        },
+        {
+          "delay": 7,
+          "shock": true,
+          "baseline": 0.375,
+          "candidate": 0.375,
+          "delta": 0.0,
+          "seconds": [
+            311.9529999999795,
+            2513.0939999999828
+          ]
+        },
+        {
+          "delay": 11,
+          "shock": false,
+          "baseline": 0.3854166666666667,
+          "candidate": 0.3385416666666667,
+          "delta": -0.046875,
+          "seconds": [
+            211.625,
+            2388.5160000000033
+          ]
+        },
+        {
+          "delay": 11,
+          "shock": true,
+          "baseline": 0.3541666666666667,
+          "candidate": 0.3333333333333333,
+          "delta": -0.02083333333333337,
+          "seconds": [
+            238.98399999999674,
+            2769.3439999999828
+          ]
+        }
+      ]
+    },
+    "completed_audit": {
+      "complete": true,
+      "runs": 12,
+      "actual_decisions": 1536,
+      "source_verified": true,
+      "manifest_sha256": "b355e101a2ccf5264eb1f0a7fdc8bd424a1bc6f4c7b0954955dcdd32700877b0",
+      "runs_evidence": [
+        {
+          "delay": 3,
+          "shock": false,
+          "horizon": 2,
+          "cash": 200.0,
+          "result_sha256": "a033ef0ffedd928ba2840dad9370505151a437354f272db07dca3735efb5d8bd",
+          "checkpoint_sha256": "4c2e3d602f9c026e916a6c5c1af793203251acac60fa27352ea2ff64671e6b36"
+        },
+        {
+          "delay": 3,
+          "shock": false,
+          "horizon": 16,
+          "cash": 200.0,
+          "result_sha256": "6653a989caeb4483c44ff5aee186cdf9a4b7264950a18dd98d2f9c8a078e18ee",
+          "checkpoint_sha256": "9d658788074684a7dbdaf0dae172cf1119c78649a5ba656fc105b838c6dc8837"
+        },
+        {
+          "delay": 3,
+          "shock": true,
+          "horizon": 2,
+          "cash": 168.0,
+          "result_sha256": "56da098aba0cb5bb04f81851f8b186e98981b8cccb8ca54727e0e4cd8e0e9147",
+          "checkpoint_sha256": "5bffb3f33b4f2c62450179b3faffe7eecd20d60d3c9a09557adb70cfffbcec95"
+        },
+        {
+          "delay": 3,
+          "shock": true,
+          "horizon": 16,
+          "cash": 168.0,
+          "result_sha256": "8d36d8bf0a4b0ed7087868c248eb8d96f252126cc9968e643d046ba6972f9539",
+          "checkpoint_sha256": "ed318c74f7f450e86661dafd66a84f1b0218d74e2af99f7b49afbc6e1b6f05b3"
+        },
+        {
+          "delay": 7,
+          "shock": false,
+          "horizon": 2,
+          "cash": 168.0,
+          "result_sha256": "18c9cba453e82ee5811cf86194912b363c9394927dff0362494b2b4d9486d4fc",
+          "checkpoint_sha256": "b614ed616b1bcfee09a7aae8d2fd6a54f616a8d3d6daa1b004a692c9087ae34d"
+        },
+        {
+          "delay": 7,
+          "shock": false,
+          "horizon": 16,
+          "cash": 168.0,
+          "result_sha256": "dbf1f5ce4d81bdf0c3e0ec66da2b4ad2e7b424a5c960462cd4dcd2aa8c6f7289",
+          "checkpoint_sha256": "839f836e80f38da2f5da60410d0bc0d3a8c7c69b24b91956e41809f521eef3b4"
+        },
+        {
+          "delay": 7,
+          "shock": true,
+          "horizon": 2,
+          "cash": 152.0,
+          "result_sha256": "a54e76e0556209dcb464db2a787a9fb1f67377ad0aadd464ab1812b84bd9f56c",
+          "checkpoint_sha256": "ffdb57103125bf89b7cbdfb971cb6708caf2708bb610507b79fda7d5f8469dac"
+        },
+        {
+          "delay": 7,
+          "shock": true,
+          "horizon": 16,
+          "cash": 152.0,
+          "result_sha256": "83851e5df4dde112d84df31137c6bd73b833833530624a0a39f59f2135726a17",
+          "checkpoint_sha256": "b982eca46bc2b6e018653276abed681f4451348b5ba2623afe927d7d22b66f73"
+        },
+        {
+          "delay": 11,
+          "shock": false,
+          "horizon": 2,
+          "cash": 156.0,
+          "result_sha256": "482a53b9dee05cadbd8e2ec7ff992bc8c30ce7bd883fb9a4006342d6503ef373",
+          "checkpoint_sha256": "fcdecb0754215871afaab8d7a4066d4a06cefb7ff6184ed4ebc718421c34a61f"
+        },
+        {
+          "delay": 11,
+          "shock": false,
+          "horizon": 16,
+          "cash": 138.0,
+          "result_sha256": "dc5779020343a91d1998ffc7af0e9b9a782d0107d0749be77bf132754719c15b",
+          "checkpoint_sha256": "131a434e2203ab53a0f17b986326c2dbc3a17bf9d5b1075dbb7c559e93c5bcea"
+        },
+        {
+          "delay": 11,
+          "shock": true,
+          "horizon": 2,
+          "cash": 144.0,
+          "result_sha256": "5ca327889cfe840d888671f2cec895e5c03e6ed4a238a39008d6e50a39ec3e33",
+          "checkpoint_sha256": "6a0129dad1dbce413b5d716dbc0bce5936b1c557d679f5315842030f0816b80f"
+        },
+        {
+          "delay": 11,
+          "shock": true,
+          "horizon": 16,
+          "cash": 136.0,
+          "result_sha256": "e73511e5f16f20c855abc910c3ca262fc7166fa88f25e216f0364b090eb5477c",
+          "checkpoint_sha256": "45ff08239b9a53d4dade1db96df915d6f6f51d614e2d00a4653dd8a50dec4440"
+        }
+      ],
+      "blind_prefixes": [
+        {
+          "delay": 3,
+          "horizon": 2,
+          "identical_predecision_ticks": 64
+        },
+        {
+          "delay": 3,
+          "horizon": 16,
+          "identical_predecision_ticks": 64
+        },
+        {
+          "delay": 7,
+          "horizon": 2,
+          "identical_predecision_ticks": 64
+        },
+        {
+          "delay": 7,
+          "horizon": 16,
+          "identical_predecision_ticks": 64
+        },
+        {
+          "delay": 11,
+          "horizon": 2,
+          "identical_predecision_ticks": 64
+        },
+        {
+          "delay": 11,
+          "horizon": 16,
+          "identical_predecision_ticks": 64
+        }
+      ],
+      "physical_replay": 1536,
+      "limitation": "Owner parity and fixed axes were checked at execution. This independent audit verifies saved checks, checkpoint integrity and physical replay; trace has owner hashes, not all historical owner records."
+    }
   },
   "compound_preparation": {
     "root": "results/compound_window_diagnostic_v2",
@@ -554,12 +765,42 @@
     "runs": [
       {
         "case": "delay-3-shock-0",
+        "mode": "fixed-window",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-3-shock-0",
         "mode": "rolling",
-        "turns": 9,
-        "complete": false
+        "turns": 128,
+        "complete": true
       },
       {
         "case": "delay-3-shock-1",
+        "mode": "fixed-window",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-3-shock-1",
+        "mode": "rolling",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-7-shock-0",
+        "mode": "fixed-window",
+        "turns": 114,
+        "complete": false
+      },
+      {
+        "case": "delay-7-shock-0",
+        "mode": "rolling",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-7-shock-1",
         "mode": "rolling",
         "turns": 9,
         "complete": false
@@ -1272,7 +1513,7 @@
   },
   "first_divergence_account": {
     "source": "results/long_horizon_diagnostics/first_divergence_account.json",
-    "sha256": "5a31606d40cdd1809ccfd9e782411a7f00ab9edd49d5c8964341bba647da77e5",
+    "sha256": "e164fa18f8f6e89222d129ea153d841213f3499d2a38661e5533fdc022e1fe30",
     "cases": [
       {
         "condition": "auction-1-56101-outside",
@@ -1284,6 +1525,18 @@
         "actions": [
           "bid:2",
           "bid:1"
+        ]
+      },
+      {
+        "condition": "auction-2-56101-outside",
+        "final_delta": -0.03466796875,
+        "conditional_delta": -0.014550781250000033,
+        "tick": 0,
+        "same_owner": true,
+        "same_world": true,
+        "actions": [
+          "bid:3",
+          "bid:4"
         ]
       },
       {

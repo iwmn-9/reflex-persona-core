@@ -61,13 +61,13 @@ def inspect(path,expected_manifest,expected_checkpoint,job,*,pair_file='pair_exe
                 manifest_sha256=expected_manifest,checkpoint_sha256=expected_checkpoint)
 
 
-def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False):
+def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,guard_history=False):
     """Validate both inputs before creating a new, independently resumable pair."""
     root=Path(root).resolve()
     if root.exists():raise FileExistsError('fresh continuation directory required')
     assert all(len(x)==2 for x in (inputs,jobs,manifests,checkpoints))
     assert all(len(j)==8 and j[5]==1 and j[7]==0 and type(j[6]) is int and 1<=j[6]<=127 for j in jobs)
-    assert type(value_contract) is bool
+    assert type(value_contract) is bool and type(guard_history) is bool
     pair_file='contract_pair.json' if value_contract else 'pair_execution.json'
     names=('baseline','candidate') if value_contract else tuple(f'h{j[6]+1}' for j in jobs)
     if value_contract:assert jobs[0][:6]==jobs[1][:6] and jobs[0][7:]==jobs[1][7:]
@@ -107,6 +107,8 @@ def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False):
     execution_id=uuid.uuid4().hex;segments.append(dict(execution_id=execution_id,start=boundary,end=None,
         runtime=runtime,cpu_count=os.cpu_count()))
     header=copy.deepcopy(prior)
+    if guard_history:header['retained_history_required']=True
+    else:assert not prior.get('retained_history_required'), 'retained history guard cannot be removed'
     header.update(version='segmented-same-host-value-contract-v1' if value_contract else 'segmented-same-host-horizon-pair-v1',complete=False,same_source=True,
         execution_id=execution_id,host_segments=segments,return_codes=None,
         continuation=dict(boundary=boundary,at_scheduled_end=boundary==jobs[0][4],inputs=[dict(manifest_sha256=x['manifest_sha256'],
@@ -125,6 +127,19 @@ def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False):
         assert saved['owner']['last_tick']==boundary-1
         assert owner_digest(saved['owner'])==saved['trace'][-1]['owner']
         child=root/name;child.mkdir()
+        if guard_history:
+            retained=item['path']/'retained_execution.json'
+            if retained.exists():
+                assert sha(retained.read_bytes())==prior['continuation']['inputs'][names.index(name)]['retained_checkpoint_sha256']
+                prior_retained=json.loads(retained.read_bytes())
+                assert sha(encoded(prior_retained['payload']))==prior_retained['sha256']
+                assert prior_retained['payload']['contract']==item['saved']['contract']
+                old_trace=prior_retained['payload']['trace']
+                assert old_trace[:min(len(old_trace),original_turns)]==item['saved']['trace'][:len(old_trace)]
+            if not retained.exists() or len(old_trace)<=original_turns:
+                retained=item['path']/'checkpoint.json'
+            shutil.copyfile(retained,child/'retained_execution.json')
+            header['continuation']['inputs'][names.index(name)]['retained_checkpoint_sha256']=sha(retained.read_bytes())
         shutil.copytree(item['path']/'_source',child/'_source')
         for name in ('source_snapshot.json','registration.json'):
             shutil.copyfile(item['path']/name,child/name)
@@ -138,12 +153,14 @@ def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False):
             discarded_work_retained_in_input=True),indent=2)+'\n')
         (child/pair_file).write_text(json.dumps(header,indent=2)+'\n')
     (root/pair_file).write_text(json.dumps(header,indent=2)+'\n')
+    # Both receipts need the final header, including both retained inputs.
+    for name in names:(root/name/pair_file).write_text(json.dumps(header,indent=2)+'\n')
     return header
 
 
-def run_pair(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,recorded_predictions=False):
+def run_pair(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,recorded_predictions=False,guard_history=False):
     assert type(recorded_predictions) is bool
-    header=prepare(root,inputs,jobs,manifests,checkpoints,value_contract=value_contract);root=Path(root).resolve()
+    header=prepare(root,inputs,jobs,manifests,checkpoints,value_contract=value_contract,guard_history=guard_history);root=Path(root).resolve()
     names=('baseline','candidate') if value_contract else tuple(f'h{j[6]+1}' for j in jobs)
     pair_file='contract_pair.json' if value_contract else 'pair_execution.json'
     script=Path(__file__).with_name('resume_horizon_study.py')
@@ -165,6 +182,11 @@ def run_pair(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,recor
             assert json.loads((child/'resume_provenance.json').read_text())['original_prefix_unchanged']
             assert json.loads((child/'audit.json').read_text())['complete']
             added.append(json.loads((child/'trajectories.jsonl').read_text())['executed']-header['continuation']['boundary'])
+            if guard_history:
+                from tools.guard_retained_history import verify
+                verify(child,json.loads((child/'trajectories.jsonl').read_text()),
+                       json.loads((child/'boundary_provenance.json').read_text()),
+                       header['continuation']['inputs'][names.index(name)]['retained_checkpoint_sha256'])
         assert all(n>=0 for n in added)
         header['continuation'].update(added_decisions=added,no_new_decisions=not any(added))
     (root/pair_file).write_text(json.dumps(header,indent=2)+'\n')
@@ -192,6 +214,9 @@ def verify_segmented_result(path,row,header,side):
     assert len(prefix)==boundary['resume_at'] and sha(encoded(prefix))==boundary['retained_prefix_sha256']
     if 'added_decisions' in header['continuation']:
         assert header['continuation']['added_decisions'][side]==row['executed']-boundary['resume_at']
+    if header.get('retained_history_required'):
+        from tools.guard_retained_history import verify
+        verify(path,row,boundary,header['continuation']['inputs'][side]['retained_checkpoint_sha256'])
     return segments
 
 
@@ -199,4 +224,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',required=True)
     for name in ('inputs','jobs','manifests','checkpoints'):p.add_argument('--'+name,required=True)
     p.add_argument('--value-contract',action='store_true');p.add_argument('--recorded-predictions',action='store_true')
-    a=p.parse_args();print(json.dumps(run_pair(a.root,*[json.loads(getattr(a,k)) for k in ('inputs','jobs','manifests','checkpoints')],value_contract=a.value_contract,recorded_predictions=a.recorded_predictions)))
+    p.add_argument('--guard-history',action='store_true')
+    a=p.parse_args();print(json.dumps(run_pair(a.root,*[json.loads(getattr(a,k)) for k in ('inputs','jobs','manifests','checkpoints')],value_contract=a.value_contract,recorded_predictions=a.recorded_predictions,guard_history=a.guard_history)))

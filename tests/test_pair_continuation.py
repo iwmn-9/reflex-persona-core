@@ -87,6 +87,98 @@ assert run(job,'receding_recovery',checkpoint=child/'checkpoint.json',max_decisi
                 actual.pop('seconds');expected.pop('seconds');self.assertEqual(actual,expected)
                 verify_segmented_result(child,actual,proof,index)
 
+    def test_guarded_continuation_retains_complete_faster_arm_history(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            inputs,jobs,_,_=self.fixture(root,'resources',tails=(2,2),value_contract=True)
+            first=Path(inputs[0])
+            subprocess.run([sys.executable,str(first/'_source/tools/run_horizon_study.py'),
+                '--root',str(first),'--job',json.dumps(jobs[0]),'--stage','diagnostic','--frozen'],
+                check=True,capture_output=True)
+            originals=[(Path(p)/'checkpoint.json').read_bytes() for p in inputs]
+            proof=run_pair(root/'continued',inputs,jobs,*self.hashes(inputs),
+                           value_contract=True,guard_history=True,recorded_predictions=True)
+            self.assertTrue(proof['complete'])
+            self.assertTrue(proof['retained_history_required'])
+            self.assertEqual(proof['continuation']['boundary'],2)
+            for index,name in enumerate(('baseline','candidate')):
+                child=root/'continued'/name
+                actual=json.loads((child/'trajectories.jsonl').read_bytes())
+                verify_segmented_result(child,actual,proof,index)
+                self.assertEqual((Path(inputs[index])/'checkpoint.json').read_bytes(),originals[index])
+                self.assertEqual((child/'retained_execution.json').read_bytes(),originals[index])
+            from tools.guard_retained_history import check_step
+            original=json.loads(originals[0])['payload']['trace'][2]
+            for field in ('action','owner','before_owner','law','after'):
+                changed=dict(original);changed[field]='changed'
+                with self.assertRaisesRegex(AssertionError,'retained experience changed'):
+                    check_step(changed,original)
+            receipt=root/'continued/baseline/retained_history_replay.json'
+            content=json.loads(receipt.read_bytes());content['checked_until']-=1
+            receipt.write_text(json.dumps(content))
+            with self.assertRaises(AssertionError):
+                verify_segmented_result(root/'continued/baseline',
+                    json.loads((root/'continued/baseline/trajectories.jsonl').read_bytes()),proof,0)
+
+    def test_guard_survives_another_interruption_before_old_history_is_replayed(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            inputs,jobs,_,_=self.fixture(root,'resources',tails=(2,2),value_contract=True)
+            first=Path(inputs[0])
+            subprocess.run([sys.executable,str(first/'_source/tools/run_horizon_study.py'),
+                '--root',str(first),'--job',json.dumps(jobs[0]),'--stage','diagnostic','--frozen'],
+                check=True,capture_output=True)
+            original=(first/'checkpoint.json').read_bytes()
+            prepare(root/'interrupted',inputs,jobs,*self.hashes(inputs),value_contract=True,guard_history=True)
+            intermediate=[str(root/'interrupted'/name) for name in ('baseline','candidate')]
+            for index,path in enumerate(intermediate):
+                self.advance(Path(path),jobs[index],1,cumulative=bool(index))
+            proof=run_pair(root/'continued',intermediate,jobs,*self.hashes(intermediate),
+                           value_contract=True,guard_history=True)
+            self.assertEqual(proof['continuation']['boundary'],3)
+            self.assertEqual((root/'continued/baseline/retained_execution.json').read_bytes(),original)
+            for index,name in enumerate(('baseline','candidate')):
+                child=root/'continued'/name
+                verify_segmented_result(child,json.loads((child/'trajectories.jsonl').read_bytes()),proof,index)
+
+    def test_guard_normalizes_only_bounded_factual_forecasts_without_forcing_actions(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            inputs,jobs,_,_=self.fixture(root,'resources',tails=(2,2),value_contract=True)
+            first=Path(inputs[0])
+            subprocess.run([sys.executable,str(first/'_source/tools/run_horizon_study.py'),
+                '--root',str(first),'--job',json.dumps(jobs[0]),'--stage','diagnostic','--frozen'],
+                check=True,capture_output=True)
+            proof=prepare(root/'continued',inputs,jobs,*self.hashes(inputs),value_contract=True,guard_history=True)
+            child=root/'continued/baseline'
+            script=Path(__file__).resolve().parents[1]/'tools/guard_retained_history.py'
+            program='''import math,runpy,sys
+from pathlib import Path
+child=Path(sys.argv[1]);guard=sys.argv[2];job=sys.argv[3]
+sys.path.insert(0,str(child/'_source'))
+from reflex.event_reader import EventReader
+original=EventReader.predict
+def rounded(self,c):
+ result=original(self,c);key=next(iter(result))
+ result[key]=math.nextafter(result[key],math.inf)
+ return result
+EventReader.predict=rounded
+sys.argv=[guard,str(child/'_source/tools/run_horizon_study.py'),'--root',str(child),'--job',job,'--stage','diagnostic','--frozen']
+runpy.run_path(guard,run_name='__main__')
+'''
+            result=subprocess.run([sys.executable,'-c',program,str(child),str(script),json.dumps(jobs[0])],
+                                  capture_output=True,text=True)
+            # A strict final audit may reject the injected rounding; it must
+            # not stop guarded actual execution or corrupt its complete trace.
+            if result.returncode:
+                self.assertIn('stored actual action/feedback replay drift',result.stderr)
+            from tools.guard_retained_history import verify
+            row=json.loads((child/'trajectories.jsonl').read_bytes())
+            receipt=verify(child,row,json.loads((child/'boundary_provenance.json').read_bytes()),
+                           proof['continuation']['inputs'][0]['retained_checkpoint_sha256'])
+            self.assertTrue(receipt['normalizations'])
+            self.assertTrue(all(2<=item['tick']<5 for item in receipt['normalizations']))
+
     def test_value_contract_cli_resumes_from_outside_repository_without_pythonpath(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);inputs,jobs,manifests,checkpoints=self.fixture(root,value_contract=True)

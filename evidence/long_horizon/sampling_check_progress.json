@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-10-20T15:12:06.814841+00:00",
+  "as_of": "2026-10-20T15:26:16.265951+00:00",
   "actor": "8c9568f8056c22be4bee1fbc115b5f879b9b2dac",
   "adopted": false,
   "scope": "Partial registered cohorts; no pooling across cohorts, no equal-compute comparison, no claim of arbitrary-game or human-level intelligence.",
@@ -9,10 +9,9 @@
       "stage": "confirmation",
       "plan_sha256": "1f95e005ca2421b91051d0283c6ff71842459bfc93081c57bb047bc938d96d0d",
       "registered_conditions": 40,
-      "completed_conditions": 37,
+      "completed_conditions": 38,
       "pending": [
         "auction-0-56101-outside",
-        "auction-2-56101-outside",
         "auction-3-56101-outside"
       ],
       "groups": [
@@ -21,16 +20,16 @@
           "key": [
             "auction"
           ],
-          "conditions": 5,
+          "conditions": 6,
           "world_seeds": [
             56101,
             56102
           ],
-          "mean_delta": -0.01083984375,
-          "mean_conditional_increment_delta": -0.008149414062499995,
+          "mean_delta": -0.014811197916666666,
+          "mean_conditional_increment_delta": -0.009216308593750002,
           "better": 1,
           "same": 1,
-          "worse": 3,
+          "worse": 4,
           "worst": -0.0361328125
         },
         {
@@ -92,16 +91,16 @@
             "auction",
             56101
           ],
-          "conditions": 1,
+          "conditions": 2,
           "world_seeds": [
             56101
           ],
-          "mean_delta": -0.0224609375,
-          "mean_conditional_increment_delta": -0.015209960937500003,
+          "mean_delta": -0.028564453125,
+          "mean_conditional_increment_delta": -0.014880371093750018,
           "better": 0,
           "same": 0,
-          "worse": 1,
-          "worst": -0.0224609375
+          "worse": 2,
+          "worst": -0.03466796875
         },
         {
           "level": "world_seed",
@@ -257,7 +256,7 @@
           "worst": 0.05859375
         }
       ],
-      "source_summary_sha256": "65a0136129cc46b635683cd068688db99366ae46d021596ae25d09d735120686",
+      "source_summary_sha256": "80b08fd1ab1e8dad6e69ae2ca7e4cd9fa8b4ca6b14627358d4c8f64b52197415",
       "comparisons": [
         {
           "condition": "gambling-0-56101-outside",
@@ -1710,6 +1709,68 @@
           "pair_id": "041eed81a0214f2e98f94e8691129802",
           "bellman_residual_removed_delta": -0.0004491476774318437,
           "bellman_residual_delta": -0.02201178982256813
+        },
+        {
+          "condition": "auction-2-56101-outside",
+          "game": "auction",
+          "profile": "care",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.137939453125,
+          "candidate_score": 0.103271484375,
+          "delta": -0.03466796875,
+          "conditional_increment_delta": -0.014550781250000033,
+          "realized_residual_delta": -0.020117187499999967,
+          "changed_actions": 70,
+          "baseline_actions": {
+            "bid:3": 72,
+            "bid:4": 18,
+            "bid:2": 20,
+            "bid:1": 13,
+            "bid:0": 5
+          },
+          "candidate_actions": {
+            "bid:4": 22,
+            "bid:2": 28,
+            "bid:3": 56,
+            "bid:0": 13,
+            "bid:1": 9
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-auction-2-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "40c85f9c5e8737cf3882c97fe5b25c673cecfaa04b38bb56b64848bea4b8f288",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-auction-2-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "e1ee64330f346d5875ac1adc17e605f8747aa78bc9518f7da211400485d0c50a",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "5909a1719e434fdd943782fe195277cb",
+          "bellman_residual_removed_delta": -0.032117766460516686,
+          "bellman_residual_delta": -0.0025502022894833137
         },
         {
           "condition": "auction-0-56102-shift-return",

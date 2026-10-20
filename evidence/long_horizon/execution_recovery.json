@@ -1,0 +1,34 @@
+{
+  "original_run": 39404741708,
+  "failure": "Completed baseline failed exact numerical replay; candidate reached the 345-minute execution limit.",
+  "inspected_completed_arms": [
+    {
+      "case": "auction-0-56101-outside",
+      "side": "baseline",
+      "complete_world": true,
+      "checked_forecasts": 128,
+      "exact_owner_hashes": 128,
+      "max_observed_ulps": 2.0,
+      "trajectory_sha256": "0e15d70f996cdb1f4c629784a0a56d168cb4264d5b6711716c109a10788ebe9c",
+      "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+      "checkpoint_sha256": "eb5454c0182b800050f94eea05483ef6842f7cf85ee9b9eb121d409923965e36"
+    },
+    {
+      "case": "auction-3-56101-outside",
+      "side": "baseline",
+      "complete_world": true,
+      "checked_forecasts": 128,
+      "exact_owner_hashes": 128,
+      "max_observed_ulps": 2.0,
+      "trajectory_sha256": "6845cd057aeb768204f65c60da9d3207e50326c1eb90a7b69ac227d428a958c6",
+      "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+      "checkpoint_sha256": "c57fb4a2db0f3cfa62ea28a4e407740b70f7a6734ee1b9e5c60b597ed92fc34d"
+    }
+  ],
+  "unfinished_candidate_turns": [
+    72,
+    80
+  ],
+  "recovery": "Resume both frozen actors from their common boundary on the same host. Recompute already lived actions, require exact original action/observation/learner state, retain original diagnostics, normalize only factual probabilities within the existing eight-ULP audit bound. Any behavioral change fails before saving. No private future information is supplied to the actor.",
+  "quality_status": "Not an improvement or completed pair. Original 40/8/8 registration and adoption criteria unchanged."
+}

@@ -36,6 +36,7 @@ jobs:
                   assert len(pair['jobs'])==len(pair['inputs'])==len(pair['keys'])==2
                   assert pair['jobs'][0][:6]==pair['jobs'][1][:6] and pair['jobs'][0][7:]==pair['jobs'][1][7:]
                   assert type(pair.get('recorded_predictions',False)) is bool
+                  assert type(pair.get('guard_history',False)) is bool
                   for key,item in zip(pair['keys'],pair['inputs']):
                       assert key not in seen and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]+',key)
                       seen.add(key)
@@ -88,6 +89,7 @@ jobs:
                   '--manifests',json.dumps([x['manifest'] for x in pair['inputs']]),
                   '--checkpoints',json.dumps([x['checkpoint'] for x in pair['inputs']])]
               if pair.get('recorded_predictions'):args+=['--recorded-predictions']
+              if pair.get('guard_history'):args+=['--guard-history']
               return subprocess.run(args,check=False).returncode
           with ThreadPoolExecutor(max_workers=2) as pool:codes=list(pool.map(execute,enumerate(pairs)))
           if any(codes):raise SystemExit('Incomplete continuations retained with original source and experience')
