@@ -1,0 +1,2709 @@
+{
+  "as_of": "2026-10-20T10:31:31.106049+00:00",
+  "actor": "8c9568f8056c22be4bee1fbc115b5f879b9b2dac",
+  "adopted": false,
+  "scope": "Partial registered cohorts; no pooling across cohorts, no equal-compute comparison, no claim of arbitrary-game or human-level intelligence.",
+  "cohorts": {
+    "confirmation": {
+      "complete": false,
+      "stage": "confirmation",
+      "plan_sha256": "1f95e005ca2421b91051d0283c6ff71842459bfc93081c57bb047bc938d96d0d",
+      "registered_conditions": 40,
+      "completed_conditions": 27,
+      "pending": [
+        "auction-0-56101-outside",
+        "auction-1-56101-outside",
+        "auction-2-56101-outside",
+        "auction-3-56101-outside",
+        "auction-2-56102-shift-return",
+        "auction-3-56102-shift-return",
+        "combat-0-56101-outside",
+        "combat-1-56101-outside",
+        "combat-2-56101-outside",
+        "combat-3-56101-outside",
+        "combat-1-56102-shift-return",
+        "combat-2-56102-shift-return",
+        "combat-3-56102-shift-return"
+      ],
+      "source_summary_sha256": "080243a63fc98103e269329d13cd22aafecc1fab2c454870fdf5ae968f5dc7a8",
+      "groups": [
+        {
+          "level": "game",
+          "key": [
+            "auction"
+          ],
+          "conditions": 2,
+          "world_seeds": [
+            56102
+          ],
+          "mean_delta": 0.0054931640625,
+          "mean_conditional_increment_delta": 0.006274414062499956,
+          "better": 1,
+          "same": 1,
+          "worse": 0,
+          "worst": 0.0
+        },
+        {
+          "level": "game",
+          "key": [
+            "combat"
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            56102
+          ],
+          "mean_delta": -0.0006510416666666297,
+          "mean_conditional_increment_delta": 0.00039062500000014433,
+          "better": 0,
+          "same": 0,
+          "worse": 1,
+          "worst": -0.0006510416666666297
+        },
+        {
+          "level": "game",
+          "key": [
+            "gambling"
+          ],
+          "conditions": 16,
+          "world_seeds": [
+            56101,
+            56102,
+            56103,
+            56104
+          ],
+          "mean_delta": 0.024576822916666654,
+          "mean_conditional_increment_delta": 0.025895182291666655,
+          "better": 10,
+          "same": 5,
+          "worse": 1,
+          "worst": -0.02083333333333337
+        },
+        {
+          "level": "game",
+          "key": [
+            "resources"
+          ],
+          "conditions": 8,
+          "world_seeds": [
+            56101,
+            56102
+          ],
+          "mean_delta": 0.18522135416666666,
+          "mean_conditional_increment_delta": 0.18950195312500012,
+          "better": 8,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.05859375
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "auction",
+            56102
+          ],
+          "conditions": 2,
+          "world_seeds": [
+            56102
+          ],
+          "mean_delta": 0.0054931640625,
+          "mean_conditional_increment_delta": 0.006274414062499956,
+          "better": 1,
+          "same": 1,
+          "worse": 0,
+          "worst": 0.0
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "combat",
+            56102
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            56102
+          ],
+          "mean_delta": -0.0006510416666666297,
+          "mean_conditional_increment_delta": 0.00039062500000014433,
+          "better": 0,
+          "same": 0,
+          "worse": 1,
+          "worst": -0.0006510416666666297
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "gambling",
+            56101
+          ],
+          "conditions": 4,
+          "world_seeds": [
+            56101
+          ],
+          "mean_delta": 0.031901041666666644,
+          "mean_conditional_increment_delta": 0.024674479166666707,
+          "better": 3,
+          "same": 1,
+          "worse": 0,
+          "worst": 0.0
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "gambling",
+            56102
+          ],
+          "conditions": 4,
+          "world_seeds": [
+            56102
+          ],
+          "mean_delta": 0.024088541666666644,
+          "mean_conditional_increment_delta": 0.017447916666666632,
+          "better": 3,
+          "same": 0,
+          "worse": 1,
+          "worst": -0.02083333333333337
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "gambling",
+            56103
+          ],
+          "conditions": 4,
+          "world_seeds": [
+            56103
+          ],
+          "mean_delta": 0.009114583333333343,
+          "mean_conditional_increment_delta": 0.017708333333333298,
+          "better": 1,
+          "same": 3,
+          "worse": 0,
+          "worst": 0.0
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "gambling",
+            56104
+          ],
+          "conditions": 4,
+          "world_seeds": [
+            56104
+          ],
+          "mean_delta": 0.033203124999999986,
+          "mean_conditional_increment_delta": 0.04374999999999998,
+          "better": 3,
+          "same": 1,
+          "worse": 0,
+          "worst": 0.0
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "resources",
+            56101
+          ],
+          "conditions": 4,
+          "world_seeds": [
+            56101
+          ],
+          "mean_delta": 0.20117187499999994,
+          "mean_conditional_increment_delta": 0.21276041666666673,
+          "better": 4,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.06901041666666663
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "resources",
+            56102
+          ],
+          "conditions": 4,
+          "world_seeds": [
+            56102
+          ],
+          "mean_delta": 0.16927083333333334,
+          "mean_conditional_increment_delta": 0.16624348958333351,
+          "better": 4,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.05859375
+        }
+      ],
+      "comparisons": [
+        {
+          "condition": "gambling-0-56101-outside",
+          "game": "gambling",
+          "profile": "growth",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.4583333333333333,
+          "candidate_score": 0.5182291666666666,
+          "delta": 0.059895833333333315,
+          "conditional_increment_delta": 0.04036458333333348,
+          "realized_residual_delta": 0.019531249999999833,
+          "changed_actions": 20,
+          "baseline_actions": {
+            "bond": 7,
+            "bet:2": 120,
+            "bet:1": 1
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 108,
+            "bet:1": 2
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "846838253a285425b565c36a40561d1efa14e4e712c5c35b6b8c4b13c25172f3",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "bb7c8db3e17f669b87470e8ea3649a614d1871671b841ad61b7e2b16232b866f",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "ed87920265b041a989ec3da45cf71d1a"
+        },
+        {
+          "condition": "gambling-1-56101-outside",
+          "game": "gambling",
+          "profile": "steady",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.5104166666666666,
+          "candidate_score": 0.5104166666666666,
+          "delta": 0.0,
+          "conditional_increment_delta": 0.0,
+          "realized_residual_delta": 0.0,
+          "changed_actions": 0,
+          "baseline_actions": {
+            "bond": 18,
+            "bet:2": 109,
+            "bet:1": 1
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 109,
+            "bet:1": 1
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "213615636c4180e4c12fb4d046784d74a50dbad7076ffa170dae4deea7b9fe7e",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "a3a961e59f04d92b6d94a0c56d21f94485e876f62b85a79616009801115ade37",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "a82075cc1a2c4e7aaeb430c7320bcea7"
+        },
+        {
+          "condition": "gambling-2-56101-outside",
+          "game": "gambling",
+          "profile": "care",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.484375,
+          "candidate_score": 0.5182291666666666,
+          "delta": 0.03385416666666663,
+          "conditional_increment_delta": 0.029166666666666674,
+          "realized_residual_delta": 0.004687499999999956,
+          "changed_actions": 23,
+          "baseline_actions": {
+            "bond": 11,
+            "bet:2": 115,
+            "bet:1": 2
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 108,
+            "bet:1": 2
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "583930e8f3ffde69938b17528cc8463d0091d50b9f91aeff690ec218d9daced5",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "c72598f760c30591bd7ec1beac363ec7ca1e39143d9a3c05cdec7631ca0d40dc",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "612cda078f67478d9e9c214b5ec0b481"
+        },
+        {
+          "condition": "gambling-3-56101-outside",
+          "game": "gambling",
+          "profile": "ego",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.484375,
+          "candidate_score": 0.5182291666666666,
+          "delta": 0.03385416666666663,
+          "conditional_increment_delta": 0.029166666666666674,
+          "realized_residual_delta": 0.004687499999999956,
+          "changed_actions": 23,
+          "baseline_actions": {
+            "bond": 11,
+            "bet:2": 115,
+            "bet:1": 2
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 108,
+            "bet:1": 2
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_infrastructure_retry/value-contract-gambling-3-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "8b0b351ae10e11a8ad6eabb82856bb76718057253415839fb820bd9081686ff1",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_infrastructure_retry/value-contract-gambling-3-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "5993180c53eeae5528fdc10fa938547725c4c0299f9ac7923a45997b6be8a327",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "ec0a9cb95a874b579fc991f061928e05"
+        },
+        {
+          "condition": "gambling-0-56102-shift-return",
+          "game": "gambling",
+          "profile": "growth",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4192708333333333,
+          "candidate_score": 0.5104166666666666,
+          "delta": 0.09114583333333331,
+          "conditional_increment_delta": 0.0763020833333331,
+          "realized_residual_delta": 0.014843750000000211,
+          "changed_actions": 17,
+          "baseline_actions": {
+            "bond": 1,
+            "bet:2": 32,
+            "bet:0": 64,
+            "bet:1": 31
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 28,
+            "bet:0": 55,
+            "bet:1": 27
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "ce98bb0590b820d11a13df808091f11db485459acdfcd0482dff75cab4e9f734",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "b191873dedd4c9def721a729a973e834376c4f6147a0fde783b756fcb8f54c61",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "5f6296f7df0746acac3827fc87ffa854"
+        },
+        {
+          "condition": "gambling-1-56102-shift-return",
+          "game": "gambling",
+          "profile": "steady",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.5052083333333334,
+          "candidate_score": 0.484375,
+          "delta": -0.02083333333333337,
+          "conditional_increment_delta": -0.0013020833333333148,
+          "realized_residual_delta": -0.019531250000000056,
+          "changed_actions": 13,
+          "baseline_actions": {
+            "bond": 16,
+            "bet:2": 27,
+            "bet:0": 58,
+            "bet:1": 27
+          },
+          "candidate_actions": {
+            "bond": 17,
+            "bet:2": 27,
+            "bet:0": 57,
+            "bet:1": 27
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "c0dd3135fbf076f3c113038d83b00b18210473b20db60a4373bd336279ef604f",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "9e2ef59ed856fb0dab53ad9cc47134cded707dcd0fa74027fb50d5331f097dfd",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "b8cf3d57a46546cc8d80b0b84e0b27bd"
+        },
+        {
+          "condition": "gambling-2-56102-shift-return",
+          "game": "gambling",
+          "profile": "care",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4973958333333333,
+          "candidate_score": 0.5104166666666666,
+          "delta": 0.013020833333333315,
+          "conditional_increment_delta": -0.0026041666666666297,
+          "realized_residual_delta": 0.015624999999999944,
+          "changed_actions": 20,
+          "baseline_actions": {
+            "bond": 16,
+            "bet:2": 28,
+            "bet:0": 56,
+            "bet:1": 28
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 28,
+            "bet:0": 55,
+            "bet:1": 27
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "4eca98ae690ec79cabceea4ba89afe54e44d32d8e2c3651c31ea79ae01f1ff1f",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "94db83fc5025764e78d15b7c0f1c6298f94945831243db37be0ab7551570a782",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "063a1073c982457c87177c55e08a3090"
+        },
+        {
+          "condition": "gambling-3-56102-shift-return",
+          "game": "gambling",
+          "profile": "ego",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4973958333333333,
+          "candidate_score": 0.5104166666666666,
+          "delta": 0.013020833333333315,
+          "conditional_increment_delta": -0.0026041666666666297,
+          "realized_residual_delta": 0.015624999999999944,
+          "changed_actions": 20,
+          "baseline_actions": {
+            "bond": 16,
+            "bet:2": 28,
+            "bet:0": 56,
+            "bet:1": 28
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 28,
+            "bet:0": 55,
+            "bet:1": 27
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-3-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "c172c7ae55ba8de40ae158e0fd6e47ec1f6f88f335a74fbc15c28fe986ace4c8",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-3-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "f802d2ffe288e983383ec700881d7baae8676f16bb00fae7c468180304ea3b42",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "01e7011d33414dc190f0f6ea9df386d7"
+        },
+        {
+          "condition": "gambling-0-56103-shift-return",
+          "game": "gambling",
+          "profile": "growth",
+          "seed": 56103,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4348958333333333,
+          "candidate_score": 0.4713541666666667,
+          "delta": 0.03645833333333337,
+          "conditional_increment_delta": 0.045833333333333115,
+          "realized_residual_delta": -0.009374999999999745,
+          "changed_actions": 23,
+          "baseline_actions": {
+            "bond": 7,
+            "bet:0": 59,
+            "bet:2": 32,
+            "bet:1": 30
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:0": 55,
+            "bet:2": 27,
+            "bet:1": 28
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56103-shift-return-baseline/trajectories.jsonl",
+            "sha256": "8575b24e1fd8583b8cbb42685abae04a1f3cd5a61f4ebbb06c4fd40c4413070f",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "749c4ae71ee36bbcd438a33883a0a19f2ef6fccc69dfbf38286b3dc239921dc0",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "74133f0c29e84310b500f1b2cd3c242b"
+        },
+        {
+          "condition": "gambling-1-56103-shift-return",
+          "game": "gambling",
+          "profile": "steady",
+          "seed": 56103,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.46875,
+          "candidate_score": 0.46875,
+          "delta": 0.0,
+          "conditional_increment_delta": 5.551115123125783e-17,
+          "realized_residual_delta": -5.551115123125783e-17,
+          "changed_actions": 2,
+          "baseline_actions": {
+            "bond": 17,
+            "bet:0": 55,
+            "bet:2": 27,
+            "bet:1": 29
+          },
+          "candidate_actions": {
+            "bond": 17,
+            "bet:0": 55,
+            "bet:2": 27,
+            "bet:1": 29
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56103-shift-return-baseline/trajectories.jsonl",
+            "sha256": "f1e186efade55de338cc6f09e205d675b9226101428731f232d3bb971a0bae7e",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "4ae5558030a6b6527670867220d701e0bebdd375bbe3f9520344127df0a4121e",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "571ef526afcf49c09fb9533ef0c2cddb"
+        },
+        {
+          "condition": "gambling-2-56103-shift-return",
+          "game": "gambling",
+          "profile": "care",
+          "seed": 56103,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4713541666666667,
+          "candidate_score": 0.4713541666666667,
+          "delta": 0.0,
+          "conditional_increment_delta": 0.012500000000000011,
+          "realized_residual_delta": -0.012500000000000011,
+          "changed_actions": 21,
+          "baseline_actions": {
+            "bond": 15,
+            "bet:0": 55,
+            "bet:2": 29,
+            "bet:1": 29
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:0": 55,
+            "bet:2": 27,
+            "bet:1": 28
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56103-shift-return-baseline/trajectories.jsonl",
+            "sha256": "ac57041b20265e9f3901f7718750c0f63f5be42f6d6cbb9a7284b80b248d9f3b",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "730a2098d3f2b6ea0ff9cbc9d4e3fff7960e7528d402ef392f967b7384497549",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "31c1f3ef265e4968ab5b42d736e1bfc4"
+        },
+        {
+          "condition": "gambling-3-56103-shift-return",
+          "game": "gambling",
+          "profile": "ego",
+          "seed": 56103,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4713541666666667,
+          "candidate_score": 0.4713541666666667,
+          "delta": 0.0,
+          "conditional_increment_delta": 0.012500000000000011,
+          "realized_residual_delta": -0.012500000000000011,
+          "changed_actions": 21,
+          "baseline_actions": {
+            "bond": 15,
+            "bet:0": 55,
+            "bet:2": 29,
+            "bet:1": 29
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:0": 55,
+            "bet:2": 27,
+            "bet:1": 28
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-3-56103-shift-return-baseline/trajectories.jsonl",
+            "sha256": "6cb6c7da7d966074aefa7b6759734bdc1ea93838e7d2e87b38664461d89d7d45",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-3-56103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "799a7e3e652caca525e835d2d94e9418bd73a2fbf29e2963b060a0601313afc3",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "6a75cc58d5af4d9ca6813cbd572947c8"
+        },
+        {
+          "condition": "gambling-0-56104-outside",
+          "game": "gambling",
+          "profile": "growth",
+          "seed": 56104,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.4973958333333333,
+          "candidate_score": 0.5416666666666666,
+          "delta": 0.044270833333333315,
+          "conditional_increment_delta": 0.05833333333333335,
+          "realized_residual_delta": -0.014062500000000033,
+          "changed_actions": 18,
+          "baseline_actions": {
+            "bond": 4,
+            "bet:2": 123,
+            "bet:0": 1
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 109,
+            "bet:0": 1
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56104-outside-baseline/trajectories.jsonl",
+            "sha256": "1178a6e62f69f47f5df3b8333be5d15dcbf1700e534c76b195bd8538f00131fd",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-0-56104-outside-candidate/trajectories.jsonl",
+            "sha256": "4648d93b256e82abcaa972da6920bff79d9104accb2d087f9e52cf64447fcb4e",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "2eb7fe98d60048d49cebbcda39acbc56"
+        },
+        {
+          "condition": "gambling-1-56104-outside",
+          "game": "gambling",
+          "profile": "steady",
+          "seed": 56104,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.5234375,
+          "candidate_score": 0.5234375,
+          "delta": 0.0,
+          "conditional_increment_delta": -1.1102230246251565e-16,
+          "realized_residual_delta": 1.1102230246251565e-16,
+          "changed_actions": 10,
+          "baseline_actions": {
+            "bond": 11,
+            "bet:2": 116,
+            "bet:0": 1
+          },
+          "candidate_actions": {
+            "bond": 11,
+            "bet:2": 116,
+            "bet:0": 1
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56104-outside-baseline/trajectories.jsonl",
+            "sha256": "ed748cce4dfb22668bf10e01819f79564139842313512a2a5b6d1837e6eb2916",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-1-56104-outside-candidate/trajectories.jsonl",
+            "sha256": "114f4ca1151f9f3ccd4b3d6656caba756ee0bf69a49a5fb234148c3a2f6fdcfe",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "2d06c68231244cb3a2ea5c62e6a7733a"
+        },
+        {
+          "condition": "gambling-2-56104-outside",
+          "game": "gambling",
+          "profile": "care",
+          "seed": 56104,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.4973958333333333,
+          "candidate_score": 0.5416666666666666,
+          "delta": 0.044270833333333315,
+          "conditional_increment_delta": 0.05833333333333335,
+          "realized_residual_delta": -0.014062500000000033,
+          "changed_actions": 18,
+          "baseline_actions": {
+            "bond": 4,
+            "bet:2": 123,
+            "bet:0": 1
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 109,
+            "bet:0": 1
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56104-outside-baseline/trajectories.jsonl",
+            "sha256": "444a0383084b6db98862a302f37ae06f9467c6678bbf69b56a8430cb0e54a83a",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-2-56104-outside-candidate/trajectories.jsonl",
+            "sha256": "966bdbf4efd07c1cf951f5efefec4ae17a8cb0b205ebb696f8c5d63ef14b5685",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "136dbdf7f6a7452594585a2211992bf7"
+        },
+        {
+          "condition": "gambling-3-56104-outside",
+          "game": "gambling",
+          "profile": "ego",
+          "seed": 56104,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.4973958333333333,
+          "candidate_score": 0.5416666666666666,
+          "delta": 0.044270833333333315,
+          "conditional_increment_delta": 0.05833333333333335,
+          "realized_residual_delta": -0.014062500000000033,
+          "changed_actions": 18,
+          "baseline_actions": {
+            "bond": 4,
+            "bet:2": 123,
+            "bet:0": 1
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 109,
+            "bet:0": 1
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-3-56104-outside-baseline/trajectories.jsonl",
+            "sha256": "6cdeb1ba27e766878d06292eaa7db382730cbcb0cce63e6ea1a60d91f2d8e2eb",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-gambling-3-56104-outside-candidate/trajectories.jsonl",
+            "sha256": "2b3c69c342631e11b7fb948cc77d99189231f3bd49f82514b25ac0cee1ab4644",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "64fe242e07724f22899db341a1e681c6"
+        },
+        {
+          "condition": "resources-0-56101-outside",
+          "game": "resources",
+          "profile": "growth",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.20442708333333334,
+          "candidate_score": 0.625,
+          "delta": 0.42057291666666663,
+          "conditional_increment_delta": 0.43593749999999987,
+          "realized_residual_delta": -0.015364583333333237,
+          "changed_actions": 21,
+          "baseline_actions": {
+            "trade": 24,
+            "crop:2": 104
+          },
+          "candidate_actions": {
+            "invest": 4,
+            "trade": 5,
+            "crop:2": 119
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-0-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "774cd945184b7492aeb59436afa26267689799b094b9b550990cdf4694a2d891",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-0-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "609c59c3cc67ab2263f4b6cf01b0c82dd1c3ad922ff63a5617bc2f5be94c5f20",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "479dabc1eef54673a6447f797c130343",
+          "bellman_residual_removed_delta": 0.43599001477446814,
+          "bellman_residual_delta": -0.015417098107801452
+        },
+        {
+          "condition": "resources-1-56101-outside",
+          "game": "resources",
+          "profile": "steady",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.5559895833333334,
+          "candidate_score": 0.625,
+          "delta": 0.06901041666666663,
+          "conditional_increment_delta": 0.08177083333333302,
+          "realized_residual_delta": -0.012760416666666385,
+          "changed_actions": 15,
+          "baseline_actions": {
+            "trade": 16,
+            "invest": 4,
+            "crop:2": 108
+          },
+          "candidate_actions": {
+            "invest": 4,
+            "trade": 7,
+            "crop:2": 117
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-1-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "e14dce67462fc298ed80b45de24d0839ca7fac2a114df2068bfeb4d26650504c",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-1-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "99a35f002fbe5be2824121adf4aab9f82d6215550834edb664cadafb82f26ac6",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "b8f69371559640418eb7d1b86a6cdbad",
+          "bellman_residual_removed_delta": 0.08176997420494059,
+          "bellman_residual_delta": -0.012759557538273958
+        },
+        {
+          "condition": "resources-2-56101-outside",
+          "game": "resources",
+          "profile": "care",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.46875,
+          "candidate_score": 0.6276041666666666,
+          "delta": 0.15885416666666663,
+          "conditional_increment_delta": 0.16484375000000034,
+          "realized_residual_delta": -0.0059895833333337145,
+          "changed_actions": 11,
+          "baseline_actions": {
+            "trade": 10,
+            "crop:2": 115,
+            "invest": 3
+          },
+          "candidate_actions": {
+            "invest": 4,
+            "trade": 6,
+            "crop:2": 118
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-2-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "5b75f7df40270f2ca40b0a67bcb1cff9f9ecf9f30c4541d7ab150f659fbe3688",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-2-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "29ef42f9cdae531f8b9c7e60c0c1c73b5bd3ecb0e04665b0a9a2e685e9e665ac",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "9afa5d4a0a744198aa68f29fba5a50ab",
+          "bellman_residual_removed_delta": 0.164838859537829,
+          "bellman_residual_delta": -0.005984692871162378
+        },
+        {
+          "condition": "resources-3-56101-outside",
+          "game": "resources",
+          "profile": "ego",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.4713541666666667,
+          "candidate_score": 0.6276041666666666,
+          "delta": 0.15624999999999994,
+          "conditional_increment_delta": 0.1684895833333337,
+          "realized_residual_delta": -0.012239583333333748,
+          "changed_actions": 12,
+          "baseline_actions": {
+            "trade": 11,
+            "crop:2": 114,
+            "invest": 3
+          },
+          "candidate_actions": {
+            "invest": 4,
+            "trade": 6,
+            "crop:2": 118
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-3-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "3b0692c598cc1df28e4a566b5f2ac0440b37462a259d8a8a9198c3f5523fc01e",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-3-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "c3423cf867a83e4ec62edf43b6d718e6f7a104962c618a771c21c1fcfbadfbcd",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "830e64c317aa451fb03056565a652475",
+          "bellman_residual_removed_delta": 0.1684846927676279,
+          "bellman_residual_delta": -0.012234692767627953
+        },
+        {
+          "condition": "resources-0-56102-shift-return",
+          "game": "resources",
+          "profile": "growth",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.20442708333333334,
+          "candidate_score": 0.6041666666666666,
+          "delta": 0.39973958333333326,
+          "conditional_increment_delta": 0.3889322916666666,
+          "realized_residual_delta": 0.01080729166666669,
+          "changed_actions": 21,
+          "baseline_actions": {
+            "trade": 21,
+            "crop:0": 56,
+            "crop:2": 23,
+            "crop:1": 28
+          },
+          "candidate_actions": {
+            "invest": 4,
+            "trade": 3,
+            "crop:0": 59,
+            "crop:2": 31,
+            "crop:1": 31
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-0-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "9138274f1a0f396649012db5d60efc30e481778ed33a766f8bba8f3ef10523a0",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-0-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "038fd1c95a72531c5e3780ec105b18c3b541e56951cd02e26be70289cefc3977",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "609606a7bad54f47949ba3e2f3b2ccf1",
+          "bellman_residual_removed_delta": 0.38892917851270903,
+          "bellman_residual_delta": 0.010810404820624453
+        },
+        {
+          "condition": "resources-1-56102-shift-return",
+          "game": "resources",
+          "profile": "steady",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.5455729166666666,
+          "candidate_score": 0.6041666666666666,
+          "delta": 0.05859375,
+          "conditional_increment_delta": 0.05651041666666656,
+          "realized_residual_delta": 0.002083333333333548,
+          "changed_actions": 9,
+          "baseline_actions": {
+            "trade": 7,
+            "invest": 4,
+            "crop:0": 56,
+            "crop:2": 30,
+            "crop:1": 31
+          },
+          "candidate_actions": {
+            "invest": 4,
+            "trade": 6,
+            "crop:0": 56,
+            "crop:2": 31,
+            "crop:1": 31
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-1-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "8147f7863e62ddfe9c91d589d94d672f91b8a1100b22aed1a2a93dee915b52ef",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-1-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "a46d9ef3cf75965dcdfa66eb8304203551b170004a6e81decca7cd8788afb0e0",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "112ce69e93e44d14804198331c802a92",
+          "bellman_residual_removed_delta": 0.05651002772855507,
+          "bellman_residual_delta": 0.002083722271444932
+        },
+        {
+          "condition": "resources-2-56102-shift-return",
+          "game": "resources",
+          "profile": "care",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4934895833333333,
+          "candidate_score": 0.6028645833333334,
+          "delta": 0.10937500000000006,
+          "conditional_increment_delta": 0.10976562500000042,
+          "realized_residual_delta": -0.0003906250000003664,
+          "changed_actions": 9,
+          "baseline_actions": {
+            "trade": 5,
+            "crop:0": 58,
+            "invest": 3,
+            "crop:2": 31,
+            "crop:1": 31
+          },
+          "candidate_actions": {
+            "invest": 4,
+            "trade": 4,
+            "crop:0": 58,
+            "crop:2": 31,
+            "crop:1": 31
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-2-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "337639df01a3640739dab0111bf64bab561838c352f7660e396969ed5e483601",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-2-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "defcf787cdc6e3fbd76138503e8eb2a062edc0203050e656c59e4d89164d87bc",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "e808a35bd09840568fd5ee1bc0851919",
+          "bellman_residual_removed_delta": 0.10976463732420516,
+          "bellman_residual_delta": -0.00038963732420510544
+        },
+        {
+          "condition": "resources-3-56102-shift-return",
+          "game": "resources",
+          "profile": "ego",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4934895833333333,
+          "candidate_score": 0.6028645833333334,
+          "delta": 0.10937500000000006,
+          "conditional_increment_delta": 0.10976562500000042,
+          "realized_residual_delta": -0.0003906250000003664,
+          "changed_actions": 9,
+          "baseline_actions": {
+            "trade": 5,
+            "crop:0": 58,
+            "invest": 3,
+            "crop:2": 31,
+            "crop:1": 31
+          },
+          "candidate_actions": {
+            "invest": 4,
+            "trade": 4,
+            "crop:0": 58,
+            "crop:2": 31,
+            "crop:1": 31
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-3-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "2d9e5e814e4da1ca77e2115f4ff09c1c068399d087136a1bc3778ce4aa79fa13",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-resources-3-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "97699ee035f20a520b2b4b2f748a4c581c83df088f3220b5ea2184cfe6d10159",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "c9369e983fa64d40ab74c50d040c1687",
+          "bellman_residual_removed_delta": 0.10976463732420516,
+          "bellman_residual_delta": -0.00038963732420510544
+        },
+        {
+          "condition": "auction-0-56102-shift-return",
+          "game": "auction",
+          "profile": "growth",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.24462890625,
+          "candidate_score": 0.24462890625,
+          "delta": 0.0,
+          "conditional_increment_delta": 0.015307617187499956,
+          "realized_residual_delta": -0.015307617187499956,
+          "changed_actions": 47,
+          "baseline_actions": {
+            "bid:2": 30,
+            "bid:3": 36,
+            "bid:4": 5,
+            "bid:1": 55,
+            "bid:0": 2
+          },
+          "candidate_actions": {
+            "bid:2": 37,
+            "bid:3": 27,
+            "bid:4": 11,
+            "bid:1": 47,
+            "bid:0": 6
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-auction-0-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "5750bd153e3b557db7cd8dffd151f12105324cd606c2e69b7bdb09f9d4840119",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-auction-0-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "4dbad3314133281de7c20cb73d864066134acab9b3967dc9a9d5c82a1a051450",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "d00c5fcd32d746c5bcfe69fef58734d8",
+          "bellman_residual_removed_delta": 0.009308191859598663,
+          "bellman_residual_delta": -0.009308191859598941
+        },
+        {
+          "condition": "auction-1-56102-shift-return",
+          "game": "auction",
+          "profile": "steady",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.268798828125,
+          "candidate_score": 0.27978515625,
+          "delta": 0.010986328125,
+          "conditional_increment_delta": -0.0027587890625000444,
+          "realized_residual_delta": 0.013745117187500044,
+          "changed_actions": 46,
+          "baseline_actions": {
+            "bid:1": 45,
+            "bid:4": 9,
+            "bid:3": 31,
+            "bid:2": 24,
+            "bid:0": 19
+          },
+          "candidate_actions": {
+            "bid:2": 17,
+            "bid:4": 6,
+            "bid:3": 40,
+            "bid:1": 42,
+            "bid:0": 23
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-auction-1-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "e126f205f1cc73955b2bee02d03dd7157c2297964d03ed371cb089ca65a861df",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation/value-contract-auction-1-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "06d12984ddf99fb0bfaa8c3ae3e09f1213e16958c5f8875df698dd74157e4e92",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "835cd422f3ea4ec2a7f3e357d26803e1",
+          "bellman_residual_removed_delta": 0.005461572249424285,
+          "bellman_residual_delta": 0.005524755875575604
+        },
+        {
+          "condition": "combat-0-56102-shift-return",
+          "game": "combat",
+          "profile": "growth",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.3880208333333333,
+          "candidate_score": 0.3873697916666667,
+          "delta": -0.0006510416666666297,
+          "conditional_increment_delta": 0.00039062500000014433,
+          "realized_residual_delta": -0.001041666666666774,
+          "changed_actions": 68,
+          "baseline_actions": {
+            "strike:1": 17,
+            "reload": 31,
+            "guard": 27,
+            "strike:0": 37,
+            "strike:2": 16
+          },
+          "candidate_actions": {
+            "strike:1": 19,
+            "strike:2": 18,
+            "guard": 25,
+            "reload": 32,
+            "strike:0": 34
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation_audit/value-contract-combat-0-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "a24ce7489306f89a397eac70ff2bde695347c46df82c830310fc965f73d77ee0",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": {
+              "version": "recorded-forecast-replay-v1",
+              "accepted": true,
+              "max_allowed_ulps": 8,
+              "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+              "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+              "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+              "trajectory_sha256": "a24ce7489306f89a397eac70ff2bde695347c46df82c830310fc965f73d77ee0",
+              "checked_forecasts": 128,
+              "exact_owner_hashes": 128,
+              "max_observed_ulps": 3.0,
+              "max_absolute_difference": 1.1102230246251565e-16
+            }
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation_audit/value-contract-combat-0-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "dce4ecb1edc36fd7d5a992d69122e43174ea18190fdab464766d0d88f4d87fc5",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": {
+              "version": "recorded-forecast-replay-v1",
+              "accepted": true,
+              "max_allowed_ulps": 8,
+              "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+              "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+              "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+              "trajectory_sha256": "dce4ecb1edc36fd7d5a992d69122e43174ea18190fdab464766d0d88f4d87fc5",
+              "checked_forecasts": 128,
+              "exact_owner_hashes": 128,
+              "max_observed_ulps": 3.0,
+              "max_absolute_difference": 1.1102230246251565e-16
+            }
+          },
+          "pair_id": "16432253ef714c68a038c85bc0f2d1a2",
+          "bellman_residual_removed_delta": 0.00045416712260559766,
+          "bellman_residual_delta": -0.0011052087892722273
+        }
+      ]
+    },
+    "diagnostic": {
+      "complete": false,
+      "stage": "diagnostic",
+      "plan_sha256": "be8949c420cfd2ae77ef93a0af7af8bde9cd2697c7904ec8e19068b4c5f07684",
+      "registered_conditions": 8,
+      "completed_conditions": 6,
+      "pending": [
+        "auction-2-53101-outside",
+        "combat-0-53101-outside"
+      ],
+      "source_summary_sha256": "d10b92f1dac64ce4f99ffe776b552b9ca363e5ce895d435ced12756070a23c67",
+      "groups": [
+        {
+          "level": "game",
+          "key": [
+            "auction"
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53103
+          ],
+          "mean_delta": 0.0048828125,
+          "mean_conditional_increment_delta": 0.0012695312499999,
+          "better": 1,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.0048828125
+        },
+        {
+          "level": "game",
+          "key": [
+            "combat"
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53103
+          ],
+          "mean_delta": 0.0078125,
+          "mean_conditional_increment_delta": 0.0057291666666666186,
+          "better": 1,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.0078125
+        },
+        {
+          "level": "game",
+          "key": [
+            "gambling"
+          ],
+          "conditions": 2,
+          "world_seeds": [
+            53101,
+            53103
+          ],
+          "mean_delta": 0.03645833333333329,
+          "mean_conditional_increment_delta": 0.03958333333333339,
+          "better": 2,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.020833333333333315
+        },
+        {
+          "level": "game",
+          "key": [
+            "resources"
+          ],
+          "conditions": 2,
+          "world_seeds": [
+            53101,
+            53103
+          ],
+          "mean_delta": 0.0,
+          "mean_conditional_increment_delta": 0.0,
+          "better": 0,
+          "same": 2,
+          "worse": 0,
+          "worst": 0.0
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "auction",
+            53103
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53103
+          ],
+          "mean_delta": 0.0048828125,
+          "mean_conditional_increment_delta": 0.0012695312499999,
+          "better": 1,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.0048828125
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "combat",
+            53103
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53103
+          ],
+          "mean_delta": 0.0078125,
+          "mean_conditional_increment_delta": 0.0057291666666666186,
+          "better": 1,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.0078125
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "gambling",
+            53101
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53101
+          ],
+          "mean_delta": 0.05208333333333326,
+          "mean_conditional_increment_delta": 0.0708333333333333,
+          "better": 1,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.05208333333333326
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "gambling",
+            53103
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53103
+          ],
+          "mean_delta": 0.020833333333333315,
+          "mean_conditional_increment_delta": 0.00833333333333347,
+          "better": 1,
+          "same": 0,
+          "worse": 0,
+          "worst": 0.020833333333333315
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "resources",
+            53101
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53101
+          ],
+          "mean_delta": 0.0,
+          "mean_conditional_increment_delta": 0.0,
+          "better": 0,
+          "same": 1,
+          "worse": 0,
+          "worst": 0.0
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "resources",
+            53103
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53103
+          ],
+          "mean_delta": 0.0,
+          "mean_conditional_increment_delta": 0.0,
+          "better": 0,
+          "same": 1,
+          "worse": 0,
+          "worst": 0.0
+        }
+      ],
+      "comparisons": [
+        {
+          "condition": "gambling-0-53101-outside",
+          "game": "gambling",
+          "profile": "growth",
+          "seed": 53101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.5286458333333334,
+          "candidate_score": 0.5807291666666666,
+          "delta": 0.05208333333333326,
+          "conditional_increment_delta": 0.0708333333333333,
+          "realized_residual_delta": -0.018750000000000044,
+          "changed_actions": 17,
+          "baseline_actions": {
+            "bond": 1,
+            "bet:2": 127
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 110
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_local/value-contract-gambling-0-53101-outside-baseline/trajectories.jsonl",
+            "sha256": "bd580dc8cbf57de1cafdcbbe286fd05d407b27d048063bd3892e9de63882471a",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_local/value-contract-gambling-0-53101-outside-candidate/trajectories.jsonl",
+            "sha256": "ba906006dc700fa070471eba2169c5a74e23aa5832439d44b126118b25d41dcc",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "7cb68e681ecc42fd9116375a21b1165c"
+        },
+        {
+          "condition": "gambling-2-53103-shift-return",
+          "game": "gambling",
+          "profile": "care",
+          "seed": 53103,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4817708333333333,
+          "candidate_score": 0.5026041666666666,
+          "delta": 0.020833333333333315,
+          "conditional_increment_delta": 0.00833333333333347,
+          "realized_residual_delta": 0.012499999999999845,
+          "changed_actions": 6,
+          "baseline_actions": {
+            "bond": 16,
+            "bet:2": 28,
+            "bet:0": 56,
+            "bet:1": 28
+          },
+          "candidate_actions": {
+            "bond": 18,
+            "bet:2": 28,
+            "bet:0": 56,
+            "bet:1": 26
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_diagnostic/value-contract-gambling-2-53103-shift-return-baseline/trajectories.jsonl",
+            "sha256": "8083d5e8998576f3267c9c9813721e92b538fcf6ffbd959743f09cfc0f114b51",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_diagnostic/value-contract-gambling-2-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "9724abf3e1a1c06b0a8ae83a209a38f5b86289d3855892f80461f967743cf241",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "ea040096ffd848f39cc98e07667eac65"
+        },
+        {
+          "condition": "resources-0-53101-outside",
+          "game": "resources",
+          "profile": "growth",
+          "seed": 53101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.7096354166666666,
+          "candidate_score": 0.7096354166666666,
+          "delta": 0.0,
+          "conditional_increment_delta": 0.0,
+          "realized_residual_delta": 0.0,
+          "changed_actions": 0,
+          "baseline_actions": {
+            "invest": 4,
+            "trade": 1,
+            "crop:2": 123
+          },
+          "candidate_actions": {
+            "invest": 4,
+            "trade": 1,
+            "crop:2": 123
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_local/value-contract-resources-0-53101-outside-baseline/trajectories.jsonl",
+            "sha256": "8dcffff91e4952738797adea4d54a2e368a9295d208cea43bc8347125145cbcf",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_local/value-contract-resources-0-53101-outside-candidate/trajectories.jsonl",
+            "sha256": "f6441c23a8917ae2921e7b945f933780f3e8afa9edf0b4c0aa9d683d1ed01ca2",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "7c8f70d3cf18429d83fdf9e23f7233e1",
+          "bellman_residual_removed_delta": 0.0,
+          "bellman_residual_delta": 0.0
+        },
+        {
+          "condition": "resources-2-53103-shift-return",
+          "game": "resources",
+          "profile": "care",
+          "seed": 53103,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.5924479166666666,
+          "candidate_score": 0.5924479166666666,
+          "delta": 0.0,
+          "conditional_increment_delta": 0.0,
+          "realized_residual_delta": 0.0,
+          "changed_actions": 0,
+          "baseline_actions": {
+            "invest": 4,
+            "trade": 3,
+            "crop:0": 59,
+            "crop:2": 31,
+            "crop:1": 31
+          },
+          "candidate_actions": {
+            "invest": 4,
+            "trade": 3,
+            "crop:0": 59,
+            "crop:2": 31,
+            "crop:1": 31
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_local_resources/value-contract-resources-2-53103-shift-return-baseline/trajectories.jsonl",
+            "sha256": "64d108e54ad11cd3df4caa7116b074c2e1738a3b15cb1c9b7f5cdd3dcf656f9d",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_local_resources/value-contract-resources-2-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "937b5aa8eaa799dcd82c8e60bf047c5d5be86ae74db53e32d54b880df8af1357",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "65cfde4877224e6684e242bd0d91951c",
+          "bellman_residual_removed_delta": 0.0,
+          "bellman_residual_delta": 0.0
+        },
+        {
+          "condition": "auction-0-53103-shift-return",
+          "game": "auction",
+          "profile": "growth",
+          "seed": 53103,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.22998046875,
+          "candidate_score": 0.23486328125,
+          "delta": 0.0048828125,
+          "conditional_increment_delta": 0.0012695312499999,
+          "realized_residual_delta": 0.0036132812500001,
+          "changed_actions": 48,
+          "baseline_actions": {
+            "bid:3": 34,
+            "bid:1": 47,
+            "bid:4": 11,
+            "bid:0": 13,
+            "bid:2": 23
+          },
+          "candidate_actions": {
+            "bid:4": 12,
+            "bid:1": 51,
+            "bid:0": 10,
+            "bid:3": 28,
+            "bid:2": 27
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_local_auction/value-contract-auction-0-53103-shift-return-baseline/trajectories.jsonl",
+            "sha256": "3879e61e956881a80fd9f67f3031057d3db2b09c75d49de84fef74bcb4992614",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_local_auction/value-contract-auction-0-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "ab429ae5203553e3369f12739c2d853f0a7bb97d9e9a5549f2ae0a9d9926c1c8",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "257d703fba794a3fa6635e0baef9772a",
+          "bellman_residual_removed_delta": 0.019433625125169662,
+          "bellman_residual_delta": -0.01455081262516994
+        },
+        {
+          "condition": "combat-2-53103-shift-return",
+          "game": "combat",
+          "profile": "care",
+          "seed": 53103,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.3880208333333333,
+          "candidate_score": 0.3958333333333333,
+          "delta": 0.0078125,
+          "conditional_increment_delta": 0.0057291666666666186,
+          "realized_residual_delta": 0.0020833333333333814,
+          "changed_actions": 55,
+          "baseline_actions": {
+            "strike:1": 17,
+            "strike:2": 18,
+            "guard": 26,
+            "reload": 30,
+            "strike:0": 37
+          },
+          "candidate_actions": {
+            "strike:1": 17,
+            "strike:2": 18,
+            "guard": 25,
+            "reload": 30,
+            "strike:0": 38
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_local_combat/value-contract-combat-2-53103-shift-return-baseline/trajectories.jsonl",
+            "sha256": "4b0fc1fe59c53c3fb79bf627a7f0411fd1ec4568b0ec95e3508ff607142e4e88",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_local_combat/value-contract-combat-2-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "a61dcaea88cd11db0592ae1b645305d158df0358997ce0a50754b65d4a9c92b6",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "500c7d3cc19b409fa2107525a88ee7d3",
+          "bellman_residual_removed_delta": 0.004351513770110782,
+          "bellman_residual_delta": 0.003460986229889218
+        }
+      ]
+    },
+    "known_combat": {
+      "complete": true,
+      "stage": "diagnostic",
+      "plan_sha256": "ec3a16aa0464087579c6e6c1e133039c1f787543d1392f4ba391c3be25a3428c",
+      "registered_conditions": 1,
+      "completed_conditions": 1,
+      "pending": [],
+      "source_summary_sha256": "e49cc2b36808ae85b8a80636004b83c4227b89f1151fb675194b831e484aa415",
+      "groups": [
+        {
+          "level": "game",
+          "key": [
+            "combat"
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53103
+          ],
+          "mean_delta": 0.0,
+          "mean_conditional_increment_delta": -0.015624999999999889,
+          "better": 0,
+          "same": 1,
+          "worse": 0,
+          "worst": 0.0
+        },
+        {
+          "level": "world_seed",
+          "key": [
+            "combat",
+            53103
+          ],
+          "conditions": 1,
+          "world_seeds": [
+            53103
+          ],
+          "mean_delta": 0.0,
+          "mean_conditional_increment_delta": -0.015624999999999889,
+          "better": 0,
+          "same": 1,
+          "worse": 0,
+          "worst": 0.0
+        }
+      ],
+      "comparisons": [
+        {
+          "condition": "combat-0-53103-shift-return",
+          "game": "combat",
+          "profile": "growth",
+          "seed": 53103,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4192708333333333,
+          "candidate_score": 0.4192708333333333,
+          "delta": 0.0,
+          "conditional_increment_delta": -0.015624999999999889,
+          "realized_residual_delta": 0.015624999999999889,
+          "changed_actions": 74,
+          "baseline_actions": {
+            "strike:1": 18,
+            "reload": 30,
+            "guard": 24,
+            "strike:0": 39,
+            "strike:2": 17
+          },
+          "candidate_actions": {
+            "strike:1": 19,
+            "strike:2": 18,
+            "guard": 25,
+            "reload": 30,
+            "strike:0": 36
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_known_combat_local/value-contract-combat-0-53103-shift-return-baseline/trajectories.jsonl",
+            "sha256": "75194f9cd4c8c554869e60ea1ce977f10966e721c078c02175435a0723d8a4d6",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_known_combat_local/value-contract-combat-0-53103-shift-return-candidate/trajectories.jsonl",
+            "sha256": "9aba74ba8c4e0feea6edf2121adfcb141d6b7dfd6c803d506a2bd4eac1ed2877",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "owner_parity": 128,
+              "fixed_axes": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "3d6ed5459e9e4c89b913727fc9af787f",
+          "bellman_residual_removed_delta": -0.01643767594691753,
+          "bellman_residual_delta": 0.01643767594691753
+        }
+      ]
+    }
+  },
+  "root_diagnoses": [
+    {
+      "tick": 1,
+      "old_action": "strike:2",
+      "new_action": "reload",
+      "seconds": 587.280999999959,
+      "sampling": {
+        "kind": "independent-decision-banks-v1",
+        "stages": [
+          {
+            "seeds": [
+              801,
+              802,
+              803,
+              804,
+              805,
+              806,
+              807,
+              808
+            ],
+            "action": "reload"
+          },
+          {
+            "seeds": [
+              811,
+              812,
+              813,
+              814,
+              815,
+              816,
+              817,
+              818
+            ],
+            "action": "reload"
+          },
+          {
+            "seeds": [
+              801,
+              802,
+              803,
+              804,
+              805,
+              806,
+              807,
+              808,
+              811,
+              812,
+              813,
+              814,
+              815,
+              816,
+              817,
+              818
+            ],
+            "action": "reload"
+          }
+        ],
+        "agreement": true,
+        "expanded": false,
+        "selected_samples": 16,
+        "cache_hits": 30,
+        "computed_bank_frontiers": 30,
+        "semantics": "Complete paths pooled before persona and purpose gates; agreement is not a statistical confidence guarantee. World-model and horizon bias remain."
+      },
+      "roots": {
+        "flow-plan-001": [
+          "reload"
+        ]
+      },
+      "goals": {
+        "flow-plan-001": 0.09071761038965487
+      }
+    },
+    {
+      "tick": 5,
+      "old_action": "reload",
+      "new_action": "strike:0",
+      "seconds": 572.655999999959,
+      "sampling": {
+        "kind": "independent-decision-banks-v1",
+        "stages": [
+          {
+            "seeds": [
+              801,
+              802,
+              803,
+              804,
+              805,
+              806,
+              807,
+              808
+            ],
+            "action": "strike:0"
+          },
+          {
+            "seeds": [
+              811,
+              812,
+              813,
+              814,
+              815,
+              816,
+              817,
+              818
+            ],
+            "action": "strike:0"
+          },
+          {
+            "seeds": [
+              801,
+              802,
+              803,
+              804,
+              805,
+              806,
+              807,
+              808,
+              811,
+              812,
+              813,
+              814,
+              815,
+              816,
+              817,
+              818
+            ],
+            "action": "strike:0"
+          }
+        ],
+        "agreement": true,
+        "expanded": false,
+        "selected_samples": 16,
+        "cache_hits": 30,
+        "computed_bank_frontiers": 30,
+        "semantics": "Complete paths pooled before persona and purpose gates; agreement is not a statistical confidence guarantee. World-model and horizon bias remain."
+      },
+      "roots": {
+        "flow-plan-000": [
+          "guard"
+        ],
+        "flow-plan-001": [
+          "reload"
+        ],
+        "flow-plan-002": [
+          "strike:0"
+        ]
+      },
+      "goals": {
+        "flow-plan-000": 0.1076134243462312,
+        "flow-plan-001": 0.10835139035475576,
+        "flow-plan-002": 0.11278494236244443
+      }
+    },
+    {
+      "tick": 20,
+      "old_action": "reload",
+      "new_action": "strike:0",
+      "seconds": 600.5939999999828,
+      "sampling": {
+        "kind": "independent-decision-banks-v1",
+        "stages": [
+          {
+            "seeds": [
+              801,
+              802,
+              803,
+              804,
+              805,
+              806,
+              807,
+              808
+            ],
+            "action": "strike:0"
+          },
+          {
+            "seeds": [
+              811,
+              812,
+              813,
+              814,
+              815,
+              816,
+              817,
+              818
+            ],
+            "action": "strike:0"
+          },
+          {
+            "seeds": [
+              801,
+              802,
+              803,
+              804,
+              805,
+              806,
+              807,
+              808,
+              811,
+              812,
+              813,
+              814,
+              815,
+              816,
+              817,
+              818
+            ],
+            "action": "strike:0"
+          }
+        ],
+        "agreement": true,
+        "expanded": false,
+        "selected_samples": 16,
+        "cache_hits": 30,
+        "computed_bank_frontiers": 30,
+        "semantics": "Complete paths pooled before persona and purpose gates; agreement is not a statistical confidence guarantee. World-model and horizon bias remain."
+      },
+      "roots": {
+        "flow-plan-000": [
+          "guard"
+        ],
+        "flow-plan-001": [
+          "reload"
+        ],
+        "flow-plan-002": [
+          "strike:0"
+        ]
+      },
+      "goals": {
+        "flow-plan-000": 0.14982284121844086,
+        "flow-plan-001": 0.1516206004117398,
+        "flow-plan-002": 0.15354530896540236
+      }
+    }
+  ],
+  "future_competence": {
+    "action": "strike:0",
+    "seconds": 704.5779999999795,
+    "future_planning_calls": 1395,
+    "roots": {
+      "flow-plan-000": [
+        "guard"
+      ],
+      "flow-plan-001": [
+        "reload"
+      ],
+      "flow-plan-002": [
+        "strike:0"
+      ]
+    },
+    "purpose": {
+      "flow-plan-000": 0.16435035338507403,
+      "flow-plan-001": 0.1641658488194837,
+      "flow-plan-002": 0.16858655517091448
+    },
+    "scope": "Known tick20, same original bankA three seeds. Existing custom future planner applies exact two-step owner choice at every modeled step. Counterfactual only."
+  }
+}

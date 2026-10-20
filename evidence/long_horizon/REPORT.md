@@ -95,7 +95,7 @@
 
 この完了済み戦闘の1・5・20手目を、同じ本人・同じ公開状態で別の大きい標本組（各8本、最大3組）により再診断した。3局面とも二組と統合16本の判断が一致し、選択はそれぞれ `strike:2 → reload`、`reload → strike:0`、`reload → strike:0` となった。乱数と標本数の両方が変わるため、標本数だけの因果効果や収束・長期改善の証明ではない。少数標本の一致を強い確信とみなせない例として残す。元資料：`results/long_horizon_completed_combat_sampling`。
 
-別の原因診断では、20手目からの予測内の本人が、弾切れ時に体力11.75を12へ回復する小さい利益を選び、準備を遅らせていた。同じ将来の本人と公開情報に既存の二手読みを与えると、22手目・29手目の二例では準備を選んだ。現在の回復起動条件は「即時の正の目的増分がないこと」なので、小さい利益がある場合には起動しない。この起動条件が現在の根の判断や長期結果をどこまで悪くするかは、まだ検証中である。元資料：`results/long_horizon_diagnostics/combat_continuation_paths.json`。
+別の原因診断では、20手目からの予測内の本人が、弾切れ時に体力11.75を12へ回復する小さい利益を選び、準備を遅らせていた。同じ将来の本人と公開情報に既存の二手読みを与えると、22手目・29手目の二例では準備を選んだ。現在の回復起動条件は「即時の正の目的増分がないこと」なので、小さい利益がある場合には起動しない。さらに、20手目の同じ本人・同じ3本の予測乱数で、既存の `future_planner` を使って31手すべてに二手読みを適用すると、根の選択が `reload → strike:0` に変わった。人格・ルール・現在の予測は維持した。1局面に704.6秒・将来の計画呼出し1,395回を使った診断で、長期改善やこの重い構成の採用はまだ証明していない。標本を増やす方法とは別の変更として扱う。元資料：`results/long_horizon_diagnostics/combat_continuation_paths.json`、`results/long_horizon_future_competence_probe`。
 
 正規集計は `results/long_horizon_sampling_check_confirmation/summary.json`、診断は `results/long_horizon_sampling_check_diagnostic/summary.json`、追加戦闘は `results/long_horizon_sampling_check_known_combat_local/summary.json`。クラウド継続runは `39404634553` と `39404741708`。後者の `combat / growth / 56102` は両方128手完了後の履歴監査で確率の再計算丸め差により停止したため、run `39406480947` で追加判断0手の監査のみを実行した。予測確率差は最大3ULP（絶対差1.11e−16、既存の許容上限8ULP以内）、保存された予測での実行結果・所有者・世界乱数は128手すべて厳密一致した。これは新しい選択の再現保証ではなく、保存された実判断と実経験の監査である。
 
