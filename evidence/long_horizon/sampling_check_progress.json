@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-10-20T12:14:06.149925+00:00",
+  "as_of": "2026-10-20T13:48:12.522591+00:00",
   "actor": "8c9568f8056c22be4bee1fbc115b5f879b9b2dac",
   "adopted": false,
   "scope": "Partial registered cohorts; no pooling across cohorts, no equal-compute comparison, no claim of arbitrary-game or human-level intelligence.",
@@ -9,15 +9,11 @@
       "stage": "confirmation",
       "plan_sha256": "1f95e005ca2421b91051d0283c6ff71842459bfc93081c57bb047bc938d96d0d",
       "registered_conditions": 40,
-      "completed_conditions": 33,
+      "completed_conditions": 37,
       "pending": [
         "auction-0-56101-outside",
         "auction-2-56101-outside",
-        "auction-3-56101-outside",
-        "auction-2-56102-shift-return",
-        "combat-2-56101-outside",
-        "combat-3-56101-outside",
-        "combat-1-56102-shift-return"
+        "auction-3-56101-outside"
       ],
       "groups": [
         {
@@ -25,16 +21,16 @@
           "key": [
             "auction"
           ],
-          "conditions": 4,
+          "conditions": 5,
           "world_seeds": [
             56101,
             56102
           ],
-          "mean_delta": -0.01190185546875,
-          "mean_conditional_increment_delta": -0.007745361328125023,
+          "mean_delta": -0.01083984375,
+          "mean_conditional_increment_delta": -0.008149414062499995,
           "better": 1,
           "same": 1,
-          "worse": 2,
+          "worse": 3,
           "worst": -0.0361328125
         },
         {
@@ -42,16 +38,16 @@
           "key": [
             "combat"
           ],
-          "conditions": 5,
+          "conditions": 8,
           "world_seeds": [
             56101,
             56102
           ],
-          "mean_delta": 0.01679687499999999,
-          "mean_conditional_increment_delta": 0.016380208333333323,
-          "better": 3,
-          "same": 0,
-          "worse": 2,
+          "mean_delta": 0.013020833333333329,
+          "mean_conditional_increment_delta": 0.023697916666666673,
+          "better": 4,
+          "same": 1,
+          "worse": 3,
           "worst": -0.020182291666666685
         },
         {
@@ -113,15 +109,15 @@
             "auction",
             56102
           ],
-          "conditions": 3,
+          "conditions": 4,
           "world_seeds": [
             56102
           ],
-          "mean_delta": -0.008382161458333334,
-          "mean_conditional_increment_delta": -0.005257161458333363,
+          "mean_delta": -0.0079345703125,
+          "mean_conditional_increment_delta": -0.0063842773437499944,
           "better": 1,
           "same": 1,
-          "worse": 1,
+          "worse": 2,
           "worst": -0.0361328125
         },
         {
@@ -130,14 +126,14 @@
             "combat",
             56101
           ],
-          "conditions": 2,
+          "conditions": 4,
           "world_seeds": [
             56101
           ],
-          "mean_delta": 0.014648437499999972,
-          "mean_conditional_increment_delta": 0.01985677083333323,
-          "better": 1,
-          "same": 0,
+          "mean_delta": 0.016438802083333315,
+          "mean_conditional_increment_delta": 0.02919921874999995,
+          "better": 2,
+          "same": 1,
           "worse": 1,
           "worst": -0.020182291666666685
         },
@@ -147,16 +143,16 @@
             "combat",
             56102
           ],
-          "conditions": 3,
+          "conditions": 4,
           "world_seeds": [
             56102
           ],
-          "mean_delta": 0.018229166666666668,
-          "mean_conditional_increment_delta": 0.014062500000000052,
+          "mean_delta": 0.009602864583333343,
+          "mean_conditional_increment_delta": 0.018196614583333395,
           "better": 2,
           "same": 0,
-          "worse": 1,
-          "worst": -0.0006510416666666297
+          "worse": 2,
+          "worst": -0.01627604166666663
         },
         {
           "level": "world_seed",
@@ -261,7 +257,7 @@
           "worst": 0.05859375
         }
       ],
-      "source_summary_sha256": "c63d5d957f125f4432262fab7cc85f33fe506a3a9dcc41fe03e8eb82a672a7e1",
+      "source_summary_sha256": "65a0136129cc46b635683cd068688db99366ae46d021596ae25d09d735120686",
       "comparisons": [
         {
           "condition": "gambling-0-56101-outside",
@@ -1840,6 +1836,68 @@
           "bellman_residual_delta": 0.005524755875575604
         },
         {
+          "condition": "auction-2-56102-shift-return",
+          "game": "auction",
+          "profile": "care",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.283447265625,
+          "candidate_score": 0.27685546875,
+          "delta": -0.006591796875,
+          "conditional_increment_delta": -0.009765624999999889,
+          "realized_residual_delta": 0.003173828124999889,
+          "changed_actions": 38,
+          "baseline_actions": {
+            "bid:3": 38,
+            "bid:4": 8,
+            "bid:0": 7,
+            "bid:1": 48,
+            "bid:2": 27
+          },
+          "candidate_actions": {
+            "bid:3": 37,
+            "bid:4": 8,
+            "bid:0": 11,
+            "bid:2": 28,
+            "bid:1": 44
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-auction-2-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "f45dbab55a40acc4f20cf6bf3cad5f8209c41728e18bd0460a1fd025aef18857",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-auction-2-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "ddc12c438dc83ede46718614a4387713dbb6d5b1f9c0c18b5848ee3390a8a6cd",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "5dccc65703a44f2ca34597caadac5b1e",
+          "bellman_residual_removed_delta": -0.008547767270202011,
+          "bellman_residual_delta": 0.0019559703952024554
+        },
+        {
           "condition": "auction-3-56102-shift-return",
           "game": "auction",
           "profile": "ego",
@@ -2046,6 +2104,127 @@
           "bellman_residual_delta": 0.0027982723691210576
         },
         {
+          "condition": "combat-2-56101-outside",
+          "game": "combat",
+          "profile": "care",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.3828125,
+          "candidate_score": 0.4192708333333333,
+          "delta": 0.036458333333333315,
+          "conditional_increment_delta": 0.04375000000000001,
+          "realized_residual_delta": -0.007291666666666752,
+          "changed_actions": 68,
+          "baseline_actions": {
+            "strike:1": 2,
+            "reload": 35,
+            "strike:2": 67,
+            "guard": 23,
+            "strike:0": 1
+          },
+          "candidate_actions": {
+            "strike:1": 2,
+            "strike:2": 73,
+            "reload": 28,
+            "guard": 25
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-2-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "9eae86d664c78f66e58c7909fb3e58e4eadf6e64f0cdb7d6d107a7db4e8010e9",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-2-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "e13f3b6aad757b35f95eee49a7157014c045362916a20e58d64f5725d4d93371",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "7b7cab0e71444fc48088f15f02c8b9f8",
+          "bellman_residual_removed_delta": 0.0442251915848218,
+          "bellman_residual_delta": -0.007766858251488484
+        },
+        {
+          "condition": "combat-3-56101-outside",
+          "game": "combat",
+          "profile": "ego",
+          "seed": 56101,
+          "regime": "outside",
+          "turns": 128,
+          "baseline_score": 0.4270833333333333,
+          "candidate_score": 0.4270833333333333,
+          "delta": 0.0,
+          "conditional_increment_delta": 0.033333333333333326,
+          "realized_residual_delta": -0.033333333333333326,
+          "changed_actions": 77,
+          "baseline_actions": {
+            "strike:1": 1,
+            "reload": 34,
+            "strike:2": 69,
+            "guard": 24
+          },
+          "candidate_actions": {
+            "reload": 30,
+            "strike:2": 73,
+            "guard": 24,
+            "strike:1": 1
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-3-56101-outside-baseline/trajectories.jsonl",
+            "sha256": "f379c7ec168803aeb04e033c578df780dffaac2e5f9a0f72b4a5341c8e4688d2",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "candidate": {
+            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-combat-3-56101-outside-candidate/trajectories.jsonl",
+            "sha256": "d743ca7e25baa3836de527aecf0bdc4c7e4e01939089c7156b2f7248e9e3f74a",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": null
+          },
+          "pair_id": "be8f81c0fc504f1abd665bceb013e2e2",
+          "bellman_residual_removed_delta": 0.03106373952176561,
+          "bellman_residual_delta": -0.03106373952176561
+        },
+        {
           "condition": "combat-0-56102-shift-return",
           "game": "combat",
           "profile": "growth",
@@ -2130,6 +2309,92 @@
           "pair_id": "16432253ef714c68a038c85bc0f2d1a2",
           "bellman_residual_removed_delta": 0.00045416712260559766,
           "bellman_residual_delta": -0.0011052087892722273
+        },
+        {
+          "condition": "combat-1-56102-shift-return",
+          "game": "combat",
+          "profile": "steady",
+          "seed": 56102,
+          "regime": "shift-return",
+          "turns": 128,
+          "baseline_score": 0.4427083333333333,
+          "candidate_score": 0.4264322916666667,
+          "delta": -0.01627604166666663,
+          "conditional_increment_delta": 0.030598958333333426,
+          "realized_residual_delta": -0.046875000000000056,
+          "changed_actions": 74,
+          "baseline_actions": {
+            "guard": 29,
+            "strike:0": 37,
+            "reload": 29,
+            "strike:2": 17,
+            "strike:1": 16
+          },
+          "candidate_actions": {
+            "strike:0": 38,
+            "guard": 24,
+            "reload": 30,
+            "strike:2": 18,
+            "strike:1": 18
+          },
+          "identical_world_predictions": 128,
+          "paired_external_events": 128,
+          "baseline_executed": 128,
+          "candidate_executed": 128,
+          "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+          "baseline": {
+            "path": "results/rwc/p-39404741708-bc1214ea-a-result/value-contract-combat-1-56102-shift-return-baseline/trajectories.jsonl",
+            "sha256": "a19b22496fb2d88ce7d0fd136551e37baee345a582cc4f591656d75289eb3331",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": {
+              "version": "recorded-forecast-replay-v1",
+              "accepted": true,
+              "max_allowed_ulps": 8,
+              "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+              "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+              "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+              "trajectory_sha256": "a19b22496fb2d88ce7d0fd136551e37baee345a582cc4f591656d75289eb3331",
+              "checked_forecasts": 128,
+              "exact_owner_hashes": 128,
+              "max_observed_ulps": 3.0,
+              "max_absolute_difference": 1.1102230246251565e-16
+            }
+          },
+          "candidate": {
+            "path": "results/rwc/p-39404741708-bc1214ea-a-result/value-contract-combat-1-56102-shift-return-candidate/trajectories.jsonl",
+            "sha256": "59991d9b5dcab30dab42b0f0b7696b5fe9687f53c31d63938cb78fc35aa8855d",
+            "checks": {
+              "world_rng_replay": 128,
+              "restored_action_feedback": 128,
+              "physical_replay": 128,
+              "fixed_axes": 128,
+              "owner_parity": 128,
+              "restore": 6
+            },
+            "recorded_forecast_replay": {
+              "version": "recorded-forecast-replay-v1",
+              "accepted": true,
+              "max_allowed_ulps": 8,
+              "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+              "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+              "source_manifest_sha256": "482d196f14b8a41c363f7600bff93f6aea77d1323d9145de4f9e1addbc6a0f4b",
+              "trajectory_sha256": "59991d9b5dcab30dab42b0f0b7696b5fe9687f53c31d63938cb78fc35aa8855d",
+              "checked_forecasts": 128,
+              "exact_owner_hashes": 128,
+              "max_observed_ulps": 3.0,
+              "max_absolute_difference": 1.1102230246251565e-16
+            }
+          },
+          "pair_id": "194238a48dd24fcfb31a8bfbea76807d",
+          "bellman_residual_removed_delta": 0.027788423385298355,
+          "bellman_residual_delta": -0.044064465051964985
         },
         {
           "condition": "combat-2-56102-shift-return",

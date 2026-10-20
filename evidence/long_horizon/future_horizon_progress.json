@@ -1,6 +1,12 @@
 {
   "status": "research-only; registered cloud cohorts and adopted main unchanged",
   "candidate_source": "bc61977acefa917b0432906cb6599565649e37e4",
+  "ci": {
+    "run": 39427876988,
+    "environments": 4,
+    "passed_each": 1199,
+    "skipped_each": 17
+  },
   "limits": [
     "Saved-root fidelity is not judgment quality.",
     "Deterministic preparation environments are mechanism diagnostics, not independent game-family confirmation.",
@@ -14,63 +20,73 @@
     "results": [
       {
         "case": "gambling-0-53101-outside",
-        "completed_roots": 79,
+        "completed_roots": 97,
         "complete": false,
         "input": {
           "key": "gambling-0-53101-outside",
           "path": "results/long_horizon_sampling_check_local/value-contract-gambling-0-53101-outside-candidate/trajectories.jsonl",
           "sha256": "ba906006dc700fa070471eba2169c5a74e23aa5832439d44b126118b25d41dcc"
         },
-        "agreement": 79,
-        "fixed_axes": 79,
-        "unchanged_factual_owners": 79,
-        "seconds": 2834.6719999999623
+        "agreement": 97,
+        "fixed_axes": 97,
+        "unchanged_factual_owners": 97,
+        "seconds": 3671.1089999999967
       },
       {
         "case": "resources-0-53101-outside",
-        "completed_roots": 90,
+        "completed_roots": 116,
         "complete": false,
         "input": {
           "key": "resources-0-53101-outside",
           "path": "results/long_horizon_sampling_check_local/value-contract-resources-0-53101-outside-candidate/trajectories.jsonl",
           "sha256": "f6441c23a8917ae2921e7b945f933780f3e8afa9edf0b4c0aa9d683d1ed01ca2"
         },
-        "agreement": 90,
-        "fixed_axes": 90,
-        "unchanged_factual_owners": 90,
-        "seconds": 2855.4689999999828
+        "agreement": 116,
+        "fixed_axes": 116,
+        "unchanged_factual_owners": 116,
+        "seconds": 3670.3119999999763
       },
       {
         "case": "resources-2-53103-shift-return",
-        "completed_roots": 89,
+        "completed_roots": 114,
         "complete": false,
         "input": {
           "key": "resources-2-53103-shift-return",
           "path": "results/long_horizon_sampling_check_local_resources/value-contract-resources-2-53103-shift-return-candidate/trajectories.jsonl",
           "sha256": "937b5aa8eaa799dcd82c8e60bf047c5d5be86ae74db53e32d54b880df8af1357"
         },
-        "agreement": 89,
-        "fixed_axes": 89,
-        "unchanged_factual_owners": 89,
-        "seconds": 2845.905999999959
+        "agreement": 114,
+        "fixed_axes": 114,
+        "unchanged_factual_owners": 114,
+        "seconds": 3676.2029999999795
       },
       {
         "case": "auction-0-53103-shift-return",
-        "completed_roots": 89,
+        "completed_roots": 127,
         "complete": false,
         "input": {
           "key": "auction-0-53103-shift-return",
           "path": "results/long_horizon_sampling_check_local_auction/value-contract-auction-0-53103-shift-return-candidate/trajectories.jsonl",
           "sha256": "ab429ae5203553e3369f12739c2d853f0a7bb97d9e9a5549f2ae0a9d9926c1c8"
         },
-        "agreement": 65,
-        "fixed_axes": 89,
-        "unchanged_factual_owners": 89,
-        "seconds": 2818.0619999999763
+        "agreement": 97,
+        "fixed_axes": 127,
+        "unchanged_factual_owners": 127,
+        "seconds": 3638.75
       },
       {
         "case": "combat-2-53103-shift-return",
-        "completed_roots": 0
+        "completed_roots": 1,
+        "complete": false,
+        "input": {
+          "key": "combat-2-53103-shift-return",
+          "path": "results/long_horizon_sampling_check_local_combat/value-contract-combat-2-53103-shift-return-candidate/trajectories.jsonl",
+          "sha256": "a61dcaea88cd11db0592ae1b645305d158df0358997ce0a50754b65d4a9c92b6"
+        },
+        "agreement": 0,
+        "fixed_axes": 1,
+        "unchanged_factual_owners": 1,
+        "seconds": 32.29700000002049
       },
       {
         "case": "combat-0-53103-shift-return",
@@ -86,8 +102,8 @@
       {
         "case": "delay-3-shock-0",
         "mode": "16",
-        "turns": 92,
-        "complete": false
+        "turns": 128,
+        "complete": true
       },
       {
         "case": "delay-3-shock-0",
@@ -98,7 +114,7 @@
       {
         "case": "delay-3-shock-1",
         "mode": "16",
-        "turns": 73,
+        "turns": 87,
         "complete": false
       },
       {
@@ -106,6 +122,12 @@
         "mode": "2",
         "turns": 128,
         "complete": true
+      },
+      {
+        "case": "delay-7-shock-0",
+        "mode": "2",
+        "turns": 112,
+        "complete": false
       }
     ]
   },
@@ -116,14 +138,38 @@
     "runs": [
       {
         "case": "length-3-shock-0",
+        "mode": "fixed-window",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "length-3-shock-0",
         "mode": "rolling",
-        "turns": 111,
-        "complete": false
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "length-3-shock-1",
+        "mode": "fixed-window",
+        "turns": 128,
+        "complete": true
       },
       {
         "case": "length-3-shock-1",
         "mode": "rolling",
-        "turns": 115,
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "length-5-shock-0",
+        "mode": "rolling",
+        "turns": 94,
+        "complete": false
+      },
+      {
+        "case": "length-5-shock-1",
+        "mode": "rolling",
+        "turns": 89,
         "complete": false
       }
     ]
@@ -307,5 +353,95 @@
     "corrected_root": "results/compound_window_diagnostic_v2",
     "reason": "Diagnostic adapter used initial self.payout instead of observed public world payout; shock had no effect. Incomplete run rejected; retained original sources and resolved checkpoints. Registered auction/combat runs unaffected.",
     "accepted": false
+  },
+  "first_divergence_account": {
+    "source": "results/long_horizon_diagnostics/first_divergence_account.json",
+    "sha256": "5a31606d40cdd1809ccfd9e782411a7f00ab9edd49d5c8964341bba647da77e5",
+    "cases": [
+      {
+        "condition": "auction-1-56101-outside",
+        "final_delta": -0.0224609375,
+        "conditional_delta": -0.015209960937500003,
+        "tick": 7,
+        "same_owner": true,
+        "same_world": true,
+        "actions": [
+          "bid:2",
+          "bid:1"
+        ]
+      },
+      {
+        "condition": "auction-1-56102-shift-return",
+        "final_delta": 0.010986328125,
+        "conditional_delta": -0.0027587890625000444,
+        "tick": 0,
+        "same_owner": true,
+        "same_world": true,
+        "actions": [
+          "bid:1",
+          "bid:2"
+        ]
+      },
+      {
+        "condition": "auction-2-56102-shift-return",
+        "final_delta": -0.006591796875,
+        "conditional_delta": -0.009765624999999889,
+        "tick": 5,
+        "same_owner": true,
+        "same_world": true,
+        "actions": [
+          "bid:3",
+          "bid:2"
+        ]
+      },
+      {
+        "condition": "auction-3-56102-shift-return",
+        "final_delta": -0.0361328125,
+        "conditional_delta": -0.0283203125,
+        "tick": 0,
+        "same_owner": true,
+        "same_world": true,
+        "actions": [
+          "bid:2",
+          "bid:3"
+        ]
+      },
+      {
+        "condition": "combat-0-56101-outside",
+        "final_delta": -0.020182291666666685,
+        "conditional_delta": -0.005598958333333459,
+        "tick": 1,
+        "same_owner": true,
+        "same_world": true,
+        "actions": [
+          "reload",
+          "strike:2"
+        ]
+      },
+      {
+        "condition": "combat-0-56102-shift-return",
+        "final_delta": -0.0006510416666666297,
+        "conditional_delta": 0.00039062500000014433,
+        "tick": 1,
+        "same_owner": true,
+        "same_world": true,
+        "actions": [
+          "reload",
+          "strike:2"
+        ]
+      },
+      {
+        "condition": "combat-1-56102-shift-return",
+        "final_delta": -0.01627604166666663,
+        "conditional_delta": 0.030598958333333426,
+        "tick": 0,
+        "same_owner": true,
+        "same_world": true,
+        "actions": [
+          "guard",
+          "strike:0"
+        ]
+      }
+    ]
   }
 }
