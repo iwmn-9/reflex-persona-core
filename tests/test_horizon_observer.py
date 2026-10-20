@@ -8,6 +8,15 @@ from tools.observe_horizon_pairs import Progress, checkpoint_summary, digest, en
 
 
 class HorizonObserverTests(unittest.TestCase):
+    def test_first_restored_checkpoint_is_not_reported_as_forward_progress(self):
+        obs=Progress();status={'pid':20}
+        table={20:dict(parent=1,born='a',cpu=1)}
+        obs.observe('x',None,status,table,'t0',0)
+        restored=obs.observe('x',{'ticks':16},status,table,'t1',60)
+        self.assertIsNone(restored['last_observed_advance_at'])
+        advanced=obs.observe('x',{'ticks':20},status,table,'t2',120)
+        self.assertEqual(advanced['last_observed_advance_at'],'t2')
+
     def test_cpu_activity_is_not_decision_advance_and_idle_flags_without_killing(self):
         obs=Progress(); cp={'ticks':12}; status={'pid':20,'return_code':None}
         table={20:dict(parent=1,state='S',born='a',cpu=1),21:dict(parent=20,state='R',born='b',cpu=20)}

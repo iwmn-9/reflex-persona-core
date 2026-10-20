@@ -101,10 +101,12 @@ class Progress:
             identity = (pid, item['born'])
             seen[identity] = max(seen.get(identity,0), item['cpu'])
         total = sum(seen.values())
-        ticks = checkpoint['ticks'] if checkpoint else 0
+        ticks = checkpoint['ticks'] if checkpoint else None
         old = self.previous.get(key)
-        advanced = old is not None and ticks > old['ticks']
-        assert old is None or ticks >= old['ticks'], 'saved progress regressed'
+        # Seeing the restored input for the first time is not new experience.
+        comparable = old is not None and old['ticks'] is not None and ticks is not None
+        advanced = comparable and ticks > old['ticks']
+        assert not comparable or ticks >= old['ticks'], 'saved progress regressed'
         last_advance = now if advanced else (old['last_advance'] if old else None)
         busy = old is not None and total > old['cpu'] + .001
         last_activity = monotonic if advanced or busy or old is None else old['activity']
