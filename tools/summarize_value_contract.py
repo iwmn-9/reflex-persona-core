@@ -29,7 +29,7 @@ def read_run(path,job,enabled,plan,plan_hash):
     from tools.audit_recorded_forecasts import verify_receipt
     recipe=verify_receipt(path,audit,row)
     assert [row[k] for k in ('game','profile','seed','regime','turns','interval','tail_steps','offset')]==[g,PROFILES[p]['id'],s,r,t,i,h,o]
-    for key in ('cumulative_achievement','tail_goal_refinement','sampling_check'):
+    for key in ('cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning'):
         assert row.get(key,False)==configuration.get(key,False)
     assert 'sampling_standard_errors' not in row and 'model_seeds' not in row and 'tail_recovery_limit' not in row
     reg=json.loads((path/'registration.json').read_text())

@@ -14,6 +14,7 @@ def main():
     p.add_argument('--cumulative-achievement',action='store_true')
     p.add_argument('--tail-goal-refinement',action='store_true')
     p.add_argument('--sampling-check',action='store_true')
+    p.add_argument('--tail-replanning',action='store_true')
     p.add_argument('--frozen',action='store_true');a=p.parse_args()
     root=Path(a.root).resolve();job=json.loads(a.job)
     if not a.frozen:
@@ -23,6 +24,7 @@ def main():
         if a.cumulative_achievement:args+=['--cumulative-achievement']
         if a.tail_goal_refinement:args+=['--tail-goal-refinement']
         if a.sampling_check:args+=['--sampling-check']
+        if a.tail_replanning:args+=['--tail-replanning']
         dispatch(root,Path(__file__).name,args);return
     from tools.run_owned_value import run,law
     from tools.continuing_games import GAMES
@@ -44,6 +46,7 @@ def main():
     if a.cumulative_achievement:configuration['cumulative_achievement']=True
     if a.tail_goal_refinement:configuration['tail_goal_refinement']=True
     if a.sampling_check:configuration['sampling_check']=True
+    if a.tail_replanning:configuration['tail_replanning']=True
     if configuration:registration['configuration']=configuration
     reg=root/'registration.json'
     if reg.exists():assert json.loads(reg.read_text())==registration,'cannot change a resumed study'
@@ -53,7 +56,7 @@ def main():
     if not env.exists():env.write_text(json.dumps(environment,indent=2)+'\n',encoding='utf8')
     output=root/'trajectories.jsonl'
     if output.exists():raise FileExistsError('completed study must not be repeated')
-    result=run(job,'receding_recovery',checkpoint=root/'checkpoint.json',checkpoint_every=4,tail_recovery_limit=a.recovery_limit,model_seeds=tuple(a.model_seeds),sampling_standard_errors=a.sampling_standard_errors,cumulative_achievement=a.cumulative_achievement,tail_goal_refinement=a.tail_goal_refinement,sampling_check=a.sampling_check)
+    result=run(job,'receding_recovery',checkpoint=root/'checkpoint.json',checkpoint_every=4,tail_recovery_limit=a.recovery_limit,model_seeds=tuple(a.model_seeds),sampling_standard_errors=a.sampling_standard_errors,cumulative_achievement=a.cumulative_achievement,tail_goal_refinement=a.tail_goal_refinement,sampling_check=a.sampling_check,tail_replanning=a.tail_replanning)
     assert result is not None
     temporary=output.with_suffix('.new')
     temporary.write_text(json.dumps(result,separators=(',',':'))+'\n',encoding='utf8');temporary.replace(output)

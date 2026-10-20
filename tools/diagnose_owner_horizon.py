@@ -12,7 +12,7 @@ from tools.run_owned_value import cumulative_basis
 
 
 def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
-    recovery_limit=row.get('tail_recovery_limit',16) if recovery_limit is None else recovery_limit
+    recovery_limit=(tail if row.get('tail_replanning') else row.get('tail_recovery_limit',16)) if recovery_limit is None else recovery_limit
     if seeds is None and row.get('sampling_check'):
         seeds=tuple(row['trace'][tick]['sampling_check']['stages'][-1]['seeds'])
     seeds=tuple(row.get('model_seeds',(701,702,703))) if seeds is None else seeds
@@ -25,6 +25,7 @@ def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
         assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
         feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=tail,
         world_model='posterior',purpose_estimator='conditional',tail_recovery=2,tail_recovery_limit=recovery_limit,seeds=seeds,
+        tail_recovery_mode='always' if row.get('tail_replanning') else 'stalled',
         sampling_standard_errors=row.get('sampling_standard_errors'),
         cumulative_preference=cumulative_basis(g,row.get('cumulative_achievement',False)),
         tail_goal_refinement=row.get('tail_goal_refinement',False))
@@ -74,6 +75,7 @@ def diagnose(row,tick,tail,recovery_limit=None,*,seeds=None):
         **({'sampling_standard_errors':row['sampling_standard_errors']} if 'sampling_standard_errors' in row else {}),
         **({'cumulative_achievement':True} if row.get('cumulative_achievement') else {}),
         **({'tail_goal_refinement':True,'refinement_calls':frontier.refinement_calls} if row.get('tail_goal_refinement') else {}),
+        **({'tail_replanning':True} if row.get('tail_replanning') else {}),
         **({'sampling_check':True,'sampling_check_replay':'fixed final bank only; not a replay of the adaptive bank-selection stages'} if row.get('sampling_check') else {}))
 
 
@@ -89,7 +91,7 @@ def pool_diagnostics(diagnostics):
     if not first.get('owner_digest') and not first.get('source_sha256'):
         raise ValueError('owner or saved trajectory identity required')
     for d in diagnostics:
-        for key in ('tick','tail_steps','recovery_limit','children','core_sources','owner_digest','source_sha256','game','profile','regime','seed','sampling_standard_errors','cumulative_achievement','tail_goal_refinement','sampling_check'):
+        for key in ('tick','tail_steps','recovery_limit','children','core_sources','owner_digest','source_sha256','game','profile','regime','seed','sampling_standard_errors','cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning'):
             if d.get(key)!=first.get(key):raise ValueError('identical owner, model and horizon required')
         seeds=d.get('seeds')
         if seeds is None and d['distributions']:seeds=list(map(int,d['distributions'][0]['paths']))
@@ -102,6 +104,7 @@ def pool_diagnostics(diagnostics):
     if 'sampling_standard_errors' in first:result['sampling_standard_errors']=first['sampling_standard_errors']
     if first.get('cumulative_achievement'):result['cumulative_achievement']=True
     if first.get('tail_goal_refinement'):result['tail_goal_refinement']=True
+    if first.get('tail_replanning'):result['tail_replanning']=True
     if first.get('sampling_check'):result['sampling_check']=True
     result.update(seeds=union,frontiers=[dict(root=f['root'],public=copy.deepcopy(f['public'])) for f in first['frontiers']],distributions=[])
     for d in diagnostics:
@@ -134,6 +137,8 @@ def prefix_choice(row,tick,diagnostic,horizon):
         raise ValueError('matching sampling-margin configuration required')
     if row.get('cumulative_achievement',False)!=diagnostic.get('cumulative_achievement',False):
         raise ValueError('matching cumulative preference configuration required')
+    if row.get('tail_replanning',False)!=diagnostic.get('tail_replanning',False):
+        raise ValueError('matching future replanning configuration required')
     assert 1<=horizon<=diagnostic['tail_steps']+1 and tick==diagnostic['tick']
     g=ContinuingGame(row['game'],next(p for p in PROFILES if p['id']==row['profile']),row['turns'],row['seed']%2)
     w=copy.deepcopy(row['trace'][tick]['before']);c=g.context(w)

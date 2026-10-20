@@ -31,7 +31,7 @@ def resume(root,expected_manifest,job,*,recorded_predictions=False):
           '--job',json.dumps(job),'--stage',registration['stage'],'--frozen']
     configuration=registration.get('configuration',{})
     assert saved['contract'].get('configuration',{})==configuration
-    assert set(configuration)<= {'tail_recovery_limit','model_seeds','sampling_standard_errors','cumulative_achievement','tail_goal_refinement','sampling_check'}
+    assert set(configuration)<= {'tail_recovery_limit','model_seeds','sampling_standard_errors','cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning'}
     if 'tail_recovery_limit' in configuration:
         args+=['--recovery-limit',str(configuration['tail_recovery_limit'])]
     if 'model_seeds' in configuration:args+=['--model-seeds',*map(str,configuration['model_seeds'])]
@@ -45,6 +45,9 @@ def resume(root,expected_manifest,job,*,recorded_predictions=False):
     if 'sampling_check' in configuration:
         assert configuration['sampling_check'] is True
         args+=['--sampling-check']
+    if 'tail_replanning' in configuration:
+        assert configuration['tail_replanning'] is True
+        args+=['--tail-replanning']
     if audit_only:
         completed=json.loads(trajectory.read_text())
         assert 0<len(prefix)==saved['world']['tick']==completed['executed']==len(completed['trace'])<=job[4],'stored execution boundary mismatch'

@@ -7,7 +7,7 @@ def configurations(plan):
     if not isinstance(value,dict) or set(value)!={'baseline','candidate'}:
         raise ValueError('two named registered configurations required')
     for row in value.values():
-        if not isinstance(row,dict) or set(row)-{'cumulative_achievement','tail_goal_refinement','sampling_check'} or any(v is not True for v in row.values()):
+        if not isinstance(row,dict) or set(row)-{'cumulative_achievement','tail_goal_refinement','sampling_check','tail_replanning'} or any(v is not True for v in row.values()):
             raise ValueError('explicit supported enabled mechanisms required')
     if value['baseline']==value['candidate']:raise ValueError('distinct paired configurations required')
     return copy.deepcopy(value)

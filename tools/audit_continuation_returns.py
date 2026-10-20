@@ -51,15 +51,19 @@ def audit_run(r,*,ticks=None):
         own=DecisionLoop.from_record(raw,t['checkpoint'],predictor=g.actor(raw,learning='segmented' if segmented else 'windows').predictor)
         assert digest(own.record())==t['before_owner']
         effective=own.preview(g.request(raw))[0];start=copy.deepcopy(own)
-        future=None;future_calls=0
+        future=None;refinement=None;future_calls=0
         if r['arm']=='receding_recovery':
             continuation=owned_rollout(start,observe=g.context,events=g.events,terminal=g.terminal,
                 assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
                 feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=r['tail_steps'],
                 world_model='posterior',purpose_estimator='conditional',tail_recovery=2,
-                tail_recovery_limit=r.get('tail_recovery_limit',16),seeds=tuple(r.get('model_seeds',(701,702,703))),
-                sampling_standard_errors=r.get('sampling_standard_errors'),cumulative_preference=cumulative)
+                tail_recovery_limit=r['tail_steps'] if r.get('tail_replanning') else r.get('tail_recovery_limit',16),
+                tail_recovery_mode='always' if r.get('tail_replanning') else 'stalled',
+                seeds=tuple(r.get('model_seeds',(701,702,703))),
+                sampling_standard_errors=r.get('sampling_standard_errors'),cumulative_preference=cumulative,
+                tail_goal_refinement=r.get('tail_goal_refinement',False))
             future=continuation.frontier.future_planner
+            refinement=continuation.frontier.reflex_planner
         actual_actions=[];actual_flows=[];reflex_actions=[];reflex_flows=[]
         post_root=(r['trace'][index+1].get('checkpoint') if index+1<len(r['trace']) else None)
         if post_root is not None:
@@ -81,6 +85,8 @@ def audit_run(r,*,ticks=None):
             if j and future is not None and future_calls<continuation.frontier.future_planner_limit:
                 planner=future(copy.deepcopy(own),copy.deepcopy(req),copy.deepcopy(w))
                 if planner is not None:future_calls+=1
+            if j and planner is None and refinement is not None:
+                planner=refinement(copy.deepcopy(own),copy.deepcopy(req),copy.deepcopy(w))
             result=DecisionLoop.decide_batch([(own,req)],False,planner,
                 _counterfactual_roots=(t['action'],) if j==0 else None)[0]
             key=result['decision']['action_id'];after,flow=g.transition(w,key,s['response'])
@@ -93,7 +99,9 @@ def audit_run(r,*,ticks=None):
         ours=realized_score(g,start,effective,t['action'],actual_actions,actual_flows,segment[-1]['after'],cumulative_preference=cumulative)
         theirs=realized_score(g,start,effective,t['action'],reflex_actions,reflex_flows,w,cumulative_preference=cumulative)
         cases.append(dict(tick=index,root_owner='actual-checkpoint' if post_root is not None else 'exact-feedback-replay',
-            reference_policy='two-step-recovery-when-no-immediate-gain' if future else 'learned-reflex',future_calls=future_calls,
+            reference_policy=('two-step-every-future-decision' if r.get('tail_replanning') else
+                              'two-step-recovery-when-no-immediate-gain' if future else 'learned-reflex'),
+            tail_goal_refinement=bool(refinement),future_calls=future_calls,
             predicted=predicted,reflex_replay=reference,executed=actual,
             world_and_sampling_residual=reference-predicted,control_contribution=actual-reference,
             total_gap=actual-predicted,realized_persona_gain=ours-theirs,
