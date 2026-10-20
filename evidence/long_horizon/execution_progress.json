@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-10-20T22:18:32.875445+00:00",
-  "ledger_updated": "2026-10-20T22:18:18.923777+00:00",
+  "checked_at": "2026-10-20T23:05:35.487091+00:00",
+  "ledger_updated": "2026-10-20T23:05:03.381559+00:00",
   "supervisor_error": null,
   "counts": {
     "confirmation": {
-      "complete": false,
-      "completed_conditions": 39,
+      "complete": true,
+      "completed_conditions": 40,
       "registered_conditions": 40
     },
     "diagnostic": {
@@ -21,298 +21,122 @@
   },
   "pending": [
     {
-      "key": "auction-3-56101-outside",
-      "plan": "evidence/long_horizon/sampling_check_confirmation_plan.json",
-      "run": 39458689868,
-      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39458689868",
-      "head_sha": "aafd049bfc3f499bd756d5cc7f789edaaf61c6b4",
-      "attempt": 1,
-      "remote_status": "in_progress",
-      "conclusion": null,
-      "job_status": null,
-      "active_steps": [],
-      "step_limit_at_utc": null,
-      "input_common_boundary": 80,
-      "requested_turns": 128,
-      "last_verified_saved": {
-        "run": 39404741708,
-        "common_boundary": 80,
-        "checkpoints": [
-          {
-            "side": "baseline",
-            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-auction-3-56101-outside-baseline/checkpoint.json",
-            "sha256": "c57fb4a2db0f3cfa62ea28a4e407740b70f7a6734ee1b9e5c60b597ed92fc34d",
-            "ticks": 128,
-            "elapsed_minutes": 394.2099668222,
-            "cumulative_minutes_per_decision": 3.0797653657984374
-          },
-          {
-            "side": "candidate",
-            "path": "results/long_horizon_sampling_check_confirmation_continuation/value-contract-auction-3-56101-outside-candidate/checkpoint.json",
-            "sha256": "c879d5b602676f7d4a03c388fa9f89520fc7598481704a2c609bae4667c09d52",
-            "ticks": 80,
-            "elapsed_minutes": 643.4059073005,
-            "cumulative_minutes_per_decision": 8.04257384125625
-          }
-        ]
-      },
-      "current_run_saved_progress": null,
-      "current_run_resolved_advance": null,
-      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
-      "live_progress": "unknown_until_artifact"
-    },
-    {
       "key": "gambling-0-53101-outside",
       "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
-      "run": 39461136727,
-      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39461136727",
-      "head_sha": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "run": 39509569611,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39509569611",
+      "head_sha": "ce7ec6592fd92ca573c9fa58da2839fb382bb78c",
       "attempt": 1,
       "remote_status": "in_progress",
       "conclusion": null,
       "job_status": null,
       "active_steps": [],
       "step_limit_at_utc": null,
-      "input_common_boundary": 16,
+      "input_common_boundary": 28,
       "requested_turns": 128,
       "last_verified_saved": {
-        "run": 39412321707,
-        "common_boundary": 16,
+        "run": 39461136727,
+        "common_boundary": 28,
         "checkpoints": [
           {
             "side": "baseline",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-gambling-0-53101-outside-baseline/checkpoint.json",
-            "sha256": "b9c5f6bbfe7a3c66ab0ebcac0b66c508f934b35b3873a031a244ed872032a20c",
+            "path": "results/rwc/p-39412321707-ac91cfe6-c-result/value-contract-gambling-0-53101-outside-baseline/checkpoint.json",
+            "sha256": "62283dd9d933da522fab0d27ef49e1f218a50e0cc40b3102040b3d2ef9871f01",
             "ticks": 128,
-            "elapsed_minutes": 148.58109170256665,
-            "cumulative_minutes_per_decision": 1.160789778926302
+            "elapsed_minutes": 271.91699692791667,
+            "cumulative_minutes_per_decision": 2.124351538499349
           },
           {
             "side": "candidate",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-gambling-0-53101-outside-candidate/checkpoint.json",
-            "sha256": "194a120ae790de6db087de9ed54fb5a28ca7712b5adbc130abeb58ce965b63e1",
-            "ticks": 16,
-            "elapsed_minutes": 334.84399216118334,
-            "cumulative_minutes_per_decision": 20.92774951007396
+            "path": "results/rwc/p-39412321707-ac91cfe6-c-result/value-contract-gambling-0-53101-outside-candidate/checkpoint.json",
+            "sha256": "5212286eccef8cec3a6150ad9b4e6c3a4789ea693bdd5de7748ff9f6d640e441",
+            "ticks": 28,
+            "elapsed_minutes": 590.5309772338333,
+            "cumulative_minutes_per_decision": 21.090392044065474
           }
         ]
       },
       "current_run_saved_progress": null,
       "current_run_resolved_advance": null,
+      "latest_collected_advance": {
+        "from_tick": 16,
+        "to_tick": 28,
+        "added": 12
+      },
+      "live": {
+        "check_id": 118927114012,
+        "url": "https://github.com/iwmn-9/reflex-persona-core/runs/118927114012",
+        "observed_at": "2026-10-20T23:05:04.213369+00:00",
+        "age_seconds": 24.124506,
+        "stale": false,
+        "arms": [
+          {
+            "key": "gambling-0-53101-outside-baseline",
+            "checkpoint": {
+              "ticks": 40,
+              "requested_turns": 128,
+              "checkpoint_sha256": "d8d3aa00b7142a232401634df4af7818ef1a29418ad81a136a35407d9fb0ca03",
+              "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+              "elapsed_seconds": 17593.894879036,
+              "checkpoint_mtime_utc": "2026-10-20T23:00:14.438364+00:00"
+            },
+            "execution": {
+              "pid": 2356,
+              "started_at": "2026-10-20T22:38:54.769608+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": "2026-10-20T23:01:02.250231+00:00",
+            "cpu_seconds_observed": 1569.55,
+            "cpu_delta": 60.38000000000011,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 28,
+            "prior_turns": 128,
+            "segment_advance": 12,
+            "new_experience": 0
+          },
+          {
+            "key": "gambling-0-53101-outside-candidate",
+            "checkpoint": {
+              "ticks": 28,
+              "requested_turns": 128,
+              "checkpoint_sha256": "5212286eccef8cec3a6150ad9b4e6c3a4789ea693bdd5de7748ff9f6d640e441",
+              "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+              "elapsed_seconds": 35431.858634029995,
+              "checkpoint_mtime_utc": "2026-10-20T22:38:54.747291+00:00"
+            },
+            "execution": {
+              "pid": 2358,
+              "started_at": "2026-10-20T22:38:54.770206+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 1569.48,
+            "cpu_delta": 60.38000000000011,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 28,
+            "prior_turns": 28,
+            "segment_advance": 0,
+            "new_experience": 0
+          }
+        ],
+        "pair_return_codes": [
+          null
+        ],
+        "segment_ended": false
+      },
       "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
       "live_progress": "unknown_until_artifact"
     },
     {
       "key": "gambling-2-53103-shift-return",
       "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
-      "run": 39462555043,
-      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39462555043",
-      "head_sha": "1317465f450fbf61c8a2760372117b4e7eb743be",
-      "attempt": 1,
-      "remote_status": "in_progress",
-      "conclusion": null,
-      "job_status": null,
-      "active_steps": [],
-      "step_limit_at_utc": null,
-      "input_common_boundary": 12,
-      "requested_turns": 128,
-      "last_verified_saved": {
-        "run": 39412321707,
-        "common_boundary": 12,
-        "checkpoints": [
-          {
-            "side": "baseline",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-gambling-2-53103-shift-return-baseline/checkpoint.json",
-            "sha256": "5173bcbf515096508f0f7c765a8e301b7eeae20a5dfb18072dd5f6ff4deebd08",
-            "ticks": 128,
-            "elapsed_minutes": 204.57747045571668,
-            "cumulative_minutes_per_decision": 1.5982614879352866
-          },
-          {
-            "side": "candidate",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-gambling-2-53103-shift-return-candidate/checkpoint.json",
-            "sha256": "274d2f523d35c7352939505780d5ee2878771f4ff7da8a9f40c2d4cb655a6eac",
-            "ticks": 12,
-            "elapsed_minutes": 333.7179579885667,
-            "cumulative_minutes_per_decision": 27.809829832380558
-          }
-        ]
-      },
-      "current_run_saved_progress": null,
-      "current_run_resolved_advance": null,
-      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
-      "live_progress": "unknown_until_artifact"
-    },
-    {
-      "key": "resources-0-53101-outside",
-      "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
-      "run": 39463534266,
-      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39463534266",
-      "head_sha": "1317465f450fbf61c8a2760372117b4e7eb743be",
-      "attempt": 2,
-      "remote_status": "in_progress",
-      "conclusion": null,
-      "job_status": null,
-      "active_steps": [],
-      "step_limit_at_utc": null,
-      "input_common_boundary": 8,
-      "requested_turns": 128,
-      "last_verified_saved": {
-        "run": 39412321707,
-        "common_boundary": 8,
-        "checkpoints": [
-          {
-            "side": "baseline",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-resources-0-53101-outside-baseline/checkpoint.json",
-            "sha256": "8a6fb8d05f007d18c62ad6415827755f326c8c778bdba4e691ef64ea7ca47610",
-            "ticks": 128,
-            "elapsed_minutes": 179.76513060121667,
-            "cumulative_minutes_per_decision": 1.4044150828220052
-          },
-          {
-            "side": "candidate",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-resources-0-53101-outside-candidate/checkpoint.json",
-            "sha256": "cd060627621864c942f1f5088482a47bb3d89023a044884573171533f6b8c6f3",
-            "ticks": 8,
-            "elapsed_minutes": 237.26011404401666,
-            "cumulative_minutes_per_decision": 29.657514255502083
-          }
-        ]
-      },
-      "current_run_saved_progress": null,
-      "current_run_resolved_advance": null,
-      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
-      "live_progress": "unknown_until_artifact"
-    },
-    {
-      "key": "resources-2-53103-shift-return",
-      "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
-      "run": 39460987527,
-      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39460987527",
-      "head_sha": "1317465f450fbf61c8a2760372117b4e7eb743be",
-      "attempt": 1,
-      "remote_status": "in_progress",
-      "conclusion": null,
-      "job_status": null,
-      "active_steps": [],
-      "step_limit_at_utc": null,
-      "input_common_boundary": 12,
-      "requested_turns": 128,
-      "last_verified_saved": {
-        "run": 39412321707,
-        "common_boundary": 12,
-        "checkpoints": [
-          {
-            "side": "baseline",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-resources-2-53103-shift-return-baseline/checkpoint.json",
-            "sha256": "17940d76c9c28a0ca17f2e498271fe8128f2ad898dec066bb10286c4dfe3de71",
-            "ticks": 128,
-            "elapsed_minutes": 173.18173243243334,
-            "cumulative_minutes_per_decision": 1.3529822846283854
-          },
-          {
-            "side": "candidate",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-resources-2-53103-shift-return-candidate/checkpoint.json",
-            "sha256": "4da122eb55fe9ccba21206eb85290a2c1e681191dc8aa387263bf2432711c605",
-            "ticks": 12,
-            "elapsed_minutes": 335.26750088051665,
-            "cumulative_minutes_per_decision": 27.93895840670972
-          }
-        ]
-      },
-      "current_run_saved_progress": null,
-      "current_run_resolved_advance": null,
-      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
-      "live_progress": "unknown_until_artifact"
-    },
-    {
-      "key": "auction-0-53103-shift-return",
-      "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
-      "run": 39463225290,
-      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39463225290",
-      "head_sha": "1317465f450fbf61c8a2760372117b4e7eb743be",
-      "attempt": 1,
-      "remote_status": "in_progress",
-      "conclusion": null,
-      "job_status": null,
-      "active_steps": [],
-      "step_limit_at_utc": null,
-      "input_common_boundary": 24,
-      "requested_turns": 128,
-      "last_verified_saved": {
-        "run": 39412321707,
-        "common_boundary": 24,
-        "checkpoints": [
-          {
-            "side": "baseline",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-auction-0-53103-shift-return-baseline/checkpoint.json",
-            "sha256": "7c1e78dc0b9c56eee4eecc9f21c4dd3e2a1ed70467c9d0f2591d7f236c6cae19",
-            "ticks": 128,
-            "elapsed_minutes": 338.0835753425334,
-            "cumulative_minutes_per_decision": 2.641277932363542
-          },
-          {
-            "side": "candidate",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-auction-0-53103-shift-return-candidate/checkpoint.json",
-            "sha256": "f8b987b9ea8090fd6099aeab077f9d0199ba93194bb1bbf7eac144a5fa2261a2",
-            "ticks": 24,
-            "elapsed_minutes": 293.94146389855,
-            "cumulative_minutes_per_decision": 12.247560995772917
-          }
-        ]
-      },
-      "current_run_saved_progress": null,
-      "current_run_resolved_advance": null,
-      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
-      "live_progress": "unknown_until_artifact"
-    },
-    {
-      "key": "auction-2-53101-outside",
-      "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
-      "run": 39464489557,
-      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39464489557",
-      "head_sha": "1317465f450fbf61c8a2760372117b4e7eb743be",
-      "attempt": 1,
-      "remote_status": "in_progress",
-      "conclusion": null,
-      "job_status": null,
-      "active_steps": [],
-      "step_limit_at_utc": null,
-      "input_common_boundary": 12,
-      "requested_turns": 128,
-      "last_verified_saved": {
-        "run": 39412321707,
-        "common_boundary": 12,
-        "checkpoints": [
-          {
-            "side": "baseline",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-auction-2-53101-outside-baseline/checkpoint.json",
-            "sha256": "e362c1ca48e0ef3807aae7ecd7dd66d5e0ea46486f220219a85f80906ff48e78",
-            "ticks": 48,
-            "elapsed_minutes": 327.1740840365,
-            "cumulative_minutes_per_decision": 6.816126750760417
-          },
-          {
-            "side": "candidate",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-auction-2-53101-outside-candidate/checkpoint.json",
-            "sha256": "5353c043fb8960d7b83264975603b5a08f373886d5ff38549c30d4bd88c0200d",
-            "ticks": 12,
-            "elapsed_minutes": 315.3321207925166,
-            "cumulative_minutes_per_decision": 26.27767673270972
-          }
-        ]
-      },
-      "current_run_saved_progress": null,
-      "current_run_resolved_advance": null,
-      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
-      "live_progress": "unknown_until_artifact"
-    },
-    {
-      "key": "combat-0-53103-shift-return",
-      "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
-      "run": 39462780551,
-      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39462780551",
-      "head_sha": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "run": 39510684699,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39510684699",
+      "head_sha": "ce7ec6592fd92ca573c9fa58da2839fb382bb78c",
       "attempt": 1,
       "remote_status": "in_progress",
       "conclusion": null,
@@ -322,70 +146,765 @@
       "input_common_boundary": 20,
       "requested_turns": 128,
       "last_verified_saved": {
-        "run": 39412321707,
+        "run": 39462555043,
         "common_boundary": 20,
         "checkpoints": [
           {
             "side": "baseline",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-combat-0-53103-shift-return-baseline/checkpoint.json",
-            "sha256": "b16c43dc7c60af253981bac1b4735f54df29e522b57466d2d072c43adea0616b",
+            "path": "results/rwc/p-39412321707-841211f6-c-result/value-contract-gambling-2-53103-shift-return-baseline/checkpoint.json",
+            "sha256": "46957aec7839375c68cc8c5f040c4c1ca6120fad818e3bd32b342ee8f29faeb2",
             "ticks": 128,
-            "elapsed_minutes": 327.1314115730333,
-            "cumulative_minutes_per_decision": 2.5557141529143226
+            "elapsed_minutes": 384.2780543530834,
+            "cumulative_minutes_per_decision": 3.002172299633464
           },
           {
             "side": "candidate",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-combat-0-53103-shift-return-candidate/checkpoint.json",
-            "sha256": "09e3cf612ebcf4d2c382fb441ef38f13008354dabae4beafd3cad13ce6701e80",
+            "path": "results/rwc/p-39412321707-841211f6-c-result/value-contract-gambling-2-53103-shift-return-candidate/checkpoint.json",
+            "sha256": "665df0ba65b86678b3d2c05ee82848187047fce46d7a1ccdef0304b30f32d50a",
             "ticks": 20,
-            "elapsed_minutes": 322.92481291085,
-            "cumulative_minutes_per_decision": 16.1462406455425
+            "elapsed_minutes": 567.1081080328834,
+            "cumulative_minutes_per_decision": 28.35540540164417
           }
         ]
       },
       "current_run_saved_progress": null,
       "current_run_resolved_advance": null,
+      "latest_collected_advance": {
+        "from_tick": 12,
+        "to_tick": 20,
+        "added": 8
+      },
+      "live": {
+        "check_id": 118930807559,
+        "url": "https://github.com/iwmn-9/reflex-persona-core/runs/118930807559",
+        "observed_at": "2026-10-20T23:04:35.401997+00:00",
+        "age_seconds": 52.83324,
+        "stale": false,
+        "arms": [
+          {
+            "key": "gambling-2-53103-shift-return-baseline",
+            "checkpoint": {
+              "ticks": 36,
+              "requested_turns": 128,
+              "checkpoint_sha256": "498b80d409e74dde5ccc62d79a0657a65bf0ed26df130d09e04ffa93cd8af97c",
+              "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+              "elapsed_seconds": 23982.676866187005,
+              "checkpoint_mtime_utc": "2026-10-20T23:03:54.733293+00:00"
+            },
+            "execution": {
+              "pid": 2190,
+              "started_at": "2026-10-20T22:48:28.137953+00:00",
+              "return_code": null
+            },
+            "phase": "saved_advance",
+            "last_observed_advance_at": "2026-10-20T23:04:35.401997+00:00",
+            "cpu_seconds_observed": 967.25,
+            "cpu_delta": 60.370000000000005,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 20,
+            "prior_turns": 128,
+            "segment_advance": 16,
+            "new_experience": 0
+          },
+          {
+            "key": "gambling-2-53103-shift-return-candidate",
+            "checkpoint": {
+              "ticks": 20,
+              "requested_turns": 128,
+              "checkpoint_sha256": "665df0ba65b86678b3d2c05ee82848187047fce46d7a1ccdef0304b30f32d50a",
+              "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+              "elapsed_seconds": 34026.486481973,
+              "checkpoint_mtime_utc": "2026-10-20T22:48:28.123530+00:00"
+            },
+            "execution": {
+              "pid": 2192,
+              "started_at": "2026-10-20T22:48:28.138484+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 967.41,
+            "cpu_delta": 60.370000000000005,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 20,
+            "prior_turns": 20,
+            "segment_advance": 0,
+            "new_experience": 0
+          }
+        ],
+        "pair_return_codes": [
+          null
+        ],
+        "segment_ended": false
+      },
       "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
       "live_progress": "unknown_until_artifact"
     },
     {
-      "key": "combat-2-53103-shift-return",
+      "key": "resources-0-53101-outside",
       "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
-      "run": 39463391015,
-      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39463391015",
-      "head_sha": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "run": 39512186255,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39512186255",
+      "head_sha": "ce7ec6592fd92ca573c9fa58da2839fb382bb78c",
       "attempt": 1,
       "remote_status": "in_progress",
       "conclusion": null,
       "job_status": null,
       "active_steps": [],
       "step_limit_at_utc": null,
-      "input_common_boundary": 12,
+      "input_common_boundary": 20,
       "requested_turns": 128,
       "last_verified_saved": {
-        "run": 39412321707,
-        "common_boundary": 12,
+        "run": 39463534266,
+        "common_boundary": 20,
         "checkpoints": [
           {
             "side": "baseline",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-combat-2-53103-shift-return-baseline/checkpoint.json",
-            "sha256": "575c2ea061fb0224b96bf0b88c00e6e1c9943fb55f919407e74cbac9792cf6b4",
-            "ticks": 64,
-            "elapsed_minutes": 329.0663414269,
-            "cumulative_minutes_per_decision": 5.141661584795313
+            "path": "results/rwc/p-39412321707-8509ca6f-c-result/value-contract-resources-0-53101-outside-baseline/checkpoint.json",
+            "sha256": "c0a0acd70a9a40b806658aa52de7292399852c5712b906e2eea9829179bfef21",
+            "ticks": 128,
+            "elapsed_minutes": 345.6144417387333,
+            "cumulative_minutes_per_decision": 2.700112826083854
           },
           {
             "side": "candidate",
-            "path": "results/long_horizon_tail_replanning_diagnostic/value-contract-combat-2-53103-shift-return-candidate/checkpoint.json",
-            "sha256": "d35fb0eba0d457eff2210f1ff949ae005adca33a33dfb55784b22085ac1a9d1d",
-            "ticks": 12,
-            "elapsed_minutes": 327.4182121778666,
-            "cumulative_minutes_per_decision": 27.28485101482222
+            "path": "results/rwc/p-39412321707-8509ca6f-c-result/value-contract-resources-0-53101-outside-candidate/checkpoint.json",
+            "sha256": "1f4dd299f39a5e221d3bb160d96eeddb8f60fffab7bef767af47e4b13c6ddba0",
+            "ticks": 20,
+            "elapsed_minutes": 581.1854254843166,
+            "cumulative_minutes_per_decision": 29.05927127421583
           }
         ]
       },
       "current_run_saved_progress": null,
       "current_run_resolved_advance": null,
+      "latest_collected_advance": {
+        "from_tick": 8,
+        "to_tick": 20,
+        "added": 12
+      },
+      "live": {
+        "check_id": 118935816110,
+        "url": "https://github.com/iwmn-9/reflex-persona-core/runs/118935816110",
+        "observed_at": "2026-10-20T23:04:46.552377+00:00",
+        "age_seconds": 41.766273,
+        "stale": false,
+        "arms": [
+          {
+            "key": "resources-0-53101-outside-baseline",
+            "checkpoint": {
+              "ticks": 20,
+              "requested_turns": 128,
+              "checkpoint_sha256": "bcb3e24856cc6cd3941055ebaa04c265dbdd698595aa784dd26b08f1d2197488",
+              "source_manifest_sha256": "b126eec3a69f4b9e497b73c1deca9707037fc1298c88860c1a7b1497b9fd1602",
+              "elapsed_seconds": 20736.866504324,
+              "checkpoint_mtime_utc": "2026-10-20T23:01:46.253614+00:00"
+            },
+            "execution": {
+              "pid": 2430,
+              "started_at": "2026-10-20T23:01:46.357708+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 180.4,
+            "cpu_delta": 60.34,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 20,
+            "prior_turns": 128,
+            "segment_advance": 0,
+            "new_experience": 0
+          },
+          {
+            "key": "resources-0-53101-outside-candidate",
+            "checkpoint": {
+              "ticks": 20,
+              "requested_turns": 128,
+              "checkpoint_sha256": "1f4dd299f39a5e221d3bb160d96eeddb8f60fffab7bef767af47e4b13c6ddba0",
+              "source_manifest_sha256": "b126eec3a69f4b9e497b73c1deca9707037fc1298c88860c1a7b1497b9fd1602",
+              "elapsed_seconds": 34871.125529059,
+              "checkpoint_mtime_utc": "2026-10-20T23:01:46.338886+00:00"
+            },
+            "execution": {
+              "pid": 2432,
+              "started_at": "2026-10-20T23:01:46.358351+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 180.33,
+            "cpu_delta": 60.35000000000001,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 20,
+            "prior_turns": 20,
+            "segment_advance": 0,
+            "new_experience": 0
+          }
+        ],
+        "pair_return_codes": [
+          null
+        ],
+        "segment_ended": false
+      },
+      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
+      "live_progress": "unknown_until_artifact"
+    },
+    {
+      "key": "resources-2-53103-shift-return",
+      "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
+      "run": 39509427384,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39509427384",
+      "head_sha": "ce7ec6592fd92ca573c9fa58da2839fb382bb78c",
+      "attempt": 1,
+      "remote_status": "in_progress",
+      "conclusion": null,
+      "job_status": null,
+      "active_steps": [],
+      "step_limit_at_utc": null,
+      "input_common_boundary": 24,
+      "requested_turns": 128,
+      "last_verified_saved": {
+        "run": 39460987527,
+        "common_boundary": 24,
+        "checkpoints": [
+          {
+            "side": "baseline",
+            "path": "results/rwc/p-39412321707-dfbfe128-c-result/value-contract-resources-2-53103-shift-return-baseline/checkpoint.json",
+            "sha256": "f9e7b644d9517ea6d2c9a0190c17634c601dd144d305b3bf44cc1db897054505",
+            "ticks": 128,
+            "elapsed_minutes": 331.9522556307,
+            "cumulative_minutes_per_decision": 2.5933769971148437
+          },
+          {
+            "side": "candidate",
+            "path": "results/rwc/p-39412321707-dfbfe128-c-result/value-contract-resources-2-53103-shift-return-candidate/checkpoint.json",
+            "sha256": "343f7a594af37f8a99bd11dfecc1b9bede0828dfffbf40309035e075ccda235f",
+            "ticks": 24,
+            "elapsed_minutes": 678.8255705705667,
+            "cumulative_minutes_per_decision": 28.284398773773614
+          }
+        ]
+      },
+      "current_run_saved_progress": null,
+      "current_run_resolved_advance": null,
+      "latest_collected_advance": {
+        "from_tick": 12,
+        "to_tick": 24,
+        "added": 12
+      },
+      "live": {
+        "check_id": 118926646423,
+        "url": "https://github.com/iwmn-9/reflex-persona-core/runs/118926646423",
+        "observed_at": "2026-10-20T23:04:57.749023+00:00",
+        "age_seconds": 30.570603,
+        "stale": false,
+        "arms": [
+          {
+            "key": "resources-2-53103-shift-return-baseline",
+            "checkpoint": {
+              "ticks": 40,
+              "requested_turns": 128,
+              "checkpoint_sha256": "b0ef145ea4176e299751db4b67250a2997616453ac311eb22a3447573a781cc7",
+              "source_manifest_sha256": "b126eec3a69f4b9e497b73c1deca9707037fc1298c88860c1a7b1497b9fd1602",
+              "elapsed_seconds": 21314.207225086997,
+              "checkpoint_mtime_utc": "2026-10-20T23:01:02.743427+00:00"
+            },
+            "execution": {
+              "pid": 2661,
+              "started_at": "2026-10-20T22:37:44.847629+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": "2026-10-20T23:01:56.412069+00:00",
+            "cpu_seconds_observed": 1633.12,
+            "cpu_delta": 60.419999999999845,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 24,
+            "prior_turns": 128,
+            "segment_advance": 16,
+            "new_experience": 0
+          },
+          {
+            "key": "resources-2-53103-shift-return-candidate",
+            "checkpoint": {
+              "ticks": 24,
+              "requested_turns": 128,
+              "checkpoint_sha256": "343f7a594af37f8a99bd11dfecc1b9bede0828dfffbf40309035e075ccda235f",
+              "source_manifest_sha256": "b126eec3a69f4b9e497b73c1deca9707037fc1298c88860c1a7b1497b9fd1602",
+              "elapsed_seconds": 40729.534234234,
+              "checkpoint_mtime_utc": "2026-10-20T22:37:44.826410+00:00"
+            },
+            "execution": {
+              "pid": 2663,
+              "started_at": "2026-10-20T22:37:44.848490+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 1632.97,
+            "cpu_delta": 60.40000000000009,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 24,
+            "prior_turns": 24,
+            "segment_advance": 0,
+            "new_experience": 0
+          }
+        ],
+        "pair_return_codes": [
+          null
+        ],
+        "segment_ended": false
+      },
+      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
+      "live_progress": "unknown_until_artifact"
+    },
+    {
+      "key": "auction-0-53103-shift-return",
+      "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
+      "run": 39511360531,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39511360531",
+      "head_sha": "ce7ec6592fd92ca573c9fa58da2839fb382bb78c",
+      "attempt": 1,
+      "remote_status": "in_progress",
+      "conclusion": null,
+      "job_status": null,
+      "active_steps": [],
+      "step_limit_at_utc": null,
+      "input_common_boundary": 36,
+      "requested_turns": 128,
+      "last_verified_saved": {
+        "run": 39463225290,
+        "common_boundary": 36,
+        "checkpoints": [
+          {
+            "side": "baseline",
+            "path": "results/rwc/p-39412321707-686529b5-c-result/value-contract-auction-0-53103-shift-return-baseline/checkpoint.json",
+            "sha256": "c2af62f8294b19e23b3e70fb0fefa9314cb9d93dc961b45dcb8f0b40e82ec725",
+            "ticks": 72,
+            "elapsed_minutes": 677.6677722753334,
+            "cumulative_minutes_per_decision": 9.412052392712964
+          },
+          {
+            "side": "candidate",
+            "path": "results/rwc/p-39412321707-686529b5-c-result/value-contract-auction-0-53103-shift-return-candidate/checkpoint.json",
+            "sha256": "9630d361824646387809e01e7f52d16aa2f9c903c479cacc5ad81b95e6e9aba6",
+            "ticks": 36,
+            "elapsed_minutes": 542.5051565153667,
+            "cumulative_minutes_per_decision": 15.069587680982409
+          }
+        ]
+      },
+      "current_run_saved_progress": null,
+      "current_run_resolved_advance": null,
+      "latest_collected_advance": {
+        "from_tick": 24,
+        "to_tick": 36,
+        "added": 12
+      },
+      "live": {
+        "check_id": 118933072088,
+        "url": "https://github.com/iwmn-9/reflex-persona-core/runs/118933072088",
+        "observed_at": "2026-10-20T23:04:27.954896+00:00",
+        "age_seconds": 65.028753,
+        "stale": false,
+        "arms": [
+          {
+            "key": "auction-0-53103-shift-return-baseline",
+            "checkpoint": {
+              "ticks": 36,
+              "requested_turns": 128,
+              "checkpoint_sha256": "822e304559bd853d7e54ed6b6fe2aaa363fdf82a8a3e963a85794b86656a70d8",
+              "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+              "elapsed_seconds": 40660.06633652,
+              "checkpoint_mtime_utc": "2026-10-20T22:54:24.218933+00:00"
+            },
+            "execution": {
+              "pid": 2421,
+              "started_at": "2026-10-20T22:54:24.394542+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 603.71,
+            "cpu_delta": 60.41999999999996,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 36,
+            "prior_turns": 72,
+            "segment_advance": 0,
+            "new_experience": 0
+          },
+          {
+            "key": "auction-0-53103-shift-return-candidate",
+            "checkpoint": {
+              "ticks": 36,
+              "requested_turns": 128,
+              "checkpoint_sha256": "9630d361824646387809e01e7f52d16aa2f9c903c479cacc5ad81b95e6e9aba6",
+              "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+              "elapsed_seconds": 32550.309390922,
+              "checkpoint_mtime_utc": "2026-10-20T22:54:24.335009+00:00"
+            },
+            "execution": {
+              "pid": 2423,
+              "started_at": "2026-10-20T22:54:24.395111+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 603.7,
+            "cpu_delta": 60.40999999999997,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 36,
+            "prior_turns": 36,
+            "segment_advance": 0,
+            "new_experience": 0
+          }
+        ],
+        "pair_return_codes": [
+          null
+        ],
+        "segment_ended": false
+      },
+      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
+      "live_progress": "unknown_until_artifact"
+    },
+    {
+      "key": "auction-2-53101-outside",
+      "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
+      "run": 39512319195,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39512319195",
+      "head_sha": "ce7ec6592fd92ca573c9fa58da2839fb382bb78c",
+      "attempt": 1,
+      "remote_status": "in_progress",
+      "conclusion": null,
+      "job_status": null,
+      "active_steps": [],
+      "step_limit_at_utc": null,
+      "input_common_boundary": 20,
+      "requested_turns": 128,
+      "last_verified_saved": {
+        "run": 39464489557,
+        "common_boundary": 20,
+        "checkpoints": [
+          {
+            "side": "baseline",
+            "path": "results/rwc/p-39412321707-0cee3054-c-result/value-contract-auction-2-53101-outside-baseline/checkpoint.json",
+            "sha256": "2e87644bef4dde8453cebd6603171d276b15083ed9f80cc5920af9e1db014711",
+            "ticks": 56,
+            "elapsed_minutes": 637.9088484387668,
+            "cumulative_minutes_per_decision": 11.39122943640655
+          },
+          {
+            "side": "candidate",
+            "path": "results/rwc/p-39412321707-0cee3054-c-result/value-contract-auction-2-53101-outside-candidate/checkpoint.json",
+            "sha256": "1e77cbed6f83f789fa7326675792e3f92a371d66b52bf37d437b0f29796f6c49",
+            "ticks": 20,
+            "elapsed_minutes": 567.7367104368499,
+            "cumulative_minutes_per_decision": 28.386835521842492
+          }
+        ]
+      },
+      "current_run_saved_progress": null,
+      "current_run_resolved_advance": null,
+      "latest_collected_advance": {
+        "from_tick": 12,
+        "to_tick": 20,
+        "added": 8
+      },
+      "live": {
+        "check_id": 118936284553,
+        "url": "https://github.com/iwmn-9/reflex-persona-core/runs/118936284553",
+        "observed_at": "2026-10-20T23:04:59.708321+00:00",
+        "age_seconds": 33.105084,
+        "stale": false,
+        "arms": [
+          {
+            "key": "auction-2-53101-outside-baseline",
+            "checkpoint": {
+              "ticks": 20,
+              "requested_turns": 128,
+              "checkpoint_sha256": "b965a3a7f0e542c5c06e2a364d9282ff47e6bfc81f6c5ff29675923df14ff496",
+              "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+              "elapsed_seconds": 38274.53090632601,
+              "checkpoint_mtime_utc": "2026-10-20T23:02:59.211316+00:00"
+            },
+            "execution": {
+              "pid": 2466,
+              "started_at": "2026-10-20T23:02:59.263615+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 120.71000000000001,
+            "cpu_delta": 60.45,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 20,
+            "prior_turns": 56,
+            "segment_advance": 0,
+            "new_experience": 0
+          },
+          {
+            "key": "auction-2-53101-outside-candidate",
+            "checkpoint": {
+              "ticks": 20,
+              "requested_turns": 128,
+              "checkpoint_sha256": "1e77cbed6f83f789fa7326675792e3f92a371d66b52bf37d437b0f29796f6c49",
+              "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+              "elapsed_seconds": 34064.202626210994,
+              "checkpoint_mtime_utc": "2026-10-20T23:02:59.254870+00:00"
+            },
+            "execution": {
+              "pid": 2468,
+              "started_at": "2026-10-20T23:02:59.264293+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 120.38000000000001,
+            "cpu_delta": 60.45000000000001,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 20,
+            "prior_turns": 20,
+            "segment_advance": 0,
+            "new_experience": 0
+          }
+        ],
+        "pair_return_codes": [
+          null
+        ],
+        "segment_ended": false
+      },
+      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
+      "live_progress": "unknown_until_artifact"
+    },
+    {
+      "key": "combat-0-53103-shift-return",
+      "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
+      "run": 39510915615,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39510915615",
+      "head_sha": "ce7ec6592fd92ca573c9fa58da2839fb382bb78c",
+      "attempt": 1,
+      "remote_status": "in_progress",
+      "conclusion": null,
+      "job_status": null,
+      "active_steps": [],
+      "step_limit_at_utc": null,
+      "input_common_boundary": 32,
+      "requested_turns": 128,
+      "last_verified_saved": {
+        "run": 39462780551,
+        "common_boundary": 32,
+        "checkpoints": [
+          {
+            "side": "baseline",
+            "path": "results/rwc/p-39412321707-8a1260e6-c-result/value-contract-combat-0-53103-shift-return-baseline/checkpoint.json",
+            "sha256": "a441b41fbcce70f3ddf29a31400fec1b2fa71d80d70de699b8af255ea13cf626",
+            "ticks": 108,
+            "elapsed_minutes": 670.7500068944333,
+            "cumulative_minutes_per_decision": 6.210648211985494
+          },
+          {
+            "side": "candidate",
+            "path": "results/rwc/p-39412321707-8a1260e6-c-result/value-contract-combat-0-53103-shift-return-candidate/checkpoint.json",
+            "sha256": "87b96c6fc4b3311615234b07ec16c9a3bf3e064972f8431ef238c425b6aaf38d",
+            "ticks": 32,
+            "elapsed_minutes": 608.4140976972667,
+            "cumulative_minutes_per_decision": 19.012940553039584
+          }
+        ]
+      },
+      "current_run_saved_progress": null,
+      "current_run_resolved_advance": null,
+      "latest_collected_advance": {
+        "from_tick": 20,
+        "to_tick": 32,
+        "added": 12
+      },
+      "live": {
+        "check_id": 118931645250,
+        "url": "https://github.com/iwmn-9/reflex-persona-core/runs/118931645250",
+        "observed_at": "2026-10-20T23:04:46.612565+00:00",
+        "age_seconds": 46.216525,
+        "stale": false,
+        "arms": [
+          {
+            "key": "combat-0-53103-shift-return-baseline",
+            "checkpoint": {
+              "ticks": 32,
+              "requested_turns": 128,
+              "checkpoint_sha256": "d0c6ef81a8e27b73a8d6890c381b3e5773fe9c1f5f8ef246133c906cafac39ba",
+              "source_manifest_sha256": "b126eec3a69f4b9e497b73c1deca9707037fc1298c88860c1a7b1497b9fd1602",
+              "elapsed_seconds": 40245.000413666,
+              "checkpoint_mtime_utc": "2026-10-20T22:50:40.033355+00:00"
+            },
+            "execution": {
+              "pid": 2205,
+              "started_at": "2026-10-20T22:50:40.128897+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 846.77,
+            "cpu_delta": 60.58999999999992,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 32,
+            "prior_turns": 108,
+            "segment_advance": 0,
+            "new_experience": 0
+          },
+          {
+            "key": "combat-0-53103-shift-return-candidate",
+            "checkpoint": {
+              "ticks": 32,
+              "requested_turns": 128,
+              "checkpoint_sha256": "87b96c6fc4b3311615234b07ec16c9a3bf3e064972f8431ef238c425b6aaf38d",
+              "source_manifest_sha256": "b126eec3a69f4b9e497b73c1deca9707037fc1298c88860c1a7b1497b9fd1602",
+              "elapsed_seconds": 36504.845861836,
+              "checkpoint_mtime_utc": "2026-10-20T22:50:40.110248+00:00"
+            },
+            "execution": {
+              "pid": 2207,
+              "started_at": "2026-10-20T22:50:40.129431+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 846.59,
+            "cpu_delta": 60.59000000000003,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 32,
+            "prior_turns": 32,
+            "segment_advance": 0,
+            "new_experience": 0
+          }
+        ],
+        "pair_return_codes": [
+          null
+        ],
+        "segment_ended": false
+      },
+      "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
+      "live_progress": "unknown_until_artifact"
+    },
+    {
+      "key": "combat-2-53103-shift-return",
+      "plan": "evidence/long_horizon/tail_replanning_diagnostic_plan.json",
+      "run": 39511495475,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39511495475",
+      "head_sha": "ce7ec6592fd92ca573c9fa58da2839fb382bb78c",
+      "attempt": 1,
+      "remote_status": "in_progress",
+      "conclusion": null,
+      "job_status": null,
+      "active_steps": [],
+      "step_limit_at_utc": null,
+      "input_common_boundary": 24,
+      "requested_turns": 128,
+      "last_verified_saved": {
+        "run": 39463391015,
+        "common_boundary": 24,
+        "checkpoints": [
+          {
+            "side": "baseline",
+            "path": "results/rwc/p-39412321707-ca2ff456-c-result/value-contract-combat-2-53103-shift-return-baseline/checkpoint.json",
+            "sha256": "b5a9fc2b3d927e70fcb0e3aa05a266e77ce404fc06e48d2af36b7d5df6e91893",
+            "ticks": 76,
+            "elapsed_minutes": 657.45872163055,
+            "cumulative_minutes_per_decision": 8.650772653033552
+          },
+          {
+            "side": "candidate",
+            "path": "results/rwc/p-39412321707-ca2ff456-c-result/value-contract-combat-2-53103-shift-return-candidate/checkpoint.json",
+            "sha256": "221d2107e95c4d947f73ac7e6598246c96069eb1e4ae1b644ef78dbbfc1be62c",
+            "ticks": 24,
+            "elapsed_minutes": 617.8515809014665,
+            "cumulative_minutes_per_decision": 25.743815870894437
+          }
+        ]
+      },
+      "current_run_saved_progress": null,
+      "current_run_resolved_advance": null,
+      "latest_collected_advance": {
+        "from_tick": 12,
+        "to_tick": 24,
+        "added": 12
+      },
+      "live": {
+        "check_id": 118933547000,
+        "url": "https://github.com/iwmn-9/reflex-persona-core/runs/118933547000",
+        "observed_at": "2026-10-20T23:04:44.586555+00:00",
+        "age_seconds": 48.320064,
+        "stale": false,
+        "arms": [
+          {
+            "key": "combat-2-53103-shift-return-baseline",
+            "checkpoint": {
+              "ticks": 24,
+              "requested_turns": 128,
+              "checkpoint_sha256": "b1220d7e3d10235629958839564d9a61d99e4a0ef9d4c18202d60eb4b5e883c0",
+              "source_manifest_sha256": "b126eec3a69f4b9e497b73c1deca9707037fc1298c88860c1a7b1497b9fd1602",
+              "elapsed_seconds": 39447.523297833,
+              "checkpoint_mtime_utc": "2026-10-20T22:55:40.401400+00:00"
+            },
+            "execution": {
+              "pid": 2327,
+              "started_at": "2026-10-20T22:55:40.470286+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 544.3000000000001,
+            "cpu_delta": 60.50000000000006,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 24,
+            "prior_turns": 76,
+            "segment_advance": 0,
+            "new_experience": 0
+          },
+          {
+            "key": "combat-2-53103-shift-return-candidate",
+            "checkpoint": {
+              "ticks": 24,
+              "requested_turns": 128,
+              "checkpoint_sha256": "221d2107e95c4d947f73ac7e6598246c96069eb1e4ae1b644ef78dbbfc1be62c",
+              "source_manifest_sha256": "b126eec3a69f4b9e497b73c1deca9707037fc1298c88860c1a7b1497b9fd1602",
+              "elapsed_seconds": 37071.09485408799,
+              "checkpoint_mtime_utc": "2026-10-20T22:55:40.458812+00:00"
+            },
+            "execution": {
+              "pid": 2329,
+              "started_at": "2026-10-20T22:55:40.471067+00:00",
+              "return_code": null
+            },
+            "phase": "computing_no_new_checkpoint",
+            "last_observed_advance_at": null,
+            "cpu_seconds_observed": 544.03,
+            "cpu_delta": 60.47999999999996,
+            "no_activity_seconds": 0.0,
+            "return_code": null,
+            "input_boundary": 24,
+            "prior_turns": 24,
+            "segment_advance": 0,
+            "new_experience": 0
+          }
+        ],
+        "pair_return_codes": [
+          null
+        ],
+        "segment_ended": false
+      },
       "proof_scope": "Checksum, frozen source, registered job, owner timeline and world RNG of saved checkpoints; not final quality/audit acceptance.",
       "live_progress": "unknown_until_artifact"
     }

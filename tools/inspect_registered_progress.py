@@ -48,6 +48,7 @@ def live_progress(checks, task, run):
         age=(datetime.now(timezone.utc)-datetime.fromisoformat(value['observed_at'])).total_seconds()
         matches.append(dict(check_id=check['id'],url=check['html_url'],observed_at=value['observed_at'],
                             age_seconds=age,stale=age>300,arms=arms,
+                            pair_return_codes=value.get('pair_return_codes',[]),
                             segment_ended=value.get('segment_ended',False)))
     assert len(matches)<=1, 'ambiguous live monitor'
     return matches[0] if matches else None
@@ -144,6 +145,7 @@ def display(output):
             tick=' / '.join(arm_label(a) for a in arms)
             last=' / '.join(a.get('last_observed_advance_at') or '初回観測後の増加なし' for a in arms)
             phase=' / '.join(a['phase'] for a in arms)
+            if any(c is not None and c!=0 for c in live['pair_return_codes']):phase='実行・照合処理に失敗: '+phase
             if live['stale']:phase='監視情報が5分以上古い: '+phase
             if live['segment_ended']:phase='区間終了: '+phase
         advance=row['latest_collected_advance']
@@ -184,16 +186,18 @@ def main():
                       'pending':[{'key':r['key'],'saved':r['last_verified_saved']['common_boundary'],
                                   'current_advance':r['current_run_resolved_advance'],
                                   'status':r['remote_status']} for r in rows]}))
+    return all(v['complete'] for v in output['counts'].values())
 
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--watch',action='store_true');args=parser.parse_args()
     while True:
         try:
-            main()
+            complete=main()
             save_error=None
         except Exception as error:
             save_error=dict(at=datetime.now(timezone.utc).isoformat(),error=repr(error))
+            complete=False
             if not args.watch:raise
             print(json.dumps(save_error),flush=True)
             report=ROOT/'results/registered_execution_progress.md'
@@ -202,5 +206,5 @@ if __name__ == '__main__':
                 start=old.find('# 長期検証の実行状態')
                 report.write_text('監視の更新に失敗: '+save_error['at']+'。以下は最後に取得できた状態。\n\n'+old[start:],encoding='utf8')
         (ROOT/'results/registered_execution_progress_error.json').write_text(json.dumps(save_error)+'\n',encoding='utf8')
-        if not args.watch:break
+        if not args.watch or complete:break
         time.sleep(60)
