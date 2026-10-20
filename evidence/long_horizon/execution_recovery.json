@@ -37,7 +37,8 @@
     "new_guard_tests_included": 3,
     "log": "results/retained_history_tests_final.log",
     "ci_run": 39458231973,
-    "ci_status": "in_progress"
+    "ci_status": "success",
+    "ci_environments": 4
   },
   "resumed_runs": [
     {
@@ -50,5 +51,19 @@
       "run": 39458689868,
       "boundary": 80
     }
-  ]
+  ],
+  "artifact_restore_recovery": {
+    "run": 39463534266,
+    "head": "1317465f450fbf61c8a2760372117b4e7eb743be",
+    "prior_attempt": 1,
+    "job": 118768861702,
+    "reason": "Verified artifact GET HTTP502 before any execution; resume step skipped; zero result artifacts. Retry same workflow inputs/source once.",
+    "log_sha256": "cb53b5732a53340611863e5630332a5bfecf4bed0b247e5940b6c6cecd99534d",
+    "created": "2026-10-20T17:15:11.527705+00:00",
+    "outcome": "submitted",
+    "returncode": 0,
+    "response": "",
+    "error": "",
+    "confirmed_retry_status": "second attempt restored original artifacts and entered resume step"
+  }
 }

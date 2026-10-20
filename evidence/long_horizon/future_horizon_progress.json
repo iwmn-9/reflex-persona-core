@@ -764,6 +764,30 @@
     "registration_sha256": "909b368631817396c67cecac8d26fccb012140fc4584672b6ee0c4d3828f816e",
     "runs": [
       {
+        "case": "delay-11-shock-0",
+        "mode": "fixed-window",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-11-shock-0",
+        "mode": "rolling",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-11-shock-1",
+        "mode": "fixed-window",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-11-shock-1",
+        "mode": "rolling",
+        "turns": 128,
+        "complete": true
+      },
+      {
         "case": "delay-3-shock-0",
         "mode": "fixed-window",
         "turns": 128,
@@ -790,8 +814,8 @@
       {
         "case": "delay-7-shock-0",
         "mode": "fixed-window",
-        "turns": 114,
-        "complete": false
+        "turns": 128,
+        "complete": true
       },
       {
         "case": "delay-7-shock-0",
@@ -801,11 +825,137 @@
       },
       {
         "case": "delay-7-shock-1",
+        "mode": "fixed-window",
+        "turns": 128,
+        "complete": true
+      },
+      {
+        "case": "delay-7-shock-1",
         "mode": "rolling",
-        "turns": 9,
-        "complete": false
+        "turns": 128,
+        "complete": true
       }
-    ]
+    ],
+    "summary": {
+      "complete": true,
+      "source_sha256": "46fa9761073ccab72432973392b7008cacbb34222984c67dd19381c2912c1268",
+      "comparisons": [
+        {
+          "delay": 3,
+          "shock": false,
+          "scores": [
+            0.5,
+            0.5
+          ],
+          "cash": [
+            200.0,
+            200.0
+          ],
+          "delta": 0.0,
+          "seconds": [
+            2631.1870000000345,
+            683.9060000000172
+          ]
+        },
+        {
+          "delay": 3,
+          "shock": true,
+          "scores": [
+            0.4166666666666667,
+            0.4166666666666667
+          ],
+          "cash": [
+            168.0,
+            168.0
+          ],
+          "delta": 0.0,
+          "seconds": [
+            3283.7810000000172,
+            910.5160000000033
+          ]
+        },
+        {
+          "delay": 7,
+          "shock": false,
+          "scores": [
+            0.4166666666666667,
+            0.4166666666666667
+          ],
+          "cash": [
+            168.0,
+            168.0
+          ],
+          "delta": 0.0,
+          "seconds": [
+            712.0,
+            230.40599999995902
+          ]
+        },
+        {
+          "delay": 11,
+          "shock": false,
+          "scores": [
+            0.3385416666666667,
+            0.375
+          ],
+          "cash": [
+            138.0,
+            152.0
+          ],
+          "delta": 0.036458333333333315,
+          "seconds": [
+            819.4369999999763,
+            226.21799999999348
+          ]
+        },
+        {
+          "delay": 7,
+          "shock": true,
+          "scores": [
+            0.375,
+            0.375
+          ],
+          "cash": [
+            152.0,
+            152.0
+          ],
+          "delta": 0.0,
+          "seconds": [
+            985.030999999959,
+            313.68699999997625
+          ]
+        },
+        {
+          "delay": 11,
+          "shock": true,
+          "scores": [
+            0.3333333333333333,
+            0.3541666666666667
+          ],
+          "cash": [
+            136.0,
+            144.0
+          ],
+          "delta": 0.02083333333333337,
+          "seconds": [
+            775.655999999959,
+            257.2029999999795
+          ]
+        }
+      ]
+    },
+    "completed_audit": {
+      "path": "evidence/long_horizon/exact_deadline/verification.json",
+      "sha256": "c74c9daddadf490a4284b50b43a0e6c5ae7adc6c85489c4d24d7cc1a18804109",
+      "complete": true,
+      "completed_runs": 12,
+      "actual_decisions": 1536,
+      "blind_predecision_prefixes": 6,
+      "exact_suffix_roots": {
+        "rolling": 320,
+        "fixed-window": 768
+      }
+    }
   },
   "adverse_continuation_account": {
     "source": "results\\adverse_future_account\\summary.json",
