@@ -1,0 +1,39 @@
+{
+  "cases": [
+    {
+      "delay": 3,
+      "shock": false
+    },
+    {
+      "delay": 3,
+      "shock": true
+    },
+    {
+      "delay": 7,
+      "shock": false
+    },
+    {
+      "delay": 7,
+      "shock": true
+    },
+    {
+      "delay": 11,
+      "shock": false
+    },
+    {
+      "delay": 11,
+      "shock": true
+    }
+  ],
+  "turns": 128,
+  "horizon": 16,
+  "modes": [
+    "rolling",
+    "fixed-window"
+  ],
+  "semantics": "Exact future choices versus rolling deadlines in continuing public worlds.\n\nBoth arms use the existing owned conditional tree and the SAME personality.\nOnly the actual retained evaluation deadline differs. Future choices use the\nremaining tree horizon, so the fixed-window arm reproduces that time contract\nafter real feedback. Public payout changes are never passed to forecasts.\n\nThis is a mechanism diagnosis, not an efficient replacement for sampled\nplanning in large branching games or independent game-family confirmation.\n",
+  "acceptance": "All six pairs complete and audited, including adverse cases. Mechanism diagnosis only; no global adoption.",
+  "source_commit": "d6a02361d99095aa350ef6f825008f40bbb8a1ba",
+  "manifest_sha256": "5f1324ae9287cd1a0a3c3120e8258d97a4667ee2206a4e53e6385d218ec5697f",
+  "registered_root": "results/preparation_window_diagnostic"
+}
