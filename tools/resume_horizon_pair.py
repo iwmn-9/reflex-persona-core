@@ -5,6 +5,7 @@ extra work is preserved in the input artifact, but replayed on the new host.
 No policy, world duration, source bytes, experience, or random seed is changed.
 """
 import argparse,copy,hashlib,json,os,platform,shutil,subprocess,sys,uuid
+from datetime import datetime,timezone
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import numpy as np
@@ -169,7 +170,19 @@ def run_pair(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,recor
         args=[sys.executable,str(script),'--root',str(child),
             '--job',json.dumps(job),'--manifest',manifest]
         if recorded_predictions:args+=['--recorded-predictions']
-        return subprocess.run(args,check=False).returncode
+        # Operational evidence only; never imported by the frozen actor.
+        status=child/'execution_status.json'
+        def record(value):
+            temporary=status.with_suffix('.new')
+            temporary.write_text(json.dumps(value,indent=2)+'\n',encoding='utf8')
+            temporary.replace(status)
+        process=subprocess.Popen(args)
+        state=dict(pid=process.pid,started_at=datetime.now(timezone.utc).isoformat(),return_code=None)
+        record(state)
+        code=process.wait()
+        state.update(return_code=code,ended_at=datetime.now(timezone.utc).isoformat())
+        record(state)
+        return code
     with ThreadPoolExecutor(max_workers=2) as pool:
         codes=list(pool.map(execute,zip(names,jobs,manifests)))
     header.update(return_codes=codes,complete=codes==[0,0])

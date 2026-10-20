@@ -15,7 +15,33 @@ on:
 permissions:
   contents: read
   actions: read
+  checks: write
 jobs:
+  observer-smoke:
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13.16'
+      - name: Verify progress can be read before the computation step ends
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import time
+          from tools.observe_horizon_pairs import CheckPublisher,utc
+          publisher=CheckPublisher('transport-probe-not-an-experiment')
+          value=dict(version='horizon-progress-v1',run=publisher.run,attempt=publisher.attempt,
+            head_sha=publisher.head,external_id=publisher.external,observed_at=utc(),arms=[],
+            transport_probe=True,sequence=0)
+          publisher.publish(value)
+          time.sleep(90)
+          value.update(observed_at=utc(),sequence=1)
+          publisher.publish(value,finished=True)
+          PY
   matrix:
     if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
@@ -75,25 +101,14 @@ jobs:
         timeout-minutes: 345
         env:
           PAIRS: ${{ toJSON(matrix.pairs) }}
-        run: |
-          python - <<'PY'
-          import json,os,subprocess,sys
-          from concurrent.futures import ThreadPoolExecutor
-          pairs=json.loads(os.environ['PAIRS'])
-          def execute(entry):
-              index,pair=entry
-              args=[sys.executable,'tools/resume_horizon_pair.py','--value-contract',
-                  '--root',f'results/value-contract/pair{index}',
-                  '--inputs',json.dumps([f'results/input/p{index}/a{s}' for s in range(2)]),
-                  '--jobs',json.dumps(pair['jobs']),
-                  '--manifests',json.dumps([x['manifest'] for x in pair['inputs']]),
-                  '--checkpoints',json.dumps([x['checkpoint'] for x in pair['inputs']])]
-              if pair.get('recorded_predictions'):args+=['--recorded-predictions']
-              if pair.get('guard_history'):args+=['--guard-history']
-              return subprocess.run(args,check=False).returncode
-          with ThreadPoolExecutor(max_workers=2) as pool:codes=list(pool.map(execute,enumerate(pairs)))
-          if any(codes):raise SystemExit('Incomplete continuations retained with original source and experience')
-          PY
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/observe_horizon_pairs.py
+      - name: Finalize progress check without declaring experiment completion
+        if: ${{ always() }}
+        env:
+          PAIRS: ${{ toJSON(matrix.pairs) }}
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/observe_horizon_pairs.py --finalize
       - uses: actions/upload-artifact@v7.0.2
         if: ${{ always() && matrix.pairs[0] }}
         with:
