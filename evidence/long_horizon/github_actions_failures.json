@@ -1,0 +1,1455 @@
+{
+  "version": "github-failure-investigation-v1",
+  "checked_at": "2026-10-21T02:53:54.320737+00:00",
+  "scope": "All 168 retained workflow runs returned by Actions API, including all 19 latest-attempt failures and the two runs with prior attempts. This is not a count of delivered notifications.",
+  "range_utc": [
+    "2026-10-05T23:10:03Z",
+    "2026-10-20T23:02:29Z"
+  ],
+  "run_conclusions": {
+    "in_progress": 8,
+    "success": 104,
+    "failure": 19,
+    "skipped": 10,
+    "cancelled": 27
+  },
+  "cause_counts_overlapping": {
+    "execution_timeout_345_minutes": 15,
+    "exact_saved_owner_replay_assertion": 4,
+    "hosted_runner_lost_communication": 1,
+    "windows_short_path_alias_test_bug_fixed_02bcd2d": 1,
+    "provider_payment_or_spending_limit_gate_before_start": 1
+  },
+  "failed_latest_attempts": [
+    {
+      "run": 39464489557,
+      "created_at": "2026-10-20T17:15:31Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39464489557",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 118772232860,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "321b8edbb6f6ade8ea5800b92d0e6ae23aea21ab5aa5aee4c9d1add6ebd48ae3",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T23:01:14.0089351Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39463534266,
+      "created_at": "2026-10-20T17:09:01Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39463534266",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 118772036242,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "134bfa084fd6a74ae29b68904df53442cbbe24177c23231e4f60fc651f5c4a59",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T23:00:53.4419020Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39463391015,
+      "created_at": "2026-10-20T17:08:01Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39463391015",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 118768344953,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "b9f1b9328b18174bd54e7e45761941f99a8d1f6205606c0bbc67203161ed1436",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T22:53:46.0482471Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39463225290,
+      "created_at": "2026-10-20T17:06:56Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39463225290",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 118767827069,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "1e31b6bd61935ec721e28b527c8954e4f50f37047605cb9e0c2546ddea38a2c7",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T22:52:50.8222197Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39462780551,
+      "created_at": "2026-10-20T17:03:29Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39462780551",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 118766299975,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "f360e46685d835295bd6a53d691c9dcd245c34de0c8de0f6f377d8920b129bee",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T22:49:11.2023089Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39462555043,
+      "created_at": "2026-10-20T17:01:38Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39462555043",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 118765543946,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "12f9f2f218033835a6d0a43cce90fc62acb89583d52dc4c338c787b645636644",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T22:47:30.1990629Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39461136727,
+      "created_at": "2026-10-20T16:51:45Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39461136727",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 118760657408,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "e5d65eb1e337c99e9dc7b4f6802b94572eb7e548558f00770777216728673558",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T22:37:27.3497885Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39460987527,
+      "created_at": "2026-10-20T16:50:42Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "1317465f450fbf61c8a2760372117b4e7eb743be",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39460987527",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 118760134331,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "154d7e1b5dd868a4aa6dfc19750e3c6b34085617b2c4054a21d82208066125c4",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T22:36:21.6688966Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39458689868,
+      "created_at": "2026-10-20T16:34:51Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "aafd049bfc3f499bd756d5cc7f789edaaf61c6b4",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39458689868",
+      "causes": [
+        "execution_timeout_345_minutes",
+        "exact_saved_owner_replay_assertion"
+      ],
+      "jobs": [
+        {
+          "id": 118752203273,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "74ee18b9c68d693d71e108c2034303d23687dfe0052c06b7133f8a8ed86c79c1",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T22:20:30.1356955Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            },
+            {
+              "kind": "numeric_replay",
+              "examples": [
+                "2026-10-20T18:08:50.9662770Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T18:08:50.9664027Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-20T18:08:50.9664027Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39412321707,
+      "created_at": "2026-10-20T11:04:04Z",
+      "workflow": "Cumulative value contract comparison",
+      "source": "0a84cca01f4e72f2ee96c078e8e3ab9a7b694d5b",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39412321707",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 118592945005,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "572b092fe6d5b40b5dc0152a7fd5499be36feef47b18074f0903de4d249cdec1",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T17:02:04.7393625Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118592945006,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "32781298d9a48f9b3792748a5ea6cf94733ba9195242be66e167ca981439e419",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T17:05:30.8103671Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118592945013,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "397dffc0ba227c2f73d47063a19aab503cd308b0176846a134f3f72cd584f6f3",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T17:00:50.8419705Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118592945020,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "9e2ce22e8e3e940ba58aca74e3b5999eed325af8a3d37f0fc23c521fc4099e20",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T16:50:05.2810137Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118592945021,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "9af0b13d1af79da49a2fbbdfafd00d087b15d65662c5a88165282b4d550d7ef8",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T16:49:55.8295892Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118592945036,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "5a92d5936cebc007ed31277969f354fcc0bc7caaefe9358ef1d6f96c3e3c6a0f",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T17:06:38.3985334Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118592945098,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "c8772fbebc47a2f0d6dc787eae950bc9e451941de536e0f7366649a41434f4c6",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T17:07:11.5418781Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118592945147,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "3d7c716d497b6e0d25165898baa76ed51fd0d78e5db0fa3809dc9332990f6536",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T17:10:08.0527172Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39404741708,
+      "created_at": "2026-10-20T09:59:57Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "9da998fa716ded3706228a805eb265df82d05ef4",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39404741708",
+      "causes": [
+        "execution_timeout_345_minutes",
+        "exact_saved_owner_replay_assertion"
+      ],
+      "jobs": [
+        {
+          "id": 118567886924,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "a6dae68f6f783cca2ba62131ddc4e469d03729efe9714ae154c6c56a2193369d",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "numeric_replay",
+              "examples": [
+                "2026-10-20T10:04:26.8554797Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T10:04:26.8556694Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T10:09:55.9560524Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T10:09:55.9561623Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-20T10:04:26.8556694Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T10:09:55.9561623Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "exception",
+              "examples": [
+                "2026-10-20T10:09:56.0959106Z RuntimeError: incomplete pair continuation retained"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118567886931,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "3fdacf22f738aaf76e6828787e296a582d323869233cc2d8793bc18f57f30ee3",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "numeric_replay",
+              "examples": [
+                "2026-10-20T10:46:15.4013449Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T10:46:15.4014281Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T13:26:42.1910111Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T13:26:42.1911432Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-20T10:46:15.4014281Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T13:26:42.1911432Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "exception",
+              "examples": [
+                "2026-10-20T13:26:42.4931846Z RuntimeError: incomplete pair continuation retained"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118567886941,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "e460546c45b96c0721bc0b9f32f82aa1564a2673f55bc647d44492d24dbf11a0",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T15:45:41.1413812Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            },
+            {
+              "kind": "numeric_replay",
+              "examples": [
+                "2026-10-20T13:04:39.8161427Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T13:04:39.8163577Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-20T13:04:39.8163577Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118567886982,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "0fa65c1c72c9e2755ce632c91fb883b9c148b5717568dede8f2928355fc00f6c",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-20T15:45:44.3472279Z ##[error]The action 'Resume at each pair's common experience boundary' has timed out after 345 minutes."
+              ]
+            },
+            {
+              "kind": "numeric_replay",
+              "examples": [
+                "2026-10-20T12:14:35.0669598Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T12:14:35.0671406Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-20T12:14:35.0671406Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118567887042,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "19f3ee5c027af67288d03bfe156e28f9e0fb99b2351952eab46193337972ec4e",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "numeric_replay",
+              "examples": [
+                "2026-10-20T10:28:10.1420372Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T10:28:10.1421228Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T11:49:57.4989658Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T11:49:57.4990173Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-20T10:28:10.1421228Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T11:49:57.4990173Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "exception",
+              "examples": [
+                "2026-10-20T11:49:57.6450177Z RuntimeError: incomplete pair continuation retained"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118567887127,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "c700850085e256f855a736502a267e7b902a39d0f4f88b493b7a1aa20912f99a",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "numeric_replay",
+              "examples": [
+                "2026-10-20T10:26:35.6137531Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T10:26:35.6138424Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T11:54:28.0250424Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T11:54:28.0251162Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-20T10:26:35.6138424Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T11:54:28.0251162Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "exception",
+              "examples": [
+                "2026-10-20T11:54:28.1784282Z RuntimeError: incomplete pair continuation retained"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 118567887224,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "b188754a7272f90f05b0d36c6ab697ef3fd6e4e39e6b16e4a09aaaaab3fac149",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "numeric_replay",
+              "examples": [
+                "2026-10-20T10:27:07.6967243Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T10:27:07.6967924Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T11:37:56.7642930Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T11:37:56.7645243Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-20T10:27:07.6967924Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T11:37:56.7645243Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "exception",
+              "examples": [
+                "2026-10-20T11:37:56.9549294Z RuntimeError: incomplete pair continuation retained"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39404634553,
+      "created_at": "2026-10-20T09:59:01Z",
+      "workflow": "Continue interrupted cumulative value pairs",
+      "source": "9da998fa716ded3706228a805eb265df82d05ef4",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39404634553",
+      "causes": [
+        "exact_saved_owner_replay_assertion"
+      ],
+      "jobs": [
+        {
+          "id": 118567531553,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Resume at each pair's common experience boundary"
+          ],
+          "log_sha256": "c6c3ff7008d7aba15d6901e6ba2569ab023bc8d5fb7406c584b094f410390908",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "numeric_replay",
+              "examples": [
+                "2026-10-20T12:31:29.2073194Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T12:31:29.2074416Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T15:04:47.8278278Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-20T15:04:47.8278971Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-20T12:31:29.2074416Z AssertionError: stored actual action/feedback replay drift",
+                "2026-10-20T15:04:47.8278971Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "exception",
+              "examples": [
+                "2026-10-20T15:04:47.9770696Z RuntimeError: incomplete pair continuation retained"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39145938532,
+      "created_at": "2026-10-18T16:38:42Z",
+      "workflow": "Cumulative value contract comparison",
+      "source": "1b61a3b466e0917e9f879cb12442f7a005f0f749",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39145938532",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 117751527650,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "fabbbd9cfe58fbc68e21a74919d38c32fa94cfb349c51380f34f3208a32c7651",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-19T00:16:12.0483866Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117751527715,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "9a0db324a19621df3dc808a27e21dc0552ad63777bb745593820d651aac15df9",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-19T00:54:02.4331584Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39125239370,
+      "created_at": "2026-10-18T11:56:24Z",
+      "workflow": "Cumulative value contract comparison",
+      "source": "8c9568f8056c22be4bee1fbc115b5f879b9b2dac",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39125239370",
+      "causes": [
+        "execution_timeout_345_minutes",
+        "hosted_runner_lost_communication"
+      ],
+      "jobs": [
+        {
+          "id": 117672821133,
+          "conclusion": "failure",
+          "failed_steps": [],
+          "log_sha256": null,
+          "log_unavailable": "gh: HTTP 404",
+          "signals": []
+        },
+        {
+          "id": 117672821265,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "4690018303f1d934656b8b594a87ca798aff564bbc8b0bd2d4be093f8af71481",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T18:15:53.6805366Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821299,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "c67e6eae4b64b2d7995672cb0796c39ee26a34fb4eec3616ba2d43d93b574d08",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T21:49:17.1697451Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821306,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "a7dbf540cfff73868df21a1d8d13629d1d7189de13bf478df6300b84d875b390",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-19T00:01:24.8688532Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821314,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "8362c476c09f54b10cf13cb1a09ec7c2cb912e6a7860a7889fd57f5f00c9cc2d",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T18:12:34.3500786Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821327,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "3ca0e3014ec01a8714dbcb60ccbb57b6c0677ee260b1189787a9456054651074",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T22:41:08.9306339Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821336,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "c0e4af8cdbb8d6367060fcd37d5ad28db8c117d58d2e736664f3de5985ef6d63",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T18:15:36.6711748Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821349,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "214fd13322c42b97bdeb2b1ef51755670ca3cbf0cf0c652617c05e1d26acebeb",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T22:27:00.9107311Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821352,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "25873c7e018572d9962d9857cbbfacacc4daec60bbc94eb2b611105a5f95d9e2",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T18:16:27.6795843Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821353,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "8530585bded5fb38e2216a3103f24a3114efe5b3e44d019df9d06bbcb512daaa",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T20:50:30.6348643Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821364,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "79fe195a4a1166aada36a35311b6298ed565329d02bec57d02aec0f416cb5271",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T22:30:24.3778008Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821380,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "879d1a12d7b05d52e2eb96a19e232a04cd8381d40991a46a675e0b2ff38d893d",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T21:17:34.6328249Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821388,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "ba08a5657282c8a95709d5ba57d5fa9591a51a45d244d7c62b66f9b05083aba9",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T20:51:11.9534956Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821408,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "9eb8c7a3ffd81b357d61753c14f69ae5a6a93c8600e9fe2f90a02aebd47562f4",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T19:44:44.6273921Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117672821413,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "7a168478ddf187ad382dd0304804a4faf79dd819033446c405c5c12130356fed",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T19:43:56.5432286Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39105452088,
+      "created_at": "2026-10-18T06:50:14Z",
+      "workflow": "Resume and group registered horizon studies",
+      "source": "9ec314d683cb0a5e2d47e4bf550f8f69eb40e8ac",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39105452088",
+      "causes": [
+        "exact_saved_owner_replay_assertion"
+      ],
+      "jobs": [
+        {
+          "id": 117621926228,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Continue registered worlds from their own frozen sources"
+          ],
+          "log_sha256": "1bb8119a4a704b8cadf19b363155d8b38928a9d7cd3c4a2fa6816d4d5471116c",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "numeric_replay",
+              "examples": [
+                "2026-10-18T08:08:35.6004956Z     assert digest(own.record())==t['owner'],'stored actual action/feedback replay drift'",
+                "2026-10-18T08:08:35.6005898Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-18T08:08:35.6005898Z AssertionError: stored actual action/feedback replay drift"
+              ]
+            },
+            {
+              "kind": "exception",
+              "examples": [
+                "2026-10-18T08:08:35.8345598Z RuntimeError: incomplete batch retained with original checkpoints"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39103462702,
+      "created_at": "2026-10-18T06:16:34Z",
+      "workflow": "Cumulative value contract comparison",
+      "source": "daa9cf2308694f2b3a0d27fde86d4d3662055777",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39103462702",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 117607947761,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "dd121048aac17c829949bf35155ba3386060d53542b00e6e41168572e2a2f575",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T12:29:53.9690568Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117607947786,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "4ef36c7be01a1097295fe26f87c32042de4ac9beb89361eec0e8cf7be91aed0e",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T12:30:09.9911688Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117607947828,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "110872de682cc9a6c86ef309f82cff7c8edf44569d6e5c49a5f00497eaad5f86",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T12:30:33.9648817Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117607947852,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "77cc26609fa9acb73720a6a9898022a045092095eb01f76ef2c0a21fd19c7a49",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T12:29:42.9498062Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117607947864,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Compare the same persistent world and fixed person"
+          ],
+          "log_sha256": "aea18102c98ea1d664f93f645e583a38e65b9a7db25381da07e00075737ea985",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T12:30:46.2909354Z ##[error]The action 'Compare the same persistent world and fixed person' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 39081837935,
+      "created_at": "2026-10-18T00:11:22Z",
+      "workflow": "Continuing owner horizon comparison",
+      "source": "d24c96cda7dc9f145dfb9ffbd3bd7b608a0cc0c8",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39081837935",
+      "causes": [
+        "execution_timeout_345_minutes"
+      ],
+      "jobs": [
+        {
+          "id": 117564015731,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run registered persistent world"
+          ],
+          "log_sha256": "2376cffd9e19764ea1e349ccf2dcb3dd622db180d6c277e215e734594078f7ba",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T08:07:44.3903071Z ##[error]The action 'Run registered persistent world' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117564015758,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run registered persistent world"
+          ],
+          "log_sha256": "3bf10fdb1de3ea6ffb45a5e2cae52e057fffdc38c86fc304b991df3cefcb186d",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T08:07:58.4295563Z ##[error]The action 'Run registered persistent world' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        },
+        {
+          "id": 117564015763,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run registered persistent world"
+          ],
+          "log_sha256": "5042689139fc7e654da186e9dd73ac4adda61bcfdc91dc270d812f8b933c4599",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "timeout",
+              "examples": [
+                "2026-10-18T08:08:04.4941596Z ##[error]The action 'Run registered persistent world' has timed out after 345 minutes."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 38050658454,
+      "created_at": "2026-10-10T12:04:44Z",
+      "workflow": "Numeric core tests",
+      "source": "407aa1447cc49c9cd0c415e83e9e67b5606fcfc5",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/38050658454",
+      "causes": [
+        "windows_short_path_alias_test_bug_fixed_02bcd2d"
+      ],
+      "jobs": [
+        {
+          "id": 114208941652,
+          "conclusion": "cancelled",
+          "failed_steps": [],
+          "log_sha256": "7365452514cb5404b536c3c822e5845c6c08b97d597c986d68e0d7699fe1a06c",
+          "log_unavailable": null,
+          "signals": []
+        },
+        {
+          "id": 114208941742,
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run python -m unittest discover -s tests -v"
+          ],
+          "log_sha256": "ca3f6281c4c53b86a57c9394e47b2e03c7b5a3e87e64c6da87e498a42fff0be6",
+          "log_unavailable": null,
+          "signals": [
+            {
+              "kind": "test_failure",
+              "examples": [
+                "2026-10-10T12:05:46.7720133Z FAIL: test_child_runs_from_detached_bytes_and_cannot_overwrite_registration (test_frozen_experiment.FrozenExperimentTests.test_child_runs_from_detached_bytes_and_cannot_overwrite_registration)",
+                "2026-10-10T12:05:46.7727110Z FAILED (failures=1, skipped=14)"
+              ]
+            },
+            {
+              "kind": "assertion",
+              "examples": [
+                "2026-10-10T12:05:46.7726323Z AssertionError: WindowsPath('C:/Users/runneradmin/AppData/Local/Temp/tmpbmg21q0[46 chars].py') != WindowsPath('C:/Users/RUNNER~1/AppData/Local/Temp/tmpbmg21q08/s[43 chars].py')"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 114208941761,
+          "conclusion": "cancelled",
+          "failed_steps": [],
+          "log_sha256": "0fc6b6ca25abfe890d1d8cdf7192d9149431d988773856ebf6ccf108831670cf",
+          "log_unavailable": null,
+          "signals": []
+        },
+        {
+          "id": 114208941783,
+          "conclusion": "cancelled",
+          "failed_steps": [],
+          "log_sha256": "703ea49a9dc7dcb0511a02780a1a62188471635733db35a04b471e4de1eae860",
+          "log_unavailable": null,
+          "signals": []
+        }
+      ]
+    },
+    {
+      "run": 37386908229,
+      "created_at": "2026-10-05T23:10:03Z",
+      "workflow": "Numeric core tests",
+      "source": "f4913818727ddf16d37e573efc4546c19d59ecf3",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/37386908229",
+      "causes": [
+        "provider_payment_or_spending_limit_gate_before_start"
+      ],
+      "jobs": [
+        {
+          "id": 112022295210,
+          "conclusion": "failure",
+          "failed_steps": [],
+          "log_sha256": null,
+          "log_unavailable": "gh: HTTP 404",
+          "signals": []
+        },
+        {
+          "id": 112022295403,
+          "conclusion": "failure",
+          "failed_steps": [],
+          "log_sha256": null,
+          "log_unavailable": "gh: HTTP 404",
+          "signals": []
+        },
+        {
+          "id": 112022295422,
+          "conclusion": "failure",
+          "failed_steps": [],
+          "log_sha256": null,
+          "log_unavailable": "gh: HTTP 404",
+          "signals": []
+        },
+        {
+          "id": 112022295965,
+          "conclusion": "failure",
+          "failed_steps": [],
+          "log_sha256": null,
+          "log_unavailable": "gh: HTTP 404",
+          "signals": []
+        }
+      ]
+    }
+  ],
+  "failed_prior_attempts": [
+    {
+      "run": 39463534266,
+      "attempt": 1,
+      "job": 118768861702,
+      "cause": "artifact_download_http_502_before_actor_started",
+      "status": "Same inputs retried once; attempt 2 restored and advanced to normal 345-minute limit.",
+      "log_sha256": "fd673fc6347f0a3705465b806165248f85afa3b150a1eac27c510b2b411ca1b5"
+    },
+    {
+      "run": 37387331432,
+      "attempt": 1,
+      "cause": "provider_payment_or_spending_limit_gate_before_start",
+      "status": "Attempt 2 succeeded; no claim that the exact billing cause is known."
+    }
+  ],
+  "annotations": {
+    "initial-annotations.json": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/iwmn-9/reflex-persona-core/blob/f4913818727ddf16d37e573efc4546c19d59ecf3/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+        "raw_details": ""
+      }
+    ],
+    "retry-initial-annotations.json": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/iwmn-9/reflex-persona-core/blob/cc36ac188209bf29ea1b2c5b493e2ca03c378930/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+        "raw_details": ""
+      }
+    ],
+    "runner-loss-annotations.json": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/iwmn-9/reflex-persona-core/blob/8c9568f8056c22be4bee1fbc115b5f879b9b2dac/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "The hosted runner lost communication with the server. Anything in your workflow that terminates the runner process, starves it for CPU/Memory, or blocks its network access can cause this error.",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/iwmn-9/reflex-persona-core/blob/8c9568f8056c22be4bee1fbc115b5f879b9b2dac/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "notice",
+        "title": "",
+        "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+        "raw_details": ""
+      }
+    ]
+  },
+  "repaired_test": {
+    "failed_run": 38050658454,
+    "fix": "02bcd2db94c8eb606dc3b8c5e0dc836c98ead210",
+    "successful_run": 38050907872,
+    "change": "Resolve Windows 8.3 and long-path aliases before comparing the same frozen source path."
+  },
+  "latest_standard_ci": {
+    "run": 39508425344,
+    "source": "d81eca051e8b011d25a810b1d4d50f2dbfc04096",
+    "environments": [
+      "Windows Python 3.12",
+      "Windows Python 3.13",
+      "Linux Python 3.12",
+      "Linux Python 3.13"
+    ],
+    "all_success": true
+  },
+  "numeric_recovery": "Verified completed examples have maximum 2 or 3 ULP forecast rounding differences, within the pre-existing 8 ULP limit. Saved actions, owner hashes, physical transitions and world RNG remain exact. An assertion text alone does not prove any new case has this cause.",
+  "operational_gap": "The continuation workflow uses timeout-minutes:345 and always uploads checkpoints; the supervisor resumes verified progress in a new run. Successful recovery does not change the older failed run. Planned segment termination and genuine errors currently share the failed workflow conclusion.",
+  "open_current_arm_failures": [
+    {
+      "key": "gambling-0-53101-outside-baseline",
+      "run": 39509569611,
+      "check_id": 118927114012,
+      "observed_at": "2026-10-21T02:52:59.834353+00:00",
+      "ticks": 128,
+      "return_code": 1,
+      "cause": "unconfirmed_until_full_job_log_and_artifacts_available"
+    },
+    {
+      "key": "gambling-2-53103-shift-return-baseline",
+      "run": 39510684699,
+      "check_id": 118930807559,
+      "observed_at": "2026-10-21T02:53:34.810719+00:00",
+      "ticks": 128,
+      "return_code": 1,
+      "cause": "unconfirmed_until_full_job_log_and_artifacts_available"
+    }
+  ],
+  "active_experiments": "Eight candidate arms still computing with CPU activity. No cancellation, rerun, duplicate dispatch, notification setting or acceptance criterion changed during investigation.",
+  "raw_evidence_directory": "results/github_failure_investigation"
+}
