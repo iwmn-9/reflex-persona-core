@@ -115,7 +115,7 @@ try:
                 failed_pause=True  # Workflow remains failed; only its paused peer is verified.
             assert handoff or audit or timeout, f'Unknown failure in {key}; inspect {log}'
             audit_only=audit and not (timeout or failed_pause)
-            guarded=bool(handoff) or timeout or proofs[0].get('retained_history_required',False)
+            guarded=bool(handoff) or timeout or failed_pause or proofs[0].get('retained_history_required',False)
             assert len(task['history'])<16,'unexpectedly many continuations need investigation'
             if audit_only:assert not any(h['audit_only'] for h in task['history']),'audit retry failed; investigate rather than relax'
             prefix=f"results/rwc/p-{task['run']}-{hashlib.sha256(key.encode()).hexdigest()[:8]}-"+('h' if handoff else 'm' if audit and (timeout or failed_pause) else 'a' if audit else 'c')

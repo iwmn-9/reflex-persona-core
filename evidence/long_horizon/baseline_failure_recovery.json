@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "key": "gambling-0-53101-outside",
+      "run": 39509569611,
+      "original": "results/rwc/p-39461136727-ac91cfe6-c-result/value-contract-gambling-0-53101-outside-baseline",
+      "copy": "results/baseline_failure_audit_v1/gambling-0-53101-outside",
+      "hashes": {
+        "checkpoint.json": "6d3b8d48f8822d14117745984c63c23e819cd306baf261bf5b1d3e1dbdd5b2c9",
+        "trajectories.jsonl": "4ccff9856334b6ccf4343be3ee6219e7da7ffaf0384f88ecc1d30b95fddf194c",
+        "source_snapshot.json": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328"
+      },
+      "complete": true,
+      "checks": {
+        "world_rng_replay": 128,
+        "restored_action_feedback": 128,
+        "physical_replay": 128,
+        "fixed_axes": 128,
+        "owner_parity": 128,
+        "restore": 6
+      },
+      "max_ulps": 2.0,
+      "max_absolute": 1.1102230246251565e-16,
+      "audit_receipt_sha256": "d0808f2072efc4484aa296a6ed8959345f959920d7ad4b32539b1b962c05ed09"
+    },
+    {
+      "key": "gambling-2-53103-shift-return",
+      "run": 39510684699,
+      "original": "results/rwc/p-39462555043-841211f6-c-result/value-contract-gambling-2-53103-shift-return-baseline",
+      "copy": "results/baseline_failure_audit_v1/gambling-2-53103-shift-return",
+      "hashes": {
+        "checkpoint.json": "2861eea4d0a17368097b3ac2e66235e33fe08fbc2db2e5f37405cab9ac2100d4",
+        "trajectories.jsonl": "9dd255dfbb2c4cca455e103ab9efd59e525481177297d00f128f3fdf784a8cfc",
+        "source_snapshot.json": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328"
+      },
+      "complete": true,
+      "checks": {
+        "world_rng_replay": 128,
+        "restored_action_feedback": 128,
+        "physical_replay": 128,
+        "fixed_axes": 128,
+        "owner_parity": 128,
+        "restore": 6
+      },
+      "max_ulps": 1.0,
+      "max_absolute": 2.7755575615628914e-17,
+      "audit_receipt_sha256": "7836978ec6fc4b39884fafe83bffa6b44ed7b29035140cc122888717d1fda91e"
+    }
+  ],
+  "original_bytes_unchanged": true,
+  "allowed_ulps_unchanged": 8,
+  "extra_decisions": 0,
+  "quality_completion": false
+}

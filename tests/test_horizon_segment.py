@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import runpy
 import subprocess
 import sys
 import tempfile
@@ -118,6 +119,51 @@ class HorizonSegmentTests(unittest.TestCase):
         from tools.summarize_value_contract import read_run
         with self.assertRaises((FileNotFoundError,AssertionError)):
             read_run(dirs[0],self.jobs[0],False,{'configurations':{'baseline':{},'candidate':{'cumulative_achievement':True}}},'a'*64)
+
+    def test_failed_peer_stays_failed_even_with_a_valid_paused_peer(self):
+        root=self.fresh();dirs=[root/n for n in ('baseline','candidate')]
+        header=read(root/'contract_pair.json');header['return_codes']=[1,PAUSED]
+        for d in [root,*dirs]:save(d/'contract_pair.json',header)
+        status=read(dirs[0]/'execution_status.json');status['return_code']=1;save(dirs[0]/'execution_status.json',status)
+        facts=handoff_facts(dirs,self.jobs,failed_peer=True)
+        self.assertEqual(facts['arms'][0]['return_code'],1)
+        with self.assertRaisesRegex(AssertionError,'real failure'):write_handoff(root,self.jobs)
+        self.assertFalse((root/RECEIPT).exists())
+
+    def test_audited_faster_arm_does_not_make_the_pair_complete(self):
+        root=self.fresh();child=root/'baseline'
+        subprocess.run([sys.executable,str(child/'_source/tools/run_horizon_study.py'),
+            '--root',str(child),'--job',json.dumps(self.jobs[0]),'--stage','diagnostic','--frozen'],
+            check=True,capture_output=True)
+        save(child/'resume_provenance.json',dict(complete=True,original_prefix_unchanged=True))
+        status=read(child/'execution_status.json');status['return_code']=0;save(child/'execution_status.json',status)
+        header=read(root/'contract_pair.json');header['return_codes']=[0,PAUSED]
+        for d in [root,child,root/'candidate']:save(d/'contract_pair.json',header)
+        receipt=write_handoff(root,self.jobs)
+        self.assertEqual([a['ticks'] for a in receipt['arms']],[5,4])
+        self.assertFalse(receipt['experiment_complete'])
+        audit=read(child/'audit.json');audit['checks']['physical_replay']-=1;save(child/'audit.json',audit)
+        with self.assertRaises(AssertionError):verify_handoff([child,root/'candidate'],self.jobs)
+
+    def test_successful_segment_collection_keeps_partial_audit_out_of_completed_results(self):
+        root=self.fresh();header=read(root/'contract_pair.json')
+        plan=dict(stage='diagnostic',cases=[dict(key='case',job=self.jobs[1])],sources=header['sources'],
+            configurations=header['configurations'],horizons={'baseline':2,'candidate':3})
+        plan_path=root.parent/'plan.json';save(plan_path,plan);header['plan_sha256']=sha(plan_path)
+        for d in [root,root/'baseline',root/'candidate']:save(d/'contract_pair.json',header)
+        (root/'candidate/audit.json').write_text('{incomplete final audit write')
+        with patch.dict(os.environ,{'GITHUB_RUN_ID':'123'}):write_handoff(root,self.jobs)
+        collected=root.parent/'collected';collected.mkdir()
+        for name in ('baseline','candidate'):shutil.copytree(root/name,collected/f'value-contract-case-{name}')
+        state=dict(id=123,head_sha='b'*40,status='completed',conclusion='success',html_url='https://example.invalid',created_at='t',updated_at='t')
+        def api(command,**kwargs):
+            return json.dumps({'artifacts':[]} if '/artifacts?' in command[-1] else state).encode()
+        args=['collect','--run','123','--sha','b'*40,'--root',str(collected),'--plan',str(plan_path),'--once']
+        with patch.object(sys,'argv',args),patch('subprocess.check_output',side_effect=api):
+            runpy.run_path(str(Path(__file__).resolve().parents[1]/'tools/collect_value_contract.py'),run_name='__main__')
+        checks=read(collected/'collection.json')
+        self.assertTrue(all(v['complete'] is False and v['pair_complete'] is False for v in checks.values()))
+        self.assertEqual(read(collected/'handoffs.json')[0]['state'],'handoff_pending')
 
     @unittest.skipUnless(os.name=='posix','Actions process-group control is Linux-only')
     def test_real_process_stop_errors_and_deadline_are_distinct(self):

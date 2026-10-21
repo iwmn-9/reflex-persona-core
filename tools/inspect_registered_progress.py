@@ -116,7 +116,7 @@ def check(task, checks_by_head):
     return dict(key=task['key'], plan=task['plan'], run=task['run'],
                 url=run['html_url'], head_sha=run['head_sha'], attempt=run['run_attempt'],
                 remote_status=run['status'], conclusion=run['conclusion'],
-                job_status=job['status'] if job else None, active_steps=active,
+                job_status=job['status'] if job else None, job_conclusion=job['conclusion'] if job else None, active_steps=active,
                 step_limit_at_utc=deadline,
                 input_common_boundary=prior, requested_turns=spec['job'][4],
                 last_verified_saved=saved[-1],
@@ -151,6 +151,8 @@ def display(output):
             if live.get('segment_outcome')=='failure':phase='実行・監査・保存検証の失敗: '+phase
             if live['stale']:phase='監視情報が5分以上古い: '+phase
             if live['segment_ended']:phase='区間終了: '+phase
+        if row.get('job_conclusion') in ('failure','timed_out','cancelled') or row.get('conclusion') in ('failure','timed_out','cancelled'):
+            phase='GitHub実行失敗（保存・アップロードの確認が必要）: '+phase
         advance=row['latest_collected_advance']
         change=f"{advance['from_tick']}→{advance['to_tick']} (+{advance['added']})" if advance else '今回の再開後は未回収'
         lines.append(f"| {row['key']} | {row['last_verified_saved']['common_boundary']}/{row['requested_turns']} | {change} | {tick} | {last} | {phase} |")

@@ -46,6 +46,11 @@ def verify(target,spec,arm):
     reg=json.loads((target/'registration.json').read_text())
     assert reg['jobs']==[jobs(spec,plan)[arm]] and reg['stage']==plan['stage']
     assert reg.get('configuration',{})==proof['configurations'][arm]
+    if not proof['complete'] and (target/'segment_handoff.json').exists():
+        # A requested stop can interrupt a final audit's file write. Do not
+        # parse or promote that partial audit; jointly verify both handoff
+        # receipts/checkpoints below after all artifacts have been collected.
+        return dict(complete=False,pair_complete=False,handoff_reported=True,checkpoint=(target/'checkpoint.json').exists())
     if not (target/'audit.json').exists():return dict(complete=False,checkpoint=(target/'checkpoint.json').exists())
     audit=json.loads((target/'audit.json').read_text());trajectory=target/'trajectories.jsonl'
     assert audit['complete'] and audit['source_freeze_verified'] and audit['completed_runs']==1

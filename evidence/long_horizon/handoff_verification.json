@@ -1,0 +1,138 @@
+{
+  "checked_at": "2026-10-21T11:02:46.982608+00:00",
+  "implementation": "e557c2947c054c180c33a9e860482fb55b905c04",
+  "semantics": "Planned handoff is an operational success and neutral progress check, never an audited complete comparison. True failures remain failed.",
+  "tests": {
+    "local_regression": {
+      "total": 24,
+      "passed": 22,
+      "linux_only_skipped": 2
+    },
+    "additional_focused": {
+      "passed": 3
+    },
+    "linux": {
+      "run": 39587312460,
+      "job": 119179321905,
+      "tests_passed": 6
+    },
+    "full_ci": {
+      "run": 39587312431,
+      "source": "e557c2947c054c180c33a9e860482fb55b905c04",
+      "jobs": [
+        {
+          "id": 119179320610,
+          "name": "test (ubuntu-latest, 3.12)",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 119179320966,
+          "name": "test (ubuntu-latest, 3.13)",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 119179320989,
+          "name": "test (windows-latest, 3.13)",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 119179321021,
+          "name": "test (windows-latest, 3.12)",
+          "status": "in_progress",
+          "conclusion": null
+        }
+      ]
+    },
+    "logs": {
+      "local_regression": {
+        "path": "results/handoff_regression_tests.log",
+        "sha256": "0e4cb36e5514fac699a7e2c075d293e4d94636f0f3bb4c7455cf8b456251e611"
+      },
+      "failed_peer": {
+        "path": "results/handoff_mixed_failure_test.log",
+        "sha256": "909a830fe78ec15d46cc51ecdf62e9753d06bb5658b51ef83cf9fd94e56bb113"
+      },
+      "completed_peer": {
+        "path": "results/handoff_completed_peer_test.log",
+        "sha256": "b9624a3bd802c73716b7e08b7c5de0c2e08053f7c3374e2959d6b213ff085b85"
+      },
+      "collector_partial_audit": {
+        "path": "results/handoff_collection_test.log",
+        "sha256": "d91ca603c323e00d6dd8e55fc328ecc8b8ed3c3f7ce9278feceaf03227879a01"
+      },
+      "linux_process_stop_and_resume": {
+        "path": "results/handoff_linux_probe.log",
+        "sha256": "fd59e404b7725d5fa0e83a9836bcb0e0e93a14becf65e56d4ee46e5c77fea8c9"
+      }
+    }
+  },
+  "post_ci_source_refinements": "Failed-peer guard retention, uploader-failure display, and partial-audit collection; focused local tests cover the mixed/complete-peer and collector paths.",
+  "completed_comparisons": {
+    "confirmation": {
+      "complete": true,
+      "completed_conditions": 40,
+      "registered_conditions": 40
+    },
+    "diagnostic": {
+      "complete": true,
+      "completed_conditions": 8,
+      "registered_conditions": 8
+    },
+    "future_replanning": {
+      "complete": false,
+      "completed_conditions": 0,
+      "registered_conditions": 8
+    }
+  },
+  "active_registered_runs": [
+    {
+      "key": "gambling-0-53101-outside",
+      "run": 39582722730,
+      "saved_boundary": 44
+    },
+    {
+      "key": "gambling-2-53103-shift-return",
+      "run": 39583930824,
+      "saved_boundary": 48
+    },
+    {
+      "key": "resources-0-53101-outside",
+      "run": 39585539559,
+      "saved_boundary": 56
+    },
+    {
+      "key": "resources-2-53103-shift-return",
+      "run": 39582571126,
+      "saved_boundary": 64
+    },
+    {
+      "key": "auction-0-53103-shift-return",
+      "run": 39584632825,
+      "saved_boundary": 52
+    },
+    {
+      "key": "auction-2-53101-outside",
+      "run": 39585690204,
+      "saved_boundary": 44
+    },
+    {
+      "key": "combat-0-53103-shift-return",
+      "run": 39584181704,
+      "saved_boundary": 52
+    },
+    {
+      "key": "combat-2-53103-shift-return",
+      "run": 39584775124,
+      "saved_boundary": 44
+    }
+  ],
+  "resolved_candidate_saved_decisions": 404,
+  "no_registered_run_cancelled": true,
+  "automatic_resume_source": "tools/finish_registered_worlds.py",
+  "acceptance_criteria_changed": false,
+  "source_manifests_and_registered_conditions_unchanged": true,
+  "new_diagnostic_complete": false
+}
