@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-21T11:02:46.982608+00:00",
+  "checked_at": "2026-10-21T11:19:04.269604+00:00",
   "implementation": "e557c2947c054c180c33a9e860482fb55b905c04",
   "semantics": "Planned handoff is an operational success and neutral progress check, never an audited complete comparison. True failures remain failed.",
   "tests": {
@@ -23,28 +23,37 @@
         {
           "id": 119179320610,
           "name": "test (ubuntu-latest, 3.12)",
-          "status": "in_progress",
-          "conclusion": null
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-21T10:48:49Z",
+          "completed_at": "2026-10-21T11:11:58Z"
         },
         {
           "id": 119179320966,
           "name": "test (ubuntu-latest, 3.13)",
-          "status": "in_progress",
-          "conclusion": null
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-21T10:48:49Z",
+          "completed_at": "2026-10-21T11:05:27Z"
         },
         {
           "id": 119179320989,
           "name": "test (windows-latest, 3.13)",
-          "status": "in_progress",
-          "conclusion": null
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-21T10:48:49Z",
+          "completed_at": "2026-10-21T11:17:51Z"
         },
         {
           "id": 119179321021,
           "name": "test (windows-latest, 3.12)",
-          "status": "in_progress",
-          "conclusion": null
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-21T10:48:49Z",
+          "completed_at": "2026-10-21T11:16:27Z"
         }
-      ]
+      ],
+      "conclusion": "success"
     },
     "logs": {
       "local_regression": {
@@ -66,6 +75,34 @@
       "linux_process_stop_and_resume": {
         "path": "results/handoff_linux_probe.log",
         "sha256": "fd59e404b7725d5fa0e83a9836bcb0e0e93a14becf65e56d4ee46e5c77fea8c9"
+      },
+      "full_ci_linux312": {
+        "path": "results/handoff_ci_linux312.log",
+        "sha256": "a67b049ff98a1aa117702b8df4898b689554229879c6eb5cf0619e372ea7e8c7",
+        "total": 1233,
+        "passed": 1216,
+        "skipped": 17
+      },
+      "full_ci_linux313": {
+        "path": "results/handoff_ci_linux313.log",
+        "sha256": "15182a6e1105a1d398301086c59d3c8989434441bac740073f6c55157e63d135",
+        "total": 1233,
+        "passed": 1216,
+        "skipped": 17
+      },
+      "full_ci_windows312": {
+        "path": "results/handoff_ci_windows312.log",
+        "sha256": "3931a35d29e17934fdbb16027bbfabb71ef3c74a899b8a7457c3e13c817743a5",
+        "total": 1233,
+        "passed": 1214,
+        "skipped": 19
+      },
+      "full_ci_windows313": {
+        "path": "results/handoff_ci_windows313.log",
+        "sha256": "a232394d452873576d156ad631d73db94a869f827dc11aaea6138ab42329805e",
+        "total": 1233,
+        "passed": 1214,
+        "skipped": 19
       }
     }
   },
