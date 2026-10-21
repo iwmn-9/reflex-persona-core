@@ -49,6 +49,7 @@ def live_progress(checks, task, run):
         matches.append(dict(check_id=check['id'],url=check['html_url'],observed_at=value['observed_at'],
                             age_seconds=age,stale=age>300,arms=arms,
                             pair_return_codes=value.get('pair_return_codes',[]),
+                            segment_outcome=value.get('segment_outcome'),
                             segment_ended=value.get('segment_ended',False)))
     assert len(matches)<=1, 'ambiguous live monitor'
     return matches[0] if matches else None
@@ -58,7 +59,7 @@ def check(task, checks_by_head):
     run = api(f"actions/runs/{task['run']}")
     assert run['head_sha'] == task['head'], 'remote source changed'
     all_jobs = api(f"actions/runs/{task['run']}/jobs?per_page=100")['jobs']
-    remote = [j for j in all_jobs if j['name'].startswith(f"study ({task['key']},")]
+    remote = [j for j in all_jobs if j['name'].startswith((f"study ({task['key']},",f"study ({task['key']}-baseline,"))]
     assert len(remote) <= 1
     job = remote[0] if remote else None
     checks=checks_by_head[task['head']]
@@ -146,6 +147,8 @@ def display(output):
             last=' / '.join(a.get('last_observed_advance_at') or '初回観測後の増加なし' for a in arms)
             phase=' / '.join(a['phase'] for a in arms)
             if any(c is not None and c!=0 for c in live['pair_return_codes']):phase='実行・照合処理に失敗: '+phase
+            if live.get('segment_outcome')=='handoff_pending':phase='引き継ぎ待ち（保存検証済み・実験未完走）'
+            if live.get('segment_outcome')=='failure':phase='実行・監査・保存検証の失敗: '+phase
             if live['stale']:phase='監視情報が5分以上古い: '+phase
             if live['segment_ended']:phase='区間終了: '+phase
         advance=row['latest_collected_advance']
@@ -154,6 +157,8 @@ def display(output):
     lines+=['','`computing_no_new_checkpoint`: CPU使用は増加、保存手数はまだ同じ。',
             '`suspected_stall_no_cpu_or_checkpoint_15m`: CPUと保存手数が15分増えず、要調査。自動で実験を捨てない。',
             '`failed` / `observation_error`: 実行失敗 / 観測失敗。完走・品質改善とは区別する。','']
+    lines+=['`pause_awaiting_validation`: 時間枠による停止。保存検証が終わるまで正常な引き継ぎとは認定しない。',
+            '`handoff_pending`: 保存検証済みの引き継ぎ待ち。GitHubの区間処理が成功でも、実験は未完走。','']
     lines+=['監視情報は約60秒ごとに公開・取得。凍結済み実験の保存間隔は4手ごとのままなので、計算中でも保存手数はしばらく変わらない。','']
     (ROOT/'results/registered_execution_progress.md').write_text('\n'.join(lines),encoding='utf8')
 

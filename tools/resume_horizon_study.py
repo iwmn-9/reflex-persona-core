@@ -5,7 +5,7 @@ import numpy as np
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 
 
-def resume(root,expected_manifest,job,*,recorded_predictions=False):
+def resume(root,expected_manifest,job,*,recorded_predictions=False,deadline=None):
     assert type(recorded_predictions) is bool
     root=Path(root).resolve();manifest=root/'source_snapshot.json'
     assert hashlib.sha256(manifest.read_bytes()).hexdigest()==expected_manifest,'wrong frozen source manifest'
@@ -71,13 +71,21 @@ def resume(root,expected_manifest,job,*,recorded_predictions=False):
     print(json.dumps(dict(resume_at=len(prefix),turns=job[4])),flush=True)
     if (root/'retained_execution.json').exists() and not audit_only:
         args=[sys.executable,str(Path(__file__).with_name('guard_retained_history.py')),*args[1:]]
+    def invoke(command,stage):
+        if deadline is None:subprocess.run(command,check=True)
+        else:
+            from tools.horizon_segment import bounded_command
+            bounded_command(command,root,deadline,stage)
     try:
-        subprocess.run(args,check=True)
+        invoke(args,'strict_audit' if audit_only else 'frozen_execution')
     except subprocess.CalledProcessError:
         # Never hide an interrupted world or change any of its decisions.
         # The opt-in alternate auditor still requires exact resulting owners.
         if not recorded_predictions or not trajectory.exists() or audit_path.exists():raise
-        subprocess.run([sys.executable,str(Path(__file__).with_name('audit_recorded_forecasts.py')),str(root)],check=True)
+        from tools.horizon_segment import SegmentPaused
+        try:invoke([sys.executable,str(Path(__file__).with_name('audit_recorded_forecasts.py')),str(root)],'recorded_audit')
+        except SegmentPaused as error:
+            raise RuntimeError('audit recovery did not finish; original failure remains unresolved') from error
     if audit_only:
         assert trajectory.read_bytes()==original_trajectory and checkpoint.read_bytes()==original,'audit changed execution evidence'
     completed=json.loads((root/'trajectories.jsonl').read_text())
@@ -94,5 +102,8 @@ def resume(root,expected_manifest,job,*,recorded_predictions=False):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--manifest',required=True)
-    p.add_argument('--job',required=True);p.add_argument('--recorded-predictions',action='store_true');a=p.parse_args()
-    resume(a.root,a.manifest,json.loads(a.job),recorded_predictions=a.recorded_predictions)
+    p.add_argument('--job',required=True);p.add_argument('--recorded-predictions',action='store_true')
+    p.add_argument('--deadline',type=float);a=p.parse_args()
+    from tools.horizon_segment import SegmentPaused,PAUSED
+    try:resume(a.root,a.manifest,json.loads(a.job),recorded_predictions=a.recorded_predictions,deadline=a.deadline)
+    except SegmentPaused:raise SystemExit(PAUSED)

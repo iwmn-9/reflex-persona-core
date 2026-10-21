@@ -42,6 +42,9 @@ jobs:
           value.update(observed_at=utc(),sequence=1)
           publisher.publish(value,finished=True)
           PY
+      - run: python -m pip install -e . numpy==2.5.4
+      - name: Verify pause, error and completion stay distinct
+        run: python -m unittest tests.test_horizon_segment -v
   matrix:
     if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
@@ -102,6 +105,7 @@ jobs:
         env:
           PAIRS: ${{ toJSON(matrix.pairs) }}
           GH_TOKEN: ${{ github.token }}
+          HORIZON_SEGMENT_SECONDS: '19800'
         run: python tools/observe_horizon_pairs.py
       - name: Finalize progress check without declaring experiment completion
         if: ${{ always() }}

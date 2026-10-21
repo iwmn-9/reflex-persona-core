@@ -12,6 +12,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from urllib.request import Request, urlopen
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 
 
 def utc():
@@ -112,7 +113,7 @@ class Progress:
         last_activity = monotonic if advanced or busy or old is None else old['activity']
         code = execution.get('return_code')
         if code is not None:
-            phase = 'finished' if code == 0 else 'failed'
+            phase = 'finished' if code == 0 else ('pause_awaiting_validation' if code==75 and execution.get('interruption') else 'failed')
         elif checkpoint is None:
             phase = 'preparing'
         elif not table:
@@ -155,6 +156,11 @@ class CheckPublisher:
         body = dict(status='completed' if finished else 'in_progress',output=output)
         if finished:
             body.update(conclusion='neutral',completed_at=utc())
+            outcome=snapshot.get('segment_outcome')
+            if outcome=='failure':body['conclusion']='failure'
+            if outcome=='handoff_pending':
+                output['title']='Handoff pending — experiment incomplete'
+                output['summary']='Verified saved progress; continue from these artifacts. No completed comparison or quality pass is claimed.'
         if self.id is None:
             body.update(name='Horizon progress / '+self.external,head_sha=self.head,
                         external_id=self.external,started_at=utc(),
@@ -173,7 +179,24 @@ def launch(index, pair, root):
           '--checkpoints',json.dumps([x['checkpoint'] for x in pair['inputs']])]
     if pair.get('recorded_predictions'):args+=['--recorded-predictions']
     if pair.get('guard_history'):args+=['--guard-history']
+    if os.environ.get('HORIZON_SEGMENT_SECONDS'):
+        seconds=float(os.environ['HORIZON_SEGMENT_SECONDS'])
+        assert 0<seconds<=19800
+        args+=['--segment-seconds',str(seconds)]
     return subprocess.Popen(args)
+
+
+def segment_outcome(root,pairs,codes):
+    if any(c is not None and c!=0 for c in codes):return 'failure'
+    if any(c is None for c in codes):return 'running'
+    from tools.horizon_segment import verify_handoff
+    pending=False
+    for i,pair in enumerate(pairs):
+        directory=root/f'pair{i}';header=read(directory/'contract_pair.json')
+        if not header['complete']:
+            verify_handoff([directory/n for n in ('baseline','candidate')],pair['jobs'],run=os.environ.get('GITHUB_RUN_ID'))
+            pending=True
+    return 'handoff_pending' if pending else 'completed'
 
 
 def main():
@@ -188,6 +211,9 @@ def main():
         publisher.id=previous['check_id']
         path=root/'progress.json'
         snapshot=read(path) if path.exists() else dict(previous,arms=[])
+        # A platform timeout/unknown early exit remains a failure. Only the
+        # normal main path can publish a verified handoff outcome.
+        if not snapshot.get('finished'):snapshot['segment_outcome']='failure'
         snapshot.update(segment_ended=True,finalized_at=utc())
         publisher.publish(snapshot,finished=True)
         save(path,snapshot)
@@ -217,7 +243,11 @@ def main():
                 except Exception as error:
                     arms.append(dict(key=key,phase='observation_error',error=repr(error)))
         codes=[p.poll() for p in processes];finished=all(c is not None for c in codes)
-        snapshot=dict(identity,observed_at=now,arms=arms,pair_return_codes=codes,finished=finished)
+        try:outcome=segment_outcome(root,pairs,codes)
+        except Exception as error:
+            outcome='failure'
+            print('Segment evidence validation failed: '+repr(error),flush=True)
+        snapshot=dict(identity,observed_at=now,arms=arms,pair_return_codes=codes,finished=finished,segment_outcome=outcome)
         save(root/'progress.json',snapshot)
         try:
             publisher.publish(snapshot,finished=finished)
@@ -226,7 +256,11 @@ def main():
             print('Progress publication failed: '+type(error).__name__,flush=True)
             save(root/'telemetry_error.json',dict(at=utc(),error=type(error).__name__))
         if finished:
-            if any(codes):raise SystemExit('Incomplete continuations retained with original source and experience')
+            if outcome=='failure':raise SystemExit('Failed continuation retained with original source and experience')
+            if os.environ.get('GITHUB_STEP_SUMMARY'):
+                with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf8') as stream:
+                    stream.write(f'## Segment: {outcome}\n\n')
+                    stream.write('Verified handoff only; experiment remains incomplete.\n' if outcome=='handoff_pending' else 'All pairs in this segment completed their existing audits.\n')
             return
         time.sleep(60)
 

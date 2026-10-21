@@ -4,7 +4,7 @@ Both policies retain the same sequence of execution hosts. The faster arm's
 extra work is preserved in the input artifact, but replayed on the new host.
 No policy, world duration, source bytes, experience, or random seed is changed.
 """
-import argparse,copy,hashlib,json,os,platform,shutil,subprocess,sys,uuid
+import argparse,copy,hashlib,json,os,platform,shutil,subprocess,sys,time,uuid
 from datetime import datetime,timezone
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -159,17 +159,25 @@ def prepare(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,guard_
     return header
 
 
-def run_pair(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,recorded_predictions=False,guard_history=False):
+def run_pair(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,recorded_predictions=False,guard_history=False,segment_seconds=None):
     assert type(recorded_predictions) is bool
+    if segment_seconds is not None:
+        assert value_contract and 0<segment_seconds<=19800,'bounded value-contract segment required'
+    deadline=None if segment_seconds is None else time.monotonic()+segment_seconds
     header=prepare(root,inputs,jobs,manifests,checkpoints,value_contract=value_contract,guard_history=guard_history);root=Path(root).resolve()
     names=('baseline','candidate') if value_contract else tuple(f'h{j[6]+1}' for j in jobs)
     pair_file='contract_pair.json' if value_contract else 'pair_execution.json'
+    if recorded_predictions:
+        header['recorded_prediction_replay_permitted']=True
+        for directory in [root,*[root/n for n in names]]:
+            (directory/pair_file).write_text(json.dumps(header,indent=2)+'\n')
     script=Path(__file__).with_name('resume_horizon_study.py')
     def execute(item):
         name,job,manifest=item;child=root/name
         args=[sys.executable,str(script),'--root',str(child),
             '--job',json.dumps(job),'--manifest',manifest]
         if recorded_predictions:args+=['--recorded-predictions']
+        if deadline is not None:args+=['--deadline',str(deadline)]
         # Operational evidence only; never imported by the frozen actor.
         status=child/'execution_status.json'
         def record(value):
@@ -181,6 +189,7 @@ def run_pair(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,recor
         record(state)
         code=process.wait()
         state.update(return_code=code,ended_at=datetime.now(timezone.utc).isoformat())
+        if (child/'segment_interruption.json').exists():state['interruption']=json.loads((child/'segment_interruption.json').read_text())
         record(state)
         return code
     with ThreadPoolExecutor(max_workers=2) as pool:
@@ -204,7 +213,11 @@ def run_pair(root,inputs,jobs,manifests,checkpoints,*,value_contract=False,recor
         header['continuation'].update(added_decisions=added,no_new_decisions=not any(added))
     (root/pair_file).write_text(json.dumps(header,indent=2)+'\n')
     for name in names:(root/name/pair_file).write_text(json.dumps(header,indent=2)+'\n')
-    if not header['complete']:raise RuntimeError('incomplete pair continuation retained')
+    if not header['complete']:
+        from tools.horizon_segment import PAUSED,write_handoff
+        if segment_seconds is not None and PAUSED in codes and all(c in (0,PAUSED) for c in codes):
+            write_handoff(root,jobs)
+        else:raise RuntimeError('incomplete pair continuation retained')
     return header
 
 
@@ -238,4 +251,5 @@ if __name__=='__main__':
     for name in ('inputs','jobs','manifests','checkpoints'):p.add_argument('--'+name,required=True)
     p.add_argument('--value-contract',action='store_true');p.add_argument('--recorded-predictions',action='store_true')
     p.add_argument('--guard-history',action='store_true')
-    a=p.parse_args();print(json.dumps(run_pair(a.root,*[json.loads(getattr(a,k)) for k in ('inputs','jobs','manifests','checkpoints')],value_contract=a.value_contract,recorded_predictions=a.recorded_predictions,guard_history=a.guard_history)))
+    p.add_argument('--segment-seconds',type=float)
+    a=p.parse_args();print(json.dumps(run_pair(a.root,*[json.loads(getattr(a,k)) for k in ('inputs','jobs','manifests','checkpoints')],value_contract=a.value_contract,recorded_predictions=a.recorded_predictions,guard_history=a.guard_history,segment_seconds=a.segment_seconds)))
