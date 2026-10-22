@@ -147,7 +147,7 @@ try:
                                         audit_only=audit_only,guard_history=guarded,mixed_failure=audit and (timeout or failed_pause),planned_handoff=bool(handoff),job=job['id']))
             task.update(run=dispatch['run'],root=dispatch['root'],head=dispatch['workflow_sha'],external_collector=False)
             print(json.dumps(dict(resumed=key,run=task['run'],audit_only=audit_only,
-                mixed_failure=audit and timeout,boundary=task['history'][-1]['boundary'])),flush=True)
+                mixed_failure=audit and (timeout or failed_pause),boundary=task['history'][-1]['boundary'])),flush=True)
             changed=True;save(state)
         if not changed:save(state)
         if any(t['status']!='complete' for t in state['tasks']):time.sleep(45)

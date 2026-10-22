@@ -18,11 +18,11 @@ class TiledPolicy(Policy):
             raise ValueError('positive integer tile_size required')
         self.tile_size = tile_size
 
-    def decide(self, batch, stochastic=True,*,return_frame=None,appraisal=None,purpose=None,max_social_regret=.15,outcome_audit=None):
+    def decide(self, batch, stochastic=True,*,return_frame=None,appraisal=None,purpose=None,max_social_regret=.15,outcome_audit=None,return_means=None):
         if outcome_audit is not None and not isinstance(outcome_audit,dict):raise ValueError('explicit outcome audit dictionary required')
         count = len(batch.ids)
         if count <= self.tile_size:
-            return super().decide(batch, stochastic,return_frame=return_frame,appraisal=appraisal,purpose=purpose,max_social_regret=max_social_regret,outcome_audit=outcome_audit)
+            return super().decide(batch, stochastic,return_frame=return_frame,appraisal=appraisal,purpose=purpose,max_social_regret=max_social_regret,outcome_audit=outcome_audit,return_means=return_means)
         bias=None if appraisal is None else np.asarray(appraisal,dtype=float)
         goal=None if purpose is None else np.asarray(purpose,dtype=float)
         if any(x is not None and x.shape!=batch.legal.shape for x in (bias,goal)):
@@ -35,8 +35,9 @@ class TiledPolicy(Policy):
             part = Batch(**{f.name: getattr(batch, f.name)[start:stop]
                             for f in fields(Batch)})
             frame=None if return_frame is None else return_frame.take(range(start,stop))
+            means=None if return_means is None else return_means.take(range(start,stop))
             part_audit={} if outcome_audit is not None else None
-            result = super().decide(part, stochastic,return_frame=frame,
+            result = super().decide(part, stochastic,return_frame=frame,return_means=means,
                 appraisal=None if bias is None else bias[start:stop],purpose=None if goal is None else goal[start:stop],max_social_regret=max_social_regret,outcome_audit=part_audit)
             if part_audit is not None:
                 if audited is None:audited={k:np.empty((count,)+part_audit[k].shape[1:]) for k in ('scores','expected')}

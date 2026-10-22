@@ -26,6 +26,7 @@ class JointForecast:
     outcome_limit: int=8
     purpose_sampling: object=None
     goal_ties: object=None
+    return_means: object=None
 
 
 def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
@@ -94,6 +95,7 @@ def select(base,forecast,policy=None,root_allowed=None,*,appraisal=None):
         c=copy.deepcopy(fc);by={a['id']:a for a in c['actions']};c['actions']=[by[k] for k in names];contexts.append(c)
     b=compile_batch(contexts,outcome_limit=forecast.outcome_limit);p=policy or Policy()
     framed={} if forecast.return_frame is None else dict(return_frame=forecast.return_frame)
+    if forecast.return_means is not None:framed['return_means']=forecast.return_means
     if appraisal is not None:
         if len(appraisal)!=len(base) or any(not isinstance(row,dict) or set(row)-{a['id'] for a in c['actions']} for c,row in zip(base,appraisal)):
             raise ValueError('one current-root appraisal per owner required')

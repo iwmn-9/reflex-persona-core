@@ -2,6 +2,7 @@
 import argparse
 import copy
 import json
+import platform
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -112,6 +113,7 @@ def execution(root, spec, retry, *, max_decisions=None):
     assert replay_rng.bit_generator.state==rng.bit_generator.state
     row=dict(configuration=config,complete=True,final=w,score=g.goal(w).value,
         trace=trace,checks=checks,seconds=time.monotonic()-start,physical_replay=len(trace))
+    row['runtime']=dict(python=platform.python_version(),numpy=np.__version__,platform=platform.platform())
     (root/'result.json').write_bytes(encoded(row))
     return row
 
@@ -138,6 +140,8 @@ def pair(root,spec):
         assert all(a['response']==b['response'] and a['truth']==b['truth']
             for a,b in zip(rows[0]['trace'],rows[1]['trace']))
         assert rows[0]['trace'][0]['before']==rows[1]['trace'][0]['before']
+    else:
+        assert rows[0]['runtime']==rows[1]['runtime'],'fresh controls require the same execution environment'
     conditional=lambda row: (sum(t['conditional_increment'] for t in row['trace'])
         if 'conditional_increment' in row['trace'][0] else realized_account(row)['conditional_increments'])
     result=dict(id=spec['id'],spec=spec,cash=[r['final']['cash'] for r in rows],
@@ -191,6 +195,8 @@ def main():
     parser.add_argument('--purpose-estimator',choices=('sampled','conditional'),default='sampled')
     parser.add_argument('--tail-recovery',type=int,choices=(0,2),default=0)
     parser.add_argument('--recovery-cache',type=int,default=0)
+    parser.add_argument('--coherent-cumulative-mean',action='store_true')
+    parser.add_argument('--fresh-controls',action='store_true')
     args=parser.parse_args();root=Path(args.root).resolve()
     if not args.frozen:
         from tools.freeze_experiment import dispatch
@@ -200,6 +206,8 @@ def main():
         return dispatch(root,Path(__file__).name,['--workers',str(args.workers),
             '--purpose-estimator',args.purpose_estimator,'--tail-recovery',str(args.tail_recovery)]+
             ['--recovery-cache',str(args.recovery_cache)]+
+            (['--coherent-cumulative-mean'] if args.coherent_cumulative_mean else [])+
+            (['--fresh-controls'] if args.fresh_controls else [])+
             (['--worlds'] if args.worlds else []))
     specs=[]
     for mechanism,length,good in (('delayed',11,6.),('chain',5,14.)):
@@ -213,9 +221,13 @@ def main():
             dict(id=f'{game}-{profile}',mechanism='world',game=game,profile=profile,turns=128,
                 seed=58101 if profile==0 else 58102,regime='irregular' if profile==0 else 'outside')
                 for game in ('auction','resources','combat','gambling') for profile in (0,2)]
+        if args.fresh_controls:specs=[{k:v for k,v in s.items() if k!='reference'} for s in specs]
     if args.purpose_estimator!='sampled' or args.tail_recovery or args.recovery_cache:
         specs=[dict(s,controller=dict(purpose_estimator=args.purpose_estimator,
             tail_recovery=args.tail_recovery,recovery_cache=args.recovery_cache)) for s in specs]
+    if args.coherent_cumulative_mean:
+        if args.purpose_estimator!='conditional':raise ValueError('coherent cumulative mean requires conditional mean')
+        specs=[dict(s,controller=dict(s['controller'],coherent_cumulative_mean=True)) for s in specs]
     plan=dict(version=2,specs=specs,source=sha(encoded(json.loads((root/'source_snapshot.json').read_bytes()))),
         purpose='mechanism screen only; no adoption and no replacement of registered 40/8/8',
         criteria='all cases complete; fixed personality and actual feedback parity; report every loss; preparation gain and abandonment of unprofitable work; new opportunity inside a former fixed window' if not args.worlds else

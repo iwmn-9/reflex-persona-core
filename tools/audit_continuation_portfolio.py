@@ -66,6 +66,9 @@ def main():
     # announced change is actually observed. No predicted future event leaks.
     indexed={(r['spec']['id'],r['retry']):r['result'] for r in runs if 'spec' in r}
     for spec in plan['specs']:
+        if 'reference' not in spec:
+            before=indexed[(spec['id'],False)];after=indexed[(spec['id'],True)]
+            assert before['runtime']==after['runtime']
         if not spec['id'].endswith('-loss'):continue
         stable_id=spec['id'].removesuffix('-loss')+'-stable'
         for retry in (False,True):

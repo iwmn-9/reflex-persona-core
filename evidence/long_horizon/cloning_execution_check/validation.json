@@ -1,0 +1,56 @@
+{
+  "checked_at": "2026-10-22T14:46:43.573504+00:00",
+  "head": "8c52469970d631efbc3dc90efcdb74126d64701a",
+  "local": {
+    "discovery_tests": 1251,
+    "passed": 1232,
+    "skipped": 19,
+    "seconds": 2182.416,
+    "exit_code": 0,
+    "additional_cache_test": {
+      "passed": 1,
+      "seconds": 63.776,
+      "reason": "Added after full-suite discovery; separately exercised the final monitor code with real saved histories."
+    }
+  },
+  "ci": {
+    "run": 39795917911,
+    "head": "8c52469970d631efbc3dc90efcdb74126d64701a",
+    "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/39795917911",
+    "workflow_status": "completed",
+    "workflow_conclusion": "success",
+    "checked_at": "2026-10-22T14:56:58.103466+00:00",
+    "jobs": [
+      {
+        "name": "test (windows-latest, 3.12)",
+        "status": "completed",
+        "conclusion": "success",
+        "tests": "success",
+        "tests_completed_at": "2026-10-22T14:52:53Z"
+      },
+      {
+        "name": "test (windows-latest, 3.13)",
+        "status": "in_progress",
+        "conclusion": null,
+        "tests": "success",
+        "tests_completed_at": "2026-10-22T14:53:56Z"
+      },
+      {
+        "name": "test (ubuntu-latest, 3.13)",
+        "status": "completed",
+        "conclusion": "success",
+        "tests": "success",
+        "tests_completed_at": "2026-10-22T14:38:19Z"
+      },
+      {
+        "name": "test (ubuntu-latest, 3.12)",
+        "status": "completed",
+        "conclusion": "success",
+        "tests": "success",
+        "tests_completed_at": "2026-10-22T14:39:01Z"
+      }
+    ],
+    "scope": "Four test steps completed successfully and workflow completed success. A job final status was still lagging in API; raw status retained. No long-world adoption."
+  },
+  "behavioral_scope": "Regression validation plus one exact serialized known-owner forecast. Not long-play adoption."
+}

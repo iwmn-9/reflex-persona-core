@@ -30,7 +30,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                       assess, request_for, feedback, model_id, target,
                       horizon=16, seeds=(701, 702, 703), world_model='posterior',
                       cumulative_preference=None, include_retry=True, captured=None,
-                      purpose_estimator='sampled', tail_recovery=0, recovery_cache=0):
+                      purpose_estimator='sampled', tail_recovery=0, recovery_cache=0,
+                      coherent_cumulative_mean=False):
     if type(horizon) is not int or not 1 <= horizon <= 128:
         raise ValueError('explicit bounded continuation horizon required')
     if (not isinstance(seeds, tuple) or not 1 <= len(seeds) <= 8
@@ -41,6 +42,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         raise ValueError('resolved owner in a live public world required')
     if purpose_estimator not in ('sampled', 'conditional'):
         raise ValueError('known purpose mean estimator required')
+    if type(coherent_cumulative_mean) is not bool or coherent_cumulative_mean and (purpose_estimator!='conditional' or cumulative_preference is None):
+        raise ValueError('coherent mean requires conditional cumulative value forecasts')
     if type(tail_recovery) is not int or tail_recovery not in (0,2) or (tail_recovery and horizon<2):
         raise ValueError('optional existing two-step owner recovery requires a future tail')
     if type(recovery_cache) is not int or not 0<=recovery_cache<=256:
@@ -151,7 +154,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
             unit='owner-decisions', target=target, policy=actor.policy,
             plan_roots=mapping, settlement_weight='absolute',
             objective_origin=Goal(**assess(world)), opportunity_regret=True,
-            cumulative_preference=cumulative_preference, outcome_limit=256)
+            cumulative_preference=cumulative_preference, outcome_limit=256,
+            coherent_cumulative_mean=coherent_cumulative_mean)
         metadata = copy.deepcopy(forecast.audit)
         # Opportunity means a choice between real first actions. Adding an
         # intentionally bad continuation under an already-covered root must
@@ -169,6 +173,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         metadata['continuation_portfolio'] = dict(policies=policies, simulated_steps=steps,
             source_owner=source, horizon=horizon, seeds=list(seeds), model_id=model_id,
             purpose_estimator=purpose_estimator,
+            coherent_cumulative_mean=coherent_cumulative_mean,
             tail_recovery=tail_recovery,
             recovery_cache=dict(capacity=recovery_cache,hits=cache_hits,computations=recovery_computations),
             source_semantics='learning owner (optional existing recovery) or retry a public action with that owner as fallback; only selected root is executed')

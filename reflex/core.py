@@ -247,7 +247,7 @@ class Policy:
     def signature(self):
         return self.principle_priority,tuple(self.residual),self._commitments
 
-    def decide(self, b, stochastic=True, *, appraisal=None, purpose=None, max_social_regret=.15,return_frame=None,outcome_audit=None):
+    def decide(self, b, stochastic=True, *, appraisal=None, purpose=None, max_social_regret=.15,return_frame=None,outcome_audit=None,return_means=None):
         if outcome_audit is not None and not isinstance(outcome_audit,dict):raise ValueError('explicit outcome audit dictionary required')
         n,a,k,d = b.effects.shape; rows=np.arange(n)
         old=np.maximum(b.primary,0); best=b.needs.argmax(1)
@@ -291,6 +291,15 @@ class Policy:
         means=np.einsum('nak,nakd->nad',b.probability,perceived)
         expected=np.einsum('nak,nak->na',b.probability,outcome)
         loss=np.einsum('nak,nak->na',b.probability,np.maximum(-outcome,0))
+        mean_utility=None
+        if return_means is not None:
+            from .return_means import ReturnMeans
+            if return_frame is None or not isinstance(return_means,ReturnMeans):
+                raise ValueError('explicit owned forecast means require return units')
+            correction=return_means.numeric(b)
+            means+=correction
+            mean_utility=np.einsum('nad,nd->na',correction,w)
+            expected+=mean_utility
         risk=.25+.75*b.traits[:,4]+.25*b.needs[:,1]
         # Growth enters benefit, never a blanket bonus for any risky action.
         risk_adjusted=expected-risk[:,None]*loss
@@ -347,6 +356,7 @@ class Policy:
             # stay as the actor priced them BEFORE any public result is known.
             # The probability-weighted rows recover the exact decision scores.
             conditional=outcome-risk[:,None,None]*np.maximum(-outcome,0)
+            if mean_utility is not None:conditional+=mean_utility[:,:,None]
             conditional+=(result.scores-risk_adjusted)[:,:,None]
             outcome_audit.update(scores=conditional.copy(),expected=result.scores.copy(),
                 semantics='frozen decision-time appraisal; not objective reward or future causal credit')

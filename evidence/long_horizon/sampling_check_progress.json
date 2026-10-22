@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-10-20T22:53:30.034512+00:00",
+  "as_of": "2026-10-22T20:57:23.262492+00:00",
   "actor": "8c9568f8056c22be4bee1fbc115b5f879b9b2dac",
   "adopted": false,
   "scope": "Partial registered cohorts; no pooling across cohorts, no equal-compute comparison, no claim of arbitrary-game or human-level intelligence.",
@@ -4137,9 +4137,101 @@
       "Every future owner gets two-step planning; six-step preparation is still outside that inner horizon."
     ],
     "active_run": 39412321707,
-    "completed_conditions": 0,
+    "completed_conditions": 1,
     "registered_conditions": 8,
-    "long_run_groups": [],
-    "long_run_comparisons": []
+    "long_run_groups": [
+      {
+        "level": "game",
+        "key": [
+          "resources"
+        ],
+        "conditions": 1,
+        "world_seeds": [
+          53103
+        ],
+        "mean_delta": 0.0013020833333333703,
+        "mean_conditional_increment_delta": 0.0005208333333334147,
+        "better": 1,
+        "same": 0,
+        "worse": 0,
+        "worst": 0.0013020833333333703
+      }
+    ],
+    "long_run_comparisons": [
+      {
+        "condition": "resources-2-53103-shift-return",
+        "game": "resources",
+        "profile": "care",
+        "seed": 53103,
+        "regime": "shift-return",
+        "turns": 128,
+        "baseline_score": 0.5924479166666666,
+        "candidate_score": 0.59375,
+        "delta": 0.0013020833333333703,
+        "conditional_increment_delta": 0.0005208333333334147,
+        "realized_residual_delta": 0.0007812499999999556,
+        "changed_actions": 1,
+        "baseline_actions": {
+          "invest": 4,
+          "trade": 3,
+          "crop:0": 59,
+          "crop:2": 31,
+          "crop:1": 31
+        },
+        "candidate_actions": {
+          "invest": 4,
+          "trade": 2,
+          "crop:0": 60,
+          "crop:2": 31,
+          "crop:1": 31
+        },
+        "identical_world_predictions": 95,
+        "paired_external_events": 128,
+        "baseline_executed": 128,
+        "candidate_executed": 128,
+        "phase_semantics": "Actual executed decisions; a settled score stays fixed after early terminal death. No fabricated later actions or feedback.",
+        "baseline": {
+          "path": "results/rwc/p-39759996458-dfbfe128-m-result/value-contract-resources-2-53103-shift-return-baseline/trajectories.jsonl",
+          "sha256": "5a12bb6f82a2d46e6f6d4a3d74681f00d731c3ab5c0caeff0704f0f9d566d4ad",
+          "checks": {
+            "world_rng_replay": 128,
+            "restored_action_feedback": 128,
+            "physical_replay": 128,
+            "fixed_axes": 128,
+            "owner_parity": 128,
+            "restore": 6
+          },
+          "recorded_forecast_replay": null
+        },
+        "candidate": {
+          "path": "results/rwc/p-39759996458-dfbfe128-m-result/value-contract-resources-2-53103-shift-return-candidate/trajectories.jsonl",
+          "sha256": "0489b0bc289da6545c5eadadf6a8d2280086261b59fa48a9310d3405c9b49517",
+          "checks": {
+            "world_rng_replay": 128,
+            "restored_action_feedback": 128,
+            "physical_replay": 128,
+            "fixed_axes": 128,
+            "owner_parity": 128,
+            "restore": 6
+          },
+          "recorded_forecast_replay": {
+            "version": "recorded-forecast-replay-v1",
+            "accepted": true,
+            "max_allowed_ulps": 8,
+            "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+            "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+            "source_manifest_sha256": "b126eec3a69f4b9e497b73c1deca9707037fc1298c88860c1a7b1497b9fd1602",
+            "trajectory_sha256": "0489b0bc289da6545c5eadadf6a8d2280086261b59fa48a9310d3405c9b49517",
+            "checked_forecasts": 128,
+            "exact_owner_hashes": 128,
+            "max_observed_ulps": 3.0,
+            "max_absolute_difference": 1.1102230246251565e-16
+          }
+        },
+        "pair_id": "eaa3a1721dcc4516bb2e9ee096983bec",
+        "bellman_residual_removed_delta": 0.0005155945947074025,
+        "bellman_residual_delta": 0.0007864887386259678
+      }
+    ]
   }
 }

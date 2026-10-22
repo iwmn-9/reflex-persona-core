@@ -7,7 +7,7 @@ No win probability calibration, universal game score or learning is claimed.
 from dataclasses import dataclass,replace,asdict
 import copy
 import math
-from .core import Policy,compile_batch,identifier,number
+from .core import Policy,compile_batch,identifier,number,FEATURES,owner_key
 from .intertemporal import forecast
 from .progress import ProgressWatch,ProgressConfig
 from .valuation import ReturnFrame
@@ -33,7 +33,7 @@ class Goal:
 
 def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,plan_roots=None,policy=None,settlement_weight='discounted',
                   objective_origin=None,objective_unit=1.,opportunity_regret=False,competence_support=None,outcome_limit=8,
-                  preference_basis=None,cumulative_preference=None):
+                  preference_basis=None,cumulative_preference=None,coherent_cumulative_mean=False):
     """Use one endpoint per coherent branch for objective and competence.
 
     Intrinsic needs/values/style/cost retain their discounted flow treatment;
@@ -46,6 +46,8 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
     the purpose corridor inside it. A principle may therefore rationally lose.
     """
     if settlement_weight not in ('discounted','absolute'):raise ValueError('known settlement time weight required')
+    if type(coherent_cumulative_mean) is not bool or coherent_cumulative_mean and cumulative_preference is None:
+        raise ValueError('coherent cumulative means require an explicit cumulative declaration')
     if preference_basis is not None:
         from .preference_basis import PreferenceBasis
         if not isinstance(preference_basis,PreferenceBasis) or preference_basis.target!=target:
@@ -67,7 +69,7 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
         raise ValueError('supported real roots required')
     encoded_regret=max_regret if opportunity_regret or objective_unit==1. else max_regret*objective_unit
     f=forecast(c,paths,horizon=horizon,unit=unit,target=target,max_regret=encoded_regret,plan_roots=plan_roots,outcome_limit=outcome_limit)
-    fc=copy.deepcopy(f.contexts[0]);purpose={};endpoint={};mean_audit={}
+    fc=copy.deepcopy(f.contexts[0]);purpose={};endpoint={};mean_audit={};corrections={}
     if set(rollout_audit)!=set(paths):raise ValueError('endpoint coverage must match all viable roots')
     for a in fc['actions']:
         root=f.roots[a['id']][0];proposal=f.audit['plans'][a['id']].get('proposal',root);rows=rollout_audit[proposal]
@@ -131,6 +133,13 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
             expected=max(-1.,min(1.,corrected))
         purpose[a['id']]=expected
         endpoint[a['id']]=goals
+        if coherent_cumulative_mean:
+            correction=[0.]*len(FEATURES)
+            if adjusted:
+                delta=expected-mean_audit[a['id']]['sampled']
+                for key,conversion in cumulative_preference.channels:
+                    correction[FEATURES.index(key.split('.')[1])]=delta*conversion
+            corrections[a['id']]=tuple(correction)
     # Preserving the tier before the purpose gate prevents a competence band
     # from silently substituting a lower-principle option for the owner.
     frame=ReturnFrame.flows((fc,),f.audit['normalizer'],unit,endpoint=True)
@@ -138,9 +147,16 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
         objective_scale=(2. if objective_origin is not None else 1.)/objective_unit
         frame=replace(frame,effects=tuple((objective_scale,)+row[1:] for row in frame.effects))
     if cumulative_preference is not None:frame=cumulative_preference.reframe(frame)
-    b=compile_batch([fc],outcome_limit=outcome_limit);d=(policy or Policy()).decide(b,False,return_frame=frame)
+    return_means=None
+    if coherent_cumulative_mean:
+        from .return_means import ReturnMeans
+        names=tuple(sorted(corrections))
+        return_means=ReturnMeans((owner_key(fc),),names,(tuple(corrections[k] for k in names),))
+    framed={} if return_means is None else dict(return_means=return_means)
+    b=compile_batch([fc],outcome_limit=outcome_limit);d=(policy or Policy()).decide(b,False,return_frame=frame,**framed)
     retained={key for key,yes in zip(b.ids[0],d.eligible[0]) if yes}
     fc['actions']=[a for a in fc['actions'] if a['id'] in retained]
+    if return_means is not None:return_means=return_means.retain(sorted(retained))
     metadata=copy.deepcopy(f.audit);metadata.update(endpoint=endpoint,original_tier_plans=sorted(retained),
         endpoint_semantics='settled result OR explicit nonterminal proxy; not calibrated win EV',
         readiness_learned=False,return_frame=frame.record())
@@ -153,6 +169,9 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
             channels=[list(row) for row in cumulative_preference.channels],unit=cumulative_preference.unit,
             origin=objective_origin.record(),
             semantics='declared cumulative goal change per sampled outcome; intrinsic flows retain their time weights; model uncertainty and cutoff bias remain')
+    if return_means is not None:
+        metadata['cumulative_mean_correction']=return_means.record()
+        metadata['cumulative_mean_semantics']='same projected conditional goal mean for declared cumulative values and purpose; sampled downside risk and intrinsic flows unchanged; finite-sample/model error remains'
     if settlement_weight=='absolute':metadata['subjective_settlement_semantics']='absolute terminal outcome once; running cutoff proxy and preference flows still discounted'
     if settlement_weight=='absolute' and cumulative_preference is not None:
         metadata['subjective_settlement_semantics']+='; explicitly cumulative value channels use undiscounted sampled goal changes'
@@ -167,7 +186,7 @@ def goal_forecast(c,paths,rollout_audit,*,horizon,unit,target,max_regret=.15,pla
             semantics='fraction of sampled purpose opportunity in full personality tier; not calibrated victory risk')
         f=replace(f,max_regret=max_regret*spread)
     return replace(f,contexts=(fc,),roots={k:v for k,v in f.roots.items() if k in retained},
-        purpose={k:v for k,v in purpose.items() if k in retained},audit=metadata,return_frame=frame)
+        purpose={k:v for k,v in purpose.items() if k in retained},audit=metadata,return_frame=frame,return_means=return_means)
 
 
 class PersonaProgressWatch(ProgressWatch):
