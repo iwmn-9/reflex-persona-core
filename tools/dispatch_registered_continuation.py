@@ -13,6 +13,19 @@ def command(*args):
     return subprocess.check_output(args, cwd=R, encoding="utf8")
 
 
+def published_revision(branch):
+    # A concurrent research commit/push can briefly separate local and remote
+    # heads. Only retry these read-only checks, before any dispatch is recorded
+    # or submitted. Never retry the POST or an unknown submission outcome.
+    for attempt in range(5):
+        before=command('git','rev-parse','HEAD').strip()
+        remote=command('git','ls-remote','origin','refs/heads/'+branch).split()
+        after=command('git','rev-parse','HEAD').strip()
+        if remote and before==after==remote[0]:return before
+        if attempt<4:time.sleep(3)
+    raise RuntimeError('Local/published revision did not converge; nothing dispatched.')
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--prepare", required=True)
@@ -25,10 +38,9 @@ def main():
     batches = json.loads((prepare / "batches.json").read_text())
     evidence = json.loads((prepare / "preparation.json").read_text())
     assert batches and len(batches) == len(evidence["pairs"])
-    sha = command("git", "rev-parse", "HEAD").strip()
     branch = "research/long-horizon"
     assert command("git", "branch", "--show-current").strip() == branch
-    assert command("git", "ls-remote", "origin", "refs/heads/" + branch).split()[0] == sha
+    sha = published_revision(branch)
     workflow = "owner-value-contract-resume.yml"
     body = dict(ref=branch, inputs=dict(label=a.label, batches=json.dumps(batches, separators=(",", ":"))))
     request = prepare / "dispatch_request.json"
