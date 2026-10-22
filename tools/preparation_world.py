@@ -40,3 +40,30 @@ class DelayedYield(ContinuingGame):
             if n['investment']==0:n['cash']+=w['payout']
         gain=(n['cash']-w['cash'])/12.
         return n,effect(gain,needs={'growth':gain,'safety':0.},values={'achievement':gain})
+
+
+class PreparationChain(DelayedYield):
+    """Public multi-action construction; no evaluator hint about preparation.
+
+    The same rules as the previously published compound-window diagnostic,
+    moved here so a new continuation method can use the identical mechanism.
+    """
+    def __init__(self, delay, payout=14., turns=128, profile=None):
+        super().__init__(delay, payout=payout, turns=turns, profile=profile)
+        self.model_id=digest(['preparation-chain-v1',delay,turns])
+
+    def start(self):
+        w=super().start();w['stage']=0;return w
+
+    def keys(self,w):
+        return () if self.terminal(w) else ('x',)+(('y',) if w['cash']>=1 else ())
+
+    def transition(self,w,key,symbol):
+        if key not in self.keys(w):raise ValueError('illegal diagnostic action')
+        n=copy.deepcopy(w);n.update(tick=w['tick']+1,signal='0',last=key)
+        if key=='x':n['cash']+=1
+        else:
+            n['cash']-=1;n['stage']+=1
+            if n['stage']==self.delay:n['stage']=0;n['cash']+=w['payout']
+        gain=max(-1.,min(1.,(n['cash']-w['cash'])/12.))
+        return n,effect(gain,needs={'growth':gain,'safety':0.},values={'achievement':gain})
