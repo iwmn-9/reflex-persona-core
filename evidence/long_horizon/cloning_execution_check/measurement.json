@@ -1,0 +1,121 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "input_sha256": "4c690cc14bbb4a2eadf706ba379cf86e03e09e736cc3aa67e0615272f71874a3",
+  "repeats": 3,
+  "comparison": {
+    "exact_serialized_output": true,
+    "sha256": "08b5b86d9dd250c087d6ac3ce46798624cfae8b5b3b7c8e8c4617a40f2e6270e",
+    "baseline": "results\\continuation_profile\\probe-0-84.json",
+    "candidate": "results\\continuation_clone_check\\probe-0-84.json",
+    "note": "Identical complete forecast/decision/owner output on known factual owner. Unprofiled elapsed was not recorded due to an in-memory tuple/list comparison; no wall-time claim."
+  },
+  "rows": [
+    {
+      "object": "context",
+      "iterations": 5000,
+      "serialized_bytes": 5461,
+      "timings": {
+        "standard": [
+          {
+            "wall_seconds_per_copy": 0.0002795760000124574,
+            "process_seconds_per_copy": 0.000196875
+          },
+          {
+            "wall_seconds_per_copy": 0.00032832577999215574,
+            "process_seconds_per_copy": 0.00024375
+          },
+          {
+            "wall_seconds_per_copy": 0.0002778375599998981,
+            "process_seconds_per_copy": 0.0002
+          }
+        ],
+        "plain_containers": [
+          {
+            "wall_seconds_per_copy": 0.00010183129999786616,
+            "process_seconds_per_copy": 9.0625e-05
+          },
+          {
+            "wall_seconds_per_copy": 0.00014754623998887838,
+            "process_seconds_per_copy": 7.8125e-05
+          },
+          {
+            "wall_seconds_per_copy": 9.8680100007914e-05,
+            "process_seconds_per_copy": 6.875e-05
+          }
+        ]
+      }
+    },
+    {
+      "object": "owner_record",
+      "iterations": 500,
+      "serialized_bytes": 55153,
+      "timings": {
+        "standard": [
+          {
+            "wall_seconds_per_copy": 0.003634554399875924,
+            "process_seconds_per_copy": 0.0029375
+          },
+          {
+            "wall_seconds_per_copy": 0.003427450999850407,
+            "process_seconds_per_copy": 0.00265625
+          },
+          {
+            "wall_seconds_per_copy": 0.0034991182000376282,
+            "process_seconds_per_copy": 0.002875
+          }
+        ],
+        "plain_containers": [
+          {
+            "wall_seconds_per_copy": 0.0019747981999535115,
+            "process_seconds_per_copy": 0.001375
+          },
+          {
+            "wall_seconds_per_copy": 0.0018048020000569522,
+            "process_seconds_per_copy": 0.001375
+          },
+          {
+            "wall_seconds_per_copy": 0.0016804128000512718,
+            "process_seconds_per_copy": 0.0014375
+          }
+        ]
+      }
+    },
+    {
+      "object": "world",
+      "iterations": 100000,
+      "serialized_bytes": 138,
+      "timings": {
+        "standard": [
+          {
+            "wall_seconds_per_copy": 9.401157000102103e-06,
+            "process_seconds_per_copy": 6.5625e-06
+          },
+          {
+            "wall_seconds_per_copy": 9.581466999370605e-06,
+            "process_seconds_per_copy": 7.03125e-06
+          },
+          {
+            "wall_seconds_per_copy": 7.943314999574795e-06,
+            "process_seconds_per_copy": 7.34375e-06
+          }
+        ],
+        "plain_containers": [
+          {
+            "wall_seconds_per_copy": 2.87047200021334e-06,
+            "process_seconds_per_copy": 1.40625e-06
+          },
+          {
+            "wall_seconds_per_copy": 2.985093001043424e-06,
+            "process_seconds_per_copy": 1.5625e-06
+          },
+          {
+            "wall_seconds_per_copy": 2.251885000150651e-06,
+            "process_seconds_per_copy": 1.875e-06
+          }
+        ]
+      }
+    }
+  ],
+  "limit": "Copy-only benchmark with alternating order under concurrent experiment load. Process clock has coarse Windows granularity; no full-game speed claim. Existing frozen studies unchanged."
+}

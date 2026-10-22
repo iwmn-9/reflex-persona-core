@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import threading
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,6 +26,44 @@ def read(path):
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+class SavedAuditCache:
+    """Reuse a compact audit only while every audited input byte is unchanged.
+
+    Old segments are immutable, but their owner timelines were being decoded
+    and hashed every minute. Content hashes, including all frozen source files,
+    are still checked on every visit. This is telemetry, not final acceptance.
+    """
+    def __init__(self):
+        self.items={};self.lock=threading.Lock()
+
+    def summary(self,directory,job):
+        directory=Path(directory).resolve()
+        paths=[directory/name for name in ('source_snapshot.json','checkpoint.json',
+                                          'registration.json','contract_pair.json')]
+        hashes=tuple(sha(path) for path in paths)
+        source=directory/'_source'
+        for name,fingerprint in read(paths[0]).items():
+            target=(source/name).resolve()
+            assert target.is_relative_to(source) and target.is_file(),'invalid frozen source path'
+            assert sha(target)==fingerprint,('source changed',name)
+        key=(hashes,tuple(job))
+        with self.lock:cached=self.items.get(directory)
+        if cached is not None and cached[0]==key:
+            return json.loads(cached[1])
+        verified=inspect(directory,hashes[0],hashes[1],job,pair_file='contract_pair.json')
+        assert tuple(sha(path) for path in paths)==hashes,'audit inputs changed during inspection'
+        payload=verified['saved']
+        result=dict(pair=verified['pair'],ticks=len(payload['trace']),
+                    elapsed=payload['elapsed'],checkpoint_sha256=hashes[1])
+        with self.lock:
+            if len(self.items)>=512 and directory not in self.items:self.items.pop(next(iter(self.items)))
+            self.items[directory]=(key,json.dumps(result))
+        return result
+
+
+SAVED_AUDITS=SavedAuditCache()
 
 
 def api(path):
@@ -76,17 +115,14 @@ def check(task, checks_by_head):
             checkpoint = directory / 'checkpoint.json'
             if not checkpoint.is_file():
                 break
-            manifest = directory / 'source_snapshot.json'
-            verified = inspect(directory, sha(manifest), sha(checkpoint), expected_job,
-                               pair_file='contract_pair.json')
+            verified = SAVED_AUDITS.summary(directory,expected_job)
             assert verified['pair']['plan_sha256'] == sha(plan_path)
             assert verified['pair']['sources'] == plan['sources']
-            payload = verified['saved']
-            ticks = len(payload['trace'])
+            ticks = verified['ticks']
             pair.append(dict(side=side, path=checkpoint.relative_to(ROOT).as_posix(),
-                             sha256=sha(checkpoint), ticks=ticks,
-                             elapsed_minutes=payload['elapsed']/60,
-                             cumulative_minutes_per_decision=payload['elapsed']/60/ticks))
+                             sha256=verified['checkpoint_sha256'], ticks=ticks,
+                             elapsed_minutes=verified['elapsed']/60,
+                             cumulative_minutes_per_decision=verified['elapsed']/60/ticks))
         if len(pair) == 2:
             saved.append(dict(run=segment['run'], common_boundary=min(p['ticks'] for p in pair),
                               checkpoints=pair))

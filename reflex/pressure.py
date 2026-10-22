@@ -1,6 +1,6 @@
 """Bounded need frustration from observed lack of progress, not win-rate tuning."""
 from dataclasses import dataclass,asdict
-import copy
+from . import cloning as copy
 import math
 from .core import NEEDS,digest,compile_batch
 

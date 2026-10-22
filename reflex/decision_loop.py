@@ -8,7 +8,7 @@ Only forecasts for the SAME outcome target may be scored against feedback.
 """
 from collections import OrderedDict, deque
 from dataclasses import dataclass, asdict,replace
-import copy
+from . import cloning as copy
 import numpy as np
 from .core import FEATURES, Policy, compile_batch, digest, identifier,character_key
 from .judgment import Binding, OutcomeMemory, ReadControl, avoid_waste

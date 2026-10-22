@@ -5,7 +5,7 @@ The existing EventLearner compares supplied hypotheses and empirical predictors
 before each reveal, including distributions outside the hypothesis library.
 No action utility, personality coefficient or hidden game state is learned here.
 """
-import copy
+from . import cloning as copy
 from collections import OrderedDict
 
 from .adaptive_dynamics import EventLearner

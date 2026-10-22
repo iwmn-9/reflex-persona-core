@@ -5,7 +5,7 @@ are bounded engineering heuristics, not calibrated psychological estimates.
 """
 from collections import OrderedDict, deque
 from dataclasses import dataclass, replace
-import copy
+from . import cloning as copy
 import numpy as np
 from .core import FEATURES, Policy, compile_batch, digest, identifier, number, MAX_OUTCOMES
 from .planning import vector, from_vector, compress_outcomes

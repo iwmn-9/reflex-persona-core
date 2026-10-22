@@ -48,6 +48,32 @@ class HorizonSegmentTests(unittest.TestCase):
         target=Path(context.name)/'pair';shutil.copytree(self.partial,target)
         return target
 
+    def test_progress_cache_reuses_only_unchanged_audited_bytes(self):
+        from tools.inspect_registered_progress import SavedAuditCache
+        from tools.resume_horizon_pair import inspect
+        root=self.fresh()/'candidate';cache=SavedAuditCache()
+        with patch('tools.inspect_registered_progress.inspect',wraps=inspect) as auditor:
+            first=cache.summary(root,self.jobs[1]);again=cache.summary(root,self.jobs[1])
+            self.assertEqual(first,again);self.assertEqual(auditor.call_count,1)
+            again['pair']['complete']=True
+            self.assertFalse(cache.summary(root,self.jobs[1])['pair']['complete'])
+            header=read(root/'contract_pair.json');header['monitor_note']='updated'
+            save(root/'contract_pair.json',header)
+            self.assertEqual(cache.summary(root,self.jobs[1])['pair']['monitor_note'],'updated')
+            self.assertEqual(auditor.call_count,2)
+            reg=read(root/'registration.json');reg['arms']=['wrong'];save(root/'registration.json',reg)
+            with self.assertRaises(AssertionError):cache.summary(root,self.jobs[1])
+            reg['arms']=['receding_recovery'];save(root/'registration.json',reg)
+            source=root/'_source/reflex/core.py';stat=source.stat();raw=source.read_bytes()
+            source.write_bytes(raw[:-1]+(b'x' if raw[-1:]!=b'x' else b'y'))
+            os.utime(source,ns=(stat.st_atime_ns,stat.st_mtime_ns))
+            with self.assertRaisesRegex(AssertionError,'source changed'):cache.summary(root,self.jobs[1])
+            source.write_bytes(raw)
+            cp=read(root/'checkpoint.json');cp['payload']['trace'][0]['before_owner']='0'*64
+            from tools.resume_horizon_pair import encoded,sha as bytes_sha
+            cp['sha256']=bytes_sha(encoded(cp['payload']));save(root/'checkpoint.json',cp)
+            with self.assertRaises(AssertionError):cache.summary(root,self.jobs[1])
+
     def test_handoff_retains_history_and_resume_reaches_same_final_decisions(self):
         root=self.fresh();dirs=[root/n for n in ('baseline','candidate')]
         with patch.dict(os.environ,{'GITHUB_RUN_ID':'123','GITHUB_RUN_ATTEMPT':'1'}):

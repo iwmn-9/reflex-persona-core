@@ -43,5 +43,89 @@
       "reference_sha256": "583930e8f3ffde69938b17528cc8463d0091d50b9f91aeff690ec218d9daced5",
       "same_initial_owner": "ca3a8a21fb989e58d8d6d92a7533af497b2b926748988c328182a54da9760a65"
     }
-  ]
+  ],
+  "runtime_comparison": {
+    "candidate": {
+      "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+      "numpy": "2.3.5",
+      "system": "Windows",
+      "machine": "AMD64"
+    },
+    "references": [
+      {
+        "case": "auction-0-56101-outside",
+        "runtime": {
+          "machine": "x86_64",
+          "numpy": "2.5.4",
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "system": "Linux"
+        }
+      },
+      {
+        "case": "auction-2-56101-outside",
+        "runtime": {
+          "machine": "x86_64",
+          "numpy": "2.5.4",
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "system": "Linux"
+        }
+      },
+      {
+        "case": "combat-0-56101-outside",
+        "runtime": {
+          "machine": "x86_64",
+          "numpy": "2.5.4",
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "system": "Linux"
+        }
+      },
+      {
+        "case": "combat-2-56101-outside",
+        "runtime": {
+          "machine": "x86_64",
+          "numpy": "2.5.4",
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "system": "Linux"
+        }
+      },
+      {
+        "case": "resources-0-56101-outside",
+        "runtime": {
+          "machine": "x86_64",
+          "numpy": "2.5.4",
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "system": "Linux"
+        }
+      },
+      {
+        "case": "resources-2-56101-outside",
+        "runtime": {
+          "machine": "x86_64",
+          "numpy": "2.5.4",
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "system": "Linux"
+        }
+      },
+      {
+        "case": "gambling-0-56101-outside",
+        "runtime": {
+          "machine": "x86_64",
+          "numpy": "2.5.4",
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "system": "Linux"
+        }
+      },
+      {
+        "case": "gambling-2-56101-outside",
+        "runtime": {
+          "machine": "x86_64",
+          "numpy": "2.5.4",
+          "python": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]",
+          "system": "Linux"
+        }
+      }
+    ],
+    "same_execution_host": false,
+    "limit": "Reused Linux controls and local Windows candidates are a known-case development diagnostic, not a paired-host confirmation. Independent adoption requires fresh controls on the same execution host and runtime; do not attribute all small score differences solely to the controller."
+  }
 }

@@ -6,7 +6,7 @@ spread describes possible results; it is never used as model confidence.
 """
 from dataclasses import dataclass
 from collections import OrderedDict
-import copy
+from . import cloning as copy
 import math
 import numpy as np
 from .core import digest

@@ -7,7 +7,7 @@ It is a competence constraint, not a change to fixed personality/value axes.
 """
 from collections import OrderedDict
 from dataclasses import dataclass,asdict
-import copy
+from . import cloning as copy
 import math
 from .core import digest,identifier,Policy,compile_batch
 

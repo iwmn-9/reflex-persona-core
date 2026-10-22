@@ -7,7 +7,7 @@ Complete return distributions retain loss aversion instead of averaging away
 bad outcomes. Work limits decline the WHOLE proposal, never selected roots.
 """
 from dataclasses import dataclass,asdict,replace
-import copy
+from . import cloning as copy
 import math
 from .core import digest,compile_batch
 from .decision_loop import DecisionLoop,Request
