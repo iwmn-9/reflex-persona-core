@@ -36,5 +36,11 @@ Linuxの継続ワーカーは330分で、そのワーカーが作った子プロ
 監督処理の再起動前に実行中PIDと子処理を確認し、既存の送信・回収と重ねない。
 実行中の古いworkflowには後から変更が入らないため、自然な区間終了後の次回継続から新方式になる。
 
+会話の返答終了、クラウド計算、ローカルの回収・再送、AIによる分析は別の実行境界を持つ。
+GitHubで開始済みの区間はローカル監督の停止後も進めるが、次区間の送信は現在ローカル監督に依存する。
+`status: active`という台帳や古いPIDだけを継続の根拠にしない。実プロセス・更新時刻・GitHubの現在状態を確認する。
+AIによる分析・改修はチャットの実行時に行う。定期呼び戻しは有効なスケジュールとローカル実行環境が必要で、
+スケジュール有効だけでは常時稼働の保証にならない。中断時は元の保存履歴を検証してから継続する。
+
 検査: `python -m unittest tests.test_horizon_segment tests.test_horizon_observer tests.test_pair_continuation tests.test_recorded_forecast_audit -v`。
 Linuxの実プロセス停止検査はLinuxで実行する。Windowsではその2件を明示的にスキップする。

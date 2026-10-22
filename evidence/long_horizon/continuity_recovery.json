@@ -1,0 +1,90 @@
+{
+  "observed_at": "2026-10-22T10:02:42.238097+00:00",
+  "last_local_ledger_update": "2026-10-21T11:52:18.933349+00:00",
+  "all_three_prior_processes_missing": true,
+  "prior_supervisor_error": null,
+  "prior_heartbeat_status": "PAUSED",
+  "heartbeat_reactivated": true,
+  "cause_of_process_exit": "Not established. Host had not rebooted since 2026-10-15; prior final reply ended at about2026-10-21T11:19Z, so local supervisor continued for about33minutes after that reply.",
+  "cloud_execution": "Old runs finished between2026-10-21T15:56Z and16:21Z. Thus cloud computations outlived local supervision; subsequent dispatch waited for this recovery.",
+  "no_quality_acceptance": true,
+  "checked_at": "2026-10-22T10:04:30.928525+00:00",
+  "resumed_runs": [
+    {
+      "key": "gambling-0-53101-outside",
+      "run": 39759842926,
+      "head": "4d0fc31a2a416828757a09ba4d159dbb4381eb64",
+      "root": "results/rwc/p-39582722730-ac91cfe6-m-result",
+      "status": "in_progress",
+      "boundary": 52,
+      "parent_run": 39582722730
+    },
+    {
+      "key": "gambling-2-53103-shift-return",
+      "run": 39759898371,
+      "head": "4d0fc31a2a416828757a09ba4d159dbb4381eb64",
+      "root": "results/rwc/p-39583930824-841211f6-m-result",
+      "status": "in_progress",
+      "boundary": 64,
+      "parent_run": 39583930824
+    },
+    {
+      "key": "resources-0-53101-outside",
+      "run": 39759947417,
+      "head": "4d0fc31a2a416828757a09ba4d159dbb4381eb64",
+      "root": "results/rwc/p-39585539559-8509ca6f-m-result",
+      "status": "in_progress",
+      "boundary": 80,
+      "parent_run": 39585539559
+    },
+    {
+      "key": "resources-2-53103-shift-return",
+      "run": 39759996458,
+      "head": "4d0fc31a2a416828757a09ba4d159dbb4381eb64",
+      "root": "results/rwc/p-39582571126-dfbfe128-c-result",
+      "status": "in_progress",
+      "boundary": 76,
+      "parent_run": 39582571126
+    },
+    {
+      "key": "auction-0-53103-shift-return",
+      "run": 39760047614,
+      "head": "4d0fc31a2a416828757a09ba4d159dbb4381eb64",
+      "root": "results/rwc/p-39584632825-686529b5-c-result",
+      "status": "in_progress",
+      "boundary": 64,
+      "parent_run": 39584632825
+    },
+    {
+      "key": "auction-2-53101-outside",
+      "run": 39760097642,
+      "head": "4d0fc31a2a416828757a09ba4d159dbb4381eb64",
+      "root": "results/rwc/p-39585690204-0cee3054-c-result",
+      "status": "in_progress",
+      "boundary": 52,
+      "parent_run": 39585690204
+    },
+    {
+      "key": "combat-0-53103-shift-return",
+      "run": 39760144529,
+      "head": "4d0fc31a2a416828757a09ba4d159dbb4381eb64",
+      "root": "results/rwc/p-39584181704-8a1260e6-m-result",
+      "status": "in_progress",
+      "boundary": 60,
+      "parent_run": 39584181704
+    },
+    {
+      "key": "combat-2-53103-shift-return",
+      "run": 39760190942,
+      "head": "4d0fc31a2a416828757a09ba4d159dbb4381eb64",
+      "root": "results/rwc/p-39584775124-ca2ff456-c-result",
+      "status": "in_progress",
+      "boundary": 52,
+      "parent_run": 39584775124
+    }
+  ],
+  "saved_boundaries_total": 500,
+  "new_complete_comparisons": 0,
+  "registered_conditions_or_acceptance_changed": false,
+  "remaining_dependency": "Next-segment collection/dispatch depends on a local supervisor. Automation needs local app/project availability; active scheduling is not uninterrupted execution."
+}
