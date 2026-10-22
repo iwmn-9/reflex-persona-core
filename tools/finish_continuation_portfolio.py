@@ -14,7 +14,14 @@ from tools.run_continuation_portfolio import prepare_references
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--workers',type=int,default=4)
+    p.add_argument('--purpose-estimator',choices=('sampled','conditional'),default='sampled')
+    p.add_argument('--tail-recovery',type=int,choices=(0,2),default=0)
+    p.add_argument('--recovery-cache',type=int,default=0)
+    p.add_argument('--evidence-prefix',default='')
     args=p.parse_args();root=Path(args.root).resolve();root.mkdir(parents=True,exist_ok=True)
+    if args.evidence_prefix and (not all(c.isalnum() or c=='_' for c in args.evidence_prefix)):
+        raise ValueError('plain evidence namespace required')
+    if not 0<=args.recovery_cache<=256:raise ValueError('bounded cache required')
     base=Path(__file__).resolve().parents[1];status=dict(complete=False,phase='preparing',pid=__import__('os').getpid())
     def save(**values):
         status.update(values,updated=datetime.now(timezone.utc).isoformat())
@@ -32,12 +39,15 @@ def main():
         for name,path,world_mode in (('screen',screen,False),('worlds',worlds,True)):
             save(phase=name,error=None)
             command=[sys.executable,'-u',str(path/'_source/tools/run_continuation_portfolio.py'),
-                '--root',str(path),'--frozen','--workers',str(args.workers)]
+                '--root',str(path),'--frozen','--workers',str(args.workers),
+                '--purpose-estimator',args.purpose_estimator,'--tail-recovery',str(args.tail_recovery),
+                '--recovery-cache',str(args.recovery_cache)]
             if world_mode:command.append('--worlds')
             subprocess.run(command,check=True,cwd=base)
             data=json.loads((path/'summary.json').read_bytes())
             assert data['complete'] and data['completed_pairs']==data['registered_pairs']
-            destination=base/'evidence/long_horizon'/('continuation_portfolio_v2' if not world_mode else 'continuation_portfolio_worlds')
+            label=(args.evidence_prefix+'_'+name) if args.evidence_prefix else ('continuation_portfolio_v2' if not world_mode else 'continuation_portfolio_worlds')
+            destination=base/'evidence/long_horizon'/label
             save(phase=name+'-audit')
             subprocess.run([sys.executable,str(path/'_source/tools/audit_continuation_portfolio.py'),
                 '--root',str(path),'--publish',str(destination)],check=True,cwd=base)

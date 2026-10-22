@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from reflex.core import digest
+from reflex.closed_loop import owned_rollout
 from reflex.decision_loop import DecisionLoop
 from reflex.laboratory import PROFILES
 from tools.continuation_portfolio import portfolio_planner
@@ -13,13 +14,14 @@ from tools.run_continuation_portfolio import execution
 from tools.run_owned_value import cumulative_basis
 
 
-def choose(game, retry=True, horizon=8, seeds=(701,)):
+def choose(game, retry=True, horizon=8, seeds=(701,), purpose_estimator='sampled',tail_recovery=0,recovery_cache=0):
     world=game.start(); actor=game.actor(game.context(world),learning='segmented')
     req=game.request(game.context(world)); saved=digest(actor.record()); cap={}
     planner=portfolio_planner(actor,req,world,observe=game.context,events=game.events,
         terminal=game.terminal,assess=lambda w:game.goal(w).record(),request_for=game.request,
         feedback=game.feedback,model_id=game.model_id,target=game.target,horizon=horizon,
-        seeds=seeds,cumulative_preference=cumulative_basis(game,True),include_retry=retry,captured=cap)
+        seeds=seeds,cumulative_preference=cumulative_basis(game,True),include_retry=retry,captured=cap,
+        purpose_estimator=purpose_estimator,tail_recovery=tail_recovery,recovery_cache=recovery_cache)
     result=DecisionLoop.decide_batch([(copy.deepcopy(actor),req)],False,planner)[0]
     assert digest(actor.record())==saved
     return result,cap
@@ -73,6 +75,58 @@ class ContinuationPortfolioTests(unittest.TestCase):
         self.assertGreater(new.audit['purpose_band']['raw_proposal_regret'],old.max_regret)
         self.assertGreaterEqual(max(new.purpose.values())-new.max_regret,
             max(old.purpose.values())-old.max_regret-1e-12)
+
+    def test_conditional_mean_keeps_sampled_learning_and_risk_paths(self):
+        g=ContinuingGame('combat',PROFILES[0],turns=8)
+        _,sampled=choose(g,horizon=2,seeds=(701,702,703))
+        _,conditional=choose(g,horizon=2,seeds=(701,702,703),purpose_estimator='conditional')
+        self.assertEqual(sampled['paths'],conditional['paths'])
+        for key,rows in conditional['modeled'].items():
+            for i,row in enumerate(rows):
+                actual=dict(row);actual.pop('purpose_mean_estimate')
+                self.assertEqual(actual,sampled['modeled'][key][i])
+            # Exactly one future decision: conditioned on the enumerated root
+            # response, averaging every public next response removes all tail
+            # outcome sampling noise. The person's simulated state still varies.
+            for offset in range(0,len(rows),3):
+                values=[r['purpose_mean_estimate'] for r in rows[offset:offset+3]]
+                self.assertAlmostEqual(max(values),min(values))
+
+    def test_original_owned_recovery_is_preserved_without_extra_continuations(self):
+        class EmptyInventory(ContinuingGame):
+            def start(self):
+                w=super().start();w['ammo']=0;return w
+        g=EmptyInventory('combat',PROFILES[0],turns=8)
+        new,cap=choose(g,False,horizon=4,seeds=(701,),purpose_estimator='conditional',tail_recovery=2)
+        w=g.start();actor=g.actor(g.context(w),learning='segmented');request=g.request(g.context(w));old={}
+        model=owned_rollout(actor,observe=g.context,events=g.events,terminal=g.terminal,
+            assess=lambda w:g.goal(w).record(),record=lambda w:w,request_for=g.request,
+            feedback=g.feedback,model_id=g.model_id,target=g.target,tail_steps=3,seeds=(701,),
+            purpose_estimator='conditional',tail_recovery=2,world_model='posterior',
+            cumulative_preference=cumulative_basis(g,True))
+        result=DecisionLoop.decide_batch([(copy.deepcopy(actor),request)],False,
+            model.planner(actor,request,w,captured=old))[0]
+        before=old['node']['forecast'];after=cap['forecast']
+        def means(f):return {f.roots[k][0]:v for k,v in f.purpose.items()}
+        self.assertEqual(set(means(before)),set(means(after)))
+        for root,value in means(before).items():self.assertAlmostEqual(value,means(after)[root])
+        self.assertEqual(result['decision']['action_id'],new['decision']['action_id'])
+        self.assertTrue(any(row['recovery_calls'] for rows in cap['modeled'].values() for row in rows))
+
+    def test_recovery_cache_reuses_only_identical_complete_owners_and_worlds(self):
+        class EmptyInventory(ContinuingGame):
+            def start(self):
+                w=super().start();w['ammo']=0;return w
+        g=EmptyInventory('combat',PROFILES[2],turns=8)
+        args=dict(horizon=4,seeds=(701,702,703),purpose_estimator='conditional',tail_recovery=2)
+        old,a=choose(g,**args);new,b=choose(g,**args,recovery_cache=64)
+        for result in (old,new):
+            result['deliberation']['metadata']['continuation_portfolio'].pop('recovery_cache')
+        self.assertEqual(old,new)
+        self.assertEqual(a['modeled'],b['modeled'])
+        self.assertEqual(a['paths'],b['paths'])
+        self.assertEqual(a['forecast'].purpose,b['forecast'].purpose)
+        self.assertGreater(b['forecast'].audit['continuation_portfolio']['recovery_cache']['hits'],0)
 
     def test_resume_keeps_real_owner_and_unannounced_changes_out_of_forecast(self):
         spec=dict(id='resume',mechanism='chain',length=2,payout=8.,changes=[[3,2.]],profile=0,turns=7)

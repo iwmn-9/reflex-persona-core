@@ -61,7 +61,8 @@ def execution(root, spec, retry, *, max_decisions=None):
             planner=portfolio_planner(actor, req, w, observe=g.context, events=g.events, terminal=g.terminal,
                 assess=lambda w:g.goal(w).record(), request_for=g.request, feedback=g.feedback,
                 model_id=g.model_id, target=g.target, horizon=16, seeds=model_seeds,
-                cumulative_preference=cumulative_basis(g, True), include_retry=retry, captured=cap)
+                cumulative_preference=cumulative_basis(g, True), include_retry=retry, captured=cap,
+                **spec.get('controller',{}))
             result=DecisionLoop.decide_batch([(actor, req)], False, planner)[0]
         key=result['decision']['action_id']
         truth=law(w['tick'],spec['turns'],spec['regime']) if spec['mechanism']=='world' else {'0':1.}
@@ -176,6 +177,7 @@ def prepare_references(root,summary_path):
             turns=128,seed=row['seed'],regime=row['regime'],reference=dict(archive=archive,
                 sha256=sha(data),original_path=row['baseline']['path'],audit=receipt,
                 original_plan_sha256=plan_hash,pair_id=proof['pair_id'])))
+    specs.sort(key=lambda s:s['id'])
     path=root/'reference_specs.json'
     if path.exists():assert json.loads(path.read_bytes())==specs
     else:path.write_bytes(encoded(specs))
@@ -186,13 +188,19 @@ def main():
     parser.add_argument('--frozen',action='store_true');parser.add_argument('--workers',type=int,default=2)
     parser.add_argument('--worlds',action='store_true')
     parser.add_argument('--references-summary')
+    parser.add_argument('--purpose-estimator',choices=('sampled','conditional'),default='sampled')
+    parser.add_argument('--tail-recovery',type=int,choices=(0,2),default=0)
+    parser.add_argument('--recovery-cache',type=int,default=0)
     args=parser.parse_args();root=Path(args.root).resolve()
     if not args.frozen:
         from tools.freeze_experiment import dispatch
         if args.references_summary:
             if not args.worlds:raise ValueError('audited references require the world diagnostic')
             prepare_references(root,args.references_summary)
-        return dispatch(root,Path(__file__).name,['--workers',str(args.workers)]+(['--worlds'] if args.worlds else []))
+        return dispatch(root,Path(__file__).name,['--workers',str(args.workers),
+            '--purpose-estimator',args.purpose_estimator,'--tail-recovery',str(args.tail_recovery)]+
+            ['--recovery-cache',str(args.recovery_cache)]+
+            (['--worlds'] if args.worlds else []))
     specs=[]
     for mechanism,length,good in (('delayed',11,6.),('chain',5,14.)):
         for profile in (0,2):
@@ -205,6 +213,9 @@ def main():
             dict(id=f'{game}-{profile}',mechanism='world',game=game,profile=profile,turns=128,
                 seed=58101 if profile==0 else 58102,regime='irregular' if profile==0 else 'outside')
                 for game in ('auction','resources','combat','gambling') for profile in (0,2)]
+    if args.purpose_estimator!='sampled' or args.tail_recovery or args.recovery_cache:
+        specs=[dict(s,controller=dict(purpose_estimator=args.purpose_estimator,
+            tail_recovery=args.tail_recovery,recovery_cache=args.recovery_cache)) for s in specs]
     plan=dict(version=2,specs=specs,source=sha(encoded(json.loads((root/'source_snapshot.json').read_bytes()))),
         purpose='mechanism screen only; no adoption and no replacement of registered 40/8/8',
         criteria='all cases complete; fixed personality and actual feedback parity; report every loss; preparation gain and abandonment of unprofitable work; new opportunity inside a former fixed window' if not args.worlds else
