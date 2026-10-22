@@ -41,6 +41,11 @@ GitHubで開始済みの区間はローカル監督の停止後も進めるが�
 `status: active`という台帳や古いPIDだけを継続の根拠にしない。実プロセス・更新時刻・GitHubの現在状態を確認する。
 AIによる分析・改修はチャットの実行時に行う。定期呼び戻しは有効なスケジュールとローカル実行環境が必要で、
 スケジュール有効だけでは常時稼働の保証にならない。中断時は元の保存履歴を検証してから継続する。
+現在はユーザーの意図により定期呼び戻しを停止している。有限の登録済み実験を継続する監督処理と区別し、
+「継続してよい」という許可だけで定期呼び戻しを再度有効にしない。
+
+監督のGitHub読取は一時的なHTTP障害、タイムアウト、および実際に観測した`error connecting to api.github.com`を
+最大5回で再試行する。認可エラーや上限超過は停止し、実験の再送・失敗判定にはこの再試行を適用しない。
 
 検査: `python -m unittest tests.test_horizon_segment tests.test_horizon_observer tests.test_pair_continuation tests.test_recorded_forecast_audit -v`。
 Linuxの実プロセス停止検査はLinuxで実行する。Windowsではその2件を明示的にスキップする。

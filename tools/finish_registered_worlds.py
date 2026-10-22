@@ -34,7 +34,9 @@ def api(path):
         else:
             if response.returncode==0:return json.loads(response.stdout)
             reason=response.stderr.strip()
-            if attempt==4 or not any(f'HTTP {code}' in reason for code in (429,500,502,503,504)):
+            transient_http=any(f'HTTP {code}' in reason for code in (429,500,502,503,504))
+            transient_connection='error connecting to api.github.com' in reason.lower()
+            if attempt==4 or not (transient_http or transient_connection):
                 raise subprocess.CalledProcessError(response.returncode,command,response.stdout,response.stderr)
         print(json.dumps(dict(read_retry=path,attempt=attempt+1,reason=reason)),flush=True)
         time.sleep(min(15*(attempt+1),60))
