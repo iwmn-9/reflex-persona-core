@@ -64,7 +64,7 @@ def main():
         for side in ('baseline','candidate'):
             path=root/spec['id']/side/'result.json';data=path.read_bytes();result=json.loads(data)
             assert result['complete'] and result['configuration']['spec']==spec
-            game=game_for(spec);world=game.start();expected=0.
+            game=game_for(spec);world=game.start();increments=[]
             for step in result['trace']:
                 assert step['before']==world
                 truth=law(world['tick'],spec['turns'],spec['regime']);assert step['truth']==truth
@@ -72,12 +72,15 @@ def main():
                 increment=sum(prob*(game.goal(game.transition(world,step['action'],symbol)[0]).value-value)
                     for symbol,prob in truth.items())
                 assert increment==step['conditional_increment'], 'stored one-step expectation drift'
-                expected+=increment
+                increments.append(increment)
                 world,_=game.transition(world,step['action'],step['response'])
                 assert world==step['after'];decisions+=1
             assert world==result['final'] and game.terminal(world)
             assert game.goal(world).value==result['score']
-            results.append(result);conditional.append(expected)
+            # The runner uses Python sum (compensated on Python >=3.12),
+            # whereas repeated += rounds after every addition. Recompute the
+            # same defined statistic; keep exact equality, not a tolerance.
+            results.append(result);conditional.append(sum(increments))
             paths.append(dict(path=path.relative_to(root).as_posix(),sha256=sha(data)))
         assert results[0]['runtime']==results[1]['runtime']
         delta=results[1]['score']-results[0]['score'];cd=conditional[1]-conditional[0]

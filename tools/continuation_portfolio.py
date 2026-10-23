@@ -31,7 +31,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                       horizon=16, seeds=(701, 702, 703), world_model='posterior',
                       cumulative_preference=None, include_retry=True, captured=None,
                       purpose_estimator='sampled', tail_recovery=0, recovery_cache=0,
-                      coherent_cumulative_mean=False):
+                      coherent_cumulative_mean=False, capture_prefixes=False):
     if type(horizon) is not int or not 1 <= horizon <= 128:
         raise ValueError('explicit bounded continuation horizon required')
     if (not isinstance(seeds, tuple) or not 1 <= len(seeds) <= 8
@@ -76,7 +76,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                 for response in first:
                     for seed in seeds:
                         own, w = copy.deepcopy(actor), copy.deepcopy(world)
-                        flows, actions, falls, corrections = [], [], [], []
+                        flows, actions, falls, corrections, prefixes = [], [], [], [], []
                         current_request = copy.deepcopy(request)
                         recovery_calls = 0
                         for t in range(horizon):
@@ -141,6 +141,9 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                                         for o in outcomes) - Goal(**assess(after)).value)
                             resolve_feedback(own, result['ticket'], feedback(w, after, key, result['context'], flow))
                             flows.append(flow); actions.append(key); w = after; steps += 1
+                            if capture_prefixes:
+                                prefixes.append(dict(assessment=Goal(**assess(w)).record(),terminal=terminal(w),
+                                    correction=math.fsum(corrections),world=copy.deepcopy(w)))
                         goal = Goal(**assess(w))
                         probability = response.probability / len(seeds)
                         flows.extend(effect() for _ in range(horizon-len(flows)))
@@ -149,6 +152,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                             fallback_steps=falls, recovery_calls=recovery_calls, final_owner=digest(own.record())))
                         if purpose_estimator == 'conditional':
                             rows[-1]['purpose_mean_estimate'] = goal.value + math.fsum(corrections)
+                        if capture_prefixes:rows[-1]['prefixes']=prefixes
                 paths[proposal], audits[proposal] = tuple(branches), rows
         forecast = goal_forecast(c, paths, audits, horizon=horizon,
             unit='owner-decisions', target=target, policy=actor.policy,

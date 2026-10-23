@@ -12,13 +12,20 @@ def read_helper():
     root=Path(__file__).resolve().parents[1]
     source=root/'tools/finish_registered_worlds.py'
     tree=ast.parse(source.read_text(encoding='utf-8'))
-    definition=next(node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name=='api')
+    definitions=[node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name in ('api','transient_read')]
     scope=dict(json=json,subprocess=subprocess,time=time,R=root)
-    exec(compile(ast.Module(body=[definition],type_ignores=[]),str(source),'exec'),scope)
+    exec(compile(ast.Module(body=definitions,type_ignores=[]),str(source),'exec'),scope)
     return scope['api']
 
 
 class HorizonSupervisorReadTests(unittest.TestCase):
+    def test_observed_windows_connect_timeout_retries_the_read(self):
+        failed=subprocess.CompletedProcess([],1,'','Get "https://api.github.com": dial tcp 20.27.177.116:443: connectex: A connection attempt failed')
+        success=subprocess.CompletedProcess([],0,'{"jobs": []}','')
+        with patch.object(subprocess,'run',side_effect=[failed,success]) as run,patch.object(time,'sleep'),patch('builtins.print'):
+            self.assertEqual(read_helper()('actions/runs/123/jobs'),{'jobs':[]})
+        self.assertEqual(run.call_count,2)
+
     def test_connection_failure_retries_only_the_same_read(self):
         failed=subprocess.CompletedProcess([],1,'','error connecting to api.github.com\n')
         success=subprocess.CompletedProcess([],0,'{"jobs": []}','')

@@ -34,10 +34,11 @@ def game_for(spec):
 def execution(root, spec, retry, *, max_decisions=None):
     root = Path(root); root.mkdir(parents=True, exist_ok=True)
     hashes = {n: sha(Path(__file__).with_name(n).read_bytes()) for n in (
-        'run_continuation_portfolio.py', 'continuation_portfolio.py', 'preparation_world.py')}
+        'run_continuation_portfolio.py', 'continuation_portfolio.py', 'preparation_world.py','horizon_consensus.py')}
     model_seeds=(701,702,703) if spec['mechanism']=='world' else (701,)
     adopted=spec['mechanism']=='world' and not retry
-    config = dict(spec=spec, retry=retry, sources=hashes, horizon=16, seeds=list(model_seeds),
+    consensus=bool(spec.get('controller',{}).get('horizon_consensus',False)) and retry
+    config = dict(spec=spec, retry=retry, sources=hashes, horizon=32 if consensus else 16, seeds=list(model_seeds),
         reference='adopted-owner-continuity-H16' if adopted else 'reflex-tail')
     g = game_for(spec); w = g.start(); c = g.context(w)
     actor = g.actor(c, learning='segmented'); axes = character_key(c)
@@ -59,11 +60,16 @@ def execution(root, spec, retry, *, max_decisions=None):
                 seeds=model_seeds,world_model='posterior',purpose_estimator='conditional',tail_recovery=2)
             result=controller.decide(w)
         else:
-            planner=portfolio_planner(actor, req, w, observe=g.context, events=g.events, terminal=g.terminal,
+            options=dict(spec.get('controller',{}));options.pop('horizon_consensus',None)
+            factory=portfolio_planner
+            if consensus:
+                from tools.horizon_consensus import consensus_planner
+                factory=consensus_planner
+            planner=factory(actor, req, w, observe=g.context, events=g.events, terminal=g.terminal,
                 assess=lambda w:g.goal(w).record(), request_for=g.request, feedback=g.feedback,
-                model_id=g.model_id, target=g.target, horizon=16, seeds=model_seeds,
+                model_id=g.model_id, target=g.target, horizon=32 if consensus else 16, seeds=model_seeds,
                 cumulative_preference=cumulative_basis(g, True), include_retry=retry, captured=cap,
-                **spec.get('controller',{}))
+                **options)
             result=DecisionLoop.decide_batch([(actor, req)], False, planner)[0]
         key=result['decision']['action_id']
         truth=law(w['tick'],spec['turns'],spec['regime']) if spec['mechanism']=='world' else {'0':1.}
@@ -97,6 +103,7 @@ def execution(root, spec, retry, *, max_decisions=None):
             selected_policy=proposal,selected_purpose=diagnostic['selected_purpose'],
             predicted_actions=predicted,simulated_steps=simulated_steps,
             response=response,truth=truth,conditional_increment=conditional))
+        if consensus:trace[-1]['horizon_consensus']=cap['horizon_consensus']
         w=after
         store.save(w,actor,rng,trace,checks,time.monotonic()-start,terminal=g.terminal(w))
         if len(trace)%32==0:print(json.dumps(dict(id=spec['id'],retry=retry,turn=len(trace),cash=w['cash'])),flush=True)
@@ -197,6 +204,7 @@ def main():
     parser.add_argument('--recovery-cache',type=int,default=0)
     parser.add_argument('--coherent-cumulative-mean',action='store_true')
     parser.add_argument('--fresh-controls',action='store_true')
+    parser.add_argument('--horizon-consensus',action='store_true')
     args=parser.parse_args();root=Path(args.root).resolve()
     if not args.frozen:
         from tools.freeze_experiment import dispatch
@@ -208,6 +216,7 @@ def main():
             ['--recovery-cache',str(args.recovery_cache)]+
             (['--coherent-cumulative-mean'] if args.coherent_cumulative_mean else [])+
             (['--fresh-controls'] if args.fresh_controls else [])+
+            (['--horizon-consensus'] if args.horizon_consensus else [])+
             (['--worlds'] if args.worlds else []))
     specs=[]
     for mechanism,length,good in (('delayed',11,6.),('chain',5,14.)):
@@ -228,6 +237,9 @@ def main():
     if args.coherent_cumulative_mean:
         if args.purpose_estimator!='conditional':raise ValueError('coherent cumulative mean requires conditional mean')
         specs=[dict(s,controller=dict(s['controller'],coherent_cumulative_mean=True)) for s in specs]
+    if args.horizon_consensus:
+        if not args.coherent_cumulative_mean:raise ValueError('coherent cumulative mean required')
+        specs=[dict(s,controller=dict(s['controller'],horizon_consensus=True)) for s in specs]
     plan=dict(version=2,specs=specs,source=sha(encoded(json.loads((root/'source_snapshot.json').read_bytes()))),
         purpose='mechanism screen only; no adoption and no replacement of registered 40/8/8',
         criteria='all cases complete; fixed personality and actual feedback parity; report every loss; preparation gain and abandonment of unprofitable work; new opportunity inside a former fixed window' if not args.worlds else

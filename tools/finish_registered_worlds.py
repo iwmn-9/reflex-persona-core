@@ -21,6 +21,12 @@ def save(state):
     state['updated']=datetime.now(timezone.utc).isoformat()
     tmp=LEDGER.with_suffix('.new');tmp.write_text(json.dumps(state,indent=2)+'\n',encoding='utf8');tmp.replace(LEDGER)
 
+def transient_read(reason):
+    return (any(f'HTTP {code}' in reason for code in (429,500,502,503,504))
+        or 'error connecting to api.github.com' in reason.lower()
+        or ('dial tcp ' in reason and 'connectex:' in reason))
+
+
 def api(path):
     # GET only. Retry transient transport/server failures, never dispatches or
     # simulation/audit failures. An exhausted retry still stops for inspection.
@@ -34,9 +40,7 @@ def api(path):
         else:
             if response.returncode==0:return json.loads(response.stdout)
             reason=response.stderr.strip()
-            transient_http=any(f'HTTP {code}' in reason for code in (429,500,502,503,504))
-            transient_connection='error connecting to api.github.com' in reason.lower()
-            if attempt==4 or not (transient_http or transient_connection):
+            if attempt==4 or not transient_read(reason):
                 raise subprocess.CalledProcessError(response.returncode,command,response.stdout,response.stderr)
         print(json.dumps(dict(read_retry=path,attempt=attempt+1,reason=reason)),flush=True)
         time.sleep(min(15*(attempt+1),60))
@@ -68,7 +72,17 @@ save(state)
 try:
     while any(t['status']!='complete' for t in state['tasks']):
         active=[t for t in state['tasks'] if t['status']!='complete']
-        run_jobs={run:api(f'actions/runs/{run}/jobs?per_page=100')['jobs'] for run in {t['run'] for t in active}}
+        try:
+            run_jobs={run:api(f'actions/runs/{run}/jobs?per_page=100')['jobs'] for run in {t['run'] for t in active}}
+        except (subprocess.CalledProcessError,subprocess.TimeoutExpired) as error:
+            if isinstance(error,subprocess.CalledProcessError) and not transient_read(error.stderr or ''):
+                raise
+            # These are status GETs, before any mutation. Keep the finite study
+            # pending during outages rather than losing its only supervisor.
+            state['transport_wait']=dict(error=repr(error),since=state.get('transport_wait',{}).get(
+                'since',datetime.now(timezone.utc).isoformat()))
+            save(state);time.sleep(60);continue
+        state.pop('transport_wait',None)
         changed=False
         for task in active:
             key=task['key'];root=R/task['root']

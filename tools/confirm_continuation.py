@@ -82,6 +82,16 @@ def main():
         accepted,groups=family_gate(worlds['rows'])
         if any(r['delta'] < -1e-12 for r in screen['rows']) or not accepted:
             save(phase='not-started-gate-rejected',families=groups);return
+        if registration.get('prerequisite_root'):
+            save(phase='waiting-ablation')
+            prerequisite=base/registration['prerequisite_root']
+            while True:
+                prior=json.loads((prerequisite/'status.json').read_bytes())
+                if prior.get('error'):raise RuntimeError('Ablation failed: '+prior['error'])
+                if prior['complete']:
+                    assert prior['phase']=='audited-needs-review', 'complete ablation required before confirmation'
+                    break
+                time.sleep(45)
         plan=dict(specs=registration['specs'],source=registration['algorithm_source_sha256'],
             registration_sha256=sha((root/'registration.json').read_bytes()),
             purpose='Fresh independent confirmation, all registered conditions retained; no automatic adoption',

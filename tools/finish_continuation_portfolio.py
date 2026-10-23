@@ -19,6 +19,7 @@ def main():
     p.add_argument('--recovery-cache',type=int,default=0)
     p.add_argument('--coherent-cumulative-mean',action='store_true')
     p.add_argument('--fresh-controls',action='store_true')
+    p.add_argument('--horizon-consensus',action='store_true')
     p.add_argument('--evidence-prefix',default='')
     args=p.parse_args();root=Path(args.root).resolve();root.mkdir(parents=True,exist_ok=True)
     if args.evidence_prefix and (not all(c.isalnum() or c=='_' for c in args.evidence_prefix)):
@@ -45,6 +46,7 @@ def main():
                 '--purpose-estimator',args.purpose_estimator,'--tail-recovery',str(args.tail_recovery),
                 '--recovery-cache',str(args.recovery_cache)]
             if args.coherent_cumulative_mean:command.append('--coherent-cumulative-mean')
+            if args.horizon_consensus:command.append('--horizon-consensus')
             if world_mode:command.append('--worlds')
             if world_mode and args.fresh_controls:command.append('--fresh-controls')
             subprocess.run(command,check=True,cwd=base)

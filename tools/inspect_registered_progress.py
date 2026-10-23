@@ -170,6 +170,11 @@ def display(output):
     names={'confirmation':'独立確認','diagnostic':'従来診断','future_replanning':'新診断'}
     for name,value in output['counts'].items():
         lines.append(f"- {names.get(name,name)}: {value['completed_conditions']}/{value['registered_conditions']}")
+    if output.get('supervisor_transport_wait'):
+        lines+=['', '監督処理は状態取得の通信復旧待ち。完走・引き継ぎ済みとは扱わない。',
+                str(output['supervisor_transport_wait'])]
+    if output.get('supervisor_error'):
+        lines+=['', '監督処理は失敗で停止: '+output['supervisor_error']]
     lines+=['','| 条件 | 回収・照合済み手数 | 回収で確認した前進 | 現在のクラウド報告（基準 / 変更） | 現区間で前進を観測した時刻 | 状態 |',
             '|---|---:|---|---|---|---|']
     for row in output['pending']:
@@ -217,6 +222,7 @@ def main():
     status = read(ROOT/'results/registered_evidence_status.json')
     output = dict(checked_at=datetime.now(timezone.utc).isoformat(),
                   ledger_updated=state['updated'], supervisor_error=state.get('error'),
+                  supervisor_transport_wait=state.get('transport_wait'),
                   counts={k:{f:v[f] for f in ('complete','completed_conditions','registered_conditions')} for k,v in status.items()},
                   pending=rows,
                   caveat='The latest running segment has no externally readable checkpoints until artifact upload. Do not infer live progress from in_progress or from an older run checkpoint.')
