@@ -5,6 +5,8 @@ from pathlib import Path
 import subprocess
 import time
 import unittest
+from datetime import datetime,timezone
+from types import SimpleNamespace
 from unittest.mock import patch
 
 
@@ -19,6 +21,37 @@ def read_helper():
 
 
 class HorizonSupervisorReadTests(unittest.TestCase):
+    def test_exhausted_transport_read_keeps_study_pending_then_recovers(self):
+        root=Path(__file__).resolve().parents[1]
+        source=root/'tools/finish_registered_worlds.py'
+        tree=ast.parse(source.read_text(encoding='utf8'))
+        loop=next(n for n in tree.body if isinstance(n,ast.Try) and any(isinstance(x,ast.While) for x in n.body))
+        state=dict(tasks=[dict(status='active',run=123,key='case',root='unused')],complete=False)
+        waits=[];saved=[];calls=[]
+        def api(path):
+            calls.append(path)
+            if len(calls)==1:
+                raise subprocess.CalledProcessError(1,['gh','api',path],stderr='dial tcp 1:443: connectex: timeout')
+            return {'jobs':[]}
+        def sleep(seconds):
+            waits.append(seconds)
+            if len(waits)==1:
+                self.assertFalse(state['complete'])
+                self.assertIn('transport_wait',state)
+                self.assertNotIn('error',state)
+            else:state['tasks'][0]['status']='complete'
+        classifier=read_helper().__globals__['transient_read']
+        scope=dict(state=state,api=api,transient_read=classifier,R=root,subprocess=subprocess,
+            datetime=datetime,timezone=timezone,time=SimpleNamespace(sleep=sleep),
+            save=lambda s:saved.append(json.loads(json.dumps(s))))
+        with patch('builtins.print'):
+            exec(compile(ast.Module(body=[loop],type_ignores=[]),str(source),'exec'),scope)
+        self.assertEqual(waits,[60,45])
+        self.assertEqual(calls,['actions/runs/123/jobs?per_page=100']*2)
+        self.assertTrue(state['complete'])
+        self.assertNotIn('transport_wait',state)
+        self.assertTrue(any('transport_wait' in s and not s['complete'] for s in saved))
+
     def test_observed_windows_connect_timeout_retries_the_read(self):
         failed=subprocess.CompletedProcess([],1,'','Get "https://api.github.com": dial tcp 20.27.177.116:443: connectex: A connection attempt failed')
         success=subprocess.CompletedProcess([],0,'{"jobs": []}','')

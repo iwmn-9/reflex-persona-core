@@ -7,5 +7,14 @@
     "complete": true,
     "adoption": false
   },
-  "source": "ab86e5863544a807143a6493ea492edb4f72e139d6aee588262e4f824ea1a96b"
+  "source": "ab86e5863544a807143a6493ea492edb4f72e139d6aee588262e4f824ea1a96b",
+  "confirmation_gate_tests": {
+    "passed": 4,
+    "total": 4
+  },
+  "supervisor_recovery_integration_test": {
+    "passed": 1,
+    "total": 1,
+    "description": "Exhausted read-only connection retry stays pending, clears wait after recovery, no simulation or dispatch; unknown failures remain failures."
+  }
 }
