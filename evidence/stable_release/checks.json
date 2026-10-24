@@ -1,0 +1,198 @@
+{
+  "version": "python-stabilization-checks-v1",
+  "at": "2026-10-24T15:36:47.216426+00:00",
+  "source_commit": "225264d975875747bc475bd9b6d05c7382f9c5c2",
+  "stage": "persistence integration only; stable release not complete",
+  "focused": {
+    "tests": 10,
+    "passed": 10,
+    "seconds": 133.591
+  },
+  "full_python_regression": {
+    "started": "2026-10-24T15:03:31.916099+00:00",
+    "finished": "2026-10-24T15:33:07.375823+00:00",
+    "seconds": 1775.4529999999795,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "tests": 1290,
+    "failures": 0,
+    "errors": 0,
+    "success": true,
+    "source_unchanged": true,
+    "source_sha256": "8e67200105294510172d4b7fd4d8fcda81fc728f48a65a7a96b22dff618b47b7"
+  },
+  "skipped": [
+    {
+      "test": "test_complete_hypothetical_shape_is_bounded_without_legal_win_claim (test_contingent_mahjong.ContingentMahjongTests.test_complete_hypothetical_shape_is_bounded_without_legal_win_claim)",
+      "reason": "optional closed-hand engine required"
+    },
+    {
+      "test": "test_hypothetical_draw_cannot_mutate_actual_public_hand (test_contingent_mahjong.ContingentMahjongTests.test_hypothetical_draw_cannot_mutate_actual_public_hand)",
+      "reason": "optional closed-hand engine required"
+    },
+    {
+      "test": "test_two_own_decision_cutoff_is_explicit_proxy_not_kyoku_victory (test_contingent_mahjong.ContingentMahjongTests.test_two_own_decision_cutoff_is_explicit_proxy_not_kyoku_victory)",
+      "reason": "optional closed-hand engine required"
+    },
+    {
+      "test": "test_real_partial_checkpoint_pause_then_resume (test_horizon_segment.HorizonSegmentTests.test_real_partial_checkpoint_pause_then_resume)",
+      "reason": "Actions process-group control is Linux-only"
+    },
+    {
+      "test": "test_real_process_stop_errors_and_deadline_are_distinct (test_horizon_segment.HorizonSegmentTests.test_real_process_stop_errors_and_deadline_are_distinct)",
+      "reason": "Actions process-group control is Linux-only"
+    },
+    {
+      "test": "test_all_engine_actions_logged_and_closed_protocol_explicit (test_mahjong.MahjongTests.test_all_engine_actions_logged_and_closed_protocol_explicit)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_duplicate_public_physical_tiles_rejected (test_mahjong.MahjongTests.test_duplicate_public_physical_tiles_rejected)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_equal_progress_avoids_unnecessary_public_exposure (test_mahjong.MahjongTests.test_equal_progress_avoids_unnecessary_public_exposure)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_full_kyoku_finishes_and_real_wins_are_accepted (test_mahjong.MahjongTests.test_full_kyoku_finishes_and_real_wins_are_accepted)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_genbutsu_is_type_specific_not_calibrated_probability (test_mahjong.MahjongTests.test_genbutsu_is_type_specific_not_calibrated_probability)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_known_hand_shanten_and_copy_normalization (test_mahjong.MahjongTests.test_known_hand_shanten_and_copy_normalization)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_lookahead_is_bounded_paired_and_replayable (test_mahjong.MahjongTests.test_lookahead_is_bounded_paired_and_replayable)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_minimum_hand_progress_without_declared_threat (test_mahjong.MahjongTests.test_minimum_hand_progress_without_declared_threat)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_next_draw_completion_is_better_than_only_tenpai (test_mahjong.MahjongTests.test_next_draw_completion_is_better_than_only_tenpai)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_profile_and_unsupported_needs_preserved (test_mahjong.MahjongTests.test_profile_and_unsupported_needs_preserved)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_public_pool_uses_no_other_hand_or_wall (test_mahjong.MahjongTests.test_public_pool_uses_no_other_hand_or_wall)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_real_hidden_state_changes_cannot_change_decision (test_mahjong.MahjongTests.test_real_hidden_state_changes_cannot_change_decision)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_same_state_batch_matches_individual_choices_and_memories (test_mahjong.MahjongTests.test_same_state_batch_matches_individual_choices_and_memories)",
+      "reason": "optional riichienv environment required"
+    },
+    {
+      "test": "test_same_state_personality_safety_tradeoff (test_mahjong.MahjongTests.test_same_state_personality_safety_tradeoff)",
+      "reason": "optional riichienv environment required"
+    }
+  ],
+  "skipped_reasons": {
+    "optional closed-hand engine required": 3,
+    "Actions process-group control is Linux-only": 2,
+    "optional riichienv environment required": 14
+  },
+  "manifest_hash_definition": "SHA256(json.dumps({relative POSIX path: file SHA256 for sorted reflex/*.py and tests/*.py}, sort_keys=True).encode()); checked before and after tests",
+  "package": {
+    "success": true,
+    "at": "2026-10-24T15:19:30.273072+00:00",
+    "no_research_imports": true,
+    "actual_steps": 4,
+    "restores": 4,
+    "process_restart_at": 2,
+    "world_and_rng_equal": true,
+    "owner_equal": true,
+    "all_decisions_equal": true,
+    "terminal_restored": true,
+    "trace": [
+      "a",
+      "b",
+      "b",
+      "b"
+    ],
+    "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b",
+    "verifier_sha256": "71fcd6a1e8883823a5265c78584e1d8da1b94cbd5217e69f4ae672318e1bd542",
+    "wheel_sha256": "f4897d1ce87806e27d0a37404d43446db5cf56710a7672e8fef3f09db1025b8a",
+    "script": "tools/verify_receding_package.py",
+    "source_commit": "225264d975875747bc475bd9b6d05c7382f9c5c2",
+    "import_boundary": "Isolated wheel installation, Python -I, working directory outside checkout; research tools imports rejected."
+  },
+  "ci": {
+    "rust": {
+      "conclusion": "success",
+      "databaseId": 40105607662,
+      "headSha": "225264d975875747bc475bd9b6d05c7382f9c5c2",
+      "status": "completed",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40105607662",
+      "jobs": [
+        {
+          "name": "verify (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "verify (windows-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "python": {
+      "conclusion": "success",
+      "databaseId": 40105607667,
+      "headSha": "225264d975875747bc475bd9b6d05c7382f9c5c2",
+      "jobs": [
+        {
+          "name": "test (windows-latest, 3.12)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "test (ubuntu-latest, 3.12)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "test (windows-latest, 3.13)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "test (ubuntu-latest, 3.13)",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40105607667"
+    }
+  },
+  "independent40": {
+    "status": "in progress; not adopted",
+    "frozen_source_verified_files": 383,
+    "source_mismatches": 0,
+    "acceptance": {
+      "path": "evidence/long_horizon/continuation_selected_confirmation_acceptance.json",
+      "sha256": "3c9ca8e122b38d745f39a561379e2c2eb794723777b20eec80a4829b97777d34",
+      "criteria_change_allowed": false,
+      "partial_completion_allowed": false,
+      "personality_or_game_specific_tuning_allowed": false
+    }
+  },
+  "limits": [
+    "These checks establish lifecycle/restore/package consistency, not stronger long-term game decisions.",
+    "H32 research orchestration is not yet adopted or the supported package composition.",
+    "Host owns coherent world/RNG persistence and versioned callback semantics."
+  ]
+}
