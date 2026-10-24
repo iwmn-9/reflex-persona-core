@@ -1,0 +1,79 @@
+{
+  "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "controller": "16..32 consensus: these complete histories are not yet the H32 comparison",
+  "rows": [
+    {
+      "id": "combat-0-56101-outside",
+      "arms": [
+        {
+          "side": "baseline",
+          "input": "results\\continuation_horizon_consensus\\worlds\\combat-0-56101-outside\\baseline\\result.json",
+          "input_sha256": "ef673653793cfc6788abfefd9c0355adaeac8db3605abd36a34843614b8061e4",
+          "score": 0.423828125,
+          "account": {
+            "initial_perfect_information": 0.5094485703834357,
+            "purpose_opportunity_loss": 0.0728351198203841,
+            "residual": -0.01278532556305162,
+            "residual_removed": 0.4366134505630516,
+            "reconstruction_error": 0.0
+          }
+        },
+        {
+          "side": "candidate",
+          "input": "results\\continuation_horizon_consensus\\worlds\\combat-0-56101-outside\\candidate\\result.json",
+          "input_sha256": "ba249c2befaa8ee6137004ea2dbe4a933189a717c4a9fe8440b67df3e89e6886",
+          "score": 0.4479166666666667,
+          "account": {
+            "initial_perfect_information": 0.5094485703834357,
+            "purpose_opportunity_loss": 0.053416706585526885,
+            "residual": -0.008115197131242147,
+            "residual_removed": 0.45603186379790883,
+            "reconstruction_error": 0.0
+          }
+        }
+      ],
+      "score_delta": 0.024088541666666685,
+      "reference_choice_contribution": 0.019418413234857212,
+      "realized_residual_contribution": 0.004670128431809473
+    },
+    {
+      "id": "combat-2-56101-outside",
+      "arms": [
+        {
+          "side": "baseline",
+          "input": "results\\continuation_horizon_consensus\\worlds\\combat-2-56101-outside\\baseline\\result.json",
+          "input_sha256": "fb06ba26e7051304070d7ac308f5b37b34a29ce72a7ad1a1abb0a50d6faaa665",
+          "score": 0.3828125,
+          "account": {
+            "initial_perfect_information": 0.5094485703834357,
+            "purpose_opportunity_loss": 0.0872773931884755,
+            "residual": -0.03935867719496022,
+            "residual_removed": 0.4221711771949602,
+            "reconstruction_error": 0.0
+          }
+        },
+        {
+          "side": "candidate",
+          "input": "results\\continuation_horizon_consensus\\worlds\\combat-2-56101-outside\\candidate\\result.json",
+          "input_sha256": "bca7775acb2988e663f339239515ce972cec915c39f0f0c057d312b9aed0c97b",
+          "score": 0.4244791666666667,
+          "account": {
+            "initial_perfect_information": 0.5094485703834357,
+            "purpose_opportunity_loss": 0.04732252757226585,
+            "residual": -0.03764687614450318,
+            "residual_removed": 0.46212604281116987,
+            "reconstruction_error": 0.0
+          }
+        }
+      ],
+      "score_delta": 0.041666666666666685,
+      "reference_choice_contribution": 0.039954865616209645,
+      "realized_residual_contribution": 0.0017118010504570402
+    }
+  ],
+  "reference_source_sha256": "941d7a63fd3c12afd54be2a497a813013d9452af09f1e9b372de7c4b6fc4608d",
+  "limit": "Perfect-information objective account ignores personality and information constraints. Decomposition is diagnostic, never an adoption criterion or a pure measure of reasoning error. Only completed128-turn histories included.",
+  "inputs_sha256": "a5c8e9ce885a3136f4eb783cbf97bf2722e01955170d818618b836ce53110602",
+  "frozen_world_source_archive": "../continuation_horizon_consensus_screen/source.zip",
+  "scope": "Both completed consensus combat pairs only, not fixed32 and not the independent cohort. Existing perfect-information reference accounting; not new NPC inputs or modified acceptance."
+}
