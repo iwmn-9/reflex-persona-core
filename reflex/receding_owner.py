@@ -60,3 +60,17 @@ class RecedingOwner:
 
     def resolve(self, ticket, actual_feedback):
         return resolve_feedback(self.actor,ticket,actual_feedback)
+
+    def checkpoint(self, public):
+        """Save a resolved owner bound to this planning contract and public world."""
+        from .receding_checkpoint import checkpoint
+        return checkpoint(self, public)
+
+    def restored(self, public, saved):
+        """Return a new owner; this instance supplies the expected host configuration.
+
+        The host restores its world and RNG separately before calling this method.
+        Neither this instance nor its callbacks are loaded from the checkpoint.
+        """
+        from .receding_checkpoint import restored
+        return restored(self, public, saved)

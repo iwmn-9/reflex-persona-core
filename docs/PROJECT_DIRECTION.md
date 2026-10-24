@@ -4,6 +4,16 @@
 
 この文書は現在の判断基準と優先順位の正本。各実験の数値・旧案・不採用理由はそれぞれの evidence に置く。全体診断は [foundation_audit](../evidence/foundation_audit/REPORT.md)、将来の本人と目的評価は [closed_loop](../evidence/closed_loop/REPORT.md)、打切り地点の価値は [frontier_value](../evidence/frontier_value/REPORT.md)、学びによる将来の選択変更は [learning_value](../evidence/learning_value/REPORT.md)、既存仮説外の公開傾向の学習は [open_model](../evidence/open_model/REPORT.md)、残資源と将来の選択肢は [opportunity_graph](../evidence/opportunity_graph/REPORT.md)、人格の代償と代理評価の区別は [preference_basis](../evidence/preference_basis/REPORT.md)、実観測による修正と終局評価の接続は [adaptive_opportunities](../evidence/adaptive_opportunities/REPORT.md)。
 
+## Python安定版の期限と範囲（2026-10-24合意）
+
+目標日は **2026-11-03**、最終期限は **2026-11-07（日本時間）**。新しい判断機構の追加を止め、既存の人格・欲求・実経験の学習・相手予測・毎手の再計画を、一つの推奨構成として通しで使える状態にする。期限は検証や合否の省略理由にしない。研究全体の完成や未知ゲームでの人間水準までを、この版の達成として主張しない。
+
+採用済み構成と研究候補を区別する。H32候補は凍結した独立40組と[登録済み基準](../evidence/long_horizon/continuation_selected_confirmation_acceptance.json)を完了・監査してから採否を決める。損失、未完了条件、人格差、費用も残す。既知局面や単体試験だけで昇格させず、悪化を別人格の調整で埋めない。途中の計算は凍結したソースで継続し、統合改修とは混ぜない。
+
+安定版には、設定と入出力の契約、欠測と失敗時の更新、全状態の保存復元、ゲーム側の責任範囲、実際に配布したパッケージからの実行例を含める。将来予測の中だけで学んだ経験を本人へ混ぜない。復元時に人格・予測の前提・読みの設定を取り違えず、通し実行と同じ判断を続けられることを検査する。主要4系統の長期評価、独立確認、対応環境の回帰試験を必要条件とする。新たな修正が判断を変える場合は、その影響範囲に必要な独立確認を行う。
+
+数値基準の正本は既存の登録書、リリース作業の状態は [安定版計画](../evidence/stable_release/plan.json)。合格前はバージョンを安定版へ上げない。期限までに既知の阻害事項を解消できなければ、成果・根拠・残る阻害事項を明示し、不合格のものを安定版として出さない。定期実行は再開しない。
+
 ## 守る七つの条件
 
 1. **人物の軸**：性格と有限の主義・価値観はあまり動かさない。主義の強さと譲りにくさを分ける。本人のためになると理解して妥協することも、損をしてでも固執することも表現する。

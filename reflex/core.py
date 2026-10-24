@@ -98,14 +98,18 @@ class Batch:
         return Batch(**fields)
 
 
-def compile_batch(contexts, *, outcome_limit=MAX_OUTCOMES):
+def compile_batch(contexts, *, outcome_limit=MAX_OUTCOMES, allow_no_actions=False):
     """Validate snapshots, canonically order candidates, freeze numeric input arrays.
 
     Adapter supplies perceived outcome estimates, never hidden true world state.
     Unsupported and disabled needs differ in JSON; both receive zero numeric weight.
+    allow_no_actions is for inactive-owner persistence validation only. Decision
+    entry points retain the default requirement of at least one feasible action.
     """
     if type(outcome_limit) is not int or not 1<=outcome_limit<=4096:
         raise ValueError('bounded explicit outcome capacity required')
+    if type(allow_no_actions) is not bool:
+        raise ValueError('explicit inactive-context validation required')
     if not contexts:
         raise ValueError("empty batch")
     n = len(contexts)
@@ -113,8 +117,8 @@ def compile_batch(contexts, *, outcome_limit=MAX_OUTCOMES):
     enabled = np.zeros((n, 5), bool)
     # Allocate only actual maxima, bounded by the public contract.
     a = max(len(c["actions"]) for c in contexts)
-    k = max(len(act["outcomes"]) for c in contexts for act in c["actions"])
-    if not 1 <= a <= MAX_ACTIONS or not 1 <= k <= outcome_limit:
+    k = max((len(act["outcomes"]) for c in contexts for act in c["actions"]), default=0)
+    if not (allow_no_actions and a == 0) and (not 1 <= a <= MAX_ACTIONS or not 1 <= k <= outcome_limit):
         raise ValueError("action/outcome capacity exceeded")
     effects = np.zeros((n, a, k, len(FEATURES))); probability = np.zeros((n, a, k))
     legal = np.zeros((n, a), bool); confidence = np.zeros((n, a)); familiarity = confidence.copy()
@@ -175,7 +179,8 @@ def compile_batch(contexts, *, outcome_limit=MAX_OUTCOMES):
                 probability[i,j,h] = number(outcome["p"],0,1)
                 effects[i,j,h] = [number(outcome["objective"],-1,1)] + [number(outcome["needs"].get(key,0),-1,1) for key in NEEDS] + [number(outcome["values"].get(key,0),-1,1) for key in VALUES] + [number(outcome["style"].get(key,0),-1,1) for key in TRAITS] + [number(outcome["cost"],0,1)]
             if abs(probability[i,j].sum()-1) > 1e-8: raise ValueError("outcome probabilities must sum to one")
-        if not legal[i].any(): raise ValueError("adapter must supply at least one feasible action, including WAIT if needed")
+        if not legal[i].any() and not (allow_no_actions and not ordered):
+            raise ValueError("adapter must supply at least one feasible action, including WAIT if needed")
         other = c["opponent"]
         if other is not None:
             exact(other, ("confidence", "uncertainty", "evidence_ids", "threatened", "maintains_advantage", "deltas"))

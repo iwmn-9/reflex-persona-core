@@ -174,13 +174,13 @@ class DecisionLoop:
     Internal intent state is carried automatically. JSON boundary is audited;
     this path does not replace the existing fast numeric Population runtime.
     """
-    def __init__(self,context,policy=None,read_control=None,capacity=64,predictor=None,pressure=None,progress=None,social=None,*,decision_metric='purpose',response_adoption='joint'):
+    def __init__(self,context,policy=None,read_control=None,capacity=64,predictor=None,pressure=None,progress=None,social=None,*,decision_metric='purpose',response_adoption='joint',allow_inactive=False):
         if decision_metric not in ('purpose','persona'):raise ValueError('declared decision evidence metric required')
         if response_adoption not in ('joint','persona_choice') or response_adoption=='persona_choice' and decision_metric!='persona':
             raise ValueError('choice-based adoption requires frozen persona appraisal')
         self.decision_metric=decision_metric
         self.response_adoption=response_adoption
-        compile_batch([context])
+        compile_batch([context],allow_no_actions=allow_inactive)
         self.scope=copy.deepcopy(context['scope']);self.owner=digest(self.scope)
         self.personality=copy.deepcopy(context['personality']);self.values=copy.deepcopy(context['values']);self.seed=context['seed']
         self.policy=policy or Policy();self.read_control=read_control or ReadControl(max_nodes=16)
@@ -695,7 +695,7 @@ class DecisionLoop:
         return result
 
     @classmethod
-    def from_record(cls,context,record,policy=None,read_control=None,predictor=None,*,decision_metric=None,response_adoption=None):
+    def from_record(cls,context,record,policy=None,read_control=None,predictor=None,*,decision_metric=None,response_adoption=None,allow_inactive=False):
         metric=record.get('decision_metric','purpose')
         if decision_metric is not None and decision_metric!=metric:raise ValueError('decision evidence metric changed')
         adoption=record.get('response_adoption','joint')
@@ -707,7 +707,7 @@ class DecisionLoop:
             if saved_policy.commitments is not None and any(policy.commitments.get(k)!=v for k,v in saved_policy.commitments.items()):
                 raise ValueError('checkpoint policy changed')
         if read_control is not None and read_control!=saved_control:raise ValueError('checkpoint reading budget changed')
-        loop=cls(context,policy or saved_policy,read_control or saved_control,record['memory']['capacity'],predictor,decision_metric=metric,response_adoption=adoption)
+        loop=cls(context,policy or saved_policy,read_control or saved_control,record['memory']['capacity'],predictor,decision_metric=metric,response_adoption=adoption,allow_inactive=allow_inactive)
         if record.get('social') is not None:
             from .social import restore_memory
             loop.social=restore_memory(context,record['social'])
@@ -724,7 +724,7 @@ class DecisionLoop:
         state=record['state']
         if (tick==-1)!=(state is None):raise ValueError('checkpoint state/tick mismatch')
         if state is not None:
-            check=copy.deepcopy(context);check['state']=state;compile_batch([check])
+            check=copy.deepcopy(context);check['state']=state;compile_batch([check],allow_no_actions=allow_inactive)
         loop.state=copy.deepcopy(state);loop.last_tick=tick
         route=record['strategy']
         if type(route['switches']) is not int or route['switches']<0:raise ValueError('invalid strategy checkpoint')

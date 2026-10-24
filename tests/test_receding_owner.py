@@ -26,8 +26,10 @@ class RecedingOwnerTests(unittest.TestCase):
         record=own.record()
         self.assertEqual(record['predictor']['memory']['observations'],131)
         self.assertEqual(len(record['predictor']['memory']['history']),128)
-        restored=DecisionLoop.from_record(g.context(w),record,predictor=g.actor(g.context(w),learning='segmented').predictor)
-        self.assertEqual(RecedingOwner(own,**args).decide(w)['decision'],RecedingOwner(restored,**args).decide(w)['decision'])
+        continuous=RecedingOwner(own,**args)
+        template=RecedingOwner(g.actor(g.context(w),learning='segmented'),**args)
+        restored=template.restored(w,continuous.checkpoint(w))
+        self.assertEqual(continuous.decide(w)['decision'],restored.decide(w)['decision'])
 
     def test_incomplete_forecast_never_silently_commits_reflex(self):
         g=ContinuingGame('auction',PROFILES[0],turns=3);w=g.start();own=g.actor(g.context(w))

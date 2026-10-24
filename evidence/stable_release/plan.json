@@ -1,0 +1,71 @@
+{
+  "version": "python-stable-release-plan-v1",
+  "agreed_date": "2026-10-24",
+  "timezone": "Asia/Tokyo",
+  "target_date": "2026-11-03",
+  "deadline_date": "2026-11-07",
+  "status": "stabilizing-not-released",
+  "requirements_source": "docs/PROJECT_DIRECTION.md",
+  "scope": "One supported composition of existing personality, needs, real feedback learning, prediction, receding planning and persistence. No new AI mechanisms.",
+  "quality_contract": {
+    "path": "evidence/long_horizon/continuation_selected_confirmation_acceptance.json",
+    "sha256": "3c9ca8e122b38d745f39a561379e2c2eb794723777b20eec80a4829b97777d34",
+    "criteria_change_allowed": false,
+    "partial_completion_allowed": false,
+    "personality_or_game_specific_tuning_allowed": false
+  },
+  "frozen_evaluation": {
+    "root": "results/continuation_selected_confirmation",
+    "source_digest": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+    "paired_conditions": 40,
+    "turns_per_arm": 128,
+    "status": "running",
+    "adopted": false
+  },
+  "milestones": [
+    {
+      "id": "quality_selection",
+      "target_date": "2026-10-28",
+      "status": "running",
+      "exit": "All registered worlds complete, replay audited, original inequalities met, all losses and personality differences reviewed; no substitution of an easier baseline."
+    },
+    {
+      "id": "integrated_contract",
+      "target_date": "2026-10-29",
+      "status": "in_progress",
+      "exit": "One documented composition, explicit model/goal ownership, factual versus simulated feedback isolation, retry semantics, settings-bound save/restore and host world boundary tested."
+    },
+    {
+      "id": "release_confirmation",
+      "target_date": "2026-11-02",
+      "status": "pending",
+      "exit": "Required independent confirmation of any behavior-changing fix, supported OS/Python regression, installable package examples without research tools; source provenance matches evaluated behavior."
+    },
+    {
+      "id": "target_release",
+      "target_date": "2026-11-03",
+      "status": "pending",
+      "exit": "All quality and integration requirements met; package/version/release notes identify supported scope and known limits."
+    },
+    {
+      "id": "deadline",
+      "target_date": "2026-11-07",
+      "status": "pending",
+      "exit": "Only release blockers after target date. Never label failing or incompletely verified code stable."
+    }
+  ],
+  "current_work": {
+    "change": "Bind RecedingOwner persistence to expected planning settings, owner settings and public world boundary. Restore a new instance without mutating the live owner.",
+    "behavior_change_intended": false,
+    "validation": "pending",
+    "remaining": [
+      "Select adopted composition only after independent40 audit",
+      "Move any selected research orchestration into the package with parity evidence",
+      "Audit complete actual feedback and restoration on the final supported composition",
+      "Run final independent confirmation if changes alter decisions",
+      "Package/installation/CI and release audit"
+    ]
+  },
+  "scheduling": "No recurring automation. Existing finite evaluation continues; code changes and result review require an active agent execution.",
+  "evidence_reference": "evidence/long_horizon/REPORT.md"
+}
