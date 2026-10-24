@@ -1,0 +1,31 @@
+{
+  "development": "results/continuation_horizon_consensus",
+  "suite": "screen",
+  "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "development_plan_sha256": "4c0780c61451a11cce45535bb3fcec3d7dab8b54f29934a3d84a71bb7c87a219",
+  "manager_sha256": "34aa8995ce3c4d9ef9cdb3aefae11482086af3b1cebef9ad3d6876474f75542c",
+  "control_auditor_sha256": "6446e269c0dfdd93d677209e22b618e31561739cdb53c95dddb074c658535721",
+  "conditions": [
+    "delayed-0-stable",
+    "delayed-0-loss",
+    "delayed-0-opportunity",
+    "delayed-2-stable",
+    "delayed-2-loss",
+    "delayed-2-opportunity",
+    "chain-0-stable",
+    "chain-0-loss",
+    "chain-0-opportunity",
+    "chain-2-stable",
+    "chain-2-loss",
+    "chain-2-opportunity"
+  ],
+  "evidence": "evidence/long_horizon/continuation_fixed32_screen",
+  "registered_at": "2026-10-23T23:57:18.842466+00:00",
+  "change": "Only minimum_horizon=32; all twelve existing preparation conditions unchanged. Same frozen actor and audited H16 controls; no independent evidence or automatic adoption.",
+  "result_auditor_sha256": "a15c0d062d299faadcad93d960fa9f90314a577ec051fa433fdda9136fe80c11",
+  "audit_recovery": {
+    "at": "2026-10-24T00:18:04.493081+00:00",
+    "prior_registration_sha256": "356b6152b17a805bc3c3828282a2b60ce67a66a8580f3476c9bb921ddbb6fb7c",
+    "reason": "Referenced controls were omitted from the stable/loss prefix index. Retain their spec and retry=False, then perform the SAME pre-change checks for both arms. No history, playing source, condition, tolerance or criterion changes."
+  }
+}

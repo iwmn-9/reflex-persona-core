@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "registered_at": "2026-10-24T00:01:02.046980+00:00",
+  "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "manager_sha256": "3dfc437b67a43a1d267409a8c55f8632ba2666fa2fbdf3d8d174758ee02064dd",
+  "files": {
+    "gate.py": "54e778b54ee87bd6491525f9589f59646f3cbc8ee382caf5905b6e5f4a320fc8",
+    "reviewer.py": "dd53be868a5a6322f8730b4ccae64955dae08594afc119219b66b8e2fed8a761",
+    "fixed32_confirmation.json": "2a5bef5825f34a6d304d4473e2531c1464633c51d4308be44919e6ae8b3ba73a",
+    "consensus_confirmation.json": "2ecd2fd4924f552c721a44450df1d54b399b7ee65e744eb10c2988ea7702e0be"
+  },
+  "candidates": {
+    "fixed32": {
+      "worlds": "evidence/long_horizon/continuation_horizon_ablation",
+      "screen": "evidence/long_horizon/continuation_fixed32_screen",
+      "worlds_root": "results/continuation_horizon_ablation",
+      "world_plan_sha256": "0b8607aa40f2496048acfe03f5640796871b39c9c03c7b63eb829e497e848173",
+      "screen_plan_sha256": "30035e5b68a88a921f8dc3fd9e04324909c7fbcd8f1d9ff91be7042ac1579191",
+      "confirmation_template": "fixed32_confirmation.json"
+    },
+    "consensus": {
+      "worlds": "evidence/long_horizon/continuation_horizon_consensus_worlds",
+      "screen": "evidence/long_horizon/continuation_horizon_consensus_screen",
+      "worlds_root": "results/continuation_horizon_consensus/worlds",
+      "world_plan_sha256": "c6249d7bef7f0b1c8de9c411c5442239b932af02bf4db6fc0ebd1d0484b99f28",
+      "screen_plan_sha256": "4c0780c61451a11cce45535bb3fcec3d7dab8b54f29934a3d84a71bb7c87a219",
+      "confirmation_template": "consensus_confirmation.json"
+    }
+  },
+  "selection_rule": "Complete both candidates, all known-world8 and preparation12. If fixed H32 has no preparation loss and no family mean final-purpose or conditional-increment loss under the unchanged 1e-12 arithmetic boundary, select fixed H32 for independent40, even if consensus scores higher. Use consensus only if H32 fails that adequacy gate and consensus passes. Reject both if neither passes. Never adopt from development.",
+  "required_studies": [
+    {
+      "root": "results/continuation_horizon_consensus",
+      "phase": "audited-needs-adoption-review"
+    },
+    {
+      "root": "results/continuation_horizon_ablation",
+      "phase": "audited-needs-review"
+    },
+    {
+      "root": "results/continuation_fixed32_screen",
+      "phase": "audited-needs-review"
+    }
+  ],
+  "confirmation_root": "results/continuation_selected_confirmation",
+  "evidence": "evidence/long_horizon/continuation_simple_selection",
+  "workers": 6,
+  "observed_at_registration": "Consensus world6/8 complete; both H32 world0/8 and preparation0/12 complete. No independent actions from either registered candidate.",
+  "unchanged": "All 40 original independent world/persona/seed conditions and adoption inequalities; no score maximization, game branches, adverse-case deletion or new paid resources."
+}

@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-24T00:24:44.164355+00:00",
+  "targeted_tests": {
+    "total": 39,
+    "passed": 39,
+    "commands": [
+      "tests.test_continuation_persona tests.test_continuation_control_audit tests.test_continuation_selection tests.test_continuation_confirmation_gate tests.test_continuation_quality:15",
+      "tests.test_cutoff_prefix_reuse:3",
+      "tests.test_horizon_consensus tests.test_continuation_portfolio tests.test_preference_basis:21"
+    ]
+  },
+  "reference_audit": {
+    "controls_replayed": 1536,
+    "candidates_replayed": 1536,
+    "pre_change_prefixes": 8,
+    "all_execution_files_unchanged": true
+  },
+  "prefix_reuse": {
+    "independently_executed_preparation_decisions_matched": 640,
+    "world_smoke_families": 4,
+    "world_smoke_decisions": 8,
+    "additional_world_prefix_decisions": 17
+  },
+  "persona_probe": {
+    "profiles": [
+      "growth",
+      "care"
+    ],
+    "horizons": [
+      "fixed32",
+      "16..32 consensus"
+    ],
+    "purpose": "Intrinsic-value choice survives when principles are prioritized; need-priority may compromise. Renamed actions and actual-feedback owner parity checked.",
+    "initial_expectation_rejected": "Automatic care profile began in need mode. Both adopted H16 and H32 chose material gain; expecting care to always share was not the specified state-dependent personality contract. No personality coefficient or algorithm was changed to make the check pass."
+  },
+  "limits": "Contract and plumbing checks, not independent long-play success; full CI and five divergent world histories remain pending."
+}

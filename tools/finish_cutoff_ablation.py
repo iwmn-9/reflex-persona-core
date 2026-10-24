@@ -22,25 +22,37 @@ def main():
         tmp=root/'status.new';tmp.write_bytes(encoded(state));tmp.replace(root/'status.json')
     save(phase='waiting-development')
     try:
+        suite=registration.get('suite','worlds')
         while True:
             status=json.loads((source/'status.json').read_bytes())
             if status.get('error'):raise RuntimeError(status['error'])
             if status['phase']=='screen-regression-needs-analysis':
                 save(complete=True,phase='not-started-preparation-rejected');return
-            if status['complete']:break
+            study=source/suite
+            if (study/'plan.json').exists():
+                registered=json.loads((study/'plan.json').read_bytes())
+                if all((study/s['id']/'baseline/result.json').exists() for s in registered['specs']):break
             time.sleep(45)
-        source=source/'worlds'
+        development_root=source;source=study
         manifest=json.loads((root/'source_snapshot.json').read_bytes())
         assert sha(encoded(manifest))==registration['source']
         assert manifest==json.loads((source/'source_snapshot.json').read_bytes())
         for name,value in manifest.items():assert sha((root/'_source'/name).read_bytes())==value
-        proof=json.loads((source/'verification.json').read_bytes())
-        assert proof['complete'] and proof['actual_owner_replayed'] and proof['source_verified']
         development=json.loads((source/'plan.json').read_bytes())
         assert sha((source/'plan.json').read_bytes())==registration['development_plan_sha256']
+        auditor=root/'control_auditor.py'
+        assert sha(auditor.read_bytes())==registration['control_auditor_sha256']
+        save(phase='auditing-finished-controls')
+        subprocess.run([sys.executable,str(auditor),'--root',str(source),
+            '--expected-plan',registration['development_plan_sha256'],'--expected-source',registration['source'],
+            '--output',str(root/'controls_verification.json')],check=True,cwd=base)
+        control_proof=json.loads((root/'controls_verification.json').read_bytes())
+        assert control_proof['complete'] and control_proof['controls']==len(development['specs'])
+        receipts={r['id']:r for r in control_proof['rows']}
         specs=[];(root/'references').mkdir(exist_ok=True)
         for original in development['specs']:
             data=(source/original['id']/'baseline/result.json').read_bytes();baseline=json.loads(data)
+            assert receipts[original['id']]['result_sha256']==sha(data)
             assert baseline['complete'] and baseline['configuration']['spec']==original
             archive='references/'+original['id']+'.json';(root/archive).write_bytes(data)
             spec=dict(original,controller=dict(original['controller'],minimum_horizon=32),reference=dict(
@@ -49,7 +61,7 @@ def main():
                 audited_development_plan_sha256=registration['development_plan_sha256']))
             specs.append(spec)
         plan=dict(version=1,source=registration['source'],specs=specs,
-            purpose=__doc__,criteria='All 8 known conditions, every loss retained; not an adoption cohort.')
+            purpose=__doc__,criteria='All registered known conditions, every loss retained; not an adoption cohort.')
         target=root/'plan.json'
         if target.exists():assert json.loads(target.read_bytes())==plan
         else:target.write_bytes(encoded(plan))
@@ -63,8 +75,20 @@ def main():
                     completed_pairs=len(rows),registered_pairs=len(specs),rows=sorted(rows,key=lambda r:r['id']))))
                 save(completed_pairs=len(rows),registered_pairs=len(specs))
         save(phase='auditing')
-        subprocess.run([sys.executable,str(root/'_source/tools/audit_continuation_portfolio.py'),
+        auditor=root/'_source/tools/audit_continuation_portfolio.py'
+        if registration.get('result_auditor_sha256'):
+            auditor=root/'result_auditor.py'
+            assert sha(auditor.read_bytes())==registration['result_auditor_sha256']
+        subprocess.run([sys.executable,str(auditor),
             '--root',str(root),'--publish',str(base/registration['evidence'])],check=True,cwd=base)
+        save(phase='waiting-development-comparison')
+        while True:
+            status=json.loads((development_root/'status.json').read_bytes())
+            if status.get('error'):raise RuntimeError(status['error'])
+            if (source/'verification.json').exists():break
+            time.sleep(45)
+        proof=json.loads((source/'verification.json').read_bytes())
+        assert proof['complete'] and proof['actual_owner_replayed'] and proof['source_verified']
         comparison=[]
         primary={r['id']:r for r in json.loads((source/'summary.json').read_bytes())['rows']}
         for row in rows:

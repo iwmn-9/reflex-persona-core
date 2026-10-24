@@ -1,0 +1,17 @@
+{
+  "created": "2026-10-24T00:13:15.491190+00:00",
+  "source_manifest_sha256": "a56bf6a717d899e45554d79724b4fc5a63249d0c49b1f4bc16574e216545a848",
+  "target_plan_sha256": "30035e5b68a88a921f8dc3fd9e04324909c7fbcd8f1d9ff91be7042ac1579191",
+  "executor_sha256": "83d238508f23b8f8297bd752ae4c7a8e97e4b6b9fdd6e2cf041002b61ceeb1af",
+  "conditions": [
+    "delayed-2-opportunity",
+    "chain-0-stable",
+    "chain-0-loss",
+    "chain-0-opportunity",
+    "chain-2-stable",
+    "chain-2-loss",
+    "chain-2-opportunity"
+  ],
+  "change": "Replay only identical longest-cutoff forecasts on all actual owner/RNG transitions, as proven by prior independent parity. Preserve five already-started H32 runs. Preparation-only; no independent evidence.",
+  "timing": "Shared elapsed time, not H32 performance."
+}

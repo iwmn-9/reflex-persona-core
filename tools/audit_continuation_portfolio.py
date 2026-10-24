@@ -32,7 +32,17 @@ def main():
             if not retry and 'reference' in spec:
                 data=(root/spec['reference']['archive']).read_bytes()
                 assert sha(data)==spec['reference']['sha256']
-                runs.append(dict(reference=spec['reference'],result=json.loads(data)))
+                reference=json.loads(data)
+                if 'configuration' in reference:
+                    assert reference['complete']
+                    original=reference['configuration']['spec']
+                    assert {k:v for k,v in original.items() if k!='controller'}=={
+                        k:v for k,v in spec.items() if k not in ('controller','reference')}
+                    runs.append(dict(spec=spec,retry=False,reference=spec['reference'],result=reference))
+                else:
+                    # Historical H16 controls have the separately audited
+                    # run_owned_value schema. Preserve that archived format.
+                    runs.append(dict(reference=spec['reference'],result=reference))
                 continue
             directory=root/spec['id']/('candidate' if retry else 'baseline')
             row=json.loads((directory/'result.json').read_bytes())
@@ -77,6 +87,7 @@ def main():
                 for key in ('before','action','before_owner','selected_purpose','predicted_actions'):assert a[key]==b[key]
             prefixes+=1
     proof=dict(complete=True,pairs=len(plan['specs']),runs=len(runs),replayed_actual_decisions=decisions,
+        auditor_sha256=sha(Path(__file__).read_bytes()),
         matched_pre_change_prefixes=prefixes,source_verified=True,actual_owner_replayed=True,
         reference_reuse='Prior complete, audited controls retain their original source, SHA and traces; not new independent evidence.',
         limit='Full behavioral screen, not human-level intelligence, production adoption or completion of registered 40/8/8.')
@@ -84,6 +95,7 @@ def main():
     if args.publish:
         dest=Path(args.publish);dest.mkdir(parents=True,exist_ok=True)
         for name in ('plan.json','summary.json','source_snapshot.json'):(dest/name).write_bytes((root/name).read_bytes())
+        (dest/'auditor.py').write_bytes(Path(__file__).read_bytes())
         (dest/'runs.jsonl.gz').write_bytes(gzip.compress(b'\n'.join(encoded(r) for r in runs)+b'\n',mtime=0))
         with zipfile.ZipFile(dest/'source.zip','w',zipfile.ZIP_DEFLATED) as archive:
             for name in sorted(manifest):archive.write(root/'_source'/name,name)

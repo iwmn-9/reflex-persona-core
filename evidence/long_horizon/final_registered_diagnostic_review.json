@@ -1,0 +1,2961 @@
+{
+  "complete": true,
+  "registered_conditions": 8,
+  "counts": {
+    "better": 4,
+    "same": 3,
+    "worse": 1
+  },
+  "source_summary_sha256": "aa5016063967ff62d6105b88dd0c03c18fa98ae30e8b2d8a02363aa883331bed",
+  "oracle_source_sha256": "22762265369fcd54eac514e57b879ff8596a54cbd6371b99d483a9519e7ba12c",
+  "rule_sha256": "7d3fbc805578c24015db92f9c31821427a44f2a9e8b2befa1755084b809c6bde",
+  "cases": [
+    {
+      "condition": "auction-0-53103-shift-return",
+      "score_delta": 0.01953125,
+      "conditional_delta": 0.027539062500000044,
+      "oracle_adjusted_delta": 0.020645135187822572,
+      "oracle_residual_delta": -0.0011138851878225997,
+      "forecast_absolute_errors": [
+        0.027050265119947143,
+        0.020425144975136273
+      ],
+      "sources": [
+        {
+          "path": "results/rwc/p-39855154611-686529b5-h-result/value-contract-auction-0-53103-shift-return-baseline/trajectories.jsonl",
+          "sha256": "b43a7c9476153d380fe8765c01d8dcb8394a7ad5c89a5e9f1bb179f1dd6676d8",
+          "checks": {
+            "world_rng_replay": 128,
+            "restored_action_feedback": 128,
+            "physical_replay": 128,
+            "fixed_axes": 128,
+            "owner_parity": 128,
+            "restore": 6
+          },
+          "recorded_forecast_replay": {
+            "version": "recorded-forecast-replay-v1",
+            "accepted": true,
+            "max_allowed_ulps": 8,
+            "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+            "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+            "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+            "trajectory_sha256": "b43a7c9476153d380fe8765c01d8dcb8394a7ad5c89a5e9f1bb179f1dd6676d8",
+            "checked_forecasts": 128,
+            "exact_owner_hashes": 128,
+            "max_observed_ulps": 3.0,
+            "max_absolute_difference": 1.1102230246251565e-16
+          }
+        },
+        {
+          "path": "results/rwc/p-39855154611-686529b5-h-result/value-contract-auction-0-53103-shift-return-candidate/trajectories.jsonl",
+          "sha256": "60ea454b53549ffa2081d339846a350916e447ae189995f36ff9661d0ed174ba",
+          "checks": {
+            "world_rng_replay": 128,
+            "restored_action_feedback": 128,
+            "physical_replay": 128,
+            "fixed_axes": 128,
+            "owner_parity": 128,
+            "restore": 6
+          },
+          "recorded_forecast_replay": {
+            "version": "recorded-forecast-replay-v1",
+            "accepted": true,
+            "max_allowed_ulps": 8,
+            "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+            "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+            "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+            "trajectory_sha256": "60ea454b53549ffa2081d339846a350916e447ae189995f36ff9661d0ed174ba",
+            "checked_forecasts": 128,
+            "exact_owner_hashes": 128,
+            "max_observed_ulps": 3.0,
+            "max_absolute_difference": 1.1102230246251565e-16
+          }
+        }
+      ],
+      "largest_extra_gaps": [
+        {
+          "tick": 70,
+          "baseline_action": "bid:2",
+          "candidate_action": "bid:4",
+          "cash": [
+            2.0,
+            5.0
+          ],
+          "excess_oracle_gap": 0.003979205785858475,
+          "same_owner": false
+        },
+        {
+          "tick": 90,
+          "baseline_action": "bid:3",
+          "candidate_action": "bid:4",
+          "cash": [
+            5.0,
+            4.0
+          ],
+          "excess_oracle_gap": 0.0038431425002075636,
+          "same_owner": false
+        },
+        {
+          "tick": 26,
+          "baseline_action": "bid:1",
+          "candidate_action": "bid:2",
+          "cash": [
+            5.0,
+            4.0
+          ],
+          "excess_oracle_gap": 0.0011524834509308857,
+          "same_owner": false
+        },
+        {
+          "tick": 5,
+          "baseline_action": "bid:1",
+          "candidate_action": "bid:2",
+          "cash": [
+            3.0,
+            3.0
+          ],
+          "excess_oracle_gap": 0.0009991409152899644,
+          "same_owner": false
+        },
+        {
+          "tick": 20,
+          "baseline_action": "bid:1",
+          "candidate_action": "bid:2",
+          "cash": [
+            2.0,
+            3.0
+          ],
+          "excess_oracle_gap": 0.0009084324169939539,
+          "same_owner": false
+        },
+        {
+          "tick": 25,
+          "baseline_action": "bid:0",
+          "candidate_action": "bid:1",
+          "cash": [
+            4.0,
+            4.0
+          ],
+          "excess_oracle_gap": 0.0008017347245412032,
+          "same_owner": false
+        },
+        {
+          "tick": 41,
+          "baseline_action": "bid:0",
+          "candidate_action": "bid:3",
+          "cash": [
+            4.0,
+            5.0
+          ],
+          "excess_oracle_gap": 0.0006170669860765532,
+          "same_owner": false
+        },
+        {
+          "tick": 49,
+          "baseline_action": "bid:0",
+          "candidate_action": "bid:3",
+          "cash": [
+            4.0,
+            5.0
+          ],
+          "excess_oracle_gap": 0.0006056658226010758,
+          "same_owner": false
+        }
+      ],
+      "accounts": [
+        {
+          "game": "auction",
+          "profile": "growth",
+          "seed": 53103,
+          "regime": "shift-return",
+          "turns": 128,
+          "tail_steps": 31,
+          "offset": 0,
+          "arm": "receding_recovery@1",
+          "score": 0.23486328125,
+          "oracle_initial": 0.31065356948270495,
+          "purpose_opportunity_loss": 0.061999541449108964,
+          "innovation": -0.013790746783595986,
+          "oracle_adjusted_return": 0.248654028033596,
+          "accounting_error": 0.0,
+          "steps": [
+            {
+              "tick": 0,
+              "purpose_opportunity_loss": 0.0007421573798481185,
+              "innovation": 0.0
+            },
+            {
+              "tick": 1,
+              "purpose_opportunity_loss": 0.000193477452244184,
+              "innovation": 0.00014694313693891514
+            },
+            {
+              "tick": 2,
+              "purpose_opportunity_loss": 0.0024848113966405294,
+              "innovation": 0.0
+            },
+            {
+              "tick": 3,
+              "purpose_opportunity_loss": 0.0003172048027376695,
+              "innovation": 0.0003906249999999778
+            },
+            {
+              "tick": 4,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0024464243126377516
+            },
+            {
+              "tick": 5,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": -0.003512597115081395
+            },
+            {
+              "tick": 6,
+              "purpose_opportunity_loss": 0.001205832838731824,
+              "innovation": 0.00013699684763052167
+            },
+            {
+              "tick": 7,
+              "purpose_opportunity_loss": 5.551115123125783e-17,
+              "innovation": 0.0012280401542266728
+            },
+            {
+              "tick": 8,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0027851452289965883
+            },
+            {
+              "tick": 9,
+              "purpose_opportunity_loss": 0.0006530794632959025,
+              "innovation": -0.0001281705367041086
+            },
+            {
+              "tick": 10,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.006432835534954884
+            },
+            {
+              "tick": 11,
+              "purpose_opportunity_loss": 0.0002572468768873848,
+              "innovation": 0.0003906249999999778
+            },
+            {
+              "tick": 12,
+              "purpose_opportunity_loss": 0.0028385059361960008,
+              "innovation": 0.0
+            },
+            {
+              "tick": 13,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0008013052982033808
+            },
+            {
+              "tick": 14,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001970705789419658
+            },
+            {
+              "tick": 15,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.004748241596255365
+            },
+            {
+              "tick": 16,
+              "purpose_opportunity_loss": 0.0012822390453323118,
+              "innovation": 0.00021574023606429904
+            },
+            {
+              "tick": 17,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0001953124999999889
+            },
+            {
+              "tick": 18,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0015640701950896396
+            },
+            {
+              "tick": 19,
+              "purpose_opportunity_loss": 1.9427466372679003e-05,
+              "innovation": 0.0003857681334068497
+            },
+            {
+              "tick": 20,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00233636845825147
+            },
+            {
+              "tick": 21,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.000771381160320328
+            },
+            {
+              "tick": 22,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.007763266674325586
+            },
+            {
+              "tick": 23,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0011691681205376336
+            },
+            {
+              "tick": 24,
+              "purpose_opportunity_loss": 0.0017843852953332018,
+              "innovation": -0.0013201299801256505
+            },
+            {
+              "tick": 25,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0001953124999999889
+            },
+            {
+              "tick": 26,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001565946745115121
+            },
+            {
+              "tick": 27,
+              "purpose_opportunity_loss": 2.9052650791672185e-05,
+              "innovation": 0.000383361837302032
+            },
+            {
+              "tick": 28,
+              "purpose_opportunity_loss": 0.005071555392452076,
+              "innovation": -5.551115123125783e-17
+            },
+            {
+              "tick": 29,
+              "purpose_opportunity_loss": 0.00045887103737102253,
+              "innovation": 0.00047121974065722494
+            },
+            {
+              "tick": 30,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001603687154056621
+            },
+            {
+              "tick": 31,
+              "purpose_opportunity_loss": 0.0034004038888602595,
+              "innovation": -6.885097221503989e-05
+            },
+            {
+              "tick": 32,
+              "purpose_opportunity_loss": 0.00024163120942000127,
+              "innovation": -0.001196474619866994
+            },
+            {
+              "tick": 33,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 34,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.003284817942959206
+            },
+            {
+              "tick": 35,
+              "purpose_opportunity_loss": 0.000549065751872968,
+              "innovation": 0.0003537532518729791
+            },
+            {
+              "tick": 36,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0012973089490647682
+            },
+            {
+              "tick": 37,
+              "purpose_opportunity_loss": 0.0006613891790946957,
+              "innovation": -0.0003292793220742718
+            },
+            {
+              "tick": 38,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004160387003601662
+            },
+            {
+              "tick": 39,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004479011333404781
+            },
+            {
+              "tick": 40,
+              "purpose_opportunity_loss": 0.00044104755538532103,
+              "innovation": -5.551115123125783e-17
+            },
+            {
+              "tick": 41,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 42,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.000617072821288589
+            },
+            {
+              "tick": 43,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0010643097766107612
+            },
+            {
+              "tick": 44,
+              "purpose_opportunity_loss": 0.002487848518822444,
+              "innovation": 0.0
+            },
+            {
+              "tick": 45,
+              "purpose_opportunity_loss": 0.0008006278347582607,
+              "innovation": -0.00019473890563265206
+            },
+            {
+              "tick": 46,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00040795643689139904
+            },
+            {
+              "tick": 47,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0004393800899508693
+            },
+            {
+              "tick": 48,
+              "purpose_opportunity_loss": 0.00047748545681092214,
+              "innovation": -5.551115123125783e-17
+            },
+            {
+              "tick": 49,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 50,
+              "purpose_opportunity_loss": 0.005800317104909136,
+              "innovation": -5.551115123125783e-17
+            },
+            {
+              "tick": 51,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": -0.0001953125000000444
+            },
+            {
+              "tick": 52,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0012920869517270006
+            },
+            {
+              "tick": 53,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0019324915021587397
+            },
+            {
+              "tick": 54,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.001658167590587012
+            },
+            {
+              "tick": 55,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.002248594053979258
+            },
+            {
+              "tick": 56,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0006041410880995857
+            },
+            {
+              "tick": 57,
+              "purpose_opportunity_loss": 0.0007243274939816025,
+              "innovation": 0.0006266712439816358
+            },
+            {
+              "tick": 58,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0073137175108611285
+            },
+            {
+              "tick": 59,
+              "purpose_opportunity_loss": 0.0001289403285713031,
+              "innovation": -6.637217142868579e-05
+            },
+            {
+              "tick": 60,
+              "purpose_opportunity_loss": 7.682642066497714e-05,
+              "innovation": -0.00100603501981128
+            },
+            {
+              "tick": 61,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0022901793040877028
+            },
+            {
+              "tick": 62,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00088399126311689
+            },
+            {
+              "tick": 63,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00074016436557095
+            },
+            {
+              "tick": 64,
+              "purpose_opportunity_loss": 0.00212069412419863,
+              "innovation": 0.0
+            },
+            {
+              "tick": 65,
+              "purpose_opportunity_loss": 0.0004980176088528743,
+              "innovation": 3.2816899591336934e-05
+            },
+            {
+              "tick": 66,
+              "purpose_opportunity_loss": 0.002165853687396413,
+              "innovation": 0.0026674660626611613
+            },
+            {
+              "tick": 67,
+              "purpose_opportunity_loss": 0.0043047294266039815,
+              "innovation": -0.0005344237922205175
+            },
+            {
+              "tick": 68,
+              "purpose_opportunity_loss": 0.0019796097773007726,
+              "innovation": -0.0002771012203768297
+            },
+            {
+              "tick": 69,
+              "purpose_opportunity_loss": 0.00047035309312898343,
+              "innovation": 0.00017738434312897233
+            },
+            {
+              "tick": 70,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0008593209091455334
+            },
+            {
+              "tick": 71,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0005641760101617321
+            },
+            {
+              "tick": 72,
+              "purpose_opportunity_loss": 0.0011583749674448085,
+              "innovation": 0.00043848009703628676
+            },
+            {
+              "tick": 73,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0004317465725284797
+            },
+            {
+              "tick": 74,
+              "purpose_opportunity_loss": 0.003818491766136911,
+              "innovation": 0.0
+            },
+            {
+              "tick": 75,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004791093169054794
+            },
+            {
+              "tick": 76,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -2.565714207691805e-05
+            },
+            {
+              "tick": 77,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.006475093635950391
+            },
+            {
+              "tick": 78,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0006356787998664792
+            },
+            {
+              "tick": 79,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0011694797230964449
+            },
+            {
+              "tick": 80,
+              "purpose_opportunity_loss": 0.0007768606691074265,
+              "innovation": 0.0004898224619974689
+            },
+            {
+              "tick": 81,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00044659092999721484
+            },
+            {
+              "tick": 82,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0004345837068492342
+            },
+            {
+              "tick": 83,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004270509377794496
+            },
+            {
+              "tick": 84,
+              "purpose_opportunity_loss": 0.0016684877213796745,
+              "innovation": -0.006487394915162509
+            },
+            {
+              "tick": 85,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0003430924249179512
+            },
+            {
+              "tick": 86,
+              "purpose_opportunity_loss": 0.0017287458545490741,
+              "innovation": 0.00027273098119737216
+            },
+            {
+              "tick": 87,
+              "purpose_opportunity_loss": 0.0015304274502420945,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 88,
+              "purpose_opportunity_loss": 0.0016563551576979918,
+              "innovation": 0.0
+            },
+            {
+              "tick": 89,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.0003408985570590717
+            },
+            {
+              "tick": 90,
+              "purpose_opportunity_loss": 0.0008907694057411764,
+              "innovation": -0.00013369686784564516
+            },
+            {
+              "tick": 91,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0004012070370280063
+            },
+            {
+              "tick": 92,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 4.4279524619550426e-05
+            },
+            {
+              "tick": 93,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.0007646193116445932
+            },
+            {
+              "tick": 94,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0002809943928498704
+            },
+            {
+              "tick": 95,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 3.792582827533142e-05
+            },
+            {
+              "tick": 96,
+              "purpose_opportunity_loss": 0.00014320944332008034,
+              "innovation": 0.0018965389350514839
+            },
+            {
+              "tick": 97,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0001953124999999889
+            },
+            {
+              "tick": 98,
+              "purpose_opportunity_loss": 0.00047309773381037923,
+              "innovation": -0.006400566466634505
+            },
+            {
+              "tick": 99,
+              "purpose_opportunity_loss": 0.0007604393177612634,
+              "innovation": 0.00012920661387705312
+            },
+            {
+              "tick": 100,
+              "purpose_opportunity_loss": 0.00027603324082198233,
+              "innovation": 0.0015670192739631328
+            },
+            {
+              "tick": 101,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0009343826001049771
+            },
+            {
+              "tick": 102,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.002110924264223518
+            },
+            {
+              "tick": 103,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0013373948717343154
+            },
+            {
+              "tick": 104,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0028969119601675586
+            },
+            {
+              "tick": 105,
+              "purpose_opportunity_loss": 0.00016876116422059884,
+              "innovation": 0.0001531222089448392
+            },
+            {
+              "tick": 106,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.006857073644065126
+            },
+            {
+              "tick": 107,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0005436852499873246
+            },
+            {
+              "tick": 108,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0024901880490519335
+            },
+            {
+              "tick": 109,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -0.0036786975462549942
+            },
+            {
+              "tick": 110,
+              "purpose_opportunity_loss": 0.0005509996963831976,
+              "innovation": 0.00023446151803829807
+            },
+            {
+              "tick": 111,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0013464697413721194
+            },
+            {
+              "tick": 112,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -0.011626235024754766
+            },
+            {
+              "tick": 113,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0001953124999999889
+            },
+            {
+              "tick": 114,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0017514401374583988
+            },
+            {
+              "tick": 115,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0005874636843562209
+            },
+            {
+              "tick": 116,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0025392451307499897
+            },
+            {
+              "tick": 117,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0009718348078124883
+            },
+            {
+              "tick": 118,
+              "purpose_opportunity_loss": 0.00044968525624999867,
+              "innovation": 0.00129383472031247
+            },
+            {
+              "tick": 119,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0012914020546875016
+            },
+            {
+              "tick": 120,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.011744258749999986
+            },
+            {
+              "tick": 121,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00022719843749999247
+            },
+            {
+              "tick": 122,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0017902890624999779
+            },
+            {
+              "tick": 123,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.0006229785156250112
+            },
+            {
+              "tick": 124,
+              "purpose_opportunity_loss": 0.00041752929687496887,
+              "innovation": 0.0026372070312499774
+            },
+            {
+              "tick": 125,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0010849609374999902
+            },
+            {
+              "tick": 126,
+              "purpose_opportunity_loss": 0.0006689453124999745,
+              "innovation": 0.0015429687499999845
+            },
+            {
+              "tick": 127,
+              "purpose_opportunity_loss": 0.0001953124999999889,
+              "innovation": 0.0015136718749999833
+            }
+          ]
+        },
+        {
+          "game": "auction",
+          "profile": "growth",
+          "seed": 53103,
+          "regime": "shift-return",
+          "turns": 128,
+          "tail_steps": 31,
+          "offset": 0,
+          "arm": "receding_recovery@1",
+          "score": 0.25439453125,
+          "oracle_initial": 0.31065356948270495,
+          "purpose_opportunity_loss": 0.041354406261286364,
+          "innovation": -0.014904631971418586,
+          "oracle_adjusted_return": 0.26929916322141856,
+          "accounting_error": 0.0,
+          "steps": [
+            {
+              "tick": 0,
+              "purpose_opportunity_loss": 0.0007421573798481185,
+              "innovation": 0.0
+            },
+            {
+              "tick": 1,
+              "purpose_opportunity_loss": 0.000193477452244184,
+              "innovation": 0.00014694313693891514
+            },
+            {
+              "tick": 2,
+              "purpose_opportunity_loss": 0.001056440625946009,
+              "innovation": 9.951605605651448e-05
+            },
+            {
+              "tick": 3,
+              "purpose_opportunity_loss": 0.0004321334820454603,
+              "innovation": 0.0003906249999999778
+            },
+            {
+              "tick": 4,
+              "purpose_opportunity_loss": 0.0004682089994487715,
+              "innovation": 0.0015016751646433346
+            },
+            {
+              "tick": 5,
+              "purpose_opportunity_loss": 0.000999140915289909,
+              "innovation": -0.0025134561997914306
+            },
+            {
+              "tick": 6,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0020745448668516575
+            },
+            {
+              "tick": 7,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0012882691931886958
+            },
+            {
+              "tick": 8,
+              "purpose_opportunity_loss": 0.0004702705794119022,
+              "innovation": 0.0017510797665106215
+            },
+            {
+              "tick": 9,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0007812500000000111
+            },
+            {
+              "tick": 10,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.006534062440111843
+            },
+            {
+              "tick": 11,
+              "purpose_opportunity_loss": 0.0003913246930097869,
+              "innovation": 0.0003906249999999778
+            },
+            {
+              "tick": 12,
+              "purpose_opportunity_loss": 0.002462746886341849,
+              "innovation": 0.0
+            },
+            {
+              "tick": 13,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0008144256235946279
+            },
+            {
+              "tick": 14,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001983078333338162
+            },
+            {
+              "tick": 15,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.004796149403371808
+            },
+            {
+              "tick": 16,
+              "purpose_opportunity_loss": 0.0011798664760015454,
+              "innovation": 0.0002325306512458436
+            },
+            {
+              "tick": 17,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0001953124999999889
+            },
+            {
+              "tick": 18,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0015728679893436959
+            },
+            {
+              "tick": 19,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00039847597544828695
+            },
+            {
+              "tick": 20,
+              "purpose_opportunity_loss": 0.0009084324169939539,
+              "innovation": 0.0012673915422796167
+            },
+            {
+              "tick": 21,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.000771381160320328
+            },
+            {
+              "tick": 22,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.007763266674325586
+            },
+            {
+              "tick": 23,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0011691681205376336
+            },
+            {
+              "tick": 24,
+              "purpose_opportunity_loss": 5.551115123125783e-17,
+              "innovation": -0.010917015275458797
+            },
+            {
+              "tick": 25,
+              "purpose_opportunity_loss": 0.0008017347245412032,
+              "innovation": -5.121181135325781e-06
+            },
+            {
+              "tick": 26,
+              "purpose_opportunity_loss": 0.0011524834509308857,
+              "innovation": 0.000656764412069355
+            },
+            {
+              "tick": 27,
+              "purpose_opportunity_loss": 0.00035561396643346566,
+              "innovation": 0.00030172150839163914
+            },
+            {
+              "tick": 28,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0022379770829502044
+            },
+            {
+              "tick": 29,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0006546908588028755
+            },
+            {
+              "tick": 30,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0018007250870595848
+            },
+            {
+              "tick": 31,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0009871857702832276
+            },
+            {
+              "tick": 32,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0007565755993731438
+            },
+            {
+              "tick": 33,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 34,
+              "purpose_opportunity_loss": 5.551115123125783e-17,
+              "innovation": -0.0024710445262181024
+            },
+            {
+              "tick": 35,
+              "purpose_opportunity_loss": 0.00013995847064757205,
+              "innovation": -5.5354029352416845e-05
+            },
+            {
+              "tick": 36,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006859757123360843
+            },
+            {
+              "tick": 37,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0011748524529200943
+            },
+            {
+              "tick": 38,
+              "purpose_opportunity_loss": 5.551115123125783e-17,
+              "innovation": 0.0002904291694787453
+            },
+            {
+              "tick": 39,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.00039183080975907503
+            },
+            {
+              "tick": 40,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": -5.551115123125783e-17
+            },
+            {
+              "tick": 41,
+              "purpose_opportunity_loss": 0.0006170669860765532,
+              "innovation": 0.0014959732360765865
+            },
+            {
+              "tick": 42,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00045101205710285086
+            },
+            {
+              "tick": 43,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0008567338213786302
+            },
+            {
+              "tick": 44,
+              "purpose_opportunity_loss": 0.001612365770937041,
+              "innovation": 0.0
+            },
+            {
+              "tick": 45,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0011790222093228664
+            },
+            {
+              "tick": 46,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.000294772258590037
+            },
+            {
+              "tick": 47,
+              "purpose_opportunity_loss": 5.551115123125783e-17,
+              "innovation": 0.00039617328815810815
+            },
+            {
+              "tick": 48,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0
+            },
+            {
+              "tick": 49,
+              "purpose_opportunity_loss": 0.0006056658226010203,
+              "innovation": 0.001484572072600998
+            },
+            {
+              "tick": 50,
+              "purpose_opportunity_loss": 0.004790405581314827,
+              "innovation": 0.0
+            },
+            {
+              "tick": 51,
+              "purpose_opportunity_loss": 0.00013610061032515164,
+              "innovation": -5.921188967483726e-05
+            },
+            {
+              "tick": 52,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006982335575372312
+            },
+            {
+              "tick": 53,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001190174759421514
+            },
+            {
+              "tick": 54,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0012283531279299043
+            },
+            {
+              "tick": 55,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0018504164614722152
+            },
+            {
+              "tick": 56,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.000963189740992243
+            },
+            {
+              "tick": 57,
+              "purpose_opportunity_loss": 0.0006449595483534187,
+              "innovation": 0.0005473032983533965
+            },
+            {
+              "tick": 58,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0034959848553832717
+            },
+            {
+              "tick": 59,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": -0.0001953124999999889
+            },
+            {
+              "tick": 60,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0013132775158519738
+            },
+            {
+              "tick": 61,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001958979707314956
+            },
+            {
+              "tick": 62,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0005138727070270188
+            },
+            {
+              "tick": 63,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006122685903884872
+            },
+            {
+              "tick": 64,
+              "purpose_opportunity_loss": 0.001967158710273198,
+              "innovation": 0.0
+            },
+            {
+              "tick": 65,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004499018298253499
+            },
+            {
+              "tick": 66,
+              "purpose_opportunity_loss": 0.001620743321781859,
+              "innovation": 0.002058118721469826
+            },
+            {
+              "tick": 67,
+              "purpose_opportunity_loss": 0.0013282844207011535,
+              "innovation": -0.0001953124999999889
+            },
+            {
+              "tick": 68,
+              "purpose_opportunity_loss": 0.00202505491879601,
+              "innovation": 0.0
+            },
+            {
+              "tick": 69,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0004546502620246806
+            },
+            {
+              "tick": 70,
+              "purpose_opportunity_loss": 0.0039792057858584196,
+              "innovation": 0.0
+            },
+            {
+              "tick": 71,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0011577330965010235
+            },
+            {
+              "tick": 72,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 1.6624943639964584e-05
+            },
+            {
+              "tick": 73,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 74,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006069796352149437
+            },
+            {
+              "tick": 75,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004791093169054794
+            },
+            {
+              "tick": 76,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -2.565714207691805e-05
+            },
+            {
+              "tick": 77,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.006475093635950391
+            },
+            {
+              "tick": 78,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0006356787998664792
+            },
+            {
+              "tick": 79,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0011694797230963894
+            },
+            {
+              "tick": 80,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 3.1893134123328615e-05
+            },
+            {
+              "tick": 81,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 82,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006173255232484465
+            },
+            {
+              "tick": 83,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004906047480538467
+            },
+            {
+              "tick": 84,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.00012568078281721684
+            },
+            {
+              "tick": 85,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.00043353719576100236
+            },
+            {
+              "tick": 86,
+              "purpose_opportunity_loss": 0.002144034966624242,
+              "innovation": 0.0
+            },
+            {
+              "tick": 87,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0014883568312551443
+            },
+            {
+              "tick": 88,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": -0.007293966920958073
+            },
+            {
+              "tick": 89,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00047849161560215014
+            },
+            {
+              "tick": 90,
+              "purpose_opportunity_loss": 0.00473391190594874,
+              "innovation": 0.0
+            },
+            {
+              "tick": 91,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": -0.0001953125000000444
+            },
+            {
+              "tick": 92,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006780220093759448
+            },
+            {
+              "tick": 93,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004603890381955078
+            },
+            {
+              "tick": 94,
+              "purpose_opportunity_loss": 5.551115123125783e-17,
+              "innovation": 0.0001770461233240317
+            },
+            {
+              "tick": 95,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0002443262100738086
+            },
+            {
+              "tick": 96,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0004506230384317411
+            },
+            {
+              "tick": 97,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0001953124999999889
+            },
+            {
+              "tick": 98,
+              "purpose_opportunity_loss": 0.00047309773381037923,
+              "innovation": -0.006400566466634505
+            },
+            {
+              "tick": 99,
+              "purpose_opportunity_loss": 0.0007604393177612634,
+              "innovation": 0.00012920661387705312
+            },
+            {
+              "tick": 100,
+              "purpose_opportunity_loss": 0.00027603324082198233,
+              "innovation": 0.0015670192739631328
+            },
+            {
+              "tick": 101,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0009343826001049771
+            },
+            {
+              "tick": 102,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0021109242642234904
+            },
+            {
+              "tick": 103,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0013373948717343431
+            },
+            {
+              "tick": 104,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.002896911960167503
+            },
+            {
+              "tick": 105,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0001953124999999889
+            },
+            {
+              "tick": 106,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.006884149602636447
+            },
+            {
+              "tick": 107,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0005710710033461908
+            },
+            {
+              "tick": 108,
+              "purpose_opportunity_loss": 0.0002242726441716858,
+              "innovation": 0.0003369984523048375
+            },
+            {
+              "tick": 109,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0037500621225807773
+            },
+            {
+              "tick": 110,
+              "purpose_opportunity_loss": 0.0003240135575581782,
+              "innovation": 0.0012684784463946053
+            },
+            {
+              "tick": 111,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0013464697413720916
+            },
+            {
+              "tick": 112,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.011626235024754739
+            },
+            {
+              "tick": 113,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0001953124999999889
+            },
+            {
+              "tick": 114,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0017514401374584265
+            },
+            {
+              "tick": 115,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0005874636843562486
+            },
+            {
+              "tick": 116,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0025392451307499897
+            },
+            {
+              "tick": 117,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": 0.0009718348078124883
+            },
+            {
+              "tick": 118,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0021386779093749975
+            },
+            {
+              "tick": 119,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0013523633359374676
+            },
+            {
+              "tick": 120,
+              "purpose_opportunity_loss": 0.00043818683593743746,
+              "innovation": -0.011853753437500059
+            },
+            {
+              "tick": 121,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.00023652304687499237
+            },
+            {
+              "tick": 122,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0017873359374999676
+            },
+            {
+              "tick": 123,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006001562499999835
+            },
+            {
+              "tick": 124,
+              "purpose_opportunity_loss": 0.0006894531249999891,
+              "innovation": 0.00260361328125
+            },
+            {
+              "tick": 125,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0010336914062499813
+            },
+            {
+              "tick": 126,
+              "purpose_opportunity_loss": 1.4648437499986677e-05,
+              "innovation": 0.0004541015624999756
+            },
+            {
+              "tick": 127,
+              "purpose_opportunity_loss": 0.0001953124999999889,
+              "innovation": 0.001513671875000011
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "auction-2-53101-outside",
+      "score_delta": -0.00927734375,
+      "conditional_delta": -0.0013427734375000278,
+      "oracle_adjusted_delta": 0.000501519646134263,
+      "oracle_residual_delta": -0.009778863396134263,
+      "forecast_absolute_errors": [
+        0.01575999926894256,
+        0.010317648434946921
+      ],
+      "sources": [
+        {
+          "path": "results/rwc/p-39977723283-0cee3054-h-result/value-contract-auction-2-53101-outside-baseline/trajectories.jsonl",
+          "sha256": "49367f88971bfbec08b3fbf2f9329f2001c0cc4e372d748736cb70469503002b",
+          "checks": {
+            "world_rng_replay": 128,
+            "restored_action_feedback": 128,
+            "physical_replay": 128,
+            "fixed_axes": 128,
+            "owner_parity": 128,
+            "restore": 6
+          },
+          "recorded_forecast_replay": {
+            "version": "recorded-forecast-replay-v1",
+            "accepted": true,
+            "max_allowed_ulps": 8,
+            "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+            "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+            "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+            "trajectory_sha256": "49367f88971bfbec08b3fbf2f9329f2001c0cc4e372d748736cb70469503002b",
+            "checked_forecasts": 128,
+            "exact_owner_hashes": 128,
+            "max_observed_ulps": 2.0,
+            "max_absolute_difference": 1.1102230246251565e-16
+          }
+        },
+        {
+          "path": "results/rwc/p-39977723283-0cee3054-h-result/value-contract-auction-2-53101-outside-candidate/trajectories.jsonl",
+          "sha256": "8166825f0181dcec868dda278ba4eaecf9ac0bc18d6e9b700c9c016805e39864",
+          "checks": {
+            "world_rng_replay": 128,
+            "restored_action_feedback": 128,
+            "physical_replay": 128,
+            "fixed_axes": 128,
+            "owner_parity": 128,
+            "restore": 6
+          },
+          "recorded_forecast_replay": {
+            "version": "recorded-forecast-replay-v1",
+            "accepted": true,
+            "max_allowed_ulps": 8,
+            "checker_sha256": "cd7897ee328d74746779b046ee772bad9a0576f58846636c4a2ba33a9baa8971",
+            "frozen_auditor_sha256": "81123c60cf581df8ff519a16d19bce397a743e0330b04ac9a9bea1727d14cf8a",
+            "source_manifest_sha256": "7c1acbfd6a682acfa633722dedf7fdfcbd877aa5ca8f69b37956c0584dbd0328",
+            "trajectory_sha256": "8166825f0181dcec868dda278ba4eaecf9ac0bc18d6e9b700c9c016805e39864",
+            "checked_forecasts": 128,
+            "exact_owner_hashes": 128,
+            "max_observed_ulps": 2.0,
+            "max_absolute_difference": 1.1102230246251565e-16
+          }
+        }
+      ],
+      "largest_extra_gaps": [
+        {
+          "tick": 12,
+          "baseline_action": "bid:4",
+          "candidate_action": "bid:4",
+          "cash": [
+            9.0,
+            5.0
+          ],
+          "excess_oracle_gap": 0.0053479607139207685,
+          "same_owner": false
+        },
+        {
+          "tick": 2,
+          "baseline_action": "bid:3",
+          "candidate_action": "bid:4",
+          "cash": [
+            6.0,
+            6.0
+          ],
+          "excess_oracle_gap": 0.004716904202175742,
+          "same_owner": true
+        },
+        {
+          "tick": 63,
+          "baseline_action": "bid:3",
+          "candidate_action": "bid:4",
+          "cash": [
+            4.0,
+            6.0
+          ],
+          "excess_oracle_gap": 0.0046623763614804525,
+          "same_owner": false
+        },
+        {
+          "tick": 6,
+          "baseline_action": "bid:3",
+          "candidate_action": "bid:4",
+          "cash": [
+            10.0,
+            6.0
+          ],
+          "excess_oracle_gap": 0.0036368899506060426,
+          "same_owner": false
+        },
+        {
+          "tick": 74,
+          "baseline_action": "bid:3",
+          "candidate_action": "bid:4",
+          "cash": [
+            4.0,
+            7.0
+          ],
+          "excess_oracle_gap": 0.003468201734030396,
+          "same_owner": false
+        },
+        {
+          "tick": 46,
+          "baseline_action": "bid:3",
+          "candidate_action": "bid:4",
+          "cash": [
+            5.0,
+            7.0
+          ],
+          "excess_oracle_gap": 0.0032231537348375305,
+          "same_owner": false
+        },
+        {
+          "tick": 70,
+          "baseline_action": "bid:3",
+          "candidate_action": "bid:4",
+          "cash": [
+            4.0,
+            7.0
+          ],
+          "excess_oracle_gap": 0.0032231350524408453,
+          "same_owner": false
+        },
+        {
+          "tick": 102,
+          "baseline_action": "bid:3",
+          "candidate_action": "bid:4",
+          "cash": [
+            5.0,
+            7.0
+          ],
+          "excess_oracle_gap": 0.0032153176471347855,
+          "same_owner": false
+        }
+      ],
+      "accounts": [
+        {
+          "game": "auction",
+          "profile": "care",
+          "seed": 53101,
+          "regime": "outside",
+          "turns": 128,
+          "tail_steps": 31,
+          "offset": 0,
+          "arm": "receding_recovery@1",
+          "score": 0.16552734375,
+          "oracle_initial": 0.2031285873205047,
+          "purpose_opportunity_loss": 0.06494962031042362,
+          "innovation": 0.02734837673991891,
+          "oracle_adjusted_return": 0.1381789670100811,
+          "accounting_error": 0.0,
+          "steps": [
+            {
+              "tick": 0,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0
+            },
+            {
+              "tick": 1,
+              "purpose_opportunity_loss": 0.0002830302468412038,
+              "innovation": 0.0001853739968411816
+            },
+            {
+              "tick": 2,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00044910163020334126
+            },
+            {
+              "tick": 3,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.0008543457877541738
+            },
+            {
+              "tick": 4,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": -0.00021896178936275934
+            },
+            {
+              "tick": 5,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.0005190090357186927
+            },
+            {
+              "tick": 6,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -7.975794764703004e-05
+            },
+            {
+              "tick": 7,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.00031024172935562033
+            },
+            {
+              "tick": 8,
+              "purpose_opportunity_loss": 0.004271034923062439,
+              "innovation": 0.005170850672651495
+            },
+            {
+              "tick": 9,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006377740390418329
+            },
+            {
+              "tick": 10,
+              "purpose_opportunity_loss": 0.0010452808308437644,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 11,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006377012315934016
+            },
+            {
+              "tick": 12,
+              "purpose_opportunity_loss": 0.0003189624351307707,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 13,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.000735404909144699
+            },
+            {
+              "tick": 14,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -1.5610532327514637e-05
+            },
+            {
+              "tick": 15,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0003133683423926781
+            },
+            {
+              "tick": 16,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 17,
+              "purpose_opportunity_loss": 0.0002169681255911604,
+              "innovation": 0.001095874375591166
+            },
+            {
+              "tick": 18,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00018804885024731322
+            },
+            {
+              "tick": 19,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006377012262570869
+            },
+            {
+              "tick": 20,
+              "purpose_opportunity_loss": 0.000318962400523648,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 21,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0007354049045613653
+            },
+            {
+              "tick": 22,
+              "purpose_opportunity_loss": 0.003223154799118666,
+              "innovation": 0.0
+            },
+            {
+              "tick": 23,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0018391007326325204
+            },
+            {
+              "tick": 24,
+              "purpose_opportunity_loss": 0.002577981933606227,
+              "innovation": 0.0
+            },
+            {
+              "tick": 25,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0008789062499999778
+            },
+            {
+              "tick": 26,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0017674429978914163
+            },
+            {
+              "tick": 27,
+              "purpose_opportunity_loss": 0.00023644769270708688,
+              "innovation": 4.113519270707022e-05
+            },
+            {
+              "tick": 28,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.00026476357714161347
+            },
+            {
+              "tick": 29,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0007354048860548912
+            },
+            {
+              "tick": 30,
+              "purpose_opportunity_loss": 0.0032231547509288805,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 31,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001839100686770262
+            },
+            {
+              "tick": 32,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -0.00027131319231485373
+            },
+            {
+              "tick": 33,
+              "purpose_opportunity_loss": 0.00021696805768514627,
+              "innovation": 0.0010958743076851518
+            },
+            {
+              "tick": 34,
+              "purpose_opportunity_loss": 0.0034689128960105065,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 35,
+              "purpose_opportunity_loss": 0.0005955679440882711,
+              "innovation": 0.0023533804440882544
+            },
+            {
+              "tick": 36,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0010590540611032928
+            },
+            {
+              "tick": 37,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.002288448335923482
+            },
+            {
+              "tick": 38,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0008097791699043511
+            },
+            {
+              "tick": 39,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006215989623804541
+            },
+            {
+              "tick": 40,
+              "purpose_opportunity_loss": 0.0009828421516535069,
+              "innovation": 0.0
+            },
+            {
+              "tick": 41,
+              "purpose_opportunity_loss": 0.00026866707087505604,
+              "innovation": 0.00017101082087503383
+            },
+            {
+              "tick": 42,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0008209264557192952
+            },
+            {
+              "tick": 43,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.005276507278596576
+            },
+            {
+              "tick": 44,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0012967798002649356
+            },
+            {
+              "tick": 45,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0019383575628311445
+            },
+            {
+              "tick": 46,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00041488708345796543
+            },
+            {
+              "tick": 47,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004467398499861108
+            },
+            {
+              "tick": 48,
+              "purpose_opportunity_loss": 0.0004464063031001386,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 49,
+              "purpose_opportunity_loss": 0.0004247740166500591,
+              "innovation": 0.0003271177666500369
+            },
+            {
+              "tick": 50,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006177770833586393
+            },
+            {
+              "tick": 51,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0010651901041983103
+            },
+            {
+              "tick": 52,
+              "purpose_opportunity_loss": 0.0024965907549182043,
+              "innovation": 0.0
+            },
+            {
+              "tick": 53,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": -0.007753417762153131
+            },
+            {
+              "tick": 54,
+              "purpose_opportunity_loss": 0.00022962224801098552,
+              "innovation": -0.0005272001409295235
+            },
+            {
+              "tick": 55,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00224059654944217
+            },
+            {
+              "tick": 56,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00012682478235354067
+            },
+            {
+              "tick": 57,
+              "purpose_opportunity_loss": 0.0006151060323535684,
+              "innovation": -0.005976049129414213
+            },
+            {
+              "tick": 58,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.001767439437379198
+            },
+            {
+              "tick": 59,
+              "purpose_opportunity_loss": 0.0005955644373792368,
+              "innovation": 0.0023533769373791924
+            },
+            {
+              "tick": 60,
+              "purpose_opportunity_loss": 0.005666902083990066,
+              "innovation": 0.0
+            },
+            {
+              "tick": 61,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0002929687500000111
+            },
+            {
+              "tick": 62,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001783768359801513
+            },
+            {
+              "tick": 63,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001839085449751865
+            },
+            {
+              "tick": 64,
+              "purpose_opportunity_loss": 0.002577862355158833,
+              "innovation": 0.0
+            },
+            {
+              "tick": 65,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 66,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0017674311081535832
+            },
+            {
+              "tick": 67,
+              "purpose_opportunity_loss": 0.0005955561081535665,
+              "innovation": -0.009413474432614394
+            },
+            {
+              "tick": 68,
+              "purpose_opportunity_loss": 0.00010451982577361352,
+              "innovation": -0.0009063985548330711
+            },
+            {
+              "tick": 69,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0022884592360629397
+            },
+            {
+              "tick": 70,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0008097927950787009
+            },
+            {
+              "tick": 71,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0006216159938483845
+            },
+            {
+              "tick": 72,
+              "purpose_opportunity_loss": 0.0009828097311872785,
+              "innovation": 0.0
+            },
+            {
+              "tick": 73,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 74,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0008209792862000354
+            },
+            {
+              "tick": 75,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0013191928577500345
+            },
+            {
+              "tick": 76,
+              "purpose_opportunity_loss": 0.003336549587683313,
+              "innovation": 0.0
+            },
+            {
+              "tick": 77,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0022885152251032603
+            },
+            {
+              "tick": 78,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -0.0032394511255163794
+            },
+            {
+              "tick": 79,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0003906250000000333
+            },
+            {
+              "tick": 80,
+              "purpose_opportunity_loss": -5.551115123125783e-17,
+              "innovation": -0.0030252513199905684
+            },
+            {
+              "tick": 81,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -9.765624999999445e-05
+            },
+            {
+              "tick": 82,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0006415746677157219
+            },
+            {
+              "tick": 83,
+              "purpose_opportunity_loss": 0.0009774811342565526,
+              "innovation": 0.002735293634256536
+            },
+            {
+              "tick": 84,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0006865165848050914
+            },
+            {
+              "tick": 85,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0011755285435064156
+            },
+            {
+              "tick": 86,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00029111994961153465
+            },
+            {
+              "tick": 87,
+              "purpose_opportunity_loss": 0.003638476852947714,
+              "innovation": 0.0
+            },
+            {
+              "tick": 88,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0004989128859911318
+            },
+            {
+              "tick": 89,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 90,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001766721448962394
+            },
+            {
+              "tick": 91,
+              "purpose_opportunity_loss": 0.0005948464489623495,
+              "innovation": 0.0023526589489623606
+            },
+            {
+              "tick": 92,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.00026341068880356144
+            },
+            {
+              "tick": 93,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0007336990360710116
+            },
+            {
+              "tick": 94,
+              "purpose_opportunity_loss": 0.0032185887910805566,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 95,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0018350464169698821
+            },
+            {
+              "tick": 96,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0011067482840931564
+            },
+            {
+              "tick": 97,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 98,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0008171943709772145
+            },
+            {
+              "tick": 99,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0052578468548861446
+            },
+            {
+              "tick": 100,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0012908658804271778
+            },
+            {
+              "tick": 101,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0019309651630340097
+            },
+            {
+              "tick": 102,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004052962313158548
+            },
+            {
+              "tick": 103,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0017548622280042503
+            },
+            {
+              "tick": 104,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00010573420619919283
+            },
+            {
+              "tick": 105,
+              "purpose_opportunity_loss": 0.0005940154561991928,
+              "innovation": -0.005891686824796821
+            },
+            {
+              "tick": 106,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.001744188930179108
+            },
+            {
+              "tick": 107,
+              "purpose_opportunity_loss": 0.00023865801056602298,
+              "innovation": 4.3345510566034084e-05
+            },
+            {
+              "tick": 108,
+              "purpose_opportunity_loss": 0.005651163378453339,
+              "innovation": 0.0
+            },
+            {
+              "tick": 109,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -0.0002929687500000111
+            },
+            {
+              "tick": 110,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0017558830097680334
+            },
+            {
+              "tick": 111,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001804228762210064
+            },
+            {
+              "tick": 112,
+              "purpose_opportunity_loss": 0.002313519828597177,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 113,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -9.765624999999445e-05
+            },
+            {
+              "tick": 114,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.001768548570257794
+            },
+            {
+              "tick": 115,
+              "purpose_opportunity_loss": 0.00021209847891406897,
+              "innovation": 1.6785978914052313e-05
+            },
+            {
+              "tick": 116,
+              "purpose_opportunity_loss": 0.005199407343671858,
+              "innovation": 0.0
+            },
+            {
+              "tick": 117,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0002929687500000111
+            },
+            {
+              "tick": 118,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0017397632558593668
+            },
+            {
+              "tick": 119,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0018065054296874938
+            },
+            {
+              "tick": 120,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0002659250000000002
+            },
+            {
+              "tick": 121,
+              "purpose_opportunity_loss": 0.00022235625000002757,
+              "innovation": 0.0011012625000000054
+            },
+            {
+              "tick": 122,
+              "purpose_opportunity_loss": 0.0025715332031250038,
+              "innovation": 0.0
+            },
+            {
+              "tick": 123,
+              "purpose_opportunity_loss": 0.00019727539062497357,
+              "innovation": 7.226562499795808e-07
+            },
+            {
+              "tick": 124,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -6.933593750008127e-06
+            },
+            {
+              "tick": 125,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -0.00224218750000002
+            },
+            {
+              "tick": 126,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00011718750000000444
+            },
+            {
+              "tick": 127,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0
+            }
+          ]
+        },
+        {
+          "game": "auction",
+          "profile": "care",
+          "seed": 53101,
+          "regime": "outside",
+          "turns": 128,
+          "tail_steps": 31,
+          "offset": 0,
+          "arm": "receding_recovery@1",
+          "score": 0.15625,
+          "oracle_initial": 0.2031285873205047,
+          "purpose_opportunity_loss": 0.06444810066428935,
+          "innovation": 0.01756951334378465,
+          "oracle_adjusted_return": 0.13868048665621535,
+          "accounting_error": 0.0,
+          "steps": [
+            {
+              "tick": 0,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0
+            },
+            {
+              "tick": 1,
+              "purpose_opportunity_loss": 0.0002830302468412038,
+              "innovation": 0.0001853739968411816
+            },
+            {
+              "tick": 2,
+              "purpose_opportunity_loss": 0.004716904202175742,
+              "innovation": 0.0
+            },
+            {
+              "tick": 3,
+              "purpose_opportunity_loss": 0.00013971041747959378,
+              "innovation": -5.560208252039511e-05
+            },
+            {
+              "tick": 4,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006866063677291867
+            },
+            {
+              "tick": 5,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0011756407721614792
+            },
+            {
+              "tick": 6,
+              "purpose_opportunity_loss": 0.0036368899506060426,
+              "innovation": 0.0
+            },
+            {
+              "tick": 7,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.0022406024759422105
+            },
+            {
+              "tick": 8,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0005073296209698042
+            },
+            {
+              "tick": 9,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 10,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0017674430128692686
+            },
+            {
+              "tick": 11,
+              "purpose_opportunity_loss": 0.00023644768597808064,
+              "innovation": 4.113518597809174e-05
+            },
+            {
+              "tick": 12,
+              "purpose_opportunity_loss": 0.005666923149051539,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 13,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0002929687500000111
+            },
+            {
+              "tick": 14,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0017837805946628593
+            },
+            {
+              "tick": 15,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0018391007433286033
+            },
+            {
+              "tick": 16,
+              "purpose_opportunity_loss": 0.002577982050029237,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 17,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 18,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.001767443009814934
+            },
+            {
+              "tick": 19,
+              "purpose_opportunity_loss": 0.0002364476870016785,
+              "innovation": 4.1135187001661855e-05
+            },
+            {
+              "tick": 20,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0002647635917862323
+            },
+            {
+              "tick": 21,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0007354049045613653
+            },
+            {
+              "tick": 22,
+              "purpose_opportunity_loss": 0.003223154799118666,
+              "innovation": 0.0
+            },
+            {
+              "tick": 23,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0018391007326325204
+            },
+            {
+              "tick": 24,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": -0.0002713131370599142
+            },
+            {
+              "tick": 25,
+              "purpose_opportunity_loss": 0.00019651715461804775,
+              "innovation": -0.0018663106415627295
+            },
+            {
+              "tick": 26,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.0006177786151634335
+            },
+            {
+              "tick": 27,
+              "purpose_opportunity_loss": 0.0007378542197049032,
+              "innovation": -0.00015007876134082165
+            },
+            {
+              "tick": 28,
+              "purpose_opportunity_loss": 0.0024965963910616173,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 29,
+              "purpose_opportunity_loss": 0.0007954782765919599,
+              "innovation": -0.00019585088265705597
+            },
+            {
+              "tick": 30,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004148880562985513
+            },
+            {
+              "tick": 31,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.00044674072553529953
+            },
+            {
+              "tick": 32,
+              "purpose_opportunity_loss": 0.00044641087056232487,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 33,
+              "purpose_opportunity_loss": 0.00042477468809284935,
+              "innovation": 0.00032711843809282715
+            },
+            {
+              "tick": 34,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006177785461034258
+            },
+            {
+              "tick": 35,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0010651919326293002
+            },
+            {
+              "tick": 36,
+              "purpose_opportunity_loss": 0.00249659613577885,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 37,
+              "purpose_opportunity_loss": 0.0006624872965349526,
+              "innovation": -0.00032884203239572085
+            },
+            {
+              "tick": 38,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00041488783882792646
+            },
+            {
+              "tick": 39,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0004467405253553991
+            },
+            {
+              "tick": 40,
+              "purpose_opportunity_loss": 0.00044641002766407367,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 41,
+              "purpose_opportunity_loss": 0.00042477452406813887,
+              "innovation": 0.0003271182740681444
+            },
+            {
+              "tick": 42,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.000617778243171746
+            },
+            {
+              "tick": 43,
+              "purpose_opportunity_loss": 0.000737854425886808,
+              "innovation": -0.0006024138186638273
+            },
+            {
+              "tick": 44,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00026476326140695283
+            },
+            {
+              "tick": 45,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.000735404509147719
+            },
+            {
+              "tick": 46,
+              "purpose_opportunity_loss": 0.0032231537348375305,
+              "innovation": 0.0
+            },
+            {
+              "tick": 47,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001839099771640068
+            },
+            {
+              "tick": 48,
+              "purpose_opportunity_loss": 0.0025779738338472247,
+              "innovation": 0.0
+            },
+            {
+              "tick": 49,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -9.76562500000222e-05
+            },
+            {
+              "tick": 50,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0017674418479809717
+            },
+            {
+              "tick": 51,
+              "purpose_opportunity_loss": 0.0002364477551272115,
+              "innovation": 4.11352551272226e-05
+            },
+            {
+              "tick": 52,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.0002647623093904039
+            },
+            {
+              "tick": 53,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0029416134787099146
+            },
+            {
+              "tick": 54,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0008097788353026991
+            },
+            {
+              "tick": 55,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0006215985441283545
+            },
+            {
+              "tick": 56,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0003886979227985532
+            },
+            {
+              "tick": 57,
+              "purpose_opportunity_loss": 9.958332720141905e-05,
+              "innovation": -0.003913958308805837
+            },
+            {
+              "tick": 58,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0006177711718371726
+            },
+            {
+              "tick": 59,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0010651827147964976
+            },
+            {
+              "tick": 60,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": -6.087481528405103e-05
+            },
+            {
+              "tick": 61,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006065606730452922
+            },
+            {
+              "tick": 62,
+              "purpose_opportunity_loss": 0.0016656144942063522,
+              "innovation": 0.0
+            },
+            {
+              "tick": 63,
+              "purpose_opportunity_loss": 0.0046623763614804525,
+              "innovation": 0.0
+            },
+            {
+              "tick": 64,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0007565183562421862
+            },
+            {
+              "tick": 65,
+              "purpose_opportunity_loss": 0.00042476305683797344,
+              "innovation": 0.000327106806837979
+            },
+            {
+              "tick": 66,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006177511081374709
+            },
+            {
+              "tick": 67,
+              "purpose_opportunity_loss": 0.0007378719351816831,
+              "innovation": -0.0006022661331821222
+            },
+            {
+              "tick": 68,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.00026475285534363624
+            },
+            {
+              "tick": 69,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0007353887601638243
+            },
+            {
+              "tick": 70,
+              "purpose_opportunity_loss": 0.0032231350524408453,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 71,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0018390639826385002
+            },
+            {
+              "tick": 72,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -0.0002713534566807785
+            },
+            {
+              "tick": 73,
+              "purpose_opportunity_loss": 0.00019651736643755413,
+              "innovation": 9.886111643755968e-05
+            },
+            {
+              "tick": 74,
+              "purpose_opportunity_loss": 0.003468201734030396,
+              "innovation": 0.0
+            },
+            {
+              "tick": 75,
+              "purpose_opportunity_loss": 0.00023651981273659084,
+              "innovation": 4.1207312736574186e-05
+            },
+            {
+              "tick": 76,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0002647271065747414
+            },
+            {
+              "tick": 77,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0007353425769426325
+            },
+            {
+              "tick": 78,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 6.283739666596011e-05
+            },
+            {
+              "tick": 79,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006217034767238561
+            },
+            {
+              "tick": 80,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.001554045446378327
+            },
+            {
+              "tick": 81,
+              "purpose_opportunity_loss": 0.00015595752557640008,
+              "innovation": 5.8301275576377876e-05
+            },
+            {
+              "tick": 82,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006175034544259606
+            },
+            {
+              "tick": 83,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.001064848068032448
+            },
+            {
+              "tick": 84,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -6.127218616069907e-05
+            },
+            {
+              "tick": 85,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006060901314224876
+            },
+            {
+              "tick": 86,
+              "purpose_opportunity_loss": 0.0016651953705895117,
+              "innovation": 0.0
+            },
+            {
+              "tick": 87,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.00044573117246476945
+            },
+            {
+              "tick": 88,
+              "purpose_opportunity_loss": 0.0004449601802819225,
+              "innovation": 0.0
+            },
+            {
+              "tick": 89,
+              "purpose_opportunity_loss": 0.00042357335680331953,
+              "innovation": 0.0003259171068033251
+            },
+            {
+              "tick": 90,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.000617011637248005
+            },
+            {
+              "tick": 91,
+              "purpose_opportunity_loss": 0.0007055265422699075,
+              "innovation": -0.00018336516117009594
+            },
+            {
+              "tick": 92,
+              "purpose_opportunity_loss": 0.0024965649889422403,
+              "innovation": 0.0
+            },
+            {
+              "tick": 93,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0019382683662819145
+            },
+            {
+              "tick": 94,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.0004152700952702315
+            },
+            {
+              "tick": 95,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 0.00044828511269742743
+            },
+            {
+              "tick": 96,
+              "purpose_opportunity_loss": 0.00043046794223008944,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 97,
+              "purpose_opportunity_loss": 0.0004250546304457592,
+              "innovation": 0.000327398380445737
+            },
+            {
+              "tick": 98,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0006180548044514289
+            },
+            {
+              "tick": 99,
+              "purpose_opportunity_loss": 0.0007385227097879421,
+              "innovation": -0.000611539688169932
+            },
+            {
+              "tick": 100,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0002571640992871105
+            },
+            {
+              "tick": 101,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.0007271085094075203
+            },
+            {
+              "tick": 102,
+              "purpose_opportunity_loss": 0.0032153176471347855,
+              "innovation": 0.0
+            },
+            {
+              "tick": 103,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0073083120320359685
+            },
+            {
+              "tick": 104,
+              "purpose_opportunity_loss": 0.00023671718192186386,
+              "innovation": -0.0012058500580969522
+            },
+            {
+              "tick": 105,
+              "purpose_opportunity_loss": 0.0002589936919030478,
+              "innovation": -0.0014520369771275632
+            },
+            {
+              "tick": 106,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0017441889301790803
+            },
+            {
+              "tick": 107,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0001953124999999889
+            },
+            {
+              "tick": 108,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0009376121165678708
+            },
+            {
+              "tick": 109,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.002240722059848238
+            },
+            {
+              "tick": 110,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0007501213248102823
+            },
+            {
+              "tick": 111,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0005470266560128889
+            },
+            {
+              "tick": 112,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0004636823175900029
+            },
+            {
+              "tick": 113,
+              "purpose_opportunity_loss": 2.4598932410024865e-05,
+              "innovation": -0.003614020729639983
+            },
+            {
+              "tick": 114,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0005226746922999959
+            },
+            {
+              "tick": 115,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.000946312115374992
+            },
+            {
+              "tick": 116,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.00020532469226561267
+            },
+            {
+              "tick": 117,
+              "purpose_opportunity_loss": 2.7755575615628914e-17,
+              "innovation": 0.0004311712921875044
+            },
+            {
+              "tick": 118,
+              "purpose_opportunity_loss": 0.00140521536718749,
+              "innovation": 0.0
+            },
+            {
+              "tick": 119,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0002379996484374869
+            },
+            {
+              "tick": 120,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -2.7755575615628914e-17
+            },
+            {
+              "tick": 121,
+              "purpose_opportunity_loss": 0.0002675749023437479,
+              "innovation": 0.00016991865234375347
+            },
+            {
+              "tick": 122,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": 4.599999999999049e-05
+            },
+            {
+              "tick": 123,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": 0.0003504687499999992
+            },
+            {
+              "tick": 124,
+              "purpose_opportunity_loss": 0.00021845703125000782,
+              "innovation": 0.0
+            },
+            {
+              "tick": 125,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.004154296875000019
+            },
+            {
+              "tick": 126,
+              "purpose_opportunity_loss": -2.7755575615628914e-17,
+              "innovation": -0.001330566406250011
+            },
+            {
+              "tick": 127,
+              "purpose_opportunity_loss": 0.0,
+              "innovation": -0.0006347656250000056
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "This oracle sees the true response law and ignores personality; its gap includes unavailable knowledge and legitimate value costs. It is never provided to a playing NPC.",
+    "Frozen original8 known-case evidence, not a replacement for rejected original40 or the new independent40.",
+    "Better average forecast accuracy alone is not evidence of better choices. No actor, criterion, world or personality was changed."
+  ]
+}

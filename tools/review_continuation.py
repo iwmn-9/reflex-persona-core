@@ -58,12 +58,29 @@ def main():
     assert set(rows)=={s['id'] for s in plan['specs']}
     recomputed=[];receipts=[];decisions=0
     for spec in plan['specs']:
-        assert spec['mechanism']=='world' and 'reference' not in spec, 'fresh paired worlds required'
+        assert spec['mechanism']=='world', 'world comparison required'
         row=rows[spec['id']];assert row['spec']==spec
         results=[];conditional=[];paths=[]
         for side in ('baseline','candidate'):
-            path=root/spec['id']/side/'result.json';data=path.read_bytes();result=json.loads(data)
-            assert result['complete'] and result['configuration']['spec']==spec
+            reference=spec.get('reference') if side=='baseline' else None
+            path=root/reference['archive'] if reference else root/spec['id']/side/'result.json'
+            data=path.read_bytes();result=json.loads(data)
+            expected=spec
+            if reference:
+                assert sha(data)==reference['sha256']
+                control_proof=json.loads((root/'controls_verification.json').read_bytes())
+                receipt=next(r for r in control_proof['rows'] if r['id']==spec['id'])
+                assert control_proof['complete'] and control_proof['actual_owner_replayed'] and control_proof['source_verified']
+                assert receipt['result_sha256']==sha(data)
+                assert control_proof['plan_sha256']==reference['audited_development_plan_sha256']
+                assert control_proof['source']==reference['original_source']==plan['source']
+                expected=result['configuration']['spec']
+                # A control may differ only in the tested controller setting;
+                # world rules, persona, random seed and duration must match.
+                assert {k:v for k,v in expected.items() if k!='controller'}=={
+                    k:v for k,v in spec.items() if k not in ('controller','reference')}
+            assert result['complete'] and result['configuration']['spec']==expected
+            assert result['configuration']['retry']==(side=='candidate')
             game=game_for(spec);world=game.start();increments=[]
             for step in result['trace']:
                 assert step['before']==world
@@ -94,6 +111,7 @@ def main():
         summary_sha256=sha((root/'summary.json').read_bytes()),results=receipts,
         inherited_quality_requirements=quality_requirements(recomputed),adoption=False,
         limit='Numerical quality gate only. Original 40/8/8, individual losses and personality behavior still require review; no automatic adoption.')
+    out['reused_controls']=sum('reference' in spec for spec in plan['specs'])
     target=Path(args.output) if args.output else root/'quality_review.json'
     target.write_bytes(encoded(out))
     print(json.dumps({k:v for k,v in out.items() if k!='results'}),flush=True)

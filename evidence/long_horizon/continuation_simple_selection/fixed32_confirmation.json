@@ -1,0 +1,723 @@
+{
+  "algorithm_source_sha256": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "criteria": {
+    "adoption": "Never automatic. Review fixed independent evidence and original 40/8/8 before adoption.",
+    "all_pairs": 40,
+    "complete": "All registered pairs reach terminal or actual death; no missing, substituted or omitted conditions.",
+    "development_gate": "Same source screen12: no loss; known-world8: each family nonnegative. Complete and audited only.",
+    "family_gate": "Each family mean realized score delta and conditional increment delta >= -1e-12. Report every individual loss.",
+    "integrity": "Frozen source; actual feedback and fixed personality replay; matched world RNG; fresh same-runtime controls.",
+    "limits": "Fresh stochastic trajectories of existing rule families, not new game logic or proof of human-level intelligence.",
+    "personas": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "turns": 128
+  },
+  "evidence": "evidence/long_horizon/continuation_selected_confirmation",
+  "execution": {
+    "baseline": "adopted-owner-continuity-H16",
+    "candidate": "Fixed H32 cutoff; no voting",
+    "recurring": false,
+    "resources": "Existing local CPU only",
+    "workers": 6
+  },
+  "gate_root": "results/continuation_horizon_consensus",
+  "gate_screen_evidence": "evidence/long_horizon/continuation_fixed32_screen",
+  "gate_screen_plan_sha256": "30035e5b68a88a921f8dc3fd9e04324909c7fbcd8f1d9ff91be7042ac1579191",
+  "gate_world_evidence": "evidence/long_horizon/continuation_horizon_ablation",
+  "gate_world_plan_sha256": "0b8607aa40f2496048acfe03f5640796871b39c9c03c7b63eb829e497e848173",
+  "manager_sha256": "54e778b54ee87bd6491525f9589f59646f3cbc8ee382caf5905b6e5f4a320fc8",
+  "prerequisite_root": "results/continuation_horizon_ablation",
+  "purpose": "Independent world-trajectory confirmation only after complete development gates; original 40/8/8 remain separate.",
+  "registered_at": "2026-10-24T00:01:02.046980+00:00",
+  "seed_provenance": "Same previously registered 10061201..10061204 conditions. Prior candidate gate rejected before any independent simulations; no adverse seed replacement.",
+  "specs": [
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "auction",
+      "id": "auction-0-10061201-outside",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "auction",
+      "id": "auction-0-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "auction",
+      "id": "auction-1-10061201-outside",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "auction",
+      "id": "auction-1-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "auction",
+      "id": "auction-2-10061201-outside",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "auction",
+      "id": "auction-2-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "auction",
+      "id": "auction-3-10061201-outside",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "auction",
+      "id": "auction-3-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "combat",
+      "id": "combat-0-10061201-outside",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "combat",
+      "id": "combat-0-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "combat",
+      "id": "combat-1-10061201-outside",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "combat",
+      "id": "combat-1-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "combat",
+      "id": "combat-2-10061201-outside",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "combat",
+      "id": "combat-2-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "combat",
+      "id": "combat-3-10061201-outside",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "combat",
+      "id": "combat-3-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-0-10061201-outside",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-0-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-0-10061203-irregular",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "irregular",
+      "seed": 10061203,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-0-10061204-steady",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "steady",
+      "seed": 10061204,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-1-10061201-outside",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-1-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-1-10061203-irregular",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "irregular",
+      "seed": 10061203,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-1-10061204-steady",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "steady",
+      "seed": 10061204,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-2-10061201-outside",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-2-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-2-10061203-irregular",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "irregular",
+      "seed": 10061203,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-2-10061204-steady",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "steady",
+      "seed": 10061204,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-3-10061201-outside",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-3-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-3-10061203-irregular",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "irregular",
+      "seed": 10061203,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "gambling",
+      "id": "gambling-3-10061204-steady",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "steady",
+      "seed": 10061204,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "resources",
+      "id": "resources-0-10061201-outside",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "resources",
+      "id": "resources-0-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "resources",
+      "id": "resources-1-10061201-outside",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "resources",
+      "id": "resources-1-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "resources",
+      "id": "resources-2-10061201-outside",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "resources",
+      "id": "resources-2-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "resources",
+      "id": "resources-3-10061201-outside",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "controller": {
+        "coherent_cumulative_mean": true,
+        "horizon_consensus": true,
+        "purpose_estimator": "conditional",
+        "recovery_cache": 64,
+        "tail_recovery": 2,
+        "minimum_horizon": 32
+      },
+      "game": "resources",
+      "id": "resources-3-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    }
+  ],
+  "version": 1,
+  "selected_candidate": "fixed32",
+  "selection_rule": "Complete both candidates, all known-world8 and preparation12. If fixed H32 has no preparation loss and no family mean final-purpose or conditional-increment loss under the unchanged 1e-12 arithmetic boundary, select fixed H32 for independent40, even if consensus scores higher. Use consensus only if H32 fails that adequacy gate and consensus passes. Reject both if neither passes. Never adopt from development.",
+  "supersedes_registration_sha256": "f910b1a4acbe097f3ab141522b0d54f37a15154eb7ce33e03a8ae182cf160d60"
+}

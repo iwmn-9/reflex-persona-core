@@ -1,0 +1,16 @@
+{
+  "created": "2026-10-24T00:11:57.942466+00:00",
+  "target_plan_sha256": "0b8607aa40f2496048acfe03f5640796871b39c9c03c7b63eb829e497e848173",
+  "executor_sha256": "83d238508f23b8f8297bd752ae4c7a8e97e4b6b9fdd6e2cf041002b61ceeb1af",
+  "conditions": [
+    "gambling-0-56101-outside",
+    "gambling-2-56101-outside",
+    "resources-0-56101-outside",
+    "resources-2-56101-outside"
+  ],
+  "change": "Execution reuse only: replay identical already-computed H32 ballots up to FIRST divergence, verify every owner/RNG/physical transition, then continue original frozen runner. No current H32 execution overwritten.",
+  "tests": "Independent H32 four-family two-turn traces, full owner/checkpoint/RNG/contract exactly equal to projected prefix. Three failure guards passed.",
+  "timing": "Shared original time charged as an upper bound; not a standalone H32 runtime comparison.",
+  "independent_trials": 0,
+  "source_manifest_sha256": "a56bf6a717d899e45554d79724b4fc5a63249d0c49b1f4bc16574e216545a848"
+}
