@@ -1,0 +1,1088 @@
+{
+  "complete": true,
+  "adoption": false,
+  "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "plan_sha256": "58287e783c3c92a3ebd127163765f0f76f9a9532b6efe4cb3edf1fb190126e68",
+  "probes": 18,
+  "original_actions_and_purposes_reproduced": 6,
+  "actual_past_decisions_replayed": 1272,
+  "varying_states": 5,
+  "factual_choices_matching_stationary_reference": 0,
+  "rows": [
+    {
+      "case": "auction-2-56101-outside-t032",
+      "tick": 32,
+      "regret_rank": 1,
+      "factual_action": "bid:4",
+      "world": {
+        "ammo": 2,
+        "cash": 4.0,
+        "hp": 12.0,
+        "investment": 0,
+        "last": "bid:2",
+        "plant": 0,
+        "rival": 22.0,
+        "score": 56.0,
+        "signal": "2",
+        "tick": 32
+      },
+      "root_prediction": {
+        "0": 0.1120815954648818,
+        "1": 0.22413757990062594,
+        "2": 0.6637808246344923
+      },
+      "actual_observations": {
+        "2": 22,
+        "1": 7,
+        "0": 3
+      },
+      "factual_action_matches_stationary_reference": false,
+      "action_varies": true,
+      "references": {
+        "64": {
+          "true_law": {
+            "values": {
+              "bid:0": 0.07471997549658548,
+              "bid:1": 0.07527953466663118,
+              "bid:2": 0.07580843646052127,
+              "bid:3": 0.08162960957578541,
+              "bid:4": 0.07575353144651663
+            },
+            "best_actions": [
+              "bid:3"
+            ],
+            "bellman_checks": 5
+          },
+          "stationary_root_belief": {
+            "values": {
+              "bid:0": 0.0705963110409204,
+              "bid:1": 0.07117213462333886,
+              "bid:2": 0.07260336197671732,
+              "bid:3": 0.07703925698545623,
+              "bid:4": 0.07155395945614201
+            },
+            "best_actions": [
+              "bid:3"
+            ],
+            "bellman_checks": 5
+          }
+        },
+        "128": {
+          "true_law": {
+            "values": {
+              "bid:0": 0.17256963883971932,
+              "bid:1": 0.1731263098873354,
+              "bid:2": 0.17365379612940984,
+              "bid:3": 0.17947405655876578,
+              "bid:4": 0.17357239970551752
+            },
+            "best_actions": [
+              "bid:3"
+            ],
+            "bellman_checks": 5
+          },
+          "stationary_root_belief": {
+            "values": {
+              "bid:0": 0.1585604658075335,
+              "bid:1": 0.15912962492093513,
+              "bid:2": 0.16056348490687278,
+              "bid:3": 0.16499758980327103,
+              "bid:4": 0.15941830305099386
+            },
+            "best_actions": [
+              "bid:3"
+            ],
+            "bellman_checks": 5
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "bid:4",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.054864401580195066,
+              "bid:1": 0.05493241844321654,
+              "bid:2": 0.0558646956515437,
+              "bid:3": 0.05935460701962553,
+              "bid:4": 0.06181020550548509
+            },
+            "best_purpose": 0.06181020550548509,
+            "mode": "principle",
+            "primary_need": "safety",
+            "selected_purpose": 0.06181020550548509,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "64": {
+              "true_law": 0.005876078129268783,
+              "stationary_root_belief": 0.0054852975293142175
+            },
+            "128": {
+              "true_law": 0.005901656853248255,
+              "stationary_root_belief": 0.005579286752277174
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "bid:3",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.0426100394121514,
+              "bid:1": 0.0438275657279511,
+              "bid:2": 0.04442811655532689,
+              "bid:3": 0.05760455550809382,
+              "bid:4": 0.04938773469776176
+            },
+            "best_purpose": 0.05760455550809382,
+            "mode": "principle",
+            "primary_need": "safety",
+            "selected_purpose": 0.05760455550809382,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "64": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "bid:3",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.03641647845432885,
+              "bid:1": 0.03716211315991895,
+              "bid:2": 0.03886885010026451,
+              "bid:3": 0.04701129542242256,
+              "bid:4": 0.043405231115280864
+            },
+            "best_purpose": 0.04701129542242256,
+            "mode": "principle",
+            "primary_need": "safety",
+            "selected_purpose": 0.04701129542242256,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "64": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "auction-2-56101-outside-t080",
+      "tick": 80,
+      "regret_rank": 2,
+      "factual_action": "bid:3",
+      "world": {
+        "ammo": 2,
+        "cash": 12.0,
+        "hp": 12.0,
+        "investment": 0,
+        "last": "bid:3",
+        "plant": 0,
+        "rival": 31.0,
+        "score": 117.0,
+        "signal": "2",
+        "tick": 80
+      },
+      "root_prediction": {
+        "0": 0.13155361458876724,
+        "1": 0.16536703995186702,
+        "2": 0.7030793454593657
+      },
+      "actual_observations": {
+        "2": 57,
+        "1": 13,
+        "0": 10
+      },
+      "factual_action_matches_stationary_reference": false,
+      "action_varies": false,
+      "references": {
+        "112": {
+          "true_law": {
+            "values": {
+              "bid:0": 0.13490248175196615,
+              "bid:1": 0.13568373175196616,
+              "bid:2": 0.13643412802201335,
+              "bid:3": 0.14322317817250382,
+              "bid:4": 0.14746711154758463
+            },
+            "best_actions": [
+              "bid:4"
+            ],
+            "bellman_checks": 5
+          },
+          "stationary_root_belief": {
+            "values": {
+              "bid:0": 0.1327371192571915,
+              "bid:1": 0.13376488187116625,
+              "bid:2": 0.13498544967550957,
+              "bid:3": 0.14146119162642756,
+              "bid:4": 0.1451635270094171
+            },
+            "best_actions": [
+              "bid:4"
+            ],
+            "bellman_checks": 5
+          }
+        },
+        "128": {
+          "true_law": {
+            "values": {
+              "bid:0": 0.1593531731773546,
+              "bid:1": 0.1601344231773546,
+              "bid:2": 0.1608843526175895,
+              "bid:3": 0.16767687419793745,
+              "bid:4": 0.17194572600768857
+            },
+            "best_actions": [
+              "bid:4"
+            ],
+            "bellman_checks": 5
+          },
+          "stationary_root_belief": {
+            "values": {
+              "bid:0": 0.155485616004019,
+              "bid:1": 0.15651337861799375,
+              "bid:2": 0.1577333532233124,
+              "bid:3": 0.16420903357777306,
+              "bid:4": 0.16791285552156515
+            },
+            "best_actions": [
+              "bid:4"
+            ],
+            "bellman_checks": 5
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "bid:3",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.1002246938730731,
+              "bid:1": 0.10125245648704784,
+              "bid:2": 0.1025342469861938,
+              "bid:3": 0.1297091100473881,
+              "bid:4": 0.10141361257348938
+            },
+            "best_purpose": 0.1297091100473881,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.1297091100473881,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "112": {
+              "true_law": 0.004243933375080805,
+              "stationary_root_belief": 0.00370233538298953
+            },
+            "128": {
+              "true_law": 0.0042688518097511174,
+              "stationary_root_belief": 0.003703821943792096
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "bid:3",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.10574004184693546,
+              "bid:1": 0.1067678044609102,
+              "bid:2": 0.10804959496005617,
+              "bid:3": 0.11937849191640937,
+              "bid:4": 0.10045924941937301
+            },
+            "best_purpose": 0.11937849191640937,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.11937849191640937,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "112": {
+              "true_law": 0.004243933375080805,
+              "stationary_root_belief": 0.00370233538298953
+            },
+            "128": {
+              "true_law": 0.0042688518097511174,
+              "stationary_root_belief": 0.003703821943792096
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "bid:3",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.10602843128258213,
+              "bid:1": 0.10705619389655688,
+              "bid:2": 0.10791741366638483,
+              "bid:3": 0.11855481184857657,
+              "bid:4": 0.11469129364733589
+            },
+            "best_purpose": 0.11855481184857657,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.11855481184857657,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "112": {
+              "true_law": 0.004243933375080805,
+              "stationary_root_belief": 0.00370233538298953
+            },
+            "128": {
+              "true_law": 0.0042688518097511174,
+              "stationary_root_belief": 0.003703821943792096
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "auction-2-56101-outside-t088",
+      "tick": 88,
+      "regret_rank": 3,
+      "factual_action": "bid:3",
+      "world": {
+        "ammo": 2,
+        "cash": 12.0,
+        "hp": 12.0,
+        "investment": 0,
+        "last": "bid:3",
+        "plant": 0,
+        "rival": 31.0,
+        "score": 122.0,
+        "signal": "2",
+        "tick": 88
+      },
+      "root_prediction": {
+        "0": 0.11832661025617483,
+        "1": 0.16173484330618215,
+        "2": 0.719938546437643
+      },
+      "actual_observations": {
+        "2": 64,
+        "1": 14,
+        "0": 10
+      },
+      "factual_action_matches_stationary_reference": false,
+      "action_varies": true,
+      "references": {
+        "120": {
+          "true_law": {
+            "values": {
+              "bid:0": 0.13978529425196615,
+              "bid:1": 0.14056654425196616,
+              "bid:2": 0.14131694052201335,
+              "bid:3": 0.14810599067250382,
+              "bid:4": 0.15234992404758463
+            },
+            "best_actions": [
+              "bid:4"
+            ],
+            "bellman_checks": 5
+          },
+          "stationary_root_belief": {
+            "values": {
+              "bid:0": 0.1378633760540392,
+              "bid:1": 0.13878780269666557,
+              "bid:2": 0.1399920589086624,
+              "bid:3": 0.14656544306659744,
+              "bid:4": 0.15038729696180098
+            },
+            "best_actions": [
+              "bid:4"
+            ],
+            "bellman_checks": 5
+          }
+        },
+        "128": {
+          "true_law": {
+            "values": {
+              "bid:0": 0.1520091005093879,
+              "bid:1": 0.15279035050938788,
+              "bid:2": 0.15354032422573838,
+              "bid:3": 0.160332103250299,
+              "bid:4": 0.164595069143121
+            },
+            "best_actions": [
+              "bid:4"
+            ],
+            "bellman_checks": 5
+          },
+          "stationary_root_belief": {
+            "values": {
+              "bid:0": 0.14938183862657858,
+              "bid:1": 0.15030626526920496,
+              "bid:2": 0.15151037275746984,
+              "bid:3": 0.15808324022862252,
+              "bid:4": 0.16190319034757114
+            },
+            "best_actions": [
+              "bid:4"
+            ],
+            "bellman_checks": 5
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "bid:3",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.10091474727394421,
+              "bid:1": 0.10183917391657059,
+              "bid:2": 0.10309409214478003,
+              "bid:3": 0.13136582590566814,
+              "bid:4": 0.10438564209359197
+            },
+            "best_purpose": 0.13136582590566814,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.13136582590566814,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "120": {
+              "true_law": 0.004243933375080805,
+              "stationary_root_belief": 0.0038218538952035364
+            },
+            "128": {
+              "true_law": 0.0042629658928219905,
+              "stationary_root_belief": 0.0038199501189486174
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "bid:4",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.1151958938087478,
+              "bid:1": 0.11612032045137417,
+              "bid:2": 0.1173752386795836,
+              "bid:3": 0.12182667426266143,
+              "bid:4": 0.12547670996031754
+            },
+            "best_purpose": 0.12547670996031754,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.12547670996031754,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "120": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "bid:3",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.09997459556086112,
+              "bid:1": 0.1008990222034875,
+              "bid:2": 0.10218443234555444,
+              "bid:3": 0.12816262122842315,
+              "bid:4": 0.11454913640950719
+            },
+            "best_purpose": 0.12816262122842315,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.12816262122842315,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "120": {
+              "true_law": 0.004243933375080805,
+              "stationary_root_belief": 0.0038218538952035364
+            },
+            "128": {
+              "true_law": 0.0042629658928219905,
+              "stationary_root_belief": 0.0038199501189486174
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "auction-2-56101-outside-t096",
+      "tick": 96,
+      "regret_rank": 4,
+      "factual_action": "bid:3",
+      "world": {
+        "ammo": 2,
+        "cash": 12.0,
+        "hp": 12.0,
+        "investment": 0,
+        "last": "bid:3",
+        "plant": 0,
+        "rival": 31.0,
+        "score": 129.0,
+        "signal": "2",
+        "tick": 96
+      },
+      "root_prediction": {
+        "0": 0.11991366923262727,
+        "1": 0.14708828212809433,
+        "2": 0.7329980486392784
+      },
+      "actual_observations": {
+        "2": 71,
+        "1": 14,
+        "0": 11
+      },
+      "factual_action_matches_stationary_reference": false,
+      "action_varies": true,
+      "references": {
+        "128": {
+          "true_law": {
+            "values": {
+              "bid:0": 0.14662123175196615,
+              "bid:1": 0.14740248175196616,
+              "bid:2": 0.14815287802201335,
+              "bid:3": 0.15494192817250382,
+              "bid:4": 0.15918586154758463
+            },
+            "best_actions": [
+              "bid:4"
+            ],
+            "bellman_checks": 5
+          },
+          "stationary_root_belief": {
+            "values": {
+              "bid:0": 0.14505074211084978,
+              "bid:1": 0.14598756765172965,
+              "bid:2": 0.14708035572167935,
+              "bid:3": 0.15364858891570296,
+              "bid:4": 0.15757111907620114
+            },
+            "best_actions": [
+              "bid:4"
+            ],
+            "bellman_checks": 5
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "bid:3",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.12214367347938489,
+              "bid:1": 0.12308049902026477,
+              "bid:2": 0.12301159922890155,
+              "bid:3": 0.1360693677055374,
+              "bid:4": 0.11203580605151503
+            },
+            "best_purpose": 0.1360693677055374,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.1360693677055374,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "128": {
+              "true_law": 0.004243933375080805,
+              "stationary_root_belief": 0.003922530160498178
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "bid:4",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.12269551317665207,
+              "bid:1": 0.123632338717532,
+              "bid:2": 0.12513663559725663,
+              "bid:3": 0.13241508433622548,
+              "bid:4": 0.13371820348005228
+            },
+            "best_purpose": 0.13371820348005228,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.13371820348005228,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "bid:3",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.11867104249685761,
+              "bid:1": 0.11960786803773751,
+              "bid:2": 0.11966285704038626,
+              "bid:3": 0.13507579248398865,
+              "bid:4": 0.12349206029092058
+            },
+            "best_purpose": 0.13507579248398865,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.13507579248398865,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "128": {
+              "true_law": 0.004243933375080805,
+              "stationary_root_belief": 0.003922530160498178
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "auction-2-56101-outside-t018",
+      "tick": 18,
+      "regret_rank": 5,
+      "factual_action": "bid:4",
+      "world": {
+        "ammo": 2,
+        "cash": 7.0,
+        "hp": 12.0,
+        "investment": 0,
+        "last": "bid:2",
+        "plant": 0,
+        "rival": 4.0,
+        "score": 25.0,
+        "signal": "2",
+        "tick": 18
+      },
+      "root_prediction": {
+        "0": 0.12965694490324986,
+        "1": 0.23571509482192138,
+        "2": 0.6346279602748288
+      },
+      "actual_observations": {
+        "2": 13,
+        "1": 4,
+        "0": 1
+      },
+      "factual_action_matches_stationary_reference": false,
+      "action_varies": true,
+      "references": {
+        "50": {
+          "true_law": {
+            "values": {
+              "bid:0": 0.07107338618509337,
+              "bid:1": 0.07142044438754971,
+              "bid:2": 0.0717014810781226,
+              "bid:3": 0.07528221186393104,
+              "bid:4": 0.07183043377615465
+            },
+            "best_actions": [
+              "bid:3"
+            ],
+            "bellman_checks": 5
+          },
+          "stationary_root_belief": {
+            "values": {
+              "bid:0": 0.06698632326058415,
+              "bid:1": 0.06736593698381915,
+              "bid:2": 0.0682180273685163,
+              "bid:3": 0.07052561746797534,
+              "bid:4": 0.06666540786304329
+            },
+            "best_actions": [
+              "bid:3"
+            ],
+            "bellman_checks": 5
+          }
+        },
+        "128": {
+          "true_law": {
+            "values": {
+              "bid:0": 0.1897096688402336,
+              "bid:1": 0.1900568046742348,
+              "bid:2": 0.1903373746621789,
+              "bid:3": 0.1939161512399863,
+              "bid:4": 0.1904472378241808
+            },
+            "best_actions": [
+              "bid:3"
+            ],
+            "bellman_checks": 5
+          },
+          "stationary_root_belief": {
+            "values": {
+              "bid:0": 0.17190103196618683,
+              "bid:1": 0.17227996711018517,
+              "bid:2": 0.17312905236586432,
+              "bid:3": 0.1754294324707445,
+              "bid:4": 0.1715239425180699
+            },
+            "best_actions": [
+              "bid:3"
+            ],
+            "bellman_checks": 5
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "bid:4",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.045098799559522416,
+              "bid:1": 0.046177739212564885,
+              "bid:2": 0.04661660997773889,
+              "bid:3": 0.04904127830187463,
+              "bid:4": 0.05325085092645963
+            },
+            "best_purpose": 0.05325085092645963,
+            "mode": "need",
+            "primary_need": "growth",
+            "selected_purpose": 0.05325085092645963,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "50": {
+              "true_law": 0.003451778087776386,
+              "stationary_root_belief": 0.0038602096049320522
+            },
+            "128": {
+              "true_law": 0.0034689134158054913,
+              "stationary_root_belief": 0.00390548995267459
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "bid:4",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.05294233012545388,
+              "bid:1": 0.05284673651304416,
+              "bid:2": 0.0524125504009563,
+              "bid:3": 0.056136896947210656,
+              "bid:4": 0.060515866793405135
+            },
+            "best_purpose": 0.060515866793405135,
+            "mode": "need",
+            "primary_need": "growth",
+            "selected_purpose": 0.060515866793405135,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "50": {
+              "true_law": 0.003451778087776386,
+              "stationary_root_belief": 0.0038602096049320522
+            },
+            "128": {
+              "true_law": 0.0034689134158054913,
+              "stationary_root_belief": 0.00390548995267459
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "bid:3",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.04467119170188394,
+              "bid:1": 0.045498188014082355,
+              "bid:2": 0.04666864924946832,
+              "bid:3": 0.050104822100537946,
+              "bid:4": 0.04931155050809601
+            },
+            "best_purpose": 0.050104822100537946,
+            "mode": "need",
+            "primary_need": "growth",
+            "selected_purpose": 0.050104822100537946,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "50": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "auction-2-56101-outside-t110",
+      "tick": 110,
+      "regret_rank": 6,
+      "factual_action": "bid:4",
+      "world": {
+        "ammo": 2,
+        "cash": 7.0,
+        "hp": 12.0,
+        "investment": 0,
+        "last": "bid:4",
+        "plant": 0,
+        "rival": 31.0,
+        "score": 145.0,
+        "signal": "1",
+        "tick": 110
+      },
+      "root_prediction": {
+        "0": 0.12453041201560824,
+        "1": 0.15474518631848547,
+        "2": 0.7207244016659063
+      },
+      "actual_observations": {
+        "2": 83,
+        "1": 15,
+        "0": 12
+      },
+      "factual_action_matches_stationary_reference": false,
+      "action_varies": true,
+      "references": {
+        "128": {
+          "true_law": {
+            "values": {
+              "bid:0": 0.13936958111292613,
+              "bid:1": 0.13978140870095382,
+              "bid:2": 0.140178040612738,
+              "bid:3": 0.14467623860479698,
+              "bid:4": 0.14149732568550433
+            },
+            "best_actions": [
+              "bid:3"
+            ],
+            "bellman_checks": 5
+          },
+          "stationary_root_belief": {
+            "values": {
+              "bid:0": 0.13856984959076424,
+              "bid:1": 0.1390713431660586,
+              "bid:2": 0.1397606945625937,
+              "bid:3": 0.1436568557724485,
+              "bid:4": 0.13991163608255175
+            },
+            "best_actions": [
+              "bid:3"
+            ],
+            "bellman_checks": 5
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "bid:4",
+          "horizon": 18,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.1288667573457383,
+              "bid:1": 0.12904489880502842,
+              "bid:2": 0.1300421181909355,
+              "bid:3": 0.1334647152349644,
+              "bid:4": 0.13612059051147835
+            },
+            "best_purpose": 0.13612059051147835,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.13612059051147835,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "128": {
+              "true_law": 0.003178912919292648,
+              "stationary_root_belief": 0.003745219689896745
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "bid:3",
+          "horizon": 18,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.1290818073643102,
+              "bid:1": 0.12929752199889752,
+              "bid:2": 0.12976648112720227,
+              "bid:3": 0.13251543964770388,
+              "bid:4": 0.12706357218224243
+            },
+            "best_purpose": 0.13251543964770388,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.13251543964770388,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "bid:3",
+          "horizon": 18,
+          "model_purpose": {
+            "best_by_root": {
+              "bid:0": 0.12776577672954398,
+              "bid:1": 0.1272532439473378,
+              "bid:2": 0.128823167786091,
+              "bid:3": 0.13372059892611118,
+              "bid:4": 0.12423709101357461
+            },
+            "best_purpose": 0.13372059892611118,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.13372059892611118,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "input_summary_sha256": "b2b11a89ad26afb3f7be2be51dfd2df1bd4dda5e18fd48f0d624973bbf06ae5b",
+  "script_sha256": "6fc3974b3eee22f6f04d8b9aa37c688485413393416ad4f23fb9eb98529da849",
+  "limit": "Post-hoc diagnosis at every preregistered high-regret state, not adoption.\n\nThe references omit personality and future belief learning. Sensitivity at these\nselected states neither estimates a population error rate nor proves that a\ndifferent sample bank improves actual long-term play.\n"
+}

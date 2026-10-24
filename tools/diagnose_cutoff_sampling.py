@@ -1,4 +1,4 @@
-"""Change only hypothetical random draws at all preregistered cutoff disagreements.
+"""Change only hypothetical random draws in all registered actual decision states.
 
 Known-state sensitivity, not new real games or independent policy validation.
 No sample bank is selected to replace the registered playing configuration.
@@ -36,7 +36,7 @@ def initialize(source):
 
 
 def probe(job):
-    root, case, bank, seeds = job
+    root, case, bank, seeds, minimum_horizon = job
     from reflex.core import digest
     from reflex.decision_loop import DecisionLoop
     from reflex.model_observer import resolve_feedback
@@ -53,6 +53,8 @@ def probe(job):
         result = json.loads(path.read_bytes())
         assert result['complete'] and result['case'] == case and result['seeds'] == list(seeds)
         assert result['source_owner'] == case['actual_fixed32_owner']
+        # Earlier diagnostic records always used cutoffs 16..32.
+        assert result.get('minimum_horizon', 16) == minimum_horizon
         return result
     data = (root / case['input']).read_bytes()
     assert sha(data) == case['sha256']
@@ -72,16 +74,22 @@ def probe(job):
     before = actor.record(); owner = digest(before)
     assert owner == entry['before_owner'] == case['actual_fixed32_owner']
     request = game.request(game.context(world, actor.state)); captured = {}
+    prediction = actor.predictor.predict(game.context(world, actor.state))
     options = dict(spec['controller'])
     options.pop('horizon_consensus'); options.pop('minimum_horizon', None)
     planner = consensus_planner(actor, request, world, observe=game.context,
         events=game.events, terminal=game.terminal, assess=lambda w:game.goal(w).record(),
         request_for=game.request, feedback=game.feedback, model_id=game.model_id,
-        target=game.target, horizon=32, seeds=tuple(seeds),
+        target=game.target, horizon=32, minimum_horizon=minimum_horizon, seeds=tuple(seeds),
         cumulative_preference=cumulative_basis(game, True), captured=captured, **options)
     decision = DecisionLoop.decide_batch([(copy.deepcopy(actor), request)], False, planner)[0]
     audit = captured['horizon_consensus']
-    assert len(audit['ballots']) == 17 and audit['ballots'][-1]['horizon'] == 32
+    last_horizon = audit['ballots'][-1]['horizon']
+    assert 1 <= last_horizon <= min(32, spec['turns'] - case['tick'])
+    assert [b['horizon'] for b in audit['ballots']] == sorted({min(h, last_horizon) for h in range(minimum_horizon, 33)})
+    if bank == 'original':
+        assert audit['ballots'][-1] == case['fixed32_ballot']
+        assert decision['decision']['action_id'] == entry['action']
     assert decision['decision']['action_id'] == audit['selected']['action']
     assert actor.record() == before and world == entry['before']
     result = dict(complete=True, case=case, bank=bank, seeds=list(seeds),
@@ -89,6 +97,13 @@ def probe(job):
         ballots=audit['ballots'], consensus_selected=audit['selected'],
         fixed32_selected=audit['ballots'][-1], votes=audit['votes'],
         simulated_steps=captured['simulated_steps'], seconds=time.monotonic()-start,
+        minimum_horizon=minimum_horizon, root_prediction=prediction,
+        purpose_review=dict(best_by_root=captured['forecast'].audit['purpose_band']['best_by_root'],
+            best_purpose=decision['deliberation']['best_purpose'],
+            selected_purpose=decision['deliberation']['selected_purpose'],
+            selected_purpose_gap=decision['deliberation']['best_purpose']-decision['deliberation']['selected_purpose'],
+            mode=decision['decision']['next_state']['mode'],
+            primary_need=decision['decision']['next_state']['primary_need']),
         source_file=loaded.relative_to(root / '_source').as_posix(),
         limit=__doc__)
     tmp = path.with_suffix('.new'); tmp.write_bytes(encoded(result)); tmp.replace(path)
@@ -104,7 +119,9 @@ def main():
     assert sha(encoded(manifest)) == plan['source']
     for name, expected in manifest.items():
         assert sha((root / '_source' / name).read_bytes()) == expected
-    jobs = [(root, case, bank['id'], bank['seeds']) for case in plan['cases'] for bank in plan['banks']]
+    minimum_horizon = plan.get('minimum_horizon', 16)
+    assert minimum_horizon in (16, 32)
+    jobs = [(root, case, bank['id'], bank['seeds'], minimum_horizon) for case in plan['cases'] for bank in plan['banks']]
     state = dict(complete=False, adoption=False, pid=os.getpid(), registered=len(jobs), completed=0)
     def status(**values):
         state.update(values, updated=datetime.now(timezone.utc).isoformat())

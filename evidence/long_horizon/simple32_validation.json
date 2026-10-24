@@ -78,5 +78,29 @@
     ],
     "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40063425853",
     "scope": "Existing numeric test matrix passed; not long-play adoption evidence."
+  },
+  "cutoff_sampling_review_ci": {
+    "run": 40066217626,
+    "source_head": "74722e8cef21d3b70e966583984aaf99019fc140",
+    "conclusion": "success",
+    "matrix": [
+      "ubuntu-latest Python3.12",
+      "ubuntu-latest Python3.13",
+      "windows-latest Python3.12",
+      "windows-latest Python3.13"
+    ],
+    "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40066217626"
+  },
+  "cutoff_sampling_cache_compatibility": {
+    "complete": true,
+    "legacy_16_to_32": {
+      "complete": true,
+      "legacy_records_reused_without_changes": 10,
+      "changed_cutoff_rejected": 10,
+      "source_sha256": "175820ab7c636b8d25a97384c9ef7c1fc21f0a465bc357c9e6f16ad12c40666e"
+    },
+    "new_32_only_records_unchanged": 18,
+    "changed_cutoff_rejected": 18,
+    "scope": "Cache compatibility only; no new simulations, playing-source change, or modified frozen diagnostic evidence."
   }
 }

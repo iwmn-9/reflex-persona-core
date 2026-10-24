@@ -1,0 +1,1077 @@
+{
+  "complete": true,
+  "adoption": false,
+  "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "plan_sha256": "b6b442ad0b38d7b43d9adbe207f44a6c73ce6c8cca6f374413e053b3e3939d6c",
+  "probes": 18,
+  "original_actions_and_purposes_reproduced": 6,
+  "actual_past_decisions_replayed": 801,
+  "varying_states": 5,
+  "factual_choices_matching_stationary_reference": 2,
+  "rows": [
+    {
+      "case": "combat-0-56101-outside-t004",
+      "tick": 4,
+      "regret_rank": 1,
+      "factual_action": "strike:1",
+      "world": {
+        "ammo": 3,
+        "cash": 8.0,
+        "hp": 12.0,
+        "investment": 0,
+        "last": "guard",
+        "plant": 0,
+        "rival": 0.0,
+        "score": 3.0,
+        "signal": "1",
+        "tick": 4
+      },
+      "root_prediction": {
+        "0": 0.1169823832931379,
+        "1": 0.5681553234910629,
+        "2": 0.3148622932157992
+      },
+      "actual_observations": {
+        "2": 2,
+        "1": 2
+      },
+      "factual_action_matches_stationary_reference": true,
+      "action_varies": false,
+      "references": {
+        "36": {
+          "true_law": {
+            "values": {
+              "guard": 0.134251453534401,
+              "reload": 0.1337125446167371,
+              "strike:0": 0.13136558033151624,
+              "strike:1": 0.13136558033151624,
+              "strike:2": 0.1380464490807104
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.08932396574391238,
+              "reload": 0.08906196783202684,
+              "strike:0": 0.08792115852556512,
+              "strike:1": 0.09216359276910355,
+              "strike:2": 0.089781847479109
+            },
+            "best_actions": [
+              "strike:1"
+            ]
+          }
+        },
+        "128": {
+          "true_law": {
+            "values": {
+              "guard": 0.4975562565039872,
+              "reload": 0.49702661613891075,
+              "strike:0": 0.4948769203436399,
+              "strike:1": 0.4948769203436399,
+              "strike:2": 0.5018540379721409
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.3285045996189822,
+              "reload": 0.328071089641111,
+              "strike:0": 0.32715531200514175,
+              "strike:1": 0.3313153794612207,
+              "strike:2": 0.32897987571483583
+            },
+            "best_actions": [
+              "strike:1"
+            ]
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "strike:1",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.09180853855531429,
+              "reload": 0.0908328029738871,
+              "strike:0": 0.09021419108522198,
+              "strike:1": 0.09345262509039136,
+              "strike:2": 0.09245662517860576
+            },
+            "best_purpose": 0.09345262509039136,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.09345262509039136,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "36": {
+              "true_law": 0.006680868749194158,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.006977117628501006,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "strike:1",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.09116953323586834,
+              "reload": 0.09078163161351227,
+              "strike:1": 0.09432702399896473,
+              "strike:2": 0.09204404431112902
+            },
+            "best_purpose": 0.09432702399896473,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.09432702399896473,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "36": {
+              "true_law": 0.006680868749194158,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.006977117628501006,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "strike:1",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.08885886284530481,
+              "reload": 0.08851347992380937,
+              "strike:1": 0.08910691553351958,
+              "strike:2": 0.08750446539628165
+            },
+            "best_purpose": 0.08910691553351958,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.08910691553351958,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "36": {
+              "true_law": 0.006680868749194158,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.006977117628501006,
+              "stationary_root_belief": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "combat-0-56101-outside-t000",
+      "tick": 0,
+      "regret_rank": 2,
+      "factual_action": "strike:1",
+      "world": {
+        "ammo": 2,
+        "cash": 8.0,
+        "hp": 12.0,
+        "investment": 0,
+        "last": "none",
+        "plant": 0,
+        "rival": 0.0,
+        "score": 0.0,
+        "signal": "0",
+        "tick": 0
+      },
+      "root_prediction": {
+        "0": 0.39166666666666666,
+        "1": 0.39166666666666666,
+        "2": 0.21666666666666667
+      },
+      "actual_observations": {},
+      "factual_action_matches_stationary_reference": true,
+      "action_varies": true,
+      "references": {
+        "32": {
+          "true_law": {
+            "values": {
+              "guard": 0.12345450867652458,
+              "reload": 0.12540612428164452,
+              "strike:0": 0.12052513560321317,
+              "strike:1": 0.12052513560321317,
+              "strike:2": 0.1275576371875132
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.050417217779570395,
+              "reload": 0.05148359151339992,
+              "strike:0": 0.05221820574733266,
+              "strike:1": 0.05221820574733266,
+              "strike:2": 0.05066538642700802
+            },
+            "best_actions": [
+              "strike:0",
+              "strike:1"
+            ]
+          }
+        },
+        "128": {
+          "true_law": {
+            "values": {
+              "guard": 0.5051524733700319,
+              "reload": 0.5061966946058876,
+              "strike:0": 0.5024827454407134,
+              "strike:1": 0.5024827454407134,
+              "strike:2": 0.5094485703834357
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.21483292268102894,
+              "reload": 0.215349054652508,
+              "strike:0": 0.21664625558414766,
+              "strike:1": 0.21664625558414766,
+              "strike:2": 0.2151192233407856
+            },
+            "best_actions": [
+              "strike:0",
+              "strike:1"
+            ]
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "strike:1",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.08059615965830119,
+              "reload": 0.07940639933258606,
+              "strike:0": 0.08207530435956674,
+              "strike:1": 0.08279286400859176,
+              "strike:2": 0.08147613389371677
+            },
+            "best_purpose": 0.08279286400859176,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.08279286400859176,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "32": {
+              "true_law": 0.0070325015843000355,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.006965824942722354,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "strike:1",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.08633238854953394,
+              "reload": 0.08565600474428067,
+              "strike:0": 0.08689620701176977,
+              "strike:1": 0.08688954046555115,
+              "strike:2": 0.08578931009506865
+            },
+            "best_purpose": 0.08689620701176977,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.08688954046555115,
+            "selected_purpose_gap": 6.6665462186144e-06
+          },
+          "reference_losses": {
+            "32": {
+              "true_law": 0.0070325015843000355,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.006965824942722354,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "reload",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.08520929820493961,
+              "reload": 0.08598695614181338,
+              "strike:0": 0.08384451323155265,
+              "strike:1": 0.08338548048400853,
+              "strike:2": 0.08200765971160227
+            },
+            "best_purpose": 0.08598695614181338,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.08598695614181338,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "32": {
+              "true_law": 0.00215151290586868,
+              "stationary_root_belief": 0.0007346142339327358
+            },
+            "128": {
+              "true_law": 0.003251875777548152,
+              "stationary_root_belief": 0.0012972009316396527
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "combat-0-56101-outside-t079",
+      "tick": 79,
+      "regret_rank": 3,
+      "factual_action": "reload",
+      "world": {
+        "ammo": 2,
+        "cash": 8.0,
+        "hp": 12.0,
+        "investment": 0,
+        "last": "strike:2",
+        "plant": 0,
+        "rival": 0.0,
+        "score": 96.0,
+        "signal": "2",
+        "tick": 79
+      },
+      "root_prediction": {
+        "0": 0.13344464661718405,
+        "1": 0.1686205601243409,
+        "2": 0.6979347932584752
+      },
+      "actual_observations": {
+        "2": 56,
+        "1": 13,
+        "0": 10
+      },
+      "factual_action_matches_stationary_reference": false,
+      "action_varies": true,
+      "references": {
+        "111": {
+          "true_law": {
+            "values": {
+              "guard": 0.37433026872333724,
+              "reload": 0.3759000446167371,
+              "strike:0": 0.37113429387802704,
+              "strike:1": 0.37113429387802704,
+              "strike:2": 0.37798096689565697
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.35460977176328673,
+              "reload": 0.3546358317917133,
+              "strike:0": 0.3526454703451698,
+              "strike:1": 0.35297047199179643,
+              "strike:2": 0.3578609774598782
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          }
+        },
+        "128": {
+          "true_law": {
+            "values": {
+              "guard": 0.43969695789212143,
+              "reload": 0.44021608740973805,
+              "strike:0": 0.4371269221910256,
+              "strike:1": 0.4371269221910256,
+              "strike:2": 0.44402066838418097
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.4082976026238217,
+              "reload": 0.4096350227222736,
+              "strike:0": 0.40651203887037046,
+              "strike:1": 0.4068564506880194,
+              "strike:2": 0.4120390332840363
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "reload",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "reload": 0.3447801252850226,
+              "strike:2": 0.34374831289590585
+            },
+            "best_purpose": 0.3447801252850226,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.3447801252850226,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "111": {
+              "true_law": 0.0020809222789198722,
+              "stationary_root_belief": 0.003225145668164897
+            },
+            "128": {
+              "true_law": 0.003804580974442917,
+              "stationary_root_belief": 0.002404010561762704
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "strike:2",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "reload": 0.3487272767326179,
+              "strike:2": 0.35041154079807785
+            },
+            "best_purpose": 0.35041154079807785,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.35041154079807785,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "111": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "strike:2",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.34597372021248757,
+              "reload": 0.343468271368236,
+              "strike:0": 0.34226866575310594,
+              "strike:1": 0.34248239623130616,
+              "strike:2": 0.34621329962917236
+            },
+            "best_purpose": 0.34621329962917236,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.34621329962917236,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "111": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "combat-0-56101-outside-t065",
+      "tick": 65,
+      "regret_rank": 4,
+      "factual_action": "reload",
+      "world": {
+        "ammo": 2,
+        "cash": 8.0,
+        "hp": 10.5,
+        "investment": 0,
+        "last": "strike:2",
+        "plant": 0,
+        "rival": 0.0,
+        "score": 72.0,
+        "signal": "2",
+        "tick": 65
+      },
+      "root_prediction": {
+        "0": 0.13386741130089697,
+        "1": 0.18706735715439676,
+        "2": 0.6790652315447063
+      },
+      "actual_observations": {
+        "2": 45,
+        "1": 12,
+        "0": 8
+      },
+      "factual_action_matches_stationary_reference": false,
+      "action_varies": true,
+      "references": {
+        "97": {
+          "true_law": {
+            "values": {
+              "guard": 0.3118302687233373,
+              "reload": 0.3097862411348648,
+              "strike:0": 0.30613266981886356,
+              "strike:1": 0.30613266981886356,
+              "strike:2": 0.31276800654945797
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.28849965300065217,
+              "reload": 0.28582006203947635,
+              "strike:0": 0.2843161423360053,
+              "strike:1": 0.284830540615499,
+              "strike:2": 0.2895877420757766
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          }
+        },
+        "128": {
+          "true_law": {
+            "values": {
+              "guard": 0.43440828796804726,
+              "reload": 0.43183814232077644,
+              "strike:0": 0.4284952287383561,
+              "strike:1": 0.4284952287383561,
+              "strike:2": 0.43550148001148986
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.3873657422623009,
+              "reload": 0.38576392578162705,
+              "strike:0": 0.3828981976964589,
+              "strike:1": 0.38339939542627155,
+              "strike:2": 0.38803451701823904
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "reload",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.2748100873426265,
+              "reload": 0.27849617890940565,
+              "strike:2": 0.27745258555607316
+            },
+            "best_purpose": 0.27849617890940565,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.27849617890940565,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "97": {
+              "true_law": 0.0029817654145931627,
+              "stationary_root_belief": 0.003767680036300236
+            },
+            "128": {
+              "true_law": 0.0036633376907134196,
+              "stationary_root_belief": 0.0022705912366119962
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "strike:2",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.27430191868175624,
+              "reload": 0.2770976923447158,
+              "strike:2": 0.2770875448755678
+            },
+            "best_purpose": 0.2770976923447158,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.2770875448755678,
+            "selected_purpose_gap": 1.0147469148014121e-05
+          },
+          "reference_losses": {
+            "97": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "strike:2",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.27694483621523963,
+              "reload": 0.27474588903631586,
+              "strike:0": 0.2736402503021321,
+              "strike:1": 0.27404318854873433,
+              "strike:2": 0.2767081393320112
+            },
+            "best_purpose": 0.27694483621523963,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.2767081393320112,
+            "selected_purpose_gap": 0.00023669688322841553
+          },
+          "reference_losses": {
+            "97": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "combat-0-56101-outside-t108",
+      "tick": 108,
+      "regret_rank": 5,
+      "factual_action": "reload",
+      "world": {
+        "ammo": 2,
+        "cash": 8.0,
+        "hp": 10.25,
+        "investment": 0,
+        "last": "strike:2",
+        "plant": 0,
+        "rival": 0.0,
+        "score": 141.0,
+        "signal": "2",
+        "tick": 108
+      },
+      "root_prediction": {
+        "0": 0.1019401793513687,
+        "1": 0.12259439848723543,
+        "2": 0.7754654221613958
+      },
+      "actual_observations": {
+        "2": 83,
+        "1": 14,
+        "0": 11
+      },
+      "factual_action_matches_stationary_reference": false,
+      "action_varies": true,
+      "references": {
+        "128": {
+          "true_law": {
+            "values": {
+              "guard": 0.442204911064,
+              "reload": 0.4395392209669333,
+              "strike:0": 0.435574829168,
+              "strike:1": 0.435574829168,
+              "strike:2": 0.4428485184906667
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.43865748807177835,
+              "reload": 0.4366424661186418,
+              "strike:0": 0.43232951526581526,
+              "strike:1": 0.43254313262588323,
+              "strike:2": 0.43929548591625617
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "reload",
+          "horizon": 20,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.4291207052501727,
+              "reload": 0.4296556453737213,
+              "strike:2": 0.42903387466555065
+            },
+            "best_purpose": 0.4296556453737213,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.4296556453737213,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "128": {
+              "true_law": 0.003309297523733379,
+              "stationary_root_belief": 0.002653019797614342
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "strike:2",
+          "horizon": 20,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.42485004015310895,
+              "reload": 0.4222545143090374,
+              "strike:2": 0.4245203049357589
+            },
+            "best_purpose": 0.42485004015310895,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.4245203049357589,
+            "selected_purpose_gap": 0.00032973521735008005
+          },
+          "reference_losses": {
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "strike:2",
+          "horizon": 20,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.4311745910382478,
+              "reload": 0.4296956282894587,
+              "strike:2": 0.4322673206155194
+            },
+            "best_purpose": 0.4322673206155194,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.4322673206155194,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "combat-0-56101-outside-t011",
+      "tick": 11,
+      "regret_rank": 6,
+      "factual_action": "reload",
+      "world": {
+        "ammo": 2,
+        "cash": 8.0,
+        "hp": 11.75,
+        "investment": 0,
+        "last": "strike:2",
+        "plant": 0,
+        "rival": 0.0,
+        "score": 9.0,
+        "signal": "2",
+        "tick": 11
+      },
+      "root_prediction": {
+        "0": 0.05381340356746098,
+        "1": 0.277025588701751,
+        "2": 0.669161007730788
+      },
+      "actual_observations": {
+        "2": 8,
+        "1": 3
+      },
+      "factual_action_matches_stationary_reference": false,
+      "action_varies": true,
+      "references": {
+        "43": {
+          "true_law": {
+            "values": {
+              "guard": 0.14776776872333727,
+              "reload": 0.1487995057878646,
+              "strike:0": 0.14416136231074517,
+              "strike:1": 0.14416136231074517,
+              "strike:2": 0.15095209955108
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.1225483463019858,
+              "reload": 0.1222257122836977,
+              "strike:0": 0.11984572708592235,
+              "strike:1": 0.12194109765500494,
+              "strike:2": 0.12562220948872477
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          }
+        },
+        "128": {
+          "true_law": {
+            "values": {
+              "guard": 0.48411149974470913,
+              "reload": 0.48468467419955613,
+              "strike:0": 0.48079179025672886,
+              "strike:1": 0.48079179025672886,
+              "strike:2": 0.4877455718701791
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          },
+          "stationary_root_belief": {
+            "values": {
+              "guard": 0.3911046941739811,
+              "reload": 0.39155542271961824,
+              "strike:0": 0.3882462560995443,
+              "strike:1": 0.39036324985046494,
+              "strike:2": 0.3940823489269767
+            },
+            "best_actions": [
+              "strike:2"
+            ]
+          }
+        }
+      },
+      "samples": [
+        {
+          "bank": "original",
+          "seeds": [
+            701,
+            702,
+            703
+          ],
+          "action": "reload",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.11348321848646944,
+              "reload": 0.11488689247063788,
+              "strike:2": 0.11399876469980391
+            },
+            "best_purpose": 0.11488689247063788,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.11488689247063788,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "43": {
+              "true_law": 0.002152593763215388,
+              "stationary_root_belief": 0.003396497205027063
+            },
+            "128": {
+              "true_law": 0.003060897670622953,
+              "stationary_root_belief": 0.0025269262073584486
+            }
+          }
+        },
+        {
+          "bank": "bank1",
+          "seeds": [
+            1701,
+            1702,
+            1703
+          ],
+          "action": "strike:2",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "reload": 0.11153788160523966,
+              "strike:2": 0.11542625839927363
+            },
+            "best_purpose": 0.11542625839927363,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.11542625839927363,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "43": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        },
+        {
+          "bank": "bank2",
+          "seeds": [
+            2701,
+            2702,
+            2703
+          ],
+          "action": "strike:2",
+          "horizon": 32,
+          "model_purpose": {
+            "best_by_root": {
+              "guard": 0.10810597826710047,
+              "strike:1": 0.1063477147590836,
+              "strike:2": 0.1092689598702822
+            },
+            "best_purpose": 0.1092689598702822,
+            "mode": "principle",
+            "primary_need": "growth",
+            "selected_purpose": 0.1092689598702822,
+            "selected_purpose_gap": 0.0
+          },
+          "reference_losses": {
+            "43": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            },
+            "128": {
+              "true_law": 0.0,
+              "stationary_root_belief": 0.0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "input_summary_sha256": "3f947d1c89d6a65c163a8e800198f73d3f3c71c9566b43cb1d9163dfebcdcafe",
+  "script_sha256": "628109e4a53c6ef3e45c1e93de790bd6ea295d5f6ba3d20b319a2db81977f8ad",
+  "limit": "Post-hoc diagnosis at every preregistered high-regret state, not adoption.\n\nThe references omit personality and future belief learning. Sensitivity at these\nselected states neither estimates a population error rate nor proves that a\ndifferent sample bank improves actual long-term play.\n"
+}
