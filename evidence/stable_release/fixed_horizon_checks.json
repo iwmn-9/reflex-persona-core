@@ -1,0 +1,692 @@
+{
+  "version": "fixed-horizon-integration-checks-v1",
+  "at": "2026-10-24T22:21:23.126330+00:00",
+  "source_commit": "445e3f4fb4748f54dd3b2030b4bfe67baffef2ec",
+  "status": "Candidate integration verified; quality adoption and stable release remain pending",
+  "adopted": false,
+  "parity": {
+    "path": "evidence/stable_release/fixed_horizon/verification.json",
+    "sha256": "37e2b97a5c5b597faacb9b28cb89105cecd01009cd583277ad47b9fb2c629b8c",
+    "cases": 20,
+    "matched_decisions": 100,
+    "package_restores": 100,
+    "matched_historical_replay": 256,
+    "matched_archived_long_run_decisions": 4
+  },
+  "planner_extraction": [
+    {
+      "frozen_source": "tools/continuation_portfolio.py",
+      "target": "reflex/_continuation_portfolio.py",
+      "functions": [
+        "portfolio_planner"
+      ],
+      "all_function_asts_equal": true,
+      "source_sha256": "36e403669f76182709ae52ed1f79ff7adda0f131dd2d8bbe7818edbee6d05f6d",
+      "target_sha256": "d32c2269b408ce2c974aadfe70c82ef8bed5c482cc5ba48419007e6c3cfdd824"
+    },
+    {
+      "frozen_source": "tools/horizon_consensus.py",
+      "target": "reflex/_horizon_consensus.py",
+      "functions": [
+        "project_paths",
+        "prefix_forecast",
+        "select_support",
+        "consensus_planner"
+      ],
+      "all_function_asts_equal": true,
+      "source_sha256": "ab86e5863544a807143a6493ea492edb4f72e139d6aee588262e4f824ea1a96b",
+      "target_sha256": "7d7963ecd34fb3865233ade57cfcc2ef1151d1d650885ab7c10194d1191290da"
+    }
+  ],
+  "focused": {
+    "initial": {
+      "tests": 22,
+      "seconds": 243.286,
+      "passed": true,
+      "source_commit": "19d2adbc055df8ea1fd07a6b219bf80943b1e632"
+    },
+    "sorted_restore_fix": {
+      "tests": 16,
+      "seconds": 68.241,
+      "passed": true,
+      "source_commit": "445e3f4fb4748f54dd3b2030b4bfe67baffef2ec"
+    },
+    "overlap": "These focused sets overlap; do not sum them as unique tests."
+  },
+  "package": {
+    "wheel_sha256": "e299cc155695f2ce875378120e77a440363ceafaa81ac4785c537d29f48f6918",
+    "script": "tools/verify_receding_package.py",
+    "verifier_sha256": "a2f06b24ab0cdf81f10d91dcc16431a94e4697cf1c074cda2425f2aeb8327530",
+    "smokes": [
+      {
+        "success": true,
+        "controller": "fixed",
+        "at": "2026-10-24T21:52:53.255079+00:00",
+        "no_research_imports": true,
+        "actual_steps": 4,
+        "restores": 4,
+        "process_restart_at": 2,
+        "world_and_rng_equal": true,
+        "owner_equal": true,
+        "all_decisions_equal": true,
+        "terminal_restored": true,
+        "trace": [
+          "a",
+          "b",
+          "b",
+          "b"
+        ],
+        "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+      },
+      {
+        "success": true,
+        "controller": "receding",
+        "at": "2026-10-24T21:52:55.737191+00:00",
+        "no_research_imports": true,
+        "actual_steps": 4,
+        "restores": 4,
+        "process_restart_at": 2,
+        "world_and_rng_equal": true,
+        "owner_equal": true,
+        "all_decisions_equal": true,
+        "terminal_restored": true,
+        "trace": [
+          "a",
+          "b",
+          "b",
+          "b"
+        ],
+        "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+      }
+    ]
+  },
+  "ci": {
+    "source_commit": "445e3f4fb4748f54dd3b2030b4bfe67baffef2ec",
+    "run_id": 40135968365,
+    "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40135968365",
+    "complete": true,
+    "success": true,
+    "jobs": [
+      {
+        "id": 120997429633,
+        "name": "test (ubuntu-latest, 3.13)",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-python@v7.0.0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run python -m pip install -e .",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run python -m unittest discover -s tests -v",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Build and install an isolated wheel",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Verify installed lifecycle without research imports",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Post Run actions/setup-python@v7.0.0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Post Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          }
+        ]
+      },
+      {
+        "id": 120997429701,
+        "name": "test (windows-latest, 3.13)",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-python@v7.0.0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run python -m pip install -e .",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run python -m unittest discover -s tests -v",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Build and install an isolated wheel",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Verify installed lifecycle without research imports",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Post Run actions/setup-python@v7.0.0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Post Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          }
+        ]
+      },
+      {
+        "id": 120997429723,
+        "name": "test (windows-latest, 3.12)",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-python@v7.0.0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run python -m pip install -e .",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run python -m unittest discover -s tests -v",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Build and install an isolated wheel",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Verify installed lifecycle without research imports",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Post Run actions/setup-python@v7.0.0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Post Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          }
+        ]
+      },
+      {
+        "id": 120997429727,
+        "name": "test (ubuntu-latest, 3.12)",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-python@v7.0.0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run python -m pip install -e .",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run python -m unittest discover -s tests -v",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Build and install an isolated wheel",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Verify installed lifecycle without research imports",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Post Run actions/setup-python@v7.0.0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Post Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          }
+        ]
+      }
+    ],
+    "environments": [
+      {
+        "environment": "ubuntu313",
+        "tests": 1294,
+        "seconds": 931.748,
+        "skipped": 17,
+        "passed": 1277,
+        "failures": 0,
+        "errors": 0,
+        "skip_reasons": {
+          "optional closed-hand engine required": 3,
+          "optional riichienv environment required": 14
+        },
+        "smoke": [
+          {
+            "success": true,
+            "controller": "receding",
+            "at": "2026-10-24T22:06:24.437120+00:00",
+            "no_research_imports": true,
+            "actual_steps": 4,
+            "restores": 4,
+            "process_restart_at": 2,
+            "world_and_rng_equal": true,
+            "owner_equal": true,
+            "all_decisions_equal": true,
+            "terminal_restored": true,
+            "trace": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ],
+            "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+          },
+          {
+            "success": true,
+            "controller": "fixed",
+            "at": "2026-10-24T22:06:28.663013+00:00",
+            "no_research_imports": true,
+            "actual_steps": 4,
+            "restores": 4,
+            "process_restart_at": 2,
+            "world_and_rng_equal": true,
+            "owner_equal": true,
+            "all_decisions_equal": true,
+            "terminal_restored": true,
+            "trace": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ],
+            "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+          }
+        ]
+      },
+      {
+        "environment": "windows312",
+        "tests": 1294,
+        "seconds": 1031.808,
+        "skipped": 19,
+        "passed": 1275,
+        "failures": 0,
+        "errors": 0,
+        "skip_reasons": {
+          "optional closed-hand engine required": 3,
+          "Actions process-group control is Linux-only": 2,
+          "optional riichienv environment required": 14
+        },
+        "smoke": [
+          {
+            "success": true,
+            "controller": "receding",
+            "at": "2026-10-24T22:08:22.525215+00:00",
+            "no_research_imports": true,
+            "actual_steps": 4,
+            "restores": 4,
+            "process_restart_at": 2,
+            "world_and_rng_equal": true,
+            "owner_equal": true,
+            "all_decisions_equal": true,
+            "terminal_restored": true,
+            "trace": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ],
+            "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+          },
+          {
+            "success": true,
+            "controller": "fixed",
+            "at": "2026-10-24T22:08:26.965246+00:00",
+            "no_research_imports": true,
+            "actual_steps": 4,
+            "restores": 4,
+            "process_restart_at": 2,
+            "world_and_rng_equal": true,
+            "owner_equal": true,
+            "all_decisions_equal": true,
+            "terminal_restored": true,
+            "trace": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ],
+            "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+          }
+        ]
+      },
+      {
+        "environment": "windows313",
+        "tests": 1294,
+        "seconds": 1185.916,
+        "skipped": 19,
+        "passed": 1275,
+        "failures": 0,
+        "errors": 0,
+        "skip_reasons": {
+          "optional closed-hand engine required": 3,
+          "Actions process-group control is Linux-only": 2,
+          "optional riichienv environment required": 14
+        },
+        "smoke": [
+          {
+            "success": true,
+            "controller": "receding",
+            "at": "2026-10-24T22:10:46.837958+00:00",
+            "no_research_imports": true,
+            "actual_steps": 4,
+            "restores": 4,
+            "process_restart_at": 2,
+            "world_and_rng_equal": true,
+            "owner_equal": true,
+            "all_decisions_equal": true,
+            "terminal_restored": true,
+            "trace": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ],
+            "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+          },
+          {
+            "success": true,
+            "controller": "fixed",
+            "at": "2026-10-24T22:10:51.577075+00:00",
+            "no_research_imports": true,
+            "actual_steps": 4,
+            "restores": 4,
+            "process_restart_at": 2,
+            "world_and_rng_equal": true,
+            "owner_equal": true,
+            "all_decisions_equal": true,
+            "terminal_restored": true,
+            "trace": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ],
+            "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+          }
+        ]
+      },
+      {
+        "environment": "ubuntu312",
+        "tests": 1294,
+        "seconds": 1363.732,
+        "skipped": 17,
+        "passed": 1277,
+        "failures": 0,
+        "errors": 0,
+        "skip_reasons": {
+          "optional closed-hand engine required": 3,
+          "optional riichienv environment required": 14
+        },
+        "smoke": [
+          {
+            "success": true,
+            "controller": "receding",
+            "at": "2026-10-24T22:13:31.894372+00:00",
+            "no_research_imports": true,
+            "actual_steps": 4,
+            "restores": 4,
+            "process_restart_at": 2,
+            "world_and_rng_equal": true,
+            "owner_equal": true,
+            "all_decisions_equal": true,
+            "terminal_restored": true,
+            "trace": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ],
+            "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+          },
+          {
+            "success": true,
+            "controller": "fixed",
+            "at": "2026-10-24T22:13:37.857738+00:00",
+            "no_research_imports": true,
+            "actual_steps": 4,
+            "restores": 4,
+            "process_restart_at": 2,
+            "world_and_rng_equal": true,
+            "owner_equal": true,
+            "all_decisions_equal": true,
+            "terminal_restored": true,
+            "trace": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ],
+            "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+          }
+        ]
+      }
+    ],
+    "prior_cancelled": {
+      "run_id": 40135614123,
+      "reason": "Superseded by the sorted-JSON identity fix; not recorded as test success."
+    }
+  },
+  "independent40": {
+    "at": "2026-10-24T22:21:23.126330+00:00",
+    "completed_pairs": 4,
+    "registered_pairs": 40,
+    "saved_actual_decisions": 2175,
+    "active_arms": [
+      {
+        "id": "auction-0-10061201-outside",
+        "arm": "candidate",
+        "tick": 85,
+        "trace": 85,
+        "hours": 7.504,
+        "finished": false,
+        "mtime": "2026-10-24T22:20:46.781720+00:00"
+      },
+      {
+        "id": "auction-2-10061201-outside",
+        "arm": "candidate",
+        "tick": 93,
+        "trace": 93,
+        "hours": 8.047,
+        "finished": false,
+        "mtime": "2026-10-24T22:15:22.133415+00:00"
+      },
+      {
+        "id": "auction-3-10061201-outside",
+        "arm": "candidate",
+        "tick": 37,
+        "trace": 37,
+        "hours": 2.515,
+        "finished": false,
+        "mtime": "2026-10-24T22:20:03.202016+00:00"
+      },
+      {
+        "id": "auction-3-10061202-shift-return",
+        "arm": "candidate",
+        "tick": 68,
+        "trace": 68,
+        "hours": 3.236,
+        "finished": false,
+        "mtime": "2026-10-24T22:18:48.521657+00:00"
+      },
+      {
+        "id": "combat-0-10061201-outside",
+        "arm": "candidate",
+        "tick": 61,
+        "trace": 61,
+        "hours": 2.835,
+        "finished": false,
+        "mtime": "2026-10-24T22:21:12.358850+00:00"
+      },
+      {
+        "id": "combat-0-10061202-shift-return",
+        "arm": "candidate",
+        "tick": 39,
+        "trace": 39,
+        "hours": 1.803,
+        "finished": false,
+        "mtime": "2026-10-24T22:21:18.226258+00:00"
+      }
+    ],
+    "source_verified_files": 383,
+    "source_digest": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+    "live_progress": "results/continuation_selected_confirmation/*/{baseline,candidate}/checkpoint.json",
+    "criteria_sha256": "3c9ca8e122b38d745f39a561379e2c2eb794723777b20eec80a4829b97777d34",
+    "criteria_changed": false,
+    "adopted": false
+  },
+  "limits": [
+    "No new intelligence mechanism or personality tuning; planner functions retain frozen ASTs.",
+    "Canonical pressure map reconstruction fixes explanation/decision identity after sorted JSON restoration, not numeric pressure.",
+    "Parity is not an additional independent quality sample or proof of generic human-level play.",
+    "All40, full actual-feedback audit and unchanged stronger quality gates remain mandatory before adoption.",
+    "No long-horizon Rust port or speed claim; experimental package version remains0.1.0a1."
+  ],
+  "source_binding": {
+    "implementation_unchanged_since_tested_commit": true,
+    "installed_python_files_match_checkout": 168,
+    "remaining_changes": "Evidence/report/plan only; do not repeat full CI for unchanged implementation."
+  }
+}

@@ -33,7 +33,8 @@
       "id": "integrated_contract",
       "target_date": "2026-10-29",
       "status": "in_progress",
-      "exit": "One documented composition, explicit model/goal ownership, factual versus simulated feedback isolation, retry semantics, settings-bound save/restore and host world boundary tested."
+      "exit": "One documented composition, explicit model/goal ownership, factual versus simulated feedback isolation, retry semantics, settings-bound save/restore and host world boundary tested.",
+      "note": "Candidate integrated, frozen parity20 and four-platform regression passed; supported/adopted choice awaits independent40."
     },
     {
       "id": "release_confirmation",
@@ -55,51 +56,21 @@
     }
   ],
   "current_work": {
-    "change": "Bind RecedingOwner persistence to expected planning settings, owner settings and public world boundary. Restore a new instance without mutating the live owner.",
-    "behavior_change_intended": false,
-    "validation": {
-      "focused": {
-        "passed": 10,
-        "seconds": 133.591,
-        "includes": "4 rule families, factual versus imagined updates, failed feedback retry, missing effects, repeated restoration, history retention boundary, terminal save, mismatched settings/world rejection"
-      },
-      "installed_package": {
-        "passed": true,
-        "actual_steps": 4,
-        "restores": 4,
-        "fresh_process_restore_at": 2,
-        "world_and_rng_equal": true,
-        "owner_and_decisions_equal": true,
-        "research_imports_blocked": true,
-        "script": "tools/verify_receding_package.py"
-      },
-      "local_full_regression": {
-        "tests": 1290,
-        "passed": 1271,
-        "skipped": 19,
-        "failures": 0,
-        "errors": 0,
-        "source_unchanged": true
-      },
-      "ci": {
-        "source_commit": "225264d975875747bc475bd9b6d05c7382f9c5c2",
-        "rust_run": 40105607662,
-        "rust_windows_linux": "passed",
-        "python_run": 40105607667,
-        "python_matrix": "Windows/Linux x Python 3.12/3.13 passed"
-      }
-    },
+    "change": "Package existing fixed-H32 composition, preserve actual feedback and settings-bound restoration; fix canonical pressure order after sorted JSON saves.",
+    "source_commit": "445e3f4fb4748f54dd3b2030b4bfe67baffef2ec",
+    "new_ai_mechanisms": false,
+    "candidate_integration_complete": true,
+    "adoption": false,
+    "validation": "evidence/stable_release/fixed_horizon_checks.json",
     "remaining": [
-      "Select adopted composition only after independent40 audit",
-      "Move any selected research orchestration into the package with parity evidence",
-      "Audit complete actual feedback and restoration on the final supported composition",
-      "Run final independent confirmation if changes alter decisions",
-      "Package/installation/CI and release audit"
-    ],
-    "checkpoint_integration_complete": true
+      "Complete and audit all selected independent40; review losses and original stronger acceptance.",
+      "Select supported composition only after quality gate. If any fix changes decisions, perform required independent confirmation.",
+      "Finish release scope/version/notes and final provenance audit; no criterion relaxation."
+    ]
   },
   "scheduling": "No recurring automation. Existing finite evaluation continues; code changes and result review require an active agent execution.",
   "evidence_reference": "evidence/long_horizon/REPORT.md",
-  "last_updated": "2026-10-24T15:36:47.216426+00:00",
-  "checks": "evidence/stable_release/checks.json"
+  "last_updated": "2026-10-24T22:21:23.126330+00:00",
+  "checks": "evidence/stable_release/fixed_horizon_checks.json",
+  "base_checkpoint_checks": "evidence/stable_release/checks.json"
 }
