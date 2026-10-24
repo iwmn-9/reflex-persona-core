@@ -76,4 +76,7 @@ class NeedPressure:
         for k in NEEDS:
             v=r['debt'][k];s=r['stalls'][k]
             if isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or not 0<=v<=x.config.limit or type(s) is not int or not 0<=s<=1000000:raise ValueError('invalid pressure checkpoint')
-        x.debt=copy.deepcopy(r['debt']);x.stalls=copy.deepcopy(r['stalls']);x.last_tick=r['last_tick'];return x
+        # JSON object order is not part of a save contract. Keep the original
+        # channel order so the pressure fact (and decision identity) survives
+        # a serializer that sorts keys, without changing numeric pressure.
+        x.debt={k:r['debt'][k] for k in NEEDS};x.stalls={k:r['stalls'][k] for k in NEEDS};x.last_tick=r['last_tick'];return x

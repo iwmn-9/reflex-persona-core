@@ -51,7 +51,7 @@ class FixedHorizonTests(unittest.TestCase):
                     actual.resolve(result['ticket'], feedback); resolve_feedback(reference, expected['ticket'], feedback)
                     self.assertEqual(actual.actor.record(), reference.record())
                     world = after
-                    saved = json.loads(json.dumps(actual.checkpoint(world)))
+                    saved = json.loads(json.dumps(actual.checkpoint(world), sort_keys=True))
                     actual = owner(game, horizon=4, seeds=(701,)).restored(world, saved)
                     self.assertIs(type(actual), FixedHorizonOwner)
                     self.assertEqual(actual.actor.record(), reference.record())

@@ -89,7 +89,7 @@ class PressureTests(unittest.TestCase):
             with self.assertRaises(ValueError):loop.observe(r['ticket'],vector(effect()),need_progress={'growth':float('nan')})
             self.assertEqual(loop.pending,old);self.assertEqual(loop.pressure.record(),debt)
             loop.observe(r['ticket'],vector(effect()),need_progress={'growth':0})
-        saved=json.loads(json.dumps(loop.record()));restored=DecisionLoop.from_record(c,saved)
+        saved=json.loads(json.dumps(loop.record(),sort_keys=True));restored=DecisionLoop.from_record(c,saved)
         self.assertEqual(saved,restored.record());c['tick']=6
         self.assertEqual(loop.decide(req(c)),restored.decide(req(c)))
 
