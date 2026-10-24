@@ -6,6 +6,9 @@
 
 昇格判断と確認済み環境は [検証報告](../../evidence/rust_port/immediate/REPORT.md) が正本。APIはこの用途のまとまりとして固定するが、全人格AIの完成を意味しない。
 
+複数NPCをゲーム世界へまとめて接続する入口は [reflex-runtime](../reflex-runtime/README.md)。
+このcrateの判断を変更せず、世界の実行照合・並列処理・一体の保存復元までを扱う。
+
 ## 接続
 
 Rustの利用側からpath dependencyを指定する。

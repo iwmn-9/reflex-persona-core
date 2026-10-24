@@ -1,9 +1,10 @@
-name: Rust immediate component
+name: Rust runtime and immediate component
 on:
   push:
     paths:
       - 'rust/**'
       - 'tools/verify_rust_immediate.py'
+      - 'tools/verify_rust_runtime.py'
       - 'tools/verify_rust_policy_probe.py'
       - 'reflex/core.py'
       - '.github/workflows/rust-immediate.yml'
@@ -11,6 +12,7 @@ on:
     paths:
       - 'rust/**'
       - 'tools/verify_rust_immediate.py'
+      - 'tools/verify_rust_runtime.py'
       - 'reflex/core.py'
       - '.github/workflows/rust-immediate.yml'
   workflow_dispatch:
@@ -32,13 +34,16 @@ jobs:
           python-version: '3.13'
       - run: rustup toolchain install 1.99.0 --profile minimal --component rustfmt --component clippy
       - run: python -m pip install -e . "numpy==2.3.5"
-      - run: cargo fmt --manifest-path rust/Cargo.toml -- --check
+      - run: cargo fmt --all --manifest-path rust/Cargo.toml -- --check
       - run: cargo clippy --locked --manifest-path rust/Cargo.toml --all-targets -- -D warnings
       - run: cargo test --locked --manifest-path rust/Cargo.toml
       - run: python tools/verify_rust_immediate.py --output results/rust-immediate
+      - run: python tools/verify_rust_runtime.py --output results/rust-runtime
       - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: rust-immediate-${{ matrix.os }}
-          path: results/rust-immediate
+          path: |
+            results/rust-immediate
+            results/rust-runtime
           retention-days: 14

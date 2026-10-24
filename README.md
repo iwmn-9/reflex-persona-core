@@ -12,7 +12,7 @@
 
 接続前の急所は [長期NPCの比較](evidence/long_lived/REPORT.md)、能力・資源・途中参戦は [非対称性の検証](evidence/asymmetry/REPORT.md) を参照。新しい任意構成を、全ゲームの標準や完成した汎用知能とは扱わない。
 
-実験・比較と長期判断の改善はPythonを維持する。即時判断には入力検証・実行確定・人物別の保存復元を備えたRust crateを用意し、Pythonとの継続実行の一致を確認している。学習・社会評価・先読みまで移したものではない。[移植する境界](docs/RUST_BOUNDARY.md)、[APIと使用例](rust/reflex-immediate/README.md)、[実測と採否](evidence/rust_port/immediate/REPORT.md)。
+実験・比較と長期判断の改善はPythonを維持する。Rustの実行入口は `reflex-runtime`。観測から複数NPCの判断、世界での実行、全員の反映、世界とNPCの一体の保存復元までをつなぐ。採点はPythonとの一致を確認した `reflex-immediate` v1へ委譲する。学習・社会評価・先読みまで移したものではない。[移植する境界](docs/RUST_BOUNDARY.md)、[統合APIと使用例](rust/reflex-runtime/README.md)、[統合検証](evidence/rust_port/runtime/REPORT.md)、[即時判断の採否](evidence/rust_port/immediate/REPORT.md)。
 
 過去の方式の比較・不採用理由は [開発方針の根拠](docs/PROJECT_DIRECTION.md#主要な根拠と接続契約) と各 evidence の報告を参照。既往の実行結果は保存し、この入口には履歴の要約を積み重ねない。
 

@@ -4,6 +4,12 @@ Pythonを実験・審判・比較の正本として残す。Rustの対象は、�
 
 ## 即時判断の境界
 
+2026-10-24、[reflex-runtime](../rust/reflex-runtime/README.md) に全体の実行入口を追加した。
+`GameSession<World>` が観測・複数NPCの判断・世界の実行・全員の反映・一体の保存復元を扱う。
+採点は下記の即時判断v1へ委譲する。途中参加/退出、未実行、並列実行、古い判断案の拒否も
+この層の責務。学習や長期判断の移植ではなく、安定した判断を世界へ接続する実装である。
+契約の正本はcrateのREADME、実測は [統合検証](../evidence/rust_port/runtime/REPORT.md)。
+
 `rust/reflex-immediate` は、ゲームが与える観測・欲求・候補・結果の見込みから、一人の通常判断を実行するcrate。人格・主義3方式、損失評価、慣れ、切替費用、有界補正、提供済みの相手予測の採否、近接候補の確率選択を含む。入力検証、純粋な判断案、実行済み状態の反映、人物に結び付いた保存復元までを一単位とする。[APIと使用例](../rust/reflex-immediate/README.md)。
 
 Pythonの `Policy.choose` の、社会評価・`ReturnFrame` を指定しない経路が参照。候補の意味を推定するゲームアダプター、感情・関係記憶の更新、学習、相手モデルの生成、先読み、長期価値の換算は移さない。これらはPythonで改善を続ける。動的な欲求と結果予測は毎回の入力で受け取り、固定人格と混同しない。
@@ -33,6 +39,7 @@ Rust化だけで賢さは増えない。大量NPC向けの配置・並列化・�
 python -m tools.verify_rust_policy_probe --output FRESH_RUST_PROBE
 ```
 
-crateの検証は `cargo test --locked --manifest-path rust/Cargo.toml` と
-`python tools/verify_rust_immediate.py --output FRESH_RUST_IMMEDIATE`。
+crateの検証は `cargo test --locked --manifest-path rust/Cargo.toml --workspace` と
+`python tools/verify_rust_immediate.py --output FRESH_RUST_IMMEDIATE`、
+`python tools/verify_rust_runtime.py --output FRESH_RUST_RUNTIME`。
 C ABI、Python拡張、特定エンジンへの組込みは対象外。利用許諾の追加と公開レジストリへの配布も行わない。
