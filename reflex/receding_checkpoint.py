@@ -36,6 +36,9 @@ def configuration(loop, actor):
         options['cumulative_preference'] = asdict(preference)
     options['sampling_check'] = (None if loop.sampling_check is None
                                  else asdict(loop.sampling_check))
+    extension = loop._checkpoint_extension()
+    if extension is not None:
+        options['controller'] = extension
     dynamic = {'state', 'last_tick', 'strategy', 'predictor', 'memory', 'evidence',
                'pressure', 'progress', 'social'}
     settings = {k: v for k, v in actor.items() if k not in dynamic}
@@ -94,7 +97,6 @@ def restored(template, public, saved):
                 or digest(actual) != digest(payload['actor'])
                 or digest(boundary(template, public, actor)) != digest(payload['boundary'])):
             raise ValueError('checkpoint owner, schema or public boundary mismatch')
-        from .receding_owner import RecedingOwner
-        return RecedingOwner(actor, **template.options, sampling_check=template.sampling_check)
+        return template._with_actor(actor)
     except (KeyError, TypeError, AttributeError, OverflowError) as error:
         raise ValueError('invalid receding owner checkpoint') from error

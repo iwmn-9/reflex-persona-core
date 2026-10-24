@@ -61,6 +61,12 @@ class RecedingOwner:
     def resolve(self, ticket, actual_feedback):
         return resolve_feedback(self.actor,ticket,actual_feedback)
 
+    def _checkpoint_extension(self):
+        return None
+
+    def _with_actor(self, actor):
+        return RecedingOwner(actor, **self.options, sampling_check=self.sampling_check)
+
     def checkpoint(self, public):
         """Save a resolved owner bound to this planning contract and public world."""
         from .receding_checkpoint import checkpoint

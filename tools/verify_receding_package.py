@@ -1,12 +1,18 @@
 """Isolated wheel lifecycle/host save smoke test; not long-run quality evidence.
 
 Run with python -I tools/verify_receding_package.py <isolated-install-directory>.
-The optional second argument is an internal fresh-process resume bundle.
+Use --controller fixed for the pending H32 composition. The optional second
+positional argument is an internal fresh-process resume bundle.
 """
-import sys, json, copy, subprocess, tempfile
+import sys, json, copy, subprocess, tempfile, argparse
 from pathlib import Path
 from datetime import datetime, timezone
-installed=Path(sys.argv[1]).resolve()
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('installed',type=Path)
+parser.add_argument('resume',type=Path,nargs='?')
+parser.add_argument('--controller',choices=('receding','fixed'),default='receding')
+args=parser.parse_args()
+installed=args.installed.resolve()
 sys.path.insert(0,str(installed))
 class BlockResearch:
  def find_spec(self,fullname,path=None,target=None):
@@ -21,6 +27,8 @@ from reflex.decision_loop import DecisionLoop,Request
 from reflex.event_reader import EventReader
 from reflex.judgment import Binding,ReadControl
 from reflex.receding_owner import RecedingOwner
+from reflex.fixed_horizon import FixedHorizonOwner
+from reflex.cumulative_preference import CumulativePreference
 from reflex.adaptive_dynamics import PublicEvent
 from reflex.model_observer import ModelFeedback
 from reflex.purpose_plan import Goal
@@ -44,12 +52,15 @@ def make():
  c=observe(dict(tick=0,score=0.,signal='a'))
  reader=EventReader(c['scope'],('left','right'),models,outcome,legal_for=lambda c:keys,model_id='package-rules-v1',known_conditionals=True,learning='segmented')
  actor=DecisionLoop(c,predictor=reader,read_control=ReadControl(max_nodes=64))
- return RecedingOwner(actor,observe=observe,events=events,terminal=lambda w:w['tick']>=4,assess=lambda w:Goal('smoke-score','scored' if w['tick']>=4 else 'running',w['score']).record(),record=lambda w:w,request_for=request,feedback=feedback,model_id='package-rules-v1',target='smoke-score',tail_steps=1,seeds=(701,),world_model='posterior',purpose_estimator='conditional')
+ callbacks=dict(observe=observe,events=events,terminal=lambda w:w['tick']>=4,assess=lambda w:Goal('smoke-score','scored' if w['tick']>=4 else 'running',w['score']).record(),request_for=request,feedback=feedback,model_id='package-rules-v1',target='smoke-score')
+ if args.controller=='fixed':
+  return FixedHorizonOwner(actor,**callbacks,cumulative_preference=CumulativePreference('smoke-score','raw-score',(('values.achievement',1.),)))
+ return RecedingOwner(actor,**callbacks,record=lambda w:w,tail_steps=1,seeds=(701,),world_model='posterior',purpose_estimator='conditional')
 def symbol(w,rng):
  # Only actual execution sees the changing world law and factual RNG.
  return 'a' if rng.random() < (.8 if w['tick']<2 else .2) else 'b'
-if len(sys.argv)>2:
- bundle=json.loads(Path(sys.argv[2]).read_bytes());w=bundle['world']
+if args.resume is not None:
+ bundle=json.loads(args.resume.read_bytes());w=bundle['world']
  owner=make().restored(w,bundle['owner']);rng=np.random.default_rng()
  rng.bit_generator.state=bundle['rng'];trace=bundle['trace']
  while w['tick']<4:
@@ -79,10 +90,10 @@ except ValueError:pass
 else:raise AssertionError('terminal execution accepted')
 with tempfile.TemporaryDirectory(prefix='reflex-package-restore-') as folder:
  path=Path(folder)/'host-save.json';path.write_text(json.dumps(resume_bundle),encoding='utf-8')
- process=subprocess.run([sys.executable,'-I',str(Path(__file__).resolve()),str(installed),str(path)],
+ process=subprocess.run([sys.executable,'-I',str(Path(__file__).resolve()),str(installed),str(path),'--controller',args.controller],
                         cwd=folder,text=True,capture_output=True,check=True)
 resumed=json.loads(process.stdout)
 assert resumed==json.loads(json.dumps(dict(world=w,rng=rng.bit_generator.state,owner=b.actor.record(),trace=trace)))
-print(json.dumps(dict(success=True,at=datetime.now(timezone.utc).isoformat(),imported_from=str(Path(reflex.__file__).resolve()),
+print(json.dumps(dict(success=True,controller=args.controller,at=datetime.now(timezone.utc).isoformat(),imported_from=str(Path(reflex.__file__).resolve()),
  no_research_imports=True,actual_steps=4,restores=4,process_restart_at=2,world_and_rng_equal=True,
  owner_equal=True,all_decisions_equal=True,terminal_restored=True,trace=trace,owner_sha256=digest(b.actor.record()))))

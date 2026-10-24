@@ -165,6 +165,31 @@ controller = expected_controller.restored(restored_public_world, saved)
 
 ゲームの世界そのものや実世界の乱数、コールバックのプログラムはこの記録に含めない。ホストはそれらを同じ境界で保存・復元し、`record(public)` が計画に必要な公開状態を欠かさず表すようにする。`model_id` はルール・評価・観測コールバックの意味が変われば変更する。予測器も自分の `restored()` でモデルの設定と記憶を照合する。ハッシュは破損検知であり、第三者が書き換えた保存データの真正性を保証しない。この接続改修はH32研究候補の採用や長期判断の合格を意味しない。
 
+## 固定32手構成のパッケージ接続（採用判定待ち）
+
+`reflex.fixed_horizon.FixedHorizonOwner` は、独立40組で検証中の固定32手構成を同じ `decide → resolve → checkpoint/restored` の接続へまとめたもの。通常の `RecedingOwner` の既定を置き換えない。採用の可否は40組の完走・監査と登録済み基準で判定する。
+
+```python
+from reflex.fixed_horizon import FixedHorizonOwner
+
+controller = FixedHorizonOwner(
+    actor, observe=observe, events=events, terminal=terminal,
+    assess=assess, request_for=request_for, feedback=feedback,
+    model_id=model_id, target=target,
+    cumulative_preference=declared_preference,
+)
+result = controller.decide(public_world)
+# ゲーム側で実行し、実際に観測した結果だけを渡す。
+controller.resolve(result['ticket'], actual_feedback)
+saved = controller.checkpoint(next_public_world)
+```
+
+検証対象の構成は `horizon=32, seeds=(701,702,703), recovery_cache=64`。既存の条件付き平均、同じ本人による人格評価、準備の継続候補、将来の本人の二手回復をそのまま使う。評価の打ち切りは一つであり、複数期間による投票は実行しない。新しい準備ボーナスやゲーム名による分岐はない。私有モジュールへ移した研究コードの入口は、既存実験との互換用に残している。
+
+公開モデル状態はJSON互換で、計画に必要な情報を欠かさず渡す。累積価値の換算 `CumulativePreference` はホストが明示する。主義・欲求をゲーム側の勝利スコアへ自動置換しない。保存にはコントローラーの種類と予算も含み、別構成への誤復元を拒否する。予測の未完了を即時判断へ黙って置き換えることもない。ホストの世界・実世界の乱数・コールバックの版を同じ境界で保つ責任は、上記の保存契約と共通である。
+
+この接続は計算の軽量化や長期品質の合格を意味しない。凍結した研究実装と配布物を別プロセスで照合し、判断・全予測経路・実際の学習記録を比較する。接続確認と独立した長期品質の検証は両方必要である。
+
 ## 独立した予測群での判断確認（任意・検証中）
 
 `RecedingOwner(..., sampling_check=DecisionSampling())` は、同じ実際の本人を複製して、独立した予測乱数の組A・Bと、両組をまとめた予測で判断する。三つの選択が一致すれば統合した6標本を使い、食い違えば第三の独立した組Cを加えた9標本で判断する。初期値は各組3標本。組・標本数は明示的に指定でき、有限の上限を検査する。
