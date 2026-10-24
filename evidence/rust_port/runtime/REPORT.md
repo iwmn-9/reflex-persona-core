@@ -3,7 +3,7 @@
 2026-10-24。`reflex-runtime` を実装した。通常判断の実行に限り、
 **観測→複数NPCの並列判断→世界での実行→全員の反映→世界とNPCの一体保存**を
 `GameSession<World>` から扱える。即時判断v1の数式・人格・乱数・保存形式は変更していない。
-ローカルWindowsの統合・同等性検査は完了。Windows/Linux CIは公開後の確認待ち。
+ローカルWindowsとWindows/Linux CIの統合・同等性検査が完了し、この実行・保存範囲でv1とする。
 全人格AI、学習、長期判断のRust化を完了したという認定ではない。
 
 ## 得たものと追加しなかったもの
@@ -36,6 +36,11 @@ Python側の機能を削ったり、将来価値を即時効果に丸めて互�
 [登録した条件・ソース](registration.json)、[集計](result.json)、
 [96経路の記録](runs.jsonl.gz)、[API・接続例の結果](checks.json)。
 Rust 1.99.0、NumPy 2.3.5、Windows x86-64で確認した。
+実装コミット `dccbfa4ac20146a36cdfe365acb27f62efc4f291` の
+[Windows/Linux CI](https://github.com/iwmn-9/reflex-persona-core/actions/runs/40090019378)も両方成功。
+回収した両OSの全ソースhash・入力hash・展開後の96経路はローカルと一致した。
+同じCIで元の即時判断17,412比較も各OSで通過、数値差0。[CI出力監査](ci.json)。
+同じ事例の別環境再実行であり、独立事例数として足さない。
 各NPCの物理世界は独立したものを四つずつ同じruntimeへ入れている。
 共有世界の競合を測った96試合とは呼ばない。共有世界は別のRustアダプター試験で確認した。
 
