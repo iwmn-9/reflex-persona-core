@@ -1,0 +1,93 @@
+{
+  "registered_at": "2026-10-24T04:41:31.016960+00:00",
+  "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "diagnostic_sha256": "e18802690a726b5cda26fd4e1a5b71c81b96c116c27320c94eb78533cc349cd1",
+  "cases": [
+    {
+      "id": "auction-0-56101-outside",
+      "tick": 13,
+      "input": "inputs/auction-0-56101-outside.json",
+      "sha256": "329622489e9df2f8b1286eee01cc84ef2995a2cdc8a0f3862427b9b6eaf7fa5b",
+      "fixed32_ballot": {
+        "action": "bid:3",
+        "horizon": 32,
+        "purpose": 0.042208456701979
+      },
+      "actual_fixed32_owner": "e57a9761e3e25a18621bca63942f7d5efc7a920028a64f229fcfa06850a3a11e"
+    },
+    {
+      "id": "auction-2-56101-outside",
+      "tick": 5,
+      "input": "inputs/auction-2-56101-outside.json",
+      "sha256": "d2bf0668724bca3438ef318e77876a0e323866590dba607b935ed1615bdf2054",
+      "fixed32_ballot": {
+        "action": "bid:2",
+        "horizon": 32,
+        "purpose": 0.044576552377139644
+      },
+      "actual_fixed32_owner": "66c72538316cc67b372ccb9dfe57603a191ab5e29e9ce25ac417ed0eb5619805"
+    },
+    {
+      "id": "combat-0-56101-outside",
+      "tick": 11,
+      "input": "inputs/combat-0-56101-outside.json",
+      "sha256": "e01f85791df8bd354fb9a76a227646f7590852eea7898d211f805da6cdd70a8e",
+      "fixed32_ballot": {
+        "action": "reload",
+        "horizon": 32,
+        "purpose": 0.11488689247063788
+      },
+      "actual_fixed32_owner": "dc372d93936471fd8c17c717d4328e98298411a5ec6b1a32d7d07f2287571cb4"
+    },
+    {
+      "id": "combat-2-56101-outside",
+      "tick": 29,
+      "input": "inputs/combat-2-56101-outside.json",
+      "sha256": "0b4d3fee2d1bebe2a83d4cf4b2dac6e83e67e894f1cec15a3b6737a72c97995b",
+      "fixed32_ballot": {
+        "action": "strike:2",
+        "horizon": 32,
+        "purpose": 0.16490781155782067
+      },
+      "actual_fixed32_owner": "560e4b5e7b70849590c9316129ffe79ee5855a24734182040222d74d111aba61"
+    },
+    {
+      "id": "resources-2-56101-outside",
+      "tick": 6,
+      "input": "inputs/resources-2-56101-outside.json",
+      "sha256": "bb54789d6b9e043d53160b56820e315077185428c94cad230bf3e15594c02784",
+      "fixed32_ballot": {
+        "action": "trade",
+        "horizon": 32,
+        "purpose": 0.050828572310671206
+      },
+      "actual_fixed32_owner": "4a1f1531a5bd04e368d4675545e4b8a9bc2bf25a3b61e892b7f7c8cf88786888"
+    }
+  ],
+  "banks": [
+    {
+      "id": "bank1",
+      "seeds": [
+        1701,
+        1702,
+        1703
+      ]
+    },
+    {
+      "id": "bank2",
+      "seeds": [
+        2701,
+        2702,
+        2703
+      ]
+    }
+  ],
+  "original_model_seeds": [
+    701,
+    702,
+    703
+  ],
+  "workers": 1,
+  "original_plan_sha256": "9fd348ac0952bf657266e1fc4ef5e3d2284957f8f800850ae4ac78718ea325fd",
+  "limits": "All five existing first disagreements, same factual root owner and world. Two fixed alternative hypothetical sample banks only. No factual world seed, actor source, cohort, selection rule or adoption criteria changes. No replacing original model samples by a better-performing bank. Single below-normal-priority worker; finite ten probes, no recurring automation."
+}

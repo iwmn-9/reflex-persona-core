@@ -1,0 +1,118 @@
+{
+  "complete": true,
+  "adoption": false,
+  "rows": [
+    {
+      "id": "auction-0-56101-outside",
+      "fixed32": "bid:3",
+      "consensus": "bid:4",
+      "modeled_action_changes": 1,
+      "references": {
+        "true_law": {
+          "best_actions_stable": true,
+          "best_actions": [
+            "bid:3"
+          ],
+          "fixed32_advantage_at32": 0.001107479475722567
+        },
+        "stationary_root_belief": {
+          "best_actions_stable": true,
+          "best_actions": [
+            "bid:3"
+          ],
+          "fixed32_advantage_at32": 0.0011651946425526444
+        }
+      }
+    },
+    {
+      "id": "auction-2-56101-outside",
+      "fixed32": "bid:2",
+      "consensus": "bid:4",
+      "modeled_action_changes": 1,
+      "references": {
+        "true_law": {
+          "best_actions_stable": true,
+          "best_actions": [
+            "bid:3"
+          ],
+          "fixed32_advantage_at32": 0.0032085719556623135
+        },
+        "stationary_root_belief": {
+          "best_actions_stable": true,
+          "best_actions": [
+            "bid:2"
+          ],
+          "fixed32_advantage_at32": 0.005769423889392354
+        }
+      }
+    },
+    {
+      "id": "combat-0-56101-outside",
+      "fixed32": "reload",
+      "consensus": "strike:2",
+      "modeled_action_changes": 1,
+      "references": {
+        "true_law": {
+          "best_actions_stable": true,
+          "best_actions": [
+            "strike:2"
+          ],
+          "fixed32_advantage_at32": -0.002152593763215388
+        },
+        "stationary_root_belief": {
+          "best_actions_stable": true,
+          "best_actions": [
+            "strike:2"
+          ],
+          "fixed32_advantage_at32": -0.003396497205027063
+        }
+      }
+    },
+    {
+      "id": "combat-2-56101-outside",
+      "fixed32": "strike:2",
+      "consensus": "reload",
+      "modeled_action_changes": 6,
+      "references": {
+        "true_law": {
+          "best_actions_stable": true,
+          "best_actions": [
+            "strike:2"
+          ],
+          "fixed32_advantage_at32": 0.0029817654145931627
+        },
+        "stationary_root_belief": {
+          "best_actions_stable": true,
+          "best_actions": [
+            "strike:2"
+          ],
+          "fixed32_advantage_at32": 0.002513068525957285
+        }
+      }
+    },
+    {
+      "id": "resources-2-56101-outside",
+      "fixed32": "trade",
+      "consensus": "crop:2",
+      "modeled_action_changes": 1,
+      "references": {
+        "true_law": {
+          "best_actions_stable": true,
+          "best_actions": [
+            "crop:2"
+          ],
+          "fixed32_advantage_at32": -0.0005207548319914601
+        },
+        "stationary_root_belief": {
+          "best_actions_stable": true,
+          "best_actions": [
+            "trade"
+          ],
+          "fixed32_advantage_at32": 0.0003757959937311789
+        }
+      }
+    }
+  ],
+  "limit": "Offline depth sensitivity of existing exact references at all five saved disagreements.\n\nThe reference ignores personality and future belief learning. It is not an NPC\ninput, a personality-loss estimate, or a replacement for the registered worlds.\n",
+  "interpretation": "At these five known roots, the exact-reference best actions are stable across16..32 and full remaining play under each specified law. This weakens a depth-only explanation of the observed flips, but does not isolate sampling, future-policy quality, belief evolution or personal valuation. No extra controller is adopted."
+}

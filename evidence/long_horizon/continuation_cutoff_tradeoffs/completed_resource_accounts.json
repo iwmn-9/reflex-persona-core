@@ -1,0 +1,124 @@
+{
+  "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "reference_sha256": "018167ad3498a53dec39ce220a9043313bd2635724ecf03097c65682525ef9d0",
+  "rows": [
+    {
+      "id": "resources-0-56101-outside",
+      "arms": {
+        "h16": {
+          "input": "results\\continuation_horizon_ablation\\references\\resources-0-56101-outside.json",
+          "sha256": "f9bfc244c74ed875bdcfc6b731d31a04e47cbf696b89845863bc2ae5f9fa430d",
+          "score": 0.20442708333333334,
+          "account": {
+            "initial_perfect_information": 0.6593658445445213,
+            "purpose_opportunity_loss": 0.4385278641247599,
+            "residual": -0.016410897086428067,
+            "residual_removed": 0.22083798041976138,
+            "reconstruction_error": -2.7755575615628914e-17
+          }
+        },
+        "fixed32": {
+          "input": "results\\continuation_horizon_ablation\\resources-0-56101-outside\\candidate\\result.json",
+          "sha256": "61c7281898e4440cff8813e3686172a255d9f8928d55d25301c58ba489f4f4c3",
+          "score": 0.625,
+          "account": {
+            "initial_perfect_information": 0.6593658445445213,
+            "purpose_opportunity_loss": 0.0025378493502917765,
+            "residual": -0.03182799519422952,
+            "residual_removed": 0.6568279951942295,
+            "reconstruction_error": 0.0
+          }
+        },
+        "consensus": {
+          "input": "results\\continuation_horizon_consensus\\worlds\\resources-0-56101-outside\\candidate\\result.json",
+          "sha256": "50711a36052a09f7cd9e104db0206f294da30703e49832480e73b093596cee42",
+          "score": 0.625,
+          "account": {
+            "initial_perfect_information": 0.6593658445445213,
+            "purpose_opportunity_loss": 0.0025378493502917765,
+            "residual": -0.03182799519422952,
+            "residual_removed": 0.6568279951942295,
+            "reconstruction_error": 0.0
+          }
+        }
+      },
+      "comparisons": [
+        {
+          "reference": "h16",
+          "candidate": "fixed32",
+          "score_delta": 0.42057291666666663,
+          "choice_contribution": 0.43599001477446814,
+          "realized_residual_contribution": -0.015417098107801452
+        },
+        {
+          "reference": "consensus",
+          "candidate": "fixed32",
+          "score_delta": 0.0,
+          "choice_contribution": 0.0,
+          "realized_residual_contribution": 0.0
+        }
+      ]
+    },
+    {
+      "id": "resources-2-56101-outside",
+      "arms": {
+        "h16": {
+          "input": "results\\continuation_horizon_ablation\\references\\resources-2-56101-outside.json",
+          "sha256": "a6ba46d4ef66c976ad06efe4ee15e386518d7f1e23aaa6217eeb7b26217f252e",
+          "score": 0.46875,
+          "account": {
+            "initial_perfect_information": 0.6593658445445213,
+            "purpose_opportunity_loss": 0.1679549485885618,
+            "residual": -0.022660895955959492,
+            "residual_removed": 0.4914108959559595,
+            "reconstruction_error": 0.0
+          }
+        },
+        "fixed32": {
+          "input": "results\\continuation_horizon_ablation\\resources-2-56101-outside\\candidate\\result.json",
+          "sha256": "0bb5668d364940f32a61841caac4e6c6a0c5f8e9ce5cae48c1b355f7ce562986",
+          "score": 0.625,
+          "account": {
+            "initial_perfect_information": 0.6593658445445213,
+            "purpose_opportunity_loss": 0.0025378493502917765,
+            "residual": -0.03182799519422952,
+            "residual_removed": 0.6568279951942295,
+            "reconstruction_error": 0.0
+          }
+        },
+        "consensus": {
+          "input": "results\\continuation_horizon_consensus\\worlds\\resources-2-56101-outside\\candidate\\result.json",
+          "sha256": "85faf36d714af7d8a4ed140ebb20b6caaba0b57870cbc092e0145c8942c86ffb",
+          "score": 0.6223958333333334,
+          "account": {
+            "initial_perfect_information": 0.6593658445445213,
+            "purpose_opportunity_loss": 0.002017197680320937,
+            "residual": -0.03495281353086699,
+            "residual_removed": 0.6573486468642004,
+            "reconstruction_error": 0.0
+          }
+        }
+      },
+      "comparisons": [
+        {
+          "reference": "h16",
+          "candidate": "fixed32",
+          "score_delta": 0.15625,
+          "choice_contribution": 0.16541709923827003,
+          "realized_residual_contribution": -0.009167099238270027
+        },
+        {
+          "reference": "consensus",
+          "candidate": "fixed32",
+          "score_delta": 0.0026041666666666297,
+          "choice_contribution": -0.0005206516699708397,
+          "realized_residual_contribution": 0.0031248183366374693
+        }
+      ]
+    }
+  ],
+  "limit": "Evaluator-only complete-resource accounting. The perfect-information reference ignores personality and information limits; not an adoption gate or pure reasoning-error attribution.",
+  "inputs_sha256": "20acffc69a4ab331a5edd896a13eff07aba4e0ca082f6ac1e55fa0b4b8474054",
+  "source_archive": "../continuation_horizon_consensus_screen/source.zip",
+  "replay": "Use the frozen tools.resource_reference.account on each archived complete result after adding game, turns and regime from configuration.spec."
+}
