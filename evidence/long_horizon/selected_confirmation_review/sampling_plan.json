@@ -1,0 +1,107 @@
+{
+  "at": "2026-10-24T22:49:29.332527+00:00",
+  "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "cases": [
+    {
+      "id": "auction-1-10061202-shift-return-tick63",
+      "input": "inputs/auction-1-10061202-shift-return.json",
+      "sha256": "89ca379427a99608a769b293a68477faae18b01d74d72b26f4222c5a979b152e",
+      "tick": 63,
+      "actual_fixed32_owner": "806114aee89f4101dd1fa6080f90143cab1d3743ae279ebb9cfedb5686212854",
+      "fixed32_ballot": {
+        "action": "bid:1",
+        "horizon": 32,
+        "purpose": 0.18266188427874708
+      },
+      "original_case_id": "auction-1-10061202-shift-return",
+      "selection_rank": 1,
+      "reference_extra_loss": 0.003639599820468048
+    },
+    {
+      "id": "auction-1-10061202-shift-return-tick87",
+      "input": "inputs/auction-1-10061202-shift-return.json",
+      "sha256": "89ca379427a99608a769b293a68477faae18b01d74d72b26f4222c5a979b152e",
+      "tick": 87,
+      "actual_fixed32_owner": "e7d71b1a97011a9bd342926cdaca0fcfaa6e02869332f756532979f9973b5e88",
+      "fixed32_ballot": {
+        "action": "bid:3",
+        "horizon": 32,
+        "purpose": 0.21340452145711708
+      },
+      "original_case_id": "auction-1-10061202-shift-return",
+      "selection_rank": 2,
+      "reference_extra_loss": 0.003067100133790801
+    },
+    {
+      "id": "auction-2-10061202-shift-return-tick37",
+      "input": "inputs/auction-2-10061202-shift-return.json",
+      "sha256": "ab0c3df9915e5d8efe13e448d5a0d45fef8b4d280313ca9221cfb2170392f3b3",
+      "tick": 37,
+      "actual_fixed32_owner": "ca4a288cc9e08f3d68372aa8be10b48789be520f8c0dcf1e7531afbfefe4c636",
+      "fixed32_ballot": {
+        "action": "bid:4",
+        "horizon": 32,
+        "purpose": 0.13702010177812995
+      },
+      "original_case_id": "auction-2-10061202-shift-return",
+      "selection_rank": 1,
+      "reference_extra_loss": 0.006943873017746405
+    },
+    {
+      "id": "auction-2-10061202-shift-return-tick47",
+      "input": "inputs/auction-2-10061202-shift-return.json",
+      "sha256": "ab0c3df9915e5d8efe13e448d5a0d45fef8b4d280313ca9221cfb2170392f3b3",
+      "tick": 47,
+      "actual_fixed32_owner": "cbdcd17827a0023c76aab2247952e299dc062a138e44ae9bb172a4341b5e710c",
+      "fixed32_ballot": {
+        "action": "bid:4",
+        "horizon": 32,
+        "purpose": 0.148188075040745
+      },
+      "original_case_id": "auction-2-10061202-shift-return",
+      "selection_rank": 2,
+      "reference_extra_loss": 0.006190429959551741
+    }
+  ],
+  "banks": [
+    {
+      "id": "original",
+      "seeds": [
+        701,
+        702,
+        703
+      ]
+    },
+    {
+      "id": "bank1",
+      "seeds": [
+        1701,
+        1702,
+        1703
+      ]
+    },
+    {
+      "id": "bank2",
+      "seeds": [
+        2701,
+        2702,
+        2703
+      ]
+    }
+  ],
+  "workers": 2,
+  "minimum_horizon": 32,
+  "diagnostic_sha256": "63e385d242edafc6a4946e88f0bbeb06ea9af0d66e5472efff3b77a8ed08050d",
+  "base_diagnostic": {
+    "path": "tools/diagnose_cutoff_sampling.py",
+    "sha256": "175820ab7c636b8d25a97384c9ef7c1fc21f0a465bc357c9e6f16ad12c40666e",
+    "instrumentation": "Only add raw-vs-personal-tier purpose report fields; do not alter planner or selection."
+  },
+  "source_review_sha256": "abe044590380091faab027995467b5326f7101ddbeef1b3a95f7f1c40ac323a4",
+  "bank_source": {
+    "path": "evidence\\long_horizon\\continuation_regret_sampling\\registration.json",
+    "sha256": "b6b442ad0b38d7b43d9adbe207f44a6c73ce6c8cca6f374413e053b3e3939d6c"
+  },
+  "selection": "For every completed pair with worse reference-choice contribution, take both largest extra-loss ticks, tie by ascending tick. Includes a positive-score case. Every selected case and all three pre-existing model sample banks retained.",
+  "limits": "Post-hoc evaluator-only diagnosis, not additional independent games. Real RNG/history/persona and registered independent40 configuration remain unchanged. No best bank may replace the playing seeds."
+}
