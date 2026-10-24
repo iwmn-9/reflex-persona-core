@@ -1,0 +1,77 @@
+{
+  "complete": true,
+  "adoption": false,
+  "rows": [
+    {
+      "id": "auction-0-56101-outside",
+      "tick": 13,
+      "fixed32": "bid:3",
+      "consensus": "bid:4",
+      "mode": "need",
+      "fixed32_model_purpose_gap": 0.0,
+      "consensus_model_purpose_gap": 0.0008574952835469565,
+      "same_h32_best_available_root_mean_difference": 0.003988376437139736,
+      "perfect_information_reference_advantage": 0.0011007293024158094,
+      "perfect_information_best": "bid:3",
+      "stationary_belief_best": "bid:3"
+    },
+    {
+      "id": "auction-2-56101-outside",
+      "tick": 5,
+      "fixed32": "bid:2",
+      "consensus": "bid:4",
+      "mode": "need",
+      "fixed32_model_purpose_gap": 0.0,
+      "consensus_model_purpose_gap": 0.0,
+      "same_h32_best_available_root_mean_difference": 0.0005223152866842412,
+      "perfect_information_reference_advantage": 0.0032238753819085753,
+      "perfect_information_best": "bid:3",
+      "stationary_belief_best": "bid:2"
+    },
+    {
+      "id": "combat-0-56101-outside",
+      "tick": 11,
+      "fixed32": "reload",
+      "consensus": "strike:2",
+      "mode": "principle",
+      "fixed32_model_purpose_gap": 0.0,
+      "consensus_model_purpose_gap": 0.0,
+      "same_h32_best_available_root_mean_difference": 0.0008881277708339685,
+      "perfect_information_reference_advantage": -0.003060897670622953,
+      "perfect_information_best": "strike:2",
+      "stationary_belief_best": "strike:2"
+    },
+    {
+      "id": "combat-2-56101-outside",
+      "tick": 29,
+      "fixed32": "strike:2",
+      "consensus": "reload",
+      "mode": "principle",
+      "fixed32_model_purpose_gap": 0.0005860836121564794,
+      "consensus_model_purpose_gap": 0.0,
+      "same_h32_best_available_root_mean_difference": -0.0005860836121564794,
+      "perfect_information_reference_advantage": 0.0029689563480734815,
+      "perfect_information_best": "strike:2",
+      "stationary_belief_best": "strike:2"
+    },
+    {
+      "id": "resources-2-56101-outside",
+      "tick": 6,
+      "fixed32": "trade",
+      "consensus": "crop:2",
+      "mode": "principle",
+      "fixed32_model_purpose_gap": 0.0,
+      "consensus_model_purpose_gap": 0.00019383417674297826,
+      "same_h32_best_available_root_mean_difference": 0.0003582719039483123,
+      "perfect_information_reference_advantage": null,
+      "perfect_information_best": null,
+      "stationary_belief_best": null
+    }
+  ],
+  "limits": [
+    "These are all first divergences in the known8, not final losses or independent trials.",
+    "Model purpose gap is the sacrifice of modeled purpose within the current personal selector, not proven intentional realized loss.",
+    "Full-information and stationary-belief references ignore personality; the latter also omits future belief updating. Neither enters playing code.",
+    "Horizon and future-policy approximation can change root ranks; neither controller uniformly wins these local references. Keep all original acceptance criteria and run full worlds."
+  ]
+}

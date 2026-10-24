@@ -1,0 +1,133 @@
+{
+  "rows": [
+    {
+      "case": "auction-0-56101-outside",
+      "tick": 13,
+      "input_sha256": "329622489e9df2f8b1286eee01cc84ef2995a2cdc8a0f3862427b9b6eaf7fa5b",
+      "q": {
+        "bid:0": 0.18521202925752162,
+        "bid:1": 0.18550499800752163,
+        "bid:2": 0.18564041022030184,
+        "bid:3": 0.18797871737464572,
+        "bid:4": 0.1868779880722299
+      },
+      "fixed32": "bid:3",
+      "consensus": "bid:4",
+      "oracle": "bid:3",
+      "fixed32_reference_advantage": 0.0011007293024158094,
+      "root_prediction": {
+        "0": 0.047656607305403276,
+        "1": 0.23740226172828996,
+        "2": 0.7149411309663068
+      },
+      "stationary_belief_q": {
+        "bid:0": 0.17566520597379603,
+        "bid:1": 0.17580482494051108,
+        "bid:2": 0.17644388188100985,
+        "bid:3": 0.1786754871490837,
+        "bid:4": 0.1775111581535308
+      },
+      "stationary_belief_best": "bid:3",
+      "source_owner": "e57a9761e3e25a18621bca63942f7d5efc7a920028a64f229fcfa06850a3a11e"
+    },
+    {
+      "case": "auction-2-56101-outside",
+      "tick": 5,
+      "input_sha256": "d2bf0668724bca3438ef318e77876a0e323866590dba607b935ed1615bdf2054",
+      "q": {
+        "bid:0": 0.19164089678972712,
+        "bid:1": 0.19173347954137687,
+        "bid:2": 0.1918206063865764,
+        "bid:3": 0.19365562974236716,
+        "bid:4": 0.1885967310046678
+      },
+      "fixed32": "bid:2",
+      "consensus": "bid:4",
+      "oracle": "bid:3",
+      "fixed32_reference_advantage": 0.0032238753819085753,
+      "root_prediction": {
+        "0": 0.09943301915295155,
+        "1": 0.4224438784912352,
+        "2": 0.4781231023558133
+      },
+      "stationary_belief_q": {
+        "bid:0": 0.17197527524516731,
+        "bid:1": 0.1720389316358003,
+        "bid:2": 0.1730258222618181,
+        "bid:3": 0.17224611627633502,
+        "bid:4": 0.16705095977795464
+      },
+      "stationary_belief_best": "bid:2",
+      "source_owner": "66c72538316cc67b372ccb9dfe57603a191ab5e29e9ce25ac417ed0eb5619805"
+    },
+    {
+      "case": "combat-0-56101-outside",
+      "tick": 11,
+      "input_sha256": "e01f85791df8bd354fb9a76a227646f7590852eea7898d211f805da6cdd70a8e",
+      "q": {
+        "guard": 0.48411149974470913,
+        "reload": 0.48468467419955613,
+        "strike:0": 0.48079179025672886,
+        "strike:1": 0.48079179025672886,
+        "strike:2": 0.4877455718701791
+      },
+      "fixed32": "reload",
+      "consensus": "strike:2",
+      "oracle": "strike:2",
+      "fixed32_reference_advantage": -0.003060897670622953,
+      "root_prediction": {
+        "0": 0.05381340356746098,
+        "1": 0.277025588701751,
+        "2": 0.669161007730788
+      },
+      "stationary_belief_q": {
+        "guard": 0.3911046941739811,
+        "reload": 0.39155542271961824,
+        "strike:0": 0.3882462560995443,
+        "strike:1": 0.39036324985046494,
+        "strike:2": 0.3940823489269767
+      },
+      "stationary_belief_best": "strike:2",
+      "source_owner": "dc372d93936471fd8c17c717d4328e98298411a5ec6b1a32d7d07f2287571cb4"
+    },
+    {
+      "case": "combat-2-56101-outside",
+      "tick": 29,
+      "input_sha256": "0b4d3fee2d1bebe2a83d4cf4b2dac6e83e67e894f1cec15a3b6737a72c97995b",
+      "q": {
+        "guard": 0.47450680942758,
+        "reload": 0.4725623132341595,
+        "strike:0": 0.46857011135450294,
+        "strike:1": 0.46857011135450294,
+        "strike:2": 0.47553126958223296
+      },
+      "fixed32": "strike:2",
+      "consensus": "reload",
+      "oracle": "strike:2",
+      "fixed32_reference_advantage": 0.0029689563480734815,
+      "root_prediction": {
+        "0": 0.1369726598396976,
+        "1": 0.26488032904236863,
+        "2": 0.5981470111179338
+      },
+      "stationary_belief_q": {
+        "guard": 0.3562891425187081,
+        "reload": 0.35461546184057885,
+        "strike:0": 0.35267174223067704,
+        "strike:1": 0.3538572741314483,
+        "strike:2": 0.35694620762173607
+      },
+      "stationary_belief_best": "strike:2",
+      "source_owner": "560e4b5e7b70849590c9316129ffe79ee5855a24734182040222d74d111aba61"
+    }
+  ],
+  "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "diagnostic_source": {
+    "tools/diagnose_auction_continuity.py": "803f765afd91c13265d5cf57184a79560a23537f545b7069f4dc8a4f6ca3dffd",
+    "tools/run_owned_value.py": "0878b267d2de01d4456af81c97c610e89d868c81f5dc838d4b880c59adcc7cb1",
+    "tools/continuing_games.py": "7d3fbc805578c24015db92f9c31821427a44f2a9e8b2befa1755084b809c6bde",
+    "tools/combat_reference.py": "941d7a63fd3c12afd54be2a497a813013d9452af09f1e9b372de7c4b6fc4608d"
+  },
+  "limit": "Offline existing perfect-information finite-horizon purpose reference. Ignores personality and uncertainty. Values omit the common past score. Does not measure deliberate personality loss, change actor input, or replace complete independent acceptance.",
+  "stationary_belief_limit": "Additional lens holds the observed root probabilities constant and ignores future belief updates, information value, and personality. Not the actual posterior continuation or an error decomposition."
+}
