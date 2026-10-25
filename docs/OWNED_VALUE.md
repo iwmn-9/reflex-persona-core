@@ -165,9 +165,9 @@ controller = expected_controller.restored(restored_public_world, saved)
 
 ゲームの世界そのものや実世界の乱数、コールバックのプログラムはこの記録に含めない。ホストはそれらを同じ境界で保存・復元し、`record(public)` が計画に必要な公開状態を欠かさず表すようにする。`model_id` はルール・評価・観測コールバックの意味が変われば変更する。予測器も自分の `restored()` でモデルの設定と記憶を照合する。ハッシュは破損検知であり、第三者が書き換えた保存データの真正性を保証しない。この接続改修はH32研究候補の採用や長期判断の合格を意味しない。
 
-## 固定32手構成のパッケージ接続（採用判定待ち）
+## 固定32手構成の安定版接続
 
-`reflex.fixed_horizon.FixedHorizonOwner` は、独立40組で検証中の固定32手構成を同じ `decide → resolve → checkpoint/restored` の接続へまとめたもの。通常の `RecedingOwner` の既定を置き換えない。採用の可否は40組の完走・監査と登録済み基準で判定する。
+`reflex.fixed_horizon.FixedHorizonOwner` は、登録40組・10,240実判断の完走・監査と悪化例の審査を経て採用した固定32手構成。`decide → resolve → checkpoint/restored` を安定版の接続入口とする。通常の `RecedingOwner` の既定を置き換えず、任意の研究部品の組合せまで安定版とはしない。[採否と全悪化例](../evidence/stable_release/adoption.json)、[長期結果](../evidence/long_horizon/REPORT.md)、[配布範囲と検査](../evidence/stable_release/RELEASE.md)。
 
 ```python
 from reflex.fixed_horizon import FixedHorizonOwner
@@ -188,7 +188,7 @@ saved = controller.checkpoint(next_public_world)
 
 公開モデル状態はJSON互換で、計画に必要な情報を欠かさず渡す。累積価値の換算 `CumulativePreference` はホストが明示する。主義・欲求をゲーム側の勝利スコアへ自動置換しない。保存にはコントローラーの種類と予算も含み、別構成への誤復元を拒否する。予測の未完了を即時判断へ黙って置き換えることもない。ホストの世界・実世界の乱数・コールバックの版を同じ境界で保つ責任は、上記の保存契約と共通である。
 
-この接続は計算の軽量化や長期品質の合格を意味しない。凍結した研究実装と配布物を別プロセスで照合し、判断・全予測経路・実際の学習記録を比較する。接続確認と独立した長期品質の検証は両方必要である。
+凍結した研究実装と配布物を別プロセスで照合し、判断・全予測経路・実際の学習記録の一致を確認した。接続確認に加えて登録済みの長期品質基準も満たしたが、個別の悪化5条件、世界予測の誤り、読み切れない準備、重い費用は残る。別の予算・未知ゲーム・多数NPCのリアルタイム性能へ、この限定結果をそのまま一般化しない。
 
 ## 独立した予測群での判断確認（任意・検証中）
 

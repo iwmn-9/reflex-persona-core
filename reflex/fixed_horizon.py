@@ -1,4 +1,4 @@
-"""Explicit packaged candidate; independent long-play acceptance is still pending.
+"""Supported fixed-H32 composition, accepted in the registered long-play study.
 
 This composes existing conditional continuation estimates, the learning owner,
 and its personality selector. One cutoff is used, exactly as in the registered
@@ -14,7 +14,7 @@ from ._horizon_consensus import consensus_planner
 
 
 class FixedHorizonOwner(RecedingOwner):
-    """Same lifecycle/save interface as RecedingOwner; no implicit adoption.
+    """Same lifecycle/save interface as RecedingOwner; explicitly selected policy.
 
     The evaluated composition uses horizon=32, seeds=(701,702,703), and
     recovery_cache=64. Other declared budgets are not independent quality evidence.

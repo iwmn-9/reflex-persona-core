@@ -1,0 +1,507 @@
+{
+  "version": 1,
+  "at": "2026-10-25T23:34:48.995620+00:00",
+  "adopted": true,
+  "selected": "fixed32",
+  "scope": "One explicit Python composition, not a default switch for every game or blanket stabilization of research modules.",
+  "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+  "supported_entry": "reflex.fixed_horizon.FixedHorizonOwner",
+  "settings": {
+    "horizon": 32,
+    "seeds": [
+      701,
+      702,
+      703
+    ],
+    "recovery_cache": 64
+  },
+  "baseline": "adopted H16 recovery owner, freshly run with identical world/persona conditions",
+  "registered_pairs": 40,
+  "turns_per_arm": 128,
+  "audited_actual_decisions": 10240,
+  "counts": {
+    "better": 26,
+    "same": 9,
+    "worse": 5
+  },
+  "gate": {
+    "checks": {
+      "four_complete_gambling_worlds": true,
+      "no_family_loss": true,
+      "positive_gambling": true,
+      "positive_resources": true,
+      "required_families": true,
+      "three_gambling_worlds_improve": true
+    },
+    "families": [
+      {
+        "conditional_delta": 0.016375732421875004,
+        "count": 8,
+        "game": "auction",
+        "mean_delta": 0.020721435546875,
+        "worse": 1
+      },
+      {
+        "conditional_delta": 0.006005859375000026,
+        "count": 8,
+        "game": "combat",
+        "mean_delta": 0.012776692708333329,
+        "worse": 3
+      },
+      {
+        "conditional_delta": 0.008740234375,
+        "count": 16,
+        "game": "gambling",
+        "mean_delta": 0.0078125,
+        "worse": 1
+      },
+      {
+        "conditional_delta": 0.2135579427083333,
+        "count": 8,
+        "game": "resources",
+        "mean_delta": 0.21647135416666666,
+        "worse": 0
+      }
+    ],
+    "gambling_worlds": [
+      {
+        "mean_delta": 0.013671875,
+        "profiles": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "seed": 10061201
+      },
+      {
+        "mean_delta": 0.0013020833333333287,
+        "profiles": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "seed": 10061202
+      },
+      {
+        "mean_delta": 0.0,
+        "profiles": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "seed": 10061203
+      },
+      {
+        "mean_delta": 0.01627604166666667,
+        "profiles": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "seed": 10061204
+      }
+    ],
+    "passed": true
+  },
+  "adverse_review": [
+    {
+      "id": "auction-1-10061202-shift-return",
+      "profile": "steady",
+      "difference": {
+        "conditional": -0.02568359375000001,
+        "reference_choice": -0.0066899819301046715,
+        "reference_residual": -0.008690877444895162,
+        "residual": 0.010302734375000011,
+        "score": -0.015380859375
+      },
+      "assessment": "慎重型。32手以降で実得点の差が悪化し、条件付き増分・真の法則の参照選択差も負。四つの既知局面の標本・期間診断と五つの終局分岐を照合。標本で一手は変わるが、別標本による長期改善は一貫しない。人格だけの代償や単なる不運とは認定せず、残る世界予測・有限標本の限界として保持する。"
+    },
+    {
+      "id": "auction-2-10061202-shift-return",
+      "profile": "care",
+      "difference": {
+        "conditional": 2.441406250000555e-05,
+        "reference_choice": -0.014930708307868579,
+        "reference_residual": 0.016883833307868884,
+        "residual": 0.0019287109374999944,
+        "score": 0.001953125
+      },
+      "assessment": "協調型。最終得点は小幅改善だが真の法則の参照選択差は負。37・47手の別標本への介入でも、実得点と条件付き増分・長期参照の符号は揃わない。勝ったことだけで判断の改善とせず、未解消の選択損を明記する。"
+    },
+    {
+      "id": "auction-3-10061202-shift-return",
+      "profile": "ego",
+      "difference": {
+        "conditional": -0.015893554687500006,
+        "reference_choice": -0.00927487556395476,
+        "reference_residual": 0.030759250563954815,
+        "residual": 0.037377929687500006,
+        "score": 0.021484375
+      },
+      "assessment": "自己主張型。最終得点は改善したが条件付き増分・参照選択差は負。実現した残差が損を上回った結果であり、この条件単独を知能改善の根拠にはしない。"
+    },
+    {
+      "id": "combat-0-10061201-outside",
+      "profile": "growth",
+      "difference": {
+        "conditional": 0.0032552083333333703,
+        "reference_choice": 0.005027013231818367,
+        "reference_residual": -0.012188471565151737,
+        "residual": -0.01041666666666674,
+        "score": -0.00716145833333337
+      },
+      "assessment": "成長型。最終得点は低下したが条件付き増分・参照選択差は正。終局差の逆転は参照残差に現れる。過去の状態と人格の寄与も含む会計であり、純粋な知能差や運の因果分離とは呼ばない。"
+    },
+    {
+      "id": "combat-1-10061202-shift-return",
+      "profile": "steady",
+      "difference": {
+        "conditional": -0.01315104166666653,
+        "reference_choice": -0.012657406178325337,
+        "reference_residual": 0.0015896978449920218,
+        "residual": 0.002083333333333215,
+        "score": -0.011067708333333315
+      },
+      "assessment": "慎重型。最終得点・条件付き増分・参照選択差が負。参照選択差の悪化は64〜95手に集中。65・74手の選択は現在の予測を固定した参照では最良だが、実際の応答分布と合っていない。追加の深さや人格係数だけで直せる根拠は得られず、予測の限界を保持する。"
+    },
+    {
+      "id": "combat-2-10061202-shift-return",
+      "profile": "care",
+      "difference": {
+        "conditional": -0.01809895833333336,
+        "reference_choice": -0.016535136001130046,
+        "reference_residual": 0.011977844334463361,
+        "residual": 0.013541666666666674,
+        "score": -0.004557291666666685
+      },
+      "assessment": "協調型。最終得点・条件付き増分・参照選択差が負。変化直後の32手と65手の選択は現在の予測では最良に含まれるが、真の法則とはずれる。両方式の学習情報は同じで、準備済み資源の違いも結果へ作用する。人格の弱さと決めつけない。"
+    },
+    {
+      "id": "combat-3-10061201-outside",
+      "profile": "ego",
+      "difference": {
+        "conditional": -0.011979166666666707,
+        "reference_choice": -0.006567151324579856,
+        "reference_residual": 0.030004651324579856,
+        "residual": 0.03541666666666671,
+        "score": 0.0234375
+      },
+      "assessment": "自己主張型。得点改善に対し条件付き増分・参照選択差は負。初期32手の選択損を後半で一部回復。6・23手は現在の予測では合理的だが真の法則に合わない。得点の改善でこの弱点を消さない。"
+    },
+    {
+      "id": "gambling-1-10061201-outside",
+      "profile": "steady",
+      "difference": {
+        "conditional": 0.012239583333333304,
+        "residual": -0.03046874999999999,
+        "score": -0.018229166666666685
+      },
+      "assessment": "慎重型。資金198→191、満期資産購入18→17。初期の予測上有利な賭けへの移行に続き、購入時期がずれて終盤の購入が一回減った。条件付き利益差は資金+4.7、実現残差差は−11.7。準備時期の差と実現結果の両方が残り、すべてを不運や人格の代償には帰さない。"
+    }
+  ],
+  "all_adverse_reviewed": true,
+  "personas": [
+    {
+      "conditional_delta": 0.024548339843750003,
+      "conditions": 2,
+      "game": "auction",
+      "mean_delta": 0.0211181640625,
+      "persona": "care"
+    },
+    {
+      "conditional_delta": 0.0033081054687500028,
+      "conditions": 2,
+      "game": "auction",
+      "mean_delta": 0.019287109375,
+      "persona": "ego"
+    },
+    {
+      "conditional_delta": 0.03157958984375,
+      "conditions": 2,
+      "game": "auction",
+      "mean_delta": 0.02587890625,
+      "persona": "growth"
+    },
+    {
+      "conditional_delta": 0.0060668945312500056,
+      "conditions": 2,
+      "game": "auction",
+      "mean_delta": 0.0166015625,
+      "persona": "steady"
+    },
+    {
+      "conditional_delta": 0.005013020833333326,
+      "conditions": 2,
+      "game": "combat",
+      "mean_delta": 0.005533854166666657,
+      "persona": "care"
+    },
+    {
+      "conditional_delta": 0.007031249999999961,
+      "conditions": 2,
+      "game": "combat",
+      "mean_delta": 0.01953125,
+      "persona": "ego"
+    },
+    {
+      "conditional_delta": 0.0018880208333333648,
+      "conditions": 2,
+      "game": "combat",
+      "mean_delta": 0.008138020833333315,
+      "persona": "growth"
+    },
+    {
+      "conditional_delta": 0.010091145833333454,
+      "conditions": 2,
+      "game": "combat",
+      "mean_delta": 0.017903645833333343,
+      "persona": "steady"
+    },
+    {
+      "conditional_delta": 0.0024088541666666685,
+      "conditions": 4,
+      "game": "gambling",
+      "mean_delta": 0.0026041666666666713,
+      "persona": "care"
+    },
+    {
+      "conditional_delta": 0.0003255208333333287,
+      "conditions": 4,
+      "game": "gambling",
+      "mean_delta": 0.0032552083333333287,
+      "persona": "ego"
+    },
+    {
+      "conditional_delta": 0.027083333333333348,
+      "conditions": 4,
+      "game": "gambling",
+      "mean_delta": 0.028645833333333343,
+      "persona": "growth"
+    },
+    {
+      "conditional_delta": 0.005143229166666652,
+      "conditions": 4,
+      "game": "gambling",
+      "mean_delta": -0.0032552083333333426,
+      "persona": "steady"
+    },
+    {
+      "conditional_delta": 0.15221354166666654,
+      "conditions": 2,
+      "game": "resources",
+      "mean_delta": 0.15690104166666666,
+      "persona": "care"
+    },
+    {
+      "conditional_delta": 0.15436197916666658,
+      "conditions": 2,
+      "game": "resources",
+      "mean_delta": 0.16015624999999997,
+      "persona": "ego"
+    },
+    {
+      "conditional_delta": 0.3986979166666666,
+      "conditions": 2,
+      "game": "resources",
+      "mean_delta": 0.3977864583333333,
+      "persona": "growth"
+    },
+    {
+      "conditional_delta": 0.1489583333333335,
+      "conditions": 2,
+      "game": "resources",
+      "mean_delta": 0.15104166666666666,
+      "persona": "steady"
+    }
+  ],
+  "persona_behavior": [
+    {
+      "distinct_action_sequences": 4,
+      "game": "auction",
+      "same_initial_world_choices": {
+        "care": "bid:3",
+        "ego": "bid:3",
+        "growth": "bid:3",
+        "steady": "bid:3"
+      },
+      "seed": 10061201
+    },
+    {
+      "distinct_action_sequences": 4,
+      "game": "auction",
+      "same_initial_world_choices": {
+        "care": "bid:3",
+        "ego": "bid:3",
+        "growth": "bid:3",
+        "steady": "bid:0"
+      },
+      "seed": 10061202
+    },
+    {
+      "distinct_action_sequences": 4,
+      "game": "combat",
+      "same_initial_world_choices": {
+        "care": "strike:1",
+        "ego": "strike:1",
+        "growth": "strike:1",
+        "steady": "guard"
+      },
+      "seed": 10061201
+    },
+    {
+      "distinct_action_sequences": 4,
+      "game": "combat",
+      "same_initial_world_choices": {
+        "care": "strike:1",
+        "ego": "strike:1",
+        "growth": "strike:1",
+        "steady": "guard"
+      },
+      "seed": 10061202
+    },
+    {
+      "distinct_action_sequences": 4,
+      "game": "gambling",
+      "same_initial_world_choices": {
+        "care": "bond",
+        "ego": "bond",
+        "growth": "bond",
+        "steady": "bond"
+      },
+      "seed": 10061201
+    },
+    {
+      "distinct_action_sequences": 4,
+      "game": "gambling",
+      "same_initial_world_choices": {
+        "care": "bond",
+        "ego": "bond",
+        "growth": "bond",
+        "steady": "bond"
+      },
+      "seed": 10061202
+    },
+    {
+      "distinct_action_sequences": 2,
+      "game": "gambling",
+      "same_initial_world_choices": {
+        "care": "bond",
+        "ego": "bond",
+        "growth": "bond",
+        "steady": "bond"
+      },
+      "seed": 10061203
+    },
+    {
+      "distinct_action_sequences": 2,
+      "game": "gambling",
+      "same_initial_world_choices": {
+        "care": "bond",
+        "ego": "bond",
+        "growth": "bond",
+        "steady": "bond"
+      },
+      "seed": 10061204
+    },
+    {
+      "distinct_action_sequences": 4,
+      "game": "resources",
+      "same_initial_world_choices": {
+        "care": "invest",
+        "ego": "invest",
+        "growth": "invest",
+        "steady": "invest"
+      },
+      "seed": 10061201
+    },
+    {
+      "distinct_action_sequences": 4,
+      "game": "resources",
+      "same_initial_world_choices": {
+        "care": "invest",
+        "ego": "invest",
+        "growth": "invest",
+        "steady": "invest"
+      },
+      "seed": 10061202
+    }
+  ],
+  "profile_index": {
+    "0": "growth",
+    "1": "steady",
+    "2": "care",
+    "3": "ego"
+  },
+  "action_disagreements": 1133,
+  "aligned_action_slots": 5120,
+  "costs": [
+    {
+      "game": "auction",
+      "recorded_elapsed_seconds": [
+        74980.48499999987,
+        209546.03200000012
+      ],
+      "ratio": 2.7946742675777636
+    },
+    {
+      "game": "combat",
+      "recorded_elapsed_seconds": [
+        52095.265999999945,
+        165519.5319999999
+      ],
+      "ratio": 3.177247084216828
+    },
+    {
+      "game": "gambling",
+      "recorded_elapsed_seconds": [
+        43140.48299999966,
+        148950.90700000036
+      ],
+      "ratio": 3.45269446797806
+    },
+    {
+      "game": "resources",
+      "recorded_elapsed_seconds": [
+        22048.98399999994,
+        59373.95000000007
+      ],
+      "ratio": 2.692820222464683
+    }
+  ],
+  "cost_limit": "Recorded elapsed seconds include contention and resume wall time; not CPU time or game-frame latency. Personas sharing a world seed are not independent world samples.",
+  "retained_limits": [
+    "Five individual score losses and eight adverse score/conditional/reference accounts remain. No promise of improvement for every personality in every world.",
+    "Steady gambling mean score remains negative; every persona/family conditional mean is positive. Persona coefficients were not adjusted.",
+    "All worlds are bounded rule-family simulations, not unknown-game or human-level validation. Shared-world personas are not independent random seeds.",
+    "World-model error, finite-sample choice instability, investment timing and limits beyond the horizon remain. Older256-turn stress is not a new256-turn selected-policy confirmation.",
+    "Conditional increments/reference values are evaluator-only accounts, not persona utility or a pure intelligence metric."
+  ],
+  "not_adopted": [
+    "multi-cutoff voting",
+    "post-hoc favorable sampling-bank substitution",
+    "persona coefficient retuning",
+    "game/action-specific bonuses"
+  ],
+  "personality_preserved": true,
+  "criteria_relaxed": false,
+  "new_runtime_mechanisms": false,
+  "prerequisites_complete": true,
+  "package_release_checks": "pending final versioned artifact verification",
+  "evidence": {
+    "evidence/long_horizon/continuation_selected_confirmation_acceptance.json": "3c9ca8e122b38d745f39a561379e2c2eb794723777b20eec80a4829b97777d34",
+    "evidence/stable_release/prerequisites.json": "2a40ac4f6aab9cc50301f2041de568c5bded24e6804afe8f4232cb31b92fe644",
+    "evidence/long_horizon/selected_root_continuations/results_verification.json": "b077e7c157e9f945f47d4592ac45b28b4842418d671341eabd39943a5b894b43",
+    "evidence/stable_release/fixed_horizon_checks.json": "41c98f14e9b64dd2dd1c9a4eabf40d1f827eb3b81c3033867ec2261db5192dcc",
+    "tools/review_selected_trajectories.py": "e69149a43def0e84caed390bc65afafedb4ded281ef6876734542be7d43c17fe",
+    "tools/reproduce_selected_confirmation.py": "12e7606c9fec06009455bd2f7978e039a3b6b6b6561d15839391f7f01f41dcbd",
+    "evidence/long_horizon/continuation_selected_confirmation/verification.json": "2278444ec72c738fc0b6af099251a67f7465bb402e6d2bb65c86660a04c98340",
+    "evidence/long_horizon/continuation_selected_confirmation/quality_review.json": "3af15a6c3d725408817d9caa421305505852c5fc897023230c09329a4e4dc435",
+    "evidence/long_horizon/continuation_selected_confirmation/reproduction_package.json": "cc367fcec4a4b5f18453e89ba7f207368c5946153f699413c03d2f41986da788",
+    "evidence/long_horizon/continuation_selected_confirmation/reproduction_verification.json": "492277d6dc15e0275c089181e5fe2f4bb9400c61024348f0f6d10c6e2e96ab45",
+    "evidence/long_horizon/continuation_selected_confirmation/trajectory_review.json.gz": "2092cc53d8e7ddadfc6bcc988637184080fc7156552d8c6426764241159f1f96"
+  }
+}

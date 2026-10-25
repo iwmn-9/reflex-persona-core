@@ -1,0 +1,56 @@
+{
+  "at": "2026-10-25T23:39:52.739680+00:00",
+  "version": "0.1.0",
+  "complete": true,
+  "artifact": "reflex_persona_core-0.1.0-py3-none-any.whl",
+  "sha256": "27fa081e83f3ed269e46efa69fd7ec3796cf0199fb236682b094827fdd2fcb43",
+  "bytes": 631065,
+  "all_runtime_bytes_match_provenance": true,
+  "runtime_files": 169,
+  "provenance_sha256": "fb7c6e03466438f57f87a27b1e77249ac31c1570312369e9f401b7491d4896e3",
+  "build": "python -m pip wheel --no-deps --no-build-isolation .",
+  "isolated_install": "pip install --no-deps --target <fresh-directory> <wheel>",
+  "checks": [
+    {
+      "success": true,
+      "controller": "fixed",
+      "at": "2026-10-25T23:39:01.091439+00:00",
+      "no_research_imports": true,
+      "actual_steps": 4,
+      "restores": 4,
+      "process_restart_at": 2,
+      "world_and_rng_equal": true,
+      "owner_equal": true,
+      "all_decisions_equal": true,
+      "terminal_restored": true,
+      "trace": [
+        "a",
+        "b",
+        "b",
+        "b"
+      ],
+      "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+    },
+    {
+      "success": true,
+      "controller": "receding",
+      "at": "2026-10-25T23:39:02.431767+00:00",
+      "no_research_imports": true,
+      "actual_steps": 4,
+      "restores": 4,
+      "process_restart_at": 2,
+      "world_and_rng_equal": true,
+      "owner_equal": true,
+      "all_decisions_equal": true,
+      "terminal_restored": true,
+      "trace": [
+        "a",
+        "b",
+        "b",
+        "b"
+      ],
+      "owner_sha256": "37ecae9301fcfc6eba79f350217965287ae623c0ba3ddc5ef8a558d7216b4a6b"
+    }
+  ],
+  "scope": "Final local versioned wheel and isolated host/world/RNG lifecycle. Four-platform CI is recorded separately."
+}

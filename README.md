@@ -4,7 +4,9 @@
 
 現在の中心は、学ぶ本人を含めた将来評価の安定。`owned_rollout` は通常の `DecisionLoop` を未来の各経路でも動かし、予測・結果記憶・欲求・進展を更新しながら、将来の目的点と完全な嗜好経路を評価する。実観測後は更新済み本人から読み直す。人格による支払いと、見込み違いによる損を分けて検証する。[接続契約](docs/OWNED_VALUE.md)、[選定根拠と合否](docs/PROJECT_DIRECTION.md#次の改修の優先順位と合否)。
 
-資源・負傷・設備・経験を初期化しない128〜256ターンの世界で、実観測後の再計画と、未来の本人の短い立て直しを接続した。独立確認560実行とストレス40実行を完了し、競り・資源管理・戦闘・賭けの各平均目的得点が4対照すべてを上回った。競りは8世界seedの各平均でも改善。固定人格・ルールを保つ `receding_recovery` を品質優先の任意構成として採用した。一方、一部の人格×傾向条件の損、評価窓より遅い投資の見落とし、重い計算費用は残る。[全結果・採用範囲・得失](evidence/owner_continuity/REPORT.md)、[接続と設定](docs/OWNED_VALUE.md)。全ゲームの既定値や人間水準の認定ではない。
+Pythonの採用構成は `reflex.fixed_horizon.FixedHorizonOwner`。人格・実経験の学習・予測・毎手の再計画・保存復元を一つの入口へつなぐ。採用済みH16を対照に、競り・戦闘・賭け・複数資源の登録40組を128手まで完走し、全10,240実判断を監査した。26改善・9同等・5悪化、全4分野の平均が改善し、事前基準を満たした。人格は固定したまま、複数期間の投票やゲーム専用補正は足していない。[全結果・悪化と採否](evidence/long_horizon/REPORT.md)、[安定版の範囲と配布確認](evidence/stable_release/RELEASE.md)、[接続API・保存契約](docs/OWNED_VALUE.md#固定32手構成の安定版接続)。
+
+安定版はこの明示した構成の接続契約を対象とする。全研究モジュール、任意の設定、未知ゲームでの賢さやリアルタイム性能を一括認定しない。個別の損・世界予測の誤り・重い計算費用は残る。旧H16構成は比較・互換用に保持し、その前段の根拠は [owner_continuity](evidence/owner_continuity/REPORT.md) に残す。
 
 公開応答を学び直す `EventReader` と、欠測・保存・仮想の本人を含む共通更新が前提。[前段の予測回復](evidence/prediction_recovery/REPORT.md)、[接続監査](evidence/lifecycle_integration/REPORT.md) を参照。予測誤差や内部状態の一致だけで長期判断の品質を認定せず、全任意部品を有効化した一律の推奨設定にはしない。
 
@@ -72,7 +74,7 @@ python -m reflex.social_experiment --output FRESH_SOCIAL
 
 ## 動かす
 
-Python 3.10以上とNumPy。別の仮想環境で使う（import名`reflex`は他の同名パッケージと混在させない）。現在のWindows検証はPython 3.12。
+Python 3.10以上とNumPy。別の仮想環境で使う（import名`reflex`は他の同名パッケージと混在させない）。安定版の対応確認はWindows/Linux × Python 3.12/3.13。その他のバージョンの長期品質は未認定。
 
 ```sh
 python -m venv .venv

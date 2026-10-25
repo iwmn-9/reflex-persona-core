@@ -1,7 +1,7 @@
 """Isolated wheel lifecycle/host save smoke test; not long-run quality evidence.
 
 Run with python -I tools/verify_receding_package.py <isolated-install-directory>.
-Use --controller fixed for the pending H32 composition. The optional second
+Use --controller fixed for the supported H32 composition. The optional second
 positional argument is an internal fresh-process resume bundle.
 """
 import sys, json, copy, subprocess, tempfile, argparse
