@@ -68,16 +68,24 @@
       "Finish release scope/version/notes and final provenance audit; no criterion relaxation."
     ],
     "loss_review": {
-      "path": "evidence/long_horizon/selected_confirmation_review/verification.json",
-      "scope": "All four already completed pairs, 1024 actual decisions, twelve post-hoc probes, same-depth reference checks. Not a full forty-pair result or a playing-policy change.",
+      "path": "evidence/long_horizon/selected_confirmation_review_18/verification.json",
+      "scope": "18 completed pairs, 4608 actual decisions, portable replays. Auction8 is complete; other families remain partial. Prior twelve post-hoc probes retained separately.",
       "complete": true,
       "independent_quality_complete": false,
       "controller_changed": false
+    },
+    "sampled_root_continuations": {
+      "path": "evidence/long_horizon/selected_root_continuations/registration_proof.json",
+      "status": "running",
+      "controls_verified": 4,
+      "registered_forks": 5,
+      "complete": false,
+      "scope": "One sampled root intervention then original H32 model seeds and actual learning to terminal. Correlated known-state diagnosis, not independent confirmation."
     }
   },
   "scheduling": "No recurring automation. Existing finite evaluation continues; code changes and result review require an active agent execution.",
   "evidence_reference": "evidence/long_horizon/REPORT.md",
-  "last_updated": "2026-10-24T23:27:37.749502+00:00",
+  "last_updated": "2026-10-25T12:08:47.800234+00:00",
   "checks": "evidence/stable_release/fixed_horizon_checks.json",
   "base_checkpoint_checks": "evidence/stable_release/checks.json"
 }
