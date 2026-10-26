@@ -4,7 +4,7 @@
   "timezone": "Asia/Tokyo",
   "target_date": "2026-11-03",
   "deadline_date": "2026-11-07",
-  "status": "adopted-final-package-confirmation",
+  "status": "stable-v0.1.0-verified",
   "requirements_source": "docs/PROJECT_DIRECTION.md",
   "scope": "One supported composition of existing personality, needs, real feedback learning, prediction, receding planning and persistence. No new AI mechanisms.",
   "quality_contract": {
@@ -40,20 +40,23 @@
     {
       "id": "release_confirmation",
       "target_date": "2026-11-02",
-      "status": "in_progress",
-      "exit": "Required independent confirmation of any behavior-changing fix, supported OS/Python regression, installable package examples without research tools; source provenance matches evaluated behavior."
+      "status": "complete",
+      "exit": "Required independent confirmation of any behavior-changing fix, supported OS/Python regression, installable package examples without research tools; source provenance matches evaluated behavior.",
+      "completed_date": "2026-10-26"
     },
     {
       "id": "target_release",
       "target_date": "2026-11-03",
-      "status": "pending",
-      "exit": "All quality and integration requirements met; package/version/release notes identify supported scope and known limits."
+      "status": "complete",
+      "exit": "All quality and integration requirements met; package/version/release notes identify supported scope and known limits.",
+      "completed_date": "2026-10-26"
     },
     {
       "id": "deadline",
       "target_date": "2026-11-07",
-      "status": "pending",
-      "exit": "Only release blockers after target date. Never label failing or incompletely verified code stable."
+      "status": "complete",
+      "exit": "Only release blockers after target date. Never label failing or incompletely verified code stable.",
+      "completed_date": "2026-10-26"
     }
   ],
   "current_work": {
@@ -63,9 +66,7 @@
     "candidate_integration_complete": true,
     "adoption": true,
     "validation": "evidence/stable_release/fixed_horizon_checks.json",
-    "remaining": [
-      "Verify the final versioned wheel and CI; bind release artifacts to accepted runtime sources; publish with bounded support and retained limits."
-    ],
+    "remaining": [],
     "loss_review": {
       "path": "evidence/stable_release/adoption.json",
       "complete": true,
@@ -84,11 +85,14 @@
       "terminal_forks": 5,
       "new_full_planning_decisions": 338
     },
-    "latest_ci": "evidence/stable_release/diagnostic_ci.json"
+    "latest_ci": "evidence/stable_release/release_ci.json",
+    "release_verification": "evidence/stable_release/release_verification.json"
   },
   "scheduling": "No recurring automation. Existing finite evaluation continues; code changes and result review require an active agent execution.",
   "evidence_reference": "evidence/long_horizon/REPORT.md",
-  "last_updated": "2026-10-25T23:36:57.136049+00:00",
+  "last_updated": "2026-10-26T00:08:02.652491+00:00",
   "checks": "evidence/stable_release/fixed_horizon_checks.json",
-  "base_checkpoint_checks": "evidence/stable_release/checks.json"
+  "base_checkpoint_checks": "evidence/stable_release/checks.json",
+  "release_version": "0.1.0",
+  "release_date": "2026-10-26"
 }
