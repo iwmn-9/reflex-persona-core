@@ -55,6 +55,14 @@ pub(crate) fn state(s: &State) -> Result<()> {
 }
 
 pub(crate) fn observation(o: &Observation, s: &State) -> Result<()> {
+    observation_with_limit(o, s, 8)
+}
+
+pub(crate) fn observation_with_limit(
+    o: &Observation,
+    s: &State,
+    outcome_limit: usize,
+) -> Result<()> {
     tick(o.tick)?;
     for n in &o.needs {
         if n.enabled {
@@ -101,8 +109,10 @@ pub(crate) fn observation(o: &Observation, s: &State) -> Result<()> {
         for x in [a.confidence, a.familiarity, a.switch_cost] {
             number(x, 0., 1.)?;
         }
-        if a.outcomes.is_empty() || a.outcomes.len() > 8 {
-            return Err(Error::Invalid("1..8 immediate outcomes required"));
+        if a.outcomes.is_empty() || a.outcomes.len() > outcome_limit {
+            return Err(Error::Invalid(
+                "outcomes exceed the declared observation limit",
+            ));
         }
         let mut mass = 0.;
         for e in &a.outcomes {

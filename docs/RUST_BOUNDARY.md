@@ -4,6 +4,13 @@ Pythonを実験・審判・比較の正本として残す。Rustの対象は、�
 
 ## 即時判断の境界
 
+2026-10-26、採用した公開条件付き予測の構成を `reflex-owned` へ接続している。
+実経験・分節予測・欲求圧・目的進捗と、人格を保った長期候補の選択をRustが所有する。
+`reflex_runtime::learning::LearningSession` が世界と複数NPCの更新・保存を一体で扱う。
+32手の候補生成はPythonの `NativeOwnedBoundary` を通して、Rustの現在の実経験から作る。
+探索器そのものの完全Rust化ではない。対応する構成と未移植部分の正本は
+[所有者API](../rust/reflex-owned/README.md)。既存の即時判断API・保存版は保持する。
+
 2026-10-24、[reflex-runtime](../rust/reflex-runtime/README.md) に全体の実行入口を追加した。
 `GameSession<World>` が観測・複数NPCの判断・世界の実行・全員の反映・一体の保存復元を扱う。
 採点は下記の即時判断v1へ委譲する。途中参加/退出、未実行、並列実行、古い判断案の拒否も
@@ -12,7 +19,7 @@ Pythonを実験・審判・比較の正本として残す。Rustの対象は、�
 
 `rust/reflex-immediate` は、ゲームが与える観測・欲求・候補・結果の見込みから、一人の通常判断を実行するcrate。人格・主義3方式、損失評価、慣れ、切替費用、有界補正、提供済みの相手予測の採否、近接候補の確率選択を含む。入力検証、純粋な判断案、実行済み状態の反映、人物に結び付いた保存復元までを一単位とする。[APIと使用例](../rust/reflex-immediate/README.md)。
 
-Pythonの `Policy.choose` の、社会評価・`ReturnFrame` を指定しない経路が参照。候補の意味を推定するゲームアダプター、感情・関係記憶の更新、学習、相手モデルの生成、先読み、長期価値の換算は移さない。これらはPythonで改善を続ける。動的な欲求と結果予測は毎回の入力で受け取り、固定人格と混同しない。
+通常の `preview` はPythonの `Policy.choose` の、社会評価・`ReturnFrame` を指定しない経路が参照。追加の `preview_continuation` は、本人に結び付いた累積単位・平均補正を復元して、長期候補から実行する最初の手を選ぶ。候補の生成とゲームの意味付けは外部の責務。動的な欲求・学習した予測と固定人格を混同しない。
 
 2026-10-21の昇格確認は [実測と採否](../evidence/rust_port/immediate/REPORT.md) を正本とする。Windows/Linux x86-64、Rust 1.99.0、NumPy 2.3.5を比較対象とする。旧 `tools/rust_policy_probe.rs` の5,124判断一致は数値試作の結果として保存し、crateの完成証拠には流用しない。
 

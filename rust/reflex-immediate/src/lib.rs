@@ -1,9 +1,11 @@
-//! Immediate choices only. Estimates and learning belong to the caller.
+//! Immediate and explicit-continuation preference choices. Estimates and learning belong to the caller.
 //! Preview is pure; commit only after the chosen action actually executes.
 //! Checkpoints contain resolved intent state, not world state or learned models.
+mod continuation;
 mod numeric;
 mod types;
 mod validate;
+pub use continuation::{Continuation, ContinuationPlan, ReturnUnits};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 pub use types::*;

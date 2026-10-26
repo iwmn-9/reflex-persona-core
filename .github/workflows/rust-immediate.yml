@@ -1,19 +1,23 @@
-name: Rust runtime and immediate component
+name: Rust owned runtime and parity
 on:
   push:
     paths:
       - 'rust/**'
       - 'tools/verify_rust_immediate.py'
       - 'tools/verify_rust_runtime.py'
+      - 'tools/verify_rust_owned*.py'
       - 'tools/verify_rust_policy_probe.py'
-      - 'reflex/core.py'
+      - 'reflex/**'
+      - 'tests/test_native_owned.py'
       - '.github/workflows/rust-immediate.yml'
   pull_request:
     paths:
       - 'rust/**'
       - 'tools/verify_rust_immediate.py'
       - 'tools/verify_rust_runtime.py'
-      - 'reflex/core.py'
+      - 'tools/verify_rust_owned*.py'
+      - 'reflex/**'
+      - 'tests/test_native_owned.py'
       - '.github/workflows/rust-immediate.yml'
   workflow_dispatch:
 permissions:
@@ -39,6 +43,11 @@ jobs:
       - run: cargo test --locked --manifest-path rust/Cargo.toml
       - run: python tools/verify_rust_immediate.py --output results/rust-immediate
       - run: python tools/verify_rust_runtime.py --output results/rust-runtime
+      - run: cargo build --locked --manifest-path rust/Cargo.toml -p reflex-owned --example owned_verify
+      - run: python -m unittest tests.test_native_owned -v
+      - run: python tools/verify_rust_owned.py --output results/rust-owned-history --steps 160 --profiles 4
+      - run: python tools/verify_rust_owned.py --output results/rust-owned-terminal --steps 4 --profiles 4 --horizon-steps 1
+      - run: python tools/verify_rust_owned_prediction.py --output results/rust-owned-factors
       - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
@@ -46,4 +55,7 @@ jobs:
           path: |
             results/rust-immediate
             results/rust-runtime
+            results/rust-owned-history
+            results/rust-owned-terminal
+            results/rust-owned-factors
           retention-days: 14
