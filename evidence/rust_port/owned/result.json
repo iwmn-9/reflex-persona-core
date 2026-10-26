@@ -1,0 +1,632 @@
+{
+  "artifacts": {
+    "ci-linux.json.gz": {
+      "bytes": 72061,
+      "files": 43,
+      "sha256": "0e6b1a061e29da0035cfdcb083730fce0e3b8bd3aecd942d4291d52b8ca985f5"
+    },
+    "ci-windows.json.gz": {
+      "bytes": 72174,
+      "files": 43,
+      "sha256": "ce43928d0a9c49e4e345bda0c178b84decb35f186476073b1cf90809adc1864b"
+    },
+    "local.json.gz": {
+      "bytes": 206275,
+      "files": 64,
+      "sha256": "8d73609d70111ad83815996caf7b93ebfc7f1bb4e78ff1557205d52b54a2e805"
+    }
+  },
+  "audit": {
+    "all_local_cases_complete": true,
+    "ci_source_hashes_match_local": true,
+    "ci_trace_and_final_records_match_across_os": true,
+    "local_source_hashes_unchanged": true,
+    "original_ci_artifact_digests_verified": true
+  },
+  "ci": {
+    "linux": {
+      "original_artifact_sha256": "6d4280022cac38ccb5ef8175ad785377add3144ffc5baa7f1566354ae1fc50c2",
+      "summaries": {
+        "rust-immediate/result.json": {
+          "compiler": "rustc 1.99.0 (b940084d7 2026-09-28)",
+          "complete": true,
+          "continuous_decisions": 12288,
+          "continuous_runs": 96,
+          "corpus_decisions": 5124,
+          "exact_actions_states_rng": true,
+          "identical_physical_worlds": true,
+          "input_sha256": "0da616ce41fe64abf5618dc890f5c870df22a33b9f656205c1bd8d252b2da4e6",
+          "max_numeric_absolute_error": 0.0,
+          "performance_measured": false,
+          "platform": "linux",
+          "registration_sha256": "3286317e54a90f3c3e61ae2290d9dfd92708e2fd91ca669628a77f346812a208",
+          "runs_sha256": "045bbe1e38f188955805c8b4ff706b6dfe05683fde7a7eb21edd2f67b19f091c",
+          "scope": "Immediate base chooser only. Not learning/search integration or intelligence improvement.",
+          "total_decisions": 17412
+        },
+        "rust-owned-factors/summary.json": {
+          "binary_sha256": "812b95a6b6b7e15ab7a6b3ae5b507345f437c165c31ccd9b9dd501761ee5a520",
+          "cases": [
+            {
+              "factors": [],
+              "names": [],
+              "steps": 160
+            },
+            {
+              "factors": [],
+              "names": [
+                "one",
+                "two"
+              ],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase"
+              ],
+              "names": [],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase"
+              ],
+              "names": [
+                "one",
+                "two"
+              ],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase",
+                "terrain"
+              ],
+              "names": [],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase",
+                "terrain"
+              ],
+              "names": [
+                "one",
+                "two"
+              ],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase",
+                "terrain",
+                "signal",
+                "supply"
+              ],
+              "names": [],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase",
+                "terrain",
+                "signal",
+                "supply"
+              ],
+              "names": [
+                "one",
+                "two"
+              ],
+              "steps": 160
+            }
+          ],
+          "complete": true,
+          "input_sha256": "29ef9c6774a37b9deb658647d4fecf4e0fead3fbd66a6837a05b9f193a4fa845",
+          "max_error": 4.440892098500626e-16,
+          "predictions": 1280
+        },
+        "rust-owned-history/summary.json": {
+          "complete": true,
+          "decisions": 2560,
+          "horizon_decisions": 0,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 8.881784197001252e-16,
+          "max_state_error": 1.1102230246251565e-16,
+          "saves": 2560,
+          "seconds": 145.13381123542786,
+          "trace_sha256": "f16ab6be01dca04a2ea61b91791597d17000c26fa3f426652308765284ddb9c9"
+        },
+        "rust-owned-terminal/summary.json": {
+          "complete": true,
+          "decisions": 64,
+          "horizon_decisions": 16,
+          "max_prediction_error": 1.1102230246251565e-16,
+          "max_score_error": 8.881784197001252e-16,
+          "max_state_error": 8.326672684688674e-17,
+          "saves": 64,
+          "seconds": 97.98775935173035,
+          "trace_sha256": "2a9d383b39ef745b8ade2dc0a76839eac676d360857a95082a80486d73fe8743"
+        },
+        "rust-runtime/result.json": {
+          "batch_steps": 3072,
+          "checkpoints": 3072,
+          "compiler": "rustc 1.99.0 (b940084d7 2026-09-28)",
+          "complete": true,
+          "decisions": 12288,
+          "exact_actions_states_rng": true,
+          "identical_physical_worlds_and_rng": true,
+          "input_sha256": "da8351cd0d1ef2720c9548b7ada6d528d6f1b46d3c973b71d7fee96ea10bb2cd",
+          "max_numeric_absolute_error": 0.0,
+          "performance_measured": false,
+          "process_restarts": 24,
+          "protocol_requests": 15384,
+          "registration_sha256": "df5daa1134d6dbd607c174997ff2433750ba1a72de88798be9a9decc05d598bf",
+          "runs_sha256": "28d620702f3eba3d5e1170120f2279941b03336e93f3c8e82ed3571a6053be73",
+          "scope": "Runtime immediate integration equivalence. Four independent worlds per batch, not a multiplayer intelligence test.",
+          "trajectories": 96
+        }
+      }
+    },
+    "windows": {
+      "original_artifact_sha256": "783e16bb6e4dbd0d2689b2a9f6574c91878a792c4f2ad260efadd9a32c9cb40a",
+      "summaries": {
+        "rust-immediate/result.json": {
+          "compiler": "rustc 1.99.0 (b940084d7 2026-09-28)",
+          "complete": true,
+          "continuous_decisions": 12288,
+          "continuous_runs": 96,
+          "corpus_decisions": 5124,
+          "exact_actions_states_rng": true,
+          "identical_physical_worlds": true,
+          "input_sha256": "0da616ce41fe64abf5618dc890f5c870df22a33b9f656205c1bd8d252b2da4e6",
+          "max_numeric_absolute_error": 0.0,
+          "performance_measured": false,
+          "platform": "win32",
+          "registration_sha256": "ba786ba20a78a53b98d6240b4ca2bd5f9f991ec5ce0eee29b1f4d9c945b20ae9",
+          "runs_sha256": "3d9b59c3a7e3c174b9ca5cc78dc7a9649c85050c68fa8f4dc3bc8a4467021007",
+          "scope": "Immediate base chooser only. Not learning/search integration or intelligence improvement.",
+          "total_decisions": 17412
+        },
+        "rust-owned-factors/summary.json": {
+          "binary_sha256": "4122c99953b2e40d7eb58409d1954aba29f78e7c6ba46fb8cb481090d22f2c8e",
+          "cases": [
+            {
+              "factors": [],
+              "names": [],
+              "steps": 160
+            },
+            {
+              "factors": [],
+              "names": [
+                "one",
+                "two"
+              ],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase"
+              ],
+              "names": [],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase"
+              ],
+              "names": [
+                "one",
+                "two"
+              ],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase",
+                "terrain"
+              ],
+              "names": [],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase",
+                "terrain"
+              ],
+              "names": [
+                "one",
+                "two"
+              ],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase",
+                "terrain",
+                "signal",
+                "supply"
+              ],
+              "names": [],
+              "steps": 160
+            },
+            {
+              "factors": [
+                "phase",
+                "terrain",
+                "signal",
+                "supply"
+              ],
+              "names": [
+                "one",
+                "two"
+              ],
+              "steps": 160
+            }
+          ],
+          "complete": true,
+          "input_sha256": "c4c6b35e74649f55fe038866b41d96506a2ffb2be4e1ca43693ccc5e1b6a89f6",
+          "max_error": 4.440892098500626e-16,
+          "predictions": 1280
+        },
+        "rust-owned-history/summary.json": {
+          "complete": true,
+          "decisions": 2560,
+          "horizon_decisions": 0,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 8.881784197001252e-16,
+          "max_state_error": 1.1102230246251565e-16,
+          "saves": 2560,
+          "seconds": 126.43441104888916,
+          "trace_sha256": "f16ab6be01dca04a2ea61b91791597d17000c26fa3f426652308765284ddb9c9"
+        },
+        "rust-owned-terminal/summary.json": {
+          "complete": true,
+          "decisions": 64,
+          "horizon_decisions": 16,
+          "max_prediction_error": 1.1102230246251565e-16,
+          "max_score_error": 8.881784197001252e-16,
+          "max_state_error": 8.326672684688674e-17,
+          "saves": 64,
+          "seconds": 100.98521590232849,
+          "trace_sha256": "2a9d383b39ef745b8ade2dc0a76839eac676d360857a95082a80486d73fe8743"
+        },
+        "rust-runtime/result.json": {
+          "batch_steps": 3072,
+          "checkpoints": 3072,
+          "compiler": "rustc 1.99.0 (b940084d7 2026-09-28)",
+          "complete": true,
+          "decisions": 12288,
+          "exact_actions_states_rng": true,
+          "identical_physical_worlds_and_rng": true,
+          "input_sha256": "da8351cd0d1ef2720c9548b7ada6d528d6f1b46d3c973b71d7fee96ea10bb2cd",
+          "max_numeric_absolute_error": 0.0,
+          "performance_measured": false,
+          "process_restarts": 24,
+          "protocol_requests": 15384,
+          "registration_sha256": "242efc7c70754093875400bac60538b93d51e9412f8b3b0fc04a74f85fcdb5e6",
+          "runs_sha256": "e77c8ffbd3408a09fce54c8b18ca57377969d1b28aff600ad159881249b31442",
+          "scope": "Runtime immediate integration equivalence. Four independent worlds per batch, not a multiplayer intelligence test.",
+          "trajectories": 96
+        }
+      }
+    }
+  },
+  "local": {
+    "cases": [
+      {
+        "case": {
+          "game": "auction",
+          "index": 0,
+          "profile": 0
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 2.220446049250313e-16,
+          "max_state_error": 8.326672684688674e-17,
+          "saves": 164,
+          "seconds": 395.1126790046692,
+          "trace_sha256": "80dabcc9d2c0befca5b90519a57acfd86b2191f25d6d3413a2a435b9051c201a"
+        }
+      },
+      {
+        "case": {
+          "game": "auction",
+          "index": 1,
+          "profile": 1
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 2.220446049250313e-16,
+          "max_state_error": 1.1102230246251565e-16,
+          "saves": 164,
+          "seconds": 139.2193262577057,
+          "trace_sha256": "df150fb40c91df4f64b57b7a7f34dd89bd42573e5058f6bd5a7accb68b019eea"
+        }
+      },
+      {
+        "case": {
+          "game": "auction",
+          "index": 2,
+          "profile": 2
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 1.1102230246251565e-16,
+          "max_score_error": 1.1102230246251565e-16,
+          "max_state_error": 1.1102230246251565e-16,
+          "saves": 164,
+          "seconds": 153.79884839057922,
+          "trace_sha256": "7e81c007ff73689a705a49b1122e0373812a93ad2e757621fbedfe5251a6b7fe"
+        }
+      },
+      {
+        "case": {
+          "game": "auction",
+          "index": 3,
+          "profile": 3
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 3.3306690738754696e-16,
+          "max_state_error": 8.326672684688674e-17,
+          "saves": 164,
+          "seconds": 377.0561308860779,
+          "trace_sha256": "9b9d22dbd2414c429f69c803455dcdc6f73bcc62e96c0f035aeaab54e2811694"
+        }
+      },
+      {
+        "case": {
+          "game": "resources",
+          "index": 4,
+          "profile": 0
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 8.881784197001252e-16,
+          "max_state_error": 8.326672684688674e-17,
+          "saves": 164,
+          "seconds": 135.85563826560974,
+          "trace_sha256": "d0f20f9272c175bd6c089c80f34afd1247f3b811938b766fadc83b130f899677"
+        }
+      },
+      {
+        "case": {
+          "game": "resources",
+          "index": 5,
+          "profile": 1
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 4.440892098500626e-16,
+          "max_state_error": 1.1102230246251565e-16,
+          "saves": 164,
+          "seconds": 133.1032783985138,
+          "trace_sha256": "21cd3f17ad4bca7120a0dec37a44027cc665ad0fc678beeb6ef9e74e6f496f87"
+        }
+      },
+      {
+        "case": {
+          "game": "resources",
+          "index": 6,
+          "profile": 2
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 1.1102230246251565e-16,
+          "max_score_error": 4.440892098500626e-16,
+          "max_state_error": 1.1102230246251565e-16,
+          "saves": 164,
+          "seconds": 134.0252239704132,
+          "trace_sha256": "719b02c07151393685e765909c3db4fa9ca291a79b6f66deccd9abc1e4d36116"
+        }
+      },
+      {
+        "case": {
+          "game": "resources",
+          "index": 7,
+          "profile": 3
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 4.440892098500626e-16,
+          "max_state_error": 8.326672684688674e-17,
+          "saves": 164,
+          "seconds": 135.37551927566528,
+          "trace_sha256": "b1522e0ad3a6461e00ba16958a6fb9f9fd8aa825f015fb247520e403f9f59cb1"
+        }
+      },
+      {
+        "case": {
+          "game": "combat",
+          "index": 8,
+          "profile": 0
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 5.551115123125783e-17,
+          "max_state_error": 8.326672684688674e-17,
+          "saves": 164,
+          "seconds": 80.39095258712769,
+          "trace_sha256": "de09315d5f8b1139093a4bcb5aaea3533686a933bcca62b1f13dedaadb8d1a64"
+        }
+      },
+      {
+        "case": {
+          "game": "combat",
+          "index": 9,
+          "profile": 1
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 2.220446049250313e-16,
+          "max_state_error": 1.1102230246251565e-16,
+          "saves": 164,
+          "seconds": 86.06561541557312,
+          "trace_sha256": "9f0c1e9406ce085aa32bb1ee3b208287a649650c388827b3abb390c1ecdd4499"
+        }
+      },
+      {
+        "case": {
+          "game": "combat",
+          "index": 10,
+          "profile": 2
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 1.1102230246251565e-16,
+          "max_score_error": 6.938893903907228e-18,
+          "max_state_error": 1.1102230246251565e-16,
+          "saves": 164,
+          "seconds": 89.52439665794373,
+          "trace_sha256": "47e4d61c7a3648199eb06b3a0f750dfe6762df724597dfe83a87d409d91527b2"
+        }
+      },
+      {
+        "case": {
+          "game": "combat",
+          "index": 11,
+          "profile": 3
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 5.551115123125783e-17,
+          "max_state_error": 8.326672684688674e-17,
+          "saves": 164,
+          "seconds": 90.18631672859192,
+          "trace_sha256": "155bb49e866efadd0951ab650bfffe5ad286a0c22a9f3a8e0abb639a6ab973d2"
+        }
+      },
+      {
+        "case": {
+          "game": "gambling",
+          "index": 12,
+          "profile": 0
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 4.440892098500626e-16,
+          "max_state_error": 8.326672684688674e-17,
+          "saves": 164,
+          "seconds": 148.0842034816742,
+          "trace_sha256": "7ea494392fa74b354d2ccdca4a0fff8807f6ed5986cba4e3255247f76341e8c2"
+        }
+      },
+      {
+        "case": {
+          "game": "gambling",
+          "index": 13,
+          "profile": 1
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 8.881784197001252e-16,
+          "max_state_error": 1.1102230246251565e-16,
+          "saves": 164,
+          "seconds": 134.826491355896,
+          "trace_sha256": "0360099cc60d470617ed60836bf2c803affee5dc01417a36d3a4c8d7091a8be3"
+        }
+      },
+      {
+        "case": {
+          "game": "gambling",
+          "index": 14,
+          "profile": 2
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 1.1102230246251565e-16,
+          "max_score_error": 6.661338147750939e-16,
+          "max_state_error": 1.1102230246251565e-16,
+          "saves": 164,
+          "seconds": 135.2584969997406,
+          "trace_sha256": "fb621610a0f029258aadace46955900c97228a8e94588f48abfbae925fc2f30a"
+        }
+      },
+      {
+        "case": {
+          "game": "gambling",
+          "index": 15,
+          "profile": 3
+        },
+        "returncode": 0,
+        "summary": {
+          "complete": true,
+          "decisions": 164,
+          "horizon_decisions": 1,
+          "max_prediction_error": 2.220446049250313e-16,
+          "max_score_error": 4.440892098500626e-16,
+          "max_state_error": 8.326672684688674e-17,
+          "saves": 164,
+          "seconds": 136.34877014160156,
+          "trace_sha256": "2b132e459179ac88e73237295e3a69252301731881d3c931ca0be0a33fe000ff"
+        }
+      }
+    ],
+    "complete": true,
+    "decisions": 2624,
+    "horizon_decisions": 16,
+    "max_prediction_error": 2.220446049250313e-16,
+    "max_score_error": 8.881784197001252e-16,
+    "max_state_error": 1.1102230246251565e-16,
+    "saves": 2624,
+    "seconds": 652.9426352977753
+  },
+  "local_process_restarts": 80,
+  "scope": "Factual-owner/selector translation fidelity. One Python H32 generator, independent Rust/Python selectors. Not independent quality trials or a native Rust search engine."
+}

@@ -94,12 +94,18 @@ cargo run --release --locked --manifest-path rust/Cargo.toml -p reflex-runtime -
 | 世界・本人の知覚・合法性・効果の見込み | ゲームの `World` 実装 |
 | 全員の観測・判断・実行照合・進行・保存 | `GameSession` / `Runtime` |
 | 固定人格・主義、動的欲求への即時判断 | `reflex-immediate` v1 |
-| 経験の検査・学習、感情/関係更新、長期評価・32手読み | Pythonで継続検証。今回のruntimeへ組み込んでいない |
+| 実経験・分節予測・欲求圧・目的進捗 | `reflex-owned` の対応済み公開条件付き構成 |
+| 学習する本人を含む世界の更新と保存 | `learning::LearningSession` |
+| 32手候補の生成 | Python `NativeOwnedBoundary`、現在のRust実経験から生成 |
+| 長期候補の人格評価と実行根への変換 | Rust `preview_continuation` |
+| 感情/関係更新、その他の実験経路 | Pythonに保持 |
 
-今回の統合は、実装済みの通常判断と世界のライフサイクルをつなぐこと。
-将来価値を即時効果に押し込んだり、学習したふりの記憶欄を増やしたりはしない。
-提供済みの相手予測は既存の `Observation.opponent` で受け取れるが、その予測器を移植したわけではない。
-未移植の機構が安定したら、同じ所有者・観測・実行結果・保存の境界へ接続して再検証する。
+既存の `GameSession` は即時判断の契約を維持する。学習とH32の接続には
+別の明示的な `learning::World` / `LearningSession` を用いる。
+その `observe` は所有者を読み、`forecast` は読み取り専用の現在の所有者と準備済み判断から
+完全な候補群を返し、`advance` は次の世界と各NPCの実行結果・実際のフィードバックを返す。
+全員分の結果検証が済むまで、世界も本人も置き換えない。
+対象と制限、保存形式、Python探索器との境界は [所有者API](../reflex-owned/README.md) を参照。
 
 ```sh
 cargo fmt --all --manifest-path rust/Cargo.toml -- --check

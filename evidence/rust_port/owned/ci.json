@@ -1,0 +1,676 @@
+{
+  "code_commit": "bb7082832ec9298aac802fd2c7a006f78358a46a",
+  "runs": [
+    {
+      "id": 40316637539,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40316637539",
+      "jobs": [
+        {
+          "id": 121550773330,
+          "name": "verify (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40316637539,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run rustup toolchain install 1.99.0 --profile minimal --component rustfmt --component clippy",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run python -m pip install -e . \"numpy==2.3.5\"",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run cargo fmt --all --manifest-path rust/Cargo.toml -- --check",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run cargo clippy --locked --manifest-path rust/Cargo.toml --all-targets -- -D warnings",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Run cargo test --locked --manifest-path rust/Cargo.toml",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run python tools/verify_rust_immediate.py --output results/rust-immediate",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Run python tools/verify_rust_runtime.py --output results/rust-runtime",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Run cargo build --locked --manifest-path rust/Cargo.toml -p reflex-owned --example owned_verify",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run python -m unittest tests.test_native_owned -v",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Run python tools/verify_rust_owned.py --output results/rust-owned-history --steps 160 --profiles 4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Run python tools/verify_rust_owned.py --output results/rust-owned-terminal --steps 4 --profiles 4 --horizon-steps 1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Run python tools/verify_rust_owned_prediction.py --output results/rust-owned-factors",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Run actions/upload-artifact@v7.0.2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            }
+          ]
+        },
+        {
+          "id": 121550773616,
+          "name": "verify (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40316637539,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run rustup toolchain install 1.99.0 --profile minimal --component rustfmt --component clippy",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run python -m pip install -e . \"numpy==2.3.5\"",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run cargo fmt --all --manifest-path rust/Cargo.toml -- --check",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run cargo clippy --locked --manifest-path rust/Cargo.toml --all-targets -- -D warnings",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Run cargo test --locked --manifest-path rust/Cargo.toml",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run python tools/verify_rust_immediate.py --output results/rust-immediate",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Run python tools/verify_rust_runtime.py --output results/rust-runtime",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Run cargo build --locked --manifest-path rust/Cargo.toml -p reflex-owned --example owned_verify",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run python -m unittest tests.test_native_owned -v",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Run python tools/verify_rust_owned.py --output results/rust-owned-history --steps 160 --profiles 4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Run python tools/verify_rust_owned.py --output results/rust-owned-terminal --steps 4 --profiles 4 --horizon-steps 1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Run python tools/verify_rust_owned_prediction.py --output results/rust-owned-factors",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Run actions/upload-artifact@v7.0.2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 40316637536,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40316637536",
+      "jobs": [
+        {
+          "id": 121550773281,
+          "name": "test (ubuntu-latest, 3.13)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40316637536,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run python -m pip install -e .",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run python -m unittest discover -s tests -v",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Build and install an isolated wheel",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Verify installed lifecycle without research imports",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 121550773472,
+          "name": "test (windows-latest, 3.12)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40316637536,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run python -m pip install -e .",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run python -m unittest discover -s tests -v",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Build and install an isolated wheel",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Verify installed lifecycle without research imports",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 121550773479,
+          "name": "test (windows-latest, 3.13)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40316637536,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run python -m pip install -e .",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run python -m unittest discover -s tests -v",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Build and install an isolated wheel",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Verify installed lifecycle without research imports",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 121550773582,
+          "name": "test (ubuntu-latest, 3.12)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40316637536,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run python -m pip install -e .",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run python -m unittest discover -s tests -v",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Build and install an isolated wheel",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Verify installed lifecycle without research imports",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/setup-python@v7.0.0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v7.0.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "python_logs": [
+    {
+      "id": 121550773281,
+      "tests": 1296,
+      "seconds": 717.584,
+      "skipped": 17,
+      "wheel": [
+        {
+          "controller": "receding",
+          "success": true,
+          "actual_steps": 4,
+          "restores": 4,
+          "process_restart_at": 2,
+          "world_and_rng_equal": true,
+          "owner_equal": true,
+          "all_decisions_equal": true,
+          "terminal_restored": true,
+          "no_research_imports": true
+        },
+        {
+          "controller": "fixed",
+          "success": true,
+          "actual_steps": 4,
+          "restores": 4,
+          "process_restart_at": 2,
+          "world_and_rng_equal": true,
+          "owner_equal": true,
+          "all_decisions_equal": true,
+          "terminal_restored": true,
+          "no_research_imports": true
+        }
+      ]
+    },
+    {
+      "id": 121550773472,
+      "tests": 1296,
+      "seconds": 1214.989,
+      "skipped": 19,
+      "wheel": [
+        {
+          "controller": "receding",
+          "success": true,
+          "actual_steps": 4,
+          "restores": 4,
+          "process_restart_at": 2,
+          "world_and_rng_equal": true,
+          "owner_equal": true,
+          "all_decisions_equal": true,
+          "terminal_restored": true,
+          "no_research_imports": true
+        },
+        {
+          "controller": "fixed",
+          "success": true,
+          "actual_steps": 4,
+          "restores": 4,
+          "process_restart_at": 2,
+          "world_and_rng_equal": true,
+          "owner_equal": true,
+          "all_decisions_equal": true,
+          "terminal_restored": true,
+          "no_research_imports": true
+        }
+      ]
+    },
+    {
+      "id": 121550773479,
+      "tests": 1296,
+      "seconds": 1603.381,
+      "skipped": 19,
+      "wheel": [
+        {
+          "controller": "receding",
+          "success": true,
+          "actual_steps": 4,
+          "restores": 4,
+          "process_restart_at": 2,
+          "world_and_rng_equal": true,
+          "owner_equal": true,
+          "all_decisions_equal": true,
+          "terminal_restored": true,
+          "no_research_imports": true
+        },
+        {
+          "controller": "fixed",
+          "success": true,
+          "actual_steps": 4,
+          "restores": 4,
+          "process_restart_at": 2,
+          "world_and_rng_equal": true,
+          "owner_equal": true,
+          "all_decisions_equal": true,
+          "terminal_restored": true,
+          "no_research_imports": true
+        }
+      ]
+    },
+    {
+      "id": 121550773582,
+      "tests": 1296,
+      "seconds": 997.166,
+      "skipped": 17,
+      "wheel": [
+        {
+          "controller": "receding",
+          "success": true,
+          "actual_steps": 4,
+          "restores": 4,
+          "process_restart_at": 2,
+          "world_and_rng_equal": true,
+          "owner_equal": true,
+          "all_decisions_equal": true,
+          "terminal_restored": true,
+          "no_research_imports": true
+        },
+        {
+          "controller": "fixed",
+          "success": true,
+          "actual_steps": 4,
+          "restores": 4,
+          "process_restart_at": 2,
+          "world_and_rng_equal": true,
+          "owner_equal": true,
+          "all_decisions_equal": true,
+          "terminal_restored": true,
+          "no_research_imports": true
+        }
+      ]
+    }
+  ],
+  "scope": "Final documentation/evidence commit does not alter runtime, test, build, or workflow sources."
+}

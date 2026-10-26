@@ -3,6 +3,7 @@
 //! before changing any actor. World execution and durable writes remain host-owned.
 #![forbid(unsafe_code)]
 mod host;
+pub mod learning;
 mod snapshot;
 pub use host::{Choice, GameSession, World};
 use immediate::{Agent, Config, Decision, Observation, Prepared};

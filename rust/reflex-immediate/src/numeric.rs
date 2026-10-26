@@ -1,4 +1,4 @@
-//! Translation of the unframed, non-social Policy.decide path in reflex/core.py.
+//! Translation of non-social Policy.decide, with optional owned return units.
 //! Reduction order matches NumPy's two-lane, non-FMA f64 einsum kernel.
 //! Supported parity targets: the tested x86-64 Windows/Linux reference builds.
 use crate::{
@@ -59,6 +59,19 @@ pub(crate) fn choose(
     state: &State,
     o: &Observation,
     stochastic: bool,
+) -> Result<Decision> {
+    choose_framed(c, state, o, stochastic, None)
+}
+
+pub(crate) fn choose_framed(
+    c: &Config,
+    state: &State,
+    o: &Observation,
+    stochastic: bool,
+    frame: Option<(
+        &crate::ReturnUnits,
+        &std::collections::BTreeMap<String, [f64; 22]>,
+    )>,
 ) -> Result<Decision> {
     let hash = Sha256::digest(serde_json::to_vec(&(c.seed, &c.scope))?);
     let mut seed = [0_u8; 8];
@@ -166,12 +179,9 @@ pub(crate) fn choose(
         let mut outcomes = Vec::with_capacity(action.outcomes.len());
         for e in &action.outcomes {
             let mut perceived = [0.0; 22];
-            for (d, v) in e.effects().iter().enumerate() {
-                perceived[d] = if d < 21 && *v > 0. {
-                    v * confidence
-                } else {
-                    *v
-                };
+            for (d, raw) in e.effects().iter().enumerate() {
+                let v = *raw * frame.map_or(1., |(units, _)| units.effects[d]);
+                perceived[d] = if d < 21 && v > 0. { v * confidence } else { v };
                 means[d] += e.p * perceived[d];
             }
             probabilities.push(e.p);
@@ -181,15 +191,24 @@ pub(crate) fn choose(
         // maximum. Zero padding still affects the floating reduction tree.
         probabilities.resize(outcome_capacity, 0.);
         outcomes.resize(outcome_capacity, 0.);
-        let expected = dot(&probabilities, &outcomes);
+        let mut expected = dot(&probabilities, &outcomes);
+        if let Some((_, corrections)) = frame {
+            if let Some(correction) = corrections.get(&action.id) {
+                for (m, delta) in means.iter_mut().zip(correction) {
+                    *m += delta;
+                }
+                expected += dot(correction, &w);
+            }
+        }
         let losses: Vec<f64> = outcomes.iter().map(|x| (-x).max(0.)).collect();
         let loss = dot(&probabilities, &losses);
-        let familiar = 0.10 * (1. - confidence) * action.familiarity;
-        let switch = if intent != Some(j) {
+        let root_scale = frame.map_or(1., |(units, _)| units.root_terms);
+        let familiar = (0.10 * (1. - confidence) * action.familiarity) * root_scale;
+        let switch = (if intent != Some(j) {
             action.switch_cost
         } else {
             0.
-        };
+        }) * root_scale;
         top_effect[j] = means[6 + top];
         features[j] = [
             means[0],

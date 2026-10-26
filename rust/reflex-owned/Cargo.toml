@@ -1,0 +1,12 @@
+[package]
+name = "reflex-owned"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.99"
+publish = false
+
+[dependencies]
+reflex-immediate = { path = "../reflex-immediate" }
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = { version = "=1.0.151", features = ["float_roundtrip"] }
+sha2 = "=0.10.9"
