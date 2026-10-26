@@ -14,7 +14,7 @@ Pythonの採用構成は `reflex.fixed_horizon.FixedHorizonOwner`。人格・実
 
 接続前の急所は [長期NPCの比較](evidence/long_lived/REPORT.md)、能力・資源・途中参戦は [非対称性の検証](evidence/asymmetry/REPORT.md) を参照。新しい任意構成を、全ゲームの標準や完成した汎用知能とは扱わない。
 
-実験・比較と長期判断の改善はPythonを維持する。Rustには既存の `reflex-immediate` / `GameSession` に加え、実経験・分節予測・欲求圧・目的進捗を持つ `reflex-owned` と `LearningSession` を接続している。人格による長期候補の選択もRustで行う。32手の候補生成はPythonに残し、Rustの現在の学習履歴から生成する構成であり、完全なRust単独版ではない。[対応構成と所有者API](rust/reflex-owned/README.md)、[移植する境界](docs/RUST_BOUNDARY.md)、[統合API](rust/reflex-runtime/README.md)、[既存の即時判断の採否](evidence/rust_port/immediate/REPORT.md)。
+実験・比較と長期判断の改善はPythonを維持する。Rustには既存の `reflex-immediate` / `GameSession` に加え、実経験・分節予測・欲求圧・目的進捗を持つ `reflex-owned` と `LearningSession` を接続している。人格による長期候補の選択もRustで行う。32手の候補生成はPythonに残し、Rustの現在の学習履歴から生成する構成であり、完全なRust単独版ではない。[判断・学習・保存の一致検証](evidence/rust_port/owned/REPORT.md)、[対応構成と所有者API](rust/reflex-owned/README.md)、[移植する境界](docs/RUST_BOUNDARY.md)、[統合API](rust/reflex-runtime/README.md)、[既存の即時判断の採否](evidence/rust_port/immediate/REPORT.md)。
 
 過去の方式の比較・不採用理由は [開発方針の根拠](docs/PROJECT_DIRECTION.md#主要な根拠と接続契約) と各 evidence の報告を参照。既往の実行結果は保存し、この入口には履歴の要約を積み重ねない。
 

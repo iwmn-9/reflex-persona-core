@@ -12,6 +12,10 @@ gate, default `NeedPressure`/`ProgressWatch`, default 64-entry outcome/evidence
 memories, no social or route overrides, and no certified-exact masks. Bindings
 explicitly identify which outcome features may be learned. Other Python
 `DecisionLoop` configurations are not silently interpreted as this profile.
+The owner accepts 1..8 legal public responses, at most 4 declared factors and
+16 library models, and a 2..512-event history window. Bounded identifiers in the
+learning schema use at most 128 Unicode characters. Continuation packets may
+contain up to 256 modeled outcomes per candidate. These are explicit API limits.
 
 ## One execution unit
 
@@ -84,3 +88,6 @@ two independently implemented search engines. Discrete choices/state must match;
 numerical forecast/diagnostic differences are bounded at `2e-12`. Native saves
 must resume bit-exactly. This gate is separate from the original Python 40-pair
 quality study and never changes its criteria or results.
+
+The completed comparison and its exact scope are recorded in
+[the integration report](../../evidence/rust_port/owned/REPORT.md).
