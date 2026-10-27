@@ -30,7 +30,7 @@ def execute(gh, *args):
     raise RuntimeError('GitHub operation failed: '+p.stderr[-1800:])
 
 
-def finish(root,run,ref,gh,max_segments):
+def finish(root,run,ref,gh,max_segments,dispatch_ref):
     root=Path(root).resolve();root.mkdir(parents=True,exist_ok=True)
     plan_path=ROOT/'evidence/long_horizon/adverse_recovery/plan.json'
     plan=json.loads(plan_path.read_bytes());registration=json.loads((plan_path.parent/'registration.json').read_bytes())
@@ -47,6 +47,10 @@ def finish(root,run,ref,gh,max_segments):
         temp=state_path.with_suffix('.new');temp.write_bytes(encoded(state));temp.replace(state_path)
     save()
     repo='iwmn-9/reflex-persona-core';prefix=f'repos/{repo}'
+    # workflow_dispatch documents a branch/tag ref, not a raw commit id.
+    pinned=json.loads(execute(gh,'api',f'{prefix}/git/ref/tags/{dispatch_ref}'))
+    assert pinned['object']['type']=='commit' and pinned['object']['sha']==ref,'dispatch tag moved from frozen source'
+    save(dispatch_ref=dispatch_ref)
     wanted={f"adverse-{s['id']}-{arm}" for s in plan['specs'] for arm in plan['arms']}
     deadline=time.monotonic()+max_segments*7*3600
     try:
@@ -96,7 +100,7 @@ def finish(root,run,ref,gh,max_segments):
             if not prior:
                 save(dispatch_pending=current)
                 try:
-                    execute(gh,'workflow','run','adverse-recovery.yml','--repo',repo,'--ref',ref,'-f',f'previous_run={current}')
+                    execute(gh,'workflow','run','adverse-recovery.yml','--repo',repo,'--ref',dispatch_ref,'-f',f'previous_run={current}')
                 except RuntimeError as error:
                     save(dispatch_error=repr(error))
             candidates=[]
@@ -118,6 +122,7 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--root',required=True)
     p.add_argument('--run',type=int,required=True);p.add_argument('--ref',required=True)
     p.add_argument('--gh',default='gh');p.add_argument('--max-segments',type=int,default=4)
+    p.add_argument('--dispatch-ref',default='research/adverse-recovery-20261027')
     a=p.parse_args()
     if not 1<=a.max_segments<=4:raise ValueError('one to four finite execution segments required')
-    finish(a.root,a.run,a.ref,a.gh,a.max_segments)
+    finish(a.root,a.run,a.ref,a.gh,a.max_segments,a.dispatch_ref)

@@ -52,3 +52,20 @@ Lower is better. Dropping the supplied hypotheses helps the wholly unrepresented
 Frozen computation source: `9e1a467cab6fb2ea142ba216f0423cd187d0b808`. [Initial twenty-arm run](https://github.com/iwmn-9/reflex-persona-core/actions/runs/40506293826). Both arms are fresh, with identical pinned Python 3.12.14 / NumPy 2.3.5 runtime contracts. The local finite collector stores status, original downloaded artifacts and a complete-pairs-only summary in `results/adverse_recovery_20261027/`. It may resume the same worlds for at most four workflow segments, then exits; it never starts an independent study or adopts a controller.
 
 The collector was hardened after dispatch: a dispatch with unknown outcome is not retried, and uncollected progress is null rather than an asserted zero. These are operational-only repairs. The registered worker source and its registration remain fixed at the commit above; do not rebuild or substitute it from the changing checkout. Current source verification must be run against that frozen checkout. Real failures stop continuation for diagnosis. Stable main, v0.1.0, its wheel and Rust remain untouched.
+
+## Completed known-root sampling diagnosis
+
+`forecast_probe/` holds 24 complete forecasts: four original public states with their exactly replayed factual owners, two samplers, and three declared model seed banks. They are a separate post-hoc mechanism check, never replacement world runs or an adoption gate.
+
+| Known root | Stable choices over three banks | Stratified choices over three banks |
+| --- | --- | --- |
+| Auction steady, turn 63 | bid 1 once, bid 3 twice | bid 3 three times |
+| Auction steady, turn 87 | bid 2 once, bid 3 twice | bid 2 twice, bid 3 once |
+| Combat steady, turn 65 | guard twice, strike 2 once | guard twice, strike 2 once |
+| Combat care, turn 32 | strike 0 three times | strike 0 three times |
+
+At turn 32 every tested bank/sampler retains the choice made immediately before the unseen change is observed. Sampling alone does not remove that local model-information limit. At other roots action rankings can move. Agreement across banks is not proof of a correct choice; the stationary-belief reference also omits future changing beliefs and personality. No favorable bank is substituted into the long study.
+
+The frozen research source passed the four Windows/Linux × Python 3.12/3.13 CI jobs ([run](https://github.com/iwmn-9/reflex-persona-core/actions/runs/40506293216)) and both Rust parity CI jobs ([run](https://github.com/iwmn-9/reflex-persona-core/actions/runs/40506293381)). Local collection-safety tests also passed. The two duplicate CI runs triggered by creating a source-pinning tag were cancelled deliberately; the study itself was not cancelled.
+
+The immutable compute ref is also available as `research/adverse-recovery-20261027`. The collector uses that tag for `workflow_dispatch` and verifies its commit against the frozen SHA. This follows the documented branch/tag requirement and leaves stable `v0.1.0` unchanged.
