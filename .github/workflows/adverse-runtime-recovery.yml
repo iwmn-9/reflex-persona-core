@@ -1,0 +1,49 @@
+name: Exact adverse runtime recovery
+on:
+  push:
+    branches: [research/adverse-recovery]
+    paths: [.github/workflows/adverse-runtime-recovery.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arm: stable
+            checkpoint: dba72134f2a5e7b97bf8f951bb02d187979dde2787464dc10c02a99ba1ac2159
+          - arm: stratified
+            checkpoint: e0eb830f61e8d864adde8933afea011d943c8fb6c2c400ac4c219a8ee3e09a49
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          path: control
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: 9e1a467cab6fb2ea142ba216f0423cd187d0b808
+          path: worker
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12.14'
+      - run: python -m pip install -e worker numpy==2.3.5
+      - name: Retrieve original audited prefix
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARM: ${{ matrix.arm }}
+        run: gh run download 40506293826 --repo iwmn-9/reflex-persona-core --name "adverse-combat-2-10061202-shift-return-$ARM" --dir results/recovered
+      - name: Require exact arithmetic replay before original worker resumes
+        env:
+          ARM: ${{ matrix.arm }}
+          SHA: ${{ matrix.checkpoint }}
+        run: python -u control/tools/recover_adverse_runtime.py --source worker --directory results/recovered --case combat-2-10061202-shift-return --arm "$ARM" --expected-sha "$SHA" --resume
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() }}
+        with:
+          name: recovered-combat-2-10061202-shift-return-${{ matrix.arm }}
+          path: results/recovered
+          retention-days: 30
