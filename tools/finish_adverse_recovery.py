@@ -30,7 +30,7 @@ def execute(gh, *args):
     raise RuntimeError('GitHub operation failed: '+p.stderr[-1800:])
 
 
-def finish(root,run,ref,gh,max_segments,dispatch_ref,plan='evidence/long_horizon/adverse_recovery/plan.json',workflow='adverse-recovery.yml',run_title='Adverse recovery'):
+def finish(root,run,ref,gh,max_segments,dispatch_ref,plan='evidence/long_horizon/adverse_recovery/plan.json',workflow='adverse-recovery.yml',run_title='Adverse recovery',archive_results=False):
     root=Path(root).resolve();root.mkdir(parents=True,exist_ok=True)
     plan_path=ROOT/plan
     plan=json.loads(plan_path.read_bytes());registration=json.loads((plan_path.parent/'registration.json').read_bytes())
@@ -41,7 +41,8 @@ def finish(root,run,ref,gh,max_segments,dispatch_ref,plan='evidence/long_horizon
         study_plan_sha256=registration['plan_sha256'],phase='collecting',pid=__import__('os').getpid())
     assert state['initial_run']==run and state['source_ref']==ref and state['study_plan_sha256']==registration['plan_sha256']
     assert state.get('workflow',workflow)==workflow and state.get('run_title',run_title)==run_title
-    state.update(workflow=workflow,run_title=run_title,plan_path=str(plan_path))
+    assert state.get('archive_results',archive_results)==archive_results
+    state.update(workflow=workflow,run_title=run_title,plan_path=str(plan_path),archive_results=archive_results)
     state['pid']=__import__('os').getpid()
     state['collector_sha256']=sha(Path(__file__).read_bytes())
     def save(**values):
@@ -94,7 +95,14 @@ def finish(root,run,ref,gh,max_segments,dispatch_ref,plan='evidence/long_horizon
                 from tools.analyze_adverse_results import analyze
                 save(phase='complete_pair_accounting')
                 (root/'outcome_review.json').write_bytes(encoded(analyze(root/'latest',plan)))
-                save(complete=True,phase='complete_needs_review',development_gate_passed=report['development_gate_passed'])
+                if archive_results:
+                    # Full audit belongs to this finite study, even when the
+                    # interactive chat is no longer running. Never promote or
+                    # launch the held-out cohort from a numeric gate alone.
+                    from tools.archive_adverse_study import archive
+                    save(phase='auditing_complete_evidence')
+                    archive(root,plan_path,ref,root/'complete_audit')
+                save(complete=True,phase='complete_audited_needs_review' if archive_results else 'complete_needs_review',development_gate_passed=report['development_gate_passed'])
                 print(json.dumps(dict(complete=True,summary=str(root/'summary.json'),development_gate_passed=report['development_gate_passed'])),flush=True)
                 return
             assert all(p['state'] in ('complete','handoff_pending') for p in report['progress']),'failed worker is not a handoff'
@@ -130,6 +138,7 @@ if __name__=='__main__':
     p.add_argument('--dispatch-ref',default='research/adverse-recovery-20261027')
     p.add_argument('--plan',default='evidence/long_horizon/adverse_recovery/plan.json')
     p.add_argument('--workflow',default='adverse-recovery.yml');p.add_argument('--run-title',default='Adverse recovery')
+    p.add_argument('--archive-results',action='store_true',help='Fully audit and seal the finished study before stopping for review; no automatic adoption')
     a=p.parse_args()
     if not 1<=a.max_segments<=4:raise ValueError('one to four finite execution segments required')
-    finish(a.root,a.run,a.ref,a.gh,a.max_segments,a.dispatch_ref,a.plan,a.workflow,a.run_title)
+    finish(a.root,a.run,a.ref,a.gh,a.max_segments,a.dispatch_ref,a.plan,a.workflow,a.run_title,a.archive_results)

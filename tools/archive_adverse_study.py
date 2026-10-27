@@ -57,18 +57,21 @@ def archive(root,plan_path,source_ref,output):
             assert r['final_rng']==p['rng'] and status['checkpoint_sha256']==sha(files['checkpoint.json'])
             assert len(trace)==spec['turns']==r['replayed_actual_steps']==status['actual_steps']
             g=game_for(spec);w=g.start();rng=np.random.default_rng(spec['seed']);axes=character_key(g.context(w))
-            prior=None;conditional=0.
+            prior=None;increments=[]
             for t in trace:
                 assert t['before']==w and t['tick']==w['tick']
                 if prior is not None:assert t['before_owner']==prior
                 truth=law(w['tick'],spec['turns'],spec['regime']);assert truth==t['truth']
                 response=sample(truth,rng.random());assert response==t['response']
                 increment=sum(prob*(g.goal(g.transition(w,t['action'],z)[0]).value-g.goal(w).value) for z,prob in truth.items())
-                assert increment==t['conditional_increment'];conditional+=increment
+                assert increment==t['conditional_increment'];increments.append(increment)
                 w,_=g.transition(w,t['action'],response);assert w==t['after']
                 assert character_key(g.context(w))==axes;prior=t['owner']
             assert g.terminal(w) and w==r['final'] and prior==r['final_owner']
-            assert rng.bit_generator.state==p['rng'] and conditional==r['conditional_increment']
+            # Preserve the frozen worker's built-in sum reduction. Sequential
+            # += has different float rounding on Python 3.12; no tolerance or
+            # change to any recorded increment is needed.
+            assert rng.bit_generator.state==p['rng'] and sum(increments)==r['conditional_increment']
             assert r['score']==g.goal(w).value and p['owner']['last_tick']+1==len(trace)
             rows.append(dict(spec=spec,arm=arm,result=r))
             audits.append(dict(id=spec['id'],arm=arm,steps=len(trace),hashes={n:sha(b) for n,b in files.items()},
