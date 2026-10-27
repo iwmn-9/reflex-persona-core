@@ -1,7 +1,7 @@
 {
   "version": "stable-delivery-audit-v1",
-  "at": "2026-10-27T10:41:28.503148+00:00",
-  "complete": false,
+  "at": "2026-10-27T11:08:10.055847+00:00",
+  "complete": true,
   "scope": "Close the agreed stable-release schedule, documentation and consumer handoff. Existing long-run evidence is integrity-checked, not rerun or counted as new quality trials.",
   "repository_base_commit": "4a55533def0688d369ecd17ac28ac4cebd4e837e",
   "runtime_changed": false,
@@ -149,11 +149,11 @@
     "supported_environments": "Windows/Linux x Python 3.12/3.13",
     "new_example_environment": "Windows x Python 3.12.14, NumPy 2.3.5",
     "rust_parity": "evidence/rust_port/owned/REPORT.md",
-    "latest_python_ci": 40317582467,
+    "latest_python_ci": 40490466821,
     "latest_rust_ci": 40317582417,
     "latest_runtime_ci_status": "success",
-    "full_regression_rerun_this_review": false,
-    "additional_ci_status": "pending publication",
+    "full_regression_rerun_this_review": true,
+    "additional_ci_status": "success",
     "reason": "New consumer example executed against the redownloaded published wheel. Add it to the existing four-environment CI to keep the documented save/resume path checked."
   },
   "verified_reference_sha256": {
@@ -191,19 +191,210 @@
     "tools/verify_stable_host.py": "2a48925798fc25c0e0f408205bf5fe7d81d9128f1ed93a4ef1d76f7aba260079"
   },
   "current_document_sha256": {
-    "evidence/stable_release/plan.json": "224c297f91aebc60a2fdecf446157ca1ebe292e08368ce7a9c9df4c4bb24ce6e",
+    "evidence/stable_release/plan.json": "2c83838711b861e23b78b630f30cfd798cabd3979283b0ba424b0266bf3626ca",
     "docs/STABLE_INTEGRATION.md": "bfae8b7e1e30eedd5f02b614a44fee74e861338f8d09f24c4724c9be160b6adb",
     "docs/OWNED_VALUE.md": "6cc7b228bf9943cde962726b3e66afb1d1108042ece203f63e9c74a66a416ec8",
     "README.md": "cb52cb62152a81cf8544a9da80f6051217c913180847f45631157b0defda470c",
-    "evidence/stable_release/RELEASE.md": "d273a741cd534493017edda9339704e32a36dd8e12c5fa247d190afe46094871",
+    "evidence/stable_release/RELEASE.md": "f99c97073b1aeb8a1edcabd5ce1a29931e3c1b81b2df9156d10a01eeb59c544c",
     "evidence/long_horizon/selected_root_continuations/STATUS.md": "c11ea04f7da561fc70a8f1b48c70c0d3c829e86f6f973541d7f18ca4a2502f89",
     ".github/workflows/test.yml": "ef13ad9aeeeb0481132c1f499178d0d104522ac55f272366a0b7408e733e3997"
   },
-  "documented_host_ci": null,
+  "documented_host_ci": {
+    "conclusion": "success",
+    "databaseId": 40490466821,
+    "headSha": "eb0c3360e24e90bb17c4ac90c388704ddd61751f",
+    "jobs": [
+      {
+        "completedAt": "2026-10-27T11:07:22Z",
+        "conclusion": "success",
+        "databaseId": 122142829262,
+        "name": "test (windows-latest, 3.13)",
+        "startedAt": "2026-10-27T10:41:49Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-27T11:06:49Z",
+            "conclusion": "success",
+            "name": "Run python -m unittest discover -s tests -v",
+            "number": 5,
+            "startedAt": "2026-10-27T10:42:21Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T11:06:56Z",
+            "conclusion": "success",
+            "name": "Build and install an isolated wheel",
+            "number": 6,
+            "startedAt": "2026-10-27T11:06:49Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T11:07:04Z",
+            "conclusion": "success",
+            "name": "Verify installed lifecycle without research imports",
+            "number": 7,
+            "startedAt": "2026-10-27T11:06:56Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T11:07:18Z",
+            "conclusion": "success",
+            "name": "Verify the standalone documented host and fresh-process resume",
+            "number": 8,
+            "startedAt": "2026-10-27T11:07:04Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40490466821/job/122142829262",
+        "unit_test_targets": 1296,
+        "existing_skips": 19
+      },
+      {
+        "completedAt": "2026-10-27T11:02:13Z",
+        "conclusion": "success",
+        "databaseId": 122142829500,
+        "name": "test (windows-latest, 3.12)",
+        "startedAt": "2026-10-27T10:41:49Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-27T11:01:45Z",
+            "conclusion": "success",
+            "name": "Run python -m unittest discover -s tests -v",
+            "number": 5,
+            "startedAt": "2026-10-27T10:42:24Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T11:01:52Z",
+            "conclusion": "success",
+            "name": "Build and install an isolated wheel",
+            "number": 6,
+            "startedAt": "2026-10-27T11:01:45Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T11:01:58Z",
+            "conclusion": "success",
+            "name": "Verify installed lifecycle without research imports",
+            "number": 7,
+            "startedAt": "2026-10-27T11:01:52Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T11:02:09Z",
+            "conclusion": "success",
+            "name": "Verify the standalone documented host and fresh-process resume",
+            "number": 8,
+            "startedAt": "2026-10-27T11:01:58Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40490466821/job/122142829500",
+        "unit_test_targets": 1296,
+        "existing_skips": 19
+      },
+      {
+        "completedAt": "2026-10-27T10:54:50Z",
+        "conclusion": "success",
+        "databaseId": 122142829674,
+        "name": "test (ubuntu-latest, 3.12)",
+        "startedAt": "2026-10-27T10:41:48Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-27T10:54:35Z",
+            "conclusion": "success",
+            "name": "Run python -m unittest discover -s tests -v",
+            "number": 5,
+            "startedAt": "2026-10-27T10:42:04Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T10:54:37Z",
+            "conclusion": "success",
+            "name": "Build and install an isolated wheel",
+            "number": 6,
+            "startedAt": "2026-10-27T10:54:35Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T10:54:41Z",
+            "conclusion": "success",
+            "name": "Verify installed lifecycle without research imports",
+            "number": 7,
+            "startedAt": "2026-10-27T10:54:37Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T10:54:48Z",
+            "conclusion": "success",
+            "name": "Verify the standalone documented host and fresh-process resume",
+            "number": 8,
+            "startedAt": "2026-10-27T10:54:41Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40490466821/job/122142829674",
+        "unit_test_targets": 1296,
+        "existing_skips": 17
+      },
+      {
+        "completedAt": "2026-10-27T11:05:32Z",
+        "conclusion": "success",
+        "databaseId": 122142829900,
+        "name": "test (ubuntu-latest, 3.13)",
+        "startedAt": "2026-10-27T10:41:48Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-27T11:05:06Z",
+            "conclusion": "success",
+            "name": "Run python -m unittest discover -s tests -v",
+            "number": 5,
+            "startedAt": "2026-10-27T10:42:07Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T11:05:10Z",
+            "conclusion": "success",
+            "name": "Build and install an isolated wheel",
+            "number": 6,
+            "startedAt": "2026-10-27T11:05:06Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T11:05:17Z",
+            "conclusion": "success",
+            "name": "Verify installed lifecycle without research imports",
+            "number": 7,
+            "startedAt": "2026-10-27T11:05:10Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-27T11:05:31Z",
+            "conclusion": "success",
+            "name": "Verify the standalone documented host and fresh-process resume",
+            "number": 8,
+            "startedAt": "2026-10-27T11:05:17Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40490466821/job/122142829900",
+        "unit_test_targets": 1296,
+        "existing_skips": 17
+      }
+    ],
+    "startedAt": "2026-10-27T10:41:46Z",
+    "status": "completed",
+    "updatedAt": "2026-10-27T11:07:22Z",
+    "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/40490466821",
+    "raw_response_sha256": "5cb9c415cc3ddaabbf36298f3f058be7e2e5354008811f3949784ca370ea57c7",
+    "log_sha256": "bc872e2c66be0f36a309be460c6ffc41bb59f99caa596f5a46e011790b858866",
+    "package_scope": "Wheel built from this main commit; published v0.1.0 wheel is independently verified locally."
+  },
   "remaining_release_blockers": [],
-  "remaining_delivery_checks": [
-    "Complete the newly added documented-host CI check on Windows/Linux x Python 3.12/3.13."
-  ],
+  "remaining_delivery_checks": [],
   "gained": [
     "Standalone consumer entry with game responsibilities and failure/recovery semantics.",
     "Actual published-wheel verification of fresh-process learning and save restoration.",

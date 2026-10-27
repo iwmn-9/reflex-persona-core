@@ -29,3 +29,5 @@
 v0.1.0の最終CIが検査したcommitは `85b6a73cfc59e0f448d2ed3c607c0f7908695317`。タグの最終記録では証拠・文書だけを追加し、配布に入るソース、README、メタデータ、テストはこのcommitと同じものを用いた。公開済みタグ・配布物は維持し、後続のmainの文書・Rust統合とは区別する。[リリース照合記録](release_verification.json)。
 
 2026-10-27に[日程の全通過条件](plan.json)を照合し、導入ガイド・ホスト例と古い引き継ぎ情報を整理した。公開wheelを再取得し、169個のruntimeファイルと既存の監査資料のハッシュを照合。新しいホスト例はWindows/Python 3.12で途中再開・終局再開を実行し、連続実行と完全一致した。長期品質試験の再実行や新しい採用ではない。[確認記録](delivery_audit.json)。追加5分岐も[完了・解釈済み](../long_horizon/selected_root_continuations/STATUS.md)であり、登録時の文書は凍結した証拠として維持する。
+
+同日の[追加CI](https://github.com/iwmn-9/reflex-persona-core/actions/runs/40490466821)では、mainの `eb0c3360e24e90bb17c4ac90c388704ddd61751f` から配布物を生成。Windows/Linux × Python 3.12/3.13の全4環境で、各1,296件の検査対象、従来の配布物検査、新しいホスト例の途中・終局再開が成功した。Linuxは1,279成功・既存17スキップ、Windowsは1,277成功・既存19スキップ。スキップ条件や判定基準は変えていない。これは後続mainの接続確認であり、v0.1.0の公開wheelを更新するものではない。
