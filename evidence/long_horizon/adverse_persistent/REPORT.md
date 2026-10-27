@@ -12,4 +12,4 @@ Python 3.12.14 and NumPy 2.3.5 run on Ubuntu 24.04 with a declared NumPy/OpenBLA
 
 The new persistent arm passed a full-versus-resumed three-step actual-owner/RNG test. Existing sampling, incomplete-result, wrong-arm/registration, collection and shared-default tests also passed (eight focused tests in total). An initial test invocation misspelled the shared-test module name; it was rerun with the correct name. These tests establish execution integrity, not game quality.
 
-Current status: registered development candidate; long-play outcome is pending. No improvement or adoption is claimed.
+Current status: registered development candidate running in workflow `40585962995` at frozen commit `ef47456750d5d5c78327c8ddbb9f335910784e17` / tag `research/adverse-persistent-20261028`. The finite collector is recorded in `results/adverse_persistent_20261028/state.json`; it resumes only these registered worlds and stops for review. Long-play outcome is pending. No improvement or adoption is claimed.
