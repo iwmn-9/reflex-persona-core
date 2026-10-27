@@ -89,6 +89,9 @@ def finish(root,run,ref,gh,max_segments,dispatch_ref):
             expected=list(wanted)
             assert all(name in state['collected'] for name in expected),'missing worker artifacts'
             if report['complete']:
+                from tools.analyze_adverse_results import analyze
+                save(phase='complete_pair_accounting')
+                (root/'outcome_review.json').write_bytes(encoded(analyze(root/'latest',plan)))
                 save(complete=True,phase='complete_needs_review',development_gate_passed=report['development_gate_passed'])
                 print(json.dumps(dict(complete=True,summary=str(root/'summary.json'),development_gate_passed=report['development_gate_passed'])),flush=True)
                 return
