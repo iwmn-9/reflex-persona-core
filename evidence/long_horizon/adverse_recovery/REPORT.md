@@ -116,3 +116,20 @@ The next long-play comparison uses the existing persistent option with independe
 Two missing combat-care forecasts were subsequently recovered on Windows against the exact archived computation bytes, retaining their original root owner. Both persistent samplers still chose strike 0 at turn 32. This brings the root diagnosis to 16/20 forecasts; the four gambling forecasts remain queued for exact-prefix recovery on Linux (`40587101557`). `first_attempt_status.json` preserves the initial failure separately.
 
 The gambling trace confirms that the first six actual observations are `[2,0,0,2,2,0]`: three occurrences of each leading alternative. At the first differing choice, the candidate's selected bet has the greater immediate expected gain under the actor's own observed-history prediction. The evaluator knows the true response-2 probability is 0.8, but the actor does not. This supports treating information/sampling effects separately from a proven preparation or personality defect. It does not remove the negative conditional difference or relax the gate. The exact short trace is in `gambling_first_divergence.json`.
+
+All nine failed continuation jobs were inspected through their authenticated logs. Every failure occurred at the same exact factual-owner replay assertion. Seven already had complete original results, which were retained; the other two are the recovered combat executions above. `runtime_recovery/failed_job_audit.json` identifies all nine jobs. A failed continuation workflow is not relabeled successful; its operational failures and the validity/completeness of retained data are audited separately.
+
+## Continuation-model tradeoff, measured before long-play completion
+
+`continuation_likelihood/` evaluates both existing world models on the sixteen retained prediction-diagnostic streams. Every stream has seven fixed 32-observation windows, giving 112 roots and 3,584 predictions per model. No stream, learner, personality or decision gate was changed. Scores are chain-rule conditional predictions of each actual future prefix, not unconditional horizon marginals. The windows overlap and are not independent trials. Summed prediction scores were also checked against 224 marginal-evidence ratios (largest numeric residual 7.82e-14).
+
+| Regime | Persistent minus posterior log loss | Persistent minus posterior Brier excess |
+| --- | ---: | ---: |
+| Unrepresented stationary law | -0.00690 | -0.00276 |
+| Change and return | +0.12976 | +0.09677 |
+| Irregular changes | +0.21374 | +0.17011 |
+| Represented stationary law | -0.00512 | -0.00585 |
+
+Lower is better. Assuming persistence improves these stationary forecasts slightly, but substantially worsens the changing-world forecasts. It is therefore **not a generally superior world predictor**. The running long-play study must establish whether factual relearning/replanning and reduced hypothetical change can nevertheless improve its actual decisions without losing the registered families. This diagnostic cannot pass that gate or substitute for full play. Reproduce with `python tools/probe_continuation_likelihood.py --output <fresh-directory>`; original inputs, source archive, all predictions and audit are retained.
+
+The persistent-study computation at `ef47456750d5d5c78327c8ddbb9f335910784e17` passed all four Windows/Linux × Python 3.12/3.13 numeric, isolated-package and fresh-process-host CI jobs (`40585962878`). Subsequent duplicate numeric runs `40587101338` and `40588423639` were cancelled after confirming that their tested core/test/package inputs were unchanged; their additions were standalone audit/recovery tools and evidence. This saves queue capacity without cancelling any registered game execution or missing-root diagnosis.
