@@ -1,0 +1,26 @@
+name: Exact missing-root diagnosis
+on:
+  push:
+    branches: [research/adverse-recovery]
+    paths: [.github/workflows/adverse-root-recovery.yml]
+permissions:
+  contents: read
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12.14'
+      - run: python -m pip install numpy==2.3.5
+      - run: python -u tools/complete_adverse_root_probe.py --directory evidence/long_horizon/adverse_recovery/world_continuation_probe --case-index 4
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() }}
+        with:
+          name: exact-gambling-root-diagnosis
+          path: |
+            evidence/long_horizon/adverse_recovery/world_continuation_probe/recovered-root-4.json
+            evidence/long_horizon/adverse_recovery/world_continuation_probe/root-4-arithmetic-attempts.json
+          retention-days: 30
