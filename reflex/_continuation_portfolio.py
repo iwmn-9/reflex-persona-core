@@ -32,7 +32,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                       horizon=16, seeds=(701, 702, 703), world_model='posterior',
                       cumulative_preference=None, include_retry=True, captured=None,
                       purpose_estimator='sampled', tail_recovery=0, recovery_cache=0,
-                      coherent_cumulative_mean=False, capture_prefixes=False):
+                      coherent_cumulative_mean=False, capture_prefixes=False,
+                      sampling='independent'):
     if type(horizon) is not int or not 1 <= horizon <= 128:
         raise ValueError('explicit bounded continuation horizon required')
     if (not isinstance(seeds, tuple) or not 1 <= len(seeds) <= 8
@@ -49,6 +50,11 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         raise ValueError('optional existing two-step owner recovery requires a future tail')
     if type(recovery_cache) is not int or not 0<=recovery_cache<=256:
         raise ValueError('bounded within-decision recovery cache required')
+    if sampling not in ('independent', 'stratified'):
+        raise ValueError('known continuation sampling mode required')
+    if sampling == 'stratified':
+        from reflex.rollout_sampling import stratified_uniforms
+        stratified_uniforms(seeds, 0)
     source = digest(actor.record())
     # Reuse the existing distinction between the modeled physical process and
     # the hypothetical person's changing beliefs. No true-world law is input.
@@ -124,7 +130,9 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                                 after, flow = copy.deepcopy(response.state), copy.deepcopy(response.flow)
                             else:
                                 outcomes = model.owner_transitions(copy.deepcopy(w), key, model_owner, copy.deepcopy(result['context']))
-                                u = np.random.default_rng(np.random.SeedSequence([seed, context['tick']])).random()
+                                u = (stratified_uniforms(seeds, context['tick'])[seeds.index(seed)]
+                                     if sampling == 'stratified' else
+                                     np.random.default_rng(np.random.SeedSequence([seed, context['tick']])).random())
                                 mass = 0.
                                 selected = outcomes[-1]
                                 for outcome in outcomes:
@@ -182,6 +190,9 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
             tail_recovery=tail_recovery,
             recovery_cache=dict(capacity=recovery_cache,hits=cache_hits,computations=recovery_computations),
             source_semantics='learning owner (optional existing recovery) or retry a public action with that owner as fallback; only selected root is executed')
+        # Keep the default forecast bytes compatible with the stable version.
+        if sampling != 'independent':
+            metadata['continuation_portfolio']['sampling'] = sampling
         forecast = replace(forecast, audit=metadata, max_regret=fraction*spread)
         if digest(actor.record()) != source:
             raise ValueError('counterfactual learning contaminated factual owner')
