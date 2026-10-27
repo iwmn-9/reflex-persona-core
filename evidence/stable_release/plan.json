@@ -24,73 +24,97 @@
   },
   "milestones": [
     {
+      "id": "registered_audit",
+      "target_date": "2026-10-27",
+      "status": "complete",
+      "completed_date": "2026-10-26",
+      "exit": "All 40 pairs and five registered diagnostic forks complete; source, personality, world RNG and actual learning audited. No partial rows or replacement conditions.",
+      "evidence": [
+        "evidence/long_horizon/continuation_selected_confirmation/verification.json",
+        "evidence/long_horizon/selected_root_continuations/results_verification.json",
+        "evidence/long_horizon/selected_root_continuations/STATUS.md"
+      ]
+    },
+    {
       "id": "quality_selection",
       "target_date": "2026-10-28",
       "status": "complete",
       "exit": "All registered worlds complete, replay audited, original inequalities met, all losses and personality differences reviewed; no substitution of an easier baseline.",
-      "completed_date": "2026-10-26"
+      "completed_date": "2026-10-26",
+      "evidence": [
+        "evidence/stable_release/adoption.json"
+      ]
     },
     {
       "id": "integrated_contract",
       "target_date": "2026-10-29",
       "status": "complete",
       "exit": "One documented composition, explicit model/goal ownership, factual versus simulated feedback isolation, retry semantics, settings-bound save/restore and host world boundary tested.",
-      "completed_date": "2026-10-26"
+      "completed_date": "2026-10-27",
+      "evidence": [
+        "docs/STABLE_INTEGRATION.md",
+        "examples/stable_host.py",
+        "evidence/stable_release/delivery_audit.json"
+      ],
+      "closure": "Existing API and tests complete on October 26; standalone host guide and published-wheel consumer verification completed October 27."
     },
     {
       "id": "release_confirmation",
       "target_date": "2026-11-02",
       "status": "complete",
       "exit": "Required independent confirmation of any behavior-changing fix, supported OS/Python regression, installable package examples without research tools; source provenance matches evaluated behavior.",
-      "completed_date": "2026-10-26"
+      "completed_date": "2026-10-26",
+      "evidence": [
+        "evidence/stable_release/release_verification.json",
+        "evidence/stable_release/release_ci.json",
+        "evidence/stable_release/delivery_audit.json"
+      ]
     },
     {
       "id": "target_release",
       "target_date": "2026-11-03",
       "status": "complete",
       "exit": "All quality and integration requirements met; package/version/release notes identify supported scope and known limits.",
-      "completed_date": "2026-10-26"
+      "completed_date": "2026-10-26",
+      "evidence": [
+        "evidence/stable_release/RELEASE.md",
+        "evidence/stable_release/release_verification.json"
+      ]
     },
     {
       "id": "deadline",
       "target_date": "2026-11-07",
       "status": "complete",
       "exit": "Only release blockers after target date. Never label failing or incompletely verified code stable.",
-      "completed_date": "2026-10-26"
+      "completed_date": "2026-10-26",
+      "evidence": [
+        "evidence/stable_release/delivery_audit.json"
+      ],
+      "reserve_start_date": "2026-11-04",
+      "remaining_blockers": [],
+      "closure": "Release gate already met. November 4-7 is a contingency window, not a scheduled background run or promise that future reports cannot reveal a defect."
     }
   ],
   "current_work": {
-    "change": "Package existing fixed-H32 composition, preserve actual feedback and settings-bound restoration; fix canonical pressure order after sorted JSON saves.",
-    "source_commit": "445e3f4fb4748f54dd3b2030b4bfe67baffef2ec",
+    "status": "delivery-ci-pending",
+    "source_commit": "4a55533def0688d369ecd17ac28ac4cebd4e837e",
+    "change": "Document the adopted consumer entry, verify the actual published wheel, and replace stale live handoff instructions. No runtime change.",
     "new_ai_mechanisms": false,
     "candidate_integration_complete": true,
     "adoption": true,
-    "validation": "evidence/stable_release/fixed_horizon_checks.json",
-    "remaining": [],
-    "loss_review": {
-      "path": "evidence/stable_release/adoption.json",
-      "complete": true,
-      "independent_quality_complete": true,
-      "reviewed_pairs": 40,
-      "audited_actual_decisions": 10240,
-      "controller_changed": false
-    },
-    "sampled_root_continuations": {
-      "path": "evidence/long_horizon/selected_root_continuations/results_verification.json",
-      "status": "all-five-terminal-forks-audited-and-reproduced",
-      "controls_verified": 4,
-      "registered_forks": 5,
-      "complete": true,
-      "scope": "One sampled root intervention then original H32 model seeds and actual learning to terminal. All gains and losses retained. Correlated known-state diagnosis, not independent confirmation.",
-      "terminal_forks": 5,
-      "new_full_planning_decisions": 338
-    },
-    "latest_ci": "evidence/stable_release/release_ci.json",
+    "remaining": [
+      "Complete the newly added documented-host CI check on Windows/Linux x Python 3.12/3.13."
+    ],
+    "current_delivery_audit": "evidence/stable_release/delivery_audit.json",
+    "integration_guide": "docs/STABLE_INTEGRATION.md",
+    "loss_review": "evidence/stable_release/adoption.json",
+    "sampled_root_continuations": "evidence/long_horizon/selected_root_continuations/STATUS.md",
+    "rust_delivery": "evidence/rust_port/owned/REPORT.md",
     "release_verification": "evidence/stable_release/release_verification.json"
   },
-  "scheduling": "No recurring automation. Existing finite evaluation continues; code changes and result review require an active agent execution.",
+  "scheduling": "No recurring automation. All registered finite evaluation and collection for this release is complete. No active evaluation job or automatic future work is required; review a newly reported blocker only when one exists.",
   "evidence_reference": "evidence/long_horizon/REPORT.md",
-  "last_updated": "2026-10-26T00:08:02.652491+00:00",
+  "last_updated": "2026-10-27T10:41:28.503148+00:00",
   "checks": "evidence/stable_release/fixed_horizon_checks.json",
   "base_checkpoint_checks": "evidence/stable_release/checks.json",
   "release_version": "0.1.0",

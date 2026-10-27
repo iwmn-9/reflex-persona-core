@@ -8,6 +8,8 @@ Pythonの採用構成は `reflex.fixed_horizon.FixedHorizonOwner`。人格・実
 
 安定版はこの明示した構成の接続契約を対象とする。全研究モジュール、任意の設定、未知ゲームでの賢さやリアルタイム性能を一括認定しない。個別の損・世界予測の誤り・重い計算費用は残る。旧H16構成は比較・互換用に保持し、その前段の根拠は [owner_continuity](evidence/owner_continuity/REPORT.md) に残す。
 
+ゲームへの接続は [安定版の導入ガイド](docs/STABLE_INTEGRATION.md) と [単独で動くホスト例](examples/stable_host.py) から始める。公開済みwheelを使い、途中保存から別プロセスへ再開した場合の世界・乱数・判断・全学習状態の一致まで確認済み。[日程と通過条件](evidence/stable_release/plan.json)、[配布・引き継ぎの最終確認](evidence/stable_release/delivery_audit.json)。
+
 公開応答を学び直す `EventReader` と、欠測・保存・仮想の本人を含む共通更新が前提。[前段の予測回復](evidence/prediction_recovery/REPORT.md)、[接続監査](evidence/lifecycle_integration/REPORT.md) を参照。予測誤差や内部状態の一致だけで長期判断の品質を認定せず、全任意部品を有効化した一律の推奨設定にはしない。
 
 自発的な提案・拒否・別案・全員の同意と、未完了の短い共同手順の継続は任意経路として保持する。交換・共同警戒・共有材料の建設で検証した範囲と、単独有利・高負担・環境変化での得失は [協力の検証](evidence/voluntary_cooperation/REPORT.md)、接続方法は [VOLUNTARY_COOPERATION](docs/VOLUNTARY_COOPERATION.md) を参照。

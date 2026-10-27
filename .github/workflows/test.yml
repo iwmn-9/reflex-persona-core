@@ -24,3 +24,5 @@ jobs:
         run: |
           python -I tools/verify_receding_package.py isolated-wheel
           python -I tools/verify_receding_package.py isolated-wheel --controller fixed
+      - name: Verify the standalone documented host and fresh-process resume
+        run: python -I tools/verify_stable_host.py isolated-wheel --output stable-host-verification

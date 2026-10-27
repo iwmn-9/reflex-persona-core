@@ -1,0 +1,219 @@
+{
+  "version": "stable-delivery-audit-v1",
+  "at": "2026-10-27T10:41:28.503148+00:00",
+  "complete": false,
+  "scope": "Close the agreed stable-release schedule, documentation and consumer handoff. Existing long-run evidence is integrity-checked, not rerun or counted as new quality trials.",
+  "repository_base_commit": "4a55533def0688d369ecd17ac28ac4cebd4e837e",
+  "runtime_changed": false,
+  "acceptance_changed": false,
+  "new_ai_mechanisms": false,
+  "published_release": {
+    "version": "0.1.0",
+    "tag_commit": "0e4a42a0b216d120a58b3615489b732b688bcab3",
+    "url": "https://github.com/iwmn-9/reflex-persona-core/releases/tag/v0.1.0",
+    "artifact": "reflex_persona_core-0.1.0-py3-none-any.whl",
+    "sha256": "27fa081e83f3ed269e46efa69fd7ec3796cf0199fb236682b094827fdd2fcb43",
+    "bytes": 631065,
+    "redownloaded": true,
+    "installed_in_isolated_target": true,
+    "packaged_runtime_files_matched": 169,
+    "published_package_replaced": false,
+    "published_runtime_matches_current_source": true,
+    "current_source_extra_runtime_files": [
+      "reflex/native_owned.py"
+    ],
+    "extra_scope": "Rust boundary added after v0.1.0; use matching source versions for Rust integration."
+  },
+  "original_quality": {
+    "pairs": 40,
+    "actual_decisions": 10240,
+    "counts": {
+      "better": 26,
+      "same": 9,
+      "worse": 5
+    },
+    "unchanged_gate": {
+      "four_complete_gambling_worlds": true,
+      "no_family_loss": true,
+      "positive_gambling": true,
+      "positive_resources": true,
+      "required_families": true,
+      "three_gambling_worlds_improve": true
+    },
+    "all_adverse_reviewed": true,
+    "source": "1f01060ee8d647e829a479083efc7faf20db2b6c1184e1864c9f6036de5a892b",
+    "reference": "evidence/stable_release/adoption.json",
+    "verification": "evidence/long_horizon/continuation_selected_confirmation/verification.json",
+    "replay_performed_this_review": false
+  },
+  "extra_diagnosis": {
+    "terminal_forks": 5,
+    "resume_controls": 4,
+    "reference": "evidence/long_horizon/selected_root_continuations/results_verification.json",
+    "exact_previous_replay": true,
+    "independent_quality_evidence": false,
+    "registration_bytes_preserved": true,
+    "new_sampling_policy_adopted": false
+  },
+  "consumer_example": {
+    "complete": true,
+    "isolated_from_repository": true,
+    "research_imports_blocked": true,
+    "example_sha256": "0e1c5a021c532e274dde2ccfdb2d7dad4d1541fe80608d080e28049a2e82cf0e",
+    "verifier_sha256": "2a48925798fc25c0e0f408205bf5fe7d81d9128f1ed93a4ef1d76f7aba260079",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "new_quality_trials": false,
+    "checks": [
+      {
+        "complete": true,
+        "tick": 6,
+        "trace": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "world": {
+          "tick": 6,
+          "score": 0.44999999999999996,
+          "signal": "b"
+        },
+        "owner_sha256": "d98c840da2f050af3366adfe81dece3241fd1818c186ba786630a4d974d9e1ef"
+      },
+      {
+        "complete": false,
+        "tick": 3,
+        "trace": [
+          "b",
+          "b",
+          "b"
+        ],
+        "world": {
+          "tick": 3,
+          "score": 0.15000000000000002,
+          "signal": "a"
+        },
+        "owner_sha256": "76236b7ee1ebd3e9ecd5eedffc5430ec241ca4e10fa30ab7fb39bbc12d8cf28c"
+      },
+      {
+        "complete": true,
+        "tick": 6,
+        "trace": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "world": {
+          "tick": 6,
+          "score": 0.44999999999999996,
+          "signal": "b"
+        },
+        "owner_sha256": "d98c840da2f050af3366adfe81dece3241fd1818c186ba786630a4d974d9e1ef"
+      },
+      {
+        "complete": true,
+        "tick": 6,
+        "trace": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "world": {
+          "score": 0.44999999999999996,
+          "signal": "b",
+          "tick": 6
+        },
+        "owner_sha256": "d98c840da2f050af3366adfe81dece3241fd1818c186ba786630a4d974d9e1ef"
+      }
+    ],
+    "host_world_rng_owner_and_trace_exact": true,
+    "final_save_sha256": "f7a5f857f3c59c944acf61f4fa0199ec37a133e5c3144197fdcb1852d4f03b1d"
+  },
+  "known_failed_attempt": {
+    "stage": "New host example development",
+    "cause": "The first draft used unsupported terminal Goal status finished.",
+    "fix": "Use the documented scored status; the final isolated four-process verification passed.",
+    "runtime_defect": false,
+    "failed_attempt_counted_as_success": false
+  },
+  "inherited_validation": {
+    "release_ci": "evidence/stable_release/release_ci.json",
+    "supported_environments": "Windows/Linux x Python 3.12/3.13",
+    "new_example_environment": "Windows x Python 3.12.14, NumPy 2.3.5",
+    "rust_parity": "evidence/rust_port/owned/REPORT.md",
+    "latest_python_ci": 40317582467,
+    "latest_rust_ci": 40317582417,
+    "latest_runtime_ci_status": "success",
+    "full_regression_rerun_this_review": false,
+    "additional_ci_status": "pending publication",
+    "reason": "New consumer example executed against the redownloaded published wheel. Add it to the existing four-environment CI to keep the documented save/resume path checked."
+  },
+  "verified_reference_sha256": {
+    "evidence/stable_release/adoption.json": "355ce1c538ef39565e8175709c97b076f1bb5f2bc359f6d39e138ab04ef937af",
+    "evidence/stable_release/release_ci.json": "438aaa4bc06a50d0dacd5c2fbb59b8059de530e932a1aaa3ca5341dc73e477db",
+    "evidence/stable_release/runtime_provenance.json": "fb7c6e03466438f57f87a27b1e77249ac31c1570312369e9f401b7491d4896e3",
+    "evidence/stable_release/wheel_verification.json": "b67d9acf91f0fd7721748c9ba04b4d7d5e445ea807bb18247e25063547316110",
+    "evidence/long_horizon/continuation_selected_confirmation/plan.json": "b15f9502c9416e3e0b5a26a9bdcd2f6d02578d1e678421345c9cdd5dce5903be",
+    "evidence/long_horizon/continuation_selected_confirmation/runs.jsonl.gz": "d7c94446b18a99c3dc478bd9008dfaa10aa5aafe0486ed12485ae2aee91bc0ee",
+    "evidence/long_horizon/continuation_selected_confirmation/source.zip": "6a0ef50f304d9fb4a45cf6178c2bfdf49a5d6ccccdff6ba8cb6ed1bec5458409",
+    "evidence/long_horizon/continuation_selected_confirmation/source_snapshot.json": "a56bf6a717d899e45554d79724b4fc5a63249d0c49b1f4bc16574e216545a848",
+    "evidence/long_horizon/continuation_selected_confirmation/summary.json": "d3d7fb1b2414ae74d691b92f0ccd871728d4300520b71f1f472b25924f44bde1",
+    "evidence/long_horizon/continuation_selected_confirmation/verification.json": "2278444ec72c738fc0b6af099251a67f7465bb402e6d2bb65c86660a04c98340",
+    "evidence/long_horizon/selected_root_continuations/frozen_runner.py": "26d028c7a9504ba78c1d5f4e0b1d5cc6912559cca722156600094bcb96f02f37",
+    "evidence/long_horizon/selected_root_continuations/registration_proof.json": "9885733085ef25a1a3366ab6f737ccd8790d89be89175071d02534965907ea29",
+    "evidence/long_horizon/selected_root_continuations/reproduce_results.py": "1c63e89ddf97acf66d5dff49c89d7b16a06e82a83e45cfcfdfd78e4dfc835b6b",
+    "evidence/long_horizon/selected_root_continuations/result_review.json": "4f7c812827ec67c990c57576740327655ed6e429c733f9700f1b903662c68e36",
+    "evidence/long_horizon/selected_root_continuations/results.json.gz": "870fc2ccd258b06724579ba50e7558a183fa1a1906160f3773225d1fca209575",
+    "evidence/long_horizon/selected_root_continuations/results.zip": "25a3ffa8be55c7f5be086a814bad299d41d90d65e538ce641f8c0a80cdf44c62",
+    "evidence/long_horizon/selected_root_continuations/results_verification.json": "b077e7c157e9f945f47d4592ac45b28b4842418d671341eabd39943a5b894b43",
+    "evidence/long_horizon/selected_root_continuations/README.md": "f301bc5070293eb0adf5a99dcc3ae54c33d0a1f91fd18e9d2a888a9cd340bd44",
+    "evidence/long_horizon/selected_root_continuations/controls.zip": "0b1fafca93f8beebb22a8bcfff1dc40763e65a254c9120d27e80927874312dfb",
+    "evidence/long_horizon/selected_root_continuations/controls_verification.json": "9bddb34eab13b629b28cb490d6c3556188f990f68028c9a55e6d906e236390b1",
+    "evidence/long_horizon/selected_root_continuations/harness_test.json": "7706f26cf841664c735f3d77c1930b702aa38d02bfb4082b61bb9c5edb3f1be6",
+    "evidence/long_horizon/selected_root_continuations/harness_test.py": "449dc3976762080223c07a2cb95bc090572683f5f031978ea7b957254e91f568",
+    "evidence/long_horizon/selected_root_continuations/harness_test_inputs.zip": "76f71d72264a82334d910f9a75d601b1d58d0f6cc7fba2011f695aa8a1f17883",
+    "evidence/long_horizon/selected_root_continuations/inputs.zip": "98f2ebbac65b7ceca75bda4d3745e1a11e48bb4c978cedabbd6c8ced0550522a",
+    "evidence/long_horizon/selected_root_continuations/plan.json": "eedb609ab54f10253dfbf2d1fdf1a15b27bb843a83073b38cd36518e99294cba",
+    "evidence/long_horizon/selected_root_continuations/reproduce_harness.py": "777a9eeae9725b6148e194c02c6cd7798eab303e1af567cec6826603d8087bfb",
+    "evidence/long_horizon/continuation_horizon_ablation/source.zip": "6a0ef50f304d9fb4a45cf6178c2bfdf49a5d6ccccdff6ba8cb6ed1bec5458409",
+    "evidence/stable_release/release_verification.json": "87d9c2c48d2ab35186d2946eb7c938ad5614305534c299a732e40e514f19406e",
+    "evidence/long_horizon/continuation_selected_confirmation_acceptance.json": "3c9ca8e122b38d745f39a561379e2c2eb794723777b20eec80a4829b97777d34",
+    "results/stable_delivery_20261027/download/reflex_persona_core-0.1.0-py3-none-any.whl": "27fa081e83f3ed269e46efa69fd7ec3796cf0199fb236682b094827fdd2fcb43",
+    "examples/stable_host.py": "0e1c5a021c532e274dde2ccfdb2d7dad4d1541fe80608d080e28049a2e82cf0e",
+    "tools/verify_stable_host.py": "2a48925798fc25c0e0f408205bf5fe7d81d9128f1ed93a4ef1d76f7aba260079"
+  },
+  "current_document_sha256": {
+    "evidence/stable_release/plan.json": "224c297f91aebc60a2fdecf446157ca1ebe292e08368ce7a9c9df4c4bb24ce6e",
+    "docs/STABLE_INTEGRATION.md": "bfae8b7e1e30eedd5f02b614a44fee74e861338f8d09f24c4724c9be160b6adb",
+    "docs/OWNED_VALUE.md": "6cc7b228bf9943cde962726b3e66afb1d1108042ece203f63e9c74a66a416ec8",
+    "README.md": "cb52cb62152a81cf8544a9da80f6051217c913180847f45631157b0defda470c",
+    "evidence/stable_release/RELEASE.md": "d273a741cd534493017edda9339704e32a36dd8e12c5fa247d190afe46094871",
+    "evidence/long_horizon/selected_root_continuations/STATUS.md": "c11ea04f7da561fc70a8f1b48c70c0d3c829e86f6f973541d7f18ca4a2502f89",
+    ".github/workflows/test.yml": "ef13ad9aeeeb0481132c1f499178d0d104522ac55f272366a0b7408e733e3997"
+  },
+  "documented_host_ci": null,
+  "remaining_release_blockers": [],
+  "remaining_delivery_checks": [
+    "Complete the newly added documented-host CI check on Windows/Linux x Python 3.12/3.13."
+  ],
+  "gained": [
+    "Standalone consumer entry with game responsibilities and failure/recovery semantics.",
+    "Actual published-wheel verification of fresh-process learning and save restoration.",
+    "Current handoff no longer directs agents to repeat completed evaluation."
+  ],
+  "removed": [
+    "Stale active-work and adoption-pending claims."
+  ],
+  "preserved": [
+    "Personality, common game-agnostic controller, original acceptance and individual losses.",
+    "Frozen registration and historical evidence, release tag and original assets."
+  ]
+}

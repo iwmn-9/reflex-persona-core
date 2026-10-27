@@ -12,9 +12,9 @@
 
 保存は実結果を反映し終えた境界で行う。世界・実乱数と本人を一緒に保存し、同じルールと `model_id`、同じ人格・予測器・探索設定で復元する。破損、違うモデルや設定、未反映の判断の保存は拒否する。予測を完了できなかった時に、即時判断へ黙って置き換えることはしない。
 
-インストール後の実行例と保存復元の検査は `tools/verify_receding_package.py`。この例は研究用 `tools` の import を禁止した別プロセスで配布物を読み、世界・乱数・判断・学習記録が通し実行と一致することを確認する。ゲームへ接続する具体的な引数は [OWNED_VALUE](../../docs/OWNED_VALUE.md) を参照。
+インストール、推奨設定、ゲーム側の責任、失敗時の扱いは [安定版の導入ガイド](../../docs/STABLE_INTEGRATION.md) を入口とする。[ホスト例](../../examples/stable_host.py) は研究用runnerを使わず単独で動く。`tools/verify_stable_host.py` はリポジトリ外・別プロセスで公開wheelを読み、途中保存と終局保存からの復元を検査する。リリース時の `tools/verify_receding_package.py` による検査も保全する。
 
-対応確認は Windows/Linux、Python 3.12/3.13。NumPy が必須。LLM、GPU、Colab、外部APIは不要。即時判断のRust部品は既存の状態を維持し、今回の長期判断はPythonで提供する。
+対応確認は Windows/Linux、Python 3.12/3.13。NumPy が必須。LLM、GPU、Colab、外部APIは不要。このv0.1.0配布物の長期判断はPythonで提供する。後続のmainには判断・実経験・保存復元を持つRust統合を追加したが、公開wheelへ遡って混ぜていない。Rust連携は [別の統合契約と検証](../rust_port/owned/REPORT.md) を参照。
 
 残る限界は、有限の読みと世界予測の誤り、条件・人格による個別の悪化、重い探索の費用。評価は限定された四つの持続世界であり、未知のゲーム、人間水準、楽しさ、全NPCのリアルタイム実行を保証しない。ルール・結果のモデルを用意するゲーム側の負担も残る。
 
@@ -26,4 +26,6 @@
 - 配布wheelの169ファイルを出荷対象のソースと照合し、別プロセスをまたぐ世界・乱数・全判断・本人の学習状態の一致を確認。[配布物の確認](wheel_verification.json)。
 - 採用前に照合済みの実装から168個のPythonモジュールの実行ロジックを維持。判断を変える追加修正はない。[来歴](runtime_provenance.json)、[凍結した研究実装との接続検査](fixed_horizon_checks.json)。
 
-最終CIが検査したcommitは `85b6a73cfc59e0f448d2ed3c607c0f7908695317`。リリースの最終記録は証拠・文書だけを追加し、配布に入るソース、README、メタデータ、テストはこのcommitから変えない。[リリース照合記録](release_verification.json)。
+v0.1.0の最終CIが検査したcommitは `85b6a73cfc59e0f448d2ed3c607c0f7908695317`。タグの最終記録では証拠・文書だけを追加し、配布に入るソース、README、メタデータ、テストはこのcommitと同じものを用いた。公開済みタグ・配布物は維持し、後続のmainの文書・Rust統合とは区別する。[リリース照合記録](release_verification.json)。
+
+2026-10-27に[日程の全通過条件](plan.json)を照合し、導入ガイド・ホスト例と古い引き継ぎ情報を整理した。公開wheelを再取得し、169個のruntimeファイルと既存の監査資料のハッシュを照合。新しいホスト例はWindows/Python 3.12で途中再開・終局再開を実行し、連続実行と完全一致した。長期品質試験の再実行や新しい採用ではない。[確認記録](delivery_audit.json)。追加5分岐も[完了・解釈済み](../long_horizon/selected_root_continuations/STATUS.md)であり、登録時の文書は凍結した証拠として維持する。
