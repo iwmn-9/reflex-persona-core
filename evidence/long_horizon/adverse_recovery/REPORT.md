@@ -72,6 +72,21 @@ The immutable compute ref is also available as `research/adverse-recovery-202610
 
 On completion, the finite collector also writes `outcome_review.json`: 32-step phase gains, conditional/residual accounting, preparation/action counts, available perfect-information reference accounts, and selected-forecast versus actual-replanning residuals. The accountant was checked against all eight published adverse-review records and reproduced every recorded difference within 1e-10. This evaluator-only addition does not change the worker or acceptance gate.
 
-## Unimplemented structural hypothesis
+## Structural hypothesis
 
-Source inspection identifies a separate approximation: each first action currently receives its own retry continuation plus the learning owner with short recovery. Changing the first action therefore also changes which retry policy is offered in the tail. A good first action followed by a different productive policy may be underrepresented. Comparing first actions against a shared bank of feasible continuations could distinguish this proposal-coverage bias from sampling variability. This has **not** been implemented, has no action-quality result, and is not part of the registered candidate. If long-play sampling results remain adverse, test this common mechanism with unchanged personality and factual learning; do not infer an improvement guarantee or add a game-specific sequence.
+Source inspection identifies a separate approximation: each first action currently receives its own retry continuation plus the learning owner with short recovery. Changing the first action therefore also changes which retry policy is offered in the tail. A good first action followed by a different productive policy may be underrepresented. Comparing first actions against a shared bank of feasible continuations could distinguish this proposal-coverage bias from sampling variability. This is a separate research variation, not part of the registered stratified candidate. Its diagnostic status is recorded below; do not infer an improvement guarantee or add a game-specific sequence.
+
+
+## Additional cross-platform integrity diagnosis
+
+Fifteen first-slice checkpoints (706 actual decisions) were also replayed on Windows. All physical transitions, actual random draws, final RNG and fixed personality axes matched. Four saved final owners had tiny differences only in numeric evidence-gain entries; the largest absolute difference was 5.551115123125783e-17. Their final prediction state and discrete adoption states matched. Exact owner hashes therefore do not match between these Linux and Windows arithmetic builds, even with the same Python/NumPy version numbers. This diagnostic does not recompute planning choices or establish cross-platform decision identity at every prior turn.
+
+`platform_replay.json` records every mismatch, input checksum and runtime. No tolerance was added to the original worker. Its exact same-runtime action/learning replay, source binding and save/restore checks remain mandatory. No histories were replaced, and completed-study accounting does not substitute a Windows owner for a Linux owner.
+
+## Separate continuation-coverage experiment
+
+The shared-bank hypothesis is now implemented only as an opt-in research setting, `continuation_scope="shared"`, on this branch. Stable/default `root` behavior reproduced the frozen computation exactly in bounded checks across all four families. The ongoing stratified study still executes its original pinned source and has no shared bank.
+
+The shared setting compares every real first action against all the same currently public retry targets, preserving legality/progress checks, owner learning and the full personality selector. It retains the original diagonal and reflex trajectories. Local integration tests verified those paths, their values and actual-root bindings. A test harness initially confused synthetic plan IDs with proposal IDs; that assertion was corrected without changing controller behavior.
+
+Two separate diagnostics were fixed before execution: six original public states/owners under H32 and seeds 701/702/703, and the existing five-operation preparation mechanism played for 128 turns with growth/care owners. The latter specifically checks whether broader hypothetical tails cause perpetual deferral. Neither is independent confirmation or a basis for adoption. The connection follows the idea of evaluating each action against a common policy bank in [Parallel Rollout](https://engineering.purdue.edu/~givan/papers/deds01.pdf); its improvement theorem is not claimed for finite-horizon, learned-model personality decisions.

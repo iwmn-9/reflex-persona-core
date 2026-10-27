@@ -33,7 +33,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                       cumulative_preference=None, include_retry=True, captured=None,
                       purpose_estimator='sampled', tail_recovery=0, recovery_cache=0,
                       coherent_cumulative_mean=False, capture_prefixes=False,
-                      sampling='independent'):
+                      sampling='independent', continuation_scope='root'):
     if type(horizon) is not int or not 1 <= horizon <= 128:
         raise ValueError('explicit bounded continuation horizon required')
     if (not isinstance(seeds, tuple) or not 1 <= len(seeds) <= 8
@@ -52,6 +52,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         raise ValueError('bounded within-decision recovery cache required')
     if sampling not in ('independent', 'stratified'):
         raise ValueError('known continuation sampling mode required')
+    if continuation_scope not in ('root', 'shared') or continuation_scope == 'shared' and not include_retry:
+        raise ValueError('shared continuations require the retry bank')
     if sampling == 'stratified':
         from reflex.rollout_sampling import stratified_uniforms
         stratified_uniforms(seeds, 0)
@@ -74,11 +76,14 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         steps = 0
         for root_index, root in enumerate(roots):
             first = model.owner_transitions(copy.deepcopy(world), root, actor, copy.deepcopy(c))
-            modes = ('reflex', 'retry') if include_retry else ('reflex',)
-            for mode in modes:
-                proposal = f'candidate-{root_index:03d}-{mode}'
+            modes = [('reflex', None)]
+            if include_retry:
+                modes += [('retry', key) for key in (roots if continuation_scope == 'shared' else (root,))]
+            for mode, preferred in modes:
+                suffix = f'-{roots.index(preferred):03d}' if mode == 'retry' and continuation_scope == 'shared' else ''
+                proposal = f'candidate-{root_index:03d}-{mode}{suffix}'
                 mapping[proposal] = root
-                policies[proposal] = dict(kind=mode, preferred=root if mode == 'retry' else None)
+                policies[proposal] = dict(kind=mode, preferred=preferred)
                 branches, rows = [], []
                 for response in first:
                     for seed in seeds:
@@ -95,8 +100,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                             context = stage['effective']
                             legal = {a['id'] for a in context['actions'] if a['legal'] and not a['known_failure']}
                             key = root if t == 0 else None
-                            if t and mode == 'retry' and root in legal and root in stage['progress_allowed']:
-                                key = root
+                            if t and mode == 'retry' and preferred in legal and preferred in stage['progress_allowed']:
+                                key = preferred
                             elif t and mode == 'retry':
                                 falls.append(t)
                             model_owner = copy.deepcopy(own)
@@ -193,6 +198,9 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         # Keep the default forecast bytes compatible with the stable version.
         if sampling != 'independent':
             metadata['continuation_portfolio']['sampling'] = sampling
+        if continuation_scope != 'root':
+            metadata['continuation_portfolio'].update(continuation_scope=continuation_scope,
+                source_semantics='every real first action shares the same public retry bank and learning-owner fallback; only the selected first action executes')
         forecast = replace(forecast, audit=metadata, max_regret=fraction*spread)
         if digest(actor.record()) != source:
             raise ValueError('counterfactual learning contaminated factual owner')
