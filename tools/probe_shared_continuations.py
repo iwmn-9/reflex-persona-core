@@ -25,7 +25,7 @@ from tools.run_owned_value import cumulative_basis
 from tools.owned_checkpoint import encoded,sha
 
 
-def probe(data,tick):
+def probe(data,tick,*,horizon=32):
     spec=data['spec'];g=game_for(spec);w=g.start();a=g.actor(g.context(w),learning='segmented')
     for t in data['result']['trace'][:tick]:
         assert digest(a.record())==t['before_owner'] and w==t['before']
@@ -39,20 +39,26 @@ def probe(data,tick):
     cap={};basis=cumulative_basis(g,True);started=time.monotonic()
     planner=portfolio_planner(a,request,w,observe=g.context,events=g.events,terminal=g.terminal,
         assess=lambda w:g.goal(w).record(),request_for=g.request,feedback=g.feedback,
-        model_id=g.model_id,target=g.target,horizon=32,seeds=(701,702,703),
+        model_id=g.model_id,target=g.target,horizon=horizon,seeds=(701,702,703),
         world_model='posterior',purpose_estimator='conditional',tail_recovery=2,
         recovery_cache=64,coherent_cumulative_mean=True,cumulative_preference=basis,
         continuation_scope='shared',capture_prefixes=True,captured=cap)
     # Evaluate projected plans identically to the public FixedHorizonOwner.
-    stage=copy.deepcopy(a)._prepare(request);context=stage['effective']
-    planner([context],[])
+    prepared={}
+    def capture(contexts,decisions):
+        # The public decision path adds response-learning facts after _prepare.
+        # Keep that exact context instead of bypassing observation integration.
+        prepared['context']=copy.deepcopy(contexts[0])
+        return planner(contexts,decisions)
+    DecisionLoop.decide_batch([(copy.deepcopy(a),request)],False,capture)
+    context=prepared['context']
     policies=cap['forecast'].audit['continuation_portfolio']['policies']
     output={}
     for scope in ('root','shared'):
         names=[n for n,rows in cap['modeled'].items() if scope=='shared' or
             policies[n]['preferred'] in (None,rows[0]['actions'][0])]
         paths={n:cap['paths'][n] for n in names};rows={n:cap['modeled'][n] for n in names}
-        forecast,_,_=prefix_forecast(context,paths,rows,32,actor=a,target=g.target,
+        forecast,_,_=prefix_forecast(context,paths,rows,horizon,actor=a,target=g.target,
             origin=g.goal(w),cumulative_preference=basis)
         result=DecisionLoop.decide_batch([(copy.deepcopy(a),request)],False,lambda cs,ds:forecast)[0]
         assert result['deliberation']['adopted'] and character_key(result['context'])==axes
