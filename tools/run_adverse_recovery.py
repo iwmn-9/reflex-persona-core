@@ -33,14 +33,14 @@ def decide(actor, game, world, arm, seeds=(701, 702, 703)):
         controller = FixedHorizonOwner(actor, **options)
         result = controller.decide(world)
         return result, controller.last
-    if arm != 'stratified':
+    if arm not in ('stratified', 'persistent'):
         raise ValueError('registered research arm required')
     request = game.request(game.context(world, actor.state))
     captured = {}
     planner = consensus_planner(actor, request, world, captured=captured,
-        minimum_horizon=32, horizon=32, world_model='posterior',
+        minimum_horizon=32, horizon=32, world_model='persistent' if arm == 'persistent' else 'posterior',
         purpose_estimator='conditional', tail_recovery=2, include_retry=True,
-        coherent_cumulative_mean=True, sampling='stratified', **options)
+        coherent_cumulative_mean=True, sampling='independent' if arm == 'persistent' else 'stratified', **options)
     result = DecisionLoop.decide_batch([(actor, request)], False, planner)[0]
     if not result.get('deliberation', {}).get('adopted'):
         raise ValueError('incomplete research forecast; no reflex fallback')
@@ -148,7 +148,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan', type=Path, required=True)
     parser.add_argument('--case', required=True)
-    parser.add_argument('--arm', choices=('stable', 'stratified'), required=True)
+    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent'), required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--max-decisions', type=int)
     args = parser.parse_args()
@@ -164,6 +164,9 @@ def verify_registration(path):
     assert proof['plan_sha256'] == sha(path.read_bytes()), 'registered plan changed'
     for name, expected in proof['sources'].items():
         assert sha((ROOT/name).read_bytes()) == expected, ('registered source changed', name)
+    import os
+    for name, expected in json.loads(path.read_bytes()).get('arithmetic', {}).items():
+        assert os.environ.get(name) == expected, ('registered arithmetic profile changed', name)
     return dict(plan_sha256=proof['plan_sha256'], source_sha256=sha(encoded(proof['sources'])))
 
 

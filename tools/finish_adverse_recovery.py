@@ -30,9 +30,9 @@ def execute(gh, *args):
     raise RuntimeError('GitHub operation failed: '+p.stderr[-1800:])
 
 
-def finish(root,run,ref,gh,max_segments,dispatch_ref):
+def finish(root,run,ref,gh,max_segments,dispatch_ref,plan='evidence/long_horizon/adverse_recovery/plan.json',workflow='adverse-recovery.yml',run_title='Adverse recovery'):
     root=Path(root).resolve();root.mkdir(parents=True,exist_ok=True)
-    plan_path=ROOT/'evidence/long_horizon/adverse_recovery/plan.json'
+    plan_path=ROOT/plan
     plan=json.loads(plan_path.read_bytes());registration=json.loads((plan_path.parent/'registration.json').read_bytes())
     assert sha(plan_path.read_bytes())==registration['plan_sha256']
     state_path=root/'state.json'
@@ -40,6 +40,8 @@ def finish(root,run,ref,gh,max_segments,dispatch_ref):
         initial_run=run,current_run=run,source_ref=ref,segments=[run],collected={},complete=False,
         study_plan_sha256=registration['plan_sha256'],phase='collecting',pid=__import__('os').getpid())
     assert state['initial_run']==run and state['source_ref']==ref and state['study_plan_sha256']==registration['plan_sha256']
+    assert state.get('workflow',workflow)==workflow and state.get('run_title',run_title)==run_title
+    state.update(workflow=workflow,run_title=run_title,plan_path=str(plan_path))
     state['pid']=__import__('os').getpid()
     state['collector_sha256']=sha(Path(__file__).read_bytes())
     def save(**values):
@@ -103,13 +105,13 @@ def finish(root,run,ref,gh,max_segments,dispatch_ref):
             if not prior:
                 save(dispatch_pending=current)
                 try:
-                    execute(gh,'workflow','run','adverse-recovery.yml','--repo',repo,'--ref',dispatch_ref,'-f',f'previous_run={current}')
+                    execute(gh,'workflow','run',workflow,'--repo',repo,'--ref',dispatch_ref,'-f',f'previous_run={current}')
                 except RuntimeError as error:
                     save(dispatch_error=repr(error))
             candidates=[]
             for _ in range(12):
-                runs=json.loads(execute(gh,'api',f'{prefix}/actions/workflows/adverse-recovery.yml/runs?per_page=40'))['workflow_runs']
-                candidates=[r for r in runs if r['head_sha']==ref and r['display_title']==f'Adverse recovery {current}' and r['id'] not in state['segments']]
+                runs=json.loads(execute(gh,'api',f'{prefix}/actions/workflows/{workflow}/runs?per_page=40'))['workflow_runs']
+                candidates=[r for r in runs if r['head_sha']==ref and r['display_title']==f'{run_title} {current}' and r['id'] not in state['segments']]
                 if candidates:break
                 time.sleep(10)
             if len(candidates)!=1:raise RuntimeError('Ambiguous/missing dispatch; inspect before issuing another')
@@ -126,6 +128,8 @@ if __name__=='__main__':
     p.add_argument('--run',type=int,required=True);p.add_argument('--ref',required=True)
     p.add_argument('--gh',default='gh');p.add_argument('--max-segments',type=int,default=4)
     p.add_argument('--dispatch-ref',default='research/adverse-recovery-20261027')
+    p.add_argument('--plan',default='evidence/long_horizon/adverse_recovery/plan.json')
+    p.add_argument('--workflow',default='adverse-recovery.yml');p.add_argument('--run-title',default='Adverse recovery')
     a=p.parse_args()
     if not 1<=a.max_segments<=4:raise ValueError('one to four finite execution segments required')
-    finish(a.root,a.run,a.ref,a.gh,a.max_segments,a.dispatch_ref)
+    finish(a.root,a.run,a.ref,a.gh,a.max_segments,a.dispatch_ref,a.plan,a.workflow,a.run_title)

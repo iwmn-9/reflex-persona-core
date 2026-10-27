@@ -100,7 +100,7 @@ def segment(plan, case, arm, output, minutes):
 if __name__ == '__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--plan',required=True);p.add_argument('--case',required=True)
-    p.add_argument('--arm',required=True,choices=('stable','stratified'))
+    p.add_argument('--arm',required=True,choices=('stable','stratified','persistent'))
     p.add_argument('--output',required=True);p.add_argument('--minutes',type=float,default=325)
     a=p.parse_args()
     if not 0<a.minutes<=330:raise ValueError('explicit bounded execution required')

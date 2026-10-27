@@ -52,25 +52,31 @@ class AdverseRecoveryTests(unittest.TestCase):
             self.assertEqual(len(paths), 9)
 
     def test_full_and_resumed_actual_learning_match_and_wrong_arm_rejected(self):
+        self.check_resume('stratified')
+
+    def test_persistent_model_keeps_full_and_resumed_actual_owner_identical(self):
+        self.check_resume('persistent')
+
+    def check_resume(self, arm):
         spec = dict(id='resume-example', mechanism='world', game='combat', profile=1,
                     seed=601, regime='outside', turns=3)
         registration = dict(plan_sha256='test-plan', source_sha256='test-source')
         with tempfile.TemporaryDirectory() as folder:
-            full = run(Path(folder)/'full', spec, 'stratified', registration=registration)
-            self.assertIsNone(run(Path(folder)/'split', spec, 'stratified', max_decisions=1, registration=registration))
-            self.assertFalse(audit(Path(folder)/'split', spec, 'stratified', registration)['complete'])
+            full = run(Path(folder)/'full', spec, arm, registration=registration)
+            self.assertIsNone(run(Path(folder)/'split', spec, arm, max_decisions=1, registration=registration))
+            self.assertFalse(audit(Path(folder)/'split', spec, arm, registration)['complete'])
             self.assertFalse((Path(folder)/'split/result.json').exists())
             with self.assertRaises(ValueError):
                 run(Path(folder)/'split', spec, 'stable', registration=registration)
             with self.assertRaises(ValueError):
-                run(Path(folder)/'split', spec, 'stratified', registration=dict(registration,plan_sha256='changed'))
-            resumed = run(Path(folder)/'split', spec, 'stratified', registration=registration)
+                run(Path(folder)/'split', spec, arm, registration=dict(registration,plan_sha256='changed'))
+            resumed = run(Path(folder)/'split', spec, arm, registration=registration)
             for key in ('trace', 'final', 'final_owner', 'final_rng', 'checks', 'configuration'):
                 self.assertEqual(full[key], resumed[key], key)
             self.assertEqual(resumed['replayed_actual_steps'], 3)
-            finished = run(Path(folder)/'split', spec, 'stratified', registration=registration)
+            finished = run(Path(folder)/'split', spec, arm, registration=registration)
             self.assertEqual(finished['trace'], resumed['trace'])
-            self.assertTrue(audit(Path(folder)/'split', spec, 'stratified', registration)['complete'])
+            self.assertTrue(audit(Path(folder)/'split', spec, arm, registration)['complete'])
             with self.assertRaises(AssertionError):
                 audit(Path(folder)/'split', spec, 'stable', registration)
 

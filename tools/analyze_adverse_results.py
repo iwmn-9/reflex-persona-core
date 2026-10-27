@@ -62,7 +62,7 @@ def analyze(root,plan):
         for arm in plan['arms']:
             path=root/f"adverse-{spec['id']}-{arm}"/'result.json'
             arms[arm]=json.loads(path.read_bytes());files[path.parent.name]=sha(path.read_bytes())
-        rows.append(account_pair(spec,arms['stable'],arms['stratified']))
+        rows.append(account_pair(spec,arms[plan.get('reference_arm','stable')],arms[plan.get('candidate_arm','stratified')]))
     return dict(complete=True,source_results=files,rows=rows,adoption=False,
         development_gate_passed=verified['development_gate_passed'],
         limits=['Conditional increments include acquired resources and personality, not pure intelligence.',

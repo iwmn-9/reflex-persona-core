@@ -83,7 +83,7 @@ def summarize(root, plan):
             assert r['conditional_increment']==sum(t['conditional_increment'] for t in r['trace'])
             arms[arm]=r;runtimes.add(encoded(r['runtime']))
         if len(arms)!=len(plan['arms']):continue
-        a,b=arms['stable'],arms['stratified']
+        a,b=arms[plan.get('reference_arm','stable')],arms[plan.get('candidate_arm','stratified')]
         assert a['runtime']==b['runtime']
         assert a['configuration']['registration']==b['configuration']['registration']
         common=min(len(a['trace']),len(b['trace']))

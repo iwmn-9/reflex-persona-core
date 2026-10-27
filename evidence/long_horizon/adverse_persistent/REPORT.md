@@ -1,0 +1,15 @@
+# Existing persistent-model development comparison
+
+This is Python research on `research/adverse-recovery`. Stable v0.1.0, `main` and Rust remain unchanged. `plan.json` and `registration.json` are the sole source of conditions, gates and frozen computation identities.
+
+The previous stratified candidate has an observed negative gambling conditional difference and therefore cannot pass its development gate. Its final auction control is still running; no condition is removed. Sampling the same possibly incorrect predictive process more evenly did not remove all losses. An earlier four-root world-model diagnosis and the newly retained combat-steady turn-65 forecast suggest that projecting unobserved regime changes can alter preparation/attack choices. These local choices do not establish a long-term improvement.
+
+This study compares fresh stable H32 controls against **the existing `world_model='persistent'` option**, under independent samples 701/702/703. The current regime remains uncertain, but is assumed to continue during each forecast. Real observations still update the segmented learner, and the full decision is recomputed at every actual step. The option also applies to the existing two-step hypothetical recovery planner. Personality, values, learning, legal actions, H32, retry continuations, conditional purpose accounting and cumulative preference selection are unchanged. There is no game/action-name branch in the change.
+
+Both arms execute all ten original 128-turn conditions. The registered family score/conditional gates, concordant-loss improvement requirement and individual-adverse review are retained. A passed development comparison only permits the original independent forty-condition study; it does not authorize adoption. Missing results, a local-root change or a unit-test pass cannot count as a completed long-world comparison.
+
+Python 3.12.14 and NumPy 2.3.5 run on Ubuntu 24.04 with a declared NumPy/OpenBLAS arithmetic profile. Every slice verifies that profile and the frozen sources. Full owner replay, fixed-personality checks, detached factual-learning parity, save/restore and original world RNG are checked. This prevents the known cross-runner resume mismatch without relaxing equality. Each resolved step is checkpointed; only bounded continuations of these same worlds are automated, with no recurring schedule or automatic independent study.
+
+The new persistent arm passed a full-versus-resumed three-step actual-owner/RNG test. Existing sampling, incomplete-result, wrong-arm/registration, collection and shared-default tests also passed (eight focused tests in total). An initial test invocation misspelled the shared-test module name; it was rerun with the correct name. These tests establish execution integrity, not game quality.
+
+Current status: registered development candidate; long-play outcome is pending. No improvement or adoption is claimed.
