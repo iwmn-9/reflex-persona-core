@@ -20,10 +20,13 @@ from tools.review_adverse_recovery import summarize
 
 def execute(gh, *args):
     command=[gh,*args]
-    for attempt in range(3):
+    # An unknown dispatch outcome may already have started a workflow. Retrying
+    # a mutation would duplicate twenty experiments; reconcile via run listing.
+    attempts = 1 if args[:2] == ('workflow', 'run') else 3
+    for attempt in range(attempts):
         p=subprocess.run(command,capture_output=True,text=True,encoding='utf8',errors='replace')
         if p.returncode==0:return p.stdout
-        if attempt<2:time.sleep(10)
+        if attempt+1<attempts:time.sleep(10)
     raise RuntimeError('GitHub operation failed: '+p.stderr[-1800:])
 
 
@@ -38,6 +41,7 @@ def finish(root,run,ref,gh,max_segments):
         study_plan_sha256=registration['plan_sha256'],phase='collecting',pid=__import__('os').getpid())
     assert state['initial_run']==run and state['source_ref']==ref and state['study_plan_sha256']==registration['plan_sha256']
     state['pid']=__import__('os').getpid()
+    state['collector_sha256']=sha(Path(__file__).read_bytes())
     def save(**values):
         state.update(values,updated=datetime.now(timezone.utc).isoformat())
         temp=state_path.with_suffix('.new');temp.write_bytes(encoded(state));temp.replace(state_path)
@@ -68,8 +72,11 @@ def finish(root,run,ref,gh,max_segments):
                 state['collected'][name]=identity;save()
             report=summarize(root/'latest',plan)
             (root/'summary.json').write_bytes(encoded(report))
-            progress={p['id']+'/'+p['arm']:p['actual_steps'] for p in report['progress']}
+            progress={p['id']+'/'+p['arm']:p['actual_steps'] if p['state']!='missing' else None for p in report['progress']}
+            jobs=json.loads(execute(gh,'api',f'{prefix}/actions/runs/{current}/jobs?per_page=100'))['jobs']
             save(pairs_complete=report['pairs_complete'],progress=progress,
+                 progress_semantics='Last retrieved resolved steps; null means not yet retrieved, not zero execution.',
+                 workers=[dict(name=j['name'],status=j['status'],conclusion=j['conclusion']) for j in jobs],
                  workflow_status=info['status'],workflow_conclusion=info['conclusion'])
             if info['status']!='completed':
                 time.sleep(60);continue
@@ -88,7 +95,10 @@ def finish(root,run,ref,gh,max_segments):
             prior=state.get('dispatch_pending')
             if not prior:
                 save(dispatch_pending=current)
-                execute(gh,'workflow','run','adverse-recovery.yml','--repo',repo,'--ref',ref,'-f',f'previous_run={current}')
+                try:
+                    execute(gh,'workflow','run','adverse-recovery.yml','--repo',repo,'--ref',ref,'-f',f'previous_run={current}')
+                except RuntimeError as error:
+                    save(dispatch_error=repr(error))
             candidates=[]
             for _ in range(12):
                 runs=json.loads(execute(gh,'api',f'{prefix}/actions/workflows/adverse-recovery.yml/runs?per_page=40'))['workflow_runs']
