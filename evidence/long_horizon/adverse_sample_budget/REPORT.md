@@ -1,0 +1,13 @@
+# Fixed sample-budget comparison
+
+Python research only. Stable main/v0.1.0 and Rust are retained. No adoption or long-play improvement is claimed. The authoritative execution/gate contract is `plan.json`; all computation bytes are bound by `registration.json`.
+
+The completed stratified and persistent-model candidates both failed their unchanged gambling family gate. In the latter, every bet was locally favored by the actor's learned probabilities, so forcing the historically favorable bet would not establish a general intelligence improvement. Known-root probes also show action rankings moving between model sample banks. This study separates sparse integration from changes to personality, learning or the future-world assumption.
+
+The candidate retains the stable **posterior H32** configuration and increases its existing independent outer path bank from seeds `[701,702,703]` to `[701,702,703,704,705,706,707,708]`. These additional consecutive seeds are fixed before long-play outcomes and are never selected for favorable actions. H2 future recovery remains fully enumerated under its existing configuration. There is no new decision mechanism, state variable, game-name branch, action-name preference, or persona coefficient change.
+
+Both candidate and fresh stable controls must finish the same ten 128-turn conditions. Source, actual-world random draws, complete factual-learning histories and fixed personality are audited; every actual step is checkpointed. The same family and individual-result review applies. Only a complete development pass and review permit the original reserved independent forty-condition comparison, including original H16 and stable H32 controls. No local forecast or unit test can pass those gates.
+
+The cost gained is more computation, in exchange for testing whether sparse hypothetical paths explain instability. A finite maximum of eight workflow segments is allowed for the original executions; a segment boundary never creates a new seed, new world or new attempt. There is no recurring schedule, automatic adoption or paid resource addition. The collector uses `--archive-results` so final full audit is included in the finite computation.
+
+Verification before registration: nine focused tests passed, including eight-sample full-versus-resumed factual owner/RNG equality, candidate-root/personality retention, normalized response mass, fixed bank rejection, incomplete-result rejection and collection/audit failure handling. A preceding CI run exposed a test-fixture Windows short-path comparison (`RUNNER~1` versus `runneradmin`); its expected path is now resolved exactly like the collector. This changes no world, history, audit threshold or controller. A fresh full CI run is required for that fixture repair.

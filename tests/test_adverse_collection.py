@@ -37,7 +37,9 @@ class AdverseCollectionTests(unittest.TestCase):
             return json.dumps(dict(head_sha='frozen',status='completed',conclusion='success'))
         for failed in (False,True):
             with self.subTest(audit_failure=failed),tempfile.TemporaryDirectory() as temporary:
-                root=Path(temporary)
+                # Windows CI can spell the temp user directory as RUNNER~1;
+                # compare the same resolved path that the collector passes.
+                root=Path(temporary).resolve()
                 (root/'state.json').write_bytes(encoded(dict(initial_run=1,current_run=1,
                     source_ref='frozen',segments=[1],collected={n:'retained' for n in names},
                     complete=False,study_plan_sha256=sha(plan_path.read_bytes()))))

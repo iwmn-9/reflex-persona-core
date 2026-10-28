@@ -1,4 +1,4 @@
-"""Registered persistent-world comparison; stable H32 versus sampling research.
+"""Registered long-play comparisons; stable H32 versus declared research arms.
 
 All personality and physical rules remain unchanged. Hidden law is evaluator
 only. Each arm retains actual learning, complete outcome traces and world RNG.
@@ -24,7 +24,14 @@ from tools.run_continuation_portfolio import game_for
 from tools.run_owned_value import cumulative_basis, law, sample
 
 
-def decide(actor, game, world, arm, seeds=(701, 702, 703)):
+def seeds_for(arm):
+    return tuple(range(701, 709)) if arm == 'sample8' else (701, 702, 703)
+
+
+def decide(actor, game, world, arm, seeds=None):
+    seeds = seeds_for(arm) if seeds is None else seeds
+    if arm == 'sample8' and seeds != seeds_for(arm):
+        raise ValueError('fixed nested eight-sample bank required')
     options = dict(observe=game.context, events=game.events, terminal=game.terminal,
         assess=lambda w: game.goal(w).record(), request_for=game.request,
         feedback=game.feedback, model_id=game.model_id, target=game.target,
@@ -33,14 +40,14 @@ def decide(actor, game, world, arm, seeds=(701, 702, 703)):
         controller = FixedHorizonOwner(actor, **options)
         result = controller.decide(world)
         return result, controller.last
-    if arm not in ('stratified', 'persistent'):
+    if arm not in ('stratified', 'persistent', 'sample8'):
         raise ValueError('registered research arm required')
     request = game.request(game.context(world, actor.state))
     captured = {}
     planner = consensus_planner(actor, request, world, captured=captured,
         minimum_horizon=32, horizon=32, world_model='persistent' if arm == 'persistent' else 'posterior',
         purpose_estimator='conditional', tail_recovery=2, include_retry=True,
-        coherent_cumulative_mean=True, sampling='independent' if arm == 'persistent' else 'stratified', **options)
+        coherent_cumulative_mean=True, sampling='stratified' if arm == 'stratified' else 'independent', **options)
     result = DecisionLoop.decide_batch([(actor, request)], False, planner)[0]
     if not result.get('deliberation', {}).get('adopted'):
         raise ValueError('incomplete research forecast; no reflex fallback')
@@ -73,7 +80,7 @@ def replay(game, spec, trace, expected_owner, expected_rng):
 def run(directory, spec, arm, *, max_decisions=None, registration=None):
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
-    config = dict(spec=spec, arm=arm, horizon=32, seeds=[701, 702, 703], recovery_cache=64,
+    config = dict(spec=spec, arm=arm, horizon=32, seeds=list(seeds_for(arm)), recovery_cache=64,
         runner_sha256=sha(Path(__file__).read_bytes()),
         adapters={name: sha((ROOT/'tools'/name).read_bytes()) for name in (
             'run_continuation_portfolio.py', 'preparation_world.py')})
@@ -148,7 +155,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan', type=Path, required=True)
     parser.add_argument('--case', required=True)
-    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent'), required=True)
+    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8'), required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--max-decisions', type=int)
     args = parser.parse_args()

@@ -140,5 +140,5 @@ if __name__=='__main__':
     p.add_argument('--workflow',default='adverse-recovery.yml');p.add_argument('--run-title',default='Adverse recovery')
     p.add_argument('--archive-results',action='store_true',help='Fully audit and seal the finished study before stopping for review; no automatic adoption')
     a=p.parse_args()
-    if not 1<=a.max_segments<=4:raise ValueError('one to four finite execution segments required')
+    if not 1<=a.max_segments<=8:raise ValueError('one to eight finite execution segments required')
     finish(a.root,a.run,a.ref,a.gh,a.max_segments,a.dispatch_ref,a.plan,a.workflow,a.run_title,a.archive_results)

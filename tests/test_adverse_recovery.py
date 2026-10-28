@@ -9,7 +9,7 @@ from reflex.decision_loop import DecisionLoop
 from reflex.laboratory import PROFILES
 from reflex._continuation_portfolio import portfolio_planner
 from tools.continuing_games import ContinuingGame
-from tools.run_adverse_recovery import run
+from tools.run_adverse_recovery import run, seeds_for, decide
 from tools.adverse_segment import audit
 from tools.run_owned_value import cumulative_basis
 
@@ -57,12 +57,29 @@ class AdverseRecoveryTests(unittest.TestCase):
     def test_persistent_model_keeps_full_and_resumed_actual_owner_identical(self):
         self.check_resume('persistent')
 
+    def test_eight_sample_budget_keeps_full_and_resumed_actual_owner_identical(self):
+        self.check_resume('sample8')
+
+    def test_eight_sample_budget_preserves_persona_roots_and_mass(self):
+        g=ContinuingGame('combat',PROFILES[1],turns=3)
+        w=g.start();a=g.actor(g.context(w),learning='segmented')
+        left,small=decide(copy.deepcopy(a),g,w,'stable')
+        right,wide=decide(copy.deepcopy(a),g,w,'sample8')
+        self.assertEqual(character_key(left['context']),character_key(right['context']))
+        self.assertEqual(small['forecast'].roots,wide['forecast'].roots)
+        self.assertEqual(wide['forecast'].audit['continuation_portfolio']['seeds'],list(range(701,709)))
+        for paths in wide['paths'].values():
+            self.assertEqual(len(paths),24)
+            self.assertAlmostEqual(sum(b.probability for b in paths),1.)
+        with self.assertRaises(ValueError):decide(copy.deepcopy(a),g,w,'sample8',seeds=(701,702,703))
+
     def check_resume(self, arm):
         spec = dict(id='resume-example', mechanism='world', game='combat', profile=1,
                     seed=601, regime='outside', turns=3)
         registration = dict(plan_sha256='test-plan', source_sha256='test-source')
         with tempfile.TemporaryDirectory() as folder:
             full = run(Path(folder)/'full', spec, arm, registration=registration)
+            self.assertEqual(full['configuration']['seeds'],list(seeds_for(arm)))
             self.assertIsNone(run(Path(folder)/'split', spec, arm, max_decisions=1, registration=registration))
             self.assertFalse(audit(Path(folder)/'split', spec, arm, registration)['complete'])
             self.assertFalse((Path(folder)/'split/result.json').exists())

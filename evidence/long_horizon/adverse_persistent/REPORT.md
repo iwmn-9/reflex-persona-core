@@ -1,6 +1,23 @@
 # Existing persistent-model development comparison
 
-This is Python research on `research/adverse-recovery`. Stable v0.1.0, `main` and Rust remain unchanged. `plan.json` and `registration.json` are the sole source of conditions, gates and frozen computation identities.
+Status: **all ten pairs complete and audited; unchanged development gate failed**. This is Python research on `research/adverse-recovery`. Stable v0.1.0, `main` and Rust remain unchanged. `plan.json` and `registration.json` are the sole source of conditions, gates and frozen computation identities. Complete source, traces, checkpoints and audit are in `complete_study/`.
+
+| Family | Mean final-score difference | Mean conditional-increment difference |
+| --- | ---: | ---: |
+| Auction (4 conditions) | +0.007385 | +0.013574 |
+| Combat (4 conditions) | +0.013672 | +0.005078 |
+| Gambling (1 condition) | **-0.015625** | **-0.010938** |
+| Resources (1 condition) | +0.010417 | +0.006901 |
+
+These are differences against fresh stable H32 controls in each game's own normalized purpose units, not win-rate percentage points. Eight final scores improved, one tied, and one worsened. The gambling family fails the fixed gate, so this candidate is not adopted and its independent forty-condition study is not started. Every actual prediction matched between paired arms; personality and factual learning were preserved. The two original workflow segments were `40585962995` and `40624320632`, both successful. All twenty executions / 2,560 actual decisions passed full source, world RNG, fixed-axis, owner-replay, save/restore and complete-result audit.
+
+## Loss diagnosis
+
+Gambling ended with cash 185 instead of 191. Both owners bought and completed 17 bonds. The candidate placed 105 bets on response 2 versus 107 in the control, replacing the difference with one additional bet on response 0 and one on response 1. Under the evaluator's stationary law, those counts explain the entire conditional loss of 4.2 currency units; the remaining realized difference is -1.8. The differing investment schedules move conditional gains between the 32-turn reporting windows but do not change total completed-investment return.
+
+The extra contrary bets occurred at turns 6 and 22, when the actor's own learned prediction favored the chosen response. In fact **all 111 candidate bets selected its currently most likely response**. The control had one exception, at turn 6, which happened to favor the evaluator's true law. This is an offline within-bet immediate comparison, not proof of optimal long-term personality behavior. It does rule out the initial suspicion that later well-informed betting mistakes explain the loss. `gambling_observed_belief_diagnosis.json` retains all exceptional choices and investment times. Do not force the favorable historical action from hidden knowledge or discard this condition; the unchanged gate still fails.
+
+Other individual cautions remain: combat-growth has equal final score but conditional difference -0.007292 and perfect-information reference-choice difference -0.009408; combat-care has positive realized score but conditional difference -0.000130 and reference-choice difference -0.001014. Auction-steady/care retain reference-choice differences -0.002974/-0.000205 despite positive realized and conditional values. These full-horizon reference accounts include unavailable future information and personality effects, so they are diagnostics, not a pure intelligence label. All phase/action accounts are retained.
 
 The previous stratified candidate has completed and passed its full source/history audit for all ten pairs / 2,560 actual decisions, but failed the gambling conditional family gate. Its completed evidence is in `../adverse_recovery/complete_study/`; no condition was removed. Sampling the same possibly incorrect predictive process more evenly did not remove all losses. An earlier four-root world-model diagnosis and the newly retained combat-steady turn-65 forecast suggest that projecting unobserved regime changes can alter preparation/attack choices. These local choices do not establish a long-term improvement.
 
@@ -12,8 +29,10 @@ Python 3.12.14 and NumPy 2.3.5 run on Ubuntu 24.04 with a declared NumPy/OpenBLA
 
 The new persistent arm passed a full-versus-resumed three-step actual-owner/RNG test. Existing sampling, incomplete-result, wrong-arm/registration, collection and shared-default tests also passed (eight focused tests in total). An initial test invocation misspelled the shared-test module name; it was rerun with the correct name. These tests establish execution integrity, not game quality.
 
-Current status: registered development candidate running in workflow `40585962995` at frozen commit `ef47456750d5d5c78327c8ddbb9f335910784e17` / tag `research/adverse-persistent-20261028`. The finite collector is recorded in `results/adverse_persistent_20261028/state.json`; it resumes only these registered worlds and stops for review. Long-play outcome is pending. No improvement or adoption is claimed.
+The computation stayed at frozen commit `ef47456750d5d5c78327c8ddbb9f335910784e17` / tag `research/adverse-persistent-20261028`. The finite collector recorded completion in `results/adverse_persistent_20261028/state.json` and exited after full audit. No worker remains for this completed study. Partial progress was never counted as completion.
 
 Prediction-only follow-up in `../adverse_recovery/continuation_likelihood/` found a real cost: persistence slightly improves stationary-stream scores but worsens forecasts over change-and-return and irregular-change streams. It is not a universally better predictor. This is a reason to retain every changing-world condition and examine the actual closed loop, not to narrow the study or relax its gates. The frozen study also passed all four OS/Python numeric and package CI combinations (`40585962878`).
 
 The existing finite collector now runs with `--archive-results`: after all ten complete pairs, it seals the full source/history/RNG audit in `results/adverse_persistent_20261028/complete_audit/` before setting completion. A failing audit leaves `needs_attention` and cannot mark the study complete. Focused tests verify that behavior and that even a numeric development pass does not dispatch another study. This is an operational integration only; workflow source, original observations, persona and decision code remain frozen. The collector resumes only the existing registered worlds, never a recurring schedule. Independent forty-condition execution still requires a complete audit and individual-result/personality review.
+
+The next research comparison (`../adverse_sample_budget/REPORT.md`) changes only the existing outer model-sample count from three to eight, returning to the stable posterior world assumption. It tests observed sample-bank sensitivity without adding a decision mechanism. More samples do not supply missing information; if the known gambling loss persists for observed-belief reasons, searching favorable sample banks would be overfitting, not a valid repair.
