@@ -31,7 +31,9 @@ def game_for(spec):
     return cls(spec['length'], payout=spec['payout'], turns=spec['turns'], profile=PROFILES[spec['profile']])
 
 
-def execution(root, spec, retry, *, max_decisions=None):
+def execution(root, spec, retry, *, max_decisions=None, reader_selection='advice'):
+    if reader_selection not in ('advice', 'current_model') or reader_selection == 'current_model' and not retry:
+        raise ValueError('explicit reader selection on the candidate portfolio required')
     root = Path(root); root.mkdir(parents=True, exist_ok=True)
     hashes = {n: sha(Path(__file__).with_name(n).read_bytes()) for n in (
         'run_continuation_portfolio.py', 'continuation_portfolio.py', 'preparation_world.py','horizon_consensus.py')}
@@ -40,8 +42,13 @@ def execution(root, spec, retry, *, max_decisions=None):
     consensus=bool(spec.get('controller',{}).get('horizon_consensus',False)) and retry
     config = dict(spec=spec, retry=retry, sources=hashes, horizon=32 if consensus else 16, seeds=list(model_seeds),
         reference='adopted-owner-continuity-H16' if adopted else 'reflex-tail')
+    if reader_selection != 'advice':
+        config['reader_selection'] = reader_selection
     g = game_for(spec); w = g.start(); c = g.context(w)
     actor = g.actor(c, learning='segmented'); axes = character_key(c)
+    if reader_selection == 'current_model':
+        from tools.current_model_reader import CurrentModelReader
+        actor.predictor = CurrentModelReader.from_reader(actor.predictor, c['scope'])
     store = OwnedCheckpoint(root/'checkpoint.json', ('continuation-portfolio', spec['id']),
         'portfolio' if retry else 'reflex-tail', configuration=config, every=1, max_decisions=max_decisions)
     trace=[]; checks=dict(owner_parity=0, fixed_axes=0, restored=0); rng=np.random.default_rng(spec.get('seed',0))
