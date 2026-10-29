@@ -1,0 +1,50 @@
+name: Frozen sample-budget root diagnosis
+on:
+  push:
+    branches: [research/adverse-recovery]
+    paths: [.github/workflows/adverse-sample-roots.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  NPY_DISABLE_CPU_FEATURES: AVX512F,AVX512CD,AVX512_SKX,AVX512_CLX,AVX512_CNL,AVX512_ICL
+  OPENBLAS_CORETYPE: Haswell
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        tick: [6, 64]
+        start: [701, 9101, 9201]
+        samples: [3, 8]
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          path: control
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: 19462563a54cd36f43ff14679bf0e731de687cfe
+          path: worker
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12.14'
+      - run: python -m pip install -e worker numpy==2.3.5
+      - name: Retrieve complete original factual history
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 40737176817 --repo iwmn-9/reflex-persona-core --name adverse-gambling-1-10061201-outside-sample8 --dir results/input
+      - name: Reproduce factual owner before changing only the model bank
+        run: >-
+          python -u control/tools/probe_frozen_sample_budget.py
+          --worker worker --input results/input/result.json
+          --tick ${{ matrix.tick }} --start ${{ matrix.start }} --samples ${{ matrix.samples }}
+          --output results/diagnosis/result.json
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() }}
+        with:
+          name: sample-root-${{ matrix.tick }}-${{ matrix.start }}-${{ matrix.samples }}
+          path: results/diagnosis
+          retention-days: 30
