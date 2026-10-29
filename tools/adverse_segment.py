@@ -34,7 +34,7 @@ def audit(directory, spec, arm, registration):
     cfg = saved['contract']['configuration']
     assert cfg['spec'] == spec and cfg['arm'] == arm and cfg['registration'] == registration
     trace = saved['trace']
-    n = replay(game_for(spec), spec, trace, saved['owner'], saved['rng'])
+    n = replay(game_for(spec), spec, trace, saved['owner'], saved['rng'], arm)
     assert n == saved['world']['tick'] == saved['owner']['last_tick']+1
     assert saved['world'] == trace[-1]['after']
     assert saved['checks'] == dict(fixed_axes=n, owner_parity=n, restored=n)
@@ -100,7 +100,7 @@ def segment(plan, case, arm, output, minutes):
 if __name__ == '__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--plan',required=True);p.add_argument('--case',required=True)
-    p.add_argument('--arm',required=True,choices=('stable','stratified','persistent','sample8'))
+    p.add_argument('--arm',required=True,choices=('stable','stratified','persistent','sample8','symmetric','transfer'))
     p.add_argument('--output',required=True);p.add_argument('--minutes',type=float,default=325)
     a=p.parse_args()
     if not 0<a.minutes<=330:raise ValueError('explicit bounded execution required')

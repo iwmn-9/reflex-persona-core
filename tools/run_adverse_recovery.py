@@ -28,6 +28,20 @@ def seeds_for(arm):
     return tuple(range(701, 709)) if arm == 'sample8' else (701, 702, 703)
 
 
+def actor_for(game, context, arm):
+    actor = game.actor(context, learning='segmented')
+    if arm in ('symmetric', 'transfer'):
+        from tools.symmetric_prediction import SymmetricEventLearner
+        from tools.template_transfer_prediction import TemplateTransferLearner
+        reader = actor.predictor
+        previous = reader.learner
+        cls = TemplateTransferLearner if arm == 'transfer' else SymmetricEventLearner
+        reader.learner = cls(owner=reader.owner, model_id=game.model_id,
+            factors=previous.factors, names=previous.names, window=previous.window)
+        reader.memory = reader.learner.start()
+    return actor
+
+
 def decide(actor, game, world, arm, seeds=None):
     seeds = seeds_for(arm) if seeds is None else seeds
     if arm == 'sample8' and seeds != seeds_for(arm):
@@ -36,7 +50,7 @@ def decide(actor, game, world, arm, seeds=None):
         assess=lambda w: game.goal(w).record(), request_for=game.request,
         feedback=game.feedback, model_id=game.model_id, target=game.target,
         cumulative_preference=cumulative_basis(game, True), seeds=seeds, recovery_cache=64)
-    if arm == 'stable':
+    if arm in ('stable', 'symmetric', 'transfer'):
         controller = FixedHorizonOwner(actor, **options)
         result = controller.decide(world)
         return result, controller.last
@@ -54,9 +68,9 @@ def decide(actor, game, world, arm, seeds=None):
     return result, captured
 
 
-def replay(game, spec, trace, expected_owner, expected_rng):
+def replay(game, spec, trace, expected_owner, expected_rng, arm='stable'):
     world = game.start()
-    actor = game.actor(game.context(world), learning='segmented')
+    actor = actor_for(game, game.context(world), arm)
     axes = character_key(game.context(world))
     rng = np.random.default_rng(spec['seed'])
     for row in trace:
@@ -90,7 +104,7 @@ def run(directory, spec, arm, *, max_decisions=None, registration=None):
         configuration=config, every=1, max_decisions=max_decisions)
     g = game_for(spec)
     world = g.start()
-    actor = g.actor(g.context(world), learning='segmented')
+    actor = actor_for(g, g.context(world), arm)
     axes = character_key(g.context(world))
     rng = np.random.default_rng(spec['seed'])
     trace, checks, elapsed = [], dict(fixed_axes=0, owner_parity=0, restored=0), 0.
@@ -141,7 +155,7 @@ def run(directory, spec, arm, *, max_decisions=None, registration=None):
         print(json.dumps(dict(id=spec['id'], arm=arm, turn=world['tick'], complete=g.terminal(world))), flush=True)
         if store.stopping(len(trace)) and not g.terminal(world):
             return None
-    actual_steps = replay(g, spec, trace, actor.record(), rng.bit_generator.state)
+    actual_steps = replay(g, spec, trace, actor.record(), rng.bit_generator.state, arm)
     result = dict(complete=True, configuration=config, final=world, score=g.goal(world).value,
         conditional_increment=sum(row['conditional_increment'] for row in trace), trace=trace,
         checks=checks, replayed_actual_steps=actual_steps,
@@ -155,7 +169,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan', type=Path, required=True)
     parser.add_argument('--case', required=True)
-    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8'), required=True)
+    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8', 'symmetric', 'transfer'), required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--max-decisions', type=int)
     args = parser.parse_args()

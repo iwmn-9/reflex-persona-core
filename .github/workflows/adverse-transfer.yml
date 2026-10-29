@@ -1,0 +1,102 @@
+name: Registered template-transfer comparison
+run-name: Template transfer ${{ inputs.previous_run || 'initial' }}
+on:
+  push:
+    branches: [research/prediction-transfer]
+    paths: [.github/workflows/adverse-transfer.yml]
+  workflow_dispatch:
+    inputs:
+      previous_run:
+        type: string
+        default: ''
+        description: Completed run containing original checkpoints; empty only for initial run
+permissions:
+  contents: read
+  actions: read
+env:
+  NPY_DISABLE_CPU_FEATURES: AVX512F,AVX512CD,AVX512_SKX,AVX512_CLX,AVX512_CNL,AVX512_ICL
+  OPENBLAS_CORETYPE: Haswell
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      include: ${{ steps.plan.outputs.include }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - id: plan
+        run: |
+          python - <<'PY'
+          import json,os
+          p=json.load(open('evidence/long_horizon/adverse_transfer/plan.json'))
+          rows=[dict(case=s['id'],arm=a) for s in p['specs'] for a in p['arms']]
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('include='+json.dumps(rows)+'\n')
+          PY
+  world:
+    needs: plan
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.include) }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12.14'
+      - run: python -m pip install -e . numpy==2.3.5
+      - name: Restore original actual experience
+        if: ${{ inputs.previous_run != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN: ${{ inputs.previous_run }}
+          ARTIFACT: adverse-${{ matrix.case }}-${{ matrix.arm }}
+        run: gh run download "$RUN" --name "$ARTIFACT" --dir results/adverse
+      - name: Execute finite slice 1 of 4
+        env:
+          CASE: ${{ matrix.case }}
+          ARM: ${{ matrix.arm }}
+        run: python -u tools/adverse_segment.py --plan evidence/long_horizon/adverse_transfer/plan.json --case "$CASE" --arm "$ARM" --output results/adverse --minutes 80
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() }}
+        with:
+          name: adverse-${{ matrix.case }}-${{ matrix.arm }}
+          path: results/adverse
+          overwrite: true
+          retention-days: 30
+      - name: Execute finite slice 2 of 4
+        env:
+          CASE: ${{ matrix.case }}
+          ARM: ${{ matrix.arm }}
+        run: python -u tools/adverse_segment.py --plan evidence/long_horizon/adverse_transfer/plan.json --case "$CASE" --arm "$ARM" --output results/adverse --minutes 80
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() }}
+        with:
+          name: adverse-${{ matrix.case }}-${{ matrix.arm }}
+          path: results/adverse
+          overwrite: true
+          retention-days: 30
+      - name: Execute finite slice 3 of 4
+        env:
+          CASE: ${{ matrix.case }}
+          ARM: ${{ matrix.arm }}
+        run: python -u tools/adverse_segment.py --plan evidence/long_horizon/adverse_transfer/plan.json --case "$CASE" --arm "$ARM" --output results/adverse --minutes 80
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() }}
+        with:
+          name: adverse-${{ matrix.case }}-${{ matrix.arm }}
+          path: results/adverse
+          overwrite: true
+          retention-days: 30
+      - name: Execute finite slice 4 of 4
+        env:
+          CASE: ${{ matrix.case }}
+          ARM: ${{ matrix.arm }}
+        run: python -u tools/adverse_segment.py --plan evidence/long_horizon/adverse_transfer/plan.json --case "$CASE" --arm "$ARM" --output results/adverse --minutes 80
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ always() }}
+        with:
+          name: adverse-${{ matrix.case }}-${{ matrix.arm }}
+          path: results/adverse
+          overwrite: true
+          retention-days: 30
