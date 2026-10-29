@@ -1,5 +1,7 @@
 # 長期利益の数え落とし：固定32手構成を採用
 
+2026-10-29の実行方針：利用者の指定で後続研究をPC側へ移し、GitHub Actionsは停止・無効化した。元の計算と途中保存は保全し、固定ソース・同じ条件と乱数・同じ判定基準によるWindowsの両側比較を進める。Linuxの途中保存を異なる実行環境へ偽装して移植しない。現在の実行登録は[後続研究の記録](https://github.com/iwmn-9/reflex-persona-core/blob/research/consistent-reading/evidence/long_horizon/consistent_horizon/local_execution.json)を正本とする。以下の採用済み安定版と、その後の未採用研究は区別する。
+
 2026-10-26、登録40組すべてを128手まで完走し、両方式の全10,240実判断を監査した。固定人格・実際の学習・世界乱数を再生し、配布用の凍結ソースと80保存データから別ディレクトリで再監査しても、履歴と数値判定は完全一致した。登録済み基準を変えず、固定32手を採用する。[採用決定と全悪化例](../stable_release/adoption.json)、[元の採用基準](continuation_selected_confirmation_acceptance.json)、[完全な入力・再現手順](continuation_selected_confirmation/README.md)。安定版の配布状態は [RELEASE](../stable_release/RELEASE.md) を正本とする。目標11月3日・期限7日は維持する。
 
 ## 全40組の結果と採用範囲
