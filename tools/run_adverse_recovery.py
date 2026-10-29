@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT))
 from reflex.core import character_key, digest
 from reflex.decision_loop import DecisionLoop
 from reflex.fixed_horizon import FixedHorizonOwner
+from reflex.receding_owner import RecedingOwner
 from reflex.model_observer import resolve_feedback
 from reflex._horizon_consensus import consensus_planner
 from tools.owned_checkpoint import OwnedCheckpoint, encoded, sha
@@ -49,6 +50,16 @@ def decide(actor, game, world, arm, seeds=None):
     seeds = seeds_for(arm) if seeds is None else seeds
     if arm == 'sample8' and seeds != seeds_for(arm):
         raise ValueError('fixed nested eight-sample bank required')
+    if arm == 'original16':
+        # Exact previously adopted H16 comparison, without H32's cumulative
+        # preference or retry portfolio. This is not a weakened new baseline.
+        controller = RecedingOwner(actor, observe=game.context, events=game.events,
+            terminal=game.terminal, assess=lambda w: game.goal(w).record(),
+            record=lambda w: w, request_for=game.request, feedback=game.feedback,
+            model_id=game.model_id, target=game.target, tail_steps=15, seeds=seeds,
+            world_model='posterior', purpose_estimator='conditional', tail_recovery=2)
+        result = controller.decide(world)
+        return result, controller.last
     options = dict(observe=game.context, events=game.events, terminal=game.terminal,
         assess=lambda w: game.goal(w).record(), request_for=game.request,
         feedback=game.feedback, model_id=game.model_id, target=game.target,
@@ -97,7 +108,8 @@ def replay(game, spec, trace, expected_owner, expected_rng, arm='stable'):
 def run(directory, spec, arm, *, max_decisions=None, registration=None):
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
-    config = dict(spec=spec, arm=arm, horizon=32, seeds=list(seeds_for(arm)), recovery_cache=64,
+    config = dict(spec=spec, arm=arm, horizon=16 if arm == 'original16' else 32,
+        seeds=list(seeds_for(arm)), recovery_cache=None if arm == 'original16' else 64,
         runner_sha256=sha(Path(__file__).read_bytes()),
         adapters={name: sha((ROOT/'tools'/name).read_bytes()) for name in (
             'run_continuation_portfolio.py', 'preparation_world.py')})
@@ -142,17 +154,26 @@ def run(directory, spec, arm, *, max_decisions=None, registration=None):
         assert actor.record() == saved_actor
         checks['restored'] += 1
         selected_plan = result['deliberation']['selected_plan']
-        proposal = captured['forecast'].audit['plans'][selected_plan]['proposal']
+        if arm == 'original16':
+            proposal = 'adopted-H16'
+            purpose_by_plan = captured['node']['forecast'].purpose
+            predicted_actions = list(captured['node']['returns'][0][2])
+            simulated_steps = None
+        else:
+            proposal = captured['forecast'].audit['plans'][selected_plan]['proposal']
+            purpose_by_plan = captured['forecast'].purpose
+            predicted_actions = captured['modeled'][proposal][0]['actions']
+            simulated_steps = captured['simulated_steps']
         trace.append(dict(tick=world['tick'], before=world, after=after, action=action,
             before_owner=digest(before), owner=digest(saved_actor), truth=truth, response=response,
             conditional_increment=sum(p*(g.goal(g.transition(world, action, z)[0]).value-g.goal(world).value)
                                       for z, p in truth.items()),
             selected_purpose=result['deliberation']['selected_purpose'],
-            simulated_steps=captured['simulated_steps'],
+            simulated_steps=simulated_steps,
             response_prediction=prediction,
-            purpose_by_plan=captured['forecast'].purpose,
+            purpose_by_plan=purpose_by_plan,
             selected_plan=selected_plan, selected_policy=proposal,
-            predicted_actions=captured['modeled'][proposal][0]['actions']))
+            predicted_actions=predicted_actions))
         world = after
         store.save(world, actor, rng, trace, checks, elapsed+time.monotonic()-start, terminal=g.terminal(world))
         print(json.dumps(dict(id=spec['id'], arm=arm, turn=world['tick'], complete=g.terminal(world))), flush=True)
@@ -172,7 +193,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan', type=Path, required=True)
     parser.add_argument('--case', required=True)
-    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8', 'symmetric', 'transfer', 'consistent'), required=True)
+    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8', 'symmetric', 'transfer', 'consistent', 'original16'), required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--max-decisions', type=int)
     args = parser.parse_args()

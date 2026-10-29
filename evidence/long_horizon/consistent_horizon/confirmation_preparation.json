@@ -1,0 +1,33 @@
+{
+  "H16_comparison": "All four rule families match the old H16 controller actions, owner hashes, actual responses, score and final world/owner/RNG; a separate split/restored execution matches uninterrupted execution.",
+  "checks": {
+    "confirmation-reference-tests.log": {
+      "sha256": "57751120508fc61a91a7d1a296fc2cc9cf11fc718a4863e1caf1cf05b4ef25df",
+      "tests": 2
+    },
+    "confirmation-runner-regression.log": {
+      "sha256": "2e978566b3f8543aa576ed35a35e89870c87980718999283f359728a45a44a09",
+      "tests": 8
+    }
+  },
+  "gate_tests": {
+    "cases": [
+      "complete numeric result does not adopt",
+      "one family loss cannot be offset",
+      "missing/duplicate condition rejected",
+      "wrong seeds or shorter worlds rejected",
+      "two gambling world improvements insufficient"
+    ],
+    "failed": 0,
+    "tests": 5
+  },
+  "independent_started": false,
+  "scope": "Preparation of the already-required independent40 comparison only. No independent world has started. Frozen ongoing workers remain unchanged.",
+  "source_sha256": {
+    "tests/test_confirmation_gates.py": "b2a29477b84d1607df515bc1fdd977fb127c9a1baef19c9cb95f28a792cc2a34",
+    "tests/test_confirmation_reference.py": "218b900753970e73a03266bc73398c2cbe84ca73ea8aa4392fd3ee98286391b1",
+    "tools/review_adverse_confirmation.py": "3c5554030253b51d559b18b467d825c2d68f2a6ad045ebc0389e121922a1f90c",
+    "tools/run_adverse_recovery.py": "af19c16f20b3168063adc37e3ad998bbdab370a80fd32c4cfb8f33baf18c132e"
+  },
+  "specs_sha256": "b692e70246a40346bd6e6f61a1e11b837c7600593c11499b8be67aab40f2c8fd"
+}
