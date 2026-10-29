@@ -6,6 +6,6 @@
 
 `plan.json` と `original_plan.json` が条件、`summary.json` が全結果、`verification.json` が保存物のハッシュと実行検査回数の正本。`source.zip` は凍結440ファイル、`checkpoints.zip` は24実行の保存・結果・監査記録72ファイル、`runs.jsonl.gz` は全実行履歴を含む。
 
-配布物から別ディレクトリを再構成し、元と同じ監査を再実行した。凍結ソース、保存・結果ファイル、および圧縮した全履歴の内容は完全一致した（`roundtrip.json`）。再構成は上記JSON5点（`status.json` と `source_snapshot.json` を含む）を複写し、`checkpoints.zip` をその直下、`source.zip` を `_source/` に展開して行う。その後 `python archive.py --root 再構成先 --output 新しい出力先` で保存物の構造・ハッシュを再監査できる。この操作自体はH32を再計算しない。
+配布物から別ディレクトリを再構成し、元と同じ監査を再実行した。凍結ソース、保存・結果ファイル、および圧縮した全履歴の内容は完全一致した（`roundtrip.json`）。再構成は `plan.json`・`original_plan.json`・`summary.json`・`source_snapshot.json`・`status.json` を複写し、`checkpoints.zip` をその直下、`source.zip` を `_source/` に展開して行う。その後 `python archive.py --root 再構成先 --output 新しい出力先` で保存物の構造・ハッシュを再監査できる。この操作自体はH32を再計算しない。
 
 再実行する場合は `plan.json` のPython/NumPyと算術設定、凍結ソースを使用する。異なる環境に合わせて元の契約や履歴を書き換えない。採用判断は未実施。
