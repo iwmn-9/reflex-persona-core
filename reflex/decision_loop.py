@@ -422,9 +422,17 @@ class DecisionLoop:
             audit['unvalidated_roots']=[k for j,k in enumerate(rb.ids[0]) if not approved[0,j]]
             new=int(rd.action[0])
             gain=float(rd.scores[0,new]-rd.scores[0,old])
-            if not rd.eligible[0,old] or gain>.05:
+            # A single complete response forecast is the actor's current
+            # probability model, not competing advice. Reprice all choices in
+            # that model once, retaining Policy's risk, principles and intent
+            # switching cost. An additional reader margin can otherwise veto
+            # the same person's preferred action indefinitely. Competing or
+            # unvalidated advice retains its existing adoption margin.
+            single_forecast = proposal.known_conditionals and proposal.response_candidate is None
+            if single_forecast or not rd.eligible[0,old] or gain>.05:
                 s['decision']=rd.records(rb)[0];s['effective']=rc
-                audit.update(adopted=True,reason='conditional_rule_persona_gain' if proposal.known_conditionals else 'validated_forecast_persona_gain',gain=gain)
+                reason = 'single_forecast_persona_choice' if single_forecast else ('conditional_rule_persona_gain' if proposal.known_conditionals else 'validated_forecast_persona_gain')
+                audit.update(adopted=True,reason=reason,gain=gain)
             else:audit['reason']='no_material_persona_gain'
         # Optional joint horizon selection has a distinct target. Commit only
         # the selected legal immediate root to experience; simulated future
