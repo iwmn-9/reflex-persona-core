@@ -4,6 +4,7 @@ import gzip
 import json
 from pathlib import Path
 import sys
+import zipfile
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from tools.owned_checkpoint import encoded,sha
@@ -30,7 +31,12 @@ def compare(reference,current,plan_path,output):
     assert json.loads((current/'plan.json').read_bytes())==plan
     changed=[k for k,v in oldplan['sources'].items() if plan['sources'].get(k)!=v]
     assert changed==['reflex/decision_loop.py'],changed
-    for name,checksum in plan['sources'].items():assert sha((ROOT/name).read_bytes())==checksum
+    # Evidence is tied to its frozen worker, not to a later checkout that may
+    # legitimately contain post-study test corrections.
+    for folder,contract in ((reference,oldplan),(current,plan)):
+        with zipfile.ZipFile(folder/'source.zip') as archive:
+            for name,checksum in contract['sources'].items():
+                assert sha(archive.read(name))==checksum
     rows=[]
     for key in sorted(old):
         assert old[key]['spec']==new[key]['spec']

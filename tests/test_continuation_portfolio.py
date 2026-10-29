@@ -65,14 +65,33 @@ class ContinuationPortfolioTests(unittest.TestCase):
         self.assertTrue(all(len(rows)==6 for rows in cap['modeled'].values()))
 
     def test_adding_bad_continuations_does_not_relax_the_competence_floor(self):
-        # Regression: on this unchanged public state the raw proposal spread
-        # doubled the allowed loss even though no better outcome was found.
-        g=ContinuingGame('resources',PROFILES[2],turns=128)
+        # The added retry of an unprofitable construction is deterministically
+        # worse. Do not assume a stochastic resource continuation remains bad
+        # after the simulated owner's selection behavior improves.
+        g=PreparationChain(3,payout=1.,turns=128,profile=PROFILES[2])
         _,base=choose(g,False,horizon=8)
         _,expanded=choose(g,True,horizon=8)
         old,new=base['forecast'],expanded['forecast']
         self.assertAlmostEqual(max(old.purpose.values()),max(new.purpose.values()))
         self.assertGreater(new.audit['purpose_band']['raw_proposal_regret'],old.max_regret)
+        self.assertGreaterEqual(max(new.purpose.values())-new.max_regret,
+            max(old.purpose.values())-old.max_regret-1e-12)
+
+    def test_improved_continuations_preserve_existing_paths_and_competence_floor(self):
+        # Retain the original regression world. Extra continuations may now
+        # improve its best value; they still may not erase the old alternatives
+        # or lower the competence floor.
+        g=ContinuingGame('resources',PROFILES[2],turns=128)
+        _,base=choose(g,False,horizon=8)
+        _,expanded=choose(g,True,horizon=8)
+        old,new=base['forecast'],expanded['forecast']
+        # Display-plan indexes shift when extra proposals are inserted. Match
+        # the actual continuation identity, not its position in the bank.
+        new_by_proposal={new.audit['plans'][name]['proposal']:value
+                         for name,value in new.purpose.items()}
+        for name,value in old.purpose.items():
+            self.assertEqual(value,new_by_proposal[old.audit['plans'][name]['proposal']])
+        self.assertGreaterEqual(max(new.purpose.values()),max(old.purpose.values()))
         self.assertGreaterEqual(max(new.purpose.values())-new.max_regret,
             max(old.purpose.values())-old.max_regret-1e-12)
 
