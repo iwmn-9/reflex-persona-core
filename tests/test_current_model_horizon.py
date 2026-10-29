@@ -1,0 +1,11 @@
+import unittest
+from tests import test_symmetric_prediction as source_tests
+
+
+class CurrentModelHorizonTests(unittest.TestCase):
+    arm='consistent'
+    test_predictive_branches_save_restore_and_no_factual_contamination=source_tests.SymmetricPredictionTests.test_predictive_branches_save_restore_and_no_factual_contamination
+    test_full_and_resumed_game_equality_across_rule_families=source_tests.SymmetricPredictionTests.test_full_and_resumed_game_equality_across_rule_families
+
+
+if __name__=='__main__':unittest.main()

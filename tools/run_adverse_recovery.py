@@ -30,6 +30,9 @@ def seeds_for(arm):
 
 def actor_for(game, context, arm):
     actor = game.actor(context, learning='segmented')
+    if arm == 'consistent':
+        from tools.current_model_reader import CurrentModelReader
+        actor.predictor = CurrentModelReader.from_reader(actor.predictor,context['scope'])
     if arm in ('symmetric', 'transfer'):
         from tools.symmetric_prediction import SymmetricEventLearner
         from tools.template_transfer_prediction import TemplateTransferLearner
@@ -50,7 +53,7 @@ def decide(actor, game, world, arm, seeds=None):
         assess=lambda w: game.goal(w).record(), request_for=game.request,
         feedback=game.feedback, model_id=game.model_id, target=game.target,
         cumulative_preference=cumulative_basis(game, True), seeds=seeds, recovery_cache=64)
-    if arm in ('stable', 'symmetric', 'transfer'):
+    if arm in ('stable', 'symmetric', 'transfer', 'consistent'):
         controller = FixedHorizonOwner(actor, **options)
         result = controller.decide(world)
         return result, controller.last
@@ -169,7 +172,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan', type=Path, required=True)
     parser.add_argument('--case', required=True)
-    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8', 'symmetric', 'transfer'), required=True)
+    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8', 'symmetric', 'transfer', 'consistent'), required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--max-decisions', type=int)
     args = parser.parse_args()

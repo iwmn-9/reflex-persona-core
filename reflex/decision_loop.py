@@ -99,6 +99,7 @@ class Reading:
     responses: dict | None=None
     known_conditionals: bool=False
     response_candidate: dict | None=None
+    selection: str='advice'
 
 
 @dataclass(frozen=True)
@@ -141,6 +142,10 @@ def _validate_reading(base,proposal,bindings,target,cap):
     if not isinstance(proposal,Reading) or type(proposal.nodes) is not int or not 0<=proposal.nodes<=cap:
         raise ValueError('bounded Reading with counted nodes required')
     identifier(proposal.key)
+    if proposal.selection not in ('advice','current_model'):
+        raise ValueError('declared reading selection semantics required')
+    if proposal.selection=='current_model' and (not proposal.known_conditionals or proposal.response_candidate is not None):
+        raise ValueError('current model requires one complete conditional response forecast')
     if proposal.target!=target:raise ValueError('forecast/feedback outcome target mismatch')
     if type(proposal.known_conditionals) is not bool:raise ValueError('explicit conditional-rule declaration required')
     if proposal.known_conditionals:
@@ -428,7 +433,7 @@ class DecisionLoop:
             # switching cost. An additional reader margin can otherwise veto
             # the same person's preferred action indefinitely. Competing or
             # unvalidated advice retains its existing adoption margin.
-            single_forecast = proposal.known_conditionals and proposal.response_candidate is None
+            single_forecast = proposal.selection=='current_model'
             if single_forecast or not rd.eligible[0,old] or gain>.05:
                 s['decision']=rd.records(rb)[0];s['effective']=rc
                 reason = 'single_forecast_persona_choice' if single_forecast else ('conditional_rule_persona_gain' if proposal.known_conditionals else 'validated_forecast_persona_gain')
