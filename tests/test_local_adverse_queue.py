@@ -6,10 +6,33 @@ import sys
 import tempfile
 import unittest
 
-from tools.local_adverse_queue import encoded, exclusive, progress, sha
+from tools.local_adverse_queue import active_progress, encoded, exclusive, progress, sha
 
 
 class LocalQueueContractTests(unittest.TestCase):
+    def test_active_notice_does_not_open_checkpoint_or_claim_completion(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root/'checkpoint.json').write_bytes(b'corrupt')
+            (root/'execution.stdout.log').write_bytes(
+                b'{"id":"case","arm":"stable","turn":128,"complete":true}\n')
+            state = active_progress(root, dict(id='case', turns=128), 'stable', 1)
+            self.assertEqual(state['actual_steps'], 128)
+            self.assertFalse(state['complete'])
+            self.assertFalse(state['checkpoint_verified'])
+            with self.assertRaises(json.JSONDecodeError):
+                progress(root)
+
+    def test_partial_log_line_cannot_advance_saved_progress(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root/'execution.stdout.log').write_bytes(
+                b'{"id":"case","arm":"stable","turn":1}\n'
+                b'{"id":"case","arm":"stable","turn":2}')
+            state = active_progress(root, dict(id='case', turns=128), 'stable', 1)
+            self.assertEqual(state['actual_steps'], 1)
+            self.assertFalse(state['complete'])
+
     def test_checkpoint_progress_is_visible_without_completion(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

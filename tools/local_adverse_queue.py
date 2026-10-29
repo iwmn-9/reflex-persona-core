@@ -15,6 +15,11 @@ import subprocess
 import sys
 import time
 
+if __package__:
+    from .local_checkpoint_io import read_json, atomic_json
+else:
+    from local_checkpoint_io import read_json, atomic_json
+
 
 def encoded(value):
     return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
@@ -25,14 +30,11 @@ def sha(data):
 
 
 def read(path):
-    return json.loads(Path(path).read_bytes())
+    return read_json(path)
 
 
 def save(path, value):
-    path = Path(path)
-    temp = path.with_suffix('.new')
-    temp.write_bytes(encoded(value))
-    temp.replace(path)
+    atomic_json(path, value)
 
 
 def now():
@@ -71,7 +73,48 @@ def progress(folder):
         modified = checkpoint.stat().st_mtime
     return dict(state=status.get('state', 'pending'), actual_steps=n,
                 checkpoint_modified=modified, complete=status.get('complete', False),
-                pid=status.get('pid'), error=status.get('error'))
+                pid=status.get('pid'), error=status.get('error'),
+                progress_source='checkpoint' if modified is not None else 'status',
+                checkpoint_verified=modified is not None)
+
+
+def active_progress(folder, spec, arm, pid, minimum=0):
+    """Observe notices emitted AFTER a saved turn without opening its file.
+
+    A frozen Windows writer cannot atomically replace a destination held open
+    by a reader. Log notices expose saved progress only; completion still needs
+    worker exit, the complete checkpoint and its unchanged exact audit.
+    """
+    log = Path(folder)/'execution.stdout.log'
+    if type(minimum) is not int or not 0 <= minimum <= spec['turns']:
+        raise ValueError('valid previously saved progress required')
+    steps = minimum
+    if log.exists():
+        with log.open('rb') as stream:
+            size = stream.seek(0, 2)
+            start = max(0, size-32768)
+            stream.seek(start)
+            raw = stream.read()
+        lines = raw.splitlines()
+        if start:
+            lines = lines[1:]
+        if raw and not raw.endswith(b'\n'):
+            lines = lines[:-1]
+        for line in lines:
+            try:
+                row = json.loads(line)
+            except (ValueError, UnicodeError):
+                continue
+            if not isinstance(row, dict) or row.get('id') != spec['id'] or row.get('arm') != arm:
+                continue
+            turn = row.get('turn')
+            if type(turn) is not int or not 0 <= turn <= spec['turns']:
+                raise ValueError('invalid post-checkpoint progress notice')
+            steps = max(steps, turn)
+    return dict(state='auditing' if steps == spec['turns'] else 'running',
+                actual_steps=steps, checkpoint_modified=None, complete=False,
+                pid=pid, error=None, progress_source='post_checkpoint_log',
+                checkpoint_verified=False)
 
 
 class ExistingWorker:
@@ -125,11 +168,13 @@ def coordinate(path, workers):
     root = path.parent
     manifest = read(path)
     assert manifest['driver_sha256'] == sha(Path(__file__).read_bytes())
+    assert manifest['io_sha256'] == sha(Path(__file__).with_name('local_checkpoint_io.py').read_bytes())
     import numpy as np
     runtime = dict(python=sys.version, numpy=np.__version__, system=platform.system(), machine=platform.machine())
     assert runtime == manifest['runtime']
     with exclusive(root/'queue.lock'):
         active = {}
+        initial_steps = {}
         # Recover our live workers rather than duplicate or terminate them.
         for i, job in enumerate(manifest['jobs']):
             folder = Path(job['output'])
@@ -142,12 +187,15 @@ def coordinate(path, workers):
                 assert status['registration'] == job['registration']
                 assert status['case'] == job['spec']['id'] and status['arm'] == job['arm']
                 active[i] = ExistingWorker(folder, status['pid']), []
+                initial_steps[i] = status.get('from_tick', status['actual_steps'])
         done = set()
         failures = {}
         while True:
             snapshot = []
             for i, job in enumerate(manifest['jobs']):
-                p = progress(job['output'])
+                p = (active_progress(job['output'], job['spec'], job['arm'],
+                                     active[i][0].pid, initial_steps[i])
+                     if i in active else progress(job['output']))
                 snapshot.append(dict(index=i, study=job['study'], case=job['spec']['id'], arm=job['arm'], **p))
                 if p['complete']:
                     assert p['state'] == 'complete' and p['actual_steps'] == job['spec']['turns']
@@ -160,6 +208,7 @@ def coordinate(path, workers):
                     handle.close()
                 del active[i]
                 p = progress(manifest['jobs'][i]['output'])
+                snapshot[i].update(p)
                 if code or not p['complete']:
                     failures[i] = dict(returncode=code, progress=p)
                 else:
@@ -176,10 +225,12 @@ def coordinate(path, workers):
                     env = os.environ.copy()
                     env.update(job['arithmetic'])
                     env.update(OPENBLAS_NUM_THREADS='1', OMP_NUM_THREADS='1', MKL_NUM_THREADS='1')
+                    initial_steps[i] = snapshot[i]['actual_steps']
                     child = subprocess.Popen([sys.executable, '-u', str(Path(__file__).resolve()),
                         '--manifest', str(path), '--job', str(i)], cwd=job['source'], env=env,
                         stdout=logs[0], stderr=logs[1], creationflags=subprocess.BELOW_NORMAL_PRIORITY_CLASS)
                     active[i] = child, logs
+                    snapshot[i].update(pid=child.pid, state='running')
             state = dict(updated=now(), pid=os.getpid(), manifest_sha256=sha(path.read_bytes()),
                 complete=len(done) == len(manifest['jobs']), executions_complete=len(done),
                 executions_registered=len(manifest['jobs']), active={i:p.pid for i,(p,_) in active.items()},
@@ -203,4 +254,7 @@ if __name__ == '__main__':
             raise ValueError('bounded local concurrency required')
         coordinate(args.manifest, args.workers)
     else:
-        worker(read(args.manifest), args.job)
+        manifest = read(args.manifest)
+        assert manifest['driver_sha256'] == sha(Path(__file__).read_bytes())
+        assert manifest['io_sha256'] == sha(Path(__file__).with_name('local_checkpoint_io.py').read_bytes())
+        worker(manifest, args.job)
