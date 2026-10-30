@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import signal
 import subprocess
 import sys
 from threading import Lock
@@ -181,6 +182,9 @@ def main(root, acknowledge_interruption=None, workers=1):
 
 
 if __name__ == '__main__':
+    # A background launcher may inherit SIGINT as ignored. Restore Python's
+    # cooperative interruption so the pool drains its scientific children.
+    signal.signal(signal.SIGINT, signal.default_int_handler)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', required=True)
     parser.add_argument('--acknowledge-interruption')
