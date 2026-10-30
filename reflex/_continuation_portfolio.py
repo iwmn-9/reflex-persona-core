@@ -33,7 +33,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                       cumulative_preference=None, include_retry=True, captured=None,
                       purpose_estimator='sampled', tail_recovery=0, recovery_cache=0,
                       coherent_cumulative_mean=False, capture_prefixes=False,
-                      sampling='independent', continuation_scope='root'):
+                      sampling='independent', continuation_scope='root',
+                      tail_purpose_reflex=False):
     if type(horizon) is not int or not 1 <= horizon <= 128:
         raise ValueError('explicit bounded continuation horizon required')
     if (not isinstance(seeds, tuple) or not 1 <= len(seeds) <= 8
@@ -50,6 +51,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         raise ValueError('optional existing two-step owner recovery requires a future tail')
     if type(recovery_cache) is not int or not 0<=recovery_cache<=256:
         raise ValueError('bounded within-decision recovery cache required')
+    if type(tail_purpose_reflex) is not bool:
+        raise ValueError('explicit future immediate-purpose selection required')
     if sampling not in ('independent', 'stratified'):
         raise ValueError('known continuation sampling mode required')
     if continuation_scope not in ('root', 'shared') or continuation_scope == 'shared' and not include_retry:
@@ -73,7 +76,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         cache=OrderedDict();cache_hits=0;recovery_computations=0
         roots = sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure'])
         paths, audits, mapping, policies = {}, {}, {}, {}
-        steps = 0
+        steps = 0; purpose_reflex_calls = 0
         for root_index, root in enumerate(roots):
             first = model.owner_transitions(copy.deepcopy(world), root, actor, copy.deepcopy(c))
             modes = [('reflex', None)]
@@ -128,6 +131,27 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                                                 return f
                                             future=memo
                                 if future is not None:recovery_calls += 1
+                            if key is None and future is None and tail_purpose_reflex:
+                                # The factual owner has a declared public goal.
+                                # Reuse that same existing one-step evaluator
+                                # for its hypothetical fallback, including when
+                                # passive income makes coarse effects positive.
+                                # Personality, outcome risks, learning and retry
+                                # proposals are not replaced by a new reward.
+                                person = copy.deepcopy(own)
+                                immediate = owned_rollout(person, observe=observe, events=events,
+                                    terminal=terminal, assess=assess, record=lambda w: w,
+                                    request_for=request_for, feedback=feedback, model_id=model_id,
+                                    target=target, tail_steps=0, tree_steps=1,
+                                    world_model=world_model, cumulative_preference=cumulative_preference)
+                                proposed = immediate.planner(person, copy.deepcopy(current_request), copy.deepcopy(w))
+                                def complete_purpose(cs, ds, proposed=proposed):
+                                    f = proposed(cs, ds)
+                                    if f is None:
+                                        raise ValueError('incomplete future immediate-purpose forecast')
+                                    return f
+                                future = complete_purpose
+                                purpose_reflex_calls += 1
                             result = DecisionLoop.decide_batch([(own, current_request)], False, future,
                                 _counterfactual_roots=(key,) if key is not None else None)[0]
                             key = result['decision']['action_id']
@@ -201,6 +225,11 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         if continuation_scope != 'root':
             metadata['continuation_portfolio'].update(continuation_scope=continuation_scope,
                 source_semantics='every real first action shares the same public retry bank and learning-owner fallback; only the selected first action executes')
+        if tail_purpose_reflex:
+            metadata['continuation_portfolio']['tail_purpose_reflex'] = dict(
+                kind='existing-one-step-owned-purpose', calls=purpose_reflex_calls,
+                semantics='Existing H2 recovery first; otherwise evaluate the public immediate goal with the same owner. '
+                          'Forced retry proposals remain proposals. No factual or hidden outcomes are supplied.')
         forecast = replace(forecast, audit=metadata, max_regret=fraction*spread)
         if digest(actor.record()) != source:
             raise ValueError('counterfactual learning contaminated factual owner')

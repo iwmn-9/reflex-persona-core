@@ -30,12 +30,12 @@ def seeds_for(arm):
 
 def actor_for(game, context, arm):
     actor = game.actor(context, learning='segmented')
-    if arm in ('symmetric', 'transfer'):
+    if arm in ('symmetric', 'transfer', 'transfer_purpose'):
         from tools.symmetric_prediction import SymmetricEventLearner
         from tools.template_transfer_prediction import TemplateTransferLearner
         reader = actor.predictor
         previous = reader.learner
-        cls = TemplateTransferLearner if arm == 'transfer' else SymmetricEventLearner
+        cls = TemplateTransferLearner if arm in ('transfer', 'transfer_purpose') else SymmetricEventLearner
         reader.learner = cls(owner=reader.owner, model_id=game.model_id,
             factors=previous.factors, names=previous.names, window=previous.window)
         reader.memory = reader.learner.start()
@@ -54,10 +54,12 @@ def decide(actor, game, world, arm, seeds=None):
         controller = FixedHorizonOwner(actor, **options)
         result = controller.decide(world)
         return result, controller.last
-    if arm not in ('stratified', 'persistent', 'sample8'):
+    if arm not in ('stratified', 'persistent', 'sample8', 'transfer_purpose'):
         raise ValueError('registered research arm required')
     request = game.request(game.context(world, actor.state))
     captured = {}
+    if arm == 'transfer_purpose':
+        options['tail_purpose_reflex'] = True
     planner = consensus_planner(actor, request, world, captured=captured,
         minimum_horizon=32, horizon=32, world_model='persistent' if arm == 'persistent' else 'posterior',
         purpose_estimator='conditional', tail_recovery=2, include_retry=True,
@@ -169,7 +171,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan', type=Path, required=True)
     parser.add_argument('--case', required=True)
-    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8', 'symmetric', 'transfer'), required=True)
+    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8', 'symmetric', 'transfer', 'transfer_purpose'), required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--max-decisions', type=int)
     args = parser.parse_args()
