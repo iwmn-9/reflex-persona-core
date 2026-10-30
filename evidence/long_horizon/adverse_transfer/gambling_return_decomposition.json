@@ -1,0 +1,119 @@
+{
+  "adoption": false,
+  "at": "2026-10-30T12:16:54.902409+00:00",
+  "complete": true,
+  "differences": {
+    "conditional_bet_return": 0.0,
+    "conditional_cash_gain": -9.0,
+    "investment_return": -9,
+    "realized_bet_return": 3,
+    "realized_cash_gain": -6.0
+  },
+  "formula": {
+    "bet_conditional": "3 * evaluator_probability_of_bet_response - 1",
+    "bet_realized": "2 per matching response, -1 otherwise",
+    "investment": "7 * matured - 4 * bought",
+    "score_scale": 384
+  },
+  "id": "gambling-1-10061201-outside",
+  "limits": [
+    "Accounting under the actual completed trajectories, not a counterfactual optimal policy.",
+    "Evaluator probabilities never enter actor learning.",
+    "Identifies where currency was lost, not yet why the persona selector delayed an investment."
+  ],
+  "rows": {
+    "stable": {
+      "bond_ticks": [
+        0,
+        8,
+        15,
+        22,
+        29,
+        36,
+        43,
+        50,
+        60,
+        67,
+        74,
+        81,
+        88,
+        95,
+        102,
+        109,
+        116
+      ],
+      "bought": 17,
+      "conditional_bet_return": 147.00000000000003,
+      "conditional_cash_gain": 198.00000000000003,
+      "input_sha256": "d32020bd38a665c9e6ddf9d7641f5f96cc50a99883c266d93cb07796e930d361",
+      "investment_return": 51,
+      "matured": 17,
+      "maturity_ticks": [
+        6,
+        14,
+        21,
+        28,
+        35,
+        42,
+        49,
+        56,
+        66,
+        73,
+        80,
+        87,
+        94,
+        101,
+        108,
+        115,
+        122
+      ],
+      "realized_bet_return": 132,
+      "realized_cash_gain": 183.0,
+      "unfinished": 0
+    },
+    "transfer": {
+      "bond_ticks": [
+        0,
+        7,
+        14,
+        21,
+        28,
+        35,
+        42,
+        53,
+        60,
+        67,
+        79,
+        100,
+        107,
+        114
+      ],
+      "bought": 14,
+      "conditional_bet_return": 147.00000000000003,
+      "conditional_cash_gain": 189.00000000000003,
+      "input_sha256": "cc4a3985f8d0ac5b06cb18fd8f1a97d272480fd28f06f4ac253b60e34679173f",
+      "investment_return": 42,
+      "matured": 14,
+      "maturity_ticks": [
+        6,
+        13,
+        20,
+        27,
+        34,
+        41,
+        48,
+        59,
+        66,
+        73,
+        85,
+        106,
+        113,
+        120
+      ],
+      "realized_bet_return": 135,
+      "realized_cash_gain": 177.0,
+      "unfinished": 0
+    }
+  },
+  "whole_verification_sha256": "b7205d4ef9680e6ea37163f50e0cf0b5b459d35c48b7ff45457aaecd0ddb90b4"
+}
