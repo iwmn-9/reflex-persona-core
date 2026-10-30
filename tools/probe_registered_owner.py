@@ -106,6 +106,13 @@ def main(args):
         action=result['decision']['action_id'], selected_purpose=result['deliberation']['selected_purpose'],
         estimated_purpose_by_root=best, purpose_by_plan=forecast.purpose, roots=forecast.roots,
         decision=result['decision'], deliberation=result['deliberation'],
+        # Retain the actual numeric selection packet. Purpose alone cannot
+        # distinguish a personal tradeoff from a bad forecast. This is captured
+        # after the original decision and never fed back into its computation.
+        selection_inputs=dict(base_context=result['context'], forecast_contexts=forecast.contexts,
+            outcome_limit=forecast.outcome_limit, progress=result.get('progress'),
+            policy=dict(principle_priority=actor.policy.principle_priority,
+                        commitments=actor.policy.commitments, residual=actor.policy.residual.tolist())),
         simulated_steps=captured['simulated_steps'], total_seconds=time.monotonic()-started,
         diagnostic_source_sha256=sha(Path(__file__).read_bytes()), adoption=False)
     output.parent.mkdir(parents=True, exist_ok=True)
