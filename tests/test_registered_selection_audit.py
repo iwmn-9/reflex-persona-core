@@ -51,6 +51,25 @@ class RegisteredSelectionAuditTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             personal_ranking(packet)
 
+    def test_actual_decision_loop_packet_retains_personal_policy_and_next_state(self):
+        from reflex.laboratory import PROFILES
+        from tests.test_continuation_persona import IntrinsicTradeoff
+        from tools.run_adverse_recovery import actor_for, decide
+        game = IntrinsicTradeoff(PROFILES[2], turns=1)
+        world = game.start()
+        actor = actor_for(game, game.context(world), 'consistent')
+        result, captured = decide(actor, game, world, 'consistent')
+        forecast = captured['forecast']
+        packet = json.loads(json.dumps(dict(decision=result['decision'],
+            deliberation=result['deliberation'], roots=forecast.roots, purpose_by_plan=forecast.purpose,
+            selection_inputs=dict(base_context=result['context'], forecast_contexts=forecast.contexts,
+                target=forecast.target, extra_selectors={}, outcome_limit=forecast.outcome_limit,
+                progress=result.get('progress'), policy=dict(principle_priority=actor.policy.principle_priority,
+                    commitments=actor.policy.commitments, residual=actor.policy.residual.tolist())))))
+        review = personal_ranking(packet)
+        self.assertTrue(review['exact_selection_reproduced'])
+        self.assertEqual(review['mode'], packet['decision']['next_state']['mode'])
+
 
 if __name__ == '__main__':
     unittest.main()
