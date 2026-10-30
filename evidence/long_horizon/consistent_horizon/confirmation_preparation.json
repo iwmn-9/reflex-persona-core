@@ -29,5 +29,26 @@
     "tools/review_adverse_confirmation.py": "3c5554030253b51d559b18b467d825c2d68f2a6ad045ebc0389e121922a1f90c",
     "tools/run_adverse_recovery.py": "af19c16f20b3168063adc37e3ad998bbdab370a80fd32c4cfb8f33baf18c132e"
   },
-  "specs_sha256": "b692e70246a40346bd6e6f61a1e11b837c7600593c11499b8be67aab40f2c8fd"
+  "specs_sha256": "b692e70246a40346bd6e6f61a1e11b837c7600593c11499b8be67aab40f2c8fd",
+  "confirmation_archive": {
+    "at": "2026-10-30T03:47:37.486817+00:00",
+    "entry": "tools/archive_adverse_confirmation.py",
+    "checks": {
+      "new_packaging_tests": 3,
+      "unchanged_gate_regressions": 5,
+      "failed": 0
+    },
+    "coverage": [
+      "both controls and all individual losses retained",
+      "failed numeric gates remain failed without adoption",
+      "partial second control cannot produce a complete archive",
+      "all 120 executions and exact source/history audit required"
+    ],
+    "limitation": "Packaging tests use synthetic receipts; independent40 has not started and no confirmation quality is claimed.",
+    "ongoing_development_collector": "Unchanged; it neither loads nor calls the new entry.",
+    "source_sha256": {
+      "tools/archive_adverse_confirmation.py": "e367e1dd053cafae9507bed8bb7fd5ce4500bd15b19c0e3726dc1e4bc8d48727",
+      "tests/test_confirmation_archive.py": "322454b7d8fd0dc694864a3c5ca42c66416afb20b340b146a4958c4625f2b1b6"
+    }
+  }
 }
