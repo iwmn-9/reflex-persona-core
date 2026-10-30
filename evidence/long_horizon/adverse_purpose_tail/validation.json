@@ -1,15 +1,32 @@
 {
-  "tests": 16,
+  "adoption": false,
+  "child_pid": 8620,
+  "complete": true,
+  "elapsed_seconds": 2285.9219999999914,
+  "exit_code": 0,
+  "finished": "2026-10-30T15:52:48.805974+00:00",
+  "pid": 11012,
+  "source": "09def091c1539e9eacc6c47f8a8533fb6a44b762",
+  "source_files": 3196,
+  "source_unchanged": true,
+  "started": "2026-10-30T15:14:42.871553+00:00",
+  "state": "passed",
+  "tests": 1327,
+  "skipped": 19,
   "failures": 0,
-  "seconds": 127.283,
-  "command": "python -m unittest tests.test_tail_purpose_reflex tests.test_continuation_portfolio tests.test_fixed_horizon -v",
-  "runtime": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "errors": 0,
+  "archive_sha256": "ac8a167f9f598384f9b95bb370cec85241b13e3afffbcf0db33ef4a7376bd23e",
   "files": {
-    "reflex/_continuation_portfolio.py": "07a7f0537a08e16fce2f8165420ff3c450d40936aed9a39763f7ca58b9c6a356",
-    "tools/run_adverse_recovery.py": "1afbab48f6d198565bd069afda8a7b1fc782c7213439230cbd86466e220af257",
-    "tests/test_tail_purpose_reflex.py": "e3638e6d79d84818393ed3da331524fb136154c5c1bbef95ab3352b43cb35f1a"
+    "state.json": "b838d388eb7a5fc0660f9b37ab20a4522da999b417c122b0e46d5c46126c08ef",
+    "sources.json": "678eb37308c911c130ca76eb0eb022291921dd0d034aafb27c540bd951b2df07",
+    "run.py": "b018258e4d4940a994befa2071e8ff198f3c12c1d8481fac98f8a943b5982ba4",
+    "tests.stdout.log": "d6d65ed6c3c6ec77b28b1753b86b0aaa97d15ca775d72eaad87dc7cf676182e7",
+    "tests.stderr.log": "788b2ca529359d105aa6f09254d5304b635d7414edc2396494b926bd4ff6acdf"
   },
-  "scope": "Four integration regressions plus twelve existing continuation/fixed-H32 tests. This is not full long-play quality or independent confirmation.",
-  "initial_fixture_correction": "H8 preparation assumption failed for both existing and candidate controllers; retain the inherited H8 limit and verify both at H10. No long-play gate or condition changed.",
-  "native_diagnostic": "Pending; tools/probe_purpose_tail.py will first be checked against the original complete forecast in the registered Linux arithmetic."
+  "skip_reasons": [
+    "Actions process-group control is Linux-only",
+    "optional closed-hand engine required",
+    "optional riichienv environment required"
+  ],
+  "scope": "Complete local regression at exact source 09def09; source HEAD and all tracked bytes verified unchanged. Preparation and development/independent long-play qualification remain separate."
 }
