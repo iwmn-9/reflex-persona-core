@@ -8,16 +8,23 @@
   ],
   "prepared": true,
   "scope": "Finite local orchestration and complete-only archival for the fixed loss-root protocol; frozen science unchanged.",
-  "selection_capture": "After the unchanged original decision, retain the public base context, forecast contexts, progress mask audit and stateless Policy parameters. The existing metadata retains return units and mean corrections. No extra forecast or choice is executed by capture.",
+  "selection_capture": "Capture the public base/forecast contexts and stateless Policy parameters after the unchanged original decision. Reconstruct selection using the frozen native selector, original return units and corrections, and observed progress mask; require identical decision and purpose/gate audit, then retain its exact scores and native feature values. No world or forecast is rerun by this additional selection audit.",
   "sources": {
-    "tools/archive_registered_loss_roots.py": "f9b93974be0d5b2bba26d15fa50e59d03e45221c4a92cdb1b063ab50728d6593",
-    "tools/probe_registered_owner.py": "92737a1975af53d5a90ed4f45604513ec90476b975248c26be5c049c74ef7162",
+    "tests/test_registered_selection_audit.py": "7ce62bb730a8b98c1475518e5d8e636d4e5dc2d9c52ae8ac83731ae989bcdd44",
+    "tools/archive_registered_loss_roots.py": "feff578e85029045999a63aa60195fd69ab7e1a3014f98a074f214a047b747d4",
+    "tools/probe_registered_owner.py": "cada12a215e6d58dc672c1c6779249e2117c0ba9eba3ae79add34eb45c821549",
     "tools/run_registered_loss_roots.py": "9a64ad2e82def6fde5d7eeb116abf09333b3033af766568ba22b980e058f756b"
   },
   "validation": {
     "archive_entry_help": true,
     "changed_complete_purpose_map_rejected": true,
     "existing_endpoint_control_matched": true,
+    "selection_packet_regressions": {
+      "failed": 0,
+      "passed": 3,
+      "scope": "Native forecast units/corrected means survive JSON; actual progress exclusion retained; contradictory saved choice rejected. These are diagnostic integrity tests, not long-play quality.",
+      "seconds": 0.025
+    },
     "syntax": true
   }
 }

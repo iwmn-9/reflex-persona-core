@@ -65,6 +65,8 @@ def archive(execution, study, root_plan, prepared_manifest, resolver, output):
             original = json.loads(inputs.read(job['input_archive_member']))
             controls += validate(job, row, original, plan['registration'], manifest['probe_sha256'])
             assert not row['adoption']
+            assert row['personal_ranking']['exact_selection_reproduced']
+            assert set(row['personal_ranking']['plans']) == set(row['purpose_by_plan'])
             rows.append(row)
             files.append(filename)
     roots = {(j['id'], j['tick']) for j in jobs}
@@ -81,7 +83,7 @@ def archive(execution, study, root_plan, prepared_manifest, resolver, output):
                 actions_by_sample_count=choices,
                 unique_actions_by_sample_count={n: len(set(a)) for n, a in choices.items()},
                 selections=[{k: r[k] for k in ('seeds', 'action', 'selected_purpose',
-                    'estimated_purpose_by_root')} for r in group]))
+                    'estimated_purpose_by_root', 'personal_ranking')} for r in group]))
     staging = output.with_name(output.name + '.partial-' + uuid.uuid4().hex)
     staging.mkdir(parents=True)
     names = ['manifest.json', 'plan.json', 'verification.json', 'status.json',

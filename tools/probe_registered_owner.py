@@ -35,6 +35,60 @@ def inputs(path, expected_sha256, tick, start, samples):
     return row, tuple(range(start, start + samples))
 
 
+def personal_ranking(row):
+    """Reproduce selection from its retained numeric packet, without forecasting."""
+    from reflex.core import Policy, NEEDS
+    from reflex.deliberation import JointForecast, select
+    from reflex.valuation import ReturnFrame
+    from reflex.return_means import ReturnMeans
+    packet, audit = row['selection_inputs'], row['deliberation']
+    if any(packet['extra_selectors'].values()):
+        raise ValueError('unsupported selection extension; never infer a personal ranking')
+    metadata = audit['metadata']
+    frame = metadata['return_frame']
+    means = metadata.get('cumulative_mean_correction')
+    assert frame['format'] == 'return-frame-v1'
+    frame = ReturnFrame(tuple(frame['owners']), tuple(map(tuple, frame['effects'])),
+                        tuple(frame['root_terms']), frame['unit'])
+    if means is not None:
+        assert means['format'] == 'return-means-v1'
+        means = ReturnMeans(tuple(means['owners']), tuple(means['plans']),
+            tuple(tuple(map(tuple, owner)) for owner in means['corrections']))
+
+    class Capture(Policy):
+        def decide(self, batch, *args, **kwargs):
+            result = super().decide(batch, *args, **kwargs)
+            self.captured = batch, result
+            return result
+
+    policy = Capture(**packet['policy'])
+    forecast = JointForecast(tuple(packet['forecast_contexts']),
+        {k: tuple(v) for k, v in row['roots'].items()}, row['purpose_by_plan'],
+        audit['horizon'], audit['max_regret'], metadata, packet['target'],
+        return_frame=frame, return_means=means, outcome_limit=packet['outcome_limit'])
+    base = packet['base_context']
+    allowed = {a['id'] for a in base['actions'] if a['legal'] and not a['known_failure']}
+    progress = packet['progress']
+    if progress and progress['applied']:
+        allowed -= set(progress['blocked'])
+    decisions, reproduced = select([base], forecast, policy, [allowed])
+    assert decisions[0] == row['decision']
+    for key in ('selected_plan', 'selected_purpose', 'best_purpose', 'max_regret',
+                'progress_excluded', 'purpose_excluded', 'subjective_regret'):
+        assert reproduced[key] == audit[key], ('selection replay differs', key)
+    batch, decision = policy.captured
+    names = ('objective_mean', 'primary_need_effect', 'top_value_effect', 'downside_loss',
+             'cost_mean', 'familiarity', 'switch_cost', 'confidence')
+    return dict(exact_selection_reproduced=True,
+        primary_need=None if decision.primary[0] < 0 else NEEDS[int(decision.primary[0])],
+        mode='principle' if decision.mode[0] else 'need',
+        plans={key: dict(personal_score=float(decision.scores[0, i]),
+            eligible=bool(decision.eligible[0, i]),
+            features=dict(zip(names, decision.features[0, i].tolist())))
+            for i, key in enumerate(batch.ids[0])},
+        scope='Exact personal ranking under this modeled future; not proof of true future value or intentional real-world loss.')
+
+
 def main(args):
     output = Path(args.output).resolve()
     if output.exists():
@@ -110,11 +164,15 @@ def main(args):
         # distinguish a personal tradeoff from a bad forecast. This is captured
         # after the original decision and never fed back into its computation.
         selection_inputs=dict(base_context=result['context'], forecast_contexts=forecast.contexts,
+            target=forecast.target,
+            extra_selectors={name: getattr(forecast, name) is not None for name in
+                ('continuity', 'stability_reference', 'replan_check', 'purpose_sampling', 'goal_ties')},
             outcome_limit=forecast.outcome_limit, progress=result.get('progress'),
             policy=dict(principle_priority=actor.policy.principle_priority,
                         commitments=actor.policy.commitments, residual=actor.policy.residual.tolist())),
         simulated_steps=captured['simulated_steps'], total_seconds=time.monotonic()-started,
         diagnostic_source_sha256=sha(Path(__file__).read_bytes()), adoption=False)
+    row['personal_ranking'] = personal_ranking(row)
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open('xb') as stream:
         stream.write(encoded(row))
