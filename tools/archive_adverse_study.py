@@ -26,6 +26,24 @@ from tools.review_adverse_recovery import summarize
 from tools.analyze_adverse_results import analyze
 
 
+def registered_sources(source_ref, expected, root=ROOT):
+    """Read every registered path from the frozen commit, including tests.
+
+    Archive roots come from the registration rather than a fixed directory
+    list. Only the individually registered and hash-checked files are retained.
+    """
+    if not expected:raise ValueError('nonempty source registration required')
+    roots=sorted({name.split('/')[0] for name in expected})
+    raw=subprocess.check_output(['git','archive','--format=zip',source_ref,'--',*roots],cwd=root)
+    source={}
+    with zipfile.ZipFile(io.BytesIO(raw)) as frozen:
+        for name,checksum in expected.items():
+            data=frozen.read(name)
+            assert sha(data)==checksum,(name,'source mismatch')
+            source[name]=data
+    return source
+
+
 def archive(root,plan_path,source_ref,output):
     root=Path(root);plan_path=Path(plan_path);out=Path(output)
     plan=json.loads(plan_path.read_bytes());proof=json.loads((plan_path.parent/'registration.json').read_bytes())
@@ -34,12 +52,7 @@ def archive(root,plan_path,source_ref,output):
     summary=summarize(root/'latest',plan)
     assert summary['complete'] and summary['pairs_complete']==len(plan['specs'])
     if out.exists():raise FileExistsError('do not replace an existing complete audit')
-    # Extract only computation paths from Git, not unrelated historical data.
-    workflows=[n for n in proof['sources'] if n.startswith('.github/')]
-    raw=subprocess.check_output(['git','archive','--format=zip',source_ref,'reflex','tools',*workflows],cwd=ROOT)
-    frozen=zipfile.ZipFile(io.BytesIO(raw));source={}
-    for name,expected_hash in proof['sources'].items():
-        data=frozen.read(name);assert sha(data)==expected_hash,(name,'source mismatch');source[name]=data
+    source=registered_sources(source_ref,proof['sources'])
     rows=[];audits=[];saved_files={}
     for spec in plan['specs']:
         matched=[]

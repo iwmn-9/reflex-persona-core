@@ -60,6 +60,11 @@ class AdverseRecoveryTests(unittest.TestCase):
     def test_eight_sample_budget_keeps_full_and_resumed_actual_owner_identical(self):
         self.check_resume('sample8')
 
+    def test_purpose_tail_preserves_actual_learning_and_resume_in_all_rule_families(self):
+        for game in ('auction', 'combat', 'gambling', 'resources'):
+            with self.subTest(game=game):
+                self.check_resume('transfer_purpose', game)
+
     def test_eight_sample_budget_preserves_persona_roots_and_mass(self):
         g=ContinuingGame('combat',PROFILES[1],turns=3)
         w=g.start();a=g.actor(g.context(w),learning='segmented')
@@ -73,8 +78,8 @@ class AdverseRecoveryTests(unittest.TestCase):
             self.assertAlmostEqual(sum(b.probability for b in paths),1.)
         with self.assertRaises(ValueError):decide(copy.deepcopy(a),g,w,'sample8',seeds=(701,702,703))
 
-    def check_resume(self, arm):
-        spec = dict(id='resume-example', mechanism='world', game='combat', profile=1,
+    def check_resume(self, arm, game='combat'):
+        spec = dict(id='resume-example', mechanism='world', game=game, profile=1,
                     seed=601, regime='outside', turns=3)
         registration = dict(plan_sha256='test-plan', source_sha256='test-source')
         with tempfile.TemporaryDirectory() as folder:

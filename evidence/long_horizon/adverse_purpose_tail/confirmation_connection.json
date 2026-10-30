@@ -1,0 +1,37 @@
+{
+  "complete": true,
+  "passed": true,
+  "adoption": false,
+  "tests": 22,
+  "failures": 0,
+  "skipped": 0,
+  "seconds": 555.842,
+  "at": "2026-10-30T16:05:50.334086+00:00",
+  "log": "confirmation_connection.log",
+  "log_sha256": "63c174b9fcfbb4be2f90d47051ce8555e409d194716615cf2f8d983730dcff3c",
+  "sources": {
+    "tests/test_adverse_recovery.py": "fc8f90686037dd5f8832b28005e352698474c618ee814ebda2259d2ed74ddfb3",
+    "tests/test_confirmation_archive.py": "322454b7d8fd0dc694864a3c5ca42c66416afb20b340b146a4958c4625f2b1b6",
+    "tests/test_confirmation_gates.py": "b2a29477b84d1607df515bc1fdd977fb127c9a1baef19c9cb95f28a792cc2a34",
+    "tests/test_confirmation_reference.py": "218b900753970e73a03266bc73398c2cbe84ca73ea8aa4392fd3ee98286391b1",
+    "tests/test_registered_source_archive.py": "5592f49474619db7e254477f90bbe0dabb53ebe3711d86e0d257fd0a9707ab70",
+    "tools/archive_adverse_confirmation.py": "e367e1dd053cafae9507bed8bb7fd5ce4500bd15b19c0e3726dc1e4bc8d48727",
+    "tools/archive_adverse_study.py": "339359ea846a03953c7f039fb0a99385aa702b71f57de55d8fd71544296c879b",
+    "tools/register_purpose_tail.py": "82f48eeee3600457d4ef720d54fceb2c131efa98b72f4b4395188f775438665c",
+    "tools/review_adverse_confirmation.py": "3c5554030253b51d559b18b467d825c2d68f2a6ad045ebc0389e121922a1f90c",
+    "tools/run_adverse_recovery.py": "3da397fed8205e90be02c8faa955c56e47b754b9134fdb5eb0620c920c9f3c18"
+  },
+  "checks": [
+    "Original H16 exact old-controller parity across four rule families, including actual learning and physical owner/RNG.",
+    "Original H16 interruption/resume and complete-only audit.",
+    "Purpose-tail actual full/split/resumed identity across four rule families, and wrong arm/changed registration rejected.",
+    "Unchanged forty-condition numerical gates and archive with both controls; partial comparisons rejected.",
+    "All registered sources, including tests and root files, retained by exact hash.",
+    "Existing default/sample8/persistent/stratified and purpose-tail integration regressions."
+  ],
+  "limits": [
+    "Short lifecycle and gate checks are not long-play quality evidence.",
+    "No development cohort or independent confirmation has started for purpose-tail.",
+    "Full 1327-test regression at 09def09 is retained separately; these subsequent changes only add the old H16 comparison and audit/registration harness."
+  ]
+}
