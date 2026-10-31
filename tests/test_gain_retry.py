@@ -6,7 +6,7 @@ from reflex.core import character_key,digest
 from reflex.decision_loop import DecisionLoop
 from reflex._continuation_portfolio import portfolio_planner
 from reflex.laboratory import PROFILES
-from tools.preparation_world import PreparationChain
+from tools.preparation_world import PreparationChain,DelayedYield
 from tools.continuing_games import ContinuingGame
 from tools.run_owned_value import cumulative_basis
 from tests.test_continuation_persona import IntrinsicTradeoff
@@ -77,6 +77,19 @@ class GainRetryTests(unittest.TestCase):
                 game=PreparationChain(11,payout=payout,turns=128)
                 result,_=evaluate(game,True,horizon=32)
                 self.assertEqual(result['decision']['action_id'],expected)
+
+    def test_waiting_income_does_not_replace_the_original_maturity_proposal(self):
+        # Here ordinary income crosses the origin before an investment matures.
+        # The new termination proposal must coexist with the original full one.
+        for payout,expected in ((6.,'y'),(2.,'x')):
+            with self.subTest(payout=payout):
+                game=DelayedYield(11,payout=payout,turns=128)
+                result,cap=evaluate(game,True,horizon=32)
+                self.assertEqual(result['decision']['action_id'],expected)
+                full=cap['modeled']['candidate-001-retry'][0]
+                limited=cap['modeled']['candidate-001-retry-until-gain'][0]
+                self.assertEqual(limited['retry_termination_step'],5)
+                self.assertGreater(full['actions'].count('y'),limited['actions'].count('y'))
 
 
 if __name__=='__main__':unittest.main()
