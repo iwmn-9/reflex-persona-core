@@ -7,6 +7,7 @@ from reflex.decision_loop import DecisionLoop
 from reflex._continuation_portfolio import portfolio_planner
 from reflex.laboratory import PROFILES
 from tools.preparation_world import PreparationChain
+from tools.continuing_games import ContinuingGame
 from tools.run_owned_value import cumulative_basis
 from tests.test_continuation_persona import IntrinsicTradeoff
 from tests.test_continuation_portfolio import RenamedChain
@@ -46,6 +47,16 @@ class GainRetryTests(unittest.TestCase):
             self.assertEqual(old['modeled'][name],new['modeled'][name])
             self.assertEqual(old['paths'][name],new['paths'][name])
         self.assertEqual(evaluate(RenamedChain(5,payout=14.,turns=32),True)[0]['decision']['action_id'],'first')
+
+    def test_stochastic_original_paths_stay_exact_in_every_rule_family(self):
+        for family in ('auction','combat','gambling','resources'):
+            with self.subTest(family=family):
+                game=ContinuingGame(family,PROFILES[0],turns=128)
+                _,old=evaluate(game,horizon=4);result,new=evaluate(game,True,horizon=4)
+                self.assertIn(result['decision']['action_id'],game.keys(game.start()))
+                for name in old['modeled']:
+                    self.assertEqual(old['modeled'][name],new['modeled'][name])
+                    self.assertEqual(old['paths'][name],new['paths'][name])
 
     def test_intrinsic_value_tradeoff_and_need_override_survive(self):
         for profile,mode,names,expected in [(0,'principle',('x','y'),'x'),(2,'principle',('x','y'),'y'),
