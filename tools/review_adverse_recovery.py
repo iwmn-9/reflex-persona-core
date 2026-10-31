@@ -14,6 +14,7 @@ from reflex.decision_loop import DecisionLoop
 from reflex.model_observer import resolve_feedback
 from tools.owned_checkpoint import encoded, sha
 from tools.run_adverse_recovery import game_for
+from tools.frozen_controls import load_controls
 
 
 def historical_diagnosis(plan):
@@ -58,10 +59,14 @@ def historical_diagnosis(plan):
 
 def summarize(root, plan):
     root=Path(root);pairs=[];progress=[];runtimes=set()
+    controls=load_controls(plan)
     for spec in plan['specs']:
         arms={}
         for arm in plan['arms']:
             d=root/f"adverse-{spec['id']}-{arm}"
+            if controls is not None and arm==plan['reference_arm']:
+                for name in ('checkpoint.json','result.json','status.json'):
+                    assert (d/name).read_bytes()==controls['files'][(spec['id'],name)], 'frozen control altered'
             if not (d/'status.json').exists():
                 progress.append(dict(id=spec['id'],arm=arm,state='missing',actual_steps=0));continue
             status=json.loads((d/'status.json').read_bytes())
@@ -85,7 +90,13 @@ def summarize(root, plan):
         if len(arms)!=len(plan['arms']):continue
         a,b=arms[plan.get('reference_arm','stable')],arms[plan.get('candidate_arm','stratified')]
         assert a['runtime']==b['runtime']
-        assert a['configuration']['registration']==b['configuration']['registration']
+        if controls is None:
+            assert a['configuration']['registration']==b['configuration']['registration']
+        else:
+            assert a['configuration']['registration']==controls['registration']
+            registration=json.loads((ROOT/plan['registration_file']).read_bytes())
+            assert registration['plan_sha256']==sha(encoded(plan))
+            assert b['configuration']['registration']==dict(plan_sha256=registration['plan_sha256'],source_sha256=sha(encoded(registration['sources'])))
         common=min(len(a['trace']),len(b['trace']))
         assert [t['response'] for t in a['trace'][:common]]==[t['response'] for t in b['trace'][:common]]
         pairs.append(dict(id=spec['id'],game=spec['game'],profile=spec['profile'],

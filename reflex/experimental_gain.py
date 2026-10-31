@@ -47,3 +47,20 @@ class GainHorizonOwner(FixedHorizonOwner):
     def _checkpoint_extension(self):
         return dict(kind='experimental-gain-continuation-v1',recovery_cache=self.recovery_cache,
                     **self._continuation_options())
+
+
+class RelativeGainHorizonOwner(GainHorizonOwner):
+    """Unadopted correction using the paired ordinary continuation as reference.
+
+    Common background income is not preparation's return. A retry stops when
+    its modeled public purpose exceeds the same-response, same-time ordinary
+    path. The same person's selector still chooses among complete proposals.
+    Old gain-owner saves are deliberately incompatible with this composition.
+    """
+    def _continuation_options(self):
+        return dict(tail_purpose_reflex=True,retry_until_gain=True,
+                    retry_gain_reference='ordinary')
+
+    def _checkpoint_extension(self):
+        return dict(kind='experimental-relative-gain-continuation-v1',
+                    recovery_cache=self.recovery_cache,**self._continuation_options())

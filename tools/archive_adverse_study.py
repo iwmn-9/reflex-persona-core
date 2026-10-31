@@ -24,6 +24,7 @@ from tools.run_adverse_recovery import game_for
 from tools.run_owned_value import law,sample
 from tools.review_adverse_recovery import summarize
 from tools.analyze_adverse_results import analyze
+from tools.frozen_controls import load_controls
 
 
 def registered_sources(source_ref, expected, root=ROOT):
@@ -49,6 +50,7 @@ def archive(root,plan_path,source_ref,output):
     plan=json.loads(plan_path.read_bytes());proof=json.loads((plan_path.parent/'registration.json').read_bytes())
     assert sha(plan_path.read_bytes())==proof['plan_sha256']
     expected=dict(plan_sha256=proof['plan_sha256'],source_sha256=sha(encoded(proof['sources'])))
+    controls=load_controls(plan)
     summary=summarize(root/'latest',plan)
     assert summary['complete'] and summary['pairs_complete']==len(plan['specs'])
     if out.exists():raise FileExistsError('do not replace an existing complete audit')
@@ -57,15 +59,20 @@ def archive(root,plan_path,source_ref,output):
     for spec in plan['specs']:
         matched=[]
         for arm in plan['arms']:
+            reused=controls is not None and arm==plan['reference_arm']
+            arm_expected=controls['registration'] if reused else expected
+            arm_proof=controls['proof'] if reused else proof
             folder=root/'latest'/f"adverse-{spec['id']}-{arm}"
             files={name:(folder/name).read_bytes() for name in ('checkpoint.json','result.json','status.json')}
+            if reused:
+                assert all(raw==controls['files'][(spec['id'],name)] for name,raw in files.items())
             envelope=json.loads(files['checkpoint.json']);p=envelope['payload'];r=json.loads(files['result.json']);status=json.loads(files['status.json'])
             assert sha(encoded(p))==envelope['sha256']
             cfg=p['contract']['configuration'];trace=r['trace']
-            assert cfg==r['configuration'] and cfg['registration']==status['registration']==expected
-            assert cfg['runner_sha256']==proof['sources']['tools/run_adverse_recovery.py']
-            assert all(h==proof['sources'][n] for n,h in p['contract']['sources'].items())
-            assert all(h==proof['sources']['tools/'+n] for n,h in cfg['adapters'].items())
+            assert cfg==r['configuration'] and cfg['registration']==status['registration']==arm_expected
+            assert cfg['runner_sha256']==arm_proof['sources']['tools/run_adverse_recovery.py']
+            assert all(h==arm_proof['sources'][n] for n,h in p['contract']['sources'].items())
+            assert all(h==arm_proof['sources']['tools/'+n] for n,h in cfg['adapters'].items())
             assert trace==p['trace'] and r['final_owner']==digest(p['owner'])
             assert r['final_rng']==p['rng'] and status['checkpoint_sha256']==sha(files['checkpoint.json'])
             assert len(trace)==spec['turns']==r['replayed_actual_steps']==status['actual_steps']
@@ -101,6 +108,9 @@ def archive(root,plan_path,source_ref,output):
     for name,contents in (('source.zip',source),('checkpoints.zip',saved_files)):
         with zipfile.ZipFile(out/name,'x',compression=zipfile.ZIP_DEFLATED) as z:
             for key,data in contents.items():z.writestr(key,data)
+    if controls is not None:
+        (out/'frozen_controls.zip').write_bytes(controls['archive'])
+        (out/'original_control_verification.json').write_bytes(controls['original_verification'])
     verification=dict(complete=True,at=datetime.now(timezone.utc).isoformat(),source_ref=source_ref,
         pairs=len(plan['specs']),executions=len(rows),actual_steps=sum(r['steps'] for r in audits),
         registration=expected,workers=audits,development_gate_passed=summary['development_gate_passed'],
@@ -108,6 +118,12 @@ def archive(root,plan_path,source_ref,output):
         artifacts={p.name:sha(p.read_bytes()) for p in out.iterdir()},auditor_sha256=sha(Path(__file__).read_bytes()),
         limitations=['Exact owner replay was performed by each frozen execution worker and exact arithmetic recovery. Local audit verifies their receipts, full hash chain, source and saved final owner; it does not claim cross-platform reexecution of every planning search.',
             'These are selected development conditions, not independent confirmation. All individual adverse results remain.'])
+    if controls is not None:
+        verification.update(registrations_by_arm={arm:controls['registration'] if arm==plan['reference_arm'] else expected for arm in plan['arms']},
+            source_refs_by_arm={arm:controls['source_ref'] if arm==plan['reference_arm'] else source_ref for arm in plan['arms']},
+            fresh_executions=len(plan['specs']),reused_executions=len(plan['specs']),
+            frozen_controls=plan['frozen_controls'])
+        verification['limitations'].append('All ten stable controls reuse their original native execution bytes, source and registration. Only candidate executions are new; no new independent samples are claimed.')
     (out/'verification.json').write_bytes(encoded(verification))
     print(encoded({k:verification[k] for k in ('complete','pairs','actual_steps','development_gate_passed','adoption')}).decode(),flush=True)
     return verification
