@@ -78,7 +78,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         cache=OrderedDict();cache_hits=0;recovery_computations=0
         roots = sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure'])
         paths, audits, mapping, policies = {}, {}, {}, {}
-        steps = 0; purpose_reflex_calls = 0
+        steps = 0; purpose_reflex_calls = 0; reused_steps = 0
         for root_index, root in enumerate(roots):
             first = model.owner_transitions(copy.deepcopy(world), root, actor, copy.deepcopy(c))
             modes = [('reflex', None, False)]
@@ -98,6 +98,24 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                 branches, rows = [], []
                 for response in first:
                     for seed in seeds:
+                        if until_gain:
+                            origin = Goal(**assess(world))
+                            first_goal = Goal(**assess(response.state))
+                            if first_goal.target != origin.target:
+                                raise ValueError('one declared purpose throughout retry termination required')
+                            if first_goal.value > origin.value + 1e-12:
+                                # Termination after the forced root makes this
+                                # exact path the ordinary owned continuation.
+                                # Reuse its completed learner and full effects,
+                                # not an approximation or a shorter trajectory.
+                                ordinary = f'candidate-{root_index:03d}-reflex'
+                                index = len(rows)
+                                branches.append(copy.deepcopy(paths[ordinary][index]))
+                                rows.append(copy.deepcopy(audits[ordinary][index]))
+                                rows[-1]['retry_termination_step'] = 1
+                                count = len(rows[-1]['actions'])
+                                steps += count; reused_steps += count
+                                continue
                         own, w = copy.deepcopy(actor), copy.deepcopy(world)
                         flows, actions, falls, corrections, prefixes = [], [], [], [], []
                         current_request = copy.deepcopy(request)
@@ -253,6 +271,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                 semantics='Existing H2 recovery first; otherwise evaluate the public immediate goal with the same owner. '
                           'Forced retry proposals remain proposals. No factual or hidden outcomes are supplied.')
         if retry_until_gain:
+            metadata['continuation_portfolio']['reused_steps'] = reused_steps
             metadata['continuation_portfolio']['retry_until_gain'] = dict(
                 kind='public-purpose-above-origin',
                 semantics='Additional proposal ends root retry after the modeled public goal exceeds its root value. '

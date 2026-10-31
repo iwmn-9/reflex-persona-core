@@ -28,6 +28,19 @@ def evaluate(game,enabled=False,horizon=8):
 
 
 class GainRetryTests(unittest.TestCase):
+    def test_immediate_gain_reuses_an_exact_independent_completed_path(self):
+        _,cap=evaluate(PreparationChain(5,payout=14.,turns=128),True)
+        ordinary='candidate-000-reflex';limited='candidate-000-retry-until-gain'
+        self.assertEqual(cap['paths'][ordinary],cap['paths'][limited])
+        for old,new in zip(cap['paths'][ordinary],cap['paths'][limited]):
+            self.assertIsNot(old,new)
+            self.assertIsNot(old.effects[0],new.effects[0])
+        for old,new in zip(cap['modeled'][ordinary],cap['modeled'][limited]):
+            self.assertEqual({k:v for k,v in new.items() if k!='retry_termination_step'},old)
+            self.assertEqual(new['retry_termination_step'],1)
+        self.assertGreater(cap['forecast'].audit['continuation_portfolio']['reused_steps'],0)
+        self.assertEqual(cap['simulated_steps'],sum(len(r['actions']) for rows in cap['modeled'].values() for r in rows))
+
     def test_every_duration_and_both_payoff_signs(self):
         for delay in range(2,8):
             for good in (True,False):
