@@ -1,4 +1,5 @@
 import copy
+import copyreg
 import unittest
 from collections import OrderedDict
 
@@ -8,6 +9,47 @@ from reflex.examples import context,action,effect
 
 
 class CloneTests(unittest.TestCase):
+    def test_instance_level_protocols_use_the_standard_library(self):
+        class Owner:pass
+        owner=Owner();owner.__deepcopy__=lambda memo: {'custom':True}
+        self.assertEqual(deepcopy(owner),copy.deepcopy(owner))
+        self.assertEqual(deepcopy({'owner':owner}),copy.deepcopy({'owner':owner}))
+        owner=Owner();owner.__reduce_ex__=lambda protocol:(dict,(),None,None,iter([('reduced',True)]))
+        self.assertEqual(deepcopy(owner),copy.deepcopy(owner))
+
+    def test_ordinary_owner_graph_keeps_cycles_aliases_and_array_copy_semantics(self):
+        import numpy as np
+        class Owner:pass
+        owner=Owner();shared=[];owner.memory=shared;owner.other=shared;shared.append(owner)
+        owner.weights=np.array([.2,.7]);owner.weights.flags.writeable=False
+        actual=deepcopy(owner);expected=copy.deepcopy(owner)
+        self.assertIs(actual.memory,actual.other);self.assertIs(actual.memory[0],actual)
+        self.assertIsNot(actual.memory,owner.memory)
+        self.assertTrue(np.array_equal(actual.weights,expected.weights))
+        self.assertEqual(actual.weights.flags.writeable,expected.weights.flags.writeable)
+        actual.weights[0]=.8;self.assertEqual(owner.weights[0],.2)
+
+    def test_registered_reduction_and_custom_state_are_not_bypassed(self):
+        class Registered:pass
+        def rebuild():
+            value=Registered();value.used=True;return value
+        copyreg.pickle(Registered,lambda obj:(rebuild,()))
+        try:self.assertTrue(deepcopy(Registered()).used)
+        finally:copyreg.dispatch_table.pop(Registered)
+        class State:
+            def __getstate__(self):return {'replaced':[1]}
+        value=State();value.other=[2]
+        self.assertEqual(vars(deepcopy(value)),vars(copy.deepcopy(value)))
+
+    def test_custom_dictionary_key_and_value_hooks_run_in_reference_order(self):
+        calls=[]
+        class Hook:
+            def __init__(self,name):self.name=name
+            def __deepcopy__(self,memo):calls.append(self.name);return Hook(self.name)
+        value={Hook('key'):Hook('value')}
+        copy.deepcopy(value);expected=list(calls);calls.clear()
+        deepcopy(value);self.assertEqual(calls,expected)
+
     def test_contexts_match_standard_copy_and_do_not_share_mutable_values(self):
         c=context('clone',[action(str(i),effect(i/10,needs={'growth':i/10})) for i in range(5)])
         copied=deepcopy(c)

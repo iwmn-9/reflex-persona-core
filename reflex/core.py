@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 import hashlib
 import json
+import math
 import numpy as np
 
 VERSION = "reflex-v3"
@@ -29,11 +30,20 @@ def character_key(c):
 
 
 def number(value, low, high):
-    if isinstance(value, bool) or not isinstance(value, (int, float)) or not np.isfinite(value):
+    if (isinstance(value, bool) or not isinstance(value, (int, float))
+            or not (math.isfinite(value) if type(value) is float else np.isfinite(value))):
         raise ValueError("finite numeric value required")
     if not low <= value <= high:
         raise ValueError(f"value outside [{low}, {high}]")
     return float(value)
+
+
+def _effect_values(mapping, names):
+    # An omitted effect is our literal zero, not an unvalidated game input.
+    # Retain custom mappings' get() semantics at the public boundary.
+    if type(mapping) is dict:
+        return [number(mapping[key], -1, 1) if key in mapping else 0.0 for key in names]
+    return [number(mapping.get(key, 0), -1, 1) for key in names]
 
 
 def exact(obj, keys):
@@ -177,7 +187,7 @@ def compile_batch(contexts, *, outcome_limit=MAX_OUTCOMES, allow_no_actions=Fals
                 exact(outcome, ("p", "objective", "needs", "values", "style", "cost"))
                 if set(outcome["needs"]) - set(NEEDS) or set(outcome["values"]) - set(VALUES) or set(outcome["style"]) - set(TRAITS): raise ValueError("unknown effect dimension")
                 probability[i,j,h] = number(outcome["p"],0,1)
-                effects[i,j,h] = [number(outcome["objective"],-1,1)] + [number(outcome["needs"].get(key,0),-1,1) for key in NEEDS] + [number(outcome["values"].get(key,0),-1,1) for key in VALUES] + [number(outcome["style"].get(key,0),-1,1) for key in TRAITS] + [number(outcome["cost"],0,1)]
+                effects[i,j,h] = [number(outcome["objective"],-1,1)] + _effect_values(outcome["needs"],NEEDS) + _effect_values(outcome["values"],VALUES) + _effect_values(outcome["style"],TRAITS) + [number(outcome["cost"],0,1)]
             if abs(probability[i,j].sum()-1) > 1e-8: raise ValueError("outcome probabilities must sum to one")
         if not legal[i].any() and not (allow_no_actions and not ordered):
             raise ValueError("adapter must supply at least one feasible action, including WAIT if needed")
@@ -190,7 +200,7 @@ def compile_batch(contexts, *, outcome_limit=MAX_OUTCOMES, allow_no_actions=Fals
             read_confidence[i] = number(other["confidence"],0,1); read_uncertainty[i] = number(other["uncertainty"],0,1)
             threatened[i] = other["threatened"]; ahead[i] = other["maintains_advantage"]
             if set(other["deltas"]) - set(action_ids): raise ValueError("unknown reading action")
-            reading[i,:len(ordered)] = [number(other["deltas"].get(key,0),-1,1) for key in action_ids]
+            reading[i,:len(ordered)] = _effect_values(other["deltas"],action_ids)
         # Isolated randomness, independent of batch size/order/thread scheduling.
         seeds[i]=int(digest([c["seed"],c["scope"]])[:16],16); ticks[i]=c["tick"]
     rng=counter_rng(seeds,ticks)

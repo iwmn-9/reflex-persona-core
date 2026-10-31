@@ -142,7 +142,7 @@ class ClosedLoop:
     def clear(self):
         self.cache.clear()
 
-    def _node(self,world,actor,request,remaining,*,root=False):
+    def _node(self,world,actor,request,remaining,*,root=False,_forecast_only=False):
         if not isinstance(request,Request) or actor.pending is not None:raise ValueError('resolved owned Request required')
         # Independent readers/value proposals are outside this controller's
         # contract: an unseen post-planner override would invalidate its tree.
@@ -159,6 +159,7 @@ class ClosedLoop:
         if self.preference_basis is not None:identity.append(self.preference_basis.identity)
         if self.cumulative_preference is not None:identity.append(self.cumulative_preference.identity)
         if self.sampling_standard_errors is not None:identity.append(['paired-purpose-sampling-v1',self.sampling_standard_errors])
+        if _forecast_only:identity.append('one-step-forecast-without-unused-successor-owner-v1')
         stamp=digest(identity)
         self._used.update(self.cache[stamp]['dependencies'] if stamp in self.cache else (stamp,))
         self.work=len(self._used)
@@ -194,9 +195,10 @@ class ClosedLoop:
             paths[key]=[];audit[key]=[];children[key]=[]
             if self.sampling_standard_errors is not None:purpose_samples[key]=[0. for _ in self.frontier.seeds]
             for transition in options:
-                if fixed_leaf:
-                    # After the last fixed-policy action, no later choice or
-                    # actor-dependent evaluator consumes the updated learner.
+                if fixed_leaf or _forecast_only:
+                    # At this endpoint no later choice or actor-dependent
+                    # evaluator consumes the updated learner. The forecast-only
+                    # caller also performs its own ordinary selection/feedback.
                     # Preserve every physical outcome/flow; omit only that
                     # unused post-horizon owner update (and do not claim its hash).
                     ended=bool(self.terminal(transition.state));g=Goal(**self.assess(transition.state))
@@ -273,6 +275,13 @@ class ClosedLoop:
             forecast.audit['frontier']=dict(identity=self.frontier.identity,
                 semantics=('full sampled owner continuation and preference flows; running cutoff retained' if self.tail_preferences else
                     'estimated purpose beyond cutoff under reference continuation; prefix personality flows only; running state retained'))
+        if _forecast_only:
+            # The caller will select and observe through its normal lifecycle.
+            # No consumer can use a post-cutoff learner or this tree's own choice:
+            # there is no frontier, continuation, or returned successor owner.
+            node=dict(stamp=stamp,forecast=forecast,dependencies=frozenset(dependencies),action=None)
+            self.cache[stamp]=node
+            return node
         chosen=None if fixed_leaf else copy.deepcopy(actor)
         planner=None if self.future_choices=='reflex' and not root else lambda cs,ds:forecast
         result=dict(decision=baseline) if fixed_leaf else DecisionLoop.decide_batch([(chosen,request)],False,planner)[0]
@@ -291,11 +300,13 @@ class ClosedLoop:
         self.cache[stamp]=node
         return node
 
-    def planner(self,actor,request,initial,*,remaining=None,captured=None):
+    def planner(self,actor,request,initial,*,remaining=None,captured=None,_forecast_only=False):
         if self.source_owner is not None and digest(actor.record())!=self.source_owner:
             raise ValueError('rebuild owned rollout from the current resolved owner')
         h=self.budget.horizon if remaining is None else remaining
         if type(h) is not int or not 1<=h<=self.budget.horizon:raise ValueError('bounded remaining decision window required')
+        if type(_forecast_only) is not bool or (_forecast_only and (h!=1 or self.frontier is not None or captured is not None)):
+            raise ValueError('forecast-only evaluation requires one step without continuation or owner audit capture')
         def call(contexts,decisions):
             if self.source_owner is not None and digest(actor.record())!=self.source_owner:
                 raise ValueError('stale owned rollout after real feedback')
@@ -305,7 +316,7 @@ class ClosedLoop:
             before=digest(actor.record());self.work=0;self.hits=0;self._used=set()
             if len(self.cache)>self.budget.nodes:self.clear()
             try:
-                node=self._node(copy.deepcopy(initial),actor,request,h,root=True)
+                node=self._node(copy.deepcopy(initial),actor,request,h,root=True,_forecast_only=_forecast_only)
                 # Forecast replaces actions and appends facts; select checks
                 # those contracts, too, before the real owner commits a root.
                 if any(contexts[0][k]!=node['forecast'].contexts[0][k] for k in contexts[0] if k not in ('actions','facts')):

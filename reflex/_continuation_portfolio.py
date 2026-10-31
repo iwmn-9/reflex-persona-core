@@ -11,7 +11,7 @@ nonlinear personality selector do NOT inherit its MDP improvement theorem.
 Packaged for explicit integration checks. Adoption still requires completed
 independent long-play evidence; packaging alone is not acceptance.
 """
-import copy
+from . import cloning as copy
 import math
 from collections import OrderedDict
 from dataclasses import replace
@@ -144,7 +144,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                                     request_for=request_for, feedback=feedback, model_id=model_id,
                                     target=target, tail_steps=0, tree_steps=1,
                                     world_model=world_model, cumulative_preference=cumulative_preference)
-                                proposed = immediate.planner(person, copy.deepcopy(current_request), copy.deepcopy(w))
+                                proposed = immediate.planner(person, copy.deepcopy(current_request), copy.deepcopy(w),
+                                    _forecast_only=True)
                                 def complete_purpose(cs, ds, proposed=proposed):
                                     f = proposed(cs, ds)
                                     if f is None:

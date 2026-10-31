@@ -31,6 +31,22 @@ def cdf_score(outcomes,observed,names):
     return float(np.mean((forecast-actual)**2))
 
 
+def _cdf_signature(rows,names):
+    """Same scalar addition order, evaluated across independent thresholds."""
+    indices=[FEATURES.index(name) for name in names]
+    samples=[(row['p'],vector(row)) for row in rows]
+    # Preserve custom numeric and integer summation semantics at this boundary.
+    if any(type(p) is not float for p,v in samples):
+        return tuple(float(sum(p*(v[i]<=t) for p,v in samples))
+                     for i in indices for t in THRESHOLDS)
+    result=np.zeros((len(indices),len(THRESHOLDS)),dtype=np.float64)
+    for probability,values in samples:
+        # Do not use a reduction/einsum: changing the addition order could change
+        # an exact equality and therefore the learner's evidence history.
+        result += probability*(values[indices,None]<=THRESHOLDS)
+    return tuple(float(value) for value in result.flat)
+
+
 class EvidenceGate:
     """Bounded, before-update prediction comparisons against a live fallback.
 
@@ -59,12 +75,7 @@ class EvidenceGate:
         if a is None: return dict(scored=False,reason='no comparable observed dimensions')
         # Compare distributions, not just this realized loss. Equal forecasts
         # must not pad the sample count or prevent revocation of a bad model.
-        def signature(rows):
-            # Keep the original summation order and exact equality contract.
-            # Convert each outcome once, rather than once per feature/threshold.
-            samples=[(r['p'],vector(r)) for r in rows]
-            return tuple(float(sum(p*(v[FEATURES.index(f)]<=t) for p,v in samples)) for f in names for t in THRESHOLDS)
-        if signature(prior)==signature(candidate): return dict(scored=False,reason='identical forecasts')
+        if _cdf_signature(prior,names)==_cdf_signature(candidate,names): return dict(scored=False,reason='identical forecasts')
         return self._update(key,a,b)
 
     def categorical(self,key,prior,candidate,observed):
