@@ -42,3 +42,8 @@ python examples/experimental_gain_host.py --resume prefix.json --save resumed.js
 
 6手の例は接続と保存復元の確認であり、長期判断や強さの試験ではない。
 Rust所有者APIはこの転移学習器を拒否する。現在の安定版Rustの対応範囲は変更していない。
+
+配布確認と同じ606 Pythonファイルで、全体回帰1,374件を実行した。
+1,355件成功、任意の麻雀環境17件とLinux専用プロセス制御2件を除外し、失敗・エラーは0。
+[ソース照合・全ログと除外理由](../evidence/gain_integration/full_regression.json)を保存した。
+これは接続と既存機能の回帰確認であり、未完走の長期比較や独立40条件の代わりにはしない。
