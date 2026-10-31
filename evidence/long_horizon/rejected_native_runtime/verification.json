@@ -1,0 +1,31 @@
+{
+  "complete": true,
+  "adopt": false,
+  "compiler": "Cython3.3.0 / MSVC14.44.35207 / CPython3.12.14 x64",
+  "scope": "Seven exact forecast/path/owner comparisons, not a new long-world result.",
+  "unchanged_source_modules": {
+    "names": [
+      "cloning",
+      "core",
+      "decision_loop",
+      "judgment",
+      "segmented_prediction"
+    ],
+    "reference_cpu": 25.296875,
+    "cpu": 24.375,
+    "initial_tests": 66
+  },
+  "protocol_clone_only": {
+    "reference_cpu": 25.296875,
+    "cpu": 26.8125,
+    "initial_tests": 69
+  },
+  "reason": "Broad compilation gave only a small observed reduction; the narrower protocol-copy variant was slower. Do not add a compiled dependency or alter scientific workers for these results.",
+  "official_build_reference": "https://docs.cython.org/en/latest/src/userguide/source_files_and_compilation.html",
+  "notes": [
+    "No C numeric inference or annotation typing; bounds and overflow checks retained and fp:strict used.",
+    "C4244 warnings arise in generated sizeof-selected overflow helpers, not changed game numerics.",
+    "Compiled binaries remain only in the local isolated probe. They are not deployed, qualified, published, or used by active worlds."
+  ],
+  "archive_sha256": "ddb9ad90a714fedcb366ffbb2ef6106ecd55fbd7a3681b288101fd1ca5d13e6f"
+}
