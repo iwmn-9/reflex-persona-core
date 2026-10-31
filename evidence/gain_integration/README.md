@@ -19,3 +19,10 @@ wheel. The wheel is not a stable release. Registered long-world development,
 all-loss/persona review and independent forty-condition confirmation remain
 required before adoption. The final scientific histories must also replay
 through the eventual installed distribution. Rust remains unchanged.
+
+The history-replay bridge is prepared, not positively completed. Its first
+rehearsal used an older Linux archive on Windows; both original and packaged
+code missed the same saved hash at tick5 while matching each other. The bridge
+now rejects a different recorded Python/NumPy/platform runtime before replay.
+`history_replay_preparation.zip` retains that diagnosis and the prepared worker.
+It awaits the current native Windows complete archives. No tolerance was relaxed.
