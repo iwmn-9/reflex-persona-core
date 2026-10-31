@@ -20,9 +20,16 @@ all-loss/persona review and independent forty-condition confirmation remain
 required before adoption. The final scientific histories must also replay
 through the eventual installed distribution. Rust remains unchanged.
 
-The history-replay bridge is prepared, not positively completed. Its first
-rehearsal used an older Linux archive on Windows; both original and packaged
-code missed the same saved hash at tick5 while matching each other. The bridge
-now rejects a different recorded Python/NumPy/platform runtime before replay.
-`history_replay_preparation.zip` retains that diagnosis and the prepared worker.
-It awaits the current native Windows complete archives. No tolerance was relaxed.
+The native Windows bridge has now replayed two complete audited development
+pairs (four executions, 512 actual steps), with exact installed-package
+learning, world, RNG, personality and controller restoration after every step.
+`native_pair_replay.json` and its archive bind the inputs and checks. Actions
+were supplied from the original histories; planning was not rerun. This is
+bounded integration evidence, not a completed cohort or runtime migration.
+
+Its earlier rehearsal used a Linux archive on Windows; both original and
+packaged code missed the same saved hash at tick5 while matching each other.
+`history_replay_preparation.zip` preserves that diagnosis. The updated bridge
+still rejects a different recorded runtime before output. Complete current
+cohorts and eventual confirmation histories remain required; no tolerance or
+scientific gate was relaxed.
