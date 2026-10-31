@@ -45,10 +45,13 @@ class FixedHorizonOwner(RecedingOwner):
 
     def _with_actor(self, actor):
         options = self.options
-        return FixedHorizonOwner(actor, **{k: options[k] for k in (
+        return type(self)(actor, **{k: options[k] for k in (
             'observe', 'events', 'terminal', 'assess', 'request_for', 'feedback',
             'model_id', 'target', 'cumulative_preference', 'seeds')},
             horizon=options['tail_steps']+1, recovery_cache=self.recovery_cache)
+
+    def _continuation_options(self):
+        return {}
 
     def decide(self, public):
         if self.actor.pending is not None:
@@ -69,7 +72,8 @@ class FixedHorizonOwner(RecedingOwner):
         captured = {}
         planner = consensus_planner(self.actor, request, world, captured=captured,
             minimum_horizon=horizon, horizon=horizon, recovery_cache=self.recovery_cache,
-            include_retry=True, coherent_cumulative_mean=True, **options)
+            include_retry=True, coherent_cumulative_mean=True,
+            **self._continuation_options(), **options)
         def complete(contexts, decisions):
             result = planner(contexts, decisions)
             if result is None:

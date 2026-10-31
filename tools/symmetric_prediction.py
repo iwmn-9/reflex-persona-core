@@ -5,22 +5,11 @@ This assumes labels carry no prior preference in the absence of observations.
 It is NOT appropriate when the host intends a semantic prior over labels.
 For >4 labels this bounded experiment declines completion, retaining baseline.
 """
-from itertools import permutations
-from functools import lru_cache
 import math
 import numpy as np
 from reflex.core import digest
 from reflex.segmented_prediction import SegmentedEventLearner, segment_prediction, _normalize_logs
-
-
-@lru_cache(maxsize=4096)
-def complete_templates(models, alphabet):
-    if alphabet > 4:
-        return models
-    # Keep a fixed transformation identity, including duplicate shapes. This
-    # preserves the same hypothesis across contexts and historical rows.
-    return tuple(tuple(model[i] for i in order) for model in models
-                 for order in permutations(range(alphabet)))
+from reflex._response_templates import complete_templates
 
 
 class SymmetricEventLearner(SegmentedEventLearner):

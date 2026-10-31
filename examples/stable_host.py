@@ -88,29 +88,30 @@ def feedback(before, after, move, observation, flow):
         event={'revealed_action': after['signal']})
 
 
-def make_controller():
+def make_controller(predictor=None, owner_type=FixedHorizonOwner):
     c = observe(initial_world())
-    predictor = EventReader(c['scope'], ('a-usual', 'b-usual'), models, outcome,
-        legal_for=lambda c: RESPONSES, model_id=RULES, known_conditionals=True,
-        learning='segmented')
+    if predictor is None:
+        predictor = EventReader(c['scope'], ('a-usual', 'b-usual'), models, outcome,
+            legal_for=lambda c: RESPONSES, model_id=RULES, known_conditionals=True,
+            learning='segmented')
     actor = DecisionLoop(c,
         policy=Policy(principle_priority='personal', commitments={character_key(c): .5}),
         predictor=predictor, read_control=ReadControl(max_nodes=64),
         pressure=NeedPressure(c['scope']), progress=ProgressWatch(c['scope']))
-    return FixedHorizonOwner(actor, observe=observe, events=events, terminal=terminal,
+    return owner_type(actor, observe=observe, events=events, terminal=terminal,
         assess=assess, request_for=request_for, feedback=feedback, model_id=RULES,
         target=TARGET, cumulative_preference=CumulativePreference(
             TARGET, 'raw-score', (('values.achievement', 1.),)),
         horizon=32, seeds=(701, 702, 703), recovery_cache=64)
 
 
-def main():
+def main(controller_factory=make_controller):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--save', type=Path, required=True)
     parser.add_argument('--resume', type=Path)
     parser.add_argument('--stop-after', type=int, choices=range(END+1), default=END)
     args = parser.parse_args()
-    controller = make_controller()
+    controller = controller_factory()
     world, trace = initial_world(), []
     rng = np.random.default_rng(987)
     if args.resume:

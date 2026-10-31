@@ -18,6 +18,7 @@ sys.meta_path.insert(0,NoResearch())
 import reflex
 from pathlib import Path
 assert Path(reflex.__file__).resolve().is_relative_to(Path(sys.argv[1]))
+sys.path.insert(0,str(Path(sys.argv[2]).parent))
 sys.argv=sys.argv[2:]
 runpy.run_path(sys.argv[0],run_name='__main__')
 '''
@@ -27,14 +28,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('installed', type=Path)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--example', choices=('stable_host.py','experimental_gain_host.py'),default='stable_host.py')
     args = parser.parse_args()
     installed = args.installed.resolve()
     args.output.mkdir(parents=True, exist_ok=False)
-    example = Path(__file__).resolve().parents[1]/'examples/stable_host.py'
+    example = Path(__file__).resolve().parents[1]/'examples'/args.example
+    support = example.parent/'stable_host.py'
     rows = []
     with tempfile.TemporaryDirectory(prefix='reflex-stable-consumer-') as folder:
         work = Path(folder)
-        copied = work/'stable_host.py'
+        copied = work/example.name
+        if support!=example:shutil.copyfile(support,work/support.name)
         shutil.copyfile(example, copied)
         for command in (['--save', 'full.json'], ['--save', 'prefix.json', '--stop-after', '3'],
                         ['--resume', 'prefix.json', '--save', 'resumed.json'],
@@ -52,6 +56,7 @@ def main():
         (args.output/'final.json').write_text(json.dumps(full, sort_keys=True)+'\n', encoding='utf8')
     summary = dict(complete=True, isolated_from_repository=True, research_imports_blocked=True,
                    example_sha256=hashlib.sha256(example.read_bytes()).hexdigest(),
+                   support_sha256=hashlib.sha256(support.read_bytes()).hexdigest(),
                    verifier_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                    python=sys.version, new_quality_trials=False, checks=rows,
                    host_world_rng_owner_and_trace_exact=True)
