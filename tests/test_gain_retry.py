@@ -60,5 +60,12 @@ class GainRetryTests(unittest.TestCase):
         for value in (1,None,'yes'):
             with self.subTest(value=value),self.assertRaises(ValueError):evaluate(PreparationChain(5),value)
 
+    def test_h32_long_preparation_with_initial_resource_shortage(self):
+        for payout,expected in ((24.,'y'),(11.,'x')):
+            with self.subTest(payout=payout):
+                game=PreparationChain(11,payout=payout,turns=128)
+                result,_=evaluate(game,True,horizon=32)
+                self.assertEqual(result['decision']['action_id'],expected)
+
 
 if __name__=='__main__':unittest.main()

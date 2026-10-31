@@ -1,7 +1,8 @@
 """Public-goal retry termination, not the reserved world cohort.
 
-H8 keeps the previously retained unfinished-cycle failure and two longer
-seven-step preparation checks. Only retry termination proposals change.
+H8 keeps the previously retained unfinished-cycle failure and two seven-step
+checks. H32 also tests eleven-step preparation with insufficient initial funds.
+Only retry termination proposals change.
 Neither the current purpose-tail twenty executions nor stable/Rust are changed.
 """
 import argparse
@@ -29,13 +30,16 @@ def specs():
         length=5,payout=2. if kind=='opportunity' else 14.,turns=128,
         changes=([[73,2.]] if kind=='loss' else [[29,14.]] if kind=='opportunity' else []))
         for profile in (0,2) for kind in ('stable','loss','opportunity')]
-    return original+[dict(id='chain-0-long-'+kind,mechanism='chain',profile=0,
+    return (original+[dict(id='chain-0-long-'+kind,mechanism='chain',profile=0,
         length=7,payout=payout,turns=128,changes=[]) for kind,payout in (('profitable',16.),('bad',7.))]
+        +[dict(id='chain-0-h32-'+kind,mechanism='chain',profile=0,horizon=32,
+        length=11,payout=payout,turns=128,changes=[]) for kind,payout in (('profitable',24.),('bad',11.))])
 
 
 def run(folder,spec,enabled):
     folder.mkdir(parents=True,exist_ok=True)
-    config=dict(spec=spec,retry=True,horizon=8,seeds=[701],retry_until_gain=enabled)
+    horizon=spec.get('horizon',8)
+    config=dict(spec=spec,retry=True,horizon=horizon,seeds=[701],retry_until_gain=enabled)
     store=OwnedCheckpoint(folder/'checkpoint.json',('gain-retry',spec['id']),
         'gain' if enabled else 'control',configuration=config,every=1)
     g=game_for(spec);world=g.start();actor=g.actor(g.context(world),learning='segmented')
@@ -51,7 +55,7 @@ def run(folder,spec,enabled):
         prior=actor.record();detached=copy.deepcopy(actor);captured={}
         planner=portfolio_planner(actor,request,world,observe=g.context,events=g.events,terminal=g.terminal,
             assess=lambda w:g.goal(w).record(),request_for=g.request,feedback=g.feedback,model_id=g.model_id,
-            target=g.target,horizon=8,seeds=(701,),world_model='posterior',
+            target=g.target,horizon=horizon,seeds=(701,),world_model='posterior',
             cumulative_preference=cumulative_basis(g,True),include_retry=True,captured=captured,
             purpose_estimator='conditional',tail_recovery=2,coherent_cumulative_mean=True,
             tail_purpose_reflex=True,retry_until_gain=enabled)
@@ -89,10 +93,11 @@ def main(root):
     source={str(p.relative_to(ROOT)):sha(p.read_bytes()) for folder in ('reflex','tools')
             for p in (ROOT/folder).rglob('*.py')}
     import os
-    plan=dict(version=1,specs=specs(),arms={'control':False,'gain':True},horizon=8,seeds=[701],
+    plan=dict(version=1,specs=specs(),arms={'control':False,'gain':True},default_horizon=8,
+        horizon_source='Per-spec horizon overrides the default; both arms always use the same horizon.',seeds=[701],
         sources=source,arithmetic={k:os.environ.get(k) for k in ('NPY_DISABLE_CPU_FEATURES','OPENBLAS_CORETYPE','OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS')},
         scope='Known deterministic preparation mechanism; not independent confirmation or replacement of the current twenty executions.',
-        criteria='All eight pairs and 2048 factual steps, every loss retained, every owner/world/RNG replayed. Nonnegative every pair, at least one positive delta; no adoption from this screen.',adoption=False)
+        criteria='All ten pairs and 2560 factual steps, every loss retained, every owner/world/RNG replayed. Nonnegative every pair, at least one positive delta; no adoption from this screen.',adoption=False)
     plan_path=root/'plan.json'
     if plan_path.exists():assert json.loads(plan_path.read_bytes())==plan
     else:plan_path.write_bytes(encoded(plan))
@@ -111,8 +116,8 @@ def main(root):
     result=dict(complete=True,pairs=pairs,actual_steps=sum(a['actual_steps'] for p in pairs for a in p['arms'].values()),
         nonnegative_every_pair=all(p['delta']>=-1e-12 for p in pairs),strict_gain=any(p['delta']>1e-12 for p in pairs),
         plan_sha256=sha(plan_path.read_bytes()),adoption=False)
-    assert result['actual_steps']==2048
-    (root/'summary.json').write_bytes(encoded(result));(root/'status.json').write_bytes(encoded(dict(complete=True,pairs_complete=8,adoption=False)))
+    assert result['actual_steps']==2560
+    (root/'summary.json').write_bytes(encoded(result));(root/'status.json').write_bytes(encoded(dict(complete=True,pairs_complete=10,adoption=False)))
     print(json.dumps({k:v for k,v in result.items() if k!='pairs'}),flush=True)
 
 
