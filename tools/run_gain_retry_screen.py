@@ -8,6 +8,7 @@ Neither the current purpose-tail twenty executions nor stable/Rust are changed.
 import argparse
 import copy
 import json
+import platform
 from pathlib import Path
 import sys
 import time
@@ -95,7 +96,8 @@ def main(root):
     import os
     plan=dict(version=1,specs=specs(),arms={'control':False,'gain':True},default_horizon=8,
         horizon_source='Per-spec horizon overrides the default; both arms always use the same horizon.',seeds=[701],
-        sources=source,arithmetic={k:os.environ.get(k) for k in ('NPY_DISABLE_CPU_FEATURES','OPENBLAS_CORETYPE','OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS')},
+        sources=source,runtime=dict(python=sys.version,numpy=np.__version__,system=platform.system(),machine=platform.machine()),
+        arithmetic={k:os.environ.get(k) for k in ('NPY_DISABLE_CPU_FEATURES','OPENBLAS_CORETYPE','OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS')},
         scope='Known deterministic preparation mechanism; not independent confirmation or replacement of the current twenty executions.',
         criteria='All ten pairs and 2560 factual steps, every loss retained, every owner/world/RNG replayed. Nonnegative every pair, at least one positive delta; no adoption from this screen.',adoption=False)
     plan_path=root/'plan.json'
