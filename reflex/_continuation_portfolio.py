@@ -78,6 +78,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         cache=OrderedDict();cache_hits=0;recovery_computations=0
         roots = sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure'])
         paths, audits, mapping, policies = {}, {}, {}, {}
+        retry_without_gain = {}
         steps = 0; purpose_reflex_calls = 0; reused_steps = 0
         for root_index, root in enumerate(roots):
             first = model.owner_transitions(copy.deepcopy(world), root, actor, copy.deepcopy(c))
@@ -95,7 +96,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                 policies[proposal] = dict(kind=mode, preferred=preferred)
                 if until_gain:
                     policies[proposal]['termination'] = 'public-purpose-above-origin'
-                branches, rows = [], []
+                branches, rows, no_gain_rows = [], [], []
                 for response in first:
                     for seed in seeds:
                         if until_gain:
@@ -103,16 +104,28 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                             first_goal = Goal(**assess(response.state))
                             if first_goal.target != origin.target:
                                 raise ValueError('one declared purpose throughout retry termination required')
+                            same_path = None
+                            termination_step = None
                             if first_goal.value > origin.value + 1e-12:
                                 # Termination after the forced root makes this
                                 # exact path the ordinary owned continuation.
                                 # Reuse its completed learner and full effects,
                                 # not an approximation or a shorter trajectory.
-                                ordinary = f'candidate-{root_index:03d}-reflex'
+                                same_path = f'candidate-{root_index:03d}-reflex'
+                                termination_step = 1
+                            else:
+                                repeated = proposal.removesuffix('-until-gain')
+                                if retry_without_gain[repeated][len(rows)]:
+                                    # Both policies stay identical throughout
+                                    # this complete modeled history. Reuse the
+                                    # full learned owner/effects, never skip a
+                                    # step or substitute an estimated tail.
+                                    same_path = repeated
+                            if same_path is not None:
                                 index = len(rows)
-                                branches.append(copy.deepcopy(paths[ordinary][index]))
-                                rows.append(copy.deepcopy(audits[ordinary][index]))
-                                rows[-1]['retry_termination_step'] = 1
+                                branches.append(copy.deepcopy(paths[same_path][index]))
+                                rows.append(copy.deepcopy(audits[same_path][index]))
+                                rows[-1]['retry_termination_step'] = termination_step
                                 count = len(rows[-1]['actions'])
                                 steps += count; reused_steps += count
                                 continue
@@ -122,7 +135,9 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                         recovery_calls = 0
                         retry_finished = False
                         retry_termination_step = None
-                        origin = Goal(**assess(world)) if until_gain else None
+                        track_gain = retry_until_gain and mode == 'retry' and not until_gain
+                        gain_seen = False
+                        origin = Goal(**assess(world)) if until_gain or track_gain else None
                         for t in range(horizon):
                             if terminal(w):
                                 break
@@ -217,13 +232,17 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                                         for o in outcomes) - Goal(**assess(after)).value)
                             resolve_feedback(own, result['ticket'], feedback(w, after, key, result['context'], flow))
                             flows.append(flow); actions.append(key); w = after; steps += 1
-                            if until_gain and not retry_finished:
+                            if (until_gain and not retry_finished) or (track_gain and not gain_seen):
                                 observed_goal = Goal(**assess(w))
                                 if observed_goal.target != origin.target:
                                     raise ValueError('one declared purpose throughout retry termination required')
-                                retry_finished = observed_goal.value > origin.value + 1e-12
-                                if retry_finished:
-                                    retry_termination_step = t + 1
+                                positive = observed_goal.value > origin.value + 1e-12
+                                if track_gain:
+                                    gain_seen = positive
+                                if until_gain:
+                                    retry_finished = positive
+                                    if retry_finished:
+                                        retry_termination_step = t + 1
                             if capture_prefixes:
                                 prefixes.append(dict(assessment=Goal(**assess(w)).record(),terminal=terminal(w),
                                     correction=math.fsum(corrections),world=copy.deepcopy(w)))
@@ -238,7 +257,10 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                         if purpose_estimator == 'conditional':
                             rows[-1]['purpose_mean_estimate'] = goal.value + math.fsum(corrections)
                         if capture_prefixes:rows[-1]['prefixes']=prefixes
+                        if track_gain:no_gain_rows.append(not gain_seen)
                 paths[proposal], audits[proposal] = tuple(branches), rows
+                if mode == 'retry' and not until_gain:
+                    retry_without_gain[proposal] = no_gain_rows
         forecast = goal_forecast(c, paths, audits, horizon=horizon,
             unit='owner-decisions', target=target, policy=actor.policy,
             plan_roots=mapping, settlement_weight='absolute',
