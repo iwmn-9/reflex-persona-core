@@ -20,3 +20,10 @@ Synthetic process-wait and incomplete/failure gates passed. The actual chain was
 still waiting for the original cohort when this record was produced.
 
 [Verification](verification.json) · [Operation and rehearsal records](operation.zip)
+
+Before any real stage started, the waiting-only process was replaced to pass
+the registered NumPy/BLAS arithmetic settings explicitly to every child.
+The actual child-launch path was tested with a synthetic environment-only job;
+all settings matched. The original scientific processes and all histories were
+untouched. Retain the first operation as retired before its first stage.
+[Environment verification](environment_verification.json) · [Active operation](operation_v2.zip).
