@@ -142,7 +142,7 @@ class ClosedLoop:
     def clear(self):
         self.cache.clear()
 
-    def _node(self,world,actor,request,remaining,*,root=False,_forecast_only=False):
+    def _node(self,world,actor,request,remaining,*,root=False,_forecast_only=False,_prepared_context=None):
         if not isinstance(request,Request) or actor.pending is not None:raise ValueError('resolved owned Request required')
         # Independent readers/value proposals are outside this controller's
         # contract: an unseen post-planner override would invalidate its tree.
@@ -150,6 +150,9 @@ class ClosedLoop:
             raise ValueError('tree requires an explicit joint planner without external advice overrides')
         baseline=None
         if self.owner_transitions is None:c=actor._prepare(request)['effective']
+        elif _prepared_context is not None:
+            if not (_forecast_only and root and remaining==1):raise ValueError('prepared context requires one-step forecast root')
+            c=_prepared_context
         else:c,baseline=actor.preview(request)
         compile_batch([c])
         identity=[self.model_id,self.target,self.unit,self.max_regret,self.record(world),actor.record(),asdict(request),c,remaining,
@@ -307,7 +310,7 @@ class ClosedLoop:
         if type(h) is not int or not 1<=h<=self.budget.horizon:raise ValueError('bounded remaining decision window required')
         if type(_forecast_only) is not bool or (_forecast_only and (h!=1 or self.frontier is not None or captured is not None)):
             raise ValueError('forecast-only evaluation requires one step without continuation or owner audit capture')
-        def call(contexts,decisions):
+        def call(contexts,decisions,*,_prepared=None):
             if self.source_owner is not None and digest(actor.record())!=self.source_owner:
                 raise ValueError('stale owned rollout after real feedback')
             if captured is not None:
@@ -316,7 +319,18 @@ class ClosedLoop:
             before=digest(actor.record());self.work=0;self.hits=0;self._used=set()
             if len(self.cache)>self.budget.nodes:self.clear()
             try:
-                node=self._node(copy.deepcopy(initial),actor,request,h,root=True,_forecast_only=_forecast_only)
+                prepared_context=None
+                if _prepared is not None:
+                    if not _forecast_only:raise ValueError('prepared context requires forecast-only planner')
+                    source,resolved,effective=_prepared
+                    # The ordinary lifecycle has already computed this same
+                    # deterministic preview. No persistent cache or save field:
+                    # evidence changes, foreign requests and foreign owners all
+                    # fall back to the original independent preview.
+                    if digest(source.record())==before and asdict(resolved)==asdict(request):
+                        prepared_context=copy.deepcopy(effective)
+                node=self._node(copy.deepcopy(initial),actor,request,h,root=True,_forecast_only=_forecast_only,
+                    _prepared_context=prepared_context)
                 # Forecast replaces actions and appends facts; select checks
                 # those contracts, too, before the real owner commits a root.
                 if any(contexts[0][k]!=node['forecast'].contexts[0][k] for k in contexts[0] if k not in ('actions','facts')):
@@ -330,6 +344,8 @@ class ClosedLoop:
                 return None
             finally:
                 if digest(actor.record())!=before:raise AssertionError('tree mutated real owner')
+        if _forecast_only:
+            call._from_prepared=lambda cs,ds,source,resolved,effective:call(cs,ds,_prepared=(source,resolved,effective))
         return call
 
 

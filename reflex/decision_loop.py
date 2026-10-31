@@ -444,7 +444,15 @@ class DecisionLoop:
         if planner is not None:
             from .deliberation import select
             contexts=[copy.deepcopy(s['effective']) for s in stages]
-            forecast=planner(contexts,copy.deepcopy(baseline_records) if proof_indices else [copy.deepcopy(s['decision']) for s in stages])
+            planner_decisions=copy.deepcopy(baseline_records) if proof_indices else [copy.deepcopy(s['decision']) for s in stages]
+            prepared=getattr(planner,'_from_prepared',None)
+            if callable(prepared) and len(items)==1 and stochastic is False and type(items[0][1]) is Request:
+                # Private one-step continuation protocol. Supply a separate copy
+                # of the resolved context, never a caller-mutated planner input.
+                # The receiver verifies the complete owner and request again.
+                s=stages[0]
+                forecast=prepared(contexts,planner_decisions,s['loop'],s['request'],copy.deepcopy(s['effective']))
+            else:forecast=planner(contexts,planner_decisions)
             if forecast is not None:
                 root_appraisal=None if not social_kwargs else [s['social_scores'] or {} for s in stages]
                 decisions,audit=select(contexts,forecast,policy,root_allowed=[s['progress_allowed'] for s in stages],appraisal=root_appraisal)

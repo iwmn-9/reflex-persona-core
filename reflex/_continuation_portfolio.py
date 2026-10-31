@@ -181,6 +181,13 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                                     if f is None:
                                         raise ValueError('incomplete future immediate-purpose forecast')
                                     return f
+                                def complete_prepared(cs, ds, source, resolved, effective, proposed=proposed):
+                                    f = proposed._from_prepared(cs, ds, source, resolved, effective)
+                                    if f is None:
+                                        raise ValueError('incomplete future immediate-purpose forecast')
+                                    return f
+                                if callable(getattr(proposed,'_from_prepared',None)):
+                                    complete_purpose._from_prepared = complete_prepared
                                 future = complete_purpose
                                 purpose_reflex_calls += 1
                             result = DecisionLoop.decide_batch([(own, current_request)], False, future,
