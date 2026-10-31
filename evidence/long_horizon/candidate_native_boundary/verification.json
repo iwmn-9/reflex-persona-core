@@ -1,0 +1,79 @@
+{
+  "complete": true,
+  "adoption": false,
+  "source": "71bf6b2f3e40724a7bb33be14dc3bd3311ee18f8",
+  "rows": [
+    {
+      "family": "auction",
+      "arm": "stable",
+      "learner": "SegmentedEventLearner",
+      "accepted": true,
+      "error": null,
+      "owner_unchanged": true
+    },
+    {
+      "family": "auction",
+      "arm": "transfer_purpose_gain",
+      "learner": "TemplateTransferLearner",
+      "accepted": false,
+      "error": "supported frozen public-conditional owner configuration required",
+      "owner_unchanged": true
+    },
+    {
+      "family": "combat",
+      "arm": "stable",
+      "learner": "SegmentedEventLearner",
+      "accepted": true,
+      "error": null,
+      "owner_unchanged": true
+    },
+    {
+      "family": "combat",
+      "arm": "transfer_purpose_gain",
+      "learner": "TemplateTransferLearner",
+      "accepted": false,
+      "error": "supported frozen public-conditional owner configuration required",
+      "owner_unchanged": true
+    },
+    {
+      "family": "gambling",
+      "arm": "stable",
+      "learner": "SegmentedEventLearner",
+      "accepted": true,
+      "error": null,
+      "owner_unchanged": true
+    },
+    {
+      "family": "gambling",
+      "arm": "transfer_purpose_gain",
+      "learner": "TemplateTransferLearner",
+      "accepted": false,
+      "error": "supported frozen public-conditional owner configuration required",
+      "owner_unchanged": true
+    },
+    {
+      "family": "resources",
+      "arm": "stable",
+      "learner": "SegmentedEventLearner",
+      "accepted": true,
+      "error": null,
+      "owner_unchanged": true
+    },
+    {
+      "family": "resources",
+      "arm": "transfer_purpose_gain",
+      "learner": "TemplateTransferLearner",
+      "accepted": false,
+      "error": "supported frozen public-conditional owner configuration required",
+      "owner_unchanged": true
+    }
+  ],
+  "sources": {
+    "reflex/native_owned.py": "924a1e65e41d47ca83863ef9def7a40b4a14e027293303cb6b79a6342a98145c",
+    "reflex/fixed_horizon.py": "ee36961ef053a91e1bc56536ff14505714d61d8ff46208d9327c3bf0b5e21238",
+    "tools/template_transfer_prediction.py": "ba565bac23320d81652fa474d3045fbed6403a17ad1e5f57c479e09c1b233253",
+    "tools/run_adverse_recovery.py": "7effe125d48bf870be02e552cca810f2a79014102f4ede45b3d86043b5d4146b"
+  },
+  "conclusion": "The current Rust factual owner supports the stable segmented learner only. The experimental transfer learner is rejected before native export instead of silently losing its behavior. Keep new learner/planner experiments in Python. Passing future world-quality gates does not itself establish Rust equivalence.",
+  "limits": "Configuration/boundary test only. No Rust execution, full native migration or new world-quality claim."
+}
