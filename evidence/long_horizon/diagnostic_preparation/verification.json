@@ -1,0 +1,45 @@
+{
+  "actual_pipeline_complete": false,
+  "adoption": false,
+  "complete": true,
+  "exact_original_driver_and_probe": true,
+  "exact_original_plan": true,
+  "exact_prepared_inputs": 72,
+  "executed_diagnostics": false,
+  "negative_checks": [
+    {
+      "case": "unfinished",
+      "error": "complete audited study required"
+    },
+    {
+      "case": "corrupt_archive",
+      "error": "audited artifact changed: x"
+    },
+    {
+      "case": "existing_execution",
+      "error": "retain the existing prepared execution"
+    },
+    {
+      "case": "foreign_worker",
+      "error": "source and completed study plans differ"
+    },
+    {
+      "case": "path_escape",
+      "rejected": true
+    }
+  ],
+  "one_shot_pipeline_preflight": {
+    "all_registered_protocol_tool_hashes_match": true,
+    "complete": true,
+    "failures_rejected": true,
+    "manifest_sha256": "ce88820bc1cb161549ecb051dcee8a8724f5858bd608ba0ac6a076c2620d3ce3",
+    "original_queue_untouched": true,
+    "scientific_execution_started": false,
+    "synthetic_process_wait_passed": true,
+    "truncated_completion_rejected": true
+  },
+  "operation_sha256": "42ceaa4ace0dd87ba86bf02f7005f82a6a3adf86f5e211583f151fef194f1af0",
+  "prepared_manifest_sha256": "ff0d77e1edc89ddf7f6ef0e90cf67e2ea4256d53750d9dc247d41b2687f5582d",
+  "preparer_sha256": "a6fbf0a94c5dae786bc335d1006b440c95f72d30e70f7f1112625b00ff6823a7",
+  "source_study_verification_sha256": "9a3c92015d1cd46b60b0897c463dd57cd78357be4f6f671eabc6efb857dd1a09"
+}
