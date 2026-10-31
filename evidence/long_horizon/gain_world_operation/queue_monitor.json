@@ -1,0 +1,35 @@
+{
+  "science_changed": false,
+  "recorded_at": "2026-10-31T23:08:37.4641719Z",
+  "tests": {
+    "source": "Observed Codex exec tool result 249 tokens, exit code 0",
+    "seconds": 0.088,
+    "command": "python -m unittest test_snapshot_registered_queues -v",
+    "passed": 6,
+    "executed": 6
+  },
+  "files": {
+    "test_snapshot_registered_queues.py": "d58d667730db7cfb1eab0fd573dccec608c2767f9fc26b4271e8946191a2a511",
+    "queue_snapshot_20261031_230634.json": "94aca6dc392300898dea960d6b3ca55ede9feed9ec05aba422c9edb3ba5d46ae",
+    "snapshot_registered_queues.py": "970b928dda23b3d316f48fbe42001811a523d9d69af4c8bfe75e5dc1cc82d094"
+  },
+  "defect": "Monitor confused saved-turn notices, worker identity and job completion; retired coordinator children require manifest/job matching.",
+  "version": 1,
+  "archive_sha256": "5b65476ba708819e1808576e306c235c486679b12f96dbb5bcad7ac4ed74df62",
+  "adoption": false,
+  "cohort_gate": false,
+  "verified_snapshot": {
+    "purpose_registered": 20,
+    "purpose_audited": 12,
+    "relative_audited": 0,
+    "relative_registered": 10,
+    "gain_registered": 20,
+    "gain_audited": 1
+  },
+  "limitations": [
+    "Does not observe process exit codes",
+    "Worker audits are not complete-cohort approval",
+    "Snapshot does not replace full archived histories and loss/personality review"
+  ],
+  "method": "Two OS snapshots identify all python.exe workers by canonical manifest and --job. Active workers: append-only log only. Inactive jobs with a full terminal notice: final registration-matched audited status. Does not open active queue/status/checkpoint JSON."
+}
