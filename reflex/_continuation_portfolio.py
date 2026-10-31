@@ -34,7 +34,7 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                       purpose_estimator='sampled', tail_recovery=0, recovery_cache=0,
                       coherent_cumulative_mean=False, capture_prefixes=False,
                       sampling='independent', continuation_scope='root',
-                      tail_purpose_reflex=False):
+                      tail_purpose_reflex=False, retry_until_gain=False):
     if type(horizon) is not int or not 1 <= horizon <= 128:
         raise ValueError('explicit bounded continuation horizon required')
     if (not isinstance(seeds, tuple) or not 1 <= len(seeds) <= 8
@@ -53,6 +53,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         raise ValueError('bounded within-decision recovery cache required')
     if type(tail_purpose_reflex) is not bool:
         raise ValueError('explicit future immediate-purpose selection required')
+    if type(retry_until_gain) is not bool or retry_until_gain and not include_retry:
+        raise ValueError('explicit optional retry termination requires the retry bank')
     if sampling not in ('independent', 'stratified'):
         raise ValueError('known continuation sampling mode required')
     if continuation_scope not in ('root', 'shared') or continuation_scope == 'shared' and not include_retry:
@@ -79,14 +81,20 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         steps = 0; purpose_reflex_calls = 0
         for root_index, root in enumerate(roots):
             first = model.owner_transitions(copy.deepcopy(world), root, actor, copy.deepcopy(c))
-            modes = [('reflex', None)]
+            modes = [('reflex', None, False)]
             if include_retry:
-                modes += [('retry', key) for key in (roots if continuation_scope == 'shared' else (root,))]
-            for mode, preferred in modes:
+                modes += [('retry', key, False) for key in (roots if continuation_scope == 'shared' else (root,))]
+                if retry_until_gain:
+                    modes += [('retry', key, True) for key in (roots if continuation_scope == 'shared' else (root,))]
+            for mode, preferred, until_gain in modes:
                 suffix = f'-{roots.index(preferred):03d}' if mode == 'retry' and continuation_scope == 'shared' else ''
+                if until_gain:
+                    suffix += '-until-gain'
                 proposal = f'candidate-{root_index:03d}-{mode}{suffix}'
                 mapping[proposal] = root
                 policies[proposal] = dict(kind=mode, preferred=preferred)
+                if until_gain:
+                    policies[proposal]['termination'] = 'public-purpose-above-origin'
                 branches, rows = [], []
                 for response in first:
                     for seed in seeds:
@@ -94,6 +102,9 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                         flows, actions, falls, corrections, prefixes = [], [], [], [], []
                         current_request = copy.deepcopy(request)
                         recovery_calls = 0
+                        retry_finished = False
+                        retry_termination_step = None
+                        origin = Goal(**assess(world)) if until_gain else None
                         for t in range(horizon):
                             if terminal(w):
                                 break
@@ -103,9 +114,10 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                             context = stage['effective']
                             legal = {a['id'] for a in context['actions'] if a['legal'] and not a['known_failure']}
                             key = root if t == 0 else None
-                            if t and mode == 'retry' and preferred in legal and preferred in stage['progress_allowed']:
+                            retry_active = mode == 'retry' and not retry_finished
+                            if t and retry_active and preferred in legal and preferred in stage['progress_allowed']:
                                 key = preferred
-                            elif t and mode == 'retry':
+                            elif t and retry_active:
                                 falls.append(t)
                             model_owner = copy.deepcopy(own)
                             future = None
@@ -180,6 +192,13 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                                         for o in outcomes) - Goal(**assess(after)).value)
                             resolve_feedback(own, result['ticket'], feedback(w, after, key, result['context'], flow))
                             flows.append(flow); actions.append(key); w = after; steps += 1
+                            if until_gain and not retry_finished:
+                                observed_goal = Goal(**assess(w))
+                                if observed_goal.target != origin.target:
+                                    raise ValueError('one declared purpose throughout retry termination required')
+                                retry_finished = observed_goal.value > origin.value + 1e-12
+                                if retry_finished:
+                                    retry_termination_step = t + 1
                             if capture_prefixes:
                                 prefixes.append(dict(assessment=Goal(**assess(w)).record(),terminal=terminal(w),
                                     correction=math.fsum(corrections),world=copy.deepcopy(w)))
@@ -189,6 +208,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                         branches.append(Branch(probability, tuple(flows), (1.,)*horizon))
                         rows.append(dict(actions=actions, assessment=goal.record(), terminal=terminal(w),
                             fallback_steps=falls, recovery_calls=recovery_calls, final_owner=digest(own.record())))
+                        if until_gain:
+                            rows[-1]['retry_termination_step'] = retry_termination_step
                         if purpose_estimator == 'conditional':
                             rows[-1]['purpose_mean_estimate'] = goal.value + math.fsum(corrections)
                         if capture_prefixes:rows[-1]['prefixes']=prefixes
@@ -231,6 +252,12 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                 kind='existing-one-step-owned-purpose', calls=purpose_reflex_calls,
                 semantics='Existing H2 recovery first; otherwise evaluate the public immediate goal with the same owner. '
                           'Forced retry proposals remain proposals. No factual or hidden outcomes are supplied.')
+        if retry_until_gain:
+            metadata['continuation_portfolio']['retry_until_gain'] = dict(
+                kind='public-purpose-above-origin',
+                semantics='Additional proposal ends root retry after the modeled public goal exceeds its root value. '
+                          'Same learning owner then decides; original full retry and reflex remain. '
+                          'Only the actual selected root executes.')
         forecast = replace(forecast, audit=metadata, max_regret=fraction*spread)
         if digest(actor.record()) != source:
             raise ValueError('counterfactual learning contaminated factual owner')
