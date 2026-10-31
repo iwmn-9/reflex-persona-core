@@ -178,8 +178,14 @@ class ClosedLoop:
             # for alternatives that this continuation will never select.
             if baseline is None:baseline=actor.preview(request)[1]
             keys=[baseline['action_id']]
+        # The owned physical kernel uses one same-context response distribution
+        # for all candidate actions. Resolve that distribution once on a fully
+        # detached owner; preserve every action's conditional outcomes below.
+        prepared_transitions=(self._prepare_transitions(actor,c)
+            if hasattr(self,'_prepare_transitions') else None)
         for key in keys:
-            options=(self.transitions(copy.deepcopy(world),key) if self.owner_transitions is None else
+            options=(prepared_transitions(copy.deepcopy(world),key) if prepared_transitions is not None else
+                self.transitions(copy.deepcopy(world),key) if self.owner_transitions is None else
                 self.owner_transitions(copy.deepcopy(world),key,copy.deepcopy(actor),copy.deepcopy(c)))
             if not isinstance(options,(tuple,list)) or not options:raise ValueError('nonempty public transition distribution required')
             probs=[t.probability for t in options if isinstance(t,Transition)]
@@ -428,6 +434,8 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
     if tail_goal_refinement:identity=digest([identity,'public-purpose-coarse-tie-v1'])
     def transitions(w,key,own,c):
         rows=events(w,key);p=predict(c) if posterior is None else posterior(own.predictor,c)
+        return conditional_rows(w,key,c,rows,p)
+    def conditional_rows(w,key,c,rows,p):
         if (not isinstance(rows,(tuple,list)) or not rows or any(not isinstance(e,PublicEvent) for e in rows)
                 or len({e.symbol for e in rows})!=len(rows) or {e.symbol for e in rows}!=set(p)):
             raise ValueError('one known conditional event per predicted public response required')
@@ -517,5 +525,10 @@ def owned_rollout(actor,*,observe,events,terminal,assess,record,request_for,feed
         budget=TreeBudget(horizon=tree_steps,outcomes=256),max_regret=max_regret,future_choices=future_choices,
         frontier=tail,tail_preferences=tail is not None,relative_objective=True,opportunity_regret=True,
         sampling_standard_errors=sampling_standard_errors,cumulative_preference=cumulative_preference)
+    def prepare_transitions(own,c):
+        detached=copy.deepcopy(own);context=copy.deepcopy(c)
+        probabilities=predict(context) if posterior is None else posterior(detached.predictor,context)
+        return lambda w,key:conditional_rows(w,key,context,events(w,key),probabilities)
+    ctrl._prepare_transitions=prepare_transitions
     ctrl.source_owner=source
     return ctrl
