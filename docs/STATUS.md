@@ -13,8 +13,8 @@
 
 Python安定版はv0.1.0／`FixedHorizonOwner`。[導入](STABLE_INTEGRATION.md)と[採用根拠](../evidence/long_horizon/REPORT.md)。安定版タグとRustの判断規則は維持する。
 
-研究先は `research/preparation-termination`。今回の[結果と限界](../evidence/completion/REPORT.md)。準備終了の候補を安定版と同じH32・3標本で比較する既知10条件はColabで実行中。将来の別手段も含む設定は小さい診断のみ通過し、未採用。独立40条件は未開始。
+研究先は `research/preparation-termination`。今回の[結果と限界](../evidence/completion/REPORT.md)。既知10条件の従来候補と基準側、新しい候補共有の10条件をColabで実行中。新候補の実履歴32手から学習継続/停止×変化/定常の40分岐も登録した。長期利益は未確定。独立40条件は未開始。
 
-実証はColab CLI、設計・改修・評価はローカル。有限実行の終了後に回収・VM解除・サーバー側消滅確認を行う。現在の実行状態は `results/colab_completion_worlds_20261102/status.json` と `progress.json`。GitHub Actionsはビルド・テスト・動作確認のみ。
+実証はColab CLI、設計・改修・評価はローカル。CPU2台で有限実行し、終了後に回収・VM解除・サーバー側消滅確認を行う。状態は `results/colab_completion_worlds_20261102/` と `results/colab_recovery_benefit_20261102/` の `progress.json`。`continuation.json` が現在の実行先を示す。時間上限だけ同じ途中状態で引き継ぎ、実エラーでは止める。GitHub Actionsはビルド・テスト・動作確認のみ。
 
 次は長期比較の監査と、同じ本人から学習継続／停止を分ける利益比較。途中を成功にせず、人格・乱数・登録条件・合格線を維持する。[教訓](LESSONS.md)。

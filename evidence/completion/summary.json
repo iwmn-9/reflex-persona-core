@@ -499,5 +499,26 @@
     "Validate shared continuation scope in long worlds before adoption.",
     "Run matched learned/frozen continuation benefit comparisons; C3 component alone is insufficient.",
     "C4 transfer, C5 blind personality/experience, C6 complete runtime performance remain unmeasured."
-  ]
+  ],
+  "long_shared_recovery": {
+    "state": "running; long-term benefit unconfirmed",
+    "episodes": 10,
+    "turns_per_episode": 128,
+    "boundary": 32,
+    "branches": 40,
+    "turns_per_branch": 32,
+    "source_sha256": "42ae57258380d3986f4545de13876b9fb474a4c1365a7305cc488fdaaf2d0b0d",
+    "plan_sha256": "bf13e9097423998226617f05e9414f0ecc1833d11e37a8769e0bf3ae45d7315b",
+    "parent_controls_reused_only_after_replay": true,
+    "parent_runner_parity": "4 families, 3 actual steps each, complete trace and owner equality",
+    "boundary_tests": {
+      "passed": 12,
+      "subtests_passed": 8
+    },
+    "audit_tool_tests": {
+      "passed": 3
+    },
+    "independent_confirmation_started": false,
+    "adoption": false
+  }
 }

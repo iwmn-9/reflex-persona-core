@@ -81,7 +81,9 @@ def replay(game, spec, trace, expected_owner, expected_rng):
     return len(trace)
 
 
-def run(directory, spec, arm, *, max_decisions=None, registration=None):
+def run(directory, spec, arm, *, max_decisions=None, registration=None, continuation_scope='root'):
+    if continuation_scope not in ('root', 'shared') or (continuation_scope != 'root' and arm != 'expected'):
+        raise ValueError('shared continuation requires expected arm')
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
     config = dict(spec=spec, arm=arm, horizon=32, seeds=list(seeds_for(arm)), recovery_cache=64,
@@ -90,6 +92,8 @@ def run(directory, spec, arm, *, max_decisions=None, registration=None):
             'run_continuation_portfolio.py', 'preparation_world.py')})
     if registration is not None:
         config['registration'] = registration
+    if continuation_scope != 'root':
+        config['continuation_scope'] = continuation_scope
     store = OwnedCheckpoint(directory/'checkpoint.json', ('adverse-recovery', spec['id']), arm,
         configuration=config, every=1, max_decisions=max_decisions)
     g = game_for(spec)
@@ -117,7 +121,7 @@ def run(directory, spec, arm, *, max_decisions=None, registration=None):
         context = g.context(world, actor.state)
         prediction = detached.predictor.predict(context)
         progress('deciding')
-        result, captured = decide(actor, g, world, arm)
+        result, captured = decide(actor, g, world, arm, continuation_scope=continuation_scope)
         action = result['decision']['action_id']
         truth = law(world['tick'], spec['turns'], spec['regime'])
         response = sample(truth, rng.random())
