@@ -1,6 +1,6 @@
 # 現在地 — 2026-11-01
 
-利用者の指示で再開。実証はColab CLI、設計・改修・評価はローカル。GitHub Actions・定期監視は使わない。
+実証はColab CLI、設計・改修・評価はローカル。GitHub Actionsはビルド・テスト・動作確認に使う。長期実験用Actionsは撤去した。
 
 - Python安定版：v0.1.0 / `FixedHorizonOwner`。設定は [導入ガイド](STABLE_INTEGRATION.md)。
 - 固定人格・実学習・予測・毎手の再計画・保存復元を接続済み。
