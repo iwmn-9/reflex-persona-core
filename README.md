@@ -1,232 +1,36 @@
 # Reflex Persona Core
 
-ゲームをまたいで、人物の軸を保ちながら欲求・関係・経験に応じて判断するNPCの土台。通常は数値バッチの反射、必要な場面では任意の先読みを使う。現在の目標・接続の不足・改修順位は [開発方針](docs/PROJECT_DIRECTION.md) を正本とする。全般的な賢さや人間水準、面白さの完成はまだ実証していない。
+人物の性格・主義を保ちながら、欲求・経験・相手予測に応じて判断する、LLM不要のゲームNPC基盤。
+通常の数値判断と、必要な場面での先読みを分ける。ゲーム側が観測・合法手・結果モデル・目的の意味を与える。
 
-現在の中心は、学ぶ本人を含めた将来評価の安定。`owned_rollout` は通常の `DecisionLoop` を未来の各経路でも動かし、予測・結果記憶・欲求・進展を更新しながら、将来の目的点と完全な嗜好経路を評価する。実観測後は更新済み本人から読み直す。人格による支払いと、見込み違いによる損を分けて検証する。[接続契約](docs/OWNED_VALUE.md)、[選定根拠と合否](docs/PROJECT_DIRECTION.md#次の改修の優先順位と合否)。
+**現在は検証・改善を停止中。** 採用構成と未達部分は [現在地](docs/STATUS.md)、目的と制約は
+[開発方針](docs/PROJECT_DIRECTION.md)。未知ゲームでの人間水準・面白さの完成はまだ実証していない。
 
-Pythonの採用構成は `reflex.fixed_horizon.FixedHorizonOwner`。人格・実経験の学習・予測・毎手の再計画・保存復元を一つの入口へつなぐ。採用済みH16を対照に、競り・戦闘・賭け・複数資源の登録40組を128手まで完走し、全10,240実判断を監査した。26改善・9同等・5悪化、全4分野の平均が改善し、事前基準を満たした。人格は固定したまま、複数期間の投票やゲーム専用補正は足していない。[全結果・悪化と採否](evidence/long_horizon/REPORT.md)、[安定版の範囲と配布確認](evidence/stable_release/RELEASE.md)、[接続API・保存契約](docs/OWNED_VALUE.md#固定32手構成の安定版接続)。
+## 使う入口
 
-安定版はこの明示した構成の接続契約を対象とする。全研究モジュール、任意の設定、未知ゲームでの賢さやリアルタイム性能を一括認定しない。個別の損・世界予測の誤り・重い計算費用は残る。旧H16構成は比較・互換用に保持し、その前段の根拠は [owner_continuity](evidence/owner_continuity/REPORT.md) に残す。
+| 用途 | 入口 |
+| --- | --- |
+| Pythonの採用構成を接続する | [安定版導入ガイド](docs/STABLE_INTEGRATION.md) → [単独で動くホスト例](examples/stable_host.py) |
+| Rustで即時判断を実行する | [reflex-immediate](rust/reflex-immediate/README.md) |
+| Rustで世界・複数NPCをまとめて実行する | [reflex-runtime](rust/reflex-runtime/README.md) |
+| Rustへ実学習・予測・提供済み長期候補を接続する | [reflex-owned](rust/reflex-owned/README.md) |
 
-ゲームへの接続は [安定版の導入ガイド](docs/STABLE_INTEGRATION.md) と [単独で動くホスト例](examples/stable_host.py) から始める。公開済みwheelを使い、途中保存から別プロセスへ再開した場合の世界・乱数・判断・全学習状態の一致まで確認済み。[日程と通過条件](evidence/stable_release/plan.json)、[配布・引き継ぎの最終確認](evidence/stable_release/delivery_audit.json)。
+Pythonの安定版は **v0.1.0 / `FixedHorizonOwner`**。推奨は固定32手、予測seed `(701,702,703)`、
+`recovery_cache=64`。[配布・対応範囲](evidence/stable_release/RELEASE.md)、
+[公開版](https://github.com/iwmn-9/reflex-persona-core/releases/tag/v0.1.0)。
 
-公開応答を学び直す `EventReader` と、欠測・保存・仮想の本人を含む共通更新が前提。[前段の予測回復](evidence/prediction_recovery/REPORT.md)、[接続監査](evidence/lifecycle_integration/REPORT.md) を参照。予測誤差や内部状態の一致だけで長期判断の品質を認定せず、全任意部品を有効化した一律の推奨設定にはしない。
+Rustの32手候補生成はPythonに残っている。公開v0.1.0 wheelは後続のRust接続を含まないため、
+連携時は両側のソース版を揃える。[Python/Rustの境界](docs/RUST_BOUNDARY.md)。
+研究モジュールすべてを有効にした構成や、任意の設定の品質を安定版として保証するものではない。
 
-自発的な提案・拒否・別案・全員の同意と、未完了の短い共同手順の継続は任意経路として保持する。交換・共同警戒・共有材料の建設で検証した範囲と、単独有利・高負担・環境変化での得失は [協力の検証](evidence/voluntary_cooperation/REPORT.md)、接続方法は [VOLUNTARY_COOPERATION](docs/VOLUNTARY_COOPERATION.md) を参照。
+## 根拠が必要な場合
 
-接続前の急所は [長期NPCの比較](evidence/long_lived/REPORT.md)、能力・資源・途中参戦は [非対称性の検証](evidence/asymmetry/REPORT.md) を参照。新しい任意構成を、全ゲームの標準や完成した汎用知能とは扱わない。
+- [長期判断の採否と個別悪化](evidence/long_horizon/REPORT.md)：40条件の完走・監査と残る限界。
+- [過去の試行の短い一覧](archive/README.md)：不採用理由と、必要な場合だけ開く原本。
+- [公開履歴の来歴](REPOSITORY_MIGRATION.md)：以前の記録に含まれるcommit参照の扱い。
 
-実験・比較と長期判断の改善はPythonを維持する。Rustには既存の `reflex-immediate` / `GameSession` に加え、実経験・分節予測・欲求圧・目的進捗を持つ `reflex-owned` と `LearningSession` を接続している。人格による長期候補の選択もRustで行う。32手の候補生成はPythonに残し、Rustの現在の学習履歴から生成する構成であり、完全なRust単独版ではない。[判断・学習・保存の一致検証](evidence/rust_port/owned/REPORT.md)、[対応構成と所有者API](rust/reflex-owned/README.md)、[移植する境界](docs/RUST_BOUNDARY.md)、[統合API](rust/reflex-runtime/README.md)、[既存の即時判断の採否](evidence/rust_port/immediate/REPORT.md)。
+接続のために研究runnerや全履歴を読む必要はない。`evidence/` と `archive/` は通常検索から外している。
+コア・実験・検査はPython、成熟した実行単位はRustに分ける。必須Python依存はNumPy。
+任意の麻雀検証依存やコンパイラーの詳細は対象の検証時だけ確認する。
 
-過去の方式の比較・不採用理由は [開発方針の根拠](docs/PROJECT_DIRECTION.md#主要な根拠と接続契約) と各 evidence の報告を参照。既往の実行結果は保存し、この入口には履歴の要約を積み重ねない。
-
-## 関係経験と人格の接続
-
-`SocialPopulation` は既存の数値Policyへ、相手別の有限・減衰する関係記憶と目的許容幅を接続する任意経路。性格と主義を固定し、観測した恩・害で接し方を変える。不運は裏切りと区別し、関係修復・忘却・相手の区別を扱う。相手予測と好悪は別に保つ。
-
-`CoarseSocialPopulation` は行動に効く好悪を「好意的・中立・警戒」の三段階へ省略する別の実行構成。記憶や固定人格は共通で、新しい感情パラメータを増やさない。2自作ルールで搾取への対応と関係修復を保った一方、個別の利得悪化もある。通常の連続方式と他ゲームの既定は維持する。[省略したもの・残した判断・限界](evidence/social_omission/REPORT.md)。
-
-自律的に判断する4人・8人の接続では、嫌悪→害する手への加点が低利益の張り合いを増やした。[初回診断](evidence/encounters/REPORT.md)を受け、`WithdrawalSocialPopulation` はこの自動加点だけを省く。三段階・記憶・本人の主義は維持し、利害からの取り分要求は許す。別の乱数列では旧三段階より182改善・299同じ・31悪化、相互協力685→757、双方の取り分要求514→84。自律NPC接続の基線として採用したが、未知ゲームや長期の関係修復、楽しさを実証したものではない。[得失と再現](evidence/encounter_withdrawal/REPORT.md)。
-
-資源配分と共同警戒の512 NPCエピソードでは、協力志向が搾取的な相手への援助を減らし、協力復帰後に戻す挙動を確認。共同警戒の搾取条件は生存0/8→8/8。一方で、好意による小さい利得悪化もあり、全体の賢さや心理学的妥当性の証明ではない。通常の無指定経路は互換、先読み全体への関係評価の伝播は未接続。[実装・評価・得失](evidence/social_appraisal/REPORT.md)。
-
-```sh
-python -m reflex.social_experiment --output FRESH_SOCIAL
-```
-
-## 判断を見て確認する
-
-カード対戦の基線は**勝利だけを狙う高予算CPU一人と、別々に相手を学習する人格NPC三人**。今回の2,176主試合では、未来でも本人の元の判断器が再探索する共通部品を、4人カード対戦と公開盤面へ接続した。相手の強さを複数仮定し毎手読むConnect Fourの比較では、深さ4の有限ミニマックス相手に本人credit（勝ち1・引分0.5）が24.2%→74.2%、4人格すべての平均が改善した。16新盤面の限定結果であり、人間水準や未知ゲームへの強さの証明ではない。
-
-カード側の利益は安定せず、公開履歴を相手仮説へ戻す案もcare改善とego悪化が併存したため、標準にはしない。通常反射・固定人格・元の制御器を保ち、新部品は任意経路とする。[得たもの・手放したもの・停滞の種類・全結果と再現](evidence/policy_rollout/REPORT.md)、[接続契約](docs/POLICY_ROLLOUT.md)。前段の判断学習器の不採用と有限終盤の接続は [supported_learning](evidence/supported_learning/REPORT.md) を参照。
-
-このCPU相手のbaselineでは個別NPCの勝利持分が約19〜27%。人間水準や楽しさを実証した数字ではなく、三人合計の勝率も個々のNPCの目的にしない。保存済み比較は実装commitとSHAを固定し、現行版の再現用研究経路は `python -m reflex.strong_table --root FRESH_ROOT --variant certified_expiry`。[前回の主試験・探索量・接続修正](evidence/strong_table/REPORT.md)は歴史的な比較として残す。
-
-既存ルールのGoofspiel/No Thanks!を4人で192試合実行した。`python -m reflex.tabletop_trials --output FRESH_ROOT` は、対象一人への反射/終局MC/公開相手予測追加を比較し、他三人も固定人格の共通Policyで動く。Goofspielの勝利持分は8→16.5→18.5/32、No Thanks!は9→6→10.5/32だが平均失点は反射より悪化。先読みを足しても賢さは安定していないため既定を切り替えない。競争利得を慈善や裏切りと読み替えず、未知山札と現在の伏せ手を渡さない。[候補・実対戦・人格の得失・見つかった不足](evidence/tabletop_trials/REPORT.md)。
-
-[evidence/persona_review/review.html](evidence/persona_review/review.html) を保存してブラウザで開く。同じ状況の四人格、四人同時の暮らし、資源の準備、物流の修正、戦闘の失敗を手ごとに確認する。採点・選択・実結果と、後で変わった継続計画を分けて表示する。評価メモはブラウザ内保存とJSON書き出しに対応し、自動学習には使わない。[範囲・得失・出所・再構築方法](evidence/persona_review/REPORT.md)。
-
-## 人格と複数の探索手法
-
-`search_forecast(..., samples=12)` は、途中で候補を絞るビーム探索と、合法な行動列を最後まで試すランダムシューティングを組み合わせる。候補の発見は異なる方法でも、評価には同じ人格・欲求・主義・目的を使う。期間・深さ・幅・サンプル数でゲーム側が知能予算を制御でき、通常の数値バッチ反射は維持する。
-
-`competence-transfer` は、目的の最低水準と候補の独立再評価を分離する84局の比較。目的許容幅を戻すことで既知の未達を回復し、留保条件の戦闘では5勝を維持して死亡1件を防いだ。ただし大きな目的犠牲を伴う信条の自由を狭める。独立再評価の追加は4勝へ悪化したため全面採用しない。[固定比較の得失と限界](evidence/competence_transfer/REPORT.md)。
-
-`settlement-transfer` は、硬い目的制約を外したまま、数手後の終局結果を時間で割り引かない採点との48局の比較。既知の未達は回復したが、別条件の戦闘は6勝→4勝・生存8→7/8、達成の遅延も増えた。**一律切替は不採用。** 任意の `settlement_weight='absolute'` は比較再現用に保持し、既定の `'discounted'` を維持する。性格の数値は同じでも、終局への時間選好は変わる。[改善した診断・捨てた採用案・残る急所](evidence/settlement_transfer/REPORT.md)。
-
-`hybrid-transfer` はビームのみ・サンプリングのみ・組み合わせの3方式を固定比較する。72局ではサンプリングのみの戦闘に1勝の追加があったが、組み合わせ方式は上積みなし、資源の達成が1手遅れる例もあり全面切替はしない。[実対戦での得失・費用・残る限界](evidence/hybrid_transfer/REPORT.md)。候補を増やしたことと、より賢い人格を実証したことは区別する。
-
-## 共通採点の有限優先
-
-`Policy(principle_priority='finite')` は、既存の主義・欲求・目的の重みを保ち、小さい主義利益が他の全損失を比較前に拒否する絶対優先を除く。大きな信条のための損は選べる。通常反射・数値バッチ・未来継続・checkpointを同じ規則へ接続した。
-
-`finite-transfer` の87局では、以前の探索で14手未達だった自己主張型が9手で達成。別条件の資源管理も成功3/4→4/4、不足4→0。一方、戦闘の生存した引き分けが相打ちに変わった例が1件あり、全NPCの一律切替はしない。旧 `Policy()` は互換用に維持する。[改善・捨てた優先規則・リスクの代償](evidence/finite_transfer/REPORT.md)、[接続契約](docs/DECISION_LOOP.md)。
-
-## 複数手の継続候補と採用判断
-
-`python -m reflex.cli search-transfer --output FRESH_ROOT` は、同じ人格・評価係数のまま将来の行動列を追加して比較する。全モデル分岐に同じ行動列を適用し、都合のよい分岐だけを選ばない。通常の高速反射経路は変更しない。
-
-物流では必要な準備を挟んで達成する条件が増えた一方、資源管理の自己主張型では毎ターンの再計画が必要な手を先送りし、達成から未達へ悪化した。**汎用経路への全面採用は見送る。** 任意の研究候補として保存した。[比較結果・得失・限界](evidence/search_transfer/REPORT.md)、[接続契約](docs/DECISION_LOOP.md)。
-
-`python -m reflex.cli continuity-transfer --output FRESH_ROOT` は、前の計画の共通部分を保持し、現在の観測から再評価する追加候補。同じ目的を遅く達成する案を一部抑える。84局で既知の物流1条件を1手短縮したが、留保20対の目的結果は全て探索と同じで、資源管理の既知の未達も残った。全面採用は見送る。最優先の主義を守ることと、無意味な先送りを防ぐことの整合が急所。[固定比較・捨てた自由・残る不足](evidence/continuity_transfer/REPORT.md)。
-
-## 公開相手行動の予測診断
-
-[固定軌跡での観測記憶の検査](evidence/observed_opponent/REPORT.md)：敵競合の確率0は仮説の行動範囲不足だった。個体別・相手別の有限記憶は全合法セルでの集計誤差を下げたが、一部人格の軌跡と局平均では悪化し、対照の全行動予測は一様より悪い。意思決定には未接続、既定値と人格コアは変更していない。
-
-## 動かす
-
-Python 3.10以上とNumPy。別の仮想環境で使う（import名`reflex`は他の同名パッケージと混在させない）。安定版の対応確認はWindows/Linux × Python 3.12/3.13。その他のバージョンの長期品質は未認定。
-
-```sh
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# Linux/macOS: source .venv/bin/activate
-python -m pip install -e .
-python -m unittest discover -s tests -v
-python -m reflex.cli demo
-python -m reflex.cli judgment
-python -m reflex.cli resource-world
-python -m reflex.cli victory-routes
-python -m reflex.cli contests
-python -m reflex.cli combat
-python -m reflex.cli npc-scale
-python -m reflex.cli decision-loop
-python -m reflex.cli validation
-python -m reflex.cli purpose
-python -m reflex.cli stability
-python -m reflex.cli purposeful-wait
-python -m reflex.cli recovery-options
-python -m reflex.cli execution-alignment
-python -m reflex.cli self-continuation
-python -m reflex.cli root-collision
-```
-
-`judgment`は自作3ルール系の384エピソードを再生成する。結果は`reflex_artifacts/judgment`。大量の軌跡を作るため、Gitへは自動追加しない。麻雀は任意依存で、`python -m pip install -e '.[mahjong]'`の後に`python -m reflex.cli mahjong`。基本テストで未導入の麻雀検査はskipする。
-
-`validation`はオークション/ハゲタカ、複数資源・複数勝利条件、戦闘、ギャンブルの共通検証。実際の目的進展に応じた有界な欲求不足を追加し、人格固定のまま既存判断と比較する。[結果・得失・未解決](evidence/validation/REPORT.md)を参照。慎重型の停滞や勝率差を解決済みとは扱わない。
-
-`purpose`は戦闘で主義の安全と負傷の欲求を分け、選択後の実際の1ターン結果を既存の有界経験記憶へ返す候補を比較する。2地形・4目的・固定/攻撃/途中で変化する相手で実勝敗を確認し、他ゲーム性の対照も行う。候補は任意で、最低限の賢さを解決済みとは扱わない。[結果・採否・残る不足](evidence/purpose/REPORT.md)。
-
-`stability`は、目的達成の見込み・共同先読み・人格選択を同じDecisionLoopへ接続する任意の候補。戦闘では味方の共同移動と目的担当/援護担当を評価し、資源管理では勝利ルートを先に選んで相手の手番・生産・維持費も予測する。696局の確認では戦闘の勝利64/192→130/192、資源管理19/24→24/24。4人格すべての勝利維持/改善、最弱人格改善、各相手群で対条件の悪化超過なしを満たした。速度費用は合否に使わず、既定の反射経路は変更しない。[結果・得失・限界](evidence/stability/REPORT.md)、[接続契約](docs/DECISION_LOOP.md)。
-
-`purposeful-wait`は、目的のある停止と根拠の薄い停滞を区別する任意候補。待機理由・解除条件・有限の見直し猶予を持ち、実際の目的/準備の進展を確認する。戦闘では味方の準備も観測し、期限後の切替には元の案より目的見込みが改善する比較を求める。有効な防衛や確率的試行は残し、支持された代案がなければ無理に動かさず未解決として記録する。資源管理では先行ルートに隠れた別勝利ルートの有効準備も数える。人格・環境・相手の相性による得意不得意は残し、勝率の均等化を目指さない。[検証と得失](evidence/purposeful_wait/REPORT.md)、[接続契約](docs/DECISION_LOOP.md)。
-
-`recovery-options`は、通常候補で打開できない時の追加案と、終点だけでなく途中の目的進展も評価する候補を分けて比較する任意実験。人格・主義を緩めず、支持された代案との比較を成立させる。戦闘と資源管理で予測と数手後の実績を同じ尺度で照合するが、実際の継続手段の変更も含むため、誤差をそのまま学習には使わない。720局の比較と得失は[結果](evidence/recovery_options/REPORT.md)、APIの境界は[接続契約](docs/DECISION_LOOP.md)。
-
-今回の確認では追加案で期限到達停止1096→1021、戦闘勝利115→114/192。途中評価も加えた版は984停止・115勝で改善9/悪化9条件、移動失敗110→145。全面採用は見送り、追加提案/診断の部品と任意実験を保持する。合理的な待機と人格の得意不得意を残し、停滞数だけを減らして賢さの安定を達成したとしない。
-
-`execution-alignment` は既知のseed180条件で予測した行動と実行を照合する診断。公開状態が同じ時の本人/相手の不一致、状態のずれ、終局、欠測を分ける。traceの既定はoffで、学習や選択は変えない。[診断の結果と限界](evidence/execution_alignment/REPORT.md)、[六つの開発基準と次の検証](docs/PROJECT_DIRECTION.md)。
-
-`self-continuation` は、目的だけに沿う自己継続を、既存人格Policyの主義階層と近接得点帯に制限する任意候補の比較。実際には将来も先読みを使う本人を、即時反射だけで近似する限界を調べる。本人と相手の同一状態での不一致、実勝敗・停滞・移動失敗、trace off費用を分け、既定は変更しない。[検証結果と採否](evidence/persona_continuation/REPORT.md)。
-
-`root-collision` はobjective自己継続をそのままに、共同plannerが辞退した時の味方の根の衝突だけを補完する既定offのablation。元の主義階層・0.025近接帯・進捗制約を保ち、衝突していない個体や別世界を変更しない。[機構と検証](evidence/root_collision/REPORT.md)。
-
-## 依存関係
-
-| 用途 | 依存 | 扱い |
-| --- | --- | --- |
-| Python判断コア・数値バッチ | NumPy `>=1.26,<3` | Pythonの必須実行依存。[BSD 3-Clause](https://numpy.org/doc/stable/license.html) |
-| 独立Rust即時判断 | Serde・serde_json・sha2 | 型付き入出力・個体乱数の種・保存破損検知。版は `rust/Cargo.lock` で固定。Python実行には不要 |
-| 麻雀のルール環境 | RiichiEnv `==0.4.10` | 任意。[Apache 2.0](https://github.com/smly/RiichiEnv/blob/v0.4.10/LICENSE) |
-| パッケージのビルド | setuptools `>=68` | ビルド時のみ |
-
-麻雀の任意依存を導入すると、RiichiEnv経由でPyYAML・IPython・Pygmentsとその依存も入る。通常の人格判断にはLLM、PyTorch、Colab、Google Drive、外部APIを必要としない。外部ライブラリのソースやバイナリはこのリポジトリに同梱していない。それぞれのライセンスは外部ライブラリ自身に適用され、このプロジェクトの利用許諾を意味しない。
-
-## 接続の境界
-
-- コア：固定Big Five 5軸、動的欲求5領域、有限の価値10分類、候補採点と個体別の状態。
-- ゲーム：本人が知る情報、合法手、本人の目的、欲求/価値の対象と効果、実行後に本人が観測できた結果。
-- 推定：確定ルールとは区別する。効果の対象・時間幅・状況の同等性はゲームが指定する。未観測結果を0や成功確定へ置き換えない。
-
-`reflex.core.Policy`と`reflex.runtime.Population`が通常の採点/数値バッチ。`reflex.judgment.OutcomeMemory`は選択済み実観測だけの条件別記憶。`AdaptivePopulation`は固定方法/状況・単一prior分岐の数値経験更新。`ReadControl`は読みの予算要求で、探索完了を意味しない。
-
-記憶は既定64方法条件・直近4結果。2観測後から経験を混ぜ、重み上限0.75。大きい予測支持外の結果では古い証拠を弱める。これは未校正の工学的ヒューリスティックで、学習の正しさを保証する採用ゲートではない。状態チェックポイントの所有者・選択ticketを検査し、他個体や未選択の結果を混ぜない。
-
-## 確認できた範囲
-
-自作の循環同時対戦、4人資源干渉、分岐配送で、同じ人格Policyを維持して経験更新を比較。見込みを更新しない方式との96条件比較では、経験方式で78改善/18同じ/0悪化。相手の非公開な現在手や未観測の封鎖は判断入力にしない。全23,040選択は元ワークスペースで再生・再採点した。
-
-経路の情報取得には時間と得点を払うが、その未来価値はゲーム側の代理評価。人間同等の知性、汎用的な情報価値学習、未見商用ゲームの強さ、万能なハメ防止は未実証。心理尺度はゲーム上の軸の参照で、心理学的妥当性を実証した人格モデルではない。
-
-数値と費用の正本は[evidence/judgment/REPORT.md](evidence/judgment/REPORT.md)と[evaluation.json](evidence/judgment/evaluation.json)。コア/数値更新の速度にはゲーム進行・JSON変換・任意読み・描画を含めない。
-
-## 複数資源・複数勝利条件の検証
-
-`resource-world`はGUIなしの自作4人経済シミュレーション。食料/木材/鉱石/資金と研究/文化/軍事、設備投資、維持費、貯蔵上限、技術前提、有限領地への競争を扱う。科学/文化/勢力の勝利条件を別に定義し、全経路有効/科学のみ/文化のみで同じ人格Policyを比較する。Civや商用ボードゲームの再現ではない。
-
-本人の1/4自己手番モデルと、専用経済方策の相手3人による実対戦。先読みでは相手を停止し、現在公開された供給だけを使う貪欲な自己継続案を作る。相手応答を含む探索ではなく、経済代理評価もゲーム側の手設計。勝率と勝利条件への進捗を分けて記録する。数値・得失の正本は[evidence/resource_world/REPORT.md](evidence/resource_world/REPORT.md)と[evaluation.json](evidence/resource_world/evaluation.json)。大量の再生用軌跡は公開版へ同梱しない。
-
-## 勝利ルートと公開入札の読み合い
-
-`victory-routes`は同じ経済ゲームで、人格・公開資源による有限勝利ルート選択と、選んだルートの専用進捗を接続する。32実対戦。特性と勝利名の固定対応を共通コアに追加しない。ルート選択に小さい差での変更を抑える記憶を持たせ、単発行動の記憶と分離する。ゲーム側で機会と価値を定義する必要は残る。[数値・得失](evidence/victory_routes/REPORT.md)。
-
-`contests`はハゲタカと自作有限予算オークションの576実対戦。固定傾向/劣勢で変更/公開過去入札へ応答する相手に、読みなし・学習予測を常用・利益ゲートを比較する。全員が同一の公開前盤面で決め、公開後のみ既存の有限仮説を更新。真の相手制御型・当ラウンドの非公開入札・山順は判断へ渡さない。現在ラウンドの32共同標本と札/資金の機会費用代理評価で、全ゲーム勝率の探索ではない。[数値・得失と検証規約](evidence/contests/REPORT.md)。コア/runtimeは両方とも変更せず、LLM/学習済み汎用評価モデル/GPUの追加はない。軌跡は公開版に同梱しない。
-
-## GUIなしの戦闘への再利用
-
-`combat`は自作3対3の公開グリッド戦闘。3地形、射線/遮蔽物、射程/体力/弾薬/救急品、移動/射撃/装填/防御/味方回復を扱う。撃破・拠点確保・どちらか(OR)・両方(AND)の4条件を120対戦で比較する。拠点確保は3tick多数占有の実績。ANDは敵全滅と確保実績を両方満たし、自軍の生存も必要。味方最大3体は同じ選択前盤面で1つのPolicyバッチとして採点し、全員確定後に同時解決する。
-
-経済ゲームの勝利名/評価を戦闘へ流用せず、共通`Policy`/`Population`/`routes.choose_route`をそのまま使う。射撃位置へ近づく意味や予想被害、生存/援護/目標進行の評価は戦闘側で定義する。相手の現在選択/実命中乱数は人格判断へ渡さない。この初期実験は公開ターン戦闘の接続試験。[結果・得失](evidence/combat/REPORT.md)。後続の`stability`で任意の共同先読みを追加したが、実時間の物理/照準/霧情報/戦闘相手モデルの学習は未実装。
-
-## 大量NPC性能
-
-`python -m reflex.cli npc-scale`で数値更新100/1000/10000体と、60/600/1800体を独立3v3戦闘に分けた全処理を測定する。[結果・費用内訳](evidence/npc_scale/REPORT.md)は、人格採点とゲーム状況変換の性能を区別する。巨大な一つの戦場や描画/物理/相手学習の性能を保証するものではない。
-
-任意の`TiledPolicy`は共通Policyの中間配列を小分けにする。通常の候補数・人格・判断頻度・乱数を維持し、Populationの個別状態も同じ結果になる。入力/出力と更新コピーは人数に比例し、JSONによるゲーム接続の費用は別に残る。NumPyの逐次バッチ処理で、マルチコアやGPUの実装ではない。
-
-ローカルi7-9700Fでは、1万体/12候補×2結果の数値step中央値は通常121.64ms、256体分割98.81ms（配列生成は別）。16候補×4結果では分割で速くならない。独立3v3戦闘の600体は地形距離の共有で1.52秒→1.29秒、まだ大量実時間戦闘の速度を満たすものではない。共有するのは静的地形だけで、人格・占有・体力・目的進捗は再評価する。
-
-```python
-from reflex.runtime import Population
-from reflex.scaling import TiledPolicy
-population = Population(contexts, policy=TiledPolicy(tile_size=1024))
-decision = population.step(needs=needs, effects=effects, confidence=confidence)
-```
-
-ゲーム側は正規化した数値配列を渡す。行動ID・容量・人格の変更時はPopulationを再構築する。計測の再実行はCPUのみ、速度をテストの合格条件にしない。
-
-## 次の検証
-
-任意の `python -m reflex.cli intertemporal` は、「目前の利得を譲って後の見返りを狙う」条件付き判断の検証。共通 `intertemporal.forecast` が利益/損失の増分を同じ期間で割り引き、既存の人格PolicyとDecisionLoopへ渡す。将来の利益の確信度、人格の時間の好み、探索期間を分ける。標準Policyと既存ゲームplannerは維持する。
-
-既存の資源管理・競り・戦闘ルール上の58条件/348判断で、資源投資と競りの温存には目先を譲る選択を確認。戦闘は切迫度を実体力に合わせると従来判断も回復し、追加差はなかった。継続行動を固定した機能試験で、実際の毎手の再判断・共同計画や汎用的な長期の強さを証明したものではない。[得失・反例と数値](evidence/intertemporal_integrated/REPORT.md)、[接続契約](docs/DECISION_LOOP.md)。
-
-1. 更新前に予測し、結果の公開後に予測誤差を測る。仮説を作った同じ標本だけで正しさを認定しない。
-2. 観測事実と、その事実から作った仮説を分ける。偶然の負け、推測の誤り、環境変化を区別し、疑わしい仮説の重みを下げる/保留する/失効させる。
-3. 仮説の正しさと、方針変更の利益を別に評価する。変更に利益がない、または優位を維持しているなら今の方針を続ける。
-4. 過去の公開行動から攻略を変える相手と比較し、失敗反復/過剰反応/目的停滞/人格の軸を同時に検査する。
-
-任意の`DecisionLoop`で、観測→経験/予測→バッチ反射→公開結果→訂正を接続した。既存の適応方式を基線として維持し、追加の相手仮説は予測精度と即時判断利益を分けて検査する。初案の成績低下は棄却し、経験全体を予測誤差だけで止めない。所有者/ticket、欠測、checkpoint、読みの予算、ルートを同じ境界で扱う。現在は任意の未来選択も接続済み。想像した未来を実経験として保存せず、遅延成果による未来予測の学習は未完成。[接続契約と未完成部分](docs/DECISION_LOOP.md)、[比較・棄却した案](evidence/decision_loop/REPORT.md)、[安定性の確認](evidence/stability/REPORT.md)を参照。未見ゲームでの評価、対立した主義の交渉、汎用の賢さの保証は残る。[近い取り組みと位置づけ](docs/RELATED_WORK.md)を参照。
-
-## 配布の扱い
-
-現在は閲覧・検討のための公開で、利用ライセンスは付与していない。このプロジェクトのコードについて、利用・改変・再配布の一般的な許諾を出していない。公開されていることだけを理由に利用可能とは扱わない。GitHubの利用規約に基づく閲覧・forkや、適用法が認める例外は別に扱われる。[GitHubのライセンス説明](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)を参照。
-
-この公開版にはColab認証、モデル本体、Drive個別ID、会話履歴、ローカルの個人ログを入れない。他プロジェクトのコードを取り込んだ版ではない。
-
-### 事前固定した混雑条件の診断
-
-既存default-offの根補完を、3種の対照配置48対と通常開始16対で比較。介入は9回あり局所衝突は減ったが、曝露条件不足と人格内の目的・停滞悪化のため昇格しない。[結果と再現手順](evidence/controlled_congestion/REPORT.md)。`python -m reflex.congestion_experiment` は味方の根、敵占有仮説、選択中の目的を別々に記録する評価用コマンドで、通常方策を変更しない。
-
-### 公開履歴からの目的別相手予測
-
-`GoalOpponentMemory` は公開盤面に対するeliminate/secureの仮説を分け、相手個体ごとの公開行動から有限の尤度重みを更新する。汎用の `GoalBeliefs` は戦闘規則を持たず、別ゲームadapterでも利用できる。新しい56局では目的の多様性が移動先予測を改善した一方、学習による全行動予測の改善と衝突先予測の悪化が併存した。[数値・費用・境界](evidence/goal_opponent/REPORT.md)。この予測比較は通常判断の変更でも、実対戦の強さの証明でもない。
-
-### 目的別相手モデルを判断に使う限定実験
-
-`TacticalControl(opponent_model='goal-uniform')` で、学習なしの目的別相手仮説を既存4標本・6stepの先読みに接続できる。通常は `'fixed'` のまま。新しい96実対戦では移動失敗は減ったが、元方式より勝利が減り留保の停止が増えたため、既定へ昇格しない。`'uniform-coverage'` との支持拡張対照、人格ごとの得失、因果照合、別枠の費用を[実対戦報告](evidence/goal_gameplay/REPORT.md)に保存した。
-
-### 毎手の再判断で見返りを回収する比較
-
-任意の `python -m reflex.cli payback-cycle --output FRESH_ROOT` は、同じ人格による将来の即時判断を予測継続に使い、資源・競り・戦闘の実行を毎手再計画する。192エピソードの比較では、競りの温存後の回収を確認した一方、予測との一致が増えても資源回収量や戦闘の勝利が下がる条件があったため標準へ昇格しない。生存/代理値/勝利・人格の譲歩を区別した[得失と残る急所](evidence/closed_loop_payback/REPORT.md)を参照。
-
-### 目的の決着と準備完了を接続する比較
-
-任意の `python -m reflex.cli purpose-recovery --output FRESH_ROOT` は、終局の勝ち/負け/引き分けと途中の代理値を分け、既存の実進捗監視・準備解除・欲求圧力を再計画へ接続する。共通 `Goal` / `goal_forecast` にゲーム側の終点評価を渡し、まず本人の最大主義tierを残した上で目的を比較する。将来利得の時間選好や死傷・支出の人格上の損失も保持する。[条件ごとの得失と採否](evidence/purpose_recovery/REPORT.md)、[接続契約](docs/DECISION_LOOP.md)を参照。ルールだけから価値判断を自動獲得した仕組みではなく、標準の高速Policy/Populationへ自動適用しない。
-
-### 固定コアの別環境検証と、目的改善を伴う停滞解除
-
-任意の `python -m reflex.cli observed-transfer --output FRESH_ROOT` は、共通コア・採点係数を固定し、既存3環境の別条件と、新しいエネルギー・積荷・二つの納品目標を持つ環境で比較する。監視/圧力の分離、分岐内の観測状態更新、既存の「目的見込みが改善したときだけ停滞maskを採用する」接続を検査する。新環境の正解探索は診断専用で、判断入力に渡さない。[得失・未達・採否](evidence/observed_transfer/REPORT.md)を参照。独立局をCPU4プロセスで実行し、ゲーム内NPC並列性能は測定しない。標準Policy/Populationは自動置換しない。
-
-任意の判断学習接続 `Request.value_proposal` と、全候補を実制御器で終局まで比較する教師を追加。847状態・5082継続で検証した二つの評価器は既定へ採用していない。学習が目的判断を改善した証拠と、部品が正しく接続した証拠を分ける。[結果と採否](evidence/supported_learning/REPORT.md)。
+公開は閲覧・検討用。利用・改変・再配布の一般的な許諾はまだ付与していない。
