@@ -28,7 +28,9 @@ def seeds_for(arm):
     return tuple(range(701, 709)) if arm == 'sample8' else (701, 702, 703)
 
 
-def decide(actor, game, world, arm, seeds=None):
+def decide(actor, game, world, arm, seeds=None, *, continuation_scope='root'):
+    if continuation_scope not in ('root', 'shared') or (continuation_scope != 'root' and arm != 'expected'):
+        raise ValueError('shared continuation diagnosis requires the declared expected arm')
     seeds = seeds_for(arm) if seeds is None else seeds
     if arm == 'sample8' and seeds != seeds_for(arm):
         raise ValueError('fixed nested eight-sample bank required')
@@ -40,14 +42,16 @@ def decide(actor, game, world, arm, seeds=None):
         controller = FixedHorizonOwner(actor, **options)
         result = controller.decide(world)
         return result, controller.last
-    if arm not in ('stratified', 'persistent', 'sample8'):
+    if arm not in ('stratified', 'persistent', 'sample8', 'expected'):
         raise ValueError('registered research arm required')
     request = game.request(game.context(world, actor.state))
     captured = {}
+    extra = dict(retry_until_gain=True, retry_gain_reference='expected',
+                 tail_purpose_reflex=False, continuation_scope=continuation_scope) if arm == 'expected' else {}
     planner = consensus_planner(actor, request, world, captured=captured,
         minimum_horizon=32, horizon=32, world_model='persistent' if arm == 'persistent' else 'posterior',
         purpose_estimator='conditional', tail_recovery=2, include_retry=True,
-        coherent_cumulative_mean=True, sampling='stratified' if arm == 'stratified' else 'independent', **options)
+        coherent_cumulative_mean=True, sampling='stratified' if arm == 'stratified' else 'independent', **extra, **options)
     result = DecisionLoop.decide_batch([(actor, request)], False, planner)[0]
     if not result.get('deliberation', {}).get('adopted'):
         raise ValueError('incomplete research forecast; no reflex fallback')
@@ -101,11 +105,18 @@ def run(directory, spec, arm, *, max_decisions=None, registration=None):
         rng.bit_generator.state = saved['rng']
         assert actor.record() == saved['owner']
     start = time.monotonic()
+    def progress(phase, complete=False):
+        import os
+        data = dict(case=spec['id'], arm=arm, actual_steps=len(trace), scheduled_steps=spec['turns'],
+                    phase=phase, complete=complete, pid=os.getpid(), updated=time.time())
+        temporary = directory/'progress.new'
+        temporary.write_bytes(encoded(data)); temporary.replace(directory/'progress.json')
     while not g.terminal(world):
         before = actor.record()
         detached = copy.deepcopy(actor)
         context = g.context(world, actor.state)
         prediction = detached.predictor.predict(context)
+        progress('deciding')
         result, captured = decide(actor, g, world, arm)
         action = result['decision']['action_id']
         truth = law(world['tick'], spec['turns'], spec['regime'])
@@ -138,6 +149,7 @@ def run(directory, spec, arm, *, max_decisions=None, registration=None):
             predicted_actions=captured['modeled'][proposal][0]['actions']))
         world = after
         store.save(world, actor, rng, trace, checks, elapsed+time.monotonic()-start, terminal=g.terminal(world))
+        progress('resolved')
         print(json.dumps(dict(id=spec['id'], arm=arm, turn=world['tick'], complete=g.terminal(world))), flush=True)
         if store.stopping(len(trace)) and not g.terminal(world):
             return None
@@ -148,6 +160,7 @@ def run(directory, spec, arm, *, max_decisions=None, registration=None):
         seconds=elapsed+time.monotonic()-start, final_owner=digest(actor.record()),
         final_rng=rng.bit_generator.state, runtime=store.contract['runtime'])
     (directory/'result.json').write_bytes(encoded(result))
+    progress('complete', True)
     return result
 
 
@@ -155,7 +168,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan', type=Path, required=True)
     parser.add_argument('--case', required=True)
-    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8'), required=True)
+    parser.add_argument('--arm', choices=('stable', 'stratified', 'persistent', 'sample8', 'expected'), required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--max-decisions', type=int)
     args = parser.parse_args()

@@ -1,0 +1,503 @@
+{
+  "date": "2026-11-02",
+  "completion_contract_sha256": "a913ac6a5b30ad92b5e92cd73b63114a66728d20a57f735b69ed8eef2de54bd2",
+  "stable_release_changed": false,
+  "adoption": false,
+  "reference": {
+    "root-stable": {
+      "roots": 16,
+      "nonzero_regret": 3,
+      "incompatible": [],
+      "all": {
+        "mean": 0.1875,
+        "p90": 1.0,
+        "max": 1.0
+      },
+      "by_kind": {
+        "chain": "fail",
+        "delay": "pass",
+        "need": "pass",
+        "principle": "pass"
+      },
+      "by_persona": {
+        "0": "fail",
+        "1": "fail",
+        "2": "fail",
+        "3": "pass"
+      },
+      "cases": [
+        {
+          "case": "chain-0",
+          "selected": "x",
+          "reference": "y",
+          "regret": 1.0
+        },
+        {
+          "case": "chain-1",
+          "selected": "x",
+          "reference": "y",
+          "regret": 1.0
+        },
+        {
+          "case": "chain-2",
+          "selected": "x",
+          "reference": "y",
+          "regret": 1.0
+        },
+        {
+          "case": "chain-3",
+          "selected": "x",
+          "reference": "x",
+          "regret": 0.0
+        }
+      ],
+      "other_12_cases": "zero regret",
+      "actual_branch_steps": 192
+    },
+    "root-expected": {
+      "roots": 16,
+      "nonzero_regret": 1,
+      "incompatible": [],
+      "all": {
+        "mean": 0.0625,
+        "p90": 0.0,
+        "max": 1.0
+      },
+      "by_kind": {
+        "chain": "fail",
+        "delay": "pass",
+        "need": "pass",
+        "principle": "pass"
+      },
+      "by_persona": {
+        "0": "pass",
+        "1": "pass",
+        "2": "pass",
+        "3": "fail"
+      },
+      "cases": [
+        {
+          "case": "chain-0",
+          "selected": "y",
+          "reference": "y",
+          "regret": 0.0
+        },
+        {
+          "case": "chain-1",
+          "selected": "y",
+          "reference": "y",
+          "regret": 0.0
+        },
+        {
+          "case": "chain-2",
+          "selected": "y",
+          "reference": "y",
+          "regret": 0.0
+        },
+        {
+          "case": "chain-3",
+          "selected": "y",
+          "reference": "x",
+          "regret": 1.0
+        }
+      ],
+      "other_12_cases": "zero regret",
+      "actual_branch_steps": 192
+    },
+    "shared-expected": {
+      "roots": 16,
+      "nonzero_regret": 0,
+      "incompatible": [],
+      "all": {
+        "mean": 0.0,
+        "p90": 0.0,
+        "max": 0.0
+      },
+      "by_kind": {
+        "chain": "pass",
+        "delay": "pass",
+        "need": "pass",
+        "principle": "pass"
+      },
+      "by_persona": {
+        "0": "pass",
+        "1": "pass",
+        "2": "pass",
+        "3": "pass"
+      },
+      "cases": [
+        {
+          "case": "chain-0",
+          "selected": "y",
+          "reference": "y",
+          "regret": 0.0
+        },
+        {
+          "case": "chain-1",
+          "selected": "y",
+          "reference": "y",
+          "regret": 0.0
+        },
+        {
+          "case": "chain-2",
+          "selected": "y",
+          "reference": "y",
+          "regret": 0.0
+        },
+        {
+          "case": "chain-3",
+          "selected": "x",
+          "reference": "x",
+          "regret": 0.0
+        }
+      ],
+      "other_12_cases": "zero regret",
+      "actual_branch_steps": 192
+    }
+  },
+  "reference_integrity": {
+    "root": {
+      "source": {
+        "path": "results/colab_completion_worlds_20261102/reference-source.zip",
+        "sha256": "e66269e595df65bef04e0c6ce6fb228965d9399574fa52deb1a328987627904a"
+      },
+      "results": {
+        "path": "results/colab_completion_worlds_20261102/reference-results.zip",
+        "sha256": "998eebe9c9511f7aef309ec7717b0a9f0ea077a29a3ec84d81c57932f1be1c6f"
+      }
+    },
+    "shared": {
+      "source": {
+        "path": "results/colab_completion_worlds_20261102/shared-source.zip",
+        "sha256": "0ad0fa83e7b9ff6c45ed3dbaaddd9ecaeb0d7d3825b8185ad8a7b263dbe54233"
+      },
+      "results": {
+        "path": "results/colab_completion_worlds_20261102/shared-results.zip",
+        "sha256": "b78b427120c2a3c114b0cef9c2ac41cb304b1c3831e96e2503f9e9a1f121ad5f"
+      }
+    },
+    "shared_replay": {
+      "roots": 32,
+      "actual_steps": 384,
+      "results": {
+        "path": "results/colab_completion_worlds_20261102/audit2-results.zip",
+        "sha256": "832c8bae96988a5df7bdf254ddb507ff70d7de1390519db1f9bbab0117a49b56"
+      },
+      "source": {
+        "path": "results/colab_completion_worlds_20261102/audit2-source.zip",
+        "sha256": "dd94539905029fc221287d5a41a5feef6c8afdf7c3df139fa84434593956a6d6"
+      }
+    }
+  },
+  "original_reference_replay": {
+    "roots": 32,
+    "actual_steps": 384,
+    "nonzero_regret_rows": [
+      {
+        "absolute_gap": 0.0003274336406249301,
+        "arm": "stable",
+        "case": "chain-0",
+        "purpose": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "reference": "y",
+        "regret": 1.0,
+        "replayed_steps": 16,
+        "score_span": 0.0003274336406249301,
+        "scores": {
+          "x": 1.6219530022927569,
+          "y": 1.6222804359333818
+        },
+        "selected": "x"
+      },
+      {
+        "absolute_gap": 0.004219371000000027,
+        "arm": "stable",
+        "case": "chain-1",
+        "purpose": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "reference": "y",
+        "regret": 1.0,
+        "replayed_steps": 16,
+        "score_span": 0.004219371000000027,
+        "scores": {
+          "x": 0.5787023296236502,
+          "y": 0.5829217006236502
+        },
+        "selected": "x"
+      },
+      {
+        "absolute_gap": 0.004271484375000023,
+        "arm": "stable",
+        "case": "chain-2",
+        "purpose": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "reference": "y",
+        "regret": 1.0,
+        "replayed_steps": 16,
+        "score_span": 0.004271484375000023,
+        "scores": {
+          "x": 0.5850981619358062,
+          "y": 0.5893696463108062
+        },
+        "selected": "x"
+      },
+      {
+        "absolute_gap": 0.009662378982239761,
+        "arm": "expected",
+        "case": "chain-3",
+        "purpose": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "reference": "x",
+        "regret": 1.0,
+        "replayed_steps": 16,
+        "score_span": 0.009662378982239761,
+        "scores": {
+          "x": 0.569783474378544,
+          "y": 0.5601210953963043
+        },
+        "selected": "y"
+      }
+    ],
+    "completed_subresult": true
+  },
+  "stable_trace_bridge_exact": true,
+  "prediction_probe": {
+    "C3": "unmeasured: prediction component only; live-agent censoring and learned/frozen benefit comparison absent",
+    "adoption": false,
+    "complete": true,
+    "component_gate": true,
+    "public_observations": 1024,
+    "qualifying_changes": 10,
+    "rate": 0.9,
+    "recovered_within_16": 9,
+    "source_unchanged": true,
+    "streams": [
+      {
+        "regime": "irregular",
+        "seed": 10061201,
+        "mean_brier": 0.12525868760043626,
+        "segments": [
+          {
+            "start": 0,
+            "end": 21,
+            "recovered_in": 9,
+            "within_16": true
+          },
+          {
+            "start": 21,
+            "end": 55,
+            "recovered_in": 15,
+            "within_16": true
+          },
+          {
+            "start": 55,
+            "end": 88,
+            "recovered_in": 14,
+            "within_16": true
+          },
+          {
+            "start": 88,
+            "end": 116,
+            "recovered_in": 13,
+            "within_16": true
+          },
+          {
+            "start": 116,
+            "end": 128,
+            "recovered_in": null,
+            "within_16": false
+          }
+        ]
+      },
+      {
+        "regime": "irregular",
+        "seed": 10061202,
+        "mean_brier": 0.13566334481252687,
+        "segments": [
+          {
+            "start": 0,
+            "end": 21,
+            "recovered_in": 12,
+            "within_16": true
+          },
+          {
+            "start": 21,
+            "end": 55,
+            "recovered_in": 15,
+            "within_16": true
+          },
+          {
+            "start": 55,
+            "end": 88,
+            "recovered_in": 17,
+            "within_16": false
+          },
+          {
+            "start": 88,
+            "end": 116,
+            "recovered_in": 13,
+            "within_16": true
+          },
+          {
+            "start": 116,
+            "end": 128,
+            "recovered_in": 11,
+            "within_16": false
+          }
+        ]
+      },
+      {
+        "regime": "outside",
+        "seed": 10061201,
+        "mean_brier": 0.0525878800943394,
+        "segments": [
+          {
+            "start": 0,
+            "end": 128,
+            "recovered_in": 21,
+            "within_16": false
+          }
+        ]
+      },
+      {
+        "regime": "outside",
+        "seed": 10061202,
+        "mean_brier": 0.032652039498975785,
+        "segments": [
+          {
+            "start": 0,
+            "end": 128,
+            "recovered_in": 9,
+            "within_16": true
+          }
+        ]
+      },
+      {
+        "regime": "shift-return",
+        "seed": 10061201,
+        "mean_brier": 0.06567112469716355,
+        "segments": [
+          {
+            "start": 0,
+            "end": 32,
+            "recovered_in": 9,
+            "within_16": true
+          },
+          {
+            "start": 32,
+            "end": 64,
+            "recovered_in": 11,
+            "within_16": true
+          },
+          {
+            "start": 64,
+            "end": 96,
+            "recovered_in": 11,
+            "within_16": true
+          },
+          {
+            "start": 96,
+            "end": 128,
+            "recovered_in": 12,
+            "within_16": true
+          }
+        ]
+      },
+      {
+        "regime": "shift-return",
+        "seed": 10061202,
+        "mean_brier": 0.09439720477992869,
+        "segments": [
+          {
+            "start": 0,
+            "end": 32,
+            "recovered_in": 12,
+            "within_16": true
+          },
+          {
+            "start": 32,
+            "end": 64,
+            "recovered_in": 14,
+            "within_16": true
+          },
+          {
+            "start": 64,
+            "end": 96,
+            "recovered_in": 10,
+            "within_16": true
+          },
+          {
+            "start": 96,
+            "end": 128,
+            "recovered_in": 11,
+            "within_16": true
+          }
+        ]
+      },
+      {
+        "regime": "steady",
+        "seed": 10061201,
+        "mean_brier": 0.0052592931140642615,
+        "segments": [
+          {
+            "start": 0,
+            "end": 128,
+            "recovered_in": 9,
+            "within_16": true
+          }
+        ]
+      },
+      {
+        "regime": "steady",
+        "seed": 10061202,
+        "mean_brier": 0.021938065724451172,
+        "segments": [
+          {
+            "start": 0,
+            "end": 128,
+            "recovered_in": 12,
+            "within_16": true
+          }
+        ]
+      }
+    ],
+    "artifacts": {
+      "source": {
+        "path": "results/colab_completion_worlds_20261102/probe-source.zip",
+        "sha256": "981cb472d0d446223f71e1c83abba6c5eabf1d8b5df7bb93b51b7cbb133f2529"
+      },
+      "results": {
+        "path": "results/colab_completion_worlds_20261102/probe-results.zip",
+        "sha256": "243280e980edc2792c3967113b6ed425ec6040ea4b25749cb43ceff0c1eb8fd9"
+      }
+    }
+  },
+  "scope": "Known deterministic finite first-action references and exogenous prediction streams. Not the long-world or unseen-game gate.",
+  "long_world": {
+    "state": "running",
+    "registered_pairs": 10,
+    "arms": [
+      "stable",
+      "expected-root"
+    ],
+    "independent_confirmation_started": false,
+    "source": {
+      "path": "results/colab_completion_worlds_20261102/source.zip",
+      "sha256": "e13f06baffc81404554bf931767f46f16e8a6e4e24f7db44f1773f1002812d63"
+    }
+  },
+  "remaining": [
+    "Complete and audit existing long-world cohort; distinguish long-game changes from reference-only improvements.",
+    "Validate shared continuation scope in long worlds before adoption.",
+    "Run matched learned/frozen continuation benefit comparisons; C3 component alone is insufficient.",
+    "C4 transfer, C5 blind personality/experience, C6 complete runtime performance remain unmeasured."
+  ]
+}

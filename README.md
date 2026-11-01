@@ -4,6 +4,7 @@ LLMを使わず、人格を保って学習・予測・再計画するゲームNP
 ゲーム側が観測・合法手・結果モデル・目的を与える。
 
 - [現在地](docs/STATUS.md)
+- [完成基準と指標](docs/COMPLETION.md)
 - [目的と制約](docs/PROJECT_DIRECTION.md)
 - [失敗から残す教訓](docs/LESSONS.md)
 - [Python導入](docs/STABLE_INTEGRATION.md)・[ホスト例](examples/stable_host.py)
