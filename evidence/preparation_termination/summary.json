@@ -1,0 +1,1043 @@
+{
+  "date": "2026-11-01",
+  "candidate_commit": "53cc7b854977d9e464994fd0be97abb083fa2d03",
+  "adoption": false,
+  "studies": [
+    {
+      "name": "ablation",
+      "active_after": 0,
+      "actual_steps": 5376,
+      "adoption": false,
+      "bundle_sha256": "d785c14400fb1d6da510d232a6ab0a025ac742d15b33e85aa2016837a6b5f68b",
+      "complete": true,
+      "conditions": 14,
+      "counts": {
+        "baseline": {
+          "better": 10,
+          "equal": 4,
+          "worse": 0
+        },
+        "purpose": {
+          "better": 10,
+          "equal": 4,
+          "worse": 0
+        }
+      },
+      "executions": 42,
+      "gate_passed": true,
+      "plan_sha256": "64b10fe8f9cfff00dcd145fd3ccb03867804b50f5021e40a0da56e4b13672f24",
+      "results_sha256": "bddd8b656e906cfbb3fc27b28f1f28689ae927d5da00d49d9ea405fb181799fc",
+      "runtime_absent": true,
+      "scope": "Known deterministic preparation mechanisms, two personas, per-spec H8/H32 and seed701. Not a full stable-H32 world-cohort comparison.",
+      "verification": "Real actions, world, RNG, fixed persona, factual learning and restoration audited; decisions are not independently rerun by the replay audit.",
+      "rows": [
+        {
+          "arms": {
+            "baseline": {
+              "cash": 140.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.34375,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 140.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.34375,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 236.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.59375,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 236.0,
+          "delta": {
+            "baseline": 0.25,
+            "purpose": 0.25
+          },
+          "id": "chain-0-stable"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 186.0,
+              "finished_cycles": 14,
+              "first_preparation": 1,
+              "preparation_steps": 73,
+              "score": 0.4635416666666667,
+              "unfinished_steps": 3
+            }
+          },
+          "cash_upper_bound": null,
+          "delta": {
+            "baseline": 0.13020833333333337,
+            "purpose": 0.13020833333333337
+          },
+          "id": "chain-0-loss"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 140.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.34375,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 140.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.34375,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 212.0,
+              "finished_cycles": 19,
+              "first_preparation": 30,
+              "preparation_steps": 95,
+              "score": 0.53125,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": null,
+          "delta": {
+            "baseline": 0.1875,
+            "purpose": 0.1875
+          },
+          "id": "chain-0-opportunity"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 140.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.34375,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 140.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.34375,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 236.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.59375,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 236.0,
+          "delta": {
+            "baseline": 0.25,
+            "purpose": 0.25
+          },
+          "id": "chain-2-stable"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 186.0,
+              "finished_cycles": 14,
+              "first_preparation": 1,
+              "preparation_steps": 73,
+              "score": 0.4635416666666667,
+              "unfinished_steps": 3
+            }
+          },
+          "cash_upper_bound": null,
+          "delta": {
+            "baseline": 0.13020833333333337,
+            "purpose": 0.13020833333333337
+          },
+          "id": "chain-2-loss"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 140.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.34375,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 140.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.34375,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 212.0,
+              "finished_cycles": 19,
+              "first_preparation": 30,
+              "preparation_steps": 95,
+              "score": 0.53125,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": null,
+          "delta": {
+            "baseline": 0.1875,
+            "purpose": 0.1875
+          },
+          "id": "chain-2-opportunity"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 138.0,
+              "finished_cycles": 1,
+              "first_preparation": 122,
+              "preparation_steps": 7,
+              "score": 0.3385416666666667,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 138.0,
+              "finished_cycles": 1,
+              "first_preparation": 122,
+              "preparation_steps": 7,
+              "score": 0.3385416666666667,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 172.0,
+              "finished_cycles": 18,
+              "first_preparation": 1,
+              "preparation_steps": 126,
+              "score": 0.4270833333333333,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 172.0,
+          "delta": {
+            "baseline": 0.08854166666666663,
+            "purpose": 0.08854166666666663
+          },
+          "id": "chain-0-long-profitable"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 136.0,
+          "delta": {
+            "baseline": 0.0,
+            "purpose": 0.0
+          },
+          "id": "chain-0-long-bad"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 140.0,
+              "finished_cycles": 2,
+              "first_preparation": 106,
+              "preparation_steps": 22,
+              "score": 0.34375,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 140.0,
+              "finished_cycles": 2,
+              "first_preparation": 106,
+              "preparation_steps": 22,
+              "score": 0.34375,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 158.0,
+              "finished_cycles": 11,
+              "first_preparation": 1,
+              "preparation_steps": 121,
+              "score": 0.390625,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 158.0,
+          "delta": {
+            "baseline": 0.046875,
+            "purpose": 0.046875
+          },
+          "id": "chain-0-h32-profitable"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 136.0,
+          "delta": {
+            "baseline": 0.0,
+            "purpose": 0.0
+          },
+          "id": "chain-0-h32-bad"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 284.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.71875,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 284.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.71875,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 380.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.96875,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 380.0,
+          "delta": {
+            "baseline": 0.25,
+            "purpose": 0.25
+          },
+          "id": "background-0-profitable"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 280.0,
+          "delta": {
+            "baseline": 0.0,
+            "purpose": 0.0
+          },
+          "id": "background-0-bad"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 284.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.71875,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 284.0,
+              "finished_cycles": 1,
+              "first_preparation": 123,
+              "preparation_steps": 5,
+              "score": 0.71875,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 380.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.96875,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 380.0,
+          "delta": {
+            "baseline": 0.25,
+            "purpose": 0.25
+          },
+          "id": "background-2-profitable"
+        },
+        {
+          "arms": {
+            "baseline": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            },
+            "purpose": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            },
+            "relative": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 280.0,
+          "delta": {
+            "baseline": 0.0,
+            "purpose": 0.0
+          },
+          "id": "background-2-bad"
+        }
+      ],
+      "boundary_tests": "....................             [100%]\n20 passed, 40 subtests passed in 305.04s (0:05:05)",
+      "local_artifacts": "results/colab_relative_ablation_20261101",
+      "compute_units": 0.10309773561181146
+    },
+    {
+      "name": "minimality",
+      "active_after": 0,
+      "actual_steps": 5376,
+      "adoption": false,
+      "bundle_sha256": "391a271a6e0c739799f2b9bb52e3ee2d11dc2d68b04025396e843d2b253ad6ee",
+      "causal_reference_preserves_deterministic_traces": true,
+      "complete": true,
+      "conditions": 14,
+      "counts": {
+        "expected": {
+          "better": 0,
+          "equal": 14,
+          "worse": 0
+        },
+        "paired": {
+          "better": 0,
+          "equal": 14,
+          "worse": 0
+        }
+      },
+      "executions": 42,
+      "gate_passed": true,
+      "plan_sha256": "fbb7a01bd47a04600cb70693e7c15a97aca774dbdae880f70ed92749e3597c4f",
+      "results_sha256": "39243bc94395441cefbb0aa49aa78131395428d6c849f72c4fd27ab85e009f10",
+      "runtime_absent": true,
+      "scope": "Known deterministic preparation mechanisms, two personas, per-spec H8/H32 and seed701. Not a full stable-H32 world-cohort comparison.",
+      "verification": "Real actions, world, RNG, fixed persona, factual learning and restoration audited; decisions are not independently rerun by the replay audit.",
+      "rows": [
+        {
+          "arms": {
+            "expected": {
+              "cash": 236.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.59375,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 236.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.59375,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 236.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.59375,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 236.0,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "chain-0-stable"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 186.0,
+              "finished_cycles": 14,
+              "first_preparation": 1,
+              "preparation_steps": 73,
+              "score": 0.4635416666666667,
+              "unfinished_steps": 3
+            },
+            "expected_only": {
+              "cash": 186.0,
+              "finished_cycles": 14,
+              "first_preparation": 1,
+              "preparation_steps": 73,
+              "score": 0.4635416666666667,
+              "unfinished_steps": 3
+            },
+            "paired": {
+              "cash": 186.0,
+              "finished_cycles": 14,
+              "first_preparation": 1,
+              "preparation_steps": 73,
+              "score": 0.4635416666666667,
+              "unfinished_steps": 3
+            }
+          },
+          "cash_upper_bound": null,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "chain-0-loss"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 212.0,
+              "finished_cycles": 19,
+              "first_preparation": 30,
+              "preparation_steps": 95,
+              "score": 0.53125,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 212.0,
+              "finished_cycles": 19,
+              "first_preparation": 30,
+              "preparation_steps": 95,
+              "score": 0.53125,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 212.0,
+              "finished_cycles": 19,
+              "first_preparation": 30,
+              "preparation_steps": 95,
+              "score": 0.53125,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": null,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "chain-0-opportunity"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 236.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.59375,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 236.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.59375,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 236.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.59375,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 236.0,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "chain-2-stable"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 186.0,
+              "finished_cycles": 14,
+              "first_preparation": 1,
+              "preparation_steps": 73,
+              "score": 0.4635416666666667,
+              "unfinished_steps": 3
+            },
+            "expected_only": {
+              "cash": 186.0,
+              "finished_cycles": 14,
+              "first_preparation": 1,
+              "preparation_steps": 73,
+              "score": 0.4635416666666667,
+              "unfinished_steps": 3
+            },
+            "paired": {
+              "cash": 186.0,
+              "finished_cycles": 14,
+              "first_preparation": 1,
+              "preparation_steps": 73,
+              "score": 0.4635416666666667,
+              "unfinished_steps": 3
+            }
+          },
+          "cash_upper_bound": null,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "chain-2-loss"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 212.0,
+              "finished_cycles": 19,
+              "first_preparation": 30,
+              "preparation_steps": 95,
+              "score": 0.53125,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 212.0,
+              "finished_cycles": 19,
+              "first_preparation": 30,
+              "preparation_steps": 95,
+              "score": 0.53125,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 212.0,
+              "finished_cycles": 19,
+              "first_preparation": 30,
+              "preparation_steps": 95,
+              "score": 0.53125,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": null,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "chain-2-opportunity"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 172.0,
+              "finished_cycles": 18,
+              "first_preparation": 1,
+              "preparation_steps": 126,
+              "score": 0.4270833333333333,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 172.0,
+              "finished_cycles": 18,
+              "first_preparation": 1,
+              "preparation_steps": 126,
+              "score": 0.4270833333333333,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 172.0,
+              "finished_cycles": 18,
+              "first_preparation": 1,
+              "preparation_steps": 126,
+              "score": 0.4270833333333333,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 172.0,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "chain-0-long-profitable"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 136.0,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "chain-0-long-bad"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 158.0,
+              "finished_cycles": 11,
+              "first_preparation": 1,
+              "preparation_steps": 121,
+              "score": 0.390625,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 158.0,
+              "finished_cycles": 11,
+              "first_preparation": 1,
+              "preparation_steps": 121,
+              "score": 0.390625,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 158.0,
+              "finished_cycles": 11,
+              "first_preparation": 1,
+              "preparation_steps": 121,
+              "score": 0.390625,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 158.0,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "chain-0-h32-profitable"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 136.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.3333333333333333,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 136.0,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "chain-0-h32-bad"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 380.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.96875,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 380.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.96875,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 380.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.96875,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 380.0,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "background-0-profitable"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 280.0,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "background-0-bad"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 380.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.96875,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 380.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.96875,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 380.0,
+              "finished_cycles": 25,
+              "first_preparation": 1,
+              "preparation_steps": 125,
+              "score": 0.96875,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 380.0,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "background-2-profitable"
+        },
+        {
+          "arms": {
+            "expected": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            },
+            "expected_only": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            },
+            "paired": {
+              "cash": 280.0,
+              "finished_cycles": 0,
+              "first_preparation": null,
+              "preparation_steps": 0,
+              "score": 0.7083333333333334,
+              "unfinished_steps": 0
+            }
+          },
+          "cash_upper_bound": 280.0,
+          "delta": {
+            "expected": 0.0,
+            "paired": 0.0
+          },
+          "id": "background-2-bad"
+        }
+      ],
+      "boundary_tests": "...............          [100%]\n15 passed, 48 subtests passed in 497.70s (0:08:17)",
+      "local_artifacts": "results/colab_preparation_minimality_20261101",
+      "compute_units": 0.16756223061315723
+    }
+  ],
+  "executions": 84,
+  "actual_steps": 10752,
+  "selected_configuration": {
+    "retry_until_gain": true,
+    "retry_gain_reference": "expected",
+    "tail_purpose_reflex": false
+  },
+  "information_boundary": {
+    "returncode": 0,
+    "test_sha256": "43c79d62ef7347252ea6fb25d60550aba84affbfc026b3e8e1d89fa3c4736ccf",
+    "log": "..                                                                       [100%]\n2 passed in 16.57s"
+  },
+  "repository_source": "Candidate source matches frozen minimality source modulo line endings; runner renamed and docstring clarified. Information tests ran separately on the same VM.",
+  "next_comparison": "Fresh stable and candidate world-cohort runs on the same Colab runtime, both through consensus_planner at H32 with seeds701,702,703 and recovery_cache64. Existing gates unchanged.",
+  "active_runtimes": 0,
+  "usage_rate": 0,
+  "compute_units_remaining": 408.3774135526501
+}
