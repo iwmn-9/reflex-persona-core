@@ -31,7 +31,9 @@ def execution(folder,spec,arm,scope,manifest,registration):
     assert cfg['spec']==spec and cfg['arm']==arm and cfg.get('continuation_scope','root')==scope
     assert cfg['registration']==registration and cfg['horizon']==32 and cfg['seeds']==[701,702,703]
     assert cfg['runner_sha256']==manifest['sources']['tools/run_adverse_recovery.py']
-    for name,value in cfg['adapters'].items():assert manifest['sources']['tools/'+name]==value
+    for name,value in cfg['adapters'].items():
+        assert manifest['sources']['tools/'+name]==value
+        assert sha((ROOT/'tools'/name).read_bytes())==value
     for name,value in payload['contract']['sources'].items():
         assert manifest['sources'][name]==value
         # Replay uses the same core and physical/feedback definitions as execution.
