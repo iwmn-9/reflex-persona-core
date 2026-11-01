@@ -11,7 +11,7 @@ nonlinear personality selector do NOT inherit its MDP improvement theorem.
 Packaged for explicit integration checks. Adoption still requires completed
 independent long-play evidence; packaging alone is not acceptance.
 """
-import copy
+from . import cloning as copy
 import math
 from collections import OrderedDict
 from dataclasses import replace

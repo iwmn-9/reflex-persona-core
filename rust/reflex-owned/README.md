@@ -91,3 +91,5 @@ quality study and never changes its criteria or results.
 
 The completed comparison and its exact scope are recorded in
 [the integration report](../../evidence/rust_port/owned/REPORT.md).
+Consecutive H32 selection, factual learning and process restoration are additionally
+checked in [the Colab comparison](../../evidence/colab_stability/REPORT.md).

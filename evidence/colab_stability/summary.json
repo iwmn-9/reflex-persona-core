@@ -1,0 +1,109 @@
+{
+  "acceptance": {
+    "case_sources_match": true,
+    "discrete_decisions_and_state_match": true,
+    "error_limit": 2e-12,
+    "max_prediction_error": 2.220446049250313e-16,
+    "max_score_error": 4.440892098500626e-16,
+    "max_state_error": 1.1102230246251565e-16,
+    "native_restore_exact": true,
+    "sources_unchanged": true,
+    "trace_hashes_match": true
+  },
+  "complete": true,
+  "conditions": [
+    {
+      "game": "auction",
+      "index": 0,
+      "max_prediction_error": 2.220446049250313e-16,
+      "max_score_error": 4.440892098500626e-16,
+      "max_state_error": 8.326672684688674e-17,
+      "profile": 0,
+      "seconds": 330.0202889442444,
+      "trace_sha256": "e3472798b9a18bef97720c0edab0f529331f80377c5bb5337e2af9caff51205d"
+    },
+    {
+      "game": "resources",
+      "index": 5,
+      "max_prediction_error": 2.220446049250313e-16,
+      "max_score_error": 4.440892098500626e-16,
+      "max_state_error": 1.1102230246251565e-16,
+      "profile": 1,
+      "seconds": 730.5884714126587,
+      "trace_sha256": "41ad30a70c4428edeee429bfa0426e37f40a5c0ba9fa5c96a9541819654e3b89"
+    },
+    {
+      "game": "combat",
+      "index": 10,
+      "max_prediction_error": 1.1102230246251565e-16,
+      "max_score_error": 5.551115123125783e-17,
+      "max_state_error": 1.1102230246251565e-16,
+      "profile": 2,
+      "seconds": 1330.9513640403748,
+      "trace_sha256": "ca1de24814bc04a501c6d21326ac786658c8df24ca8067f1768bdd817109b581"
+    },
+    {
+      "game": "gambling",
+      "index": 15,
+      "max_prediction_error": 2.220446049250313e-16,
+      "max_score_error": 4.440892098500626e-16,
+      "max_state_error": 8.326672684688674e-17,
+      "profile": 3,
+      "seconds": 900.7483127117157,
+      "trace_sha256": "d4fdf848ecbec53a9fb64c2c3484c9682267b7f4ba7015b576222281592438f4"
+    }
+  ],
+  "date": "2026-11-01",
+  "environment": {
+    "cpu_count": 2,
+    "numpy": "2.3.5",
+    "provider": "Google Colab",
+    "python": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+    "runtime": "CPU STANDARD",
+    "rust": "rustc 1.99.0 (b940084d7 2026-09-28)"
+  },
+  "execution": {
+    "actual_decisions": 748,
+    "h32_decisions": 12,
+    "h32_ticks": [
+      153,
+      154,
+      155
+    ],
+    "process_restarts": 24,
+    "restart_count_basis": "Completed 187-step traces and source-verified verifier restart schedule",
+    "restart_ticks_per_case": [
+      30,
+      61,
+      92,
+      123,
+      154,
+      185
+    ],
+    "saves": 748,
+    "seconds": 1662.46409907,
+    "workers": 2
+  },
+  "provenance": {
+    "base_commit": "110e2fdcd0c6ab151918013662990fcecf047752",
+    "batch_sha256": "b76488cdb06285ee667229122387ee0d1942e014064252f3d00f91819aa99c11",
+    "native_binary_sha256": "de2cfb24a59003abbcae3000aa040eaac211f881fc5a91715105e9cf50e0cef5",
+    "registration_sha256": "d7f4a6975d853e2bdc37228ec70fd6039af488707c68383ec7ed6aa3b74de40a",
+    "results_archive_sha256": "1d343749ef70e883282cab2f3ccf48c76e09b62edea9059e994a3c6e5306dfc6",
+    "source_archive_sha256": "638ee266830e878ec3085cd1f47338f103f6e44751fc8fb2e4f3b8ddb4296c7e",
+    "source_manifest_sha256": "3d68d6a0990a2995b61b2183092fff1749bac2cd9a5739a5c0604c3c207b5bbb",
+    "verifier_sha256": "70eee7d341f857aa88cd4a31319c259dcc61479c9bc1ce1816cb5fd75d0052f8"
+  },
+  "quality_improvement_claim": false,
+  "resource_cleanup": {
+    "active_after": 0,
+    "active_before": 0,
+    "compute_units_after": 408.70221868489506,
+    "compute_units_before": 408.7410091514304,
+    "compute_units_used": 0.03879046653531759,
+    "created_runtime_absent": true,
+    "finished_at_utc": "2026-11-01T10:47:03.387945+00:00",
+    "usage_rate_after": 0.0
+  },
+  "scope": "Consecutive H32 selection, actual learning and native save/restore fidelity; Python generates continuations."
+}
