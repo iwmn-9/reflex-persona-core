@@ -1,7 +1,9 @@
 # Prospective finite case diagnostics
 
-This changes execution order only. Current Q/G/N studies keep their existing
-whole-cohort prerequisites. No prospective cohort or diagnostic has started.
+This changes execution order only. On November 1 the human authorized retirement
+of the rejected Q/G candidates, retaining their audited incomplete histories
+(see ../rejected_candidates_retirement/verification.json). N keeps every original
+whole-cohort prerequisite. No prospective cohort or diagnostic has started.
 `verification.json` is the qualification authority; implementation and historical
 qualification are retained in `qualified_execution.zip`.
 
