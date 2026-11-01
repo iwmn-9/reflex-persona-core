@@ -1,0 +1,163 @@
+{
+  "version": "adverse-recovery-1",
+  "stable_commit": "562e6e1",
+  "stable_tag": "v0.1.0",
+  "candidate": "stratified H32 with unchanged learner and personality selector",
+  "arms": [
+    "stable",
+    "stratified"
+  ],
+  "specs": [
+    {
+      "game": "auction",
+      "id": "auction-0-10061201-outside",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "game": "auction",
+      "id": "auction-1-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "game": "auction",
+      "id": "auction-2-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "game": "auction",
+      "id": "auction-3-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "game": "combat",
+      "id": "combat-0-10061201-outside",
+      "mechanism": "world",
+      "profile": 0,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "game": "combat",
+      "id": "combat-1-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "game": "combat",
+      "id": "combat-2-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 2,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    },
+    {
+      "game": "combat",
+      "id": "combat-3-10061201-outside",
+      "mechanism": "world",
+      "profile": 3,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "game": "gambling",
+      "id": "gambling-1-10061201-outside",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "outside",
+      "seed": 10061201,
+      "turns": 128
+    },
+    {
+      "game": "resources",
+      "id": "resources-1-10061202-shift-return",
+      "mechanism": "world",
+      "profile": 1,
+      "regime": "shift-return",
+      "seed": 10061202,
+      "turns": 128
+    }
+  ],
+  "concordant_adverse": [
+    "auction-1-10061202-shift-return",
+    "combat-1-10061202-shift-return",
+    "combat-2-10061202-shift-return"
+  ],
+  "purpose": "Investigate all five realized losses, three score-positive selection losses, and two existing-success guards. Known conditions are development, never independent confirmation.",
+  "criteria": {
+    "complete": "All 10 pairs reach actual terminal under the unchanged 128-turn rules. Missing/partial executions cannot pass.",
+    "integrity": "Frozen source, fixed personality/values, matched actual world random streams, full learner/save-restore replay, fresh controls on the same pinned runtime; no hidden law input to decision.",
+    "family_gate": "Every family mean score and conditional increment delta >= -1e-12 versus stable H32. All individual losses retained and diagnosed.",
+    "improvement": "At least one of the three concordantly adverse cases improves both score and conditional increment by >1e-12.",
+    "adoption": "Not automatic. Every adverse difference and personality behavior requires review; a development pass is insufficient."
+  },
+  "independent_confirmation": {
+    "allowed_only_after": "Complete audited development gate and review, with unchanged candidate",
+    "seeds": [
+      2026102701,
+      2026102702,
+      2026102703,
+      2026102704
+    ],
+    "profiles": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "families": {
+      "auction": [
+        "outside",
+        "shift-return"
+      ],
+      "combat": [
+        "outside",
+        "shift-return"
+      ],
+      "resources": [
+        "outside",
+        "shift-return"
+      ],
+      "gambling": [
+        "outside",
+        "shift-return",
+        "irregular",
+        "steady"
+      ]
+    },
+    "turns": 128,
+    "pairs": 40,
+    "arms": [
+      "original-H16",
+      "stable-H32",
+      "candidate-H32"
+    ],
+    "gate": "All 40 conditions complete. Each family score/conditional mean nonnegative versus stable H32 and original H16; at least one strict gain versus H32. Also retain original adoption gates: positive gambling/resources, all four gambling worlds, at least three gambling worlds improve versus H16. Preserve personality, audit every loss; no acceptance on known cases or thresholds relaxed after outcomes."
+  },
+  "limitations": [
+    "Stepwise stratification is not a guarantee of lower whole-path variance.",
+    "A wrong predicted law is not corrected by sampling it more evenly.",
+    "Existing toy rule families do not demonstrate general human-level intelligence."
+  ]
+}

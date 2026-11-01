@@ -3,7 +3,7 @@
 Game adapters own method/context equivalence and the meaning of effects. These
 are bounded engineering heuristics, not calibrated psychological estimates.
 """
-from collections import OrderedDict, deque
+from collections import OrderedDict
 from dataclasses import dataclass, replace
 from . import cloning as copy
 import numpy as np
@@ -22,6 +22,39 @@ class Binding:
         identifier(self.method); identifier(self.situation)
         if not isinstance(self.estimated, tuple) or len(set(self.estimated)) != len(self.estimated) or set(self.estimated)-set(FEATURES):
             raise ValueError('distinct estimated feature names required')
+
+
+@dataclass(frozen=True)
+class _OutcomeEntry:
+    """Immutable selected evidence; the containing memory remains owner-local."""
+    count: int
+    estimated: tuple
+    samples: tuple
+
+    def __post_init__(self):
+        safe=(type(self) is _OutcomeEntry and type(self.count) is int and
+              type(self.estimated) is tuple and all(type(v) is str for v in self.estimated) and
+              type(self.samples) is tuple and
+              all(type(row) is tuple and all(type(v) is float for v in row) for row in self.samples))
+        # Retain the verified immutable objects, not just a flag. Even an
+        # explicitly bypassed frozen-field assignment must not share new data.
+        object.__setattr__(self,'_immutable_fields',
+                           (self.count,self.estimated,self.samples) if safe else None)
+
+    def __getitem__(self,key):
+        if key not in ('count','estimated','samples'):raise KeyError(key)
+        return getattr(self,key)
+
+    def __deepcopy__(self,memo):
+        state=vars(self);known=state.get('_immutable_fields')
+        if (type(self) is _OutcomeEntry and len(state)==4 and type(known) is tuple and len(known)==3
+                and all(state.get(key) is value for key,value in zip(('count','estimated','samples'),known))):
+            return self
+        # Caller-created malformed/subclass records may contain mutable values
+        # or cycles. Copy the full state with the caller's memo in that case.
+        result=object.__new__(type(self));memo[id(self)]=result
+        for key,value in state.items():object.__setattr__(result,key,copy.deepcopy(value,memo))
+        return result
 
 
 def _compress_estimates(outcomes, estimated):
@@ -130,13 +163,15 @@ class OutcomeMemory:
         e=self.entries.pop(key,None)
         reset=False
         if b.estimated:
-            if e is None: e=dict(count=0,samples=deque(maxlen=4),estimated=b.estimated)
+            count=0 if e is None else e['count']
+            samples=() if e is None else e['samples']
             # A large out-of-support result weakens obsolete evidence. A loss
             # already present in the predicted lottery is NOT such a signal.
             distance=min(float(np.max(abs(v[mask]-p[mask]))) for p in t['predicted'])
-            reset=e['count']>=3 and distance>.6
-            if reset: e['count']=0; e['samples'].clear()
-            e['count']=min(12,e['count']+1); e['samples'].append(v.copy()); self.entries[key]=e
+            reset=count>=3 and distance>.6
+            if reset: count=0; samples=()
+            e=_OutcomeEntry(min(12,count+1),b.estimated,(samples+(tuple(v.tolist()),))[-4:])
+            self.entries[key]=e
             while len(self.entries)>self.capacity: self.entries.popitem(last=False)
         self.last_tick=t['tick']; self.pending=None
         return dict(action=t['action'],regime_reset=reset,observations=0 if e is None else e['count'])
@@ -145,7 +180,7 @@ class OutcomeMemory:
         if self.pending is not None: raise ValueError('resolve the selected trial before checkpointing')
         return dict(version='outcome-memory-v1',owner=self.owner,capacity=self.capacity,last_tick=self.last_tick,
                     entries=[dict(method=m,situation=s,estimated=list(e['estimated']),count=e['count'],
-                                  samples=[v.tolist() for v in e['samples']]) for (m,s),e in self.entries.items()])
+                                  samples=[list(v) for v in e['samples']]) for (m,s),e in self.entries.items()])
 
     @classmethod
     def from_record(cls,scope,record):
@@ -169,8 +204,8 @@ class OutcomeMemory:
             for sample in samples:
                 v=np.asarray(sample,dtype=float)
                 if v.shape!=(len(FEATURES),) or not np.isfinite(v).all() or (abs(v)>1).any() or v[-1]<0: raise ValueError('invalid observed checkpoint effects')
-                values.append(v.copy())
-            m.entries[key]=dict(count=count,estimated=b.estimated,samples=deque(values,maxlen=4))
+                values.append(tuple(v.tolist()))
+            m.entries[key]=_OutcomeEntry(count,b.estimated,tuple(values))
         if entries and tick<0: raise ValueError('learned memory requires an observed tick')
         m.last_tick=tick
         return m

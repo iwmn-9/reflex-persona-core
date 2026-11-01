@@ -1,0 +1,190 @@
+{
+  "format": "colab-runtime-equivalence-v1",
+  "date": "2026-11-01",
+  "complete": true,
+  "scope": "Runtime-preserving changes; fixed-action history replay and two H32 roots. Not improved intelligence or full long-play policy evaluation.",
+  "environment": {
+    "cpu_count": 2,
+    "python": "Python 3.12.14",
+    "numpy": "2.3.5"
+  },
+  "arithmetic": {
+    "MKL_NUM_THREADS": "1",
+    "NPY_DISABLE_CPU_FEATURES": "AVX512F,AVX512CD,AVX512_SKX,AVX512_CLX,AVX512_CNL,AVX512_ICL",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "variants": {
+    "original": "Before all current runtime changes",
+    "previous": "Four preceding runtime changes",
+    "optimized": "Previous plus immutable OutcomeMemory entry sharing"
+  },
+  "tests": {
+    "files": 10,
+    "passed": 101,
+    "subtests_passed": 22
+  },
+  "history": {
+    "histories_per_variant": 80,
+    "steps_per_history": 128,
+    "steps_per_variant": 10240,
+    "variants": [
+      "original",
+      "optimized"
+    ],
+    "actions": "fixed to stored actual actions",
+    "same_vm": true,
+    "every_step_learning_and_restore": true,
+    "exact_step_hash_equal": true,
+    "history_sha256": "d7c94446b18a99c3dc478bd9008dfaa10aa5aafe0486ed12485ae2aee91bc0ee",
+    "cpu_seconds": {
+      "reference": 359.092539042,
+      "candidate": 268.38545236100003
+    },
+    "cpu_reduction_fraction": 0.2526008669603429,
+    "historical_windows_audit": {
+      "resolved": false,
+      "affected_histories": 40,
+      "mismatched_steps": 480,
+      "same_mismatches_in_both_variants": true
+    }
+  },
+  "copy": {
+    "variants": [
+      "previous",
+      "optimized"
+    ],
+    "same_vm": true,
+    "repetitions_per_variant": 100,
+    "owner_hash_equal": true,
+    "cpu_seconds_per_copy": {
+      "previous": {
+        "actor": 0.0012611150200000005,
+        "memory": 0.00095432411
+      },
+      "optimized": {
+        "actor": 0.0004332495200000003,
+        "memory": 0.00016948308000000023
+      }
+    }
+  },
+  "h32": {
+    "combat": {
+      "root_id": "combat-1-10061202-shift-return",
+      "tick": 65,
+      "history_steps": 65,
+      "horizon": 32,
+      "semantic_fields": 14,
+      "exact_equal": true,
+      "semantic_sha256": "47f75b9f91bb10d0a4180c4a0b623596009b3164e8fabbc4ba715f42c9d722a1",
+      "action": "strike:2",
+      "same_vm": false,
+      "reports_sha256": {
+        "candidate": "0f324583afeb0ca48e4fe5854b7493b834b225036abb167ae2ad96422dc80994",
+        "reference": "2fac2ae5d9d1b80198accd9b0107fe66945da6aafede95ddc9d37c75339b0ffc"
+      },
+      "timing_comparison": "excluded: reference ran on another VM",
+      "all_integrity_checks_passed": true
+    },
+    "auction": {
+      "root_id": "auction-1-10061202-shift-return",
+      "tick": 65,
+      "history_steps": 65,
+      "horizon": 32,
+      "semantic_fields": 14,
+      "exact_equal": true,
+      "semantic_sha256": "2a3888446c0fc99d0c5ced7ea7523addc5889c5370c1a4301a78b45255dfe686",
+      "action": "bid:3",
+      "same_vm": true,
+      "reports_sha256": {
+        "candidate": "8d583c619d8efd68beaa6015e094e36bed7e490992cfbb12dd91bd4944e31e35",
+        "reference": "ca45a298ceeac91db5599c11a87e1c1633969452bdf98a1d26e2237720b78682"
+      },
+      "cpu_seconds": {
+        "reference": 244.719920173,
+        "candidate": 218.754233224
+      },
+      "cpu_reduction_fraction": 0.10610369164326328,
+      "all_integrity_checks_passed": true
+    }
+  },
+  "provenance": {
+    "base_commit": "110e2fdcd0c6ab151918013662990fcecf047752",
+    "input_sha256": {
+      "original.zip": "a51d7def9aeade3619b85b1524862c3e2532cfe27c3ed6824e39504733c0161e",
+      "previous.zip": "a41684941d61b84d634b52164b77f7154b8ae1d80f2e096baa63d4dcee0680f8",
+      "optimized.zip": "14137578d411462cece0515ddc054c55ed111ec28a24b19b8bfc38734eab0715",
+      "verify_colab_optimized_root.py": "b2d4afd0aba6f30b10c3d411aed94a80f659a7bd3285d65e7626ac42bcad9125",
+      "verify_colab_history_equivalence.py": "3ce374136bf5acffb2216bc04aaa3bb27de7157e1c19cefcec1e4724a0a5fce4",
+      "reference.json": "2fac2ae5d9d1b80198accd9b0107fe66945da6aafede95ddc9d37c75339b0ffc",
+      "combat-root.json": "5501bef64d01d87c6a554ebddd4b86da72faf8a807b8ce4b7fe72e1d0d07dffb",
+      "auction-root.json": "59f61a8bcba86306832288cf1bfda6f8f56ccb8662af06bb7d91c0043adcdefb",
+      "copy_measure.py": "73c7ecab1fcf4258a79caaf0cd297f62d3fc9df3d25c883caae703627699315a",
+      "runs.jsonl.gz": "d7c94446b18a99c3dc478bd9008dfaa10aa5aafe0486ed12485ae2aee91bc0ee"
+    },
+    "bundle_sha256": "a9b220d410a56e62cdb0925f85925a0644866c8f6569ec808c222ad336aaf870",
+    "results_sha256": "30ebe38663dc03de7d68507dff6148cbe12d32f537c8d5d68e2209df79e3b709",
+    "status_sha256": "ea9ed1fada33bb1d3b4c42a9c05f6c2f1dfe80db4714b032a0adab17cb8513bf",
+    "source_unchanged": true,
+    "adapters_equal": true,
+    "independent_archive_audit": {
+      "input_hashes": true,
+      "all_stage_exit_codes": true,
+      "history_case_hashes": true,
+      "h32_semantic_bytes": true,
+      "h32_report_hashes": true
+    },
+    "source_manifests_sha256": {
+      "original": "8c6c10d2e23f1d77a4443265ab504ee5a1290fbb4084a3aca70a282e34c554a3",
+      "previous": "d0f7cfdf8bbdd20061f2bf6cd4d575a0832eb7d2c4133ed2493b3b294e57f955",
+      "optimized": "3954740c66768561b1debe8cff66468de189ab7c927f32b4a527306d39ccb676"
+    },
+    "adapters_sha256": {
+      "tools/continuing_games.py": "7d3fbc805578c24015db92f9c31821427a44f2a9e8b2befa1755084b809c6bde",
+      "tools/preparation_world.py": "63854ca82d206dc9fff3c73d18ef8935fb86810122de3116c54a97afa1aa7b72",
+      "tools/run_continuation_portfolio.py": "298896c6cec9e13b099f6e1de2db19f45300eee29ead2fc5a22d0a8d590cc0db",
+      "tools/run_owned_value.py": "0878b267d2de01d4456af81c97c610e89d868c81f5dc838d4b880c59adcc7cb1"
+    }
+  },
+  "resources": {
+    "session": "reflex-memory-ad6ed377",
+    "active_before": 0,
+    "active_after": 0,
+    "results_retrieved": true,
+    "created_runtime_absent": true,
+    "usage_rate_after": 0.0,
+    "compute_units_before_job": 408.68198747082573,
+    "compute_units_after": 408.6520765959249,
+    "compute_units_used_job": 0.02991087490083,
+    "compute_units_before_turn": 408.7410091514304,
+    "compute_units_used_turn": 0.0889325555055
+  },
+  "limits": [
+    "Historical Windows replay hash audit remains unresolved.",
+    "Fixed-action replay and two H32 roots do not establish improved long-play choices.",
+    "Single-run timings do not establish general speedup; combat timing is excluded because the baseline ran on another VM."
+  ],
+  "memory": {
+    "root": "combat-1-10061202-shift-return, tick 65",
+    "scope": "Object graph estimate with shared-object deduplication; not RSS or allocator usage.",
+    "variants": [
+      "previous",
+      "optimized"
+    ],
+    "owner_hash_equal": true,
+    "copies": 100,
+    "single_memory_bytes": {
+      "previous": 118215,
+      "optimized": 120209
+    },
+    "memory_and_100_copies_bytes": {
+      "previous": 5908535,
+      "optimized": 443329
+    },
+    "artifact_sha256": "af7ef4f6469dceebb6aa6113c00b870deba49cc9e4251f8eb2d1bb7c7b9fed6b",
+    "worker_sha256": "06ca687920f1e8ebd5174056addf948c6457f341e0dd06b6c9a33142a0b90df1",
+    "source_hashes_verified": true,
+    "helper_kernel_stopped": true
+  }
+}
