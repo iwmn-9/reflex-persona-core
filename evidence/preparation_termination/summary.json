@@ -1025,6 +1025,10 @@
   ],
   "executions": 84,
   "actual_steps": 10752,
+  "cross_study_control": {
+    "conditions": 14,
+    "full_trace_final_score_equal": true
+  },
   "selected_configuration": {
     "retry_until_gain": true,
     "retry_gain_reference": "expected",
@@ -1039,5 +1043,47 @@
   "next_comparison": "Fresh stable and candidate world-cohort runs on the same Colab runtime, both through consensus_planner at H32 with seeds701,702,703 and recovery_cache64. Existing gates unchanged.",
   "active_runtimes": 0,
   "usage_rate": 0,
-  "compute_units_remaining": 408.3774135526501
+  "compute_units_remaining": 408.3774135526501,
+  "build_test_verification": [
+    {
+      "run": 41311985078,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/41311985078",
+      "head_sha": "53cc7b854977d9e464994fd0be97abb083fa2d03",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "test (ubuntu-latest, 3.13)",
+          "conclusion": "success"
+        },
+        {
+          "name": "test (ubuntu-latest, 3.12)",
+          "conclusion": "success"
+        },
+        {
+          "name": "test (windows-latest, 3.12)",
+          "conclusion": "success"
+        },
+        {
+          "name": "test (windows-latest, 3.13)",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run": 41311985042,
+      "url": "https://github.com/iwmn-9/reflex-persona-core/actions/runs/41311985042",
+      "head_sha": "53cc7b854977d9e464994fd0be97abb083fa2d03",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "verify (ubuntu-latest)",
+          "conclusion": "success"
+        },
+        {
+          "name": "verify (windows-latest)",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
 }
