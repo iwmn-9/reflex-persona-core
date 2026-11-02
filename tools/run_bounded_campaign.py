@@ -49,6 +49,16 @@ def main():
         raise ValueError('slices must preserve the exact actual branch origin')
     args.output.mkdir(parents=True,exist_ok=True)
     run_recovery_campaign.save(args.output/'controller.json',binding)
+    # A host may stop at tick 31 even when ordinary slices have length four.
+    # Preserve the actual tick-32 intervention owner on direct CLI resumes too.
+    original_run=run_recovery_campaign.run
+    def at_boundary(folder,spec,arm,**kwargs):
+        checkpoint=Path(folder)/'checkpoint.json'
+        tick=json.loads(checkpoint.read_bytes())['payload']['world']['tick'] if checkpoint.exists() else 0
+        if tick<plan['boundary']:
+            kwargs['max_decisions']=min(kwargs['max_decisions'],plan['boundary']-tick)
+        return original_run(folder,spec,arm,**kwargs)
+    run_recovery_campaign.run=at_boundary
     run_recovery_campaign.main(args.plan,args.output,args.workers)
 
 
