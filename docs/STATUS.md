@@ -13,7 +13,7 @@
 
 Python安定版はv0.1.0／`FixedHorizonOwner`。[導入](STABLE_INTEGRATION.md)と[採用根拠](../evidence/long_horizon/REPORT.md)。安定版タグとRustの判断規則は維持する。
 
-研究先は `research/preparation-termination`。今回の[結果と限界](../evidence/completion/REPORT.md)。既知10条件の従来候補と基準側、新しい候補共有の10条件をColabで実行中。新候補の実履歴32手から学習継続/停止×変化/定常の40分岐も登録した。長期利益は未確定。独立40条件は未開始。
+研究先は `research/preparation-termination`。今回の[結果と限界](../evidence/completion/REPORT.md)。既知10条件の従来候補と基準側、新しい候補共有の10条件をColabで実行中。新候補の実履歴32手から学習継続/停止×変化/定常の40分岐も登録した。従来候補は必須3条件の改善基準を満たさず不採用。最後の1実行と新候補の比較は継続し、独立40条件は未開始。
 
 実証はColab CLI、設計・改修・評価はローカル。終了時に回収・VM解除・サーバー側消滅確認を行う。実行先は主比較 `results/colab_completion_worlds_20261102/continuation.json`、C3 `results/colab_recovery_benefit_20261102/continuation.json`。固定ソース・本人・乱数・実32手目の分岐点を維持して再配分し、全体完走は別途照合する。途中進捗は `results/watcher-status.json`。実エラーは自動再試行しない。GitHub Actionsはビルド・テスト・動作確認のみ。
 
