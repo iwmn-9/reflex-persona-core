@@ -1,0 +1,125 @@
+{
+  "review": {
+    "adoption": false,
+    "complete": false,
+    "development_gate_passed": false,
+    "families": {
+      "auction": {
+        "conditional_delta": -0.03325195312499998,
+        "score_delta": -0.029296875
+      },
+      "resources": {
+        "conditional_delta": 0.0,
+        "score_delta": 0.0
+      }
+    },
+    "gate_checks": {
+      "all_families": false,
+      "complete": false,
+      "concordant_adverse_improvement": false,
+      "no_family_loss": false,
+      "parent_root_audit_complete": true
+    },
+    "independent_confirmation": "Requires C2 reference, C3 benefit and individual-loss review as well.",
+    "pairs": [
+      {
+        "conditional_delta": 0.0,
+        "game": "resources",
+        "id": "resources-1-10061202-shift-return",
+        "profile": 1,
+        "root_candidate_score": 0.5729166666666666,
+        "score": 0.5729166666666666,
+        "score_delta": 0.0,
+        "stable_score": 0.5729166666666666
+      },
+      {
+        "conditional_delta": -0.03325195312499998,
+        "game": "auction",
+        "id": "auction-1-10061202-shift-return",
+        "profile": 1,
+        "root_candidate_score": 0.269287109375,
+        "score": 0.2431640625,
+        "score_delta": -0.029296875,
+        "stable_score": 0.2724609375
+      }
+    ],
+    "pending": [
+      "auction-0-10061201-outside",
+      "combat-0-10061201-outside",
+      "gambling-1-10061201-outside",
+      "combat-1-10061202-shift-return",
+      "auction-2-10061202-shift-return",
+      "combat-2-10061202-shift-return",
+      "auction-3-10061202-shift-return",
+      "combat-3-10061201-outside"
+    ],
+    "provenance": {
+      "candidate_registration": {
+        "plan_sha256": "bf13e9097423998226617f05e9414f0ecc1833d11e37a8769e0bf3ae45d7315b",
+        "source_sha256": "9cdbb0828559aad7a0f03188f75a5028abf1871ba709b8f0ad0e4991d7ea69ed"
+      },
+      "candidate_source": "42ae57258380d3986f4545de13876b9fb474a4c1365a7305cc488fdaaf2d0b0d",
+      "parent_registration": {
+        "plan_sha256": "f679db738d0b7a2cf9016dc2df1c729705ed7414b6b25867fee18363c4185e8a",
+        "source_sha256": "00aa0b95221d7b6ea79635f7b76e95b27863d63d92de3d7668383ec089e9714e"
+      },
+      "parent_source": "e13f06baffc81404554bf931767f46f16e8a6e4e24f7db44f1773f1002812d63"
+    }
+  },
+  "diagnosis": {
+    "case": "auction-1-10061202-shift-return",
+    "all_128_current_predictions_identical": true,
+    "first_different_action": 0,
+    "first_different_action_same_owner_and_world": true,
+    "conditional_deltas_by_16_steps": [
+      {
+        "start": 0,
+        "end": 16,
+        "conditional_delta": 0.0013671874999999986
+      },
+      {
+        "start": 16,
+        "end": 32,
+        "conditional_delta": 0.00019531250000000278
+      },
+      {
+        "start": 32,
+        "end": 48,
+        "conditional_delta": -0.0023437500000000003
+      },
+      {
+        "start": 48,
+        "end": 64,
+        "conditional_delta": -0.0275634765625
+      },
+      {
+        "start": 64,
+        "end": 80,
+        "conditional_delta": -0.0174560546875
+      },
+      {
+        "start": 80,
+        "end": 96,
+        "conditional_delta": 0.011962890625000003
+      },
+      {
+        "start": 96,
+        "end": 112,
+        "conditional_delta": 0.0007812499999999972
+      },
+      {
+        "start": 112,
+        "end": 128,
+        "conditional_delta": -0.00019531249999999584
+      }
+    ],
+    "stable_result_sha256": "5bc0614f493c7d2c8d56b21aaae4d1e89eec3bc23d6573e75bae1c72091aff68",
+    "candidate_result_sha256": "4838643cc9a9469d563ac6682422633dd532842101217b634671a6206ce614c6",
+    "causal_limit": "Later worlds and learners differ. Equal current predictions do not imply equal long-horizon estimates. No predictor-only or personality-only cause established."
+  },
+  "input_sha256": "8bd7b45e4b4b1d1750008fe1fd8114694cb71d1d725d6884c4f3aa0cf19aeeb2",
+  "audit_sha256": "273fa0d32e65b8e54a2e6b61f757c794e18a46eb3de8d7df5f6695c22882b185",
+  "audit_kernel_absent": true,
+  "prior_kernels_preserved": true,
+  "adoption": false
+}
