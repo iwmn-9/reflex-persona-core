@@ -458,5 +458,51 @@
     "actual_learning_windows": 40,
     "independent40_started": false,
     "stable_changed": false
+  },
+  "scope_diagnostic": {
+    "cases": [
+      {
+        "id": "auction-1-10061202-shift-return",
+        "states": 128,
+        "certified": 72,
+        "all_states": false,
+        "unresolved_reasons": {
+          "persona tier removed forecast plans": 56
+        }
+      },
+      {
+        "id": "combat-3-10061201-outside",
+        "states": 128,
+        "certified": 128,
+        "all_states": true,
+        "unresolved_reasons": {}
+      },
+      {
+        "id": "gambling-1-10061201-outside",
+        "states": 128,
+        "certified": 126,
+        "all_states": false,
+        "unresolved_reasons": {
+          "selected plan outside conservative bounded corridor": 2
+        }
+      },
+      {
+        "id": "resources-1-10061202-shift-return",
+        "states": 128,
+        "certified": 125,
+        "all_states": false,
+        "unresolved_reasons": {
+          "persona tier removed forecast plans": 3
+        }
+      }
+    ],
+    "source_sha256": "42ae57258380d3986f4545de13876b9fb474a4c1365a7305cc488fdaaf2d0b0d",
+    "input_sha256": "11b87d3a2b01903931c8f0cf1b37a6a1e19386aecb69a9b0ad784773808502e6",
+    "results_sha256": "4161f6e410cdd9e54533f006d6dc0f6f5bdf593072626ef35f8533318d689159",
+    "created_kernel_absent": true,
+    "prior_kernels_preserved": true,
+    "adoption": false,
+    "meaning": "On combat-3 all 128 actual states satisfy a sufficient condition for the cap to retain the old choice: full persona tier, mask-invariant scores, retained choice, no progress proof or post-choice guard. Its existing loss is outside this fix. Other trajectories remain unresolved; they are not failures or passes. This diagnostic does not replace registered new long runs.",
+    "failed_attempt": "First probe combined a preview callback with forced roots, which the API forbids. Replayed every state through the supported separate preview/forced-action calls; original failed receipt retained."
   }
 }
