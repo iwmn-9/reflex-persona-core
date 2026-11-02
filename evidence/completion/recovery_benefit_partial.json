@@ -2,7 +2,7 @@
   "audit_complete": true,
   "cohort_complete": false,
   "adoption": false,
-  "received_branches": 10,
+  "received_branches": 13,
   "registered_branches": 40,
   "complete_pairs": [
     {
@@ -48,6 +48,18 @@
       },
       "game": "gambling",
       "id": "gambling-1-10061201-outside",
+      "prediction_recovered": false,
+      "profile": 1,
+      "window_complete": true,
+      "world_mode": "steady"
+    },
+    {
+      "delta": {
+        "conditional_increment": 0.0033935546875000083,
+        "score_increment": 0.013916015625
+      },
+      "game": "auction",
+      "id": "auction-1-10061202-shift-return",
       "prediction_recovered": false,
       "profile": 1,
       "window_complete": true,
@@ -212,6 +224,42 @@
       "result_sha256": "076c89a35718eddc9082a3c7f4218e180984454f2466671cb11049361553058a"
     },
     {
+      "id": "auction-1-10061202-shift-return",
+      "world_mode": "steady",
+      "experience": "learning",
+      "initial_cash": 2.0,
+      "final_cash": 4.0,
+      "initial_investment": 0,
+      "final_investment": 0,
+      "score_increment": 0.07861328125,
+      "conditional_increment": 0.08286132812500001,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "51747f3c37f54fbd2750abf0dc2b321a59f264e8b2e9b6588d293f30389b8cc7"
+    },
+    {
+      "id": "auction-1-10061202-shift-return",
+      "world_mode": "steady",
+      "experience": "frozen",
+      "initial_cash": 2.0,
+      "final_cash": 7.0,
+      "initial_investment": 0,
+      "final_investment": 0,
+      "score_increment": 0.064697265625,
+      "conditional_increment": 0.0794677734375,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "6e894cb4c6392eedcfa2fc64570c369cfea046f552db9515e2f2a8dca72047cf"
+    },
+    {
       "id": "auction-2-10061202-shift-return",
       "world_mode": "steady",
       "experience": "learning",
@@ -251,10 +299,10 @@
   "C3_development_passed": false,
   "source_sha256": "42ae57258380d3986f4545de13876b9fb474a4c1365a7305cc488fdaaf2d0b0d",
   "overlay_sha256": "e288e10feab91433650701fd48155c5d7b5a4564c7b2f5557be7dda1b9a80e52",
-  "input_sha256": "0ded033e5a048030186fcc937363d9c09871c23e68dd0ffd7c5f70d0b7d3db7f",
-  "audit_results_sha256": "f575987b476ee242613b34582ff7156e142bb50005a3d02edf2076316767f5a3",
+  "input_sha256": "aa10c09012625dd7bc71d4c56cb28974b2a95bdb1173067f139e5274e1ff34b6",
+  "audit_results_sha256": "8768b906eca8ef863de45400797b9f235f842dc492334860466715c1e0806f3a",
   "limits": [
-    "Known conditions only: resource-management and gambling changed/steady, auction profile 2 steady. No whole-family or unseen-game claim.",
+    "Known conditions only: resource-management and gambling changed/steady, auction profiles 1 and 2 steady. No whole-family or unseen-game claim.",
     "The intervention freezes actual prediction, experience and evidence updates, not only the predictor.",
     "Fixed personality and actual-state replay passed; behavioral personality and human believability remain separate.",
     "Missing and unpaired conditions do not pass the cohort gate."
@@ -293,5 +341,26 @@
       "same_public_world": true
     },
     "interpretation": "The learner fitted this observed sequence better but moved away from the fixed true distribution. This does not identify a broken recovery gate or isolate the predictor as the cause of the full-window loss. No tuning to this sequence."
+  },
+  "same_prediction_different_outcomes": {
+    "input_sha256": "aa10c09012625dd7bc71d4c56cb28974b2a95bdb1173067f139e5274e1ff34b6",
+    "same_public_response_and_forecast_sequences": true,
+    "world_mode": "steady",
+    "cases": [
+      {
+        "profile": 1,
+        "id": "auction-1-10061202-shift-return",
+        "score_delta": 0.013916015625,
+        "expected_delta": 0.0033935546875000083
+      },
+      {
+        "profile": 2,
+        "id": "auction-2-10061202-shift-return",
+        "score_delta": 0.003662109375,
+        "expected_delta": -0.0022705078125000028
+      }
+    ],
+    "inference": "The same prediction sequence accompanies opposite expected-gain differences in different personality and resource states. Neither predictor-only causality nor personality-only causality is established. Keep the full registered cohort and do not tune to one path.",
+    "adoption": false
   }
 }
