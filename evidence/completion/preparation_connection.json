@@ -174,7 +174,7 @@
   },
   "patch": {
     "base_commit": "72d6b16d486238597397d0a052d8f06488c06f7f",
-    "sha256": "d42fd8278494294d9323c52ed2649eaa147e6dbe99c9ad0fb12902a150ef3e75",
+    "sha256": "7fb2761ce47dce0a30fc6fb0c7756899390a9321a5f49bf668a0b3d213f03b7a",
     "files": {
       "reflex/_continuation_portfolio.py": "7ad33ef5d28e82f5ee343a07dffdd23ebb3d6c9a7ea8cb3d2221ac92c58e4cdf",
       "preparation_owner.py": "4519dfccc78efee066f0752024410c517d85d60719a046b6219312c6ce9cda8b",
@@ -185,7 +185,18 @@
       "test_supported_arrival.py": "07575751eba332a04294fcc9ea02d1faa9ab9631e3fa298b21e6f2dc3838282e",
       "integration-plan.json": "6a3d13b34b440a45e79667ea2738280cb2b8eec24d509b9e34706fab47827dd0"
     },
-    "application": "git apply --check evidence/completion/preparation_connection.patch; apply only in a research checkout. Source paths and imports match the tested bundle. integration-plan.json gains only a final newline."
+    "application": "git apply --check evidence/completion/preparation_connection.patch; apply only in a research checkout. Source paths and imports match the tested bundle.",
+    "normalized_file_sha256": {
+      "reflex/_continuation_portfolio.py": "525cfecc0f416127435019eb3277921dadbcd7a6f52dbabcaae211b353fdbce5",
+      "preparation_owner.py": "4519dfccc78efee066f0752024410c517d85d60719a046b6219312c6ce9cda8b",
+      "milestone_supported.py": "6a2b1f230f23ae14782a2d6d36c6d5785ad70205295c159ac04d9dda684bbf8f",
+      "probe.py": "2fe7b6f5182c670ae8bd840839eeb5cdacfb5a1779cd86348860c6614feaf329",
+      "integrated_probe.py": "ca6ce3e5099bc6fbf2da6eff00022abaf203f0f776df46a2af40a6601f41ab1a",
+      "test_preparation_owner.py": "0944fc247b2dbd7def4ecc5ad0c074246be704edcaeb36fa31e353b750054a15",
+      "test_supported_arrival.py": "07575751eba332a04294fcc9ea02d1faa9ab9631e3fa298b21e6f2dc3838282e",
+      "integration-plan.json": "53e827e87e7ceaa09b2ad7ced8f6e63c3a18039ac305ee034567ab22bb585c5c"
+    },
+    "formatting": "LF and trailing whitespace normalization only; every Python AST and the plan JSON equal the frozen validation bundle."
   },
   "limits": [
     "Known deterministic worlds only; does not establish C3 or unseen transfer.",
