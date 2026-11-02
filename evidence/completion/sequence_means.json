@@ -220,8 +220,120 @@
     "Hypothetical forced steps need not equal the future owner choice; actual long replanning must be checked.",
     "The persona scoring rule is unchanged, but adding feasible alternatives changes the derived purpose corridor."
   ],
-  "next": "16 registered 64-step continuing runs, same two lengths and four personas, one exhaustive deterministic event per step. Check realized gain and forecast/execution gap.",
+  "next": "Finish the existing intention/arrival connection long study and repaired public-repricing contrast. Original long10/C3 and independent40 remain pending.",
   "references": [
     "https://ijcai.org/proceedings/2007/330"
-  ]
+  ],
+  "long": {
+    "complete": true,
+    "conditions": 8,
+    "physical_mechanisms": 2,
+    "personas": 4,
+    "executions": 16,
+    "actual_steps": 1024,
+    "all_score_improved": true,
+    "rows": [
+      {
+        "id": "length-1-profile-0",
+        "profile": 0,
+        "steps": 64,
+        "baseline_score": 0.3333333333333333,
+        "candidate_score": 1.0,
+        "baseline_gain": 64.0,
+        "candidate_gain": 253.0,
+        "max_overprediction": 0.0,
+        "mean_absolute_gap": 0.178955078125
+      },
+      {
+        "id": "length-1-profile-1",
+        "profile": 1,
+        "steps": 64,
+        "baseline_score": 0.3333333333333333,
+        "candidate_score": 1.0,
+        "baseline_gain": 64.0,
+        "candidate_gain": 253.0,
+        "max_overprediction": 0.0,
+        "mean_absolute_gap": 0.178955078125
+      },
+      {
+        "id": "length-1-profile-2",
+        "profile": 2,
+        "steps": 64,
+        "baseline_score": 0.3333333333333333,
+        "candidate_score": 1.0,
+        "baseline_gain": 64.0,
+        "candidate_gain": 253.0,
+        "max_overprediction": 0.0,
+        "mean_absolute_gap": 0.178955078125
+      },
+      {
+        "id": "length-1-profile-3",
+        "profile": 3,
+        "steps": 64,
+        "baseline_score": 0.3333333333333333,
+        "candidate_score": 1.0,
+        "baseline_gain": 64.0,
+        "candidate_gain": 253.0,
+        "max_overprediction": 0.0,
+        "mean_absolute_gap": 0.178955078125
+      },
+      {
+        "id": "length-2-profile-0",
+        "profile": 0,
+        "steps": 64,
+        "baseline_score": 0.3333333333333333,
+        "candidate_score": 0.6458333333333334,
+        "baseline_gain": 64.0,
+        "candidate_gain": 124.0,
+        "max_overprediction": 0.0,
+        "mean_absolute_gap": 0.08683268229166669
+      },
+      {
+        "id": "length-2-profile-1",
+        "profile": 1,
+        "steps": 64,
+        "baseline_score": 0.3333333333333333,
+        "candidate_score": 0.6458333333333334,
+        "baseline_gain": 64.0,
+        "candidate_gain": 124.0,
+        "max_overprediction": 0.0,
+        "mean_absolute_gap": 0.08683268229166669
+      },
+      {
+        "id": "length-2-profile-2",
+        "profile": 2,
+        "steps": 64,
+        "baseline_score": 0.3333333333333333,
+        "candidate_score": 0.6458333333333334,
+        "baseline_gain": 64.0,
+        "candidate_gain": 124.0,
+        "max_overprediction": 0.0,
+        "mean_absolute_gap": 0.08683268229166669
+      },
+      {
+        "id": "length-2-profile-3",
+        "profile": 3,
+        "steps": 64,
+        "baseline_score": 0.3333333333333333,
+        "candidate_score": 0.359375,
+        "baseline_gain": 64.0,
+        "candidate_gain": 69.0,
+        "max_overprediction": 0.06770833333333337,
+        "mean_absolute_gap": 0.019205729166666668
+      }
+    ],
+    "source_sha256": "73e2c59e5cc7588df0e3755609663448472d1a76c89358db7d700ca06fd790d9",
+    "results_sha256": "c87bafa25020953a7a46a5fe5ab5732a9f4fce1a4665b69e139168337ac5e970",
+    "audit_sha256": "f24ec12c3126d4ae38ba7d43b23332b6e96cc5cec34f3dbfc1bdbb7e2849e9a1",
+    "audit": "All registered outputs, immutable source/config/runtime, checkpoint checksum, actual owner/world chains and forecast gaps checked. Full feedback replay was performed in the frozen Colab runner.",
+    "runtime": {
+      "machine": "x86_64",
+      "numpy": "2.3.5",
+      "python": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+      "system": "Linux"
+    },
+    "runtime_released": true,
+    "known_weakness": "Length2/profile3 starts preparation then delays 59 steps; completes only near the real end. Initial forecast is not its actual continuation.",
+    "interpretation": "Known deterministic repeated mechanism. Purpose is capped at1; excess cash is reported separately. Not a generalization or C3 pass."
+  }
 }
