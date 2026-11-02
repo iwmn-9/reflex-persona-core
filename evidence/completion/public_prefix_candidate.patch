@@ -1,0 +1,83 @@
+--- a/reflex/_continuation_portfolio.py
++++ b/reflex/_continuation_portfolio.py
+@@ -14,12 +14,13 @@
+ from . import cloning as copy
+ import math
+ from collections import OrderedDict
++from itertools import product
+ from dataclasses import replace
+ 
+ import numpy as np
+ 
+ from reflex.closed_loop import owned_rollout
+-from reflex.core import digest
++from reflex.core import digest, MAX_ACTIONS
+ from reflex.decision_loop import DecisionLoop
+ from reflex.examples import effect
+ from reflex.intertemporal import Branch
+@@ -35,7 +36,9 @@
+                       coherent_cumulative_mean=False, capture_prefixes=False,
+                       sampling='independent', continuation_scope='root',
+                       tail_purpose_reflex=False, retry_until_gain=False,
+-                      retry_gain_reference='origin'):
++                      retry_gain_reference='origin', sequence_depth=0):
++    if type(sequence_depth) is not int or not 0 <= sequence_depth <= 3:
++        raise ValueError('bounded public prefix depth required')
+     if type(horizon) is not int or not 1 <= horizon <= 128:
+         raise ValueError('explicit bounded continuation horizon required')
+     if (not isinstance(seeds, tuple) or not 1 <= len(seeds) <= 8
+@@ -81,6 +84,14 @@
+         cache=OrderedDict();cache_hits=0;recovery_computations=0
+         roots = sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure'])
+         paths, audits, mapping, policies = {}, {}, {}, {}
++        # Keep every baseline and equal complete prefix depth at every root.
++        # Prefixes use currently public actions, never a game-specific recipe.
++        base_count = len(roots)*(1+(len(roots) if continuation_scope=='shared' else 1)
++            *int(include_retry)*(1+int(retry_until_gain)))
++        used_depth = min(sequence_depth, horizon-1)
++        while used_depth and base_count+len(roots)**(used_depth+1)>MAX_ACTIONS:
++            used_depth -= 1
++        schedules = tuple(product(roots, repeat=used_depth)) if used_depth else ()
+         retry_without_gain = {}; ordinary_goals = {}; expected_goals = {}
+         steps = 0; purpose_reflex_calls = 0; reused_steps = 0
+         for root_index, root in enumerate(roots):
+@@ -90,10 +101,13 @@
+                 modes += [('retry', key, False) for key in (roots if continuation_scope == 'shared' else (root,))]
+                 if retry_until_gain:
+                     modes += [('retry', key, True) for key in (roots if continuation_scope == 'shared' else (root,))]
++            modes += [('sequence', schedule, False) for schedule in schedules]
+             for mode, preferred, until_gain in modes:
+                 suffix = f'-{roots.index(preferred):03d}' if mode == 'retry' and continuation_scope == 'shared' else ''
++                if mode == 'sequence':
++                    suffix = '-'+'-'.join(f'{roots.index(k):03d}' for k in preferred)
+                 if until_gain:
+-                    suffix += '-until-gain'
++                    suffix += '-until-gain' 
+                 proposal = f'candidate-{root_index:03d}-{mode}{suffix}'
+                 mapping[proposal] = root
+                 policies[proposal] = dict(kind=mode, preferred=preferred)
+@@ -162,6 +176,12 @@
+                                 key = preferred
+                             elif t and retry_active:
+                                 falls.append(t)
++                            if t and mode == 'sequence' and t <= len(preferred):
++                                proposed = preferred[t-1]
++                                if proposed in legal and proposed in stage['progress_allowed']:
++                                    key = proposed
++                                else:
++                                    falls.append(t)
+                             model_owner = copy.deepcopy(own)
+                             future = None
+                             if key is None and tail_recovery and recovery_calls < model.frontier.future_planner_limit:
+@@ -317,6 +337,11 @@
+             tail_recovery=tail_recovery,
+             recovery_cache=dict(capacity=recovery_cache,hits=cache_hits,computations=recovery_computations),
+             source_semantics='learning owner (optional existing recovery) or retry a public action with that owner as fallback; only selected root is executed')
++        if sequence_depth:
++            metadata['continuation_portfolio']['public_prefixes'] = dict(
++                requested_depth=sequence_depth, depth=used_depth, per_root=len(schedules),
++                capacity=MAX_ACTIONS, baseline_count=base_count,
++                semantics='Same public prefix on every modeled branch; legal/persona-progress fallback, then existing learned-owner tail. No recipe or hidden future.')
+         # Keep the default forecast bytes compatible with the stable version.
+         if sampling != 'independent':
+             metadata['continuation_portfolio']['sampling'] = sampling

@@ -1,0 +1,128 @@
+{
+  "complete": true,
+  "comparisons": 10,
+  "all_semantics_equal": true,
+  "source_sha256": "ea94aa6969da940c1883b8bc1f4edb0c7e943ae60cf0834039f3f252ba69f213",
+  "results_sha256": "353201ff7b65f1f1aff7b3c19d292b3aecab6a324b9b146f4a2c97613a3ace7b",
+  "rows": [
+    {
+      "case": "auction-2",
+      "profile": 2,
+      "tick": 37,
+      "scope": "root",
+      "semantics_equal": true,
+      "cpu_before": 381.973111095,
+      "cpu_after": 321.49252503099996,
+      "rss_kib_before": 105556,
+      "rss_kib_after": 105556
+    },
+    {
+      "case": "auction-2",
+      "profile": 2,
+      "tick": 37,
+      "scope": "shared",
+      "semantics_equal": true,
+      "cpu_before": 949.857377317,
+      "cpu_after": 795.716841456,
+      "rss_kib_before": 164080,
+      "rss_kib_after": 163460
+    },
+    {
+      "case": "auction-3",
+      "profile": 3,
+      "tick": 37,
+      "scope": "root",
+      "semantics_equal": true,
+      "cpu_before": 380.20970407000004,
+      "cpu_after": 329.46750939599997,
+      "rss_kib_before": 105684,
+      "rss_kib_after": 105684
+    },
+    {
+      "case": "auction-3",
+      "profile": 3,
+      "tick": 37,
+      "scope": "shared",
+      "semantics_equal": true,
+      "cpu_before": 935.021770232,
+      "cpu_after": 791.709668053,
+      "rss_kib_before": 164236,
+      "rss_kib_after": 163268
+    },
+    {
+      "case": "combat-0",
+      "profile": 0,
+      "tick": 4,
+      "scope": "root",
+      "semantics_equal": true,
+      "cpu_before": 264.66535186,
+      "cpu_after": 237.589684903,
+      "rss_kib_before": 105812,
+      "rss_kib_after": 105940
+    },
+    {
+      "case": "combat-0",
+      "profile": 0,
+      "tick": 4,
+      "scope": "shared",
+      "semantics_equal": true,
+      "cpu_before": 722.930436731,
+      "cpu_after": 613.337053634,
+      "rss_kib_before": 157416,
+      "rss_kib_after": 157604
+    },
+    {
+      "case": "resources-1",
+      "profile": 1,
+      "tick": 6,
+      "scope": "root",
+      "semantics_equal": true,
+      "cpu_before": 86.659915473,
+      "cpu_after": 73.20934121399999,
+      "rss_kib_before": 105940,
+      "rss_kib_after": 105940
+    },
+    {
+      "case": "resources-1",
+      "profile": 1,
+      "tick": 6,
+      "scope": "shared",
+      "semantics_equal": true,
+      "cpu_before": 212.941357165,
+      "cpu_after": 168.323358631,
+      "rss_kib_before": 121016,
+      "rss_kib_after": 119796
+    },
+    {
+      "case": "gambling-1",
+      "profile": 1,
+      "tick": 4,
+      "scope": "root",
+      "semantics_equal": true,
+      "cpu_before": 114.960918971,
+      "cpu_after": 104.294782241,
+      "rss_kib_before": 106068,
+      "rss_kib_after": 106068
+    },
+    {
+      "case": "gambling-1",
+      "profile": 1,
+      "tick": 4,
+      "scope": "shared",
+      "semantics_equal": true,
+      "cpu_before": 308.986961375,
+      "cpu_after": 265.34939331600003,
+      "rss_kib_before": 120788,
+      "rss_kib_after": 120816
+    }
+  ],
+  "cpu_reduction_fraction": 0.150914529956512,
+  "ranges": [
+    0.0927805451232574,
+    0.2095318595129797
+  ],
+  "limits": "Ten fixed actual states/scopes, pure adapters, single runs on one Colab CPU VM. Computational counters excluded; all semantic bytes equal. Not intelligence improvement, long-world evidence, or C6 benchmark.",
+  "deployed": false,
+  "stable_unchanged": true,
+  "runtime_absent": true
+}

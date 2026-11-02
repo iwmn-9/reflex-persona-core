@@ -1,0 +1,227 @@
+{
+  "complete": true,
+  "adoption": false,
+  "cases": 8,
+  "rows": [
+    {
+      "length": 1,
+      "profile": 0,
+      "baseline_gain": 3.0,
+      "candidate_gain": 12.0,
+      "full_existing_planner_gain": 12.0,
+      "baseline_actions": [
+        "w",
+        "w",
+        "w"
+      ],
+      "candidate_actions": [
+        "u",
+        "v",
+        "w"
+      ],
+      "full_actions": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "length": 1,
+      "profile": 1,
+      "baseline_gain": 3.0,
+      "candidate_gain": 12.0,
+      "full_existing_planner_gain": 12.0,
+      "baseline_actions": [
+        "w",
+        "w",
+        "w"
+      ],
+      "candidate_actions": [
+        "u",
+        "v",
+        "w"
+      ],
+      "full_actions": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "length": 1,
+      "profile": 2,
+      "baseline_gain": 3.0,
+      "candidate_gain": 12.0,
+      "full_existing_planner_gain": 12.0,
+      "baseline_actions": [
+        "w",
+        "w",
+        "w"
+      ],
+      "candidate_actions": [
+        "u",
+        "v",
+        "w"
+      ],
+      "full_actions": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "length": 1,
+      "profile": 3,
+      "baseline_gain": 3.0,
+      "candidate_gain": 12.0,
+      "full_existing_planner_gain": 12.0,
+      "baseline_actions": [
+        "w",
+        "w",
+        "w"
+      ],
+      "candidate_actions": [
+        "u",
+        "v",
+        "w"
+      ],
+      "full_actions": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "length": 2,
+      "profile": 0,
+      "baseline_gain": 5.0,
+      "candidate_gain": 10.0,
+      "full_existing_planner_gain": 10.0,
+      "baseline_actions": [
+        "w",
+        "w",
+        "w",
+        "w",
+        "w"
+      ],
+      "candidate_actions": [
+        "u",
+        "u",
+        "v",
+        "v",
+        "w"
+      ],
+      "full_actions": [
+        "u",
+        "u",
+        "v",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "length": 2,
+      "profile": 1,
+      "baseline_gain": 5.0,
+      "candidate_gain": 10.0,
+      "full_existing_planner_gain": 10.0,
+      "baseline_actions": [
+        "w",
+        "w",
+        "w",
+        "w",
+        "w"
+      ],
+      "candidate_actions": [
+        "u",
+        "u",
+        "v",
+        "v",
+        "w"
+      ],
+      "full_actions": [
+        "u",
+        "u",
+        "v",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "length": 2,
+      "profile": 2,
+      "baseline_gain": 5.0,
+      "candidate_gain": 10.0,
+      "full_existing_planner_gain": 10.0,
+      "baseline_actions": [
+        "w",
+        "w",
+        "w",
+        "w",
+        "w"
+      ],
+      "candidate_actions": [
+        "u",
+        "u",
+        "v",
+        "v",
+        "w"
+      ],
+      "full_actions": [
+        "u",
+        "u",
+        "v",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "length": 2,
+      "profile": 3,
+      "baseline_gain": 5.0,
+      "candidate_gain": 10.0,
+      "full_existing_planner_gain": 10.0,
+      "baseline_actions": [
+        "w",
+        "w",
+        "w",
+        "w",
+        "w"
+      ],
+      "candidate_actions": [
+        "u",
+        "u",
+        "v",
+        "v",
+        "w"
+      ],
+      "full_actions": [
+        "u",
+        "u",
+        "v",
+        "v",
+        "w"
+      ]
+    }
+  ],
+  "actual_steps_baseline": 32,
+  "actual_steps_candidate": 32,
+  "actual_steps_existing_full": 32,
+  "sources": {
+    "source-v2.zip": "bb18d189b40f57664a88b069c239c3afac74407e968dd5d94a1e1106b1bbdbf5",
+    "candidate-source.zip": "282f3b0282b6d6e0cbc68997b6f183ed2698e848a423128141d8a7786ae24ed5",
+    "results-v2.zip": "b5dcfa6a2844364965ea183efc3165f9600bdbd7023c7b86e9c56e2c45ff8d47",
+    "candidate-results.zip": "496ac3a48882f7a390023c0c5be34fb7dd3aa761b8282fa7283e6b8d9d5a1cd2"
+  },
+  "limitations": [
+    "Known deterministic 3/5-step mechanism; not long-world or independent-40 evidence.",
+    "Different future controllers: objective gains, not same-controller normalized persona regret.",
+    "Prefixes only contain initially public actions; each unavailable slot falls back independently.",
+    "Hypothetical forced steps need not equal the future owner choice; actual long replanning must be checked.",
+    "The persona scoring rule is unchanged, but adding feasible alternatives changes the derived purpose corridor."
+  ],
+  "next": "16 registered 64-step continuing runs, same two lengths and four personas, one exhaustive deterministic event per step. Check realized gain and forecast/execution gap.",
+  "references": [
+    "https://ijcai.org/proceedings/2007/330"
+  ]
+}
