@@ -2,7 +2,7 @@
   "audit_complete": true,
   "cohort_complete": false,
   "adoption": false,
-  "received_branches": 15,
+  "received_branches": 18,
   "registered_branches": 40,
   "complete_pairs": [
     {
@@ -88,6 +88,18 @@
       "profile": 2,
       "window_complete": true,
       "world_mode": "steady"
+    },
+    {
+      "delta": {
+        "conditional_increment": 0.09283854166666669,
+        "score_increment": 0.07617187500000001
+      },
+      "game": "combat",
+      "id": "combat-3-10061201-outside",
+      "prediction_recovered": true,
+      "profile": 3,
+      "window_complete": true,
+      "world_mode": "changed"
     }
   ],
   "arms": [
@@ -342,15 +354,51 @@
         "restored": 64
       },
       "result_sha256": "277c9d998a972ef167b87f0ead8945ed61913a2f98fda9c5c5b8ef6946995c59"
+    },
+    {
+      "id": "combat-3-10061201-outside",
+      "world_mode": "changed",
+      "experience": "learning",
+      "initial_cash": 8.0,
+      "final_cash": 8.0,
+      "initial_investment": 0,
+      "final_investment": 0,
+      "score_increment": 0.08268229166666667,
+      "conditional_increment": 0.10455729166666669,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "7c7d387bc386921348b229ca1dcdde69193c9ad164c576ca5d7b34072abc9282"
+    },
+    {
+      "id": "combat-3-10061201-outside",
+      "world_mode": "changed",
+      "experience": "frozen",
+      "initial_cash": 8.0,
+      "final_cash": 8.0,
+      "initial_investment": 0,
+      "final_investment": 0,
+      "score_increment": 0.006510416666666657,
+      "conditional_increment": 0.011718749999999997,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "4e63a86ccf09ced60755bc5048fc5a2c5b398a30b4bb7b008c491920d05990de"
     }
   ],
   "C3_development_passed": false,
   "source_sha256": "42ae57258380d3986f4545de13876b9fb474a4c1365a7305cc488fdaaf2d0b0d",
   "overlay_sha256": "e288e10feab91433650701fd48155c5d7b5a4564c7b2f5557be7dda1b9a80e52",
-  "input_sha256": "86ad2148cb60a7205a985bf337104bc73713b959d4537bc3f19fdc7201e533ca",
-  "audit_results_sha256": "92ce065298b9b0d1548864a7d66ef9488f46410b25601ac28ad42cadcb5b5153",
+  "input_sha256": "262ac1c6751d37a670cf73e706fb4381d46763111b52946c41798b35c4a21f3d",
+  "audit_results_sha256": "dc68aa382991e2d05769d6370a0374760bde175ea2c6dd7f376bc848afd33fd4",
   "limits": [
-    "Known conditions only. Changed-world benefit verified in one condition each for resources, gambling and auction. No whole-family or unseen-game claim.",
+    "Known registered conditions only. Completed pairs do not establish full-family, full-cohort or unseen-game performance.",
     "The intervention freezes actual prediction, experience and evidence updates, not only the predictor.",
     "Fixed personality and actual-state replay passed; behavioral personality and human believability remain separate.",
     "Missing and unpaired conditions do not pass the cohort gate."
