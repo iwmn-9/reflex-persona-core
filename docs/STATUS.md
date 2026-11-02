@@ -15,8 +15,8 @@ Python安定版はv0.1.0／`FixedHorizonOwner`。[導入](STABLE_INTEGRATION.md)
 
 研究先は `research/preparation-termination`。今回の[結果と限界](../evidence/completion/REPORT.md)。既知10条件の従来候補と基準側、新しい候補共有の10条件をColabで実行中。新候補の実履歴32手から学習継続/停止×変化/定常の40分岐も登録した。長期利益は未確定。独立40条件は未開始。
 
-実証はColab CLI、設計・改修・評価はローカル。終了時に回収・VM解除・サーバー側消滅確認を行う。主比較は `results/colab_completion_worlds_20261102/sharding.json` に従う3つの排他的CPU実行へ分散した。20実行・固定ソース・452手の実途中保存を維持し、全体完走は別途照合する。C3は計算機消失後、回収済み86手を監査して同じソースで復旧した。`results/colab_recovery_benefit_20261102/continuation.json` が実行先を示す。実エラーは自動再試行しない。GitHub Actionsはビルド・テスト・動作確認のみ。
+実証はColab CLI、設計・改修・評価はローカル。終了時に回収・VM解除・サーバー側消滅確認を行う。主比較は `results/colab_completion_worlds_20261102/sharding.json` に従う3つの排他的CPU実行へ分散した。20実行・固定ソース・実途中保存を維持し、全体完走は別途照合する。C3は計算機消失後に復旧し、再開位置に関わらず実32手目で保存するよう運用処理を修正した。152手の本人・乱数・固定ソースを維持。`results/colab_recovery_benefit_20261102/continuation.json` が実行先、`results/watcher-status.json` が途中進捗を示す。実エラーは自動再試行しない。GitHub Actionsはビルド・テスト・動作確認のみ。
 
 準備の連結、計画保持の64手比較、公開報酬が下がった時の撤回を監査済み。元の失敗8件を成功扱いにはせず、撤回用8実行は全件やり直した。結果・代償・限界は[報告](../evidence/completion/REPORT.md)。元の10条件・C3比較・合格線・安定版・Rustは変更しない。
 
-次は長期比較の監査と、同じ本人から学習継続／停止を分ける利益比較。途中を成功にせず、人格・乱数・登録条件・合格線を維持する。[教訓](LESSONS.md)。
+次は長期比較の監査と、同じ本人から学習継続／停止を分ける利益比較。別の既知環境で、準備の意図・実学習・保存復元を一つの入口へ接続した候補を比較中。独立40条件の未指定だったseed対応は[予約表](../evidence/completion/independent_conditions.json)へ固定した。未開始であり、既定の前提条件を満たすまで実行しない。[教訓](LESSONS.md)。

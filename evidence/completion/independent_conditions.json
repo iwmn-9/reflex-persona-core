@@ -1,0 +1,374 @@
+{
+  "version": "independent-conditions-1",
+  "created": "2026-11-02",
+  "execution_started": false,
+  "parent_plan_sha256": "f679db738d0b7a2cf9016dc2df1c729705ed7414b6b25867fee18363c4185e8a",
+  "parent_reservation": {
+    "allowed_only_after": "Complete audited development gate and review, with unchanged candidate",
+    "arms": [
+      "original-H16",
+      "stable-H32",
+      "candidate-H32"
+    ],
+    "families": {
+      "auction": [
+        "outside",
+        "shift-return"
+      ],
+      "combat": [
+        "outside",
+        "shift-return"
+      ],
+      "gambling": [
+        "outside",
+        "shift-return",
+        "irregular",
+        "steady"
+      ],
+      "resources": [
+        "outside",
+        "shift-return"
+      ]
+    },
+    "gate": "All 40 conditions complete. Each family score/conditional mean nonnegative versus stable H32 and original H16; at least one strict gain versus H32. Also retain original adoption gates: positive gambling/resources, all four gambling worlds, at least three gambling worlds improve versus H16. Preserve personality, audit every loss; no acceptance on known cases or thresholds relaxed after outcomes.",
+    "pairs": 40,
+    "profiles": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "seeds": [
+      2026102701,
+      2026102702,
+      2026102703,
+      2026102704
+    ],
+    "turns": 128
+  },
+  "mapping": "Order worlds by sorted family name and the registered within-family regime order. For each registered profile index p in world index w, use reserved_seeds[(w+p)%4].",
+  "clarification": "The parent fixed the seeds, profiles, worlds and count but did not map seeds to cells. This mapping is fixed before any held-out execution; no outcome data was used and no listed condition/seed/gate was removed or replaced.",
+  "mechanism": "world",
+  "turns": 128,
+  "conditions": [
+    {
+      "id": "heldout-auction-outside-p0",
+      "game": "auction",
+      "regime": "outside",
+      "profile": 0,
+      "seed": 2026102701
+    },
+    {
+      "id": "heldout-auction-outside-p1",
+      "game": "auction",
+      "regime": "outside",
+      "profile": 1,
+      "seed": 2026102702
+    },
+    {
+      "id": "heldout-auction-outside-p2",
+      "game": "auction",
+      "regime": "outside",
+      "profile": 2,
+      "seed": 2026102703
+    },
+    {
+      "id": "heldout-auction-outside-p3",
+      "game": "auction",
+      "regime": "outside",
+      "profile": 3,
+      "seed": 2026102704
+    },
+    {
+      "id": "heldout-auction-shift-return-p0",
+      "game": "auction",
+      "regime": "shift-return",
+      "profile": 0,
+      "seed": 2026102702
+    },
+    {
+      "id": "heldout-auction-shift-return-p1",
+      "game": "auction",
+      "regime": "shift-return",
+      "profile": 1,
+      "seed": 2026102703
+    },
+    {
+      "id": "heldout-auction-shift-return-p2",
+      "game": "auction",
+      "regime": "shift-return",
+      "profile": 2,
+      "seed": 2026102704
+    },
+    {
+      "id": "heldout-auction-shift-return-p3",
+      "game": "auction",
+      "regime": "shift-return",
+      "profile": 3,
+      "seed": 2026102701
+    },
+    {
+      "id": "heldout-combat-outside-p0",
+      "game": "combat",
+      "regime": "outside",
+      "profile": 0,
+      "seed": 2026102703
+    },
+    {
+      "id": "heldout-combat-outside-p1",
+      "game": "combat",
+      "regime": "outside",
+      "profile": 1,
+      "seed": 2026102704
+    },
+    {
+      "id": "heldout-combat-outside-p2",
+      "game": "combat",
+      "regime": "outside",
+      "profile": 2,
+      "seed": 2026102701
+    },
+    {
+      "id": "heldout-combat-outside-p3",
+      "game": "combat",
+      "regime": "outside",
+      "profile": 3,
+      "seed": 2026102702
+    },
+    {
+      "id": "heldout-combat-shift-return-p0",
+      "game": "combat",
+      "regime": "shift-return",
+      "profile": 0,
+      "seed": 2026102704
+    },
+    {
+      "id": "heldout-combat-shift-return-p1",
+      "game": "combat",
+      "regime": "shift-return",
+      "profile": 1,
+      "seed": 2026102701
+    },
+    {
+      "id": "heldout-combat-shift-return-p2",
+      "game": "combat",
+      "regime": "shift-return",
+      "profile": 2,
+      "seed": 2026102702
+    },
+    {
+      "id": "heldout-combat-shift-return-p3",
+      "game": "combat",
+      "regime": "shift-return",
+      "profile": 3,
+      "seed": 2026102703
+    },
+    {
+      "id": "heldout-gambling-outside-p0",
+      "game": "gambling",
+      "regime": "outside",
+      "profile": 0,
+      "seed": 2026102701
+    },
+    {
+      "id": "heldout-gambling-outside-p1",
+      "game": "gambling",
+      "regime": "outside",
+      "profile": 1,
+      "seed": 2026102702
+    },
+    {
+      "id": "heldout-gambling-outside-p2",
+      "game": "gambling",
+      "regime": "outside",
+      "profile": 2,
+      "seed": 2026102703
+    },
+    {
+      "id": "heldout-gambling-outside-p3",
+      "game": "gambling",
+      "regime": "outside",
+      "profile": 3,
+      "seed": 2026102704
+    },
+    {
+      "id": "heldout-gambling-shift-return-p0",
+      "game": "gambling",
+      "regime": "shift-return",
+      "profile": 0,
+      "seed": 2026102702
+    },
+    {
+      "id": "heldout-gambling-shift-return-p1",
+      "game": "gambling",
+      "regime": "shift-return",
+      "profile": 1,
+      "seed": 2026102703
+    },
+    {
+      "id": "heldout-gambling-shift-return-p2",
+      "game": "gambling",
+      "regime": "shift-return",
+      "profile": 2,
+      "seed": 2026102704
+    },
+    {
+      "id": "heldout-gambling-shift-return-p3",
+      "game": "gambling",
+      "regime": "shift-return",
+      "profile": 3,
+      "seed": 2026102701
+    },
+    {
+      "id": "heldout-gambling-irregular-p0",
+      "game": "gambling",
+      "regime": "irregular",
+      "profile": 0,
+      "seed": 2026102703
+    },
+    {
+      "id": "heldout-gambling-irregular-p1",
+      "game": "gambling",
+      "regime": "irregular",
+      "profile": 1,
+      "seed": 2026102704
+    },
+    {
+      "id": "heldout-gambling-irregular-p2",
+      "game": "gambling",
+      "regime": "irregular",
+      "profile": 2,
+      "seed": 2026102701
+    },
+    {
+      "id": "heldout-gambling-irregular-p3",
+      "game": "gambling",
+      "regime": "irregular",
+      "profile": 3,
+      "seed": 2026102702
+    },
+    {
+      "id": "heldout-gambling-steady-p0",
+      "game": "gambling",
+      "regime": "steady",
+      "profile": 0,
+      "seed": 2026102704
+    },
+    {
+      "id": "heldout-gambling-steady-p1",
+      "game": "gambling",
+      "regime": "steady",
+      "profile": 1,
+      "seed": 2026102701
+    },
+    {
+      "id": "heldout-gambling-steady-p2",
+      "game": "gambling",
+      "regime": "steady",
+      "profile": 2,
+      "seed": 2026102702
+    },
+    {
+      "id": "heldout-gambling-steady-p3",
+      "game": "gambling",
+      "regime": "steady",
+      "profile": 3,
+      "seed": 2026102703
+    },
+    {
+      "id": "heldout-resources-outside-p0",
+      "game": "resources",
+      "regime": "outside",
+      "profile": 0,
+      "seed": 2026102701
+    },
+    {
+      "id": "heldout-resources-outside-p1",
+      "game": "resources",
+      "regime": "outside",
+      "profile": 1,
+      "seed": 2026102702
+    },
+    {
+      "id": "heldout-resources-outside-p2",
+      "game": "resources",
+      "regime": "outside",
+      "profile": 2,
+      "seed": 2026102703
+    },
+    {
+      "id": "heldout-resources-outside-p3",
+      "game": "resources",
+      "regime": "outside",
+      "profile": 3,
+      "seed": 2026102704
+    },
+    {
+      "id": "heldout-resources-shift-return-p0",
+      "game": "resources",
+      "regime": "shift-return",
+      "profile": 0,
+      "seed": 2026102702
+    },
+    {
+      "id": "heldout-resources-shift-return-p1",
+      "game": "resources",
+      "regime": "shift-return",
+      "profile": 1,
+      "seed": 2026102703
+    },
+    {
+      "id": "heldout-resources-shift-return-p2",
+      "game": "resources",
+      "regime": "shift-return",
+      "profile": 2,
+      "seed": 2026102704
+    },
+    {
+      "id": "heldout-resources-shift-return-p3",
+      "game": "resources",
+      "regime": "shift-return",
+      "profile": 3,
+      "seed": 2026102701
+    }
+  ],
+  "coverage": {
+    "worlds": 10,
+    "profiles_per_world": 4,
+    "conditions": 40,
+    "arms": [
+      "original-H16",
+      "stable-H32",
+      "candidate-H32"
+    ],
+    "executions": 120,
+    "maximum_actual_steps": 15360,
+    "per_profile": {
+      "conditions": 10,
+      "even_start_variant": 5,
+      "odd_start_variant": 5,
+      "all_four_seeds_used": true
+    }
+  },
+  "candidate_source": null,
+  "ready_to_execute": false,
+  "blockers": [
+    "Audited development gate, C2 reference and C3 learning benefit, and review of every individual loss.",
+    "Freeze and name the unchanged selected candidate and all three executable arm sources before dispatch."
+  ],
+  "baseline_definition": {
+    "original_H16": "RecedingOwner as in run_continuation_portfolio.execution(retry=False): tail_steps15, posterior world, conditional purpose, tail_recovery2, model seeds701/702/703, original default cumulative preference.",
+    "stable_H32": "FixedHorizonOwner v0.1.0; preserve accepted default configuration.",
+    "source_file_sha256": {
+      "reflex/receding_owner.py": "7c6ab937d48fe48adc613b4772ded61a8728f10ab232677dee1a2e9ac7e41043",
+      "reflex/fixed_horizon.py": "ee36961ef053a91e1bc56536ff14505714d61d8ff46208d9327c3bf0b5e21238",
+      "tools/run_continuation_portfolio.py": "298896c6cec9e13b099f6e1de2db19f45300eee29ead2fc5a22d0a8d590cc0db",
+      "tools/continuing_games.py": "7d3fbc805578c24015db92f9c31821427a44f2a9e8b2befa1755084b809c6bde"
+    }
+  },
+  "limitations": [
+    "This is a held-out paired-condition set, not 40 statistically independent random samples.",
+    "Four seeds are reused across rule families. It is not the full 160-cell world/profile/seed factorial.",
+    "This file selects no candidate and authorizes no premature execution. The existing gate text is copied unchanged."
+  ]
+}
