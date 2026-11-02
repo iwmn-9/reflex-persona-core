@@ -2,7 +2,7 @@
   "audit_complete": true,
   "cohort_complete": false,
   "adoption": false,
-  "received_branches": 13,
+  "received_branches": 15,
   "registered_branches": 40,
   "complete_pairs": [
     {
@@ -52,6 +52,18 @@
       "profile": 1,
       "window_complete": true,
       "world_mode": "steady"
+    },
+    {
+      "delta": {
+        "conditional_increment": 0.017187499999999998,
+        "score_increment": 0.018310546875
+      },
+      "game": "auction",
+      "id": "auction-1-10061202-shift-return",
+      "prediction_recovered": true,
+      "profile": 1,
+      "window_complete": true,
+      "world_mode": "changed"
     },
     {
       "delta": {
@@ -225,6 +237,42 @@
     },
     {
       "id": "auction-1-10061202-shift-return",
+      "world_mode": "changed",
+      "experience": "learning",
+      "initial_cash": 2.0,
+      "final_cash": 3.0,
+      "initial_investment": 0,
+      "final_investment": 0,
+      "score_increment": -0.002685546875,
+      "conditional_increment": -0.015771484375000002,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "951960d30f706caa035927242f00907d81ff104346ca19edc654b288a2f41fd7"
+    },
+    {
+      "id": "auction-1-10061202-shift-return",
+      "world_mode": "changed",
+      "experience": "frozen",
+      "initial_cash": 2.0,
+      "final_cash": 8.0,
+      "initial_investment": 0,
+      "final_investment": 0,
+      "score_increment": -0.02099609375,
+      "conditional_increment": -0.032958984375,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "8f103557457a63e55e1130cd2588e31beab31cfd5ae488e5956db654ca599c40"
+    },
+    {
+      "id": "auction-1-10061202-shift-return",
       "world_mode": "steady",
       "experience": "learning",
       "initial_cash": 2.0,
@@ -299,10 +347,10 @@
   "C3_development_passed": false,
   "source_sha256": "42ae57258380d3986f4545de13876b9fb474a4c1365a7305cc488fdaaf2d0b0d",
   "overlay_sha256": "e288e10feab91433650701fd48155c5d7b5a4564c7b2f5557be7dda1b9a80e52",
-  "input_sha256": "aa10c09012625dd7bc71d4c56cb28974b2a95bdb1173067f139e5274e1ff34b6",
-  "audit_results_sha256": "8768b906eca8ef863de45400797b9f235f842dc492334860466715c1e0806f3a",
+  "input_sha256": "86ad2148cb60a7205a985bf337104bc73713b959d4537bc3f19fdc7201e533ca",
+  "audit_results_sha256": "92ce065298b9b0d1548864a7d66ef9488f46410b25601ac28ad42cadcb5b5153",
   "limits": [
-    "Known conditions only: resource-management and gambling changed/steady, auction profiles 1 and 2 steady. No whole-family or unseen-game claim.",
+    "Known conditions only. Changed-world benefit verified in one condition each for resources, gambling and auction. No whole-family or unseen-game claim.",
     "The intervention freezes actual prediction, experience and evidence updates, not only the predictor.",
     "Fixed personality and actual-state replay passed; behavioral personality and human believability remain separate.",
     "Missing and unpaired conditions do not pass the cohort gate."
