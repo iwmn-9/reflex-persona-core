@@ -15,7 +15,7 @@ Python安定版はv0.1.0／`FixedHorizonOwner`。[導入](STABLE_INTEGRATION.md)
 
 研究先は `research/preparation-termination`。今回の[結果と限界](../evidence/completion/REPORT.md)。既知10条件の従来候補と基準側、新しい候補共有の10条件をColabで実行中。新候補の実履歴32手から学習継続/停止×変化/定常の40分岐も登録した。長期利益は未確定。独立40条件は未開始。
 
-実証はColab CLI、設計・改修・評価はローカル。終了時に回収・VM解除・サーバー側消滅確認を行う。主比較は `results/colab_completion_worlds_20261102/sharding.json` に従う3台、C3は `results/colab_recovery_benefit_20261102/continuation.json` が指す2台へ排他的に分けた。固定ソース・本人・乱数・実32手目の分岐点を維持し、全体完走は別途照合する。途中進捗は `results/watcher-status.json`。実エラーは自動再試行しない。GitHub Actionsはビルド・テスト・動作確認のみ。
+実証はColab CLI、設計・改修・評価はローカル。終了時に回収・VM解除・サーバー側消滅確認を行う。実行先は主比較 `results/colab_completion_worlds_20261102/continuation.json`、C3 `results/colab_recovery_benefit_20261102/continuation.json`。固定ソース・本人・乱数・実32手目の分岐点を維持して再配分し、全体完走は別途照合する。途中進捗は `results/watcher-status.json`。実エラーは自動再試行しない。GitHub Actionsはビルド・テスト・動作確認のみ。
 
 準備の連結、計画保持の64手比較、公開報酬が下がった時の撤回を監査済み。元の失敗8件を成功扱いにはせず、撤回用8実行は全件やり直した。結果・代償・限界は[報告](../evidence/completion/REPORT.md)。元の10条件・C3比較・合格線・安定版・Rustは変更しない。
 
