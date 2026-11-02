@@ -2,7 +2,7 @@
   "audit_complete": true,
   "cohort_complete": false,
   "adoption": false,
-  "received_branches": 7,
+  "received_branches": 8,
   "registered_branches": 40,
   "complete_pairs": [
     {
@@ -31,6 +31,18 @@
     },
     {
       "delta": {
+        "conditional_increment": 0.1330729166666667,
+        "score_increment": 0.09635416666666667
+      },
+      "game": "gambling",
+      "id": "gambling-1-10061201-outside",
+      "prediction_recovered": true,
+      "profile": 1,
+      "window_complete": true,
+      "world_mode": "changed"
+    },
+    {
+      "delta": {
         "conditional_increment": 0.0,
         "score_increment": 0.0
       },
@@ -49,6 +61,8 @@
       "experience": "learning",
       "initial_cash": 89.0,
       "final_cash": 183.0,
+      "initial_investment": 0,
+      "final_investment": 0,
       "score_increment": 0.12239583333333334,
       "conditional_increment": 0.15338541666666672,
       "actual_steps": 32,
@@ -65,6 +79,8 @@
       "experience": "frozen",
       "initial_cash": 89.0,
       "final_cash": 85.0,
+      "initial_investment": 0,
+      "final_investment": 0,
       "score_increment": -0.005208333333333329,
       "conditional_increment": -0.01249999999999999,
       "actual_steps": 32,
@@ -81,6 +97,8 @@
       "experience": "learning",
       "initial_cash": 89.0,
       "final_cash": 225.0,
+      "initial_investment": 0,
+      "final_investment": 0,
       "score_increment": 0.17708333333333331,
       "conditional_increment": 0.19166666666666668,
       "actual_steps": 32,
@@ -97,6 +115,8 @@
       "experience": "frozen",
       "initial_cash": 89.0,
       "final_cash": 225.0,
+      "initial_investment": 0,
+      "final_investment": 0,
       "score_increment": 0.17708333333333331,
       "conditional_increment": 0.19166666666666668,
       "actual_steps": 32,
@@ -109,10 +129,48 @@
     },
     {
       "id": "gambling-1-10061201-outside",
+      "world_mode": "changed",
+      "experience": "learning",
+      "initial_cash": 37.0,
+      "final_cash": 70.0,
+      "initial_investment": 4,
+      "final_investment": 3,
+      "score_increment": 0.08593750000000001,
+      "conditional_increment": 0.11328125000000003,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "c49af9a7111b794f2dfa822481c80de8fc2f88c712cffb1d2581ba0e99b6e142"
+    },
+    {
+      "id": "gambling-1-10061201-outside",
+      "world_mode": "changed",
+      "experience": "frozen",
+      "initial_cash": 37.0,
+      "final_cash": 33.0,
+      "initial_investment": 4,
+      "final_investment": 1,
+      "score_increment": -0.010416666666666657,
+      "conditional_increment": -0.019791666666666673,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "4f60ed8639c123d1d8f46b6fa82c684df66cfcccbffd34e3e5a7b9dea1f3505d"
+    },
+    {
+      "id": "gambling-1-10061201-outside",
       "world_mode": "steady",
       "experience": "learning",
       "initial_cash": 37.0,
       "final_cash": 90.0,
+      "initial_investment": 4,
+      "final_investment": 1,
       "score_increment": 0.13802083333333331,
       "conditional_increment": 0.13333333333333333,
       "actual_steps": 32,
@@ -129,6 +187,8 @@
       "experience": "frozen",
       "initial_cash": 37.0,
       "final_cash": 90.0,
+      "initial_investment": 4,
+      "final_investment": 1,
       "score_increment": 0.13802083333333331,
       "conditional_increment": 0.13333333333333333,
       "actual_steps": 32,
@@ -143,10 +203,10 @@
   "C3_development_passed": false,
   "source_sha256": "42ae57258380d3986f4545de13876b9fb474a4c1365a7305cc488fdaaf2d0b0d",
   "overlay_sha256": "e288e10feab91433650701fd48155c5d7b5a4564c7b2f5557be7dda1b9a80e52",
-  "input_sha256": "8fe616ec68623aa8ffb1fb1631ed6cd96b567d9a9af44ed8911c503d22150c86",
-  "audit_results_sha256": "b59936df1c2f43f767ba794d39f090e2782cbe2263b6a160e6f883b151fde261",
+  "input_sha256": "891d3f5622ca903c82602e72749fe1a684ee33088b71fb92c6a57c6fe14af2f8",
+  "audit_results_sha256": "7996f953d874591acc87466e4fc95e0c121f1a131e62905f0b49e1352ccced84",
   "limits": [
-    "Known conditions: resource-management changed and steady, gambling steady; one fixed personality. No other-family or unseen-game claim.",
+    "Known conditions: resource-management and gambling, changed and steady worlds; one fixed personality. No other-family or unseen-game claim.",
     "The intervention freezes actual prediction, experience and evidence updates, not only the predictor.",
     "Fixed personality and actual-state replay passed; behavioral personality and human believability remain separate.",
     "Missing and unpaired conditions do not pass the cohort gate."
