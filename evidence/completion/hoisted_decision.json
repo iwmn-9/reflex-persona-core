@@ -1,0 +1,45 @@
+{
+  "adoption": false,
+  "decision": "Do not add this optimization: same-VM paired CPU time did not improve.",
+  "semantic_pairs": 10,
+  "exact_bytes": true,
+  "metadata_equal": true,
+  "tests": 20,
+  "paired_cpu_relative_change": 0.01653229076238416,
+  "paired_cases": [
+    {
+      "case": "auction-2",
+      "scope": "root",
+      "same_semantics": true,
+      "same_metadata": true,
+      "original_seconds": 311.74387154399994,
+      "reuse_seconds": 310.76058661999997,
+      "original_cpu": 307.46376251500004,
+      "reuse_cpu": 299.77531396200004,
+      "original_rss_kib": 106432,
+      "reuse_rss_kib": 106176,
+      "logical_steps": 4320,
+      "original_reused": 576,
+      "reuse_reused": 576
+    },
+    {
+      "case": "auction-2",
+      "scope": "shared",
+      "same_semantics": true,
+      "same_metadata": true,
+      "original_seconds": 700.7269582490001,
+      "reuse_seconds": 734.41032739,
+      "original_cpu": 699.08017336,
+      "reuse_cpu": 723.409098926,
+      "original_rss_kib": 164388,
+      "reuse_rss_kib": 164064,
+      "logical_steps": 15840,
+      "original_reused": 2752,
+      "reuse_reused": 2752
+    }
+  ],
+  "speed_limit": "Other eight controls ran on an older VM; their timings are not evidence of a speedup. Single execution per pair, not a precision benchmark.",
+  "source_sha256": "595f007d3cf1571b79ae74e0debb8876f750034abb174506548e58ccc73cc38d",
+  "results_sha256": "b68741f976427c31d50f7359008580c10428144c2cc52e2a8e02d93a7e232203",
+  "created_runtime_absent": true
+}
