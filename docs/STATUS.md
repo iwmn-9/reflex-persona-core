@@ -17,6 +17,8 @@ Python安定版はv0.1.0／`FixedHorizonOwner`。[導入](STABLE_INTEGRATION.md)
 
 実証はColab CLI、設計・改修・評価はローカル。終了時に回収・VM解除・サーバー側消滅確認を行う。実行先は主比較 `results/colab_completion_worlds_20261102/continuation.json`、C3 `results/colab_recovery_benefit_20261102/continuation.json`。固定ソース・本人・乱数・実32手目の分岐点を維持して再配分し、全体完走は別途照合する。途中進捗は `results/watcher-status.json`。実エラーは自動再試行しない。GitHub Actionsはビルド・テスト・動作確認のみ。
 
+追加候補で目的の許容損が膨らむ接続不備を確認した。上限を通常候補の幅に保つ修正は、既知の同一本人参照16条件を通過。長期利益は未確認。[根拠](../evidence/completion/expansion_diagnosis.json)。別登録の `results/colab_bounded_expansion_20261103/sharding.json` で同じ10条件・40分岐を比較する。旧比較を置換せず、件数を混ぜない。
+
 準備の連結、計画保持の64手比較、公開報酬が下がった時の撤回を監査済み。元の失敗8件を成功扱いにはせず、撤回用8実行は全件やり直した。結果・代償・限界は[報告](../evidence/completion/REPORT.md)。元の10条件・C3比較・合格線・安定版・Rustは変更しない。
 
 次は4分野の長期比較と、同じ本人から学習継続／停止を分ける利益比較。接続候補は既知の準備8条件・撤回4条件で改善済みの行動と利益を維持したが、4分野への採用根拠にはしない。[結果と未採用差分](../evidence/completion/preparation_connection.json)。独立40条件は[予約表](../evidence/completion/independent_conditions.json)へ固定済み。既定の前提条件を満たすまで開始しない。[教訓](LESSONS.md)。
