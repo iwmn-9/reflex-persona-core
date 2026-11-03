@@ -8,15 +8,15 @@
 
 ```sh
 cargo build --release --manifest-path rust/Cargo.toml -p reflex-arena
-python tools/run_arena.py --output results/my_arena --seeds 4 --workers 2 --horizon 6 --second-moves 0 --max-regret 1 --scenario-batches 1 --intent-sharing proposals --reference frozen --modes reflex challenger planned
-python tools/arena_replay.py results/my_arena --out evidence/arena/replay.html --summary evidence/arena/summary.json
+python tools/run_arena.py --output results/my_arena --seeds 4 --workers 2 --horizon 6 --second-moves 0 --max-regret 1 --scenario-batches 3 --intent-sharing proposals --reference frozen --modes reflex challenger planned
+python tools/arena_replay.py results/my_arena --out evidence/arena/replay.html --summary evidence/arena/summary.json --view-modes planned
 ```
 
 `output` は新規フォルダを指定する。CLIの既定値は `reflex`。全員が即時判断と1手の合意評価を使う。`planned` は全員が計画、`challenger` は一チームまたは一人だけ計画を使う。計画の既定上限は6手で、常用の採用は未達。全員が実結果から学ぶ。性能比較は同じ乱数・人格配置の `reflex` と `challenger` の対象者について行う。全員自己対戦の勝率平均で優位性を主張しない。
 
 `--reference frozen` が比較の既定。reflexは全員、challengerは対象者以外を従来の即時判断（目的帯0.15、1手、予定共有なし）に固定する。変更された本人と、変更されていない相手を同じ対戦に置く。`matched` は過去の切り分け再現用で、対照にも指定した目的帯や共有方式が作用する。
 
-リプレイへ複数フォルダを渡す場合、同じ対戦は先頭のフォルダを優先する。集計は同じ採用データから作り、出典を記録する。`--summary` は出典の試験集が完走していない場合に拒否する。
+リプレイへ複数フォルダを渡す場合、同じ対戦は先頭のフォルダを優先する。集計は選択された全データから作り、出典を記録する。`--view-modes planned` は表示だけを全員計画へ絞る。`--summary` は出典の試験集が完走していない場合に拒否する。
 
 ## 接続
 
@@ -36,13 +36,13 @@ python tools/arena_replay.py results/my_arena --out evidence/arena/replay.html -
 
 共有情報で判断を改善する発想は [Multiagent Rollout](https://www.mit.edu/~dimitrib/Multiagent_Rollout.pdf) を参照した。ここでは個別効用と不完全な予測を使うため、同論文の改善保証をそのまま適用しない。
 
-`Owner::prepare_estimated` は相手モデルの外れを受け付ける入口。既存の `prepare` は既知の条件付き規則との矛盾を拒否する。実結果を見てから二つを切り替えない。CLIの現行効果契約は `arena-<game>-estimated-model-v2`。意味づけが異なる旧契約の保存を引き継がない。
+`Owner::prepare_estimated` は相手モデルの外れを受け付ける入口。既存の `prepare` は既知の条件付き規則との矛盾を拒否する。実結果を見てから二つを切り替えない。CLIの現行効果契約は `arena-<game>-estimated-model-v3`。協力競争の安全効果は健康・備蓄による安全不足の改善量で、単独行動への定額加点はしない。意味づけが異なる旧契約の保存を引き継がない。
 
 世界・Owner・Planner・Beliefsを同じ確定時点で保存する。復元したOwnerに対してPlannerを復元する。Planner保存v4は人格・設定・実学習状態に結び付く。旧形式は拒否する。Beliefsはゲーム・エピソード・観測者・行動分類を照合する。失敗時に世界だけ進めない。CLIは全員の更新・保存復元が通ってから一括確定する。一括保存用の製品APIは未提供。
 
 ## 範囲
 
-- 全合法初手、最大8候補の二手目、その後の学習する本人の即時判断を、最大32手まで試す。現在の比較は6手。相手ごとの予測から独立に選んだ3標本を使う。全深さの木探索でも、将来の本人が毎手この探索全体を繰り返す計算でもない。
+- 全合法初手、最大8候補の二手目、その後の学習する本人の即時判断を、最大32手まで試す。現在の比較は6手・9標本。全深さの木探索でも、将来の本人が毎手この探索全体を繰り返す計算でもない。
 - `--second-moves 0` は固定二手目を省く比較用。`--max-regret` は人格段階内の目的差の許容割合（既定0.15）。0〜1で、通常継続だけなら1で目的の足切りを外す。人格係数と勝敗規則は変更しない。この2変更だけで長期判断が安定するという結果は出ていない。
 - `--scenario-batches` は3標本を1組とした組数（1〜4、既定1）。追加組も同じ候補間で共通乱数を使う。相手や本人のモデルは変えない。初期の候補制約と二手目候補生成は従来の1組を使う。
 - 共通に予測できた準備手順を保持する。違法化・見込み消失・達成・期限で撤回または完了する。保持中の比較候補は保持手と通常手に限る。

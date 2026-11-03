@@ -170,5 +170,91 @@
         }
       }
     }
+  },
+  "calibrated_prediction": {
+    "sources": [
+      "arena_calibrated_v12_20261103",
+      "arena_calibrated_check_v12_20261103"
+    ],
+    "complete": true,
+    "adopted": false,
+    "games": {
+      "combat": {
+        "pairs": 24,
+        "mean_purpose_delta": 0.08888888888888889,
+        "classification": {
+          "equivalent": 12,
+          "worse": 4,
+          "better": 8
+        }
+      },
+      "hagetaka": {
+        "pairs": 8,
+        "mean_purpose_delta": 0.09709821428571427,
+        "classification": {
+          "better": 7,
+          "worse": 1
+        }
+      },
+      "exchange": {
+        "pairs": 8,
+        "mean_purpose_delta": -0.004187499999999997,
+        "classification": {
+          "equivalent": 2,
+          "worse": 4,
+          "better": 2
+        }
+      }
+    },
+    "reason": "Prequential prediction loss improved; actual-purpose gain over the chosen native candidate was not established.",
+    "prediction_replay": {
+      "matches": 100,
+      "ticks": 2206,
+      "observations": 49260,
+      "rows": [
+        {
+          "game": "combat",
+          "group": "all",
+          "observations": 37980,
+          "action_calibrated": 1.4250676880838657,
+          "action_learned": 1.5452592411655297,
+          "action_prior": 1.4284842504716255,
+          "class_calibrated": 1.1325546055615523,
+          "class_learned": 1.252746158643229,
+          "class_prior": 1.1359711679493916,
+          "delta_calibrated_vs_learned": -0.12019155308166396,
+          "delta_calibrated_vs_prior": -0.0034165623877597806,
+          "zero_probability_values": 0
+        },
+        {
+          "game": "exchange",
+          "group": "all",
+          "observations": 7680,
+          "action_calibrated": 1.0986778490316065,
+          "action_learned": 1.1023406223492183,
+          "action_prior": 1.3895637052808818,
+          "class_calibrated": 0.6376217551891699,
+          "class_learned": 0.6412845285067734,
+          "class_prior": 0.9285076114384859,
+          "delta_calibrated_vs_learned": -0.0036627733176117783,
+          "delta_calibrated_vs_prior": -0.2908858562492753,
+          "zero_probability_values": 0
+        },
+        {
+          "game": "hagetaka",
+          "group": "all",
+          "observations": 3600,
+          "action_calibrated": 1.6824089745083324,
+          "action_learned": 1.6910199691190548,
+          "action_prior": 1.707357431606071,
+          "class_calibrated": 0.7307198632461139,
+          "class_learned": 0.7393308578568406,
+          "class_prior": 0.7556683203438421,
+          "delta_calibrated_vs_learned": -0.008610994610722456,
+          "delta_calibrated_vs_prior": -0.02494845709773852,
+          "zero_probability_values": 0
+        }
+      ]
+    }
   }
 }

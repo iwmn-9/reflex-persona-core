@@ -714,9 +714,12 @@ impl World for Encounters {
         let old = &self.people[p];
         let u = &n.people[p];
         let gain = u.score - old.score;
-        let health = (u.health - old.health) / 8.;
-        let mut needs = [(u.energy - old.energy), health, 0., 0., 0.];
+        // Safety means observed health/reserve adequacy, regardless of method.
+        // Use the same deficit as factual need feedback, not a bonus for working alone.
+        let safety = self.deficits(p)[1].unwrap() - n.deficits(p)[1].unwrap();
+        let mut needs = [(u.energy - old.energy), safety, 0., 0., 0.];
         let mut v = [0.; 10];
+        v[5] = safety;
         let mut style = [0.; 5];
         if let Some(target) = a.strip_prefix("cooperate:") {
             let t: usize = target.parse().unwrap();
@@ -743,7 +746,6 @@ impl World for Encounters {
             needs[4] = 0.3;
             v[0] = 0.3;
             v[3] = 0.4;
-            v[5] = 0.45;
             style[1] = 0.4;
         }
         outcome(
@@ -1691,6 +1693,26 @@ mod tests {
             n = n.advance(&c, 1).unwrap().0;
         }
         assert!(n.winner(0));
+    }
+    #[test]
+    fn encounter_safety_tracks_state_change_not_action_name() {
+        for (stock, health, next_stock, next_health) in
+            [(0.3, 4., 2., 6.), (2., 6., 0.3, 4.), (3., 8., 3., 8.)]
+        {
+            let mut g = Encounters::new(1, 32);
+            g.people[0].stock = stock;
+            g.people[0].health = health;
+            let mut n = g.clone();
+            n.people[0].stock = next_stock;
+            n.people[0].health = next_health;
+            n.history[1].push("cooperate:0".into());
+            let expected = g.deficits(0)[1].unwrap() - n.deficits(0)[1].unwrap();
+            for action in ["alone", "rest", "cooperate:1", "claim:1"] {
+                let effect = g.effect(&n, 0, action);
+                assert_eq!(effect.needs[1], expected);
+                assert_eq!(effect.values[5], expected);
+            }
+        }
     }
     #[test]
     fn inputs_cover_actions_and_use_three_public_models() {
