@@ -14,7 +14,7 @@ PAGE=r'''<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewpo
 <script>const matches=__DATA__;
 const $=id=>document.getElementById(id),esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const labels={combat:'3対3戦闘',hagetaka:'4人ハゲタカ',exchange:'4人の協力・取り分競争'},modes={reflex:'即時判断',planned:'全員が計画',challenger:'一方に計画を導入'};
-const reasons={reflex:'即時判断',keep:'中間目標を継続',replan:'計画を比較',reached:'中間目標に到達',withdraw:'計画を撤回',agreement:'本人が評価し、参加者全員が同意'};
+const reasons={reflex:'即時判断',uncertain_forecast:'予測の優位が不安定なため通常行動',keep:'中間目標を継続',replan:'計画を比較',reached:'中間目標に到達',withdraw:'計画を撤回',agreement:'本人が評価し、参加者全員が同意'};
 function action(s){const [a,b,c]=s.split(':');const n={guard:'防御',reload:'装填',rest:'休息',alone:'単独活動',finished:'行動終了'};return n[a]||({move:`移動 (${b},${c})`,shoot:`P${b}を射撃`,heal:`P${b}を回復`,cooperate:`P${b}へ協力`,claim:`P${b}へ取り分を要求`}[a])||`札 ${s}`;}
 let timer=null;matches.forEach((m,i)=>{let o=document.createElement('option');o.value=i;o.textContent=`${labels[m.game]} / ${m.scene} / ${modes[m.mode]} / ${m.seed}`;$('match').append(o)});
 function render(){const m=matches[+$('match').value],t=+$('turn').value,r=m.trace[t],w=$('before').checked?r.before:r.after;
@@ -25,7 +25,7 @@ else{$('world').innerHTML=`<table><tr><th>NPC</th><th>健康</th><th>活動力</
 let events=[];if(r.agreements?.length)events.push(`合意 ${r.agreements.length} 件`);if(m.game==='exchange')r.actors.forEach(a=>{let [kind,id]=a.action.split(':');let other=r.actors[+id];if(other&&other.action.split(':')[1]===String(a.player)&&a.player<+id)events.push(`P${a.player} ${action(a.action)} ／ P${id} ${action(other.action)}：接触成立`)});
 if(m.game==='combat')r.after.units.forEach((u,i)=>{let d=u.hp-r.before.units[i].hp;if(d)events.push(`P${i} HP ${d>0?'+':''}${d}`)});
 if(m.game==='hagetaka')r.after.scores.forEach((v,i)=>{let d=v-r.before.scores[i];if(d)events.push(`P${i} 得点 ${d>0?'+':''}${d}`)});$('events').textContent=events.join(' / ');
-$('actors').innerHTML=r.actors.map(a=>{const p=a.planning,q=p.milestone;const learned=m.individual_beliefs?`他者の公開行動を観測 ${a.public_behavior_observations} 回`:`相手モデルを識別できた観測 ${a.prediction_observations} 回`;return `<article class="actor"><h3>P${a.player}${$('identity').checked?' · '+esc(a.name):''}</h3><div class="action">${esc(action(a.action))}</div><div>${esc(reasons[p.reason]||p.reason)}</div>${q?`<div class="muted">目標値 ${q.value.toFixed(3)} ／ 期限 ${q.deadline}手<br>予定：${q.remaining.map(action).map(esc).join(' → ')}</div>`:''}<div class="muted">実目的値 ${a.purpose_before.toFixed(3)} → ${a.purpose_after.toFixed(3)}${p.modeled_purpose===undefined?'':`<br>試走の目的値 ${p.modeled_purpose.toFixed(3)}`}<br>実結果 ${a.learning_observations} 回<br>${learned}</div></article>`}).join('');
+$('actors').innerHTML=r.actors.map(a=>{const p=a.planning,q=p.milestone;const learned=m.individual_beliefs?`他者の公開行動を観測 ${a.public_behavior_observations} 回`:`相手モデルを識別できた観測 ${a.prediction_observations} 回`;return `<article class="actor"><h3>P${a.player}${$('identity').checked?' · '+esc(a.name):''}</h3><div class="action">${esc(action(a.action))}</div>${a.route?`<div>勝ち筋：${esc(({secure:'拠点確保',eliminate:'敵の排除'})[a.route.chosen]||a.route.chosen)}${a.route.switched?'（切替）':''}</div>`:''}<div>${esc(reasons[p.reason]||p.reason)}</div>${q?`<div class="muted">目標値 ${q.value.toFixed(3)} ／ 期限 ${q.deadline}手<br>予定：${q.remaining.map(action).map(esc).join(' → ')}</div>`:''}<div class="muted">実目的値 ${a.purpose_before.toFixed(3)} → ${a.purpose_after.toFixed(3)}${p.modeled_purpose===undefined?'':`<br>試走の目的値 ${p.modeled_purpose.toFixed(3)}`}<br>実結果 ${a.learning_observations} 回<br>${learned}</div></article>`}).join('');
 $('history').innerHTML=m.trace.slice(Math.max(0,t-5),t+1).map(h=>`<div class="event"><b>${h.tick+1}手</b> ${h.actors.map(a=>`P${a.player} ${esc(action(a.action))}`).join(' ／ ')}</div>`).join('');
 $('meta').innerHTML=`<p>${esc(modes[m.mode])}<br>世界乱数 ${m.seed} ／ 読みの上限 ${m.horizon} 手<br>${m.factual_decisions} 実判断 ／ ${m.seconds.toFixed(2)} 秒で完走<br>個体別予測 ${m.individual_beliefs?'あり':'なし'} ／ 任意合意 ${m.coordination?'あり':'なし'}</p>`;$('model').textContent=(m.individual_beliefs?'他者ごとの公開行動から予測を更新する。':'3種類の全員行動モデルで予測する。')+(m.coordination?'通信できる相手とは今の意図を共有し、参加者全員が受け入れた案だけ実行する。':'')+'相手の人格や未公開の札順は参照しない。観測回数は予測精度ではない。人間水準を確認した版ではない。';$('raw').textContent=JSON.stringify({actors:r.actors,agreements:r.agreements||[]},null,2);}
 function step(n){let m=matches[+$('match').value];$('turn').value=Math.max(0,Math.min(m.trace.length-1,+$('turn').value+n));render();}
@@ -59,6 +59,10 @@ def summarize(matches,sources):
             raise ValueError('paired controllers require equal intention protocols')
         if r.get('frozen_reference',False)!=b.get('frozen_reference',False):
             raise ValueError('paired controllers require equal reference design')
+        if r.get('forecast_guard',False)!=b.get('forecast_guard',False):
+            raise ValueError('paired forecast guard settings differ')
+        if r.get('route_selection',False)!=b.get('route_selection',False):
+            raise ValueError('paired runs require equal candidate route settings')
         if r.get('scenario_batches',1)!=b.get('scenario_batches',1):
             raise ValueError('paired runs require equal candidate sample settings')
         if r.get('prediction_calibrated',False)!=b.get('prediction_calibrated',False):
@@ -108,6 +112,8 @@ def summarize(matches,sources):
         frozen_reference=sorted(set(r.get('frozen_reference',False) for r in matches)),
         scenario_batches=sorted(set(r.get('scenario_batches',1) for r in matches)),
         planning_protocol=sorted(set(r.get('planning_protocol','counterproposal') for r in matches)),
+        route_selection=sorted(set(r.get('route_selection',False) for r in matches)),
+        forecast_guard=sorted(set(r.get('forecast_guard',False) for r in matches)),
         prediction_calibrated=sorted(set(r.get('prediction_calibrated',False) for r in matches)),
         seconds=dict(min=min(r['seconds'] for r in matches),max=max(r['seconds'] for r in matches)),
         by_game=groups,by_single_focal_profile=single_profiles,exchange_all_planned=dict(**social,profile_actions=dict(actions)),focal_comparisons=cases,
@@ -129,7 +135,7 @@ def main():
             r=json.loads(f.read_bytes())
             if not (r.get('complete') and r.get('game') and r.get('trace')):continue
             identity=(r['game'],r['seed'],r['mode'],r['horizon'],r.get('second_moves',8),r.get('max_regret',.15),r.get('scenario_batches',1),r.get('intent_sharing',False),r.get('intention_protocol','sequential' if r.get('intent_sharing') else 'none'),r.get('frozen_reference',False),r.get('individual_beliefs',False),r.get('coordination',False),json.dumps(r['trace'][0]['before'],sort_keys=True))
-            identity=identity+(r.get('prediction_calibrated',False),r.get('planning_protocol','counterproposal'))
+            identity=identity+(r.get('prediction_calibrated',False),r.get('planning_protocol','counterproposal'),r.get('route_selection',False),r.get('forecast_guard',False))
             if identity in seen:continue
             seen.add(identity)
             selected.add(r['game'])

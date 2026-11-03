@@ -5,6 +5,8 @@ pub mod behavior;
 pub mod coordination;
 pub mod games;
 pub mod planner;
+pub mod robustness;
+pub mod routes;
 
 /// Current, non-binding intentions disclosed by all permitted partners.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -30,6 +32,20 @@ pub trait ArenaGame: Clone {
     /// Only these participants may receive this actor's current announced intent.
     fn partners(&self, player: usize) -> Vec<usize>;
     fn offers(&self, announced: &[String]) -> Result<Vec<coordination::Offer>>;
+    /// Game-proposed public subgoals; the same person's policy chooses among them.
+    fn route_input(&self, _player: usize) -> Result<Option<reflex_immediate::Observation>> {
+        Ok(None)
+    }
+    /// Context for this actor's appraisal, never a world transition or extra reward.
+    fn with_route(&self, _player: usize, route: Option<&str>) -> Result<Self> {
+        if route.is_some() {
+            return Err(reflex_owned::Error::Invalid("game has no route context"));
+        }
+        Ok(self.clone())
+    }
+    fn current_route(&self, _player: usize) -> Option<&str> {
+        None
+    }
     /// Compatibility of already disclosed joint intentions; independent actions stay legal.
     fn agreement_compatible(&self, _known: &BTreeMap<usize, String>) -> Result<bool> {
         Ok(true)

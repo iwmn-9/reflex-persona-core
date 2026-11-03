@@ -404,3 +404,48 @@ fn agreement_proposals_carry_the_same_valid_prefilter_selection() {
         "test must exercise at least one signed proposal"
     );
 }
+
+#[test]
+fn forecast_guard_reuses_the_existing_paths_and_preserves_factual_state() {
+    let game = Hagetaka::new(7);
+    let mut cfg = fixture::config("a");
+    cfg.contract = "arena-estimated-model-v1".into();
+    cfg.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+    let actor = Owner::new(cfg).unwrap();
+    let before = actor.state().unwrap().clone();
+    let config = Config {
+        horizon: 3,
+        second_moves: 0,
+        scenario_batches: 3,
+        max_regret: 1.,
+        ..Default::default()
+    };
+    let plain = Planner::new(&actor, config.clone())
+        .unwrap()
+        .propose(&actor, &game, 0)
+        .unwrap();
+    let guarded = Planner::new(
+        &actor,
+        Config {
+            forecast_guard: true,
+            ..config
+        },
+    )
+    .unwrap();
+    let candidate = guarded.propose(&actor, &game, 0).unwrap();
+    assert_eq!(plain.audit.simulated_nodes, candidate.audit.simulated_nodes);
+    assert_eq!(actor.state().unwrap(), &before);
+    assert!(game
+        .input(0)
+        .unwrap()
+        .observation
+        .actions
+        .iter()
+        .any(|a| a.legal && a.id == candidate.action()));
+    assert!(
+        Planner::restore(&actor, &guarded.checkpoint().unwrap())
+            .unwrap()
+            .config()
+            .forecast_guard
+    );
+}

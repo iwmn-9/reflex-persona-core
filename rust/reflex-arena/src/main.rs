@@ -1,4 +1,5 @@
 //! Headless simultaneous games with isolated personalities and factual learning.
+use reflex_arena::routes::{self, RouteState};
 use reflex_arena::{
     behavior::Beliefs,
     games::{Combat, Encounters, Hagetaka},
@@ -64,7 +65,7 @@ fn config(game: &str, seed: u64, player: usize, profile: usize) -> OwnerConfig {
             names: vec!["0".into(), "1".into(), "2".into()],
             window: 128,
         },
-        contract: format!("arena-{game}-estimated-model-v7"),
+        contract: format!("arena-{game}-estimated-model-v10"),
         purpose_target: "game-purpose".into(),
     }
 }
@@ -84,6 +85,8 @@ fn run<G: ArenaGame>(
     share_intentions: bool,
     frozen_reference: bool,
     planning_protocol: &str,
+    route_selection: bool,
+    forecast_guard: bool,
     output: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let started = Instant::now();
@@ -123,6 +126,8 @@ fn run<G: ArenaGame>(
                     second_moves: if modified[i] { second_moves } else { 8 },
                     max_regret: if modified[i] { max_regret } else { 0.15 },
                     scenario_batches: if modified[i] { scenario_batches } else { 1 },
+                    route_selection: route_selection && modified[i],
+                    forecast_guard: forecast_guard && modified[i],
                     ..Search::default()
                 },
             )
@@ -138,6 +143,7 @@ fn run<G: ArenaGame>(
     let mut beliefs: Vec<_> = (0..world.players())
         .map(|i| Beliefs::new(scopes[i].clone(), i, alphabets[i].clone()))
         .collect::<Result<_, _>>()?;
+    let mut route_states = vec![RouteState::default(); world.players()];
     let mut trace = vec![];
     let mut checks = 0;
     let mut counters = BTreeMap::<String, usize>::new();
@@ -148,30 +154,63 @@ fn run<G: ArenaGame>(
         }
         let before = world.view();
         let tick = world.tick();
+        let mut decision_world = world.clone();
+        let mut active_planners = planners.clone();
+        let mut next_routes = route_states.clone();
+        let mut route_audits = vec![json!(null); world.players()];
+        for i in 0..world.players() {
+            if route_selection && modified[i] {
+                if let Some(frame) = world.route_input(i)? {
+                    let choice = routes::choose(
+                        &configs[i].actor,
+                        &owners[i].state()?.intent,
+                        &frame,
+                        &route_states[i],
+                        0.,
+                        0.06,
+                    )?;
+                    if choice.state.chosen != route_states[i].chosen {
+                        active_planners[i] =
+                            Planner::new(&owners[i], planners[i].config().clone())?;
+                    }
+                    next_routes[i] = choice.state;
+                    decision_world =
+                        decision_world.with_route(i, next_routes[i].chosen.as_deref())?;
+                    route_audits[i] = serde_json::to_value(choice.audit)?;
+                } else {
+                    decision_world = decision_world.with_route(i, None)?;
+                }
+            }
+        }
         let mut next_owners = owners
             .iter()
             .map(Owner::fork_model)
             .collect::<Result<Vec<_>, _>>()?;
-        let mut next_planners = planners.clone();
+        let mut next_planners = active_planners.clone();
         let mut next_beliefs = beliefs.clone();
         let mut choices = vec![];
         let mut audits = vec![];
-        let mut intention_records = vec![json!(null); world.players()];
+        let mut intention_records = vec![json!(null); decision_world.players()];
         let mut inputs = vec![];
         for (i, belief) in beliefs.iter().enumerate() {
             inputs.push(if individual {
-                public_input(&world, i, belief, 701)?
+                public_input(&decision_world, i, belief, 701)?
             } else {
-                world.input(i)?
+                decision_world.input(i)?
             });
         }
         let mut selections = vec![];
-        for i in 0..world.players() {
+        for i in 0..decision_world.players() {
             if planning[i] && (!sharing[i] || planning_protocol == "independent") {
                 let proposal = if individual {
-                    planners[i].propose_with_beliefs(&owners[i], &world, i, &beliefs[i])?
+                    active_planners[i].propose_with_beliefs(
+                        &owners[i],
+                        &decision_world,
+                        i,
+                        &beliefs[i],
+                    )?
                 } else {
-                    planners[i].propose(&owners[i], &world, i)?
+                    active_planners[i].propose(&owners[i], &decision_world, i)?
                 };
                 choices.push(proposal.action().to_string());
                 simulations += proposal.audit.simulated_nodes;
@@ -189,14 +228,14 @@ fn run<G: ArenaGame>(
             // A revision relying on partners becomes a joint offer. Until every
             // participant signs, the independent announcements remain executable.
             let initial = choices.clone();
-            for offset in 0..world.players() {
-                let i = (offset + tick as usize) % world.players();
+            for offset in 0..decision_world.players() {
+                let i = (offset + tick as usize) % decision_world.players();
                 if !sharing[i] || planning[i] && planning_protocol == "independent" {
                     continue;
                 }
                 let intentions = Intentions {
                     tick,
-                    choices: world
+                    choices: decision_world
                         .partners(i)
                         .into_iter()
                         .map(|p| {
@@ -207,11 +246,17 @@ fn run<G: ArenaGame>(
                         })
                         .collect::<Result<_, _>>()?,
                 };
-                inputs[i] = public_input_with_intentions(&world, i, &beliefs[i], 701, &intentions)?;
+                inputs[i] = public_input_with_intentions(
+                    &decision_world,
+                    i,
+                    &beliefs[i],
+                    701,
+                    &intentions,
+                )?;
                 let proposed = if planning[i] {
-                    let proposal = planners[i].propose_with_intentions(
+                    let proposal = active_planners[i].propose_with_intentions(
                         &owners[i],
-                        &world,
+                        &decision_world,
                         i,
                         &beliefs[i],
                         &intentions,
@@ -242,7 +287,7 @@ fn run<G: ArenaGame>(
         let mut agreements = vec![];
         let mut incompatible_offers = vec![];
         if coordinate {
-            let mut offers = world.offers(&choices)?;
+            let mut offers = decision_world.offers(&choices)?;
             offers.extend(counteroffers);
             let mut compatible = Vec::new();
             for offer in offers {
@@ -250,7 +295,7 @@ fn run<G: ArenaGame>(
                     .roots
                     .keys()
                     .any(|&p| sharing.get(p).copied().unwrap_or(false))
-                    && !reflex_arena::offer_compatible(&world, &offer, &choices)?
+                    && !reflex_arena::offer_compatible(&decision_world, &offer, &choices)?
                 {
                     incompatible_offers.push(offer.id);
                 } else {
@@ -261,20 +306,20 @@ fn run<G: ArenaGame>(
             if !offers.is_empty() {
                 let mut consents = Vec::new();
                 let mut ballots = Vec::new();
-                for i in 0..world.players() {
+                for i in 0..decision_world.players() {
                     let consent = if sharing[i] {
-                        planners[i].consent_allow_indifference(
+                        active_planners[i].consent_allow_indifference(
                             &owners[i],
-                            &world,
+                            &decision_world,
                             i,
                             &beliefs[i],
                             &choices,
                             &offers,
                         )?
                     } else {
-                        planners[i].consent(
+                        active_planners[i].consent(
                             &owners[i],
-                            &world,
+                            &decision_world,
                             i,
                             &beliefs[i],
                             &choices,
@@ -306,8 +351,8 @@ fn run<G: ArenaGame>(
                         )
                     })
                     .collect();
-                let order: Vec<_> = (0..world.players())
-                    .map(|i| (i + tick as usize) % world.players())
+                let order: Vec<_> = (0..decision_world.players())
+                    .map(|i| (i + tick as usize) % decision_world.players())
                     .collect();
                 let agreement = reflex_arena::coordination::negotiate_checked(
                     &offers,
@@ -322,7 +367,7 @@ fn run<G: ArenaGame>(
                             .keys()
                             .any(|&p| sharing.get(p).copied().unwrap_or(false))
                         {
-                            reflex_arena::offer_compatible(&world, offer, projected)
+                            reflex_arena::offer_compatible(&decision_world, offer, projected)
                         } else {
                             Ok(true)
                         }
@@ -349,10 +394,10 @@ fn run<G: ArenaGame>(
             }
         }
         let (next, mut feedback) =
-            world.advance(&choices, seed.wrapping_mul(1009).wrapping_add(tick))?;
+            decision_world.advance(&choices, seed.wrapping_mul(1009).wrapping_add(tick))?;
         if individual {
-            for i in 0..world.players() {
-                observe_public(&world, i, &mut next_beliefs[i], &choices)?;
+            for i in 0..decision_world.players() {
+                observe_public(&decision_world, i, &mut next_beliefs[i], &choices)?;
                 feedback[i].response = None;
             }
         }
@@ -374,7 +419,7 @@ fn run<G: ArenaGame>(
             }
         }
         let mut participants = vec![];
-        for i in 0..world.players() {
+        for i in 0..decision_world.players() {
             if next_owners[i].config() != &configs[i] {
                 return Err("personality changed".into());
             }
@@ -398,12 +443,14 @@ fn run<G: ArenaGame>(
             }
             next_beliefs[i] =
                 Beliefs::restore(&next_beliefs[i].checkpoint()?, &scopes[i], i, &alphabets[i])?;
+            let route_save = next_routes[i].checkpoint(&configs[i].actor, tick)?;
+            next_routes[i] = RouteState::restore(&configs[i].actor, tick, &route_save)?;
             participants.push(json!({"player":i,"profile":profiles[i],"name":NAMES[profiles[i]],
-                "action":choices[i],"purpose_before":world.purpose(i),"purpose_after":next.purpose(i),
+                "action":choices[i],"purpose_before":decision_world.purpose(i),"purpose_after":next.purpose(i),
                 "needs":inputs[i].observation.needs,"learning_observations":tick+1,
                 "prediction_observations":next_owners[i].state()?.prediction.observations,
                 "public_behavior_observations":next_beliefs[i].observations(),
-                "planning":audits[i],"intention_input":intention_records[i]}));
+                "planning":audits[i],"intention_input":intention_records[i],"route":route_audits[i],"route_state":next_routes[i]}));
             checks += 1;
         }
         trace.push(json!({"tick":tick,"before":before,"after":next.view(),"actors":participants,"agreements":agreements,"incompatible_offers":incompatible_offers}));
@@ -411,6 +458,7 @@ fn run<G: ArenaGame>(
         owners = next_owners;
         planners = next_planners;
         beliefs = next_beliefs;
+        route_states = next_routes;
         eprintln!("{game} {mode} tick={} nodes={simulations}", world.tick());
     }
     let uses_independent = (0..world.players())
@@ -423,7 +471,7 @@ fn run<G: ArenaGame>(
         (false, true) => "mutual-counterproposal-v1",
         (false, false) => "none",
     };
-    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"planning_protocol":planning_protocol,"intention_protocol":intention_protocol,"frozen_reference":frozen_reference,
+    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"planning_protocol":planning_protocol,"route_selection":route_selection,"forecast_guard":forecast_guard,"intention_protocol":intention_protocol,"frozen_reference":frozen_reference,
         "agreement_compatibility":"public-joint-constraints-v1",
         "controllers":(0..world.players()).map(|i|json!({"planned":planning[i],"settings":planners[i].config(),"intent_sharing":sharing[i],"joint_constraints":sharing[i],"planning_protocol":if planning[i] && (!sharing[i] || planning_protocol == "independent") {"independent"} else if sharing[i] {"counterproposal"} else {"reflex"}})).collect::<Vec<_>>(),
         "profiles":profiles,"profile_names":NAMES,"focal_players":focal,"ticks":world.tick(),"factual_decisions":checks,
@@ -472,6 +520,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "--intent-sharing",
             "--reference",
             "--planning-protocol",
+            "--routes",
+            "--forecast-guard",
         ]
         .contains(key)
         {
@@ -538,6 +588,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if !["counterproposal", "independent"].contains(&planning_protocol) {
         return Err("known planning protocol required".into());
     }
+    let route_mode = *options.get("--routes").unwrap_or(&"none");
+    if !["none", "persona"].contains(&route_mode) {
+        return Err("known route mode required".into());
+    }
+    let route_selection = route_mode == "persona";
+    let guard_mode = *options.get("--forecast-guard").unwrap_or(&"none");
+    if !["none", "batch"].contains(&guard_mode) {
+        return Err("known forecast guard required".into());
+    }
+    let forecast_guard = guard_mode == "batch";
     if !["planned", "reflex", "challenger"].contains(&mode) || turns == 0 || turns > 128 {
         return Err("bounded mode/turns required".into());
     }
@@ -564,6 +624,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             share_intentions,
             frozen_reference,
             planning_protocol,
+            route_selection,
+            forecast_guard,
             output,
         ),
         "hagetaka" => run(
@@ -580,6 +642,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             share_intentions,
             frozen_reference,
             planning_protocol,
+            route_selection,
+            forecast_guard,
             output,
         ),
         "exchange" => run(
@@ -596,6 +660,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             share_intentions,
             frozen_reference,
             planning_protocol,
+            route_selection,
+            forecast_guard,
             output,
         ),
         _ => Err("unknown arena".into()),

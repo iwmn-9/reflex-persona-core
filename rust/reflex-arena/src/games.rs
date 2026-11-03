@@ -28,6 +28,9 @@ fn row(o: &Outcome) -> [f64; 22] {
 }
 trait World: ArenaGame {
     fn legal(&self, p: usize) -> Vec<String>;
+    fn route_context(&self, _p: usize) -> Option<&str> {
+        None
+    }
     fn behavior_alphabet(&self) -> Vec<String>;
     fn deficits(&self, p: usize) -> [Option<f64>; 5];
     fn transition(&self, c: &[String], seed: u64) -> Result<Self>;
@@ -138,7 +141,14 @@ fn make_input_scenarios<W: World>(w: &W, p: usize, choices: &[Vec<String>]) -> R
     }
     let bindings: BTreeMap<_, _> = actions
         .iter()
-        .map(|a| (a.id.clone(), w.binding(p, &a.id)))
+        .map(|a| {
+            let mut binding = w.binding(p, &a.id);
+            if let Some(route) = w.route_context(p) {
+                binding.situation.push_str(":route:");
+                binding.situation.push_str(route);
+            }
+            (a.id.clone(), binding)
+        })
         .collect();
     let activities = actions
         .iter()
@@ -786,6 +796,8 @@ pub struct Combat {
     secured: [bool; 2],
     tick: u64,
     limit: u64,
+    #[serde(skip)]
+    routes: [Option<String>; 6],
 }
 impl Combat {
     pub fn new(_: u64, map: &str, goal: &str, limit: u64) -> Self {
@@ -816,6 +828,7 @@ impl Combat {
             secured: [false; 2],
             tick: 0,
             limit,
+            routes: std::array::from_fn(|_| None),
         }
     }
     fn alive(&self, t: usize) -> bool {
@@ -891,6 +904,9 @@ impl Combat {
         })
     }
     fn preparation(&self, team: usize) -> f64 {
+        self.preparation_for_route(team, None)
+    }
+    fn preparation_for_route(&self, team: usize, route: Option<&str>) -> f64 {
         if self.winner(team) {
             return 1.;
         }
@@ -902,32 +918,8 @@ impl Combat {
             .iter()
             .filter(|u| u.team == team && u.hp > 0)
             .collect();
-        let enemies: Vec<_> = self
-            .units
-            .iter()
-            .filter(|u| u.team != team && u.hp > 0)
-            .collect();
-        let positions: Vec<_> = enemies.iter().map(|u| (u.x, u.y)).collect();
-        let eliminate = if enemies.is_empty() {
-            1.
-        } else {
-            let damage = 1. - enemies.iter().map(|u| u.hp).sum::<i32>() as f64 / 27.;
-            let access = own
-                .iter()
-                .map(|u| (1. - self.firing_distance((u.x, u.y), &positions) as f64 / 4.).max(0.))
-                .sum::<f64>()
-                / 3.;
-            0.65 * damage + 0.35 * access
-        };
-        let secure = if self.secured[team] {
-            1.
-        } else {
-            let proximity = own
-                .iter()
-                .map(|u| 1. - (self.zone_distance((u.x, u.y)) as f64 / 8.).min(1.))
-                .fold(0f64, f64::max);
-            0.5 * proximity + 0.5 * self.hold[team] as f64 / 3.
-        };
+        let eliminate = self.route_progress(team, "eliminate");
+        let secure = self.route_progress(team, "secure");
         let mission = match self.goal.as_str() {
             "eliminate" => eliminate,
             "secure" => secure,
@@ -936,8 +928,57 @@ impl Combat {
         };
         let fitness = own.iter().map(|u| u.hp).sum::<i32>() as f64 / 27.;
         let ammunition = own.iter().map(|u| u.ammo).sum::<i32>() as f64 / 9.;
-        // Native arena has no separate route choice: chosen route = mission.
-        0.6 * (0.8 * mission + 0.15 * fitness + 0.05 * ammunition)
+        let route_mission = match route {
+            Some("eliminate") => 0.6 * eliminate + 0.2 * mission,
+            Some("secure") => 0.6 * secure + 0.2 * mission,
+            _ => 0.8 * mission,
+        };
+        0.6 * (route_mission + 0.15 * fitness + 0.05 * ammunition)
+    }
+    fn route_progress(&self, team: usize, route: &str) -> f64 {
+        let own: Vec<_> = self
+            .units
+            .iter()
+            .filter(|u| u.team == team && u.hp > 0)
+            .collect();
+        match route {
+            "eliminate" => {
+                let enemies: Vec<_> = self
+                    .units
+                    .iter()
+                    .filter(|u| u.team != team && u.hp > 0)
+                    .collect();
+                if enemies.is_empty() {
+                    return 1.;
+                }
+                let positions: Vec<_> = enemies.iter().map(|u| (u.x, u.y)).collect();
+                let damage = 1. - enemies.iter().map(|u| u.hp).sum::<i32>() as f64 / 27.;
+                let access = own
+                    .iter()
+                    .map(|u| {
+                        (1. - self.firing_distance((u.x, u.y), &positions) as f64 / 4.).max(0.)
+                    })
+                    .sum::<f64>()
+                    / 3.;
+                0.65 * damage + 0.35 * access
+            }
+            "secure" => {
+                if self.secured[team] {
+                    return 1.;
+                }
+                let proximity = own
+                    .iter()
+                    .map(|u| 1. - (self.zone_distance((u.x, u.y)) as f64 / 8.).min(1.))
+                    .fold(0f64, f64::max);
+                0.5 * proximity + 0.5 * self.hold[team] as f64 / 3.
+            }
+            _ => unreachable!("route is validated"),
+        }
+    }
+    fn route_allowed(&self, team: usize, route: &str) -> bool {
+        matches!(route, "eliminate" | "secure")
+            && (self.goal == "either" || self.goal == "both" || self.goal == route)
+            && (self.goal != "both" || self.route_progress(team, route) < 1.)
     }
     fn chance(&self, i: usize, j: usize) -> f64 {
         let a = &self.units[i];
@@ -963,6 +1004,73 @@ impl Combat {
     }
 }
 impl ArenaGame for Combat {
+    fn current_route(&self, p: usize) -> Option<&str> {
+        self.routes.get(p).and_then(Option::as_deref)
+    }
+    fn route_input(&self, p: usize) -> Result<Option<Observation>> {
+        if p >= self.players() || self.terminal() {
+            return Err(err());
+        }
+        if self.units[p].hp <= 0 {
+            return Ok(None);
+        }
+        let team = self.units[p].team;
+        let actions = ["eliminate", "secure"]
+            .into_iter()
+            .map(|route| {
+                let quality = 0.5 + 0.5 * self.route_progress(team, route);
+                let mut values = [0.; 10];
+                values[3] = quality;
+                if route == "eliminate" {
+                    values[4] = 0.6;
+                    values[5] = -0.2;
+                } else {
+                    values[6] = 0.5;
+                    values[5] = 0.35;
+                }
+                let mut needs = [0.; 5];
+                needs[3] = quality;
+                Action {
+                    id: route.into(),
+                    target: None,
+                    legal: self.route_allowed(team, route),
+                    known_failure: false,
+                    confidence: 1.,
+                    familiarity: 0.,
+                    switch_cost: 0.,
+                    outcomes: vec![outcome(quality, needs, values, [0.; 5], 0.)],
+                }
+            })
+            .collect();
+        let deficits = self.deficits(p);
+        Ok(Some(Observation {
+            tick: self.tick,
+            needs: std::array::from_fn(|i| NeedInput {
+                supported: deficits[i].is_some(),
+                enabled: deficits[i].is_some(),
+                deficit: deficits[i],
+            }),
+            facts: self.facts(p),
+            actions,
+            opponent: None,
+        }))
+    }
+    fn with_route(&self, p: usize, route: Option<&str>) -> Result<Self> {
+        if p >= self.players() {
+            return Err(err());
+        }
+        if let Some(route) = route {
+            if self.terminal()
+                || self.units[p].hp <= 0
+                || !self.route_allowed(self.units[p].team, route)
+            {
+                return Err(err());
+            }
+        }
+        let mut clone = self.clone();
+        clone.routes[p] = route.map(str::to_owned);
+        Ok(clone)
+    }
     fn agreement_compatible(&self, known: &BTreeMap<usize, String>) -> Result<bool> {
         let mut destinations = std::collections::BTreeSet::new();
         for (&actor, action) in known {
@@ -1109,7 +1217,13 @@ impl ArenaGame for Combat {
         if viewer >= self.players() {
             return Err(err());
         }
-        Ok(self.clone())
+        let mut model = self.clone();
+        for (p, route) in model.routes.iter_mut().enumerate() {
+            if p != viewer {
+                *route = None;
+            }
+        }
+        Ok(model)
     }
     fn purpose(&self, p: usize) -> f64 {
         let t = self.units[p].team;
@@ -1152,6 +1266,9 @@ impl ArenaGame for Combat {
     }
 }
 impl World for Combat {
+    fn route_context(&self, p: usize) -> Option<&str> {
+        self.routes[p].as_deref()
+    }
     fn readiness(&self, p: usize) -> f64 {
         self.preparation(self.units[p].team)
     }
@@ -1419,7 +1536,10 @@ impl World for Combat {
                 .map(|x| x.hp)
                 .sum::<i32>()) as f64
             / 27.;
-        let obj = clamp(n.preparation(u.team) - self.preparation(u.team));
+        let route = self.routes[p].as_deref();
+        let obj = clamp(
+            n.preparation_for_route(u.team, route) - self.preparation_for_route(u.team, route),
+        );
         let mut values = [0.; 10];
         values[3] = obj;
         values[5] = dh;
@@ -1776,6 +1896,79 @@ mod tests {
         assert!((n.people[1].score - 0.8).abs() < 1e-9);
         assert_eq!(n.history[0][0], c[0]);
         assert_eq!(f.len(), 4);
+    }
+    #[test]
+    fn combat_route_candidates_follow_progress_and_constraints() {
+        let mut game = Combat::new(1, "open", "both", 20);
+        let frame = game.route_input(0).unwrap().unwrap();
+        assert!(frame.actions.iter().all(|a| a.legal));
+        for a in &frame.actions {
+            let progress = game.route_progress(0, &a.id);
+            let quality = 0.5 + 0.5 * progress;
+            assert!((a.outcomes[0].objective - quality).abs() < 1e-12);
+            assert_eq!(a.outcomes[0].needs[3], quality);
+            assert_eq!(a.outcomes[0].values[3], quality);
+        }
+        game.secured[0] = true;
+        let frame = game.route_input(0).unwrap().unwrap();
+        assert!(
+            !frame
+                .actions
+                .iter()
+                .find(|a| a.id == "secure")
+                .unwrap()
+                .legal
+        );
+        assert!(
+            frame
+                .actions
+                .iter()
+                .find(|a| a.id == "eliminate")
+                .unwrap()
+                .legal
+        );
+        assert!(game.with_route(0, Some("secure")).is_err());
+        assert!(game.with_route(0, Some("unknown")).is_err());
+    }
+    #[test]
+    fn combat_route_is_private_and_cannot_create_phantom_progress() {
+        let game = Combat::new(1, "cover", "either", 20);
+        let routed = game
+            .with_route(0, Some("eliminate"))
+            .unwrap()
+            .with_route(1, Some("secure"))
+            .unwrap();
+        assert_eq!(game.preparation(0), game.preparation_for_route(0, None));
+        assert_eq!(game.view(), routed.view());
+        let model = routed.model_world(0, 77).unwrap();
+        assert_eq!(model.routes[0].as_deref(), Some("eliminate"));
+        assert_eq!(model.routes[1], None);
+        assert_eq!(
+            routed
+                .effect(&routed.with_route(0, Some("secure")).unwrap(), 0, "guard")
+                .objective,
+            0.
+        );
+        let own = routed.input(0).unwrap();
+        let other = routed.input(1).unwrap();
+        assert!(own
+            .bindings
+            .values()
+            .all(|b| b.situation.ends_with(":route:eliminate")));
+        assert!(own
+            .purpose
+            .activities
+            .iter()
+            .all(|(id, a)| a.condition == own.bindings[id].situation));
+        assert!(other
+            .bindings
+            .values()
+            .all(|b| b.situation.ends_with(":route:secure")));
+        assert_eq!(
+            game.behavior(0, 1).unwrap().context,
+            routed.behavior(0, 1).unwrap().context
+        );
+        assert!(routed.with_route(0, None).unwrap().routes[0].is_none());
     }
     #[test]
     fn combat_preparation_uses_terrain_and_cancels_round_trips() {
