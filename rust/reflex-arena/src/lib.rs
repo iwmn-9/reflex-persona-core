@@ -30,6 +30,65 @@ pub trait ArenaGame: Clone {
     /// Only these participants may receive this actor's current announced intent.
     fn partners(&self, player: usize) -> Vec<usize>;
     fn offers(&self, announced: &[String]) -> Result<Vec<coordination::Offer>>;
+    /// Compatibility of already disclosed joint intentions; independent actions stay legal.
+    fn agreement_compatible(&self, _known: &BTreeMap<usize, String>) -> Result<bool> {
+        Ok(true)
+    }
+}
+
+/// Validate an offer using only intentions disclosed to all of its participants.
+/// Roots are applied over the current partial negotiation, never over hidden rivals.
+pub fn offer_compatible<G: ArenaGame>(
+    game: &G,
+    offer: &coordination::Offer,
+    choices: &[String],
+) -> Result<bool> {
+    let known = known_offer_intentions(game, offer, choices)?;
+    game.agreement_compatible(&known)
+}
+
+fn known_offer_intentions<G: ArenaGame>(
+    game: &G,
+    offer: &coordination::Offer,
+    choices: &[String],
+) -> Result<BTreeMap<usize, String>> {
+    let invalid =
+        || reflex_owned::Error::Invalid("valid mutually shared offer and intentions required");
+    if choices.len() != game.players() || !(2..=8).contains(&offer.roots.len()) || game.terminal() {
+        return Err(invalid());
+    }
+    let members: BTreeSet<usize> = offer.roots.keys().copied().collect();
+    if members.iter().any(|&p| p >= game.players()) {
+        return Err(invalid());
+    }
+    let mut partner_sets = Vec::new();
+    for &member in &members {
+        let partners = game.partners(member);
+        let set: BTreeSet<_> = partners.iter().copied().collect();
+        if set.len() != partners.len()
+            || set.iter().any(|&p| p >= game.players() || p == member)
+            || members.iter().any(|&p| p != member && !set.contains(&p))
+        {
+            return Err(invalid());
+        }
+        partner_sets.push((member, set));
+    }
+    let viewer = *members.iter().next().ok_or_else(invalid)?;
+    let mut known = BTreeMap::new();
+    for (person, current) in choices.iter().enumerate() {
+        if members.contains(&person)
+            || partner_sets
+                .iter()
+                .all(|(member, set)| *member == person || set.contains(&person))
+        {
+            let action = offer.roots.get(&person).unwrap_or(current);
+            if !game.behavior(viewer, person)?.actions.contains_key(action) {
+                return Err(invalid());
+            }
+            known.insert(person, action.clone());
+        }
+    }
+    Ok(known)
 }
 
 /// Independent public choices, sampled with common random numbers across roots.

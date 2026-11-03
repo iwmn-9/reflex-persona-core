@@ -256,5 +256,163 @@
         }
       ]
     }
+  },
+  "real_game_connection_repairs": {
+    "adopted_as_stable": false,
+    "comparisons": {
+      "joint_feasibility": {
+        "source": "arena_joint_execution_20261103",
+        "complete": true,
+        "games": {
+          "combat": {
+            "pairs": 12,
+            "mean_purpose_delta": -0.02530864197530863,
+            "classification": {
+              "equivalent": 7,
+              "worse": 2,
+              "better": 3
+            }
+          },
+          "exchange": {
+            "pairs": 4,
+            "mean_purpose_delta": -0.008937500000000015,
+            "classification": {
+              "worse": 3,
+              "better": 1
+            }
+          },
+          "hagetaka": {
+            "pairs": 4,
+            "mean_purpose_delta": 0.12499999999999997,
+            "classification": {
+              "better": 4
+            }
+          }
+        }
+      },
+      "independent": {
+        "source": "arena_independent_planning_20261103",
+        "complete": true,
+        "games": {
+          "combat": {
+            "pairs": 12,
+            "mean_purpose_delta": -0.2265432098765432,
+            "classification": {
+              "worse": 5,
+              "equivalent": 5,
+              "better": 2
+            }
+          },
+          "exchange": {
+            "pairs": 4,
+            "mean_purpose_delta": 0.0015624999999999944,
+            "classification": {
+              "better": 3,
+              "worse": 1
+            }
+          },
+          "hagetaka": {
+            "pairs": 4,
+            "mean_purpose_delta": 0.12499999999999997,
+            "classification": {
+              "better": 4
+            }
+          }
+        }
+      },
+      "progress_connection": {
+        "source": "arena_progress_connection_20261103",
+        "complete": true,
+        "games": {
+          "combat": {
+            "pairs": 12,
+            "mean_purpose_delta": -0.5604938271604938,
+            "classification": {
+              "worse": 9,
+              "equivalent": 2,
+              "better": 1
+            }
+          },
+          "exchange": {
+            "pairs": 4,
+            "mean_purpose_delta": 0.0015624999999999944,
+            "classification": {
+              "better": 3,
+              "worse": 1
+            }
+          },
+          "hagetaka": {
+            "pairs": 4,
+            "mean_purpose_delta": 0.12499999999999997,
+            "classification": {
+              "better": 4
+            }
+          }
+        }
+      },
+      "arrival_model": {
+        "source": "arena_position_model_20261103",
+        "complete": true,
+        "games": {
+          "combat": {
+            "pairs": 12,
+            "mean_purpose_delta": 0.07037037037037037,
+            "classification": {
+              "equivalent": 5,
+              "better": 4,
+              "worse": 3
+            }
+          }
+        }
+      },
+      "fresh_confirmation": {
+        "source": "arena_position_confirmation_20261103",
+        "complete": true,
+        "games": {
+          "combat": {
+            "pairs": 24,
+            "mean_purpose_delta": 0.038271604938271614,
+            "classification": {
+              "equivalent": 5,
+              "better": 12,
+              "worse": 7
+            }
+          },
+          "exchange": {
+            "pairs": 8,
+            "mean_purpose_delta": 0.00015624999999999667,
+            "classification": {
+              "worse": 3,
+              "equivalent": 1,
+              "better": 4
+            }
+          },
+          "hagetaka": {
+            "pairs": 8,
+            "mean_purpose_delta": 0.08950892857142859,
+            "classification": {
+              "better": 7,
+              "worse": 1
+            }
+          }
+        }
+      },
+      "secured_objective": {
+        "source": "arena_secured_purpose_20261103",
+        "complete": true,
+        "games": {
+          "combat": {
+            "pairs": 8,
+            "mean_purpose_delta": -0.3685185185185185,
+            "classification": {
+              "worse": 5,
+              "equivalent": 2,
+              "better": 1
+            }
+          }
+        }
+      }
+    },
+    "lesson": "Independent long planning exposes model and purpose-definition errors. Repairing those errors does not remove the regression in the combined combat objective. Means from different objective definitions are not a pure policy-effect comparison."
   }
 }

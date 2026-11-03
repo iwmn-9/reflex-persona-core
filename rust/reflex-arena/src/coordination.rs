@@ -41,6 +41,22 @@ pub fn negotiate(
     scope: &str,
     tick: u64,
 ) -> Result<Agreement> {
+    negotiate_checked(offers, ballots, order, legal, scope, tick, |_, _| Ok(true))
+}
+
+/// As `negotiate`, checking each fully projected candidate before acceptance.
+pub fn negotiate_checked<F>(
+    offers: &[Offer],
+    ballots: &[Ballot],
+    order: &[usize],
+    legal: &BTreeMap<usize, BTreeSet<String>>,
+    scope: &str,
+    tick: u64,
+    mut compatible: F,
+) -> Result<Agreement>
+where
+    F: FnMut(&Offer, &[String]) -> Result<bool>,
+{
     let count = ballots.len();
     if !(2..=64).contains(&count) || offers.len() > 128 || !label(scope) || tick >= (1_u64 << 63) {
         return Err(Error::Invalid(
@@ -101,7 +117,7 @@ pub fn negotiate(
         .map(|actor| by_actor[&actor].outside.clone())
         .collect();
     let mut assigned = BTreeSet::new();
-    let mut accepted = Vec::new();
+    let mut accepted: Vec<String> = Vec::new();
     for actor in order {
         if assigned.contains(actor) {
             continue;
@@ -116,6 +132,23 @@ pub fn negotiate(
                 .keys()
                 .any(|member| !by_actor[member].ranked.contains(id))
             {
+                continue;
+            }
+            let mut projected = choices.clone();
+            for (member, root) in &offer.roots {
+                projected[*member] = root.clone();
+            }
+            if !compatible(offer, &projected)? {
+                continue;
+            }
+            let mut preserves_previous = true;
+            for accepted_id in &accepted {
+                if !compatible(bank[accepted_id.as_str()], &projected)? {
+                    preserves_previous = false;
+                    break;
+                }
+            }
+            if !preserves_previous {
                 continue;
             }
             for (member, root) in &offer.roots {
@@ -216,6 +249,103 @@ mod tests {
         assert!(negotiate(&duplicate, &ballots, &order, &legal, "world", 4).is_err());
     }
 
+    #[test]
+    fn later_offer_cannot_invalidate_prior_offer_assumptions() {
+        let legal = (0..4)
+            .map(|i| (i, BTreeSet::from(["idle".into(), "busy".into()])))
+            .collect();
+        let offers = vec![
+            Offer {
+                id: "first".into(),
+                roots: BTreeMap::from([(0, "busy".into()), (1, "busy".into())]),
+            },
+            Offer {
+                id: "later".into(),
+                roots: BTreeMap::from([(2, "busy".into()), (3, "busy".into())]),
+            },
+        ];
+        let ballots = (0..4)
+            .map(|i| Ballot {
+                actor: i,
+                scope: "test".into(),
+                tick: 0,
+                outside: "idle".into(),
+                ranked: vec![if i < 2 { "first" } else { "later" }.into()],
+            })
+            .collect::<Vec<_>>();
+        let result = negotiate_checked(
+            &offers,
+            &ballots,
+            &[0, 1, 2, 3],
+            &legal,
+            "test",
+            0,
+            |offer, choices| Ok(offer.id != "first" || choices[2] == "idle"),
+        )
+        .unwrap();
+        assert_eq!(result.accepted, vec!["first"]);
+        assert_eq!(result.choices, vec!["busy", "busy", "idle", "idle"]);
+    }
+    #[test]
+    fn checked_offers_reject_conflicting_disjoint_combinations_and_fall_back() {
+        let legal = (0..4)
+            .map(|i| {
+                (
+                    i,
+                    BTreeSet::from(["free".into(), "room-a".into(), "room-b".into()]),
+                )
+            })
+            .collect();
+        let offer = |id: &str, a: usize, b: usize, place: &str| Offer {
+            id: id.into(),
+            roots: BTreeMap::from([(a, place.into()), (b, place.into())]),
+        };
+        let offers = vec![
+            offer("first", 0, 1, "room-a"),
+            offer("conflict", 2, 3, "room-a"),
+            offer("fallback", 2, 3, "room-b"),
+        ];
+        let ballot = |actor, ranked: Vec<&str>| Ballot {
+            actor,
+            scope: "test".into(),
+            tick: 0,
+            outside: "free".into(),
+            ranked: ranked.into_iter().map(str::to_owned).collect(),
+        };
+        let ballots = vec![
+            ballot(0, vec!["first"]),
+            ballot(1, vec!["first"]),
+            ballot(2, vec!["conflict", "fallback"]),
+            ballot(3, vec!["conflict", "fallback"]),
+        ];
+        let checked = negotiate_checked(
+            &offers,
+            &ballots,
+            &[0, 1, 2, 3],
+            &legal,
+            "test",
+            0,
+            |_, choices| Ok(!(choices[0] == "room-a" && choices[2] == "room-a")),
+        )
+        .unwrap();
+        assert_eq!(checked.accepted, vec!["first", "fallback"]);
+        assert_eq!(
+            checked.choices,
+            vec!["room-a", "room-a", "room-b", "room-b"]
+        );
+        let unchecked = negotiate(&offers, &ballots, &[0, 1, 2, 3], &legal, "test", 0).unwrap();
+        assert_eq!(unchecked.accepted, vec!["first", "conflict"]);
+        let failed = negotiate_checked(
+            &offers,
+            &ballots,
+            &[0, 1, 2, 3],
+            &legal,
+            "test",
+            0,
+            |_, _| Err(Error::Invalid("callback failure")),
+        );
+        assert!(failed.is_err());
+    }
     #[test]
     fn offer_limit_accepts_128_and_rejects_129() {
         let (_, mut ballots, order, legal) = setup();

@@ -64,7 +64,7 @@ fn config(game: &str, seed: u64, player: usize, profile: usize) -> OwnerConfig {
             names: vec!["0".into(), "1".into(), "2".into()],
             window: 128,
         },
-        contract: format!("arena-{game}-estimated-model-v3"),
+        contract: format!("arena-{game}-estimated-model-v7"),
         purpose_target: "game-purpose".into(),
     }
 }
@@ -83,6 +83,7 @@ fn run<G: ArenaGame>(
     coordinate: bool,
     share_intentions: bool,
     frozen_reference: bool,
+    planning_protocol: &str,
     output: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let started = Instant::now();
@@ -166,7 +167,7 @@ fn run<G: ArenaGame>(
         }
         let mut selections = vec![];
         for i in 0..world.players() {
-            if planning[i] && !sharing[i] {
+            if planning[i] && (!sharing[i] || planning_protocol == "independent") {
                 let proposal = if individual {
                     planners[i].propose_with_beliefs(&owners[i], &world, i, &beliefs[i])?
                 } else {
@@ -190,7 +191,7 @@ fn run<G: ArenaGame>(
             let initial = choices.clone();
             for offset in 0..world.players() {
                 let i = (offset + tick as usize) % world.players();
-                if !sharing[i] {
+                if !sharing[i] || planning[i] && planning_protocol == "independent" {
                     continue;
                 }
                 let intentions = Intentions {
@@ -239,9 +240,24 @@ fn run<G: ArenaGame>(
             }
         }
         let mut agreements = vec![];
+        let mut incompatible_offers = vec![];
         if coordinate {
             let mut offers = world.offers(&choices)?;
             offers.extend(counteroffers);
+            let mut compatible = Vec::new();
+            for offer in offers {
+                if offer
+                    .roots
+                    .keys()
+                    .any(|&p| sharing.get(p).copied().unwrap_or(false))
+                    && !reflex_arena::offer_compatible(&world, &offer, &choices)?
+                {
+                    incompatible_offers.push(offer.id);
+                } else {
+                    compatible.push(offer);
+                }
+            }
+            let offers = compatible;
             if !offers.is_empty() {
                 let mut consents = Vec::new();
                 let mut ballots = Vec::new();
@@ -293,8 +309,24 @@ fn run<G: ArenaGame>(
                 let order: Vec<_> = (0..world.players())
                     .map(|i| (i + tick as usize) % world.players())
                     .collect();
-                let agreement = reflex_arena::coordination::negotiate(
-                    &offers, &ballots, &order, &legal, &scopes[0], tick,
+                let agreement = reflex_arena::coordination::negotiate_checked(
+                    &offers,
+                    &ballots,
+                    &order,
+                    &legal,
+                    &scopes[0],
+                    tick,
+                    |offer, projected| {
+                        if offer
+                            .roots
+                            .keys()
+                            .any(|&p| sharing.get(p).copied().unwrap_or(false))
+                        {
+                            reflex_arena::offer_compatible(&world, offer, projected)
+                        } else {
+                            Ok(true)
+                        }
+                    },
                 )?;
                 for id in &agreement.accepted {
                     let offer = offers.iter().find(|o| &o.id == id).unwrap();
@@ -374,15 +406,26 @@ fn run<G: ArenaGame>(
                 "planning":audits[i],"intention_input":intention_records[i]}));
             checks += 1;
         }
-        trace.push(json!({"tick":tick,"before":before,"after":next.view(),"actors":participants,"agreements":agreements}));
+        trace.push(json!({"tick":tick,"before":before,"after":next.view(),"actors":participants,"agreements":agreements,"incompatible_offers":incompatible_offers}));
         world = next;
         owners = next_owners;
         planners = next_planners;
         beliefs = next_beliefs;
         eprintln!("{game} {mode} tick={} nodes={simulations}", world.tick());
     }
-    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"intention_protocol":if share_intentions {"mutual-counterproposal-v1"} else {"none"},"frozen_reference":frozen_reference,
-        "controllers":(0..world.players()).map(|i|json!({"planned":planning[i],"settings":planners[i].config(),"intent_sharing":sharing[i]})).collect::<Vec<_>>(),
+    let uses_independent = (0..world.players())
+        .any(|i| sharing[i] && planning[i] && planning_protocol == "independent");
+    let uses_counterproposal = (0..world.players())
+        .any(|i| sharing[i] && (!planning[i] || planning_protocol == "counterproposal"));
+    let intention_protocol = match (uses_independent, uses_counterproposal) {
+        (true, true) => "mixed-independent-counterproposal-v1",
+        (true, false) => "independent-planning-consent-v1",
+        (false, true) => "mutual-counterproposal-v1",
+        (false, false) => "none",
+    };
+    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"planning_protocol":planning_protocol,"intention_protocol":intention_protocol,"frozen_reference":frozen_reference,
+        "agreement_compatibility":"public-joint-constraints-v1",
+        "controllers":(0..world.players()).map(|i|json!({"planned":planning[i],"settings":planners[i].config(),"intent_sharing":sharing[i],"joint_constraints":sharing[i],"planning_protocol":if planning[i] && (!sharing[i] || planning_protocol == "independent") {"independent"} else if sharing[i] {"counterproposal"} else {"reflex"}})).collect::<Vec<_>>(),
         "profiles":profiles,"profile_names":NAMES,"focal_players":focal,"ticks":world.tick(),"factual_decisions":checks,
         "simulated_nodes":simulations,"plan_events":counters,"seconds":started.elapsed().as_secs_f64(),
         "purpose":(0..world.players()).map(|i|world.purpose(i)).collect::<Vec<_>>(),
@@ -428,6 +471,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "--coordination",
             "--intent-sharing",
             "--reference",
+            "--planning-protocol",
         ]
         .contains(key)
         {
@@ -488,6 +532,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("known reference required".into());
     }
     let frozen_reference = reference == "frozen";
+    let planning_protocol = *options
+        .get("--planning-protocol")
+        .unwrap_or(&"counterproposal");
+    if !["counterproposal", "independent"].contains(&planning_protocol) {
+        return Err("known planning protocol required".into());
+    }
     if !["planned", "reflex", "challenger"].contains(&mode) || turns == 0 || turns > 128 {
         return Err("bounded mode/turns required".into());
     }
@@ -513,6 +563,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             coordinate,
             share_intentions,
             frozen_reference,
+            planning_protocol,
             output,
         ),
         "hagetaka" => run(
@@ -528,6 +579,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             coordinate,
             share_intentions,
             frozen_reference,
+            planning_protocol,
             output,
         ),
         "exchange" => run(
@@ -543,6 +595,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             coordinate,
             share_intentions,
             frozen_reference,
+            planning_protocol,
             output,
         ),
         _ => Err("unknown arena".into()),

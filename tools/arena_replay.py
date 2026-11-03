@@ -40,6 +40,10 @@ def summarize(matches,sources):
         if r['mode']!='challenger':continue
         b=index.get((r['game'],r['scene'],r['seed'],'reflex'))
         if b is None:continue
+        if not r.get('source_binary_sha256') or r['source_binary_sha256']!=b.get('source_binary_sha256'):
+            raise ValueError('paired runs require the same frozen executable')
+        if r.get('agreement_compatibility')!=b.get('agreement_compatibility'):
+            raise ValueError('paired runs require equal agreement constraints')
         if any(r.get(k)!=b.get(k) for k in ('horizon','individual_beliefs','coordination','profiles','focal_players')):
             raise ValueError('paired controllers require equal settings and personalities')
         if r.get('second_moves',8)!=b.get('second_moves',8):
@@ -48,7 +52,10 @@ def summarize(matches,sources):
             raise ValueError('paired controllers require equal purpose filters')
         if r.get('intent_sharing',False)!=b.get('intent_sharing',False):
             raise ValueError('paired controllers require equal communication')
-        if r.get('intention_protocol')!=b.get('intention_protocol'):
+        if 'planning_protocol' in r or 'planning_protocol' in b:
+            if r.get('planning_protocol','counterproposal')!=b.get('planning_protocol','counterproposal'):
+                raise ValueError('paired runs require equal candidate planning protocols')
+        elif r.get('intention_protocol')!=b.get('intention_protocol'):
             raise ValueError('paired controllers require equal intention protocols')
         if r.get('frozen_reference',False)!=b.get('frozen_reference',False):
             raise ValueError('paired controllers require equal reference design')
@@ -100,6 +107,7 @@ def summarize(matches,sources):
         intention_protocol=sorted(set(r.get('intention_protocol','sequential' if r.get('intent_sharing') else 'none') for r in matches)),
         frozen_reference=sorted(set(r.get('frozen_reference',False) for r in matches)),
         scenario_batches=sorted(set(r.get('scenario_batches',1) for r in matches)),
+        planning_protocol=sorted(set(r.get('planning_protocol','counterproposal') for r in matches)),
         prediction_calibrated=sorted(set(r.get('prediction_calibrated',False) for r in matches)),
         seconds=dict(min=min(r['seconds'] for r in matches),max=max(r['seconds'] for r in matches)),
         by_game=groups,by_single_focal_profile=single_profiles,exchange_all_planned=dict(**social,profile_actions=dict(actions)),focal_comparisons=cases,
@@ -116,18 +124,19 @@ def main():
     sources=[]
     for folder in a.folders:
         selected=set()
+        plan=json.loads((folder/'plan.json').read_bytes()) if (folder/'plan.json').exists() else {}
         for f in sorted(folder.glob('*.json')):
             r=json.loads(f.read_bytes())
             if not (r.get('complete') and r.get('game') and r.get('trace')):continue
             identity=(r['game'],r['seed'],r['mode'],r['horizon'],r.get('second_moves',8),r.get('max_regret',.15),r.get('scenario_batches',1),r.get('intent_sharing',False),r.get('intention_protocol','sequential' if r.get('intent_sharing') else 'none'),r.get('frozen_reference',False),r.get('individual_beliefs',False),r.get('coordination',False),json.dumps(r['trace'][0]['before'],sort_keys=True))
-            identity=identity+(r.get('prediction_calibrated',False),)
+            identity=identity+(r.get('prediction_calibrated',False),r.get('planning_protocol','counterproposal'))
             if identity in seen:continue
             seen.add(identity)
             selected.add(r['game'])
+            r['source_binary_sha256']=plan.get('binary_sha256')
             r['scene']=' / '.join(f.stem.split('-')[1:3])
             matches.append(r)
         if selected:
-            plan=json.loads((folder/'plan.json').read_bytes()) if (folder/'plan.json').exists() else {}
             sources.append(dict(folder=str(folder),games=sorted(selected),binary_sha256=plan.get('binary_sha256')))
     matches.sort(key=lambda r:(r['mode']!='planned',('exchange','combat','hagetaka').index(r['game']),r['seed'],r['scene']))
     if not matches:raise ValueError('completed actual matches required')

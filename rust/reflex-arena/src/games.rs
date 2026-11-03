@@ -35,6 +35,9 @@ trait World: ArenaGame {
     fn model_choice(&self, player: usize, hypothesis: usize) -> String;
     fn facts(&self, p: usize) -> BTreeMap<String, String>;
     fn binding(&self, p: usize, action: &str) -> reflex_owned::experience::Binding;
+    fn readiness(&self, p: usize) -> f64 {
+        self.purpose(p)
+    }
 }
 fn identified_response(viewer: usize, actual: &[String], models: &[Vec<String>]) -> Option<String> {
     let mut matching = models.iter().enumerate().filter(|(_, choices)| {
@@ -76,7 +79,7 @@ fn feedback<W: World>(before: &W, after: &W, c: &[String]) -> Vec<Feedback> {
                 }),
                 purpose: Some(progress::PurposeFeedback {
                     level: after.purpose(p),
-                    readiness: 0.5,
+                    readiness: after.readiness(p),
                     maintained: false,
                     completed: after.terminal(),
                 }),
@@ -133,6 +136,10 @@ fn make_input_scenarios<W: World>(w: &W, p: usize, choices: &[Vec<String>]) -> R
             outcomes,
         });
     }
+    let bindings: BTreeMap<_, _> = actions
+        .iter()
+        .map(|a| (a.id.clone(), w.binding(p, &a.id)))
+        .collect();
     let activities = actions
         .iter()
         .map(|a| {
@@ -141,17 +148,13 @@ fn make_input_scenarios<W: World>(w: &W, p: usize, choices: &[Vec<String>]) -> R
                 progress::Activity {
                     kind: progress::Kind::Attempt,
                     reason: "game action".into(),
-                    condition: "public state".into(),
+                    condition: bindings[&a.id].situation.clone(),
                     patience: 3,
                     release: String::new(),
                     replacement: true,
                 },
             )
         })
-        .collect();
-    let bindings = actions
-        .iter()
-        .map(|a| (a.id.clone(), w.binding(p, &a.id)))
         .collect();
     let deficits = w.deficits(p);
     Ok(Input {
@@ -179,7 +182,7 @@ fn make_input_scenarios<W: World>(w: &W, p: usize, choices: &[Vec<String>]) -> R
         conditional,
         purpose: progress::Purpose {
             level: w.purpose(p),
-            readiness: 0.5,
+            readiness: w.readiness(p),
             maintained: false,
             activities,
         },
@@ -545,6 +548,8 @@ impl World for Encounters {
         if h == 2 {
             return if legal.contains(&"alone".to_string()) && self.people[p].energy >= 0.5 {
                 "alone".into()
+            } else if legal.contains(&"rest".to_string()) {
+                "rest".into()
             } else {
                 legal[0].clone()
             };
@@ -958,6 +963,33 @@ impl Combat {
     }
 }
 impl ArenaGame for Combat {
+    fn agreement_compatible(&self, known: &BTreeMap<usize, String>) -> Result<bool> {
+        let mut destinations = std::collections::BTreeSet::new();
+        for (&actor, action) in known {
+            if actor >= self.players() {
+                return Err(err());
+            }
+            if let Some(destination) = action.strip_prefix("move:") {
+                let mut parts = destination.split(':');
+                let x = parts
+                    .next()
+                    .and_then(|s| s.parse::<i32>().ok())
+                    .ok_or_else(err)?;
+                let y = parts
+                    .next()
+                    .and_then(|s| s.parse::<i32>().ok())
+                    .ok_or_else(err)?;
+                if parts.next().is_some() {
+                    return Err(err());
+                }
+                if !destinations.insert((self.units[actor].team, x, y)) {
+                    return Ok(false);
+                }
+            }
+        }
+        Ok(true)
+    }
+
     fn partners(&self, player: usize) -> Vec<usize> {
         if player >= self.players() {
             return vec![];
@@ -1095,7 +1127,11 @@ impl ArenaGame for Combat {
                 .map(|u| u.hp)
                 .sum::<i32>() as f64
                 / 27.;
-        let capture = self.hold[t] as f64 / 3.;
+        let capture = if self.secured[t] {
+            1.
+        } else {
+            self.hold[t] as f64 / 3.
+        };
         let mission = match self.goal.as_str() {
             "eliminate" => damage,
             "secure" => capture,
@@ -1116,6 +1152,9 @@ impl ArenaGame for Combat {
     }
 }
 impl World for Combat {
+    fn readiness(&self, p: usize) -> f64 {
+        self.preparation(self.units[p].team)
+    }
     fn behavior_alphabet(&self) -> Vec<String> {
         [
             "finished",
@@ -1156,6 +1195,7 @@ impl World for Combat {
                 return "reload".into();
             }
         }
+        let current_distance = self.zone_distance((u.x, u.y));
         let best = legal
             .iter()
             .filter_map(|a| {
@@ -1165,7 +1205,8 @@ impl World for Combat {
                 }
                 let x = parts.next()?.parse::<i32>().ok()?;
                 let y = parts.next()?.parse::<i32>().ok()?;
-                Some(((4 - x).abs() + (2 - y).abs(), a))
+                let distance = self.zone_distance((x, y));
+                (distance < current_distance).then_some((distance, a))
             })
             .min_by_key(|(d, _)| *d);
         best.map(|(_, a)| a.clone()).unwrap_or_else(|| {
@@ -1428,6 +1469,43 @@ mod tests {
         assert!(game.input_scenarios(0, &ignored_own).is_ok());
     }
     #[test]
+    fn agreement_uses_only_known_teammates_without_banning_independent_collisions() {
+        let mut game = Combat::new(1, "open", "secure", 10);
+        game.units[0].x = 3;
+        game.units[0].y = 1;
+        game.units[1].x = 5;
+        game.units[1].y = 1;
+        let mut choices = vec!["guard".to_string(); 6];
+        let offer = crate::coordination::Offer {
+            id: "conflict".into(),
+            roots: BTreeMap::from([(0, "move:4:1".into()), (1, "move:4:1".into())]),
+        };
+        let known = crate::known_offer_intentions(&game, &offer, &choices).unwrap();
+        assert_eq!(known.keys().copied().collect::<Vec<_>>(), vec![0, 1, 2]);
+        assert!(!crate::offer_compatible(&game, &offer, &choices).unwrap());
+        choices[3] = "unrevealed-enemy-action".into();
+        assert_eq!(
+            known,
+            crate::known_offer_intentions(&game, &offer, &choices).unwrap()
+        );
+        assert!(!crate::offer_compatible(&game, &offer, &choices).unwrap());
+        let safe = crate::coordination::Offer {
+            id: "safe".into(),
+            roots: BTreeMap::from([(0, "move:4:1".into()), (1, "guard".into())]),
+        };
+        assert!(crate::offer_compatible(&game, &safe, &choices).unwrap());
+        let invalid = crate::coordination::Offer {
+            id: "wrong-team".into(),
+            roots: BTreeMap::from([(0, "guard".into()), (3, "guard".into())]),
+        };
+        assert!(crate::offer_compatible(&game, &invalid, &choices).is_err());
+        choices[3] = "guard".into();
+        choices[0] = "move:4:1".into();
+        choices[1] = "move:4:1".into();
+        let (next, _) = game.advance(&choices, 1).unwrap();
+        assert_eq!((next.units[0].x, next.units[1].x), (3, 5));
+    }
+    #[test]
     fn voluntary_offers_are_legal_scoped_and_ignore_opponents() {
         let hagetaka = Hagetaka::new(1);
         assert!(hagetaka.partners(0).is_empty());
@@ -1590,6 +1668,67 @@ mod tests {
         }));
     }
     #[test]
+    fn combat_approach_models_hold_every_zone_cell_and_keep_existing_fallbacks() {
+        let mut game = Combat::new(1, "open", "secure", 10);
+        // Block enemy sight without changing the zone or movement around it.
+        game.walls = (0..5).map(|y| (6, y)).collect();
+        for (i, y) in [0, 2, 4].into_iter().enumerate() {
+            game.units[i + 3].x = 8;
+            game.units[i + 3].y = y;
+        }
+        for y in 1..=3 {
+            game.units[0].x = 4;
+            game.units[0].y = y;
+            for h in [1, 2] {
+                let action = game.model_choice(0, h);
+                assert_eq!(action, "guard");
+                assert!(game.legal(0).contains(&action));
+            }
+        }
+        let mut visible = game.clone();
+        visible.walls.clear();
+        visible.units[0].y = 2;
+        visible.units[3].x = 5;
+        visible.units[3].y = 2;
+        assert_eq!(visible.model_choice(0, 1), "guard");
+        let shot = visible.model_choice(0, 2);
+        assert!(shot.starts_with("shoot:"));
+        assert!(visible.legal(0).contains(&shot));
+        game.units[0].ammo = 0;
+        for h in [1, 2] {
+            let action = game.model_choice(0, h);
+            assert_eq!(action, "reload");
+            assert!(game.legal(0).contains(&action));
+        }
+        game.units[0].hp = 0;
+        for h in 0..3 {
+            let action = game.model_choice(0, h);
+            assert_eq!(action, "finished");
+            assert!(game.legal(0).contains(&action));
+        }
+    }
+    #[test]
+    fn combat_approach_models_follow_shorter_terrain_path_around_wall() {
+        let mut game = Combat::new(1, "cover", "secure", 10);
+        game.units[0].x = 3;
+        game.units[0].y = 1;
+        assert!(game.walls.contains(&(4, 1)));
+        let current = game.zone_distance((3, 1));
+        for h in [1, 2] {
+            let action = game.model_choice(0, h);
+            assert_eq!(action, "move:3:2");
+            assert!(game.legal(0).contains(&action));
+            assert!(game.zone_distance((3, 2)) < current);
+        }
+        game.units[1].x = 3;
+        game.units[1].y = 2;
+        for h in [1, 2] {
+            let action = game.model_choice(0, h);
+            assert_eq!(action, "guard");
+            assert!(game.legal(0).contains(&action));
+        }
+    }
+    #[test]
     fn model_deck_ignores_hidden_order() {
         let a = Hagetaka::new(11);
         let mut b = a.clone();
@@ -1663,6 +1802,76 @@ mod tests {
         assert!(secure.preparation(0) > before_hold);
     }
     #[test]
+    fn actual_position_progress_is_the_same_readiness_in_input_and_feedback() {
+        let game = Combat::new(1, "choke", "eliminate", 10);
+        let before = game.input(0).unwrap();
+        let mut choices = vec!["guard".to_string(); game.players()];
+        choices[0] = "move:2:0".into();
+        let (next, feedback) = game.advance(&choices, 7).unwrap();
+        let after = next.input(0).unwrap();
+        assert_eq!(before.purpose.level, after.purpose.level);
+        assert!(after.purpose.readiness > before.purpose.readiness);
+        assert_eq!(before.purpose.readiness, game.preparation(0));
+        assert_eq!(
+            feedback[0].purpose.as_ref().unwrap().readiness,
+            after.purpose.readiness
+        );
+        assert_eq!(after.purpose.readiness, next.preparation(0));
+    }
+    #[test]
+    fn failures_are_scoped_to_the_public_situation_used_by_experience() {
+        let game = Combat::new(1, "open", "eliminate", 10);
+        let before = game.input(0).unwrap();
+        for action in &before.observation.actions {
+            assert_eq!(
+                before.purpose.activities[&action.id].condition,
+                before.bindings[&action.id].situation
+            );
+        }
+        let mut progress = progress::Progress::default();
+        let feedback = progress::PurposeFeedback {
+            level: before.purpose.level,
+            readiness: before.purpose.readiness,
+            maintained: false,
+            completed: false,
+        };
+        for _ in 0..3 {
+            progress
+                .observe("guard", &before.purpose, Some(&feedback))
+                .unwrap();
+        }
+        assert!(!progress
+            .allowed(&before.observation, &before.purpose)
+            .unwrap()
+            .contains("guard"));
+        let mut changed = game.clone();
+        changed.units[0].ammo = 1;
+        let later = changed.input(0).unwrap();
+        assert_ne!(
+            before.bindings["guard"].situation,
+            later.bindings["guard"].situation
+        );
+        assert!(progress
+            .allowed(&later.observation, &later.purpose)
+            .unwrap()
+            .contains("guard"));
+    }
+    #[test]
+    fn noncombat_readiness_uses_purpose_before_and_after_the_transition() {
+        fn check<G: World>(game: G) {
+            let input = game.input(0).unwrap();
+            assert_eq!(input.purpose.readiness, game.purpose(0));
+            let choices = game.modeled_choices(0, "0").unwrap();
+            let (next, feedback) = game.advance(&choices, 7).unwrap();
+            assert_eq!(
+                feedback[0].purpose.as_ref().unwrap().readiness,
+                next.purpose(0)
+            );
+        }
+        check(Hagetaka::new(1));
+        check(Encounters::new(1, 10));
+    }
+    #[test]
     fn combat_move_without_physical_progress_has_no_openness_reward() {
         let battle = Combat::new(1, "choke", "eliminate", 10);
         let mut choices = vec!["guard".to_string(); 6];
@@ -1693,6 +1902,58 @@ mod tests {
             n = n.advance(&c, 1).unwrap().0;
         }
         assert!(n.winner(0));
+    }
+    #[test]
+    fn combat_both_keeps_captured_purpose_after_leaving_but_tracks_unsecured_hold() {
+        let mut game = Combat::new(1, "open", "both", 10);
+        game.units[3].hp = 3;
+        game.units[4].hp = 3;
+        game.secured[0] = true;
+        game.hold[0] = 3;
+        let held = game.purpose(0);
+        game.hold[0] = 0;
+        assert_eq!(game.purpose(0), held);
+        assert!(!game.winner(0));
+
+        game.secured[0] = false;
+        game.hold[0] = 0;
+        let no_hold = game.purpose(0);
+        game.hold[0] = 1;
+        let partial = game.purpose(0);
+        game.hold[0] = 2;
+        assert!(no_hold < partial && partial < game.purpose(0));
+
+        for unit in &mut game.units[3..] {
+            unit.hp = 0;
+        }
+        assert!(!game.winner(0), "both still requires permanent capture");
+        game.secured[0] = true;
+        assert!(game.winner(0));
+        assert_eq!(game.purpose(0), 1.);
+        assert_eq!(game.purpose(3), 0.);
+        let mut opposite = Combat::new(1, "open", "both", 10);
+        for unit in &mut opposite.units[..3] {
+            unit.hp = 0;
+        }
+        assert!(!opposite.winner(1));
+        opposite.secured[1] = true;
+        assert!(opposite.winner(1));
+        assert_eq!(opposite.purpose(3), 1.);
+        assert_eq!(opposite.purpose(0), 0.);
+    }
+    #[test]
+    fn encounter_conserving_model_rests_before_work_becomes_illegal() {
+        let mut g = Encounters::new(1, 32);
+        for energy in [0.18, 0.185, 0.39, 0.499] {
+            g.people[3].energy = energy;
+            assert!(g.legal(3).contains(&"alone".to_string()));
+            assert_eq!(g.model_choice(3, 2), "rest");
+            assert_eq!(g.behavior(0, 3).unwrap().suggestions[2], "rest");
+        }
+        g.people[3].energy = 0.5;
+        assert_eq!(g.model_choice(3, 2), "alone");
+        g.people[3].health = 0.;
+        assert_eq!(g.model_choice(3, 2), "finished");
     }
     #[test]
     fn encounter_safety_tracks_state_change_not_action_name() {
