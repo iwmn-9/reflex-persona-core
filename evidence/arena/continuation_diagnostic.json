@@ -67,5 +67,108 @@
         }
       }
     }
+  },
+  "sequential_intentions": {
+    "sources": [
+      "arena_intentions_v8_20261103"
+    ],
+    "complete": true,
+    "stable_adoption": false,
+    "games": {
+      "combat": {
+        "pairs": 12,
+        "mean_purpose_delta": -0.19197530864197532,
+        "classification": {
+          "equivalent": 4,
+          "worse": 6,
+          "better": 2
+        }
+      },
+      "hagetaka": {
+        "pairs": 4,
+        "mean_purpose_delta": 0.13571428571428568,
+        "classification": {
+          "better": 4
+        }
+      },
+      "exchange": {
+        "pairs": 4,
+        "mean_purpose_delta": 0.01593750000000002,
+        "classification": {
+          "equivalent": 3,
+          "better": 1
+        }
+      }
+    }
+  },
+  "mutual_intentions_matched_reference": {
+    "sources": [
+      "arena_mutual_v9_20261103"
+    ],
+    "complete": true,
+    "stable_adoption": false,
+    "games": {
+      "combat": {
+        "pairs": 12,
+        "mean_purpose_delta": 0.13456790123456788,
+        "classification": {
+          "equivalent": 6,
+          "better": 4,
+          "worse": 2
+        }
+      },
+      "hagetaka": {
+        "pairs": 4,
+        "mean_purpose_delta": 0.13571428571428568,
+        "classification": {
+          "better": 4
+        }
+      },
+      "exchange": {
+        "pairs": 4,
+        "mean_purpose_delta": -0.013187499999999991,
+        "classification": {
+          "equivalent": 1,
+          "better": 2,
+          "worse": 1
+        }
+      }
+    }
+  },
+  "nine_samples_fixed_reference": {
+    "sources": [
+      "arena_samples_v11_20261103",
+      "arena_samples_check_v11_20261103"
+    ],
+    "complete": true,
+    "stable_adoption": false,
+    "games": {
+      "combat": {
+        "pairs": 24,
+        "mean_purpose_delta": 0.1679012345679012,
+        "classification": {
+          "equivalent": 10,
+          "worse": 4,
+          "better": 10
+        }
+      },
+      "hagetaka": {
+        "pairs": 8,
+        "mean_purpose_delta": 0.0901785714285714,
+        "classification": {
+          "better": 7,
+          "worse": 1
+        }
+      },
+      "exchange": {
+        "pairs": 8,
+        "mean_purpose_delta": 0.0033437500000000064,
+        "classification": {
+          "equivalent": 2,
+          "worse": 2,
+          "better": 4
+        }
+      }
+    }
   }
 }

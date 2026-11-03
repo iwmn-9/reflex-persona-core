@@ -77,6 +77,7 @@ fn run<G: ArenaGame>(
     horizon: u32,
     second_moves: usize,
     max_regret: f64,
+    scenario_batches: usize,
     mode: &str,
     individual: bool,
     coordinate: bool,
@@ -120,6 +121,7 @@ fn run<G: ArenaGame>(
                     horizon: if planning[i] { horizon } else { 1 },
                     second_moves: if modified[i] { second_moves } else { 8 },
                     max_regret: if modified[i] { max_regret } else { 0.15 },
+                    scenario_batches: if modified[i] { scenario_batches } else { 1 },
                     ..Search::default()
                 },
             )
@@ -379,7 +381,7 @@ fn run<G: ArenaGame>(
         beliefs = next_beliefs;
         eprintln!("{game} {mode} tick={} nodes={simulations}", world.tick());
     }
-    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"intention_protocol":if share_intentions {"mutual-counterproposal-v1"} else {"none"},"frozen_reference":frozen_reference,
+    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"intention_protocol":if share_intentions {"mutual-counterproposal-v1"} else {"none"},"frozen_reference":frozen_reference,
         "controllers":(0..world.players()).map(|i|json!({"planned":planning[i],"settings":planners[i].config(),"intent_sharing":sharing[i]})).collect::<Vec<_>>(),
         "profiles":profiles,"profile_names":NAMES,"focal_players":focal,"ticks":world.tick(),"factual_decisions":checks,
         "simulated_nodes":simulations,"plan_events":counters,"seconds":started.elapsed().as_secs_f64(),
@@ -416,6 +418,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "--horizon",
             "--second-moves",
             "--max-regret",
+            "--scenario-batches",
             "--turns",
             "--mode",
             "--out",
@@ -450,6 +453,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .parse::<f64>()?;
     if !max_regret.is_finite() || !(0.0..=1.0).contains(&max_regret) {
         return Err("max-regret must be in 0..=1".into());
+    }
+    let scenario_batches = options
+        .get("--scenario-batches")
+        .unwrap_or(&"1")
+        .parse::<usize>()?;
+    if !(1..=4).contains(&scenario_batches) {
+        return Err("scenario-batches must be in 1..=4".into());
     }
     let turns = options.get("--turns").unwrap_or(&"32").parse::<u64>()?;
     let mode = *options.get("--mode").unwrap_or(&"reflex");
@@ -497,6 +507,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             horizon,
             second_moves,
             max_regret,
+            scenario_batches,
             mode,
             individual,
             coordinate,
@@ -511,6 +522,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             horizon,
             second_moves,
             max_regret,
+            scenario_batches,
             mode,
             individual,
             coordinate,
@@ -525,6 +537,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             horizon,
             second_moves,
             max_regret,
+            scenario_batches,
             mode,
             individual,
             coordinate,

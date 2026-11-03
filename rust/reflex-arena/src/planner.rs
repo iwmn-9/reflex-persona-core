@@ -17,6 +17,8 @@ pub struct Config {
     pub model_seed: u64,
     /// Number of explicit second-action candidates per root; zero keeps only ordinary tails.
     pub second_moves: usize,
+    /// Independent three-scenario batches, using common seeds across candidates.
+    pub scenario_batches: usize,
 }
 impl Default for Config {
     fn default() -> Self {
@@ -25,6 +27,7 @@ impl Default for Config {
             max_regret: 0.15,
             model_seed: 701,
             second_moves: 8,
+            scenario_batches: 1,
         }
     }
 }
@@ -34,6 +37,7 @@ impl Config {
             || !self.max_regret.is_finite()
             || !(0.0..=1.0).contains(&self.max_regret)
             || self.second_moves > 8
+            || !(1..=4).contains(&self.scenario_batches)
         {
             return Err(Error::Invalid("bounded planner settings required"));
         }
@@ -158,7 +162,7 @@ impl Planner {
     /// Restore only against an independently supplied owner; personality is checked.
     pub fn restore(owner: &Owner, bytes: &[u8]) -> Result<Self> {
         let save: PlannerSave = serde_json::from_slice(bytes)?;
-        if save.version != "arena-planner-v3"
+        if save.version != "arena-planner-v4"
             || save.sha256 != format!("{:x}", Sha256::digest(serde_json::to_vec(&save.planner)?))
         {
             return Err(Error::Invalid("planner checkpoint integrity mismatch"));
@@ -188,7 +192,7 @@ impl Planner {
     }
     pub fn checkpoint(&self) -> Result<Vec<u8>> {
         let save = PlannerSave {
-            version: "arena-planner-v3".into(),
+            version: "arena-planner-v4".into(),
             planner: self.clone(),
             sha256: format!("{:x}", Sha256::digest(serde_json::to_vec(self)?)),
         };
@@ -281,14 +285,21 @@ impl Planner {
         };
         roots.sort();
         roots.dedup();
-        let probabilities = if beliefs.is_some() {
+        let base_probabilities = if beliefs.is_some() {
             vec![1. / 3.; 3]
         } else {
             actor.predict(&input.responses)?
         };
-        if probabilities.len() != 3 {
+        if base_probabilities.len() != 3 {
             return Err(Error::Invalid("three public responses required"));
         }
+        let probabilities: Vec<_> = (0..self.config.scenario_batches)
+            .flat_map(|_| {
+                base_probabilities
+                    .iter()
+                    .map(|p| p / self.config.scenario_batches as f64)
+            })
+            .collect();
         let mut candidates = Vec::new();
         for root in roots {
             let mut schedules: Vec<Option<Vec<String>>> = vec![None];
@@ -337,20 +348,22 @@ impl Planner {
                     return Err(Error::Invalid("bounded plan count exceeded"));
                 }
                 let mut paths = Vec::new();
-                for scenario in 0..3 {
-                    paths.push(simulate(
-                        owner,
-                        game,
-                        player,
-                        &root,
-                        scenario,
-                        self.config.horizon,
-                        self.config.model_seed,
-                        schedule.as_deref(),
-                        beliefs,
-                        intentions.map(|frame| &frame.choices),
-                        false,
-                    )?);
+                for batch in 0..self.config.scenario_batches {
+                    for scenario in 0..3 {
+                        paths.push(simulate(
+                            owner,
+                            game,
+                            player,
+                            &root,
+                            scenario,
+                            self.config.horizon,
+                            batch_seed(self.config.model_seed, batch),
+                            schedule.as_deref(),
+                            beliefs,
+                            intentions.map(|frame| &frame.choices),
+                            false,
+                        )?);
+                    }
                 }
                 let purpose = paths
                     .iter()
@@ -650,24 +663,25 @@ impl Planner {
             } else {
                 None
             };
-            let paths = (0..3)
-                .map(|scenario| {
-                    simulate(
+            let mut paths = Vec::with_capacity(3 * self.config.scenario_batches);
+            for batch in 0..self.config.scenario_batches {
+                for scenario in 0..3 {
+                    paths.push(simulate(
                         owner,
                         game,
                         player,
                         root,
                         scenario,
                         self.config.horizon,
-                        self.config.model_seed,
+                        batch_seed(self.config.model_seed, batch),
                         schedule,
                         Some(beliefs),
                         Some(first),
                         id.is_some(),
-                    )
-                })
-                .collect::<Result<Vec<_>>>()?;
-            let purpose = paths.iter().map(|p| p.purpose).sum::<f64>() / 3.;
+                    )?);
+                }
+            }
+            let purpose = paths.iter().map(|p| p.purpose).sum::<f64>() / paths.len() as f64;
             candidates.push(Candidate {
                 root: root.clone(),
                 paths,
@@ -687,7 +701,13 @@ impl Planner {
                 effects: [self.config.horizon as f64; 22],
                 root_terms: self.config.horizon as f64,
             },
-            plans: plans(&candidates, &[1. / 3.; 3]),
+            plans: plans(
+                &candidates,
+                &vec![
+                    1. / (3 * self.config.scenario_batches) as f64;
+                    3 * self.config.scenario_batches
+                ],
+            ),
         };
         let tier_appraisal = actor.with_continuation(base, &forecast)?;
         let (_, pre_filter) = selected_candidate(&tier_appraisal, &candidates)?;
@@ -821,6 +841,9 @@ fn signed_context(input: &mut reflex_owned::Input) {
     for binding in input.bindings.values_mut() {
         binding.situation = format!("{}|{context}", binding.situation);
     }
+}
+fn batch_seed(seed: u64, batch: usize) -> u64 {
+    seed.wrapping_add(0x9e3779b97f4a7c15_u64.wrapping_mul(batch as u64))
 }
 fn uniform(mut x: u64) -> f64 {
     x = x.wrapping_add(0x9e3779b97f4a7c15);

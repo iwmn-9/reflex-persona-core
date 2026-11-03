@@ -166,6 +166,142 @@ fn default_second_move_budget_matches_explicit_eight_and_is_bounded() {
 }
 
 #[test]
+fn multiple_scenario_batches_are_bounded_replayable_and_leave_the_owner_untouched() {
+    let game = Hagetaka::new(7);
+    let mut cfg = fixture::config("a");
+    cfg.contract = "arena-estimated-model-v1".into();
+    cfg.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+    let actor = Owner::new(cfg).unwrap();
+    let before = actor.state().unwrap().clone();
+    let input = game.input(0).unwrap();
+    let roots = actor
+        .prepare_estimated(&input, false)
+        .unwrap()
+        .allowed()
+        .len();
+    let planner = Planner::new(
+        &actor,
+        Config {
+            horizon: 2,
+            second_moves: 0,
+            scenario_batches: 3,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let proposal = planner.propose(&actor, &game, 0).unwrap();
+    assert_eq!(proposal.audit.simulated_nodes, roots * 9 * 2);
+    assert_eq!(actor.state().unwrap(), &before);
+    let checkpoint = planner.checkpoint().unwrap();
+    let restored = Planner::restore(&actor, &checkpoint).unwrap();
+    assert_eq!(restored.config().scenario_batches, 3);
+    let replay = restored.propose(&actor, &game, 0).unwrap();
+    assert_eq!(proposal.action(), replay.action());
+    assert_eq!(
+        serde_json::to_value(&proposal.audit).unwrap(),
+        serde_json::to_value(&replay.audit).unwrap()
+    );
+    let max = Planner::new(
+        &actor,
+        Config {
+            horizon: 2,
+            second_moves: 0,
+            scenario_batches: 4,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    assert_eq!(
+        max.propose(&actor, &game, 0).unwrap().audit.simulated_nodes,
+        roots * 12 * 2
+    );
+    let mut old: serde_json::Value = serde_json::from_slice(&checkpoint).unwrap();
+    old["version"] = "arena-planner-v3".into();
+    assert!(Planner::restore(&actor, &serde_json::to_vec(&old).unwrap()).is_err());
+    for count in [0, 5] {
+        assert!(Planner::new(
+            &actor,
+            Config {
+                scenario_batches: count,
+                ..Default::default()
+            }
+        )
+        .is_err());
+    }
+}
+
+#[test]
+fn default_scenario_batch_matches_explicit_one() {
+    let game = Hagetaka::new(7);
+    let mut cfg = fixture::config("a");
+    cfg.contract = "arena-estimated-model-v1".into();
+    cfg.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+    let actor = Owner::new(cfg).unwrap();
+    let a = Planner::new(
+        &actor,
+        Config {
+            horizon: 2,
+            second_moves: 0,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let b = Planner::new(
+        &actor,
+        Config {
+            horizon: 2,
+            second_moves: 0,
+            scenario_batches: 1,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let first = a.propose(&actor, &game, 0).unwrap();
+    let second = b.propose(&actor, &game, 0).unwrap();
+    assert_eq!(first.action(), second.action());
+    assert_eq!(
+        serde_json::to_value(&first.audit).unwrap(),
+        serde_json::to_value(&second.audit).unwrap()
+    );
+}
+
+#[test]
+fn agreement_evaluation_uses_every_batch_without_mutating_factual_memory() {
+    use reflex_arena::behavior::Beliefs;
+    let game = Encounters::new(7, 5);
+    let mut cfg = fixture::config("a");
+    cfg.contract = "arena-estimated-model-v1".into();
+    cfg.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+    let actor = Owner::new(cfg).unwrap();
+    let planner = Planner::new(
+        &actor,
+        Config {
+            horizon: 1,
+            scenario_batches: 3,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let scope = serde_json::to_string(&(
+        &actor.config().actor.scope.game,
+        &actor.config().actor.scope.episode,
+    ))
+    .unwrap();
+    let beliefs = Beliefs::new(scope, 0, game.behavior(0, 0).unwrap().alphabet).unwrap();
+    let owner_before = actor.state().unwrap().clone();
+    let beliefs_before = beliefs.checkpoint().unwrap();
+    let announced = vec!["rest".to_owned(); game.players()];
+    let offers = game.offers(&announced).unwrap();
+    let relevant = offers.iter().filter(|o| o.roots.contains_key(&0)).count();
+    let consent = planner
+        .consent_allow_indifference(&actor, &game, 0, &beliefs, &announced, &offers)
+        .unwrap();
+    assert_eq!(consent.simulated_nodes, (relevant + 1) * 9);
+    assert_eq!(actor.state().unwrap(), &owner_before);
+    assert_eq!(beliefs.checkpoint().unwrap(), beliefs_before);
+}
+
+#[test]
 fn unfiltered_tier_audit_matches_selected_root_when_purpose_band_covers_all_roots() {
     let game = Hagetaka::new(7);
     let mut cfg = fixture::config("a");
