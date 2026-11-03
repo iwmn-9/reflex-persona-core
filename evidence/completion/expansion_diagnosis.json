@@ -696,5 +696,114 @@
       "shared": "guard",
       "stable": "reload"
     }
+  },
+  "recovery_divergence_validation": {
+    "complete": true,
+    "adoption": false,
+    "input_sha256": "eecb73ae2ae1a68dda153e4a0acee0762d1b4ed702dda0a79fa9d82fbb92b94c",
+    "plan_sha256": "dde8646eab828e0466615958391cec154c512e0373393b455540d334373cca26",
+    "results_sha256": "42fb51bb2d5d4f6df751ba646160d2060588f2867f607aaf53631a1de8b948cb",
+    "source_sha256": "42ae57258380d3986f4545de13876b9fb474a4c1365a7305cc488fdaaf2d0b0d",
+    "rows": [
+      {
+        "id": "auction-0-10061201-outside",
+        "tick": 44,
+        "factual_owner": "007b3789133f3e0038d578d50dfd12211f171fdfb8abaf269270ebd0a108468f",
+        "record_sha256": "5febbda15e8ce0e00c5d3baae6affbed912cc4892ff833fbb54d90a1cd60dd5c",
+        "cap_check": {
+          "applied": 0.00017730479536524693,
+          "best_purpose": 0.06887168058281477,
+          "bounded_purpose": 0.06887168058281477,
+          "bounded_root": "bid:2",
+          "expanded": 0.0005755207198836945,
+          "ordinary": 0.00017730479536524693,
+          "retained_roots": [
+            "bid:0",
+            "bid:1",
+            "bid:2",
+            "bid:3"
+          ],
+          "shared_purpose": 0.06887168058281477,
+          "shared_root": "bid:2",
+          "stable_purpose": 0.06388233301173793,
+          "stable_root": "bid:3"
+        },
+        "shared_minus_stable": {
+          "1701": 0.006335563539659458,
+          "2701": -0.00991545351350756,
+          "701": 0.004989347571076844
+        },
+        "retained_in_validation_personality_tier": {
+          "1701": {
+            "shared": true,
+            "stable": false
+          },
+          "2701": {
+            "shared": false,
+            "stable": true
+          },
+          "701": {
+            "shared": true,
+            "stable": false
+          }
+        },
+        "checks": {
+          "factual_owner_unchanged": true,
+          "filtered_training_trajectories": true,
+          "original_decision": true,
+          "standalone_stable_projection": true,
+          "training_thresholds_fixed_on_validation": true
+        }
+      },
+      {
+        "id": "auction-0-10061201-outside",
+        "tick": 60,
+        "factual_owner": "c814ee7434f6e6cdf1f3ab9cc2d47cc412fed2a6ac8af4ee7e45f009dbff657e",
+        "record_sha256": "5febbda15e8ce0e00c5d3baae6affbed912cc4892ff833fbb54d90a1cd60dd5c",
+        "cap_check": {
+          "applied": 0.0,
+          "best_purpose": 0.08841667983082947,
+          "bounded_purpose": 0.08841667983082947,
+          "bounded_root": "bid:2",
+          "expanded": 0.00045170790414298664,
+          "ordinary": 0.0,
+          "retained_roots": [
+            "bid:2",
+            "bid:4"
+          ],
+          "shared_purpose": 0.08841667983082947,
+          "shared_root": "bid:2",
+          "stable_purpose": 0.08841667983082947,
+          "stable_root": "bid:2"
+        },
+        "shared_minus_stable": {
+          "1701": 0.0,
+          "2701": 0.0,
+          "701": 0.0
+        },
+        "retained_in_validation_personality_tier": {
+          "1701": {
+            "shared": true,
+            "stable": true
+          },
+          "2701": {
+            "shared": true,
+            "stable": true
+          },
+          "701": {
+            "shared": true,
+            "stable": true
+          }
+        },
+        "checks": {
+          "factual_owner_unchanged": true,
+          "filtered_training_trajectories": true,
+          "original_decision": true,
+          "standalone_stable_projection": true,
+          "training_thresholds_fixed_on_validation": true
+        }
+      }
+    ],
+    "interpretation": "At changed-auction learning tick44, cap-only selection stays unchanged and fixed-policy purpose ranking changes sign across model banks; the full personality tier also changes. At tick60 the shared, bounded and stable owners choose the same rule. These two observed states do not establish the cause of the complete 32-step loss, a predictor-only effect, or long-run improvement. Original decision and factual learning replay pass; the C3 log did not contain the full original purpose table."
   }
 }
