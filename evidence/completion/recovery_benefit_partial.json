@@ -2,7 +2,7 @@
   "audit_complete": true,
   "cohort_complete": false,
   "adoption": false,
-  "received_branches": 37,
+  "received_branches": 38,
   "registered_branches": 40,
   "complete_pairs": [
     {
@@ -184,6 +184,18 @@
       "profile": 2,
       "window_complete": true,
       "world_mode": "steady"
+    },
+    {
+      "delta": {
+        "conditional_increment": 0.028857421874999997,
+        "score_increment": 0.034423828125
+      },
+      "game": "auction",
+      "id": "auction-3-10061202-shift-return",
+      "prediction_recovered": true,
+      "profile": 3,
+      "window_complete": true,
+      "world_mode": "changed"
     },
     {
       "delta": {
@@ -765,6 +777,42 @@
     },
     {
       "id": "auction-3-10061202-shift-return",
+      "world_mode": "changed",
+      "experience": "learning",
+      "initial_cash": 3.0,
+      "final_cash": 2.0,
+      "initial_investment": 0,
+      "final_investment": 0,
+      "score_increment": 0.021240234375,
+      "conditional_increment": 0.008349609374999999,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "7fe81809822e1102912e937bbb8029105c0d63507d08849319e7e7ed62a8dd0e"
+    },
+    {
+      "id": "auction-3-10061202-shift-return",
+      "world_mode": "changed",
+      "experience": "frozen",
+      "initial_cash": 3.0,
+      "final_cash": 5.0,
+      "initial_investment": 0,
+      "final_investment": 0,
+      "score_increment": -0.01318359375,
+      "conditional_increment": -0.0205078125,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "c59386ed118f8a8de1826e9a4919e5d7e0bc521562d386456d25be1c79f17088"
+    },
+    {
+      "id": "auction-3-10061202-shift-return",
       "world_mode": "steady",
       "experience": "learning",
       "initial_cash": 3.0,
@@ -875,8 +923,8 @@
   "C3_development_passed": false,
   "source_sha256": "42ae57258380d3986f4545de13876b9fb474a4c1365a7305cc488fdaaf2d0b0d",
   "overlay_sha256": "e288e10feab91433650701fd48155c5d7b5a4564c7b2f5557be7dda1b9a80e52",
-  "input_sha256": "7d29497fe302c23de7b8e1da51e8d844919f77a01e765f1ff57ffa4600e6844a",
-  "audit_results_sha256": "599e9964fd2fc3194475117e4fa433dc15adc61edd9e907ab15d76ecc729ac72",
+  "input_sha256": "6bf1f6025af37e97dec0cebf5a6f7b33449b055b66fe5e59f93a6f21dc446526",
+  "audit_results_sha256": "b22011ece5fed0df0adf520c229acda327c35a9245722060754ccc67dad229f4",
   "limits": [
     "Known registered conditions only. Completed pairs do not establish full-family, full-cohort or unseen-game performance.",
     "The intervention freezes actual prediction, experience and evidence updates, not only the predictor.",
@@ -942,8 +990,11 @@
   "families": {
     "changed": {
       "auction": {
-        "complete": false,
-        "mean_delta": null,
+        "complete": true,
+        "mean_delta": {
+          "conditional_increment": 0.018377685546875,
+          "score_increment": 0.01739501953125
+        },
         "registered": 4
       },
       "combat": {

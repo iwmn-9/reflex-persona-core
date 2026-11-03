@@ -5,12 +5,12 @@
     "development_gate_passed": false,
     "families": {
       "auction": {
-        "conditional_delta": -0.03325195312499998,
-        "score_delta": -0.029296875
+        "conditional_delta": -0.02144775390624999,
+        "score_delta": -0.013671875
       },
       "combat": {
-        "conditional_delta": -0.010937500000000044,
-        "score_delta": 0.0078125
+        "conditional_delta": -0.0006076388888889098,
+        "score_delta": 0.003906250000000018
       },
       "gambling": {
         "conditional_delta": -0.0013020833333332593,
@@ -30,6 +30,16 @@
     },
     "independent_confirmation": "Requires C2 reference, C3 benefit and individual-loss review as well.",
     "pairs": [
+      {
+        "conditional_delta": 0.010286458333333304,
+        "game": "combat",
+        "id": "combat-0-10061201-outside",
+        "profile": 0,
+        "root_candidate_score": 0.3880208333333333,
+        "score": 0.3795572916666667,
+        "score_delta": -0.00846354166666663,
+        "stable_score": 0.3880208333333333
+      },
       {
         "conditional_delta": 0.0,
         "game": "resources",
@@ -61,6 +71,26 @@
         "stable_score": 0.2724609375
       },
       {
+        "conditional_delta": -0.0096435546875,
+        "game": "auction",
+        "id": "auction-2-10061202-shift-return",
+        "profile": 2,
+        "root_candidate_score": 0.27197265625,
+        "score": 0.26318359375,
+        "score_delta": 0.001953125,
+        "stable_score": 0.26123046875
+      },
+      {
+        "conditional_delta": -0.001171874999999989,
+        "game": "combat",
+        "id": "combat-2-10061202-shift-return",
+        "profile": 2,
+        "root_candidate_score": 0.416015625,
+        "score": 0.416015625,
+        "score_delta": 0.012369791666666685,
+        "stable_score": 0.4036458333333333
+      },
+      {
         "conditional_delta": -0.010937500000000044,
         "game": "combat",
         "id": "combat-3-10061201-outside",
@@ -73,10 +103,7 @@
     ],
     "pending": [
       "auction-0-10061201-outside",
-      "combat-0-10061201-outside",
       "combat-1-10061202-shift-return",
-      "auction-2-10061202-shift-return",
-      "combat-2-10061202-shift-return",
       "auction-3-10061202-shift-return"
     ],
     "provenance": {
@@ -143,8 +170,8 @@
     "candidate_result_sha256": "4838643cc9a9469d563ac6682422633dd532842101217b634671a6206ce614c6",
     "causal_limit": "Later worlds and learners differ. Equal current predictions do not imply equal long-horizon estimates. No predictor-only or personality-only cause established."
   },
-  "input_sha256": "7d29497fe302c23de7b8e1da51e8d844919f77a01e765f1ff57ffa4600e6844a",
-  "audit_sha256": "599e9964fd2fc3194475117e4fa433dc15adc61edd9e907ab15d76ecc729ac72",
+  "input_sha256": "fb4a58dd0da166a0998fb59909b58dce3d5f631ae16e645b27738cc5862b5a5a",
+  "audit_sha256": "701c1a86062964de489a2f5b9a023104e1454fc6a150773daf665d1025ea62a2",
   "audit_kernel_absent": true,
   "prior_kernels_preserved": true,
   "adoption": false

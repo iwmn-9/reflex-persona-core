@@ -202,5 +202,68 @@
     "Known deterministic worlds only; does not establish C3 or unseen transfer.",
     "Future modeled tails use the existing controller, not this full replanner.",
     "Fixed traits are preserved; blind behavioral identity remains unverified."
-  ]
+  ],
+  "long_world_known_states": {
+    "complete": true,
+    "adoption": false,
+    "input_sha256": "d9cf5c9adadcb926f31f0930c1f164ceb29dada43a4c9e3e6d0f3c6a8ada3fe4",
+    "results_sha256": "7539a5e2ad9b5056b026523bb8a6065104daacbc9c32c42ff775f2eb5f2e2f1b",
+    "plan_sha256": "067abcc595d91d7c24e3a77530740d3aa02510df643383852e3c70830b2ee2a8",
+    "source_sha256": "5e3f3980c314a810aa84c05f9a135f1ccab7a8569c6a32ad06f1ef2fb33fd720",
+    "rows": [
+      {
+        "id": "gambling-1-10061201-outside",
+        "tick": 7,
+        "comparisons": {
+          "0": {
+            "root": "bond",
+            "proposal": "candidate-003-retry-002",
+            "purpose": 0.06531233473406112,
+            "subjective": 0.46614244010840467,
+            "represented_plans": 55
+          },
+          "3": {
+            "root": "bond",
+            "proposal": "candidate-003-retry-002",
+            "purpose": 0.06531233473406112,
+            "subjective": 0.46614244010840467,
+            "represented_plans": 180
+          }
+        },
+        "checks": {
+          "actual_history_replayed": true,
+          "default_full_forecast_and_choice_exact": true,
+          "existing_policy_purposes_unchanged": true,
+          "factual_owner_unchanged": true
+        }
+      },
+      {
+        "id": "combat-3-10061201-outside",
+        "tick": 21,
+        "comparisons": {
+          "0": {
+            "root": "guard",
+            "proposal": "candidate-000-retry-001-until-gain",
+            "purpose": 0.12936923329810063,
+            "subjective": 0.6263208065134218,
+            "represented_plans": 55
+          },
+          "3": {
+            "root": "strike:2",
+            "proposal": "candidate-004-sequence-001-004",
+            "purpose": 0.1311574449969443,
+            "subjective": 0.6993111767804683,
+            "represented_plans": 180
+          }
+        },
+        "checks": {
+          "actual_history_replayed": true,
+          "default_full_forecast_and_choice_exact": true,
+          "existing_policy_purposes_unchanged": true,
+          "factual_owner_unchanged": true
+        }
+      }
+    ],
+    "interpretation": "Method diagnostic: connect the already tested public-prefix preparation component to bounded H32 on two actual first-divergence owners. Keep all old policies, add uniformly enumerated legal prefixes with its existing capacity/depth bound. Compare depth 0 and requested depth 3, existing policy purpose means must stay exact. Same factual person and model bank; no gate, long-run benefit, independent confirmation, or adoption claim."
+  }
 }
