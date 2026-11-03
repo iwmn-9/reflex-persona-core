@@ -87,3 +87,184 @@ fn rejected_execution_keeps_actor_and_planner_unchanged() {
     assert_eq!(actor.state().unwrap(), &owner_before);
     assert_eq!(planner.checkpoint().unwrap(), planner_before);
 }
+
+#[test]
+fn ordinary_only_runs_three_immediate_tails_per_legal_root() {
+    let game = Hagetaka::new(7);
+    let mut cfg = fixture::config("a");
+    cfg.contract = "arena-estimated-model-v1".into();
+    cfg.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+    let actor = Owner::new(cfg).unwrap();
+    let config = Config {
+        horizon: 3,
+        second_moves: 0,
+        ..Default::default()
+    };
+    let planner = Planner::new(&actor, config).unwrap();
+    let input = game.input(0).unwrap();
+    let roots = actor
+        .prepare_estimated(&input, false)
+        .unwrap()
+        .allowed()
+        .len();
+    let before = actor.state().unwrap().clone();
+    let proposal = planner.propose(&actor, &game, 0).unwrap();
+    assert_eq!(proposal.audit.simulated_nodes, roots * 3 * 3);
+    assert_eq!(actor.state().unwrap(), &before);
+    let bytes = planner.checkpoint().unwrap();
+    assert_eq!(
+        Planner::restore(&actor, &bytes)
+            .unwrap()
+            .config()
+            .second_moves,
+        0
+    );
+    let mut old: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+    old["version"] = "arena-planner-v2".into();
+    assert!(Planner::restore(&actor, &serde_json::to_vec(&old).unwrap()).is_err());
+}
+
+#[test]
+fn default_second_move_budget_matches_explicit_eight_and_is_bounded() {
+    let game = Hagetaka::new(7);
+    let mut cfg = fixture::config("a");
+    cfg.contract = "arena-estimated-model-v1".into();
+    cfg.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+    let actor = Owner::new(cfg).unwrap();
+    let implicit = Planner::new(
+        &actor,
+        Config {
+            horizon: 2,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let explicit = Planner::new(
+        &actor,
+        Config {
+            horizon: 2,
+            second_moves: 8,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let a = implicit.propose(&actor, &game, 0).unwrap();
+    let b = explicit.propose(&actor, &game, 0).unwrap();
+    assert_eq!(a.action(), b.action());
+    assert_eq!(
+        serde_json::to_value(a.audit).unwrap(),
+        serde_json::to_value(b.audit).unwrap()
+    );
+    assert!(Planner::new(
+        &actor,
+        Config {
+            second_moves: 9,
+            ..Default::default()
+        }
+    )
+    .is_err());
+}
+
+#[test]
+fn unfiltered_tier_audit_matches_selected_root_when_purpose_band_covers_all_roots() {
+    let game = Hagetaka::new(7);
+    let mut cfg = fixture::config("a");
+    cfg.contract = "arena-estimated-model-v1".into();
+    cfg.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+    let actor = Owner::new(cfg).unwrap();
+    let planner = Planner::new(
+        &actor,
+        Config {
+            horizon: 2,
+            second_moves: 0,
+            max_regret: 1.,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let before = actor.state().unwrap().clone();
+    let proposal = planner.propose(&actor, &game, 0).unwrap();
+    assert_eq!(proposal.audit.pre_filter_action, proposal.action());
+    assert_eq!(
+        proposal.audit.pre_filter_purpose,
+        proposal.audit.modeled_purpose
+    );
+    assert!((-1.0..=1.0).contains(&proposal.audit.pre_filter_purpose));
+    assert_eq!(actor.state().unwrap(), &before);
+}
+
+#[test]
+fn agreement_proposals_carry_the_same_valid_prefilter_selection() {
+    use reflex_arena::behavior::Beliefs;
+    let game = Encounters::new(7, 5);
+    let owners: Vec<_> = (0..game.players())
+        .map(|i| {
+            let mut cfg = fixture::config(&format!("p{i}"));
+            cfg.contract = "arena-estimated-model-v1".into();
+            cfg.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+            Owner::new(cfg).unwrap()
+        })
+        .collect();
+    let planners: Vec<_> = owners
+        .iter()
+        .map(|o| {
+            Planner::new(
+                o,
+                Config {
+                    horizon: 1,
+                    ..Default::default()
+                },
+            )
+            .unwrap()
+        })
+        .collect();
+    let beliefs: Vec<_> = owners
+        .iter()
+        .enumerate()
+        .map(|(i, o)| {
+            let scope = serde_json::to_string(&(
+                &o.config().actor.scope.game,
+                &o.config().actor.scope.episode,
+            ))
+            .unwrap();
+            Beliefs::new(scope, i, game.behavior(i, i).unwrap().alphabet).unwrap()
+        })
+        .collect();
+    let announced: Vec<_> = owners
+        .iter()
+        .enumerate()
+        .map(|(i, o)| {
+            planners[i]
+                .propose_with_beliefs(o, &game, i, &beliefs[i])
+                .unwrap()
+                .action()
+                .to_owned()
+        })
+        .collect();
+    let offers = game.offers(&announced).unwrap();
+    let mut proposals = 0;
+    for i in 0..game.players() {
+        let consent = planners[i]
+            .consent(&owners[i], &game, i, &beliefs[i], &announced, &offers)
+            .unwrap();
+        let mut common = None;
+        for proposal in consent.proposals.values() {
+            assert!(!proposal.audit.pre_filter_action.is_empty());
+            assert!((-1.0..=1.0).contains(&proposal.audit.pre_filter_purpose));
+            let choice = (
+                &proposal.audit.pre_filter_action,
+                proposal.audit.pre_filter_purpose,
+            );
+            if let Some(prior) = &common {
+                assert_eq!(*prior, choice);
+            } else {
+                common = Some(choice);
+            }
+            proposals += 1;
+        }
+    }
+    assert!(
+        proposals > 0,
+        "test must exercise at least one signed proposal"
+    );
+}

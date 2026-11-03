@@ -12,6 +12,8 @@ pub struct Config {
     pub horizon: u32,
     pub max_regret: f64,
     pub model_seed: u64,
+    /// Number of explicit second-action candidates per root; zero keeps only ordinary tails.
+    pub second_moves: usize,
 }
 impl Default for Config {
     fn default() -> Self {
@@ -19,6 +21,7 @@ impl Default for Config {
             horizon: 8,
             max_regret: 0.15,
             model_seed: 701,
+            second_moves: 8,
         }
     }
 }
@@ -27,6 +30,7 @@ impl Config {
         if !(1..=32).contains(&self.horizon)
             || !self.max_regret.is_finite()
             || !(0.0..=1.0).contains(&self.max_regret)
+            || self.second_moves > 8
         {
             return Err(Error::Invalid("bounded planner settings required"));
         }
@@ -90,8 +94,30 @@ pub struct Consent {
 pub struct Audit {
     pub reason: String,
     pub modeled_purpose: f64,
+    pub pre_filter_action: String,
+    pub pre_filter_purpose: f64,
     pub milestone: Option<Milestone>,
     pub simulated_nodes: usize,
+}
+fn selected_candidate<'a>(
+    stage: &Stage,
+    candidates: &'a [Candidate],
+) -> Result<(usize, &'a Candidate)> {
+    let index = stage
+        .selected_plan()
+        .and_then(|s| s.strip_prefix("candidate-"))
+        .and_then(|s| s.parse::<usize>().ok())
+        .ok_or(Error::Invalid("selected plan identity required"))?;
+    let candidate = candidates
+        .get(index)
+        .ok_or(Error::Invalid("selected plan outside candidate set"))?;
+    if candidate.root.is_empty()
+        || candidate.root != stage.decision().action_id
+        || !candidate.purpose.is_finite()
+    {
+        return Err(Error::Invalid("selected plan root or purpose mismatch"));
+    }
+    Ok((index, candidate))
 }
 fn owner_state_hash(owner: &Owner) -> Result<String> {
     Ok(format!(
@@ -129,7 +155,7 @@ impl Planner {
     /// Restore only against an independently supplied owner; personality is checked.
     pub fn restore(owner: &Owner, bytes: &[u8]) -> Result<Self> {
         let save: PlannerSave = serde_json::from_slice(bytes)?;
-        if save.version != "arena-planner-v2"
+        if save.version != "arena-planner-v3"
             || save.sha256 != format!("{:x}", Sha256::digest(serde_json::to_vec(&save.planner)?))
         {
             return Err(Error::Invalid("planner checkpoint integrity mismatch"));
@@ -159,7 +185,7 @@ impl Planner {
     }
     pub fn checkpoint(&self) -> Result<Vec<u8>> {
         let save = PlannerSave {
-            version: "arena-planner-v2".into(),
+            version: "arena-planner-v3".into(),
             planner: self.clone(),
             sha256: format!("{:x}", Sha256::digest(serde_json::to_vec(self)?)),
         };
@@ -244,7 +270,7 @@ impl Planner {
             let mut schedules: Vec<Option<Vec<String>>> = vec![None];
             if let Some(m) = live.filter(|m| m.remaining[0] == root) {
                 schedules.insert(0, Some(m.remaining.clone()));
-            } else if live.is_none() && self.config.horizon > 1 {
+            } else if live.is_none() && self.config.horizon > 1 && self.config.second_moves > 0 {
                 // Enumerate a bounded second move from a public response scenario.
                 // Other scenarios still check legality and fall back independently.
                 let model = game.model_world(player, self.config.model_seed)?;
@@ -266,7 +292,7 @@ impl Planner {
                         .actions
                         .into_iter()
                         .filter(|a| a.legal && !a.known_failure)
-                        .take(8)
+                        .take(self.config.second_moves)
                     {
                         schedules.push(Some(vec![root.clone(), a.id]));
                     }
@@ -324,6 +350,9 @@ impl Planner {
         // First establish the person's tier over the complete forecast, before
         // purpose can discard any candidates.
         let appraisal = actor.with_continuation(stage, &forecast)?;
+        let (_, pre_filter) = selected_candidate(&appraisal, &candidates)?;
+        let pre_filter_action = pre_filter.root.clone();
+        let pre_filter_purpose = pre_filter.purpose;
         let tier: std::collections::BTreeSet<usize> = appraisal
             .decision()
             .scores
@@ -389,17 +418,7 @@ impl Planner {
             actor.with_continuation(actor.prepare_estimated(&input, false)?, &filtered)?
         };
         let action = stage.decision().action_id.clone();
-        let selected = stage
-            .selected_plan()
-            .and_then(|s| s.strip_prefix("candidate-"))
-            .and_then(|s| s.parse::<usize>().ok())
-            .ok_or(Error::Invalid("selected plan identity required"))?;
-        let selected_candidate = candidates
-            .get(selected)
-            .ok_or(Error::Invalid("selected plan outside candidate set"))?;
-        if selected_candidate.root != action {
-            return Err(Error::Invalid("selected plan root mismatch"));
-        }
+        let (selected, selected_candidate) = selected_candidate(&stage, &candidates)?;
         let next_milestone = if let Some(m) = live.filter(|m| {
             m.remaining[0] == action
                 && candidates
@@ -442,6 +461,8 @@ impl Planner {
                 }
                 .into(),
                 modeled_purpose: selected_candidate.purpose,
+                pre_filter_action,
+                pre_filter_purpose,
                 milestone: next_milestone.clone(),
                 simulated_nodes: candidates
                     .iter()
@@ -607,6 +628,9 @@ impl Planner {
             plans: plans(&candidates, &[1. / 3.; 3]),
         };
         let tier_appraisal = actor.with_continuation(base, &forecast)?;
+        let (_, pre_filter) = selected_candidate(&tier_appraisal, &candidates)?;
+        let pre_filter_action = pre_filter.root.clone();
+        let pre_filter_purpose = pre_filter.purpose;
         let tier = tier_appraisal
             .decision()
             .scores
@@ -679,6 +703,10 @@ impl Planner {
             let mut single = forecast.clone();
             single.plans = vec![forecast.plans[i].clone()];
             let stage = executing.with_continuation(prepared, &single)?;
+            let (selected, _) = selected_candidate(&stage, &candidates)?;
+            if selected != i {
+                return Err(Error::Invalid("agreement plan identity mismatch"));
+            }
             let milestone = new_milestone(
                 &candidates,
                 i,
@@ -701,6 +729,8 @@ impl Planner {
                     audit: Audit {
                         reason: "agreement".into(),
                         modeled_purpose: candidates[i].purpose,
+                        pre_filter_action: pre_filter_action.clone(),
+                        pre_filter_purpose,
                         milestone,
                         simulated_nodes: candidates
                             .iter()
@@ -1038,6 +1068,14 @@ mod tests {
     use super::*;
     use std::collections::BTreeSet;
 
+    #[allow(dead_code)]
+    mod fixture {
+        include!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/../reflex-owned/tests/support/mod.rs"
+        ));
+    }
+
     fn candidate(root: &str, purpose: f64, ordinary: bool) -> Candidate {
         Candidate {
             root: root.into(),
@@ -1097,5 +1135,28 @@ mod tests {
         let mut wrong_root = all[4].clone();
         wrong_root.root = "wrong".into();
         assert!(keep_retained_plan(&wrong_root, &rows, 1, 1, 0.6, &eligible).is_err());
+    }
+
+    #[test]
+    fn ordinary_tail_uses_the_modeled_owners_current_immediate_decision() {
+        let game = crate::games::Hagetaka::new(7);
+        let mut config = fixture::config("a");
+        config.contract = "arena-estimated-model-v1".into();
+        config.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+        let owner = Owner::new(config).unwrap();
+        let root = game.input(0).unwrap().observation.actions[0].id.clone();
+        let path = simulate(&owner, &game, 0, &root, 0, 3, 701, None, None, None, false).unwrap();
+        let model_world = game.model_world(0, 701).unwrap();
+        let mut modeled = owner.model().unwrap();
+        let input = model_world.input(0).unwrap();
+        let stage = modeled.prepare_root_estimated(&input, &root).unwrap();
+        let mut actions = model_world.modeled_choices(0, "0").unwrap();
+        actions[0] = root.clone();
+        let (next, feedback) = model_world.advance(&actions, 701).unwrap();
+        let ticket = modeled.commit(stage, &root).unwrap();
+        modeled.resolve(ticket, &feedback[0]).unwrap();
+        let immediate = modeled.prepare_estimated(&next.input(0).unwrap()).unwrap();
+        assert_eq!(path.actions[0], root);
+        assert_eq!(path.actions[1], immediate.decision().action_id);
     }
 }

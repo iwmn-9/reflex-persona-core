@@ -75,6 +75,8 @@ fn run<G: ArenaGame>(
     game: &str,
     seed: u64,
     horizon: u32,
+    second_moves: usize,
+    max_regret: f64,
     mode: &str,
     individual: bool,
     coordinate: bool,
@@ -112,6 +114,8 @@ fn run<G: ArenaGame>(
                 o,
                 Search {
                     horizon: if planning[i] { horizon } else { 1 },
+                    second_moves,
+                    max_regret,
                     ..Search::default()
                 },
             )
@@ -303,7 +307,7 @@ fn run<G: ArenaGame>(
         beliefs = next_beliefs;
         eprintln!("{game} {mode} tick={} nodes={simulations}", world.tick());
     }
-    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,
+    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,
         "profiles":profiles,"profile_names":NAMES,"focal_players":focal,"ticks":world.tick(),"factual_decisions":checks,
         "simulated_nodes":simulations,"plan_events":counters,"seconds":started.elapsed().as_secs_f64(),
         "purpose":(0..world.players()).map(|i|world.purpose(i)).collect::<Vec<_>>(),
@@ -337,6 +341,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "--game",
             "--seed",
             "--horizon",
+            "--second-moves",
+            "--max-regret",
             "--turns",
             "--mode",
             "--out",
@@ -356,6 +362,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap_or(&"20261103")
         .parse::<u64>()?;
     let horizon = options.get("--horizon").unwrap_or(&"6").parse::<u32>()?;
+    let second_moves = options
+        .get("--second-moves")
+        .unwrap_or(&"8")
+        .parse::<usize>()?;
+    if second_moves > 8 {
+        return Err("second-moves must be in 0..=8".into());
+    }
+    let max_regret = options
+        .get("--max-regret")
+        .unwrap_or(&"0.15")
+        .parse::<f64>()?;
+    if !max_regret.is_finite() || !(0.0..=1.0).contains(&max_regret) {
+        return Err("max-regret must be in 0..=1".into());
+    }
     let turns = options.get("--turns").unwrap_or(&"32").parse::<u64>()?;
     let mode = *options.get("--mode").unwrap_or(&"reflex");
     let belief_mode = *options.get("--beliefs").unwrap_or(&"individual");
@@ -388,6 +408,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             game,
             seed,
             horizon,
+            second_moves,
+            max_regret,
             mode,
             individual,
             coordinate,
@@ -398,6 +420,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             game,
             seed,
             horizon,
+            second_moves,
+            max_regret,
             mode,
             individual,
             coordinate,
@@ -408,6 +432,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             game,
             seed,
             horizon,
+            second_moves,
+            max_regret,
             mode,
             individual,
             coordinate,
