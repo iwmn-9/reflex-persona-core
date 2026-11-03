@@ -1,8 +1,8 @@
 {
   "audit_complete": true,
-  "cohort_complete": false,
+  "cohort_complete": true,
   "adoption": false,
-  "received_branches": 38,
+  "received_branches": 40,
   "registered_branches": 40,
   "complete_pairs": [
     {
@@ -16,6 +16,18 @@
       "profile": 0,
       "window_complete": true,
       "world_mode": "changed"
+    },
+    {
+      "delta": {
+        "conditional_increment": -0.0012451171874999986,
+        "score_increment": 0.0
+      },
+      "game": "auction",
+      "id": "auction-0-10061201-outside",
+      "prediction_recovered": false,
+      "profile": 0,
+      "window_complete": true,
+      "world_mode": "steady"
     },
     {
       "delta": {
@@ -270,6 +282,42 @@
         "restored": 64
       },
       "result_sha256": "e1762b2fb12d6b5f1a63553ae0aa87bee3508d182c2fa0e713f653cc8b5456bf"
+    },
+    {
+      "id": "auction-0-10061201-outside",
+      "world_mode": "steady",
+      "experience": "learning",
+      "initial_cash": 6.0,
+      "final_cash": 10.0,
+      "initial_investment": 0,
+      "final_investment": 0,
+      "score_increment": 0.0380859375,
+      "conditional_increment": 0.04443359375,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "ed7237ff84a2fa81e0a6f7c6dce1dc867e6b37abb12cc21b79a72ffaee576b83"
+    },
+    {
+      "id": "auction-0-10061201-outside",
+      "world_mode": "steady",
+      "experience": "frozen",
+      "initial_cash": 6.0,
+      "final_cash": 10.0,
+      "initial_investment": 0,
+      "final_investment": 0,
+      "score_increment": 0.0380859375,
+      "conditional_increment": 0.0456787109375,
+      "actual_steps": 32,
+      "checks": {
+        "fixed_axes": 64,
+        "owner_parity": 64,
+        "restored": 64
+      },
+      "result_sha256": "e07424dae1a3f374e6c8ab39878068c9eddc05e2172381b6108a4b85edcb08da"
     },
     {
       "id": "combat-0-10061201-outside",
@@ -920,16 +968,16 @@
       "result_sha256": "eea5da56de96548a73d39eb046096bbd800ddd553ed3ca75bd260cf1969381ac"
     }
   ],
-  "C3_development_passed": false,
+  "C3_development_passed": true,
   "source_sha256": "42ae57258380d3986f4545de13876b9fb474a4c1365a7305cc488fdaaf2d0b0d",
   "overlay_sha256": "e288e10feab91433650701fd48155c5d7b5a4564c7b2f5557be7dda1b9a80e52",
-  "input_sha256": "6bf1f6025af37e97dec0cebf5a6f7b33449b055b66fe5e59f93a6f21dc446526",
-  "audit_results_sha256": "b22011ece5fed0df0adf520c229acda327c35a9245722060754ccc67dad229f4",
+  "input_sha256": "f0fefc91fdb69afffcd6897136482f3c801d0109c8d174ab2a6e305526eb4965",
+  "audit_results_sha256": "59cbff0e1292e72b024b5ed8c37db1e32b1cbbf839bb9f32433b2e172bda943e",
   "limits": [
-    "Known registered conditions only. Completed pairs do not establish full-family, full-cohort or unseen-game performance.",
+    "All 40 registered C3 branches passed this known-condition development gate for source 42ae. This does not establish C2 long-world improvement, revised-candidate performance or unseen-game performance.",
     "The intervention freezes actual prediction, experience and evidence updates, not only the predictor.",
     "Fixed personality and actual-state replay passed; behavioral personality and human believability remain separate.",
-    "Missing and unpaired conditions do not pass the cohort gate."
+    "Four of 20 paired windows have negative conditional gain despite nonnegative family means; all retained."
   ],
   "created_kernel_absent": true,
   "prior_kernels_preserved": true,
@@ -1024,8 +1072,11 @@
     },
     "steady": {
       "auction": {
-        "complete": false,
-        "mean_delta": null,
+        "complete": true,
+        "mean_delta": {
+          "conditional_increment": 0.0006896972656250024,
+          "score_increment": 0.00494384765625
+        },
         "registered": 4
       },
       "combat": {
@@ -1055,10 +1106,10 @@
     }
   },
   "gate_checks": {
-    "all_registered_windows_complete": false,
-    "changed_expected_gain": false,
+    "all_registered_windows_complete": true,
+    "changed_expected_gain": true,
     "four_families": true,
-    "no_expected_family_loss": false,
+    "no_expected_family_loss": true,
     "prediction_recovery": true
   },
   "changed_auction_diagnosis": {
@@ -1085,5 +1136,7 @@
     },
     "prediction_recovered": true,
     "meaning": "Prediction recovery did not yield higher conditional expected gain in this paired 32-step continuation. The intervention includes all actual experience updates, not only prediction."
-  }
+  },
+  "prediction_recovered": 10,
+  "prediction_denominator": 10
 }

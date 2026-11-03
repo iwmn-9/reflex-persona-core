@@ -1,6 +1,6 @@
 """Research: discover continuations and evaluate them on disjoint model samples.
 
-Retain the ordinary bank, each root's purpose/utility frontier and the strongest
+Retain the ordinary bank, each root's purpose/utility/principle frontier and the strongest
 value anchor. Freeze public stopping curves before evaluation. The final personality
 tier and purpose corridor use evaluation paths only. This is not Double Q-learning
 or a safety guarantee; model bias, shortlist omissions and evaluation noise remain.
@@ -12,14 +12,14 @@ from reflex.core import digest,compile_batch
 from reflex._continuation_portfolio import portfolio_planner
 from reflex._horizon_consensus import prefix_forecast
 from reflex.purpose_plan import Goal
-from tools.bounded_expansion import bounded_expansion_planner
+from tools.bounded_expansion import bounded_expansion_planner,unchanged_decide
 
 
 def frontier(entries):
-    """Keep purpose/utility tradeoffs; equal points retain their first plan ID."""
+    """Keep all declared tradeoffs; equal points retain their first plan ID."""
     ordered=sorted(entries)
     return {name for i,name in enumerate(ordered) if not any(
-        entries[other][0]>=entries[name][0] and entries[other][1]>=entries[name][1]
+        all(a>=b for a,b in zip(entries[other],entries[name]))
         and (entries[other]!=entries[name] or j<i)
         for j,other in enumerate(ordered) if other!=name)}
 
@@ -39,7 +39,9 @@ def shortlist(context, forecast, policies, modeled, policy):
     selected={min(strongest,key=lambda n:(-strongest[n],n))}
     chosen={};references={};roots=sorted({row[0]['actions'][0] for row in modeled.values()})
     for root in roots:
-        entries={n:(forecast.purpose[n],utility[n]) for n,rs in forecast.roots.items() if rs==(root,)}
+        # Utility dominance does not imply principle-tier eligibility. A lower
+        # utility plan may be the best eligible compromise below the anchor.
+        entries={n:(forecast.purpose[n],utility[n],strongest[n]) for n,rs in forecast.roots.items() if rs==(root,)}
         retained=frontier(entries);selected.update(retained)
         chosen[root]=[forecast.audit['plans'][n]['proposal'] for n in sorted(retained)]
     for plan in sorted(selected):
@@ -91,3 +93,23 @@ def cross_evaluated_planner(actor,request,world,*,evaluation_seeds=(1701,1702,17
                 simulated_steps=discovery['simulated_steps']+evaluated['simulated_steps'])
         return result
     return planner
+
+
+def decide(actor,game,world,arm,seeds=None,*,continuation_scope='root'):
+    """Runner binding; stable and non-shared controls retain their chooser."""
+    if arm!='expected' or continuation_scope!='shared':
+        return unchanged_decide(actor,game,world,arm,seeds=seeds,continuation_scope=continuation_scope)
+    from reflex.decision_loop import DecisionLoop
+    from tools.run_owned_value import cumulative_basis
+    request=game.request(game.context(world,actor.state));captured={}
+    planner=cross_evaluated_planner(actor,request,world,captured=captured,observe=game.context,
+        events=game.events,terminal=game.terminal,assess=lambda w:game.goal(w).record(),
+        request_for=game.request,feedback=game.feedback,model_id=game.model_id,target=game.target,
+        cumulative_preference=cumulative_basis(game,True),seeds=(701,702,703) if seeds is None else seeds,
+        recovery_cache=64,horizon=32,world_model='posterior',purpose_estimator='conditional',
+        tail_recovery=2,include_retry=True,coherent_cumulative_mean=True,continuation_scope='shared',
+        retry_until_gain=True,retry_gain_reference='expected')
+    result=DecisionLoop.decide_batch([(actor,request)],False,planner)[0]
+    if not result.get('deliberation',{}).get('adopted'):
+        raise ValueError('complete cross-evaluated forecast required; no fallback')
+    return result,captured

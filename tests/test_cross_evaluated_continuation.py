@@ -24,6 +24,16 @@ def fixture(family):
 
 
 class CrossEvaluationTests(unittest.TestCase):
+    def test_utility_dominance_cannot_remove_a_principled_compromise(self):
+        # Same purpose, but A is outside the .98 principle tier. B beats the
+        # global strongest-value anchor C on utility. Keeping only A and C
+        # would change the real root from x to y without any new evidence.
+        entries={'A':(.8,.9,.5),'B':(.8,.8,.99)}
+        self.assertEqual(frontier(entries),{'A','B'})
+        all_plans=dict(entries,C=(.8,.3,1.))
+        chosen=max((n for n,v in all_plans.items() if v[2]>=.98),key=lambda n:all_plans[n][1])
+        self.assertEqual(chosen,'B')
+
     def test_shortlisting_preserves_the_competence_floor_and_compromises(self):
         # Choosing only the subjective favourite under each root would remove
         # high-purpose, lower-utility A. That lowers the floor from .585 to
