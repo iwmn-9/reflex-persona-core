@@ -25,4 +25,4 @@ Python安定版はv0.1.0／`FixedHorizonOwner`。[導入](STABLE_INTEGRATION.md)
 
 次は4分野の長期比較と、同じ本人から学習継続／停止を分ける利益比較。接続候補は既知の準備8条件・撤回4条件で改善済みの行動と利益を維持したが、4分野への採用根拠にはしない。[結果と未採用差分](../evidence/completion/preparation_connection.json)。独立40条件は[予約表](../evidence/completion/independent_conditions.json)へ固定済み。既定の前提条件を満たすまで開始しない。[教訓](LESSONS.md)。
 
-許容幅だけを直した候補は長期1/10・分岐13/40を監査。賭けの128手は修正前と一致し、期待利益の悪化が残ったため採用不可。残りは継続し、探索と採点を分けた候補と混同しない。[記録](../evidence/completion/bounded_long_comparison.json)。
+許容幅だけを直した候補は、賭け128手の期待利益が悪化したため不採用。ユーザーの指示で残りを打ち切り、長期1/10・分岐17/40実行完了として保存した（数値監査は以前の1/10・13/40まで）。使用した4VMの消滅を確認。元の共有候補10条件と、探索・採点を分けた新候補10条件を継続する。[記録](../evidence/completion/bounded_long_comparison.json)。
