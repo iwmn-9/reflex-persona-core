@@ -1,6 +1,6 @@
 use crate::{
     social::{Binding as SocialBinding, Event as SocialEvent},
-    ArenaGame,
+    ArenaGame, DecisionFrame,
 };
 use reflex_immediate::{Action, NeedInput, Observation, Outcome};
 use reflex_owned::{prediction, progress, Error, Feedback, Input, Result};
@@ -37,6 +37,9 @@ trait World: ArenaGame {
     fn behavior_alphabet(&self) -> Vec<String>;
     fn deficits(&self, p: usize) -> [Option<f64>; 5];
     fn transition(&self, c: &[String], seed: u64) -> Result<Self>;
+    fn transition_social(&self, c: &[String], seed: u64) -> Result<(Self, Vec<Vec<SocialEvent>>)> {
+        Ok((self.transition(c, seed)?, vec![vec![]; self.players()]))
+    }
     fn effect(&self, next: &Self, p: usize, action: &str) -> Outcome;
     fn model_choice(&self, player: usize, hypothesis: usize) -> String;
     fn facts(&self, p: usize) -> BTreeMap<String, String>;
@@ -103,6 +106,14 @@ fn make_input<W: World>(w: &W, p: usize) -> Result<Input> {
     make_input_scenarios(w, p, &choices)
 }
 fn make_input_scenarios<W: World>(w: &W, p: usize, choices: &[Vec<String>]) -> Result<Input> {
+    Ok(make_frame_scenarios(w, p, choices, false)?.input)
+}
+fn make_frame_scenarios<W: World>(
+    w: &W,
+    p: usize,
+    choices: &[Vec<String>],
+    collect: bool,
+) -> Result<DecisionFrame> {
     if p >= w.players()
         || w.terminal()
         || choices.len() != 3
@@ -117,19 +128,43 @@ fn make_input_scenarios<W: World>(w: &W, p: usize, choices: &[Vec<String>]) -> R
         return Err(err());
     }
     let legal = w.legal(p);
-    let social = w.social_bindings(p)?;
+    let mut social = w.social_bindings(p)?;
     let mut actions = Vec::new();
     let mut conditional = BTreeMap::new();
     for a in legal {
         let mut outcomes = Vec::new();
+        let target = if collect {
+            social
+                .get(&a)
+                .map(|b| b.target.parse::<usize>().map_err(|_| err()))
+                .transpose()?
+        } else {
+            None
+        };
+        let mut support = 0.;
         for (h, scenario) in choices.iter().enumerate() {
             let mut c = scenario.clone();
             c[p] = a.clone();
             let model = w.model_world(p, 0x12345678 + h as u64)?;
-            let next = model.transition(&c, 0x12345678 + h as u64)?;
+            let seed = 0x12345678 + h as u64;
+            let next = if let Some(target) = target {
+                let (next, events) = model.transition_social(&c, seed)?;
+                let recipient = events.get(target).ok_or_else(err)?;
+                support += recipient
+                    .iter()
+                    .filter(|e| e.agency && e.target == p.to_string())
+                    .map(|e| e.benefit * e.confidence / 3.)
+                    .sum::<f64>();
+                next
+            } else {
+                model.transition(&c, seed)?
+            };
             let mut o = w.effect(&next, p, &a);
             o.p = 1. / 3.;
             outcomes.push(o);
+        }
+        if target.is_some() {
+            social.get_mut(&a).ok_or_else(err)?.support = support;
         }
         conditional.insert(a.clone(), outcomes.clone());
         actions.push(Action {
@@ -171,39 +206,42 @@ fn make_input_scenarios<W: World>(w: &W, p: usize, choices: &[Vec<String>]) -> R
         })
         .collect();
     let deficits = w.deficits(p);
-    Ok(Input {
-        observation: Observation {
-            tick: w.tick(),
-            needs: std::array::from_fn(|i| NeedInput {
-                supported: deficits[i].is_some(),
-                enabled: deficits[i].is_some(),
-                deficit: deficits[i],
-            }),
-            facts: w.facts(p),
-            actions,
-            opponent: None,
+    Ok(DecisionFrame {
+        input: Input {
+            observation: Observation {
+                tick: w.tick(),
+                needs: std::array::from_fn(|i| NeedInput {
+                    supported: deficits[i].is_some(),
+                    enabled: deficits[i].is_some(),
+                    deficit: deficits[i],
+                }),
+                facts: w.facts(p),
+                actions,
+                opponent: None,
+            },
+            bindings,
+            // These labels index forecast samples, not world outcomes. Actual play
+            // resolves every independently controlled participant's chosen action.
+            responses: prediction::Inputs {
+                context: vec![],
+                legal: vec!["0".into(), "1".into(), "2".into()],
+                models: vec![
+                    vec![0.8, 0.1, 0.1],
+                    vec![0.1, 0.8, 0.1],
+                    vec![0.1, 0.1, 0.8],
+                ],
+            },
+            conditional,
+            purpose: progress::Purpose {
+                level: w.purpose(p),
+                readiness: w.readiness(p),
+                maintained: false,
+                activities,
+            },
+            threatened: false,
+            maintains_advantage: false,
         },
-        bindings,
-        // These labels index forecast samples, not world outcomes. Actual play
-        // resolves every independently controlled participant's chosen action.
-        responses: prediction::Inputs {
-            context: vec![],
-            legal: vec!["0".into(), "1".into(), "2".into()],
-            models: vec![
-                vec![0.8, 0.1, 0.1],
-                vec![0.1, 0.8, 0.1],
-                vec![0.1, 0.1, 0.8],
-            ],
-        },
-        conditional,
-        purpose: progress::Purpose {
-            level: w.purpose(p),
-            readiness: w.readiness(p),
-            maintained: false,
-            activities,
-        },
-        threatened: false,
-        maintains_advantage: false,
+        social,
     })
 }
 fn binding(method: String, situation: String) -> reflex_owned::experience::Binding {
@@ -255,6 +293,9 @@ macro_rules! common {
         }
         fn input_scenarios(&self, p: usize, choices: &[Vec<String>]) -> Result<Input> {
             make_input_scenarios(self, p, choices)
+        }
+        fn decision_frame(&self, p: usize, choices: &[Vec<String>]) -> Result<DecisionFrame> {
+            make_frame_scenarios(self, p, choices, true)
         }
         fn behavior(&self, viewer: usize, actor: usize) -> Result<crate::behavior::PublicBehavior> {
             if viewer >= self.players() || actor >= self.players() || self.terminal() {
@@ -681,6 +722,9 @@ impl Encounters {
     }
 }
 impl World for Encounters {
+    fn transition_social(&self, c: &[String], seed: u64) -> Result<(Self, Vec<Vec<SocialEvent>>)> {
+        self.resolved(c, seed, true)
+    }
     fn behavior_alphabet(&self) -> Vec<String> {
         ["alone", "claim", "cooperate", "finished", "rest"]
             .map(str::to_owned)
@@ -1493,6 +1537,9 @@ impl Combat {
     }
 }
 impl World for Combat {
+    fn transition_social(&self, c: &[String], seed: u64) -> Result<(Self, Vec<Vec<SocialEvent>>)> {
+        self.resolved(c, seed, true)
+    }
     fn route_context(&self, p: usize) -> Option<&str> {
         self.routes[p].as_deref()
     }
@@ -1713,6 +1760,75 @@ impl World for Combat {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn social_frame_uses_delivered_scenario_effects() {
+        let game = Encounters::new(1, 8);
+        let unmatched = vec![vec!["rest".to_string(); 4]; 3];
+        let frame = game.decision_frame(0, &unmatched).unwrap();
+        assert_eq!(frame.social["cooperate:1"].support, 0.);
+        assert_eq!(
+            serde_json::to_value(&frame.input).unwrap(),
+            serde_json::to_value(game.input_scenarios(0, &unmatched).unwrap()).unwrap()
+        );
+        let mut choices = unmatched;
+        choices[0][1] = "cooperate:0".into();
+        choices[1][1] = "cooperate:0".into();
+        let frame = game.decision_frame(0, &choices).unwrap();
+        let expected = (0..3)
+            .map(|h| {
+                let mut row = choices[h].clone();
+                row[0] = "cooperate:1".into();
+                let model = game.model_world(0, 0x12345678 + h as u64).unwrap();
+                let (_, events) = model.resolved(&row, 0x12345678 + h as u64, true).unwrap();
+                events[1]
+                    .iter()
+                    .filter(|e| e.agency && e.target == "0")
+                    .map(|e| e.benefit * e.confidence / 3.)
+                    .sum::<f64>()
+            })
+            .sum::<f64>();
+        assert!((frame.social["cooperate:1"].support - expected).abs() < 1e-12);
+        assert!(expected > 0. && expected <= 1.6 / 3. + 1e-12);
+        let mut all = choices.clone();
+        all[2][1] = "cooperate:0".into();
+        let frame = game.decision_frame(0, &all).unwrap();
+        let actual = (0..3)
+            .filter(|&h| rnd(0x12345678 + h, 1) % 100 >= 5)
+            .count() as f64
+            * 0.8
+            / 3.;
+        assert!((frame.social["cooperate:1"].support - actual).abs() < 1e-12);
+        let mut accident_game = Encounters::new(1, 256);
+        accident_game.tick = (0..200)
+            .find(|&t| (0..3).any(|h| rnd(0x12345678 + h, t * 16 + 1) % 100 < 5))
+            .unwrap();
+        let count = (0..3)
+            .filter(|&h| rnd(0x12345678 + h, accident_game.tick * 16 + 1) % 100 >= 5)
+            .count();
+        let accident_frame = accident_game.decision_frame(0, &all).unwrap();
+        assert!(
+            (accident_frame.social["cooperate:1"].support - count as f64 * 0.8 / 3.).abs() < 1e-12
+        );
+    }
+    #[test]
+    fn social_frame_uses_capped_combat_healing() {
+        let mut game = Combat::new(1, "open", "eliminate", 10);
+        for (p, xy) in [(0, (3, 1)), (1, (3, 2)), (2, (2, 1))] {
+            game.units[p].x = xy.0;
+            game.units[p].y = xy.1;
+        }
+        game.units[0].hp = 8;
+        let row: Vec<String> = ["guard", "guard", "heal:0", "guard", "guard", "guard"]
+            .map(str::to_owned)
+            .to_vec();
+        let choices = vec![row; 3];
+        let frame = game.decision_frame(1, &choices).unwrap();
+        assert!((frame.social["heal:0"].support - 0.5 / 9.).abs() < 1e-12);
+        assert_eq!(
+            serde_json::to_value(&frame.input).unwrap(),
+            serde_json::to_value(game.input_scenarios(1, &choices).unwrap()).unwrap()
+        );
+    }
     #[test]
     fn encounter_events_separate_choice_from_shared_bad_luck() {
         let game = Encounters::new(1, 8);

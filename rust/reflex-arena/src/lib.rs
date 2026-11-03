@@ -16,6 +16,12 @@ pub struct Intentions {
     pub choices: BTreeMap<usize, String>,
 }
 
+/// Outcome and recipient appraisal derived from the same public model samples.
+pub struct DecisionFrame {
+    pub input: Input,
+    pub social: BTreeMap<String, social::Binding>,
+}
+
 /// All model callbacks read public state only. External effects are forbidden.
 pub trait ArenaGame: Clone {
     fn players(&self) -> usize;
@@ -24,6 +30,12 @@ pub trait ArenaGame: Clone {
     fn input(&self, player: usize) -> Result<Input>;
     fn behavior(&self, viewer: usize, actor: usize) -> Result<behavior::PublicBehavior>;
     fn input_scenarios(&self, player: usize, choices: &[Vec<String>]) -> Result<Input>;
+    fn decision_frame(&self, player: usize, choices: &[Vec<String>]) -> Result<DecisionFrame> {
+        Ok(DecisionFrame {
+            input: self.input_scenarios(player, choices)?,
+            social: self.social_bindings(player)?,
+        })
+    }
     /// Build a private hypothetical world from public knowledge only.
     fn model_world(&self, viewer: usize, seed: u64) -> Result<Self>;
     fn advance(&self, choices: &[String], seed: u64) -> Result<(Self, Vec<Feedback>)>;
@@ -64,6 +76,28 @@ pub trait ArenaGame: Clone {
     fn agreement_compatible(&self, _known: &BTreeMap<usize, String>) -> Result<bool> {
         Ok(true)
     }
+}
+
+pub fn decision_frame<G: ArenaGame>(
+    game: &G,
+    player: usize,
+    beliefs: Option<&behavior::Beliefs>,
+    seed: u64,
+    intentions: Option<&Intentions>,
+) -> Result<DecisionFrame> {
+    let choices = match (beliefs, intentions) {
+        (Some(b), Some(i)) => public_scenarios_with_intentions(game, player, b, seed, i)?,
+        (Some(b), None) => public_scenarios(game, player, b, seed)?,
+        (None, None) => (0..3)
+            .map(|h| game.modeled_choices(player, &h.to_string()))
+            .collect::<Result<Vec<_>>>()?,
+        (None, Some(_)) => {
+            return Err(reflex_owned::Error::Invalid(
+                "intentions require public beliefs",
+            ))
+        }
+    };
+    game.decision_frame(player, &choices)
 }
 
 /// Validate an offer using only intentions disclosed to all of its participants.

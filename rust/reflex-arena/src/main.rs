@@ -2,6 +2,7 @@
 use reflex_arena::routes::{self, RouteState};
 use reflex_arena::{
     behavior::Beliefs,
+    decision_frame as social_frame,
     games::{Combat, Encounters, Hagetaka},
     observe_public,
     planner::{prepare_social, Config as Search, Planner},
@@ -67,7 +68,7 @@ fn config(game: &str, seed: u64, player: usize, profile: usize) -> OwnerConfig {
             names: vec!["0".into(), "1".into(), "2".into()],
             window: 128,
         },
-        contract: format!("arena-{game}-estimated-model-v16"),
+        contract: format!("arena-{game}-estimated-model-v17"),
         purpose_target: "game-purpose".into(),
     }
 }
@@ -203,12 +204,21 @@ fn run<G: ArenaGame>(
         let mut audits = vec![];
         let mut intention_records = vec![json!(null); decision_world.players()];
         let mut inputs = vec![];
+        let mut appraisals = vec![];
         for (i, belief) in beliefs.iter().enumerate() {
-            inputs.push(if individual {
-                public_input(&decision_world, i, belief, 701)?
+            if social_enabled[i] {
+                let frame =
+                    social_frame(&decision_world, i, individual.then_some(belief), 701, None)?;
+                inputs.push(frame.input);
+                appraisals.push(frame.social);
             } else {
-                decision_world.input(i)?
-            });
+                inputs.push(if individual {
+                    public_input(&decision_world, i, belief, 701)?
+                } else {
+                    decision_world.input(i)?
+                });
+                appraisals.push(BTreeMap::new());
+            }
         }
         let mut selections = vec![];
         for i in 0..decision_world.players() {
@@ -229,7 +239,7 @@ fn run<G: ArenaGame>(
                 let s = prepare_social(
                     &next_owners[i],
                     &inputs[i],
-                    &decision_world.social_bindings(i)?,
+                    &appraisals[i],
                     social_enabled[i].then_some(&memories[i]),
                 )?;
                 choices.push(s.decision().action_id.clone());
@@ -260,13 +270,25 @@ fn run<G: ArenaGame>(
                         })
                         .collect::<Result<_, _>>()?,
                 };
-                inputs[i] = public_input_with_intentions(
-                    &decision_world,
-                    i,
-                    &beliefs[i],
-                    701,
-                    &intentions,
-                )?;
+                if social_enabled[i] {
+                    let frame = social_frame(
+                        &decision_world,
+                        i,
+                        Some(&beliefs[i]),
+                        701,
+                        Some(&intentions),
+                    )?;
+                    inputs[i] = frame.input;
+                    appraisals[i] = frame.social;
+                } else {
+                    inputs[i] = public_input_with_intentions(
+                        &decision_world,
+                        i,
+                        &beliefs[i],
+                        701,
+                        &intentions,
+                    )?;
+                }
                 let proposed = if planning[i] {
                     let proposal = active_planners[i].propose_social(
                         &owners[i],
@@ -288,7 +310,7 @@ fn run<G: ArenaGame>(
                     let stage = prepare_social(
                         &next_owners[i],
                         &inputs[i],
-                        &decision_world.social_bindings(i)?,
+                        &appraisals[i],
                         social_enabled[i].then_some(&memories[i]),
                     )?;
                     stage.decision().action_id.clone()
@@ -654,6 +676,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("known relationship mode required".into());
     }
     let relationships = relationship_mode == "memory";
+    if relationships && !individual {
+        return Err("relationship frames require individual public samples".into());
+    }
     if !["planned", "reflex", "challenger"].contains(&mode) || turns == 0 || turns > 128 {
         return Err("bounded mode/turns required".into());
     }

@@ -449,14 +449,25 @@ impl Planner {
             return Err(Error::Invalid("live matching arena owner required"));
         }
         let before = owner.state()?.clone();
-        let input = match beliefs {
-            Some(b) => match intentions {
-                Some(frame) => {
-                    public_input_with_intentions(game, player, b, self.config.model_seed, frame)?
-                }
-                None => public_input(game, player, b, self.config.model_seed)?,
-            },
-            None => game.input(player)?,
+        let (input, bindings) = if memory.is_some() {
+            let frame =
+                crate::decision_frame(game, player, beliefs, self.config.model_seed, intentions)?;
+            (frame.input, frame.social)
+        } else {
+            let input = match beliefs {
+                Some(b) => match intentions {
+                    Some(frame) => public_input_with_intentions(
+                        game,
+                        player,
+                        b,
+                        self.config.model_seed,
+                        frame,
+                    )?,
+                    None => public_input(game, player, b, self.config.model_seed)?,
+                },
+                None => game.input(player)?,
+            };
+            (input, BTreeMap::new())
         };
         if input.observation.tick != game.tick() || input.responses.legal != ["0", "1", "2"] {
             return Err(Error::Invalid(
@@ -464,11 +475,6 @@ impl Planner {
             ));
         }
         let actor = owner.fork_model()?;
-        let bindings = if memory.is_some() {
-            game.social_bindings(player)?
-        } else {
-            BTreeMap::new()
-        };
         let stage = prepare_social(&actor, &input, &bindings, memory)?;
         let root_bias = memory
             .map(|m| social_bias(m, stage.context(), &bindings))
@@ -909,23 +915,6 @@ impl Planner {
         {
             return Err(Error::Invalid("current actor and intentions required"));
         }
-        let input = public_input(game, player, beliefs, self.config.model_seed)?;
-        let actor = owner.fork_model()?;
-        let bindings = if memory.is_some() {
-            game.social_bindings(player)?
-        } else {
-            BTreeMap::new()
-        };
-        let base = prepare_social(&actor, &input, &bindings, memory)?;
-        let root_bias = memory
-            .map(|m| social_bias(m, base.context(), &bindings))
-            .transpose()?
-            .unwrap_or_default();
-        if !base.allowed().contains(&announced[player]) {
-            return Err(Error::Invalid(
-                "outside action must be allowed without agreement",
-            ));
-        }
         let partners = game.partners(player);
         if partners
             .iter()
@@ -938,7 +927,40 @@ impl Planner {
             .copied()
             .map(|p| (p, announced[p].clone()))
             .collect();
-        let mut intents = vec![(None, announced[player].clone(), public.clone())];
+        let actor = owner.fork_model()?;
+        let (input, outside_bias) = if let Some(memory) = memory {
+            let mut scenarios = public_scenarios(game, player, beliefs, self.config.model_seed)?;
+            for row in &mut scenarios {
+                for (p, action) in &public {
+                    row[*p] = action.clone();
+                }
+            }
+            let frame = game.decision_frame(player, &scenarios)?;
+            memory.validate_for(&owner.config().actor, owner.state()?.last_tick)?;
+            let scores = social_bias(memory, &frame.input.observation, &frame.social)?;
+            let bias = *scores.get(&announced[player]).unwrap_or(&0.);
+            (frame.input, bias)
+        } else {
+            (
+                public_input(game, player, beliefs, self.config.model_seed)?,
+                0.,
+            )
+        };
+        let base = actor.prepare_estimated(&input, false)?;
+        if !base.allowed().contains(&announced[player]) {
+            return Err(Error::Invalid(
+                "outside action must be allowed without agreement",
+            ));
+        }
+        // A candidate retains the input and appraisal from the exact first-step commitments
+        // used to admit it; the cached signed input is reused if this offer executes.
+        let mut intents = vec![(
+            None,
+            announced[player].clone(),
+            public.clone(),
+            None,
+            outside_bias,
+        )];
         for offer in offers {
             if let Some(root) = offer.roots.get(&player) {
                 if offer
@@ -955,11 +977,24 @@ impl Planner {
                             row[*p] = action.clone();
                         }
                     }
-                    let mut signed = game.input_scenarios(player, &scenarios)?;
+                    let (mut signed, bias) = if let Some(memory) = memory {
+                        let frame = game.decision_frame(player, &scenarios)?;
+                        let scores = social_bias(memory, &frame.input.observation, &frame.social)?;
+                        let bias = *scores.get(root).unwrap_or(&0.);
+                        (frame.input, bias)
+                    } else {
+                        (game.input_scenarios(player, &scenarios)?, 0.)
+                    };
                     signed_context(&mut signed);
                     let candidate = actor.prepare_estimated(&signed, false)?;
                     if candidate.allowed().contains(root) {
-                        intents.push((Some(offer.id.clone()), root.clone(), first));
+                        intents.push((
+                            Some(offer.id.clone()),
+                            root.clone(),
+                            first,
+                            memory.map(|_| signed),
+                            bias,
+                        ));
                     }
                 }
             }
@@ -972,7 +1007,7 @@ impl Planner {
             });
         }
         let mut candidates = Vec::new();
-        for (id, root, first) in &intents {
+        for (id, root, first, _, _) in &intents {
             let mut paths = Vec::with_capacity(3 * self.config.scenario_batches);
             for batch in 0..self.config.scenario_batches {
                 for scenario in 0..3 {
@@ -1023,7 +1058,10 @@ impl Planner {
         };
         // Each root was admitted in its own signed or unsigned context. This
         // detached appraisal compares those candidates without committing it.
-        let allowed_roots = intents.iter().map(|(_, root, _)| root.clone()).collect();
+        let allowed_roots = intents
+            .iter()
+            .map(|(_, root, _, _, _)| root.clone())
+            .collect();
         let comparison = reflex_immediate::Agent::from_state(
             owner.config().actor.clone(),
             owner.state()?.intent.clone(),
@@ -1097,7 +1135,11 @@ impl Planner {
             .iter()
             .find(|s| s.id == "candidate-000")
             .ok_or(Error::Invalid("outside score required"))?;
-        let biases = plan_bias(&bounded, &root_bias);
+        let biases: BTreeMap<String, f64> = intents
+            .iter()
+            .enumerate()
+            .map(|(i, (_, _, _, _, bias))| (format!("candidate-{i:03}"), *bias))
+            .collect();
         let has_bias = biases.values().any(|v| *v != 0.);
         let best_purpose = appraisal
             .decision()
@@ -1155,7 +1197,7 @@ impl Planner {
                     &format!("candidate-{:03}", choice.0),
                     "candidate-000",
                     3,
-                    &plan_bias(&forecast, &root_bias),
+                    &biases,
                 )?;
                 if support.supported {
                     supports.insert(choice.0, support);
@@ -1175,16 +1217,22 @@ impl Planner {
                 .sum(),
         };
         for (i, _) in choices {
-            let (id, root, first) = &intents[i];
+            let (id, root, first, cached, _) = &intents[i];
             let id = id.as_ref().unwrap();
-            let mut scenarios = public_scenarios(game, player, beliefs, self.config.model_seed)?;
-            for row in &mut scenarios {
-                for (p, a) in first {
-                    row[*p] = a.clone();
+            let signed = if let Some(input) = cached {
+                input.clone()
+            } else {
+                let mut scenarios =
+                    public_scenarios(game, player, beliefs, self.config.model_seed)?;
+                for row in &mut scenarios {
+                    for (p, a) in first {
+                        row[*p] = a.clone();
+                    }
                 }
-            }
-            let mut signed = game.input_scenarios(player, &scenarios)?;
-            signed_context(&mut signed);
+                let mut input = game.input_scenarios(player, &scenarios)?;
+                signed_context(&mut input);
+                input
+            };
             let executing = owner.fork_model()?;
             let prepared = executing.prepare_estimated(&signed, false)?;
             if !prepared.allowed().contains(root) {
@@ -1314,10 +1362,15 @@ fn simulate<G: ArenaGame>(
                 game = game.with_route(player, None)?;
             }
         }
-        let mut sampled = public
-            .as_ref()
-            .map(|b| public_scenarios(&game, player, b, seed))
-            .transpose()?;
+        let mut sampled = match &public {
+            Some(b) => Some(public_scenarios(&game, player, b, seed)?),
+            None if social_memory.is_some() => Some(
+                (0..3)
+                    .map(|i| game.modeled_choices(player, &i.to_string()))
+                    .collect::<Result<Vec<_>>>()?,
+            ),
+            None => None,
+        };
         if t == 0 {
             if let (Some(rows), Some(first)) = (&mut sampled, first) {
                 for row in rows {
@@ -1327,9 +1380,15 @@ fn simulate<G: ArenaGame>(
                 }
             }
         }
-        let mut input = match &sampled {
-            Some(choices) => game.input_scenarios(player, choices)?,
-            None => game.input(player)?,
+        let (mut input, bindings) = if social_memory.is_some() {
+            let frame = game.decision_frame(player, sampled.as_ref().expect("social scenarios"))?;
+            (frame.input, frame.social)
+        } else {
+            let input = match &sampled {
+                Some(choices) => game.input_scenarios(player, choices)?,
+                None => game.input(player)?,
+            };
+            (input, BTreeMap::new())
         };
         if t == 0 && signed && first.is_some() {
             signed_context(&mut input);
@@ -1339,7 +1398,6 @@ fn simulate<G: ArenaGame>(
         }
         let normal = actor.prepare_estimated(&input)?;
         let normal = if let Some(m) = &social_memory {
-            let bindings = game.social_bindings(player)?;
             let bias = social_bias(m, normal.context(), &bindings)?;
             let purpose = normal
                 .context()
@@ -2095,6 +2153,184 @@ mod tests {
             Ok(vec![events, vec![]])
         }
     }
+    #[derive(Clone)]
+    struct ConditionalSocialWorld {
+        tick: u64,
+        frames: std::sync::Arc<std::sync::atomic::AtomicUsize>,
+    }
+    impl ArenaGame for ConditionalSocialWorld {
+        fn players(&self) -> usize {
+            2
+        }
+        fn tick(&self) -> u64 {
+            self.tick
+        }
+        fn terminal(&self) -> bool {
+            self.tick >= 4
+        }
+        fn input(&self, p: usize) -> Result<Input> {
+            SocialWorld { tick: self.tick }.input(p)
+        }
+        fn behavior(&self, v: usize, p: usize) -> Result<crate::behavior::PublicBehavior> {
+            SocialWorld { tick: self.tick }.behavior(v, p)
+        }
+        fn input_scenarios(&self, p: usize, _: &[Vec<String>]) -> Result<Input> {
+            self.input(p)
+        }
+        fn decision_frame(&self, p: usize, rows: &[Vec<String>]) -> Result<crate::DecisionFrame> {
+            self.frames
+                .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+            let support =
+                rows.iter().filter(|row| row[1] == "act").count() as f64 / rows.len() as f64;
+            Ok(crate::DecisionFrame {
+                input: self.input(p)?,
+                social: BTreeMap::from([(
+                    "act".into(),
+                    social::Binding {
+                        target: "other".into(),
+                        support,
+                        distress: 0.,
+                    },
+                )]),
+            })
+        }
+        fn model_world(&self, _: usize, _: u64) -> Result<Self> {
+            Ok(self.clone())
+        }
+        fn advance(&self, choices: &[String], seed: u64) -> Result<(Self, Vec<Feedback>)> {
+            let (_, feedback) = SocialWorld { tick: self.tick }.advance(choices, seed)?;
+            Ok((
+                Self {
+                    tick: self.tick + 1,
+                    frames: self.frames.clone(),
+                },
+                feedback,
+            ))
+        }
+        fn modeled_choices(&self, _: usize, _: &str) -> Result<Vec<String>> {
+            Ok(vec!["act".into(), "next".into()])
+        }
+        fn purpose(&self, _: usize) -> f64 {
+            0.
+        }
+        fn view(&self) -> serde_json::Value {
+            serde_json::json!({"tick": self.tick})
+        }
+        fn partners(&self, p: usize) -> Vec<usize> {
+            vec![1 - p]
+        }
+        fn offers(&self, _: &[String]) -> Result<Vec<crate::coordination::Offer>> {
+            Ok(vec![])
+        }
+    }
+    #[test]
+    fn consent_uses_candidate_specific_effects_for_same_root_and_reuses_frame() {
+        let mut cfg = fixture_owner_config();
+        cfg.actor.policy.priority = reflex_immediate::Priority::Finite;
+        cfg.actor.values[8] = 1.;
+        let mut owner = Owner::new(cfg).unwrap();
+        let first = SocialWorld { tick: 0 };
+        let stage = owner
+            .prepare_estimated(&first.input(0).unwrap(), false)
+            .unwrap();
+        let action = stage.decision().action_id.clone();
+        let (_, feedback) = first.advance(&[action.clone(), "next".into()], 0).unwrap();
+        let ticket = owner.commit(stage, &action).unwrap();
+        owner.resolve(ticket, &feedback[0]).unwrap();
+        let mut memory = social::Memory::new(&owner.config().actor).unwrap();
+        memory
+            .observe_batch(
+                &first
+                    .social_events(&SocialWorld { tick: 1 }, &[], 0)
+                    .unwrap()[0],
+                0,
+            )
+            .unwrap();
+        let scope = serde_json::to_string(&(
+            &owner.config().actor.scope.game,
+            &owner.config().actor.scope.episode,
+        ))
+        .unwrap();
+        let beliefs = Beliefs::new(scope, 0, vec!["act".into(), "next".into()]).unwrap();
+        let world = ConditionalSocialWorld {
+            tick: 1,
+            frames: std::sync::Arc::default(),
+        };
+        let planner = Planner::new(
+            &owner,
+            Config {
+                horizon: 1,
+                second_moves: 0,
+                ..Config::default()
+            },
+        )
+        .unwrap();
+        let offer = |id: &str, partner: &str| crate::coordination::Offer {
+            id: id.into(),
+            roots: BTreeMap::from([(0, "act".into()), (1, partner.into())]),
+        };
+        let saved = memory.checkpoint(&world.view()).unwrap();
+        let consent = planner
+            .consent_social(
+                &owner,
+                &world,
+                0,
+                &beliefs,
+                &["act".into(), "next".into()],
+                &[offer("delivered", "act"), offer("undelivered", "next")],
+                Some(&memory),
+                true,
+            )
+            .unwrap();
+        assert_eq!(consent.ranked, vec!["undelivered"]);
+        assert_eq!(world.frames.load(std::sync::atomic::Ordering::Relaxed), 12);
+        assert_eq!(memory.checkpoint(&world.view()).unwrap(), saved);
+        let intentions = |partner: &str| Intentions {
+            tick: 1,
+            choices: BTreeMap::from([(1, partner.into())]),
+        };
+        let delivered = planner
+            .propose_social(
+                &owner,
+                &world,
+                0,
+                Some(&beliefs),
+                Some(&intentions("act")),
+                Some(&memory),
+            )
+            .unwrap();
+        let undelivered = planner
+            .propose_social(
+                &owner,
+                &world,
+                0,
+                Some(&beliefs),
+                Some(&intentions("next")),
+                Some(&memory),
+            )
+            .unwrap();
+        assert_eq!(delivered.action(), "next");
+        assert_eq!(undelivered.action(), "act");
+        let modeled = simulate(
+            &owner,
+            &world,
+            0,
+            "act",
+            0,
+            2,
+            701,
+            None,
+            None,
+            None,
+            false,
+            false,
+            Some(&memory),
+        )
+        .unwrap();
+        assert_eq!(modeled.actions[1], "act"); // The modeled recipient does not reciprocate.
+        assert_eq!(memory.checkpoint(&world.view()).unwrap(), saved);
+    }
+
     #[test]
     fn simulated_social_learning_is_detached_and_restores_next_choice() {
         let mut config = fixture_owner_config();
