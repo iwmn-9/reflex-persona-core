@@ -1,33 +1,50 @@
 """Research: discover continuations and evaluate them on disjoint model samples.
 
-Retain the ordinary bank for every root, plus one discovered continuation per
-root. Freeze its public stopping curve before evaluation. The final personality
+Retain the ordinary bank, each root's purpose/utility frontier and the strongest
+value anchor. Freeze public stopping curves before evaluation. The final personality
 tier and purpose corridor use evaluation paths only. This is not Double Q-learning
 or a safety guarantee; model bias, shortlist omissions and evaluation noise remain.
 """
 import copy
 from dataclasses import replace
 
-from reflex.core import digest
-from reflex.deliberation import select
+from reflex.core import digest,compile_batch
 from reflex._continuation_portfolio import portfolio_planner
 from reflex._horizon_consensus import prefix_forecast
 from reflex.purpose_plan import Goal
 from tools.bounded_expansion import bounded_expansion_planner
 
 
+def frontier(entries):
+    """Keep purpose/utility tradeoffs; equal points retain their first plan ID."""
+    ordered=sorted(entries)
+    return {name for i,name in enumerate(ordered) if not any(
+        entries[other][0]>=entries[name][0] and entries[other][1]>=entries[name][1]
+        and (entries[other]!=entries[name] or j<i)
+        for j,other in enumerate(ordered) if other!=name)}
+
+
 def shortlist(context, forecast, policies, modeled, policy):
     """Use the unchanged owner selector; no score learned from game labels."""
     names={name for name,p in policies.items() if p['kind']=='reflex' or
         ('termination' not in p and p['preferred']==modeled[name][0]['actions'][0])}
-    chosen={};references={}
-    roots=sorted({row[0]['actions'][0] for row in modeled.values()})
+    batch=compile_batch(forecast.contexts,outcome_limit=forecast.outcome_limit)
+    framed=dict(return_frame=forecast.return_frame)
+    if forecast.return_means is not None:framed['return_means']=forecast.return_means
+    appraisal=policy.decide(batch,False,**framed)
+    utility={n:float(v) for n,v in zip(batch.ids[0],appraisal.scores[0])}
+    strongest={n:float(v) for n,v in zip(batch.ids[0],appraisal.features[0,:,2])}
+    # Omitting this anchor could relax the strongest-value tier before the
+    # competence filter, even if weights and traits themselves stay unchanged.
+    selected={min(strongest,key=lambda n:(-strongest[n],n))}
+    chosen={};references={};roots=sorted({row[0]['actions'][0] for row in modeled.values()})
     for root in roots:
-        decisions,audit=select([context],forecast,policy,root_allowed=[{root}])
-        if decisions is None:
-            continue  # The full discovery personality tier may exclude a root.
-        name=forecast.audit['plans'][audit['selected_plan']]['proposal']
-        names.add(name);chosen[root]=name
+        entries={n:(forecast.purpose[n],utility[n]) for n,rs in forecast.roots.items() if rs==(root,)}
+        retained=frontier(entries);selected.update(retained)
+        chosen[root]=[forecast.audit['plans'][n]['proposal'] for n in sorted(retained)]
+    for plan in sorted(selected):
+        name=forecast.audit['plans'][plan]['proposal']
+        names.add(name)
         if name.endswith('-until-gain'):
             names.add(name.removesuffix('-until-gain'))
             references[name.split('-retry')[0]+'-reflex']=policies[name]['reference_goal_curve']

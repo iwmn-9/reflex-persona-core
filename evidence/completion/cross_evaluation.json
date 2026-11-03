@@ -1,0 +1,84 @@
+{
+  "adoption": false,
+  "complete": false,
+  "long_world_improvement": false,
+  "old": {
+    "phase": "retired-before-case-analysis",
+    "completed": 1,
+    "registered": 5,
+    "input_sha256": "56933213094d4e9758e32de0ab8b02b954c5a52f96d5ab3f7713b57ce5b6cc69",
+    "results_sha256": "9b9f766481453ef2f92ca5d3dbff3e691dc736f8fb2264b849bc119dd5403c9a",
+    "reason": "One subjective favourite per root can omit a purpose advantage and lower the competence floor; retired before case analysis. Completed case retained; all five repeated.",
+    "counterexample": {
+      "purpose": [
+        0.6,
+        0.59,
+        0.58,
+        0.5
+      ],
+      "utility": [
+        0.5,
+        0.8,
+        1.0,
+        0.2
+      ],
+      "roots": [
+        "a",
+        "a",
+        "b",
+        "c"
+      ],
+      "ordinary_regret_ceiling": 0.045,
+      "original_regret": 0.015,
+      "shortlisted_regret": 0.0135,
+      "original_floor": 0.585,
+      "shortlisted_floor": 0.5765,
+      "old_root": "a",
+      "shortlisted_root": "b"
+    }
+  },
+  "current": {
+    "source_sha256": "3b7303bf90a7718796127021447ca6d115c880327285b68894e35794834271db",
+    "input_sha256": "27e86cef3fade877099fe0cb476467f163e1e6f84b9f5ab475b1a3025c776ab6",
+    "plan_sha256": "522893a4a706acce89f6a3223e3d11b5c776387c33df7a1dce83864b4cda710c",
+    "registered_states": [
+      {
+        "id": "gambling-1-10061201-outside",
+        "record": "gambling-1-10061201-outside.json",
+        "sha256": "296d3f114cbdc84d7c592aad15b684cb421aea3d742a640e2d5f72476b646ea6",
+        "tick": 7
+      },
+      {
+        "id": "combat-3-10061201-outside",
+        "record": "combat-3-10061201-outside.json",
+        "sha256": "4fd4fc9313d1341fc6503bc07609a5a950474b62c3247d5bfd26b527a21b07a4",
+        "tick": 21
+      },
+      {
+        "id": "auction-0-10061201-outside",
+        "record": "auction-0-changed-learning.json",
+        "sha256": "5febbda15e8ce0e00c5d3baae6affbed912cc4892ff833fbb54d90a1cd60dd5c",
+        "tick": 44
+      },
+      {
+        "id": "auction-1-10061202-shift-return",
+        "record": "auction-1-10061202-shift-return.json",
+        "sha256": "4838643cc9a9469d563ac6682422633dd532842101217b634671a6206ce614c6",
+        "tick": 53
+      },
+      {
+        "id": "resources-1-10061202-shift-return",
+        "record": "resources-1-10061202-shift-return.json",
+        "sha256": "66aca76fcab8fd7499340a5d47bb8e11ee110470b93f52e16a2c61c32b1f9dba",
+        "tick": 64
+      }
+    ],
+    "parity": {
+      "parent_default_parity_families": 4,
+      "tests": 4
+    },
+    "parity_sha256": "217fdae66c7f764a19c5d055b99be722667e92cbb899f5a3fd1dd978dfd5494b",
+    "method": "Keep ordinary policies, each real-root purpose/owner-utility frontier and the strongest-value anchor. Freeze candidate stopping rules on discovery samples; final appraisal uses disjoint model samples. Reject diagnostics if same-sample shortlisting changes the original choice or purpose."
+  },
+  "limits": "Known states and previously used model banks; not independent confirmation. Model error, evaluation noise, long-run benefit and transfer remain unverified. Registered long campaigns and adoption gates unchanged."
+}

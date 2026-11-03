@@ -6,7 +6,7 @@ from reflex.core import digest
 from reflex.decision_loop import DecisionLoop
 from reflex.laboratory import PROFILES
 from tools.continuing_games import ContinuingGame
-from tools.cross_evaluated_continuation import cross_evaluated_planner
+from tools.cross_evaluated_continuation import cross_evaluated_planner,frontier
 from tools.run_owned_value import cumulative_basis
 
 
@@ -24,6 +24,21 @@ def fixture(family):
 
 
 class CrossEvaluationTests(unittest.TestCase):
+    def test_shortlisting_preserves_the_competence_floor_and_compromises(self):
+        # Choosing only the subjective favourite under each root would remove
+        # high-purpose, lower-utility A. That lowers the floor from .585 to
+        # .5765 and admits C, which the original forecast rejected.
+        options={'A':(.60,.50),'B':(.59,.80),'dominated':(.57,.40),'duplicate':(.60,.50)}
+        retained=frontier(options)
+        self.assertEqual(retained,{'A','B'})
+        original_best=max(v[0] for v in options.values())
+        reduced_best=max(options[n][0] for n in retained)
+        self.assertEqual(original_best,reduced_best)
+        root_min=.50
+        floor=lambda best:best-.15*(best-root_min)
+        self.assertGreater(floor(reduced_best),.58)
+        self.assertLess(floor(options['B'][0]),.58)
+
     def test_filtered_fixed_rules_preserve_every_original_trajectory(self):
         for family in ('auction','resources','combat','gambling'):
             with self.subTest(family=family):

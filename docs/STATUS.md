@@ -19,7 +19,7 @@ Python安定版はv0.1.0／`FixedHorizonOwner`。[導入](STABLE_INTEGRATION.md)
 
 追加候補で目的の許容損が膨らむ接続不備を確認した。上限を通常候補の幅に保つ修正は、既知の同一本人参照16条件を通過。長期利益は未確認。[根拠](../evidence/completion/expansion_diagnosis.json)。別登録の `results/colab_bounded_expansion_20261103/sharding.json` で同じ10条件・40分岐を比較する。旧比較を置換せず、件数を混ぜない。
 
-候補の探索と採点を別の予測標本へ分ける[研究部品](../tools/cross_evaluated_continuation.py)も検査中。既存の既定動作は4分野で一致し、入力・固定方策・本人保持の3テストをColabで通過した。既知5局面の比較中で、長期改善・採用は未確認。実行先は `results/cross_evaluation_diagnostic_20261103`。上記の登録済み長期比較は変更しない。
+候補の探索と採点を別の予測標本へ分ける[研究部品](../tools/cross_evaluated_continuation.py)も検査中。各初手から1候補だけ残す初案は、最良の目的値まで捨て得るため中止した。目的・本人効用の両立しない候補と主義の比較基準を残す修正を、同じ5局面で再検査する。既定動作の4分野一致と4テストはColabで通過。長期改善・採用は未確認。[記録](../evidence/completion/cross_evaluation.json)。実行先は `results/cross_evaluation_frontier_20261103`。登録済み長期比較は変更しない。
 
 準備の連結、計画保持の64手比較、公開報酬が下がった時の撤回を監査済み。元の失敗8件を成功扱いにはせず、撤回用8実行は全件やり直した。結果・代償・限界は[報告](../evidence/completion/REPORT.md)。元の10条件・C3比較・合格線・安定版・Rustは変更しない。
 
