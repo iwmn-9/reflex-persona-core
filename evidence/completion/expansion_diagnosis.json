@@ -585,5 +585,116 @@
       "2": 0.8
     },
     "interpretation": "Exact additive accounting on these completed unclipped lives: one extra completed investment replaces a bet on response 2, and one extra bet on response 0 replaces response 2. It separates contributions, not a new controlled policy experiment. At tick 8 both owners predicted response 0 above 2; the learner could not observe true probabilities. Do not repair this by revealing truth or tuning a game action."
+  },
+  "first_divergence_validation": {
+    "input_sha256": "0dd6dafcf91ab2193cda1133a4462efdb03c79663731f6c95182ddbc65f41427",
+    "results_sha256": "42a955185bf3f6c73bb15f70c5c3275ce5f2fb8b70814bd44059071afd146b18",
+    "plan_sha256": "c8bc24590483d5480e377b50f38983128e2cea3496e59f38541b095c90fb575a",
+    "created_kernel_absent": true,
+    "prior_kernels_preserved": true,
+    "adoption": false,
+    "states": [
+      {
+        "id": "combat-3-10061201-outside",
+        "tick": 21,
+        "policies": {
+          "shared": {
+            "name": "candidate-000-retry-001-until-gain",
+            "root": "guard"
+          },
+          "stable": {
+            "name": "candidate-001-reflex",
+            "root": "reload"
+          }
+        },
+        "purpose_delta": {
+          "1701": -0.0033271795872609755,
+          "2701": -0.0007054235675675591,
+          "701": -0.0007819563094498827
+        }
+      },
+      {
+        "id": "gambling-1-10061201-outside",
+        "tick": 7,
+        "policies": {
+          "shared": {
+            "name": "candidate-003-retry-002",
+            "root": "bond"
+          },
+          "stable": {
+            "name": "candidate-002-retry-002",
+            "root": "bet:2"
+          }
+        },
+        "purpose_delta": {
+          "1701": 0.006367422998325059,
+          "2701": 0.006485973676365251,
+          "701": 0.0064859736763652545
+        }
+      },
+      {
+        "id": "gambling-1-10061201-outside",
+        "tick": 8,
+        "policies": {
+          "shared": {
+            "name": "candidate-000-reflex",
+            "root": "bet:0"
+          },
+          "stable": {
+            "name": "candidate-000-reflex",
+            "root": "bet:0"
+          }
+        },
+        "purpose_delta": {
+          "1701": 0.0,
+          "2701": 0.0,
+          "701": 0.0
+        }
+      }
+    ],
+    "interpretation": "Fixed-policy model validation, not true-law value or long-run intelligence. Gambling t7 supports preparation on all three banks; t8 stable and shared choose the same bet from the same actual owner. Combat t21 trades lower modeled purpose for another objective; personal appraisal is measured separately below.",
+    "checks": {
+      "factual_owner_unchanged": true,
+      "filtered_training_trajectories": true,
+      "original_decision": true,
+      "standalone_stable_projection": true,
+      "training_thresholds_fixed_on_validation": true
+    }
+  },
+  "combat_first_divergence_appraisal": {
+    "input_sha256": "9aa221f0b1138bc20497c0f53f336aa7877c71018b333b20c684f13f43a060f4",
+    "results_sha256": "11761c0d302c99d83c87dd93f72cca1dfe409d9c7a0e0eb97b99a492dd8fe2f2",
+    "plan_sha256": "8bc44720d4fd67ec806600b7acf1d1f552cc97ae3b2637402356b6f3ecc99791",
+    "created_kernel_absent": true,
+    "prior_kernels_preserved": true,
+    "adoption": false,
+    "id": "combat-3-10061201-outside",
+    "tick": 21,
+    "checks": {
+      "actual_history_replayed": true,
+      "factual_owner_unchanged": true,
+      "previous_fixed_policy_purposes_exact": true,
+      "subjective_branch_mean_reconstructed": true,
+      "training_thresholds_fixed": true
+    },
+    "banks": {
+      "1701": {
+        "purpose_delta": -0.0033271795872609755,
+        "subjective_delta": 0.05094567909812209
+      },
+      "2701": {
+        "purpose_delta": -0.0007054235675675591,
+        "subjective_delta": 0.05203252195888863
+      },
+      "701": {
+        "purpose_delta": -0.0007819563094498827,
+        "subjective_delta": 0.07759858986883084
+      }
+    },
+    "interpretation": "The selected guard has lower modeled purpose but higher decision-time personal utility on all three banks. Purpose loss alone does not show a personal decision error. Finite samples and an imperfect future controller remain; neither true optimality nor a complete long-run loss attribution is established.",
+    "roots": {
+      "shared": "guard",
+      "stable": "reload"
+    }
   }
 }
