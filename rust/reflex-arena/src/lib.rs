@@ -4,7 +4,6 @@ use std::collections::{BTreeMap, BTreeSet};
 pub mod behavior;
 pub mod coordination;
 pub mod games;
-pub mod hypotheses;
 pub mod planner;
 pub mod robustness;
 pub mod routes;
@@ -117,7 +116,7 @@ pub fn public_scenarios<G: ArenaGame>(
 ) -> Result<Vec<Vec<String>>> {
     let mut scenarios = vec![Vec::new(); 3];
     for person in 0..game.players() {
-        let frame = hypotheses::frame(game, viewer, person, beliefs.model_set())?;
+        let frame = game.behavior(viewer, person)?;
         let probabilities = if person == viewer {
             vec![(
                 frame
@@ -233,12 +232,7 @@ pub fn observe_public<G: ArenaGame>(
     let mut next = beliefs.clone();
     for (person, choice) in choices.iter().enumerate() {
         if person != viewer {
-            next.observe(
-                &hypotheses::frame(game, viewer, person, beliefs.model_set())?,
-                person,
-                choice,
-                game.tick(),
-            )?;
+            next.observe(&game.behavior(viewer, person)?, person, choice, game.tick())?;
         }
     }
     *beliefs = next;

@@ -26,9 +26,8 @@ struct Person {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
-pub enum ModelSet {
+enum ModelSet {
     Adapter,
-    AppraisalMixture,
 }
 
 /// A viewer's separate factual memories of observed persons. Clone before a trial.
@@ -105,31 +104,22 @@ fn alphabet_valid(a: &[String]) -> bool {
         && a.iter().all(|s| label(s))
         && a.windows(2).all(|w| w[0] < w[1])
 }
-fn definition(model_set: ModelSet) -> Definition {
+fn definition() -> Definition {
     Definition {
-        model_id: match model_set {
-            ModelSet::Adapter => "public-behavior-v2",
-            ModelSet::AppraisalMixture => "public-appraisal-mixture-v1",
-        }
-        .into(),
+        model_id: "public-behavior-v2".into(),
         factors: vec!["situation".into()],
-        names: (0..match model_set {
-            ModelSet::Adapter => 3,
-            ModelSet::AppraisalMixture => 6,
-        })
-            .map(|i| i.to_string())
-            .collect(),
+        names: (0..3).map(|i| i.to_string()).collect(),
         window: 64,
     }
 }
 impl PublicBehavior {
-    fn inputs(&self, expected: &[String], model_set: ModelSet) -> Result<Inputs> {
+    fn inputs(&self, expected: &[String]) -> Result<Inputs> {
         if self.alphabet != expected
             || !alphabet_valid(&self.alphabet)
             || !label(&self.context)
             || self.actions.is_empty()
             || self.actions.len() > 256
-            || self.suggestions.len() != definition(model_set).names.len()
+            || self.suggestions.len() != definition().names.len()
             || self
                 .actions
                 .iter()
@@ -171,14 +161,6 @@ impl Beliefs {
         self.people.values().map(|p| p.memory.observations).sum()
     }
     pub fn new(scope: String, viewer: usize, alphabet: Vec<String>) -> Result<Self> {
-        Self::new_with_models(scope, viewer, alphabet, ModelSet::Adapter)
-    }
-    pub fn new_with_models(
-        scope: String,
-        viewer: usize,
-        alphabet: Vec<String>,
-        model_set: ModelSet,
-    ) -> Result<Self> {
         if !label(&scope) || viewer >= 10_000 || !alphabet_valid(&alphabet) {
             return Err(Error::Invalid(
                 "bounded scope, viewer and sorted alphabet required",
@@ -189,13 +171,10 @@ impl Beliefs {
             scope,
             viewer,
             alphabet,
-            model_set,
+            model_set: ModelSet::Adapter,
             people: BTreeMap::new(),
             cache: Arc::default(),
         })
-    }
-    pub fn model_set(&self) -> ModelSet {
-        self.model_set
     }
     /// Validate deserialized state against independently supplied episode identity.
     pub fn validate(&self, scope: &str, viewer: usize, alphabet: &[String]) -> Result<()> {
@@ -213,7 +192,7 @@ impl Beliefs {
         for (actor, person) in &self.people {
             if *actor >= 10_000
                 || *actor == viewer
-                || person.definition != definition(self.model_set)
+                || person.definition != definition()
                 || (person.memory.observations == 0) != person.last_tick.is_none()
                 || person
                     .last_tick
@@ -239,25 +218,12 @@ impl Beliefs {
         result.validate(scope, viewer, alphabet)?;
         Ok(result)
     }
-    pub fn restore_with_models(
-        bytes: &[u8],
-        scope: &str,
-        viewer: usize,
-        alphabet: &[String],
-        model_set: ModelSet,
-    ) -> Result<Self> {
-        let result = Self::restore(bytes, scope, viewer, alphabet)?;
-        if result.model_set != model_set {
-            return Err(Error::Invalid("behavior model set mismatch"));
-        }
-        Ok(result)
-    }
     pub fn predict(&self, frame: &PublicBehavior, actor: usize) -> Result<Vec<(String, f64)>> {
         if actor >= 10_000 || actor == self.viewer {
             return Err(Error::Invalid("bounded observed person required"));
         }
-        let inputs = frame.inputs(&self.alphabet, self.model_set)?;
-        let d = definition(self.model_set);
+        let inputs = frame.inputs(&self.alphabet)?;
+        let d = definition();
         let empty = Memory::default();
         let memory = match self.people.get(&actor) {
             Some(p) => {
@@ -348,19 +314,17 @@ impl Beliefs {
         {
             return Err(Error::Invalid("bounded observed person and tick required"));
         }
-        let inputs = frame.inputs(&self.alphabet, self.model_set)?;
+        let inputs = frame.inputs(&self.alphabet)?;
         let class = frame
             .actions
             .get(actual)
             .ok_or(Error::Invalid("actual action must be publicly legal"))?;
         let mut person = self.people.get(&actor).cloned().unwrap_or_else(|| Person {
-            definition: definition(self.model_set),
+            definition: definition(),
             memory: Memory::default(),
             last_tick: None,
         });
-        if person.definition != definition(self.model_set)
-            || person.last_tick.is_some_and(|last| tick <= last)
-        {
+        if person.definition != definition() || person.last_tick.is_some_and(|last| tick <= last) {
             return Err(Error::Invalid("behavior observation clock must advance"));
         }
         person.memory.observe(&person.definition, &inputs, class)?;
@@ -454,9 +418,7 @@ mod tests {
         let mut restricted = frame();
         restricted.actions.remove("a");
         restricted.suggestions = vec!["b".into(), "b".into(), "b".into()];
-        let input = restricted
-            .inputs(&restricted.alphabet, ModelSet::Adapter)
-            .unwrap();
+        let input = restricted.inputs(&restricted.alphabet).unwrap();
         assert_eq!(input.legal, frame().alphabet);
         assert!(input.models.iter().all(|row| row[0] == 0.));
         for tick in 30..35 {
@@ -501,11 +463,11 @@ mod tests {
     fn cache_hash_collision_cannot_change_prediction() {
         let mut b = new();
         b.observe(&frame(), 1, "a", 0).unwrap();
-        let input = frame().inputs(&b.alphabet, ModelSet::Adapter).unwrap();
+        let input = frame().inputs(&b.alphabet).unwrap();
         let key = hash_key(&b.people[&1].memory, &input);
         b.cache.lock().unwrap().entries.push_back(CacheEntry {
             hash: key,
-            definition: definition(ModelSet::Adapter),
+            definition: definition(),
             memory: Memory::default(),
             inputs: input.clone(),
             probabilities: vec![0., 0., 1.],
@@ -519,97 +481,27 @@ mod tests {
     }
 
     #[test]
-    fn six_models_use_the_same_class_memory_and_action_distribution() {
-        let mut f = frame();
-        f.suggestions = vec![
-            "a".into(),
-            "b".into(),
-            "c".into(),
-            "d".into(),
-            "b".into(),
-            "a".into(),
-        ];
-        let mut b = Beliefs::new_with_models(
-            "g/e".into(),
-            0,
-            f.alphabet.clone(),
-            ModelSet::AppraisalMixture,
-        )
-        .unwrap();
-        let mut reference = Memory::default();
-        let d = definition(ModelSet::AppraisalMixture);
-        let inputs = f.inputs(&f.alphabet, ModelSet::AppraisalMixture).unwrap();
-        assert_eq!(inputs.models.len(), 6);
-        for tick in 0..20 {
-            let actual = if tick % 3 == 0 { "a" } else { "c" };
-            b.observe(&f, 1, actual, tick).unwrap();
-            reference.observe(&d, &inputs, &f.actions[actual]).unwrap();
-        }
-        let classes = reference.predict(&d, &inputs).unwrap();
-        let rows = b.predict(&f, 1).unwrap();
-        for (index, class) in f.alphabet.iter().enumerate() {
-            let sum: f64 = rows
-                .iter()
-                .filter(|(a, _)| &f.actions[a] == class)
-                .map(|(_, p)| p)
-                .sum();
-            assert!((sum - classes[index]).abs() < 1e-12);
-        }
-        let c = rows.iter().find(|(a, _)| a == "c").unwrap().1;
-        let d = rows.iter().find(|(a, _)| a == "d").unwrap().1;
-        assert!((c - d).abs() < 1e-12);
-        let saved = b.checkpoint().unwrap();
-        let restored =
-            Beliefs::restore_with_models(&saved, "g/e", 0, &f.alphabet, ModelSet::AppraisalMixture)
-                .unwrap();
-        assert_eq!(restored.predict(&f, 1).unwrap(), rows);
-        assert!(
-            Beliefs::restore_with_models(&saved, "g/e", 0, &f.alphabet, ModelSet::Adapter).is_err()
-        );
-        assert!(new().predict(&f, 1).is_err());
-        let mut three = f.clone();
-        three.suggestions.truncate(3);
-        assert!(b.predict(&three, 1).is_err());
-        assert!(b.observe(&f, 1, "a", 19).is_err());
-        assert_eq!(b.checkpoint().unwrap(), saved);
-    }
-
-    #[test]
-    fn adapter_and_repeated_six_preserve_predictions_and_reject_old_schema() {
+    fn checkpoint_rejects_other_model_sets_and_old_schema() {
         let f = frame();
-        let mut six = f.clone();
-        six.suggestions.extend(f.suggestions.clone());
-        let mut adapter = new();
-        let mut mixture = Beliefs::new_with_models(
-            "g/e".into(),
-            0,
-            f.alphabet.clone(),
-            ModelSet::AppraisalMixture,
-        )
-        .unwrap();
-        assert_eq!(adapter.model_set(), ModelSet::Adapter);
-        for tick in 0..20 {
-            let actual = if tick % 2 == 0 { "a" } else { "c" };
-            adapter.observe(&f, 1, actual, tick).unwrap();
-            mixture.observe(&six, 1, actual, tick).unwrap();
-        }
-        for ((a, p), (b, q)) in adapter
-            .predict(&f, 1)
-            .unwrap()
-            .iter()
-            .zip(mixture.predict(&six, 1).unwrap())
-        {
-            assert_eq!(*a, b);
-            assert!((p - q).abs() < 1e-12);
-        }
-        let mut state: serde_json::Value =
-            serde_json::from_slice(&adapter.checkpoint().unwrap()).unwrap();
+        let mut b = new();
+        b.observe(&f, 1, "a", 0).unwrap();
+        let bytes = b.checkpoint().unwrap();
+        let mut state: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+        state["model_set"] = "AppraisalMixture".into();
+        assert!(
+            Beliefs::restore(&serde_json::to_vec(&state).unwrap(), "g/e", 0, &f.alphabet).is_err()
+        );
+        let mut state: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+        state["people"]["1"]["definition"]["model_id"] = "public-appraisal-mixture-v1".into();
+        assert!(
+            Beliefs::restore(&serde_json::to_vec(&state).unwrap(), "g/e", 0, &f.alphabet).is_err()
+        );
+        let mut state: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
         state.as_object_mut().unwrap().remove("version");
         assert!(
             Beliefs::restore(&serde_json::to_vec(&state).unwrap(), "g/e", 0, &f.alphabet).is_err()
         );
-        let mut state: serde_json::Value =
-            serde_json::from_slice(&adapter.checkpoint().unwrap()).unwrap();
+        let mut state: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
         state["people"]["1"]["last_tick"] = (1_u64 << 63).into();
         assert!(
             Beliefs::restore(&serde_json::to_vec(&state).unwrap(), "g/e", 0, &f.alphabet).is_err()
