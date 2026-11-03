@@ -482,9 +482,37 @@
     "adoption": false,
     "branches": 40,
     "conditions": 10,
-    "execution_started": false,
+    "execution_started": true,
     "parent_parity_required": true,
     "plan_sha256": "ec84af93876bfd4bd5bbedc98aa039ece8ef7c3cecb48759f79c90699c075b18",
-    "source_sha256": "3dc85490b39f9ba5bf81bf7047558ea4739ad4dc922c597ae9b37f087a8ca6ce"
+    "source_sha256": "3dc85490b39f9ba5bf81bf7047558ea4739ad4dc922c597ae9b37f087a8ca6ce",
+    "registered_conditions": 10,
+    "independent_confirmation_started": false
+  },
+  "isolation_checks": {
+    "parent_parity": {
+      "actual_steps_per_side": 12,
+      "adoption": false,
+      "binding": "tools.run_cross_campaign",
+      "candidate_source_sha256": "3dc85490b39f9ba5bf81bf7047558ea4739ad4dc922c597ae9b37f087a8ca6ce",
+      "candidate_trace_sha256": "ea605ed9096b34a3074177f97d62c22bc4032a5326145c9b7357ba46b91288e6",
+      "complete": true,
+      "families": 4,
+      "isolated_complete_sources": true,
+      "parent_source_sha256": "e13f06baffc81404554bf931767f46f16e8a6e4e24f7db44f1773f1002812d63",
+      "parent_trace_sha256": "ea605ed9096b34a3074177f97d62c22bc4032a5326145c9b7357ba46b91288e6",
+      "returncode": 0
+    },
+    "reviewer": {
+      "adoption": false,
+      "complete": true,
+      "parent_actual_steps": 2560,
+      "parent_executions_audited": 20,
+      "partial_rejected": true,
+      "pending_cases": 10
+    },
+    "parity_artifact_sha256": "136f4f26224329d7672f3f09a45b99bbcba8fac9a0ac3840c041efded682302f",
+    "reviewer_artifact_sha256": "ee5ab5eb962bc3c10229d6b318f0e031cd983d2c1eabddbfa4016cb5c0f79be0",
+    "scope": "Separate complete source trees; parent controls replayed; pending candidates cannot pass. No new long-run improvement proved."
   }
 }
