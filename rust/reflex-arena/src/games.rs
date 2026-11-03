@@ -1548,12 +1548,7 @@ impl World for Combat {
             values[4] = obj
         }
         let mut style = [0.; 5];
-        if a.starts_with("heal:") {
-            style[3] = 0.5;
-        }
-        if a == "guard" {
-            style[4] = -0.2;
-        }
+        style[1] = 0.15 * ((v.ammo - u.ammo) as f64 / 3.).max(0.);
         outcome(obj, [dh, dh, allies, obj, 0.], values, style, 0.)
     }
 }
@@ -2064,6 +2059,48 @@ mod tests {
         check(Hagetaka::new(1));
         check(Encounters::new(1, 10));
     }
+    #[test]
+    fn combat_style_tracks_only_ammunition_recovery() {
+        let mut game = Combat::new(1, "open", "either", 10);
+        let mut choices = vec!["guard".to_string(); 6];
+        let (next, feedback) = game.advance(&choices, 1).unwrap();
+        assert_eq!(game.effect(&next, 0, "guard").style, [0.; 5]);
+        assert_eq!(&feedback[0].observed.unwrap()[16..21], &[0.; 5]);
+        for (before, expected) in [(0, 0.15), (1, 0.1), (2, 0.05)] {
+            game.units[0].ammo = before;
+            choices[0] = "reload".into();
+            let (next, _) = game.advance(&choices, 1).unwrap();
+            let style = game.effect(&next, 0, "reload").style;
+            assert!((style[1] - expected).abs() < 1e-12);
+            assert_eq!([style[0], style[2], style[3], style[4]], [0.; 4]);
+        }
+        let mut spent = game.clone();
+        spent.units[0].ammo = 0;
+        assert_eq!(game.effect(&spent, 0, "shoot:3").style, [0.; 5]);
+    }
+
+    #[test]
+    fn combat_healing_preserves_actual_health_effects_without_style_bonus() {
+        let mut game = Combat::new(1, "open", "either", 10);
+        game.units[0].hp = 5;
+        let mut choices = vec!["guard".to_string(); 6];
+        choices[0] = "heal:0".into();
+        let (next, _) = game.advance(&choices, 1).unwrap();
+        let effect = game.effect(&next, 0, "heal:0");
+        assert_eq!(effect.style, [0.; 5]);
+        assert!((effect.needs[0] - 4. / 9.).abs() < 1e-12);
+        assert!((effect.values[5] - 4. / 9.).abs() < 1e-12);
+        assert!((effect.values[8] - 4. / 27.).abs() < 1e-12);
+        game.units[1].x = 2;
+        game.units[1].y = 0;
+        game.units[1].hp = 5;
+        choices[0] = "heal:1".into();
+        let (next, _) = game.advance(&choices, 1).unwrap();
+        let effect = game.effect(&next, 0, "heal:1");
+        assert_eq!(effect.style, [0.; 5]);
+        assert!((effect.values[8] - 4. / 27.).abs() < 1e-12);
+    }
+
     #[test]
     fn combat_move_without_physical_progress_has_no_openness_reward() {
         let battle = Combat::new(1, "choke", "eliminate", 10);

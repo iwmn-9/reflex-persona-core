@@ -65,7 +65,7 @@ fn config(game: &str, seed: u64, player: usize, profile: usize) -> OwnerConfig {
             names: vec!["0".into(), "1".into(), "2".into()],
             window: 128,
         },
-        contract: format!("arena-{game}-estimated-model-v13"),
+        contract: format!("arena-{game}-estimated-model-v14"),
         purpose_target: "game-purpose".into(),
     }
 }
