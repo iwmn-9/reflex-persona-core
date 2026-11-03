@@ -35,7 +35,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                       coherent_cumulative_mean=False, capture_prefixes=False,
                       sampling='independent', continuation_scope='root',
                       tail_purpose_reflex=False, retry_until_gain=False,
-                      retry_gain_reference='origin'):
+                      retry_gain_reference='origin', policy_names=None,
+                      fixed_references=None):
     if type(horizon) is not int or not 1 <= horizon <= 128:
         raise ValueError('explicit bounded continuation horizon required')
     if (not isinstance(seeds, tuple) or not 1 <= len(seeds) <= 8
@@ -62,6 +63,17 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         raise ValueError('known continuation sampling mode required')
     if continuation_scope not in ('root', 'shared') or continuation_scope == 'shared' and not include_retry:
         raise ValueError('shared continuations require the retry bank')
+    if policy_names is not None:
+        if not isinstance(policy_names,(set,frozenset)) or not policy_names or any(not isinstance(n,str) for n in policy_names):
+            raise ValueError('a nonempty explicit continuation subset required')
+        policy_names=frozenset(policy_names)
+    if fixed_references is not None:
+        if (policy_names is None or retry_gain_reference!='expected' or not isinstance(fixed_references,dict)
+                or any(not isinstance(n,str) or not isinstance(curve,(list,tuple)) or len(curve)!=horizon
+                    or any(isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or not -1<=v<=1 for v in curve)
+                    for n,curve in fixed_references.items())):
+            raise ValueError('fixed complete public goal curves require an explicit expected-reference subset')
+        fixed_references={n:tuple(curve) for n,curve in fixed_references.items()}
     if sampling == 'stratified':
         from reflex.rollout_sampling import stratified_uniforms
         stratified_uniforms(seeds, 0)
@@ -80,6 +92,14 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
         c = contexts[0]
         cache=OrderedDict();cache_hits=0;recovery_computations=0
         roots = sorted(a['id'] for a in c['actions'] if a['legal'] and not a['known_failure'])
+        if policy_names is not None:
+            reflexes={f'candidate-{i:03d}-reflex' for i in range(len(roots))}
+            if not reflexes<=policy_names:
+                raise ValueError('the continuation subset must keep ordinary coverage of every real root')
+            if any(n.endswith('-until-gain') and n.removesuffix('-until-gain') not in policy_names for n in policy_names):
+                raise ValueError('terminated retries require their matching complete retry')
+            if fixed_references is not None and not set(fixed_references)<=reflexes:
+                raise ValueError('fixed references must name ordinary root continuations')
         paths, audits, mapping, policies = {}, {}, {}, {}
         retry_without_gain = {}; ordinary_goals = {}; expected_goals = {}
         steps = 0; purpose_reflex_calls = 0; reused_steps = 0
@@ -95,6 +115,8 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                 if until_gain:
                     suffix += '-until-gain'
                 proposal = f'candidate-{root_index:03d}-{mode}{suffix}'
+                if policy_names is not None and proposal not in policy_names:
+                    continue
                 mapping[proposal] = root
                 policies[proposal] = dict(kind=mode, preferred=preferred)
                 if until_gain:
@@ -288,8 +310,12 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                             branch.probability*values[min(t,len(values)-1)]
                             for branch,values in zip(branches,goal_rows))/mass
                             for t in range(horizon))
+                        if fixed_references is not None and proposal in fixed_references:
+                            expected_goals[proposal]=fixed_references[proposal]
                 if mode == 'retry' and not until_gain:
                     retry_without_gain[proposal] = no_gain_rows
+        if policy_names is not None and set(paths)!=policy_names:
+            raise ValueError('continuation subset contains an unavailable proposal')
         forecast = goal_forecast(c, paths, audits, horizon=horizon,
             unit='owner-decisions', target=target, policy=actor.policy,
             plan_roots=mapping, settlement_weight='absolute',
@@ -346,6 +372,10 @@ def portfolio_planner(actor, request, world, *, observe, events, terminal,
                 kind='public-purpose-above-root-expected-ordinary',
                 semantics='Root-fixed expected ordinary goal by elapsed time; terminal goals held constant. '
                           'Switching uses only this schedule and current public goal, never another branch outcome.')
+        if policy_names is not None:
+            metadata['continuation_subset']=dict(names=sorted(policy_names),
+                fixed_references={} if fixed_references is None else {n:list(v) for n,v in fixed_references.items()},
+                semantics='Explicit fixed proposals evaluated on this sample bank; all real roots retain ordinary coverage.')
         forecast = replace(forecast, audit=metadata, max_regret=fraction*spread)
         if digest(actor.record()) != source:
             raise ValueError('counterfactual learning contaminated factual owner')
