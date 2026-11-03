@@ -1,5 +1,8 @@
 //! Bounded public-model planning. Separate research profile, not fixed H32.
-use crate::{behavior::Beliefs, observe_public, public_input, public_scenarios, ArenaGame};
+use crate::{
+    behavior::Beliefs, observe_public, public_input, public_input_with_intentions,
+    public_scenarios, public_scenarios_with_intentions, ArenaGame, Intentions,
+};
 use reflex_immediate::{Action, Continuation, ContinuationPlan, Outcome, ReturnUnits};
 use reflex_owned::{Error, Feedback, LearnedState, Owner, OwnerConfig, Result, Stage};
 use serde::{Deserialize, Serialize};
@@ -198,7 +201,7 @@ impl Planner {
         game: &G,
         player: usize,
     ) -> Result<Proposal> {
-        self.propose_inner(owner, game, player, None)
+        self.propose_inner(owner, game, player, None, None)
     }
     pub fn propose_with_beliefs<G: ArenaGame>(
         &self,
@@ -212,7 +215,22 @@ impl Planner {
             &owner.config().actor.scope.episode,
         ))?;
         beliefs.validate(&scope, player, &game.behavior(player, player)?.alphabet)?;
-        self.propose_inner(owner, game, player, Some(beliefs))
+        self.propose_inner(owner, game, player, Some(beliefs), None)
+    }
+    pub fn propose_with_intentions<G: ArenaGame>(
+        &self,
+        owner: &Owner,
+        game: &G,
+        player: usize,
+        beliefs: &Beliefs,
+        intentions: &Intentions,
+    ) -> Result<Proposal> {
+        let scope = serde_json::to_string(&(
+            &owner.config().actor.scope.game,
+            &owner.config().actor.scope.episode,
+        ))?;
+        beliefs.validate(&scope, player, &game.behavior(player, player)?.alphabet)?;
+        self.propose_inner(owner, game, player, Some(beliefs), Some(intentions))
     }
     fn propose_inner<G: ArenaGame>(
         &self,
@@ -220,6 +238,7 @@ impl Planner {
         game: &G,
         player: usize,
         beliefs: Option<&Beliefs>,
+        intentions: Option<&Intentions>,
     ) -> Result<Proposal> {
         self.config.validate()?;
         if owner.config() != &self.owner
@@ -232,7 +251,12 @@ impl Planner {
         }
         let before = owner.state()?.clone();
         let input = match beliefs {
-            Some(b) => public_input(game, player, b, self.config.model_seed)?,
+            Some(b) => match intentions {
+                Some(frame) => {
+                    public_input_with_intentions(game, player, b, self.config.model_seed, frame)?
+                }
+                None => public_input(game, player, b, self.config.model_seed)?,
+            },
             None => game.input(player)?,
         };
         if input.observation.tick != game.tick() || input.responses.legal != ["0", "1", "2"] {
@@ -275,9 +299,19 @@ impl Planner {
                 // Other scenarios still check legality and fall back independently.
                 let model = game.model_world(player, self.config.model_seed)?;
                 let mut choices = match beliefs {
-                    Some(b) => {
-                        public_scenarios(&model, player, b, self.config.model_seed)?.remove(0)
-                    }
+                    Some(b) => match intentions {
+                        Some(frame) => public_scenarios_with_intentions(
+                            &model,
+                            player,
+                            b,
+                            self.config.model_seed,
+                            frame,
+                        )?
+                        .remove(0),
+                        None => {
+                            public_scenarios(&model, player, b, self.config.model_seed)?.remove(0)
+                        }
+                    },
                     None => model.modeled_choices(player, "0")?,
                 };
                 if choices.len() != game.players() {
@@ -314,7 +348,7 @@ impl Planner {
                         self.config.model_seed,
                         schedule.as_deref(),
                         beliefs,
-                        None,
+                        intentions.map(|frame| &frame.choices),
                         false,
                     )?);
                 }
@@ -396,7 +430,8 @@ impl Planner {
                 if !eligible(inc) || incumbent.iter().any(Option::is_none) {
                     let mut fresh = self.clone();
                     fresh.milestone = None;
-                    let mut proposal = fresh.propose_inner(owner, game, player, beliefs)?;
+                    let mut proposal =
+                        fresh.propose_inner(owner, game, player, beliefs, intentions)?;
                     proposal.audit.reason = "withdraw".into();
                     proposal.planner_before = self.checkpoint()?;
                     return Ok(proposal);

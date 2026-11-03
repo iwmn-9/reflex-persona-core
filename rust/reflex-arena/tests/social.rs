@@ -258,3 +258,250 @@ fn exchange_offers_require_consent_and_only_agreed_proposals_execute() {
         "test must exercise an independently accepted offer"
     );
 }
+
+#[derive(Clone, Debug)]
+enum Observed {
+    Input(u64, Vec<Vec<String>>),
+    Advance(u64, Vec<String>),
+}
+#[derive(Clone)]
+struct Recording<G> {
+    game: G,
+    events: std::sync::Arc<std::sync::Mutex<Vec<Observed>>>,
+    partners_override: Option<Vec<usize>>,
+}
+impl<G: ArenaGame> ArenaGame for Recording<G> {
+    fn players(&self) -> usize {
+        self.game.players()
+    }
+    fn tick(&self) -> u64 {
+        self.game.tick()
+    }
+    fn terminal(&self) -> bool {
+        self.game.terminal()
+    }
+    fn input(&self, p: usize) -> reflex_owned::Result<reflex_owned::Input> {
+        self.game.input(p)
+    }
+    fn behavior(
+        &self,
+        v: usize,
+        p: usize,
+    ) -> reflex_owned::Result<reflex_arena::behavior::PublicBehavior> {
+        self.game.behavior(v, p)
+    }
+    fn input_scenarios(
+        &self,
+        p: usize,
+        c: &[Vec<String>],
+    ) -> reflex_owned::Result<reflex_owned::Input> {
+        self.events
+            .lock()
+            .unwrap()
+            .push(Observed::Input(self.tick(), c.to_vec()));
+        self.game.input_scenarios(p, c)
+    }
+    fn model_world(&self, v: usize, seed: u64) -> reflex_owned::Result<Self> {
+        Ok(Self {
+            game: self.game.model_world(v, seed)?,
+            events: self.events.clone(),
+            partners_override: self.partners_override.clone(),
+        })
+    }
+    fn advance(
+        &self,
+        c: &[String],
+        seed: u64,
+    ) -> reflex_owned::Result<(Self, Vec<reflex_owned::Feedback>)> {
+        self.events
+            .lock()
+            .unwrap()
+            .push(Observed::Advance(self.tick(), c.to_vec()));
+        let (game, f) = self.game.advance(c, seed)?;
+        Ok((
+            Self {
+                game,
+                events: self.events.clone(),
+                partners_override: self.partners_override.clone(),
+            },
+            f,
+        ))
+    }
+    fn modeled_choices(&self, v: usize, r: &str) -> reflex_owned::Result<Vec<String>> {
+        self.game.modeled_choices(v, r)
+    }
+    fn purpose(&self, p: usize) -> f64 {
+        self.game.purpose(p)
+    }
+    fn view(&self) -> serde_json::Value {
+        self.game.view()
+    }
+    fn partners(&self, p: usize) -> Vec<usize> {
+        self.partners_override
+            .clone()
+            .unwrap_or_else(|| self.game.partners(p))
+    }
+    fn offers(&self, a: &[String]) -> reflex_owned::Result<Vec<reflex_arena::coordination::Offer>> {
+        self.game.offers(a)
+    }
+}
+fn frame<G: ArenaGame>(game: &G, viewer: usize, action: &str) -> reflex_arena::Intentions {
+    reflex_arena::Intentions {
+        tick: game.tick(),
+        choices: game
+            .partners(viewer)
+            .into_iter()
+            .map(|p| (p, action.to_owned()))
+            .collect(),
+    }
+}
+
+#[test]
+fn intentions_reject_old_incomplete_illegal_and_enemy_frames() {
+    use reflex_arena::public_input_with_intentions;
+    let game = Combat::new(7, "open", "eliminate", 5);
+    let person = owner(0);
+    let beliefs = new_beliefs(&game, &person, 0);
+    let valid = frame(&game, 0, "guard");
+    assert!(public_input_with_intentions(&game, 0, &beliefs, 701, &valid).is_ok());
+    let mut old = valid.clone();
+    old.tick = 1;
+    assert!(public_input_with_intentions(&game, 0, &beliefs, 701, &old).is_err());
+    let mut missing = valid.clone();
+    missing.choices.remove(&1);
+    assert!(public_input_with_intentions(&game, 0, &beliefs, 701, &missing).is_err());
+    let mut enemy = valid.clone();
+    enemy.choices.insert(3, "guard".into());
+    assert!(public_input_with_intentions(&game, 0, &beliefs, 701, &enemy).is_err());
+    let mut out_of_range = valid.clone();
+    out_of_range.choices.insert(game.players(), "guard".into());
+    assert!(public_input_with_intentions(&game, 0, &beliefs, 701, &out_of_range).is_err());
+    let mut own = valid.clone();
+    own.choices.insert(0, "guard".into());
+    assert!(public_input_with_intentions(&game, 0, &beliefs, 701, &own).is_err());
+    let mut illegal = valid.clone();
+    illegal.choices.insert(1, "not-an-action".into());
+    assert!(public_input_with_intentions(&game, 0, &beliefs, 701, &illegal).is_err());
+    let malformed = Recording {
+        game: game.clone(),
+        events: Default::default(),
+        partners_override: Some(vec![1, 1]),
+    };
+    let duplicate = reflex_arena::Intentions {
+        tick: game.tick(),
+        choices: BTreeMap::from([(1, "guard".into())]),
+    };
+    assert!(public_input_with_intentions(&malformed, 0, &beliefs, 701, &duplicate).is_err());
+}
+
+#[test]
+fn empty_partners_preserve_prior_path_exactly() {
+    let game = Hagetaka::new(7);
+    let person = owner(0);
+    let beliefs = new_beliefs(&game, &person, 0);
+    let planner = planner(&person);
+    let prior = planner
+        .propose_with_beliefs(&person, &game, 0, &beliefs)
+        .unwrap();
+    let new = planner
+        .propose_with_intentions(&person, &game, 0, &beliefs, &frame(&game, 0, ""))
+        .unwrap();
+    assert_eq!(prior.action(), new.action());
+    assert_eq!(
+        serde_json::to_value(prior.audit).unwrap(),
+        serde_json::to_value(new.audit).unwrap()
+    );
+    let a = reflex_arena::public_input(&game, 0, &beliefs, 701).unwrap();
+    let b =
+        reflex_arena::public_input_with_intentions(&game, 0, &beliefs, 701, &frame(&game, 0, ""))
+            .unwrap();
+    assert_eq!(
+        serde_json::to_value(a).unwrap(),
+        serde_json::to_value(b).unwrap()
+    );
+}
+
+#[test]
+fn same_intentions_reach_initial_input_scout_and_each_modeled_root_without_mutation() {
+    let game = Recording {
+        game: Encounters::new(7, 5),
+        events: Default::default(),
+        partners_override: None,
+    };
+    let person = owner(0);
+    let beliefs = new_beliefs(&game, &person, 0);
+    let planner = Planner::new(
+        &person,
+        Config {
+            horizon: 2,
+            second_moves: 1,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let intentions = frame(&game, 0, "rest");
+    let before = person.state().unwrap().clone();
+    let memory = beliefs.checkpoint().unwrap();
+    let input =
+        reflex_arena::public_input_with_intentions(&game, 0, &beliefs, 701, &intentions).unwrap();
+    assert!(!input.observation.facts.contains_key("agreement"));
+    assert!(input
+        .bindings
+        .values()
+        .all(|b| !b.situation.contains("accepted-current-agreement")));
+    let roots = person
+        .prepare_estimated(&input, false)
+        .unwrap()
+        .allowed()
+        .len();
+    game.events.lock().unwrap().clear();
+    let proposal = planner
+        .propose_with_intentions(&person, &game, 0, &beliefs, &intentions)
+        .unwrap();
+    assert!(!proposal.action().is_empty());
+    assert_eq!(person.state().unwrap(), &before);
+    assert_eq!(beliefs.checkpoint().unwrap(), memory);
+    let events = game.events.lock().unwrap();
+    let root_inputs: Vec<_> = events
+        .iter()
+        .filter_map(|e| {
+            if let Observed::Input(0, rows) = e {
+                Some(rows)
+            } else {
+                None
+            }
+        })
+        .collect();
+    let root_advances: Vec<_> = events
+        .iter()
+        .filter_map(|e| {
+            if let Observed::Advance(0, row) = e {
+                Some(row)
+            } else {
+                None
+            }
+        })
+        .collect();
+    // One initial input; each legal root has one scout plus 2 candidates x 3 branches.
+    assert_eq!(root_inputs.len(), 1 + roots * 2 * 3);
+    assert_eq!(root_advances.len(), roots * (1 + 2 * 3));
+    for rows in root_inputs {
+        for row in rows {
+            for (&p, action) in &intentions.choices {
+                assert_eq!(&row[p], action);
+            }
+        }
+    }
+    for row in root_advances {
+        for (&p, action) in &intentions.choices {
+            assert_eq!(&row[p], action);
+        }
+    }
+    // Future inputs are resampled, so the first-turn frame is not held as an agreement.
+    assert!(events.iter().any(|e| match e {
+        Observed::Input(t, rows) if *t > 0 => rows
+            .iter()
+            .any(|row| intentions.choices.iter().any(|(&p, a)| &row[p] != a)),
+        _ => false,
+    }));
+}

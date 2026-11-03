@@ -24,6 +24,7 @@ def main():
     p.add_argument('--modes',nargs='+',choices=('reflex','planned','challenger'),default=('reflex','planned'))
     p.add_argument('--beliefs',choices=('joint','individual'),default='individual')
     p.add_argument('--coordination',choices=('none','consent'),default='consent')
+    p.add_argument('--intent-sharing',choices=('none','sequential'),default='none')
     p.add_argument('--games',nargs='+',choices=('combat','hagetaka','exchange'),default=('combat','hagetaka','exchange'))
     a=p.parse_args()
     if not 1<=a.seeds<=16 or not 1<=a.workers<=4 or not 1<=a.horizon<=32: p.error('bounded run required')
@@ -41,7 +42,7 @@ def main():
                 seed=a.seed_start+index
                 name=f'{game}-{board or "standard"}-{goal or "score"}-{seed}-{mode}'
                 jobs.append(dict(id=name,game=game,map=board,goal=goal,seed=seed,mode=mode))
-    manifest=dict(jobs=jobs,horizon=a.horizon,second_moves=a.second_moves,max_regret=a.max_regret,turns=32,beliefs=a.beliefs,coordination=a.coordination,binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),
+    manifest=dict(jobs=jobs,horizon=a.horizon,second_moves=a.second_moves,max_regret=a.max_regret,turns=32,beliefs=a.beliefs,coordination=a.coordination,intent_sharing=a.intent_sharing,binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),
         sources={str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest()
             for f in sorted((ROOT/'rust').glob('reflex-*/src/*.rs'))},
         purpose='Native mixed-personality actual games and behavior review; not automatic adoption',
@@ -49,7 +50,7 @@ def main():
     (a.output/'plan.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf8')
     def run(job):
         command=[str(binary.resolve()),'--game',job['game'],'--seed',str(job['seed']),
-            '--mode',job['mode'],'--horizon',str(a.horizon),'--second-moves',str(a.second_moves),'--max-regret',str(a.max_regret),'--turns','32','--beliefs',a.beliefs,'--coordination',a.coordination,'--out',str((a.output/(job['id']+'.json')).resolve())]
+            '--mode',job['mode'],'--horizon',str(a.horizon),'--second-moves',str(a.second_moves),'--max-regret',str(a.max_regret),'--turns','32','--beliefs',a.beliefs,'--coordination',a.coordination,'--intent-sharing',a.intent_sharing,'--out',str((a.output/(job['id']+'.json')).resolve())]
         if job['map']:command+=['--map',job['map'],'--goal',job['goal']]
         result=subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,encoding='utf8',timeout=600)
         if result.returncode:raise RuntimeError(f"{job['id']}: {result.stderr[-2000:]}")

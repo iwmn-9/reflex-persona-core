@@ -1,9 +1,17 @@
 //! Experimental multi-actor arena and bounded planner; not the frozen H32 owner.
 use reflex_owned::{Feedback, Input, Result};
+use std::collections::{BTreeMap, BTreeSet};
 pub mod behavior;
 pub mod coordination;
 pub mod games;
 pub mod planner;
+
+/// Current, non-binding intentions disclosed by all permitted partners.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Intentions {
+    pub tick: u64,
+    pub choices: BTreeMap<usize, String>,
+}
 
 /// All model callbacks read public state only. External effects are forbidden.
 pub trait ArenaGame: Clone {
@@ -80,6 +88,58 @@ pub fn public_input<G: ArenaGame>(
     seed: u64,
 ) -> Result<Input> {
     game.input_scenarios(viewer, &public_scenarios(game, viewer, beliefs, seed)?)
+}
+
+/// Exactly the viewer's permitted partners may be fixed, for this tick only.
+pub(crate) fn public_scenarios_with_intentions<G: ArenaGame>(
+    game: &G,
+    viewer: usize,
+    beliefs: &behavior::Beliefs,
+    seed: u64,
+    intentions: &Intentions,
+) -> Result<Vec<Vec<String>>> {
+    if viewer >= game.players() || intentions.tick != game.tick() {
+        return Err(reflex_owned::Error::Invalid(
+            "current valid viewer required",
+        ));
+    }
+    let partners = game.partners(viewer);
+    let unique: BTreeSet<_> = partners.iter().copied().collect();
+    if unique.len() != partners.len()
+        || unique.iter().any(|&p| p >= game.players() || p == viewer)
+        || intentions.choices.keys().copied().collect::<BTreeSet<_>>() != unique
+    {
+        return Err(reflex_owned::Error::Invalid(
+            "current complete partner intentions required",
+        ));
+    }
+    for (&person, action) in &intentions.choices {
+        if !game.behavior(viewer, person)?.actions.contains_key(action) {
+            return Err(reflex_owned::Error::Invalid(
+                "legal public partner intention required",
+            ));
+        }
+    }
+    let mut scenarios = public_scenarios(game, viewer, beliefs, seed)?;
+    for row in &mut scenarios {
+        for (&person, action) in &intentions.choices {
+            row[person] = action.clone();
+        }
+    }
+    Ok(scenarios)
+}
+
+pub fn public_input_with_intentions<G: ArenaGame>(
+    game: &G,
+    viewer: usize,
+    beliefs: &behavior::Beliefs,
+    seed: u64,
+    intentions: &Intentions,
+) -> Result<Input> {
+    game.input_scenarios(
+        viewer,
+        &public_scenarios_with_intentions(game, viewer, beliefs, seed, intentions)?,
+    )
 }
 
 /// Call after actions are revealed. The game supplies only viewer-visible frames.

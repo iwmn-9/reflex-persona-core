@@ -4,7 +4,7 @@ use reflex_arena::{
     games::{Combat, Encounters, Hagetaka},
     observe_public,
     planner::{Config as Search, Planner},
-    public_input, ArenaGame,
+    public_input, public_input_with_intentions, ArenaGame, Intentions,
 };
 use reflex_immediate::{Config, Policy, Priority, Scope};
 use reflex_owned::{prediction, Owner, OwnerConfig};
@@ -80,6 +80,7 @@ fn run<G: ArenaGame>(
     mode: &str,
     individual: bool,
     coordinate: bool,
+    share_intentions: bool,
     output: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let started = Instant::now();
@@ -149,6 +150,7 @@ fn run<G: ArenaGame>(
         let mut next_beliefs = beliefs.clone();
         let mut choices = vec![];
         let mut audits = vec![];
+        let mut intention_records = vec![json!(null); world.players()];
         let mut inputs = vec![];
         for (i, belief) in beliefs.iter().enumerate() {
             inputs.push(if individual {
@@ -159,7 +161,7 @@ fn run<G: ArenaGame>(
         }
         let mut selections = vec![];
         for i in 0..world.players() {
-            if planning[i] {
+            if planning[i] && !share_intentions {
                 let proposal = if individual {
                     planners[i].propose_with_beliefs(&owners[i], &world, i, &beliefs[i])?
                 } else {
@@ -174,6 +176,47 @@ fn run<G: ArenaGame>(
                 choices.push(s.decision().action_id.clone());
                 selections.push(Selection::Reflex(Box::new(s)));
                 audits.push(json!({"reason":"reflex","milestone":null,"simulated_nodes":0}));
+            }
+        }
+        if share_intentions {
+            // Tentative announcements are actual private decisions, not a peek at
+            // hidden opponent policies. Each actor sees only permitted partners.
+            let initial = choices.clone();
+            for offset in 0..world.players() {
+                let i = (offset + tick as usize) % world.players();
+                let intentions = Intentions {
+                    tick,
+                    choices: world
+                        .partners(i)
+                        .into_iter()
+                        .map(|p| {
+                            choices
+                                .get(p)
+                                .map(|a| (p, a.clone()))
+                                .ok_or("invalid communication partner")
+                        })
+                        .collect::<Result<_, _>>()?,
+                };
+                inputs[i] = public_input_with_intentions(&world, i, &beliefs[i], 701, &intentions)?;
+                if planning[i] {
+                    let proposal = planners[i].propose_with_intentions(
+                        &owners[i],
+                        &world,
+                        i,
+                        &beliefs[i],
+                        &intentions,
+                    )?;
+                    choices[i] = proposal.action().to_string();
+                    simulations += proposal.audit.simulated_nodes;
+                    audits[i] = serde_json::to_value(&proposal.audit)?;
+                    selections[i] = Selection::Planned(Box::new(proposal));
+                } else if !intentions.choices.is_empty() {
+                    let stage = next_owners[i].prepare_estimated(&inputs[i], false)?;
+                    choices[i] = stage.decision().action_id.clone();
+                    selections[i] = Selection::Reflex(Box::new(stage));
+                }
+                intention_records[i] =
+                    json!({"announced_action":initial[i],"received_intentions":intentions.choices});
             }
         }
         let mut agreements = vec![];
@@ -297,7 +340,7 @@ fn run<G: ArenaGame>(
                 "needs":inputs[i].observation.needs,"learning_observations":tick+1,
                 "prediction_observations":next_owners[i].state()?.prediction.observations,
                 "public_behavior_observations":next_beliefs[i].observations(),
-                "planning":audits[i]}));
+                "planning":audits[i],"intention_input":intention_records[i]}));
             checks += 1;
         }
         trace.push(json!({"tick":tick,"before":before,"after":next.view(),"actors":participants,"agreements":agreements}));
@@ -307,7 +350,7 @@ fn run<G: ArenaGame>(
         beliefs = next_beliefs;
         eprintln!("{game} {mode} tick={} nodes={simulations}", world.tick());
     }
-    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,
+    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,
         "profiles":profiles,"profile_names":NAMES,"focal_players":focal,"ticks":world.tick(),"factual_decisions":checks,
         "simulated_nodes":simulations,"plan_events":counters,"seconds":started.elapsed().as_secs_f64(),
         "purpose":(0..world.players()).map(|i|world.purpose(i)).collect::<Vec<_>>(),
@@ -350,6 +393,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "--goal",
             "--beliefs",
             "--coordination",
+            "--intent-sharing",
         ]
         .contains(key)
         {
@@ -391,6 +435,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("consent needs individual public models".into());
     }
     let coordinate = coordination == "consent";
+    let intent_sharing = *options.get("--intent-sharing").unwrap_or(&"none");
+    if !["none", "sequential"].contains(&intent_sharing)
+        || intent_sharing == "sequential" && !individual
+    {
+        return Err("sequential intentions need individual public models".into());
+    }
+    let share_intentions = intent_sharing == "sequential";
     if !["planned", "reflex", "challenger"].contains(&mode) || turns == 0 || turns > 128 {
         return Err("bounded mode/turns required".into());
     }
@@ -413,6 +464,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             mode,
             individual,
             coordinate,
+            share_intentions,
             output,
         ),
         "hagetaka" => run(
@@ -425,6 +477,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             mode,
             individual,
             coordinate,
+            share_intentions,
             output,
         ),
         "exchange" => run(
@@ -437,6 +490,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             mode,
             individual,
             coordinate,
+            share_intentions,
             output,
         ),
         _ => Err("unknown arena".into()),
