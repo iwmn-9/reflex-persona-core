@@ -30,6 +30,14 @@ enum ModelSet {
     Adapter,
 }
 
+/// Sampling changes scenario placement, not individual predictive distributions.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum Sampling {
+    Independent,
+    Stratified,
+}
+
 /// A viewer's separate factual memories of observed persons. Clone before a trial.
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -39,6 +47,7 @@ pub struct Beliefs {
     viewer: usize,
     alphabet: Vec<String>,
     model_set: ModelSet,
+    sampling: Sampling,
     people: BTreeMap<usize, Person>,
     #[serde(skip)]
     cache: Arc<Mutex<PredictionCache>>,
@@ -161,24 +170,33 @@ impl Beliefs {
         self.people.values().map(|p| p.memory.observations).sum()
     }
     pub fn new(scope: String, viewer: usize, alphabet: Vec<String>) -> Result<Self> {
+        Self::new_with_sampling(scope, viewer, alphabet, Sampling::Independent)
+    }
+    pub fn new_with_sampling(
+        scope: String,
+        viewer: usize,
+        alphabet: Vec<String>,
+        sampling: Sampling,
+    ) -> Result<Self> {
         if !label(&scope) || viewer >= 10_000 || !alphabet_valid(&alphabet) {
             return Err(Error::Invalid(
                 "bounded scope, viewer and sorted alphabet required",
             ));
         }
         Ok(Self {
-            version: "public-beliefs-v3".into(),
+            version: "public-beliefs-v4".into(),
             scope,
             viewer,
             alphabet,
             model_set: ModelSet::Adapter,
+            sampling,
             people: BTreeMap::new(),
             cache: Arc::default(),
         })
     }
     /// Validate deserialized state against independently supplied episode identity.
     pub fn validate(&self, scope: &str, viewer: usize, alphabet: &[String]) -> Result<()> {
-        if self.version != "public-beliefs-v3"
+        if self.version != "public-beliefs-v4"
             || self.scope != scope
             || self.viewer != viewer
             || self.alphabet != alphabet
@@ -213,9 +231,24 @@ impl Beliefs {
         self.validate(&self.scope, self.viewer, &self.alphabet)?;
         Ok(serde_json::to_vec(self)?)
     }
+    pub fn sampling(&self) -> Sampling {
+        self.sampling
+    }
     pub fn restore(bytes: &[u8], scope: &str, viewer: usize, alphabet: &[String]) -> Result<Self> {
+        Self::restore_with_sampling(bytes, scope, viewer, alphabet, Sampling::Independent)
+    }
+    pub fn restore_with_sampling(
+        bytes: &[u8],
+        scope: &str,
+        viewer: usize,
+        alphabet: &[String],
+        sampling: Sampling,
+    ) -> Result<Self> {
         let result: Self = serde_json::from_slice(bytes)?;
         result.validate(scope, viewer, alphabet)?;
+        if result.sampling != sampling {
+            return Err(Error::Invalid("behavior sampling mismatch"));
+        }
         Ok(result)
     }
     pub fn predict(&self, frame: &PublicBehavior, actor: usize) -> Result<Vec<(String, f64)>> {
@@ -360,6 +393,49 @@ mod tests {
             .find(|(a, _)| a == action)
             .unwrap()
             .1
+    }
+    #[test]
+    fn sampling_identity_roundtrip_preserves_learning_and_distribution() {
+        let f = frame();
+        let mut independent = new();
+        let mut stratified =
+            Beliefs::new_with_sampling("g/e".into(), 0, f.alphabet.clone(), Sampling::Stratified)
+                .unwrap();
+        for tick in 0..20 {
+            let action = if tick % 3 == 0 { "a" } else { "c" };
+            independent.observe(&f, 1, action, tick).unwrap();
+            stratified.observe(&f, 1, action, tick).unwrap();
+        }
+        assert_eq!(
+            independent.predict(&f, 1).unwrap(),
+            stratified.predict(&f, 1).unwrap()
+        );
+        assert_eq!(independent.observations(), stratified.observations());
+        let bytes = stratified.checkpoint().unwrap();
+        let restored =
+            Beliefs::restore_with_sampling(&bytes, "g/e", 0, &f.alphabet, Sampling::Stratified)
+                .unwrap();
+        assert_eq!(restored.sampling(), Sampling::Stratified);
+        assert_eq!(
+            restored.predict(&f, 1).unwrap(),
+            stratified.predict(&f, 1).unwrap()
+        );
+        assert!(Beliefs::restore(&bytes, "g/e", 0, &f.alphabet).is_err());
+        let default = independent.checkpoint().unwrap();
+        assert!(Beliefs::restore_with_sampling(
+            &default,
+            "g/e",
+            0,
+            &f.alphabet,
+            Sampling::Stratified
+        )
+        .is_err());
+        let mut old: serde_json::Value = serde_json::from_slice(&default).unwrap();
+        old["version"] = "public-beliefs-v3".into();
+        old.as_object_mut().unwrap().remove("sampling");
+        assert!(
+            Beliefs::restore(&serde_json::to_vec(&old).unwrap(), "g/e", 0, &f.alphabet).is_err()
+        );
     }
     #[test]
     fn separate_people_learn_and_unmodeled_class_is_retained() {

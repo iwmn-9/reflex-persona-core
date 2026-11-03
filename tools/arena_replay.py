@@ -63,6 +63,8 @@ def summarize(matches,sources):
             raise ValueError('paired opponent models differ')
         if r.get('relationships',False)!=b.get('relationships',False):
             raise ValueError('paired relationship settings differ')
+        if r.get('sampling','independent')!=b.get('sampling','independent'):
+            raise ValueError('paired sampling settings differ')
         if r.get('fallback_search',False)!=b.get('fallback_search',False):
             raise ValueError('paired fallback settings differ')
         if r.get('forecast_guard',False)!=b.get('forecast_guard',False):
@@ -142,7 +144,7 @@ def main():
             r=json.loads(f.read_bytes())
             if not (r.get('complete') and r.get('game') and r.get('trace')):continue
             identity=(r['game'],r['seed'],r['mode'],r['horizon'],r.get('second_moves',8),r.get('max_regret',.15),r.get('scenario_batches',1),r.get('intent_sharing',False),r.get('intention_protocol','sequential' if r.get('intent_sharing') else 'none'),r.get('frozen_reference',False),r.get('individual_beliefs',False),r.get('coordination',False),json.dumps(r['trace'][0]['before'],sort_keys=True))
-            identity=identity+(r.get('prediction_calibrated',False),r.get('planning_protocol','counterproposal'),r.get('route_selection',False),r.get('forecast_guard',False),r.get('opponent_models','Adapter'),r.get('relationships',False),r.get('fallback_search',False))
+            identity=identity+(r.get('prediction_calibrated',False),r.get('planning_protocol','counterproposal'),r.get('route_selection',False),r.get('forecast_guard',False),r.get('opponent_models','Adapter'),r.get('relationships',False),r.get('fallback_search',False),r.get('sampling','independent'))
             if identity in seen:continue
             seen.add(identity)
             selected.add(r['game'])
