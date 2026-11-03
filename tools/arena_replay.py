@@ -14,7 +14,7 @@ PAGE=r'''<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewpo
 <script>const matches=__DATA__;
 const $=id=>document.getElementById(id),esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const labels={combat:'3対3戦闘',hagetaka:'4人ハゲタカ',exchange:'4人の協力・取り分競争'},modes={reflex:'即時判断',planned:'全員が計画',challenger:'一方に計画を導入'};
-const reasons={reflex:'即時判断',robust_alternative:'予測が割れた案を見送り、支持された別案へ',uncertain_forecast:'予測の優位が不安定なため通常行動',keep:'中間目標を継続',replan:'計画を比較',reached:'中間目標に到達',withdraw:'計画を撤回',agreement:'本人が評価し、参加者全員が同意'};
+const reasons={reflex:'即時判断',uncertain_forecast:'予測の優位が不安定なため通常行動',keep:'中間目標を継続',replan:'計画を比較',reached:'中間目標に到達',withdraw:'計画を撤回',agreement:'本人が評価し、参加者全員が同意'};
 function action(s){const [a,b,c]=s.split(':');const n={guard:'防御',reload:'装填',rest:'休息',alone:'単独活動',finished:'行動終了'};return n[a]||({move:`移動 (${b},${c})`,shoot:`P${b}を射撃`,heal:`P${b}を回復`,cooperate:`P${b}へ協力`,claim:`P${b}へ取り分を要求`}[a])||`札 ${s}`;}
 let timer=null;matches.forEach((m,i)=>{let o=document.createElement('option');o.value=i;o.textContent=`${labels[m.game]} / ${m.scene} / ${modes[m.mode]} / ${m.seed}`;$('match').append(o)});
 function render(){const m=matches[+$('match').value],t=+$('turn').value,r=m.trace[t],w=$('before').checked?r.before:r.after;
@@ -63,8 +63,6 @@ def summarize(matches,sources):
             raise ValueError('paired opponent models differ')
         if r.get('relationships',False)!=b.get('relationships',False):
             raise ValueError('paired relationship settings differ')
-        if r.get('fallback_search',False)!=b.get('fallback_search',False):
-            raise ValueError('paired fallback settings differ')
         if r.get('forecast_guard',False)!=b.get('forecast_guard',False):
             raise ValueError('paired forecast guard settings differ')
         if r.get('route_selection',False)!=b.get('route_selection',False):
@@ -142,7 +140,7 @@ def main():
             r=json.loads(f.read_bytes())
             if not (r.get('complete') and r.get('game') and r.get('trace')):continue
             identity=(r['game'],r['seed'],r['mode'],r['horizon'],r.get('second_moves',8),r.get('max_regret',.15),r.get('scenario_batches',1),r.get('intent_sharing',False),r.get('intention_protocol','sequential' if r.get('intent_sharing') else 'none'),r.get('frozen_reference',False),r.get('individual_beliefs',False),r.get('coordination',False),json.dumps(r['trace'][0]['before'],sort_keys=True))
-            identity=identity+(r.get('prediction_calibrated',False),r.get('planning_protocol','counterproposal'),r.get('route_selection',False),r.get('forecast_guard',False),r.get('opponent_models','Adapter'),r.get('relationships',False),r.get('fallback_search',False))
+            identity=identity+(r.get('prediction_calibrated',False),r.get('planning_protocol','counterproposal'),r.get('route_selection',False),r.get('forecast_guard',False),r.get('opponent_models','Adapter'),r.get('relationships',False))
             if identity in seen:continue
             seen.add(identity)
             selected.add(r['game'])

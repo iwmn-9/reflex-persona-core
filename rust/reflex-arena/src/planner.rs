@@ -23,9 +23,6 @@ pub struct Config {
     pub route_selection: bool,
     /// Require improvement over the ordinary continuation across leave-one-batch-out appraisals.
     pub forecast_guard: bool,
-    /// Search already modeled candidates after an unsupported forecast during factual stagnation.
-    #[serde(default)]
-    pub fallback_search: bool,
 }
 impl Default for Config {
     fn default() -> Self {
@@ -37,7 +34,6 @@ impl Default for Config {
             scenario_batches: 1,
             route_selection: false,
             forecast_guard: false,
-            fallback_search: false,
         }
     }
 }
@@ -48,7 +44,6 @@ impl Config {
             || !(0.0..=1.0).contains(&self.max_regret)
             || self.second_moves > 8
             || !(1..=4).contains(&self.scenario_batches)
-            || self.fallback_search && !self.forecast_guard
         {
             return Err(Error::Invalid("bounded planner settings required"));
         }
@@ -242,75 +237,6 @@ fn plan_purpose(forecast: &Continuation) -> BTreeMap<String, f64> {
         .collect()
 }
 
-#[allow(clippy::too_many_arguments)]
-fn robust_alternative(
-    actor: &Owner,
-    stage: &Stage,
-    forecast: &Continuation,
-    bias: &BTreeMap<String, f64>,
-    original_id: &str,
-    base_id: &str,
-    social_enabled: bool,
-) -> Result<Option<(String, crate::robustness::Support)>> {
-    let decision = stage.decision();
-    let scores = &decision.scores;
-    let base = scores
-        .iter()
-        .find(|s| s.id == base_id && s.eligible)
-        .ok_or(Error::Invalid("eligible forecast baseline required"))?;
-    let purpose = plan_purpose(forecast);
-    let social_bias_active = social_enabled && bias.values().any(|v| *v != 0.);
-    let best_purpose = scores
-        .iter()
-        .filter(|s| s.eligible)
-        .map(|s| purpose[&s.id])
-        .fold(f64::NEG_INFINITY, f64::max);
-    let base_choice = stage
-        .selected_plan()
-        .ok_or(Error::Invalid("forecast choice required"))?;
-    let floor = purpose[base_choice].min(best_purpose - 0.15);
-    let base_score = base.score + bias.get(base_id).copied().unwrap_or(0.);
-    let base_root = forecast
-        .plans
-        .iter()
-        .find(|p| p.action.id == base_id)
-        .ok_or(Error::Invalid("forecast baseline required"))?
-        .root
-        .as_str();
-    let mut alternatives: Vec<_> = scores
-        .iter()
-        .filter_map(|score| {
-            let plan = forecast.plans.iter().find(|p| p.action.id == score.id)?;
-            let value = score.score + bias.get(&score.id).copied().unwrap_or(0.);
-            (score.eligible
-                && score.id != original_id
-                && plan.root != base_root
-                && value > base_score + 1e-9
-                && (!social_bias_active || plan.purpose >= floor - 1e-9))
-                .then_some((score.id.as_str(), value))
-        })
-        .collect();
-    alternatives.sort_by(|a, b| b.1.total_cmp(&a.1).then(a.0.cmp(b.0)));
-    for (id, _) in alternatives {
-        let support = crate::robustness::check_with_appraisal(
-            &actor.config().actor,
-            &actor.state()?.intent,
-            actor.state()?.last_tick,
-            stage.context(),
-            stage.allowed(),
-            forecast,
-            id,
-            base_id,
-            3,
-            bias,
-        )?;
-        if support.supported {
-            return Ok(Some((id.to_owned(), support)));
-        }
-    }
-    Ok(None)
-}
-
 impl Planner {
     pub fn new(owner: &Owner, config: Config) -> Result<Self> {
         config.validate()?;
@@ -335,7 +261,7 @@ impl Planner {
     /// Restore only against an independently supplied owner; personality is checked.
     pub fn restore(owner: &Owner, bytes: &[u8]) -> Result<Self> {
         let save: PlannerSave = serde_json::from_slice(bytes)?;
-        if save.version != "arena-planner-v8"
+        if save.version != "arena-planner-v7"
             || save.sha256 != format!("{:x}", Sha256::digest(serde_json::to_vec(&save.planner)?))
         {
             return Err(Error::Invalid("planner checkpoint integrity mismatch"));
@@ -365,7 +291,7 @@ impl Planner {
     }
     pub fn checkpoint(&self) -> Result<Vec<u8>> {
         let save = PlannerSave {
-            version: "arena-planner-v8".into(),
+            version: "arena-planner-v7".into(),
             planner: self.clone(),
             sha256: format!("{:x}", Sha256::digest(serde_json::to_vec(self)?)),
         };
@@ -671,7 +597,6 @@ impl Planner {
         };
         let mut forecast_support = None;
         let mut fallback = false;
-        let mut alternative = false;
         if self.config.forecast_guard && self.config.horizon > 1 && reachable.is_empty() {
             let chosen = chosen_id
                 .strip_prefix("candidate-")
@@ -702,32 +627,10 @@ impl Planner {
                             &bias,
                         )?;
                         if !support.supported {
-                            let replacement =
-                                if self.config.fallback_search && before.progress.stalls > 0 {
-                                    robust_alternative(
-                                        &actor,
-                                        &stage,
-                                        &filtered,
-                                        &bias,
-                                        &chosen_id,
-                                        &baseline_id,
-                                        memory.is_some(),
-                                    )?
-                                } else {
-                                    None
-                                };
-                            if let Some((id, supported)) = replacement {
-                                chosen_id = id;
-                                forecast_support = Some(supported);
-                                alternative = true;
-                            } else {
-                                chosen_id = baseline_id;
-                                forecast_support = Some(support);
-                                fallback = true;
-                            }
-                        } else {
-                            forecast_support = Some(support);
+                            chosen_id = baseline_id;
+                            fallback = true;
                         }
+                        forecast_support = Some(support);
                     }
                 }
             }
@@ -766,9 +669,7 @@ impl Planner {
             tick: game.tick(),
             action,
             audit: Audit {
-                reason: if alternative {
-                    "robust_alternative"
-                } else if fallback {
+                reason: if fallback {
                     "uncertain_forecast"
                 } else if live.is_some()
                     && !switching
@@ -1934,7 +1835,7 @@ mod tests {
         let bytes = planner.checkpoint().unwrap();
         assert!(Planner::restore(&owner, &bytes).is_err());
         let mut old: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
-        old["version"] = "arena-planner-v7".into();
+        old["version"] = "arena-planner-v6".into();
         assert!(Planner::restore(&owner, &serde_json::to_vec(&old).unwrap()).is_err());
         let before = owner.state().unwrap().clone();
         let world = AgreementWorld { tick: 0 };
@@ -2771,308 +2672,6 @@ mod tests {
             ordinary,
         }
     }
-    #[test]
-    fn fallback_search_uses_second_supported_plan_and_respects_tier() {
-        let mut cfg = fixture_owner_config();
-        cfg.actor.policy.priority = reflex_immediate::Priority::Finite;
-        cfg.actor.personality[4] = 0.;
-        let owner = Owner::new(cfg.clone()).unwrap();
-        let mut input = AgreementWorld { tick: 0 }.input(0).unwrap();
-        let mut third = input.observation.actions[1].clone();
-        third.id = "third".into();
-        input.observation.actions.push(third);
-        input
-            .bindings
-            .insert("third".into(), input.bindings["next"].clone());
-        input
-            .purpose
-            .activities
-            .insert("third".into(), input.purpose.activities["next"].clone());
-        input
-            .conditional
-            .insert("third".into(), input.conditional["next"].clone());
-        let make = |id: &str, root: &str, values: &[f64]| ContinuationPlan {
-            root: root.into(),
-            action: Action {
-                id: id.into(),
-                target: None,
-                legal: true,
-                known_failure: false,
-                confidence: 1.,
-                familiarity: 0.,
-                switch_cost: 0.,
-                outcomes: values
-                    .iter()
-                    .map(|&v| Outcome {
-                        p: 1. / 9.,
-                        objective: v,
-                        needs: [0.; 5],
-                        values: [0.; 10],
-                        style: [0.; 5],
-                        cost: 0.,
-                    })
-                    .collect(),
-            },
-            purpose: 0.,
-            correction: None,
-        };
-        let forecast = Continuation {
-            owner: cfg.actor.clone(),
-            state: owner.state().unwrap().intent.clone(),
-            tick: 0,
-            target: cfg.purpose_target.clone(),
-            horizon: 1,
-            max_regret: 2.,
-            units: ReturnUnits {
-                unit: "arena-turn".into(),
-                effects: [1.; 22],
-                root_terms: 1.,
-            },
-            plans: vec![
-                make("candidate-000", "third", &[0.; 9]),
-                make(
-                    "candidate-001",
-                    "act",
-                    &[1., 1., 1., 1., 1., 1., -1., -1., -1.],
-                ),
-                make("candidate-002", "next", &[0.05; 9]),
-            ],
-        };
-        let stage = owner
-            .with_continuation(owner.prepare_estimated(&input, false).unwrap(), &forecast)
-            .unwrap();
-        assert_eq!(stage.selected_plan(), Some("candidate-001"));
-        let empty = BTreeMap::new();
-        assert!(
-            !crate::robustness::check_with_appraisal(
-                &cfg.actor,
-                &owner.state().unwrap().intent,
-                None,
-                stage.context(),
-                stage.allowed(),
-                &forecast,
-                "candidate-001",
-                "candidate-000",
-                3,
-                &empty
-            )
-            .unwrap()
-            .supported
-        );
-        let (id, support) = robust_alternative(
-            &owner,
-            &stage,
-            &forecast,
-            &empty,
-            "candidate-001",
-            "candidate-000",
-            false,
-        )
-        .unwrap()
-        .unwrap();
-        assert_eq!(id, "candidate-002");
-        assert!(support.supported);
-        let mut no_second = forecast.clone();
-        no_second.plans.pop();
-        let stage = owner
-            .with_continuation(owner.prepare_estimated(&input, false).unwrap(), &no_second)
-            .unwrap();
-        assert!(robust_alternative(
-            &owner,
-            &stage,
-            &no_second,
-            &empty,
-            "candidate-001",
-            "candidate-000",
-            false
-        )
-        .unwrap()
-        .is_none());
-        cfg.actor.policy.priority = reflex_immediate::Priority::Lexicographic;
-        cfg.actor.values = [0.; 10];
-        cfg.actor.values[5] = 1.;
-        let owner = Owner::new(cfg.clone()).unwrap();
-        let mut tiered = forecast;
-        tiered.owner = cfg.actor.clone();
-        for plan in &mut tiered.plans[..2] {
-            for o in &mut plan.action.outcomes {
-                o.values[5] = 1.;
-            }
-        }
-        let stage = owner
-            .with_continuation(owner.prepare_estimated(&input, false).unwrap(), &tiered)
-            .unwrap();
-        assert!(
-            !stage
-                .decision()
-                .scores
-                .iter()
-                .find(|s| s.id == "candidate-002")
-                .unwrap()
-                .eligible
-        );
-        assert!(robust_alternative(
-            &owner,
-            &stage,
-            &tiered,
-            &empty,
-            "candidate-001",
-            "candidate-000",
-            false
-        )
-        .unwrap()
-        .is_none());
-    }
-
-    #[derive(Clone)]
-    struct FallbackWorld {
-        tick: u64,
-    }
-    impl ArenaGame for FallbackWorld {
-        fn players(&self) -> usize {
-            2
-        }
-        fn tick(&self) -> u64 {
-            self.tick
-        }
-        fn terminal(&self) -> bool {
-            self.tick >= 5
-        }
-        fn input(&self, p: usize) -> Result<Input> {
-            let mut input = SocialWorld { tick: self.tick }.input(p)?;
-            let mut third = input.observation.actions[1].clone();
-            third.id = "third".into();
-            input.observation.actions.push(third);
-            input
-                .bindings
-                .insert("third".into(), input.bindings["next"].clone());
-            input
-                .purpose
-                .activities
-                .insert("third".into(), input.purpose.activities["next"].clone());
-            input
-                .conditional
-                .insert("third".into(), input.conditional["next"].clone());
-            Ok(input)
-        }
-        fn behavior(&self, viewer: usize, actor: usize) -> Result<crate::behavior::PublicBehavior> {
-            AgreementWorld { tick: self.tick }.behavior(viewer, actor)
-        }
-        fn input_scenarios(&self, p: usize, _: &[Vec<String>]) -> Result<Input> {
-            self.input(p)
-        }
-        fn model_world(&self, _: usize, _: u64) -> Result<Self> {
-            Ok(self.clone())
-        }
-        fn advance(&self, choices: &[String], seed: u64) -> Result<(Self, Vec<Feedback>)> {
-            let (_, mut feedback) = SocialWorld { tick: self.tick }.advance(choices, seed)?;
-            if self.tick == 1 {
-                let negative =
-                    (0..3).any(|scenario| seed == batch_seed(701, 2).wrapping_add(scenario * 37));
-                let value = match choices[0].as_str() {
-                    "next" => {
-                        if negative {
-                            -1.
-                        } else {
-                            1.
-                        }
-                    }
-                    "third" => 0.05,
-                    _ => 0.,
-                };
-                feedback[0].observed.as_mut().unwrap()[0] = value;
-            }
-            Ok((
-                Self {
-                    tick: self.tick + 1,
-                },
-                feedback,
-            ))
-        }
-        fn modeled_choices(&self, _: usize, _: &str) -> Result<Vec<String>> {
-            Ok(vec!["act".into(), "next".into()])
-        }
-        fn purpose(&self, _: usize) -> f64 {
-            0.
-        }
-        fn view(&self) -> serde_json::Value {
-            serde_json::json!({"tick": self.tick})
-        }
-        fn partners(&self, p: usize) -> Vec<usize> {
-            vec![1 - p]
-        }
-        fn offers(&self, _: &[String]) -> Result<Vec<crate::coordination::Offer>> {
-            Ok(vec![])
-        }
-    }
-    #[test]
-    fn fallback_search_reuses_simulations_and_leaves_actual_learning_untouched() {
-        let mut config = fixture_owner_config();
-        config.actor.policy.priority = reflex_immediate::Priority::Finite;
-        config.actor.personality[4] = 0.;
-        let mut owner = Owner::new(config).unwrap();
-        let world = FallbackWorld { tick: 0 };
-        let stage = owner
-            .prepare_estimated(&world.input(0).unwrap(), false)
-            .unwrap();
-        let action = stage.decision().action_id.clone();
-        let (next, feedback) = world.advance(&[action.clone(), "next".into()], 1).unwrap();
-        let ticket = owner.commit(stage, &action).unwrap();
-        owner.resolve(ticket, &feedback[0]).unwrap();
-        assert!(owner.state().unwrap().progress.stalls > 0);
-        let before = owner.state().unwrap().clone();
-        let config = Config {
-            horizon: 2,
-            second_moves: 0,
-            scenario_batches: 3,
-            max_regret: 1.,
-            forecast_guard: true,
-            ..Config::default()
-        };
-        let baseline = Planner::new(&owner, config.clone())
-            .unwrap()
-            .propose(&owner, &next, 0)
-            .unwrap();
-        let search = Planner::new(
-            &owner,
-            Config {
-                fallback_search: true,
-                ..config
-            },
-        )
-        .unwrap()
-        .propose(&owner, &next, 0)
-        .unwrap();
-        assert_eq!(baseline.audit.reason, "uncertain_forecast");
-        assert_eq!(baseline.action(), "act");
-        assert_eq!(search.audit.reason, "robust_alternative");
-        assert_eq!(search.action(), "third");
-        assert_eq!(baseline.audit.simulated_nodes, search.audit.simulated_nodes);
-        assert_eq!(owner.state().unwrap(), &before);
-        assert!(search.audit.forecast_support.unwrap().supported);
-    }
-
-    #[test]
-    fn fallback_search_configuration_is_opt_in_and_validated() {
-        let mut value = serde_json::to_value(Config::default()).unwrap();
-        value.as_object_mut().unwrap().remove("fallback_search");
-        let old: Config = serde_json::from_value(value).unwrap();
-        assert!(!old.fallback_search);
-        assert!(Config {
-            fallback_search: true,
-            ..Config::default()
-        }
-        .validate()
-        .is_err());
-        assert!(Config {
-            forecast_guard: true,
-            fallback_search: true,
-            ..Config::default()
-        }
-        .validate()
-        .is_ok());
-    }
-
     #[test]
     fn purpose_band_is_limited_by_tier_and_ordinary_root_spreads() {
         let rows = vec![
