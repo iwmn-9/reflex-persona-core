@@ -1,9 +1,17 @@
 //! Public appraisals supplement the adapter hypotheses; real opponent state is never read.
-use crate::{behavior::{ModelSet, PublicBehavior}, routes, ArenaGame};
+use crate::{
+    behavior::{ModelSet, PublicBehavior},
+    routes, ArenaGame,
+};
 use reflex_immediate::{Agent, Config, Policy, Priority, Scope, State};
 use reflex_owned::{Error, Result};
 
-pub fn frame<G: ArenaGame>(game: &G, viewer: usize, target: usize, models: ModelSet) -> Result<PublicBehavior> {
+pub fn frame<G: ArenaGame>(
+    game: &G,
+    viewer: usize,
+    target: usize,
+    models: ModelSet,
+) -> Result<PublicBehavior> {
     if viewer >= game.players() || target >= game.players() {
         return Err(Error::Invalid("valid public viewer and target required"));
     }

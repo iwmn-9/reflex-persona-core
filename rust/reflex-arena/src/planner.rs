@@ -53,7 +53,6 @@ impl Config {
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Milestone {
-    pub remaining: Vec<String>,
     pub value: f64,
     pub deadline: u64,
 }
@@ -79,6 +78,7 @@ struct Path {
     purpose: f64,
     actions: Vec<String>,
     goals: Vec<f64>,
+    terminal: bool,
 }
 struct Candidate {
     root: String,
@@ -169,7 +169,7 @@ impl Planner {
     /// Restore only against an independently supplied owner; personality is checked.
     pub fn restore(owner: &Owner, bytes: &[u8]) -> Result<Self> {
         let save: PlannerSave = serde_json::from_slice(bytes)?;
-        if save.version != "arena-planner-v6"
+        if save.version != "arena-planner-v7"
             || save.sha256 != format!("{:x}", Sha256::digest(serde_json::to_vec(&save.planner)?))
         {
             return Err(Error::Invalid("planner checkpoint integrity mismatch"));
@@ -185,12 +185,12 @@ impl Planner {
             return Err(Error::Invalid("planner owner mismatch"));
         }
         if let Some(m) = &p.milestone {
-            if m.remaining.is_empty()
-                || m.remaining.len() > 32
-                || !m.value.is_finite()
+            if !m.value.is_finite()
                 || !(-1.0..=1.0).contains(&m.value)
-                || m.remaining.iter().any(|s| s.is_empty())
-                || owner.state()?.last_tick.is_some_and(|t| m.deadline <= t)
+                || !p.last_tick.is_some_and(|t| {
+                    t.checked_add(p.config.horizon as u64)
+                        .is_some_and(|limit| m.deadline > t && m.deadline <= limit)
+                })
             {
                 return Err(Error::Invalid("invalid milestone"));
             }
@@ -199,7 +199,7 @@ impl Planner {
     }
     pub fn checkpoint(&self) -> Result<Vec<u8>> {
         let save = PlannerSave {
-            version: "arena-planner-v6".into(),
+            version: "arena-planner-v7".into(),
             planner: self.clone(),
             sha256: format!("{:x}", Sha256::digest(serde_json::to_vec(self)?)),
         };
@@ -279,19 +279,11 @@ impl Planner {
         let stage = actor.prepare_estimated(&input, false)?;
         let normal = stage.decision().action_id.clone();
         let allowed = stage.allowed().clone();
-        let live = self.milestone.as_ref().filter(|m| {
-            game.tick() < m.deadline
-                && game.purpose(player) < m.value - 1e-12
-                && !m.remaining.is_empty()
-                && allowed.contains(&m.remaining[0])
-        });
-        let mut roots: Vec<String> = if let Some(m) = live {
-            vec![m.remaining[0].clone(), normal.clone()]
-        } else {
-            allowed.iter().cloned().collect()
-        };
-        roots.sort();
-        roots.dedup();
+        let live = self
+            .milestone
+            .as_ref()
+            .filter(|m| game.tick() < m.deadline && game.purpose(player) < m.value - 1e-12);
+        let roots: Vec<String> = allowed.iter().cloned().collect();
         let base_probabilities = if beliefs.is_some() {
             vec![1. / 3.; 3]
         } else {
@@ -310,9 +302,7 @@ impl Planner {
         let mut candidates = Vec::new();
         for root in roots {
             let mut schedules: Vec<Option<Vec<String>>> = vec![None];
-            if let Some(m) = live.filter(|m| m.remaining[0] == root) {
-                schedules.insert(0, Some(m.remaining.clone()));
-            } else if live.is_none() && self.config.horizon > 1 && self.config.second_moves > 0 {
+            if self.config.horizon > 1 && self.config.second_moves > 0 {
                 // Enumerate a bounded second move from a public response scenario.
                 // Other scenarios still check legality and fall back independently.
                 let model = game.model_world(player, self.config.model_seed)?;
@@ -427,45 +417,36 @@ impl Planner {
         let evaluated =
             actor.with_continuation(actor.prepare_estimated(&input, false)?, &bounded)?;
         let mut filtered = bounded.clone();
+        let mut retained = live.cloned();
+        let mut reachable = std::collections::BTreeSet::new();
         if let Some(m) = live {
-            if let Some(inc) = candidates.iter().position(|c| c.root == m.remaining[0]) {
-                let eligible = |i: usize| {
-                    evaluated
-                        .decision()
-                        .scores
-                        .iter()
-                        .any(|s| s.id == format!("candidate-{i:03}") && s.eligible)
-                };
-                let arrival = |c: &Candidate| {
-                    c.paths
-                        .iter()
-                        .map(|p| {
-                            p.goals
-                                .iter()
-                                .position(|v| *v >= m.value - 1e-12)
-                                .map(|i| i + 1)
-                        })
-                        .collect::<Vec<_>>()
-                };
-                let incumbent = arrival(&candidates[inc]);
-                if !eligible(inc) || incumbent.iter().any(Option::is_none) {
-                    let mut fresh = self.clone();
-                    fresh.milestone = None;
-                    let mut proposal =
-                        fresh.propose_inner(owner, game, player, beliefs, intentions)?;
-                    proposal.audit.reason = "withdraw".into();
-                    proposal.planner_before = self.checkpoint()?;
-                    return Ok(proposal);
-                }
-                if eligible(inc) && incumbent.iter().all(Option::is_some) {
-                    let latest = incumbent.iter().flatten().copied().max().unwrap();
-                    filtered.plans.clear();
-                    for plan in &bounded.plans {
-                        if keep_retained_plan(plan, &candidates, inc, latest, m.value, &eligible)? {
-                            filtered.plans.push(plan.clone());
-                        }
-                    }
-                }
+            let eligible: std::collections::BTreeSet<usize> = evaluated
+                .decision()
+                .scores
+                .iter()
+                .filter(|s| s.eligible)
+                .filter_map(|s| s.id.strip_prefix("candidate-")?.parse().ok())
+                .collect();
+            let remaining = (m.deadline - game.tick()) as usize;
+            reachable = eligible
+                .iter()
+                .copied()
+                .filter(|&i| arrival(&candidates[i], m.value, remaining) == Arrival::Reached)
+                .collect();
+            if !reachable.is_empty() {
+                let permitted = goal_options(&candidates, &eligible, &reachable);
+                filtered.plans.retain(|p| {
+                    p.action
+                        .id
+                        .strip_prefix("candidate-")
+                        .and_then(|s| s.parse::<usize>().ok())
+                        .is_some_and(|i| permitted.contains(&i))
+                });
+            } else if eligible
+                .iter()
+                .all(|&i| arrival(&candidates[i], m.value, remaining) == Arrival::Impossible)
+            {
+                retained = None;
             }
         }
         let mut stage = if filtered.plans.len() == bounded.plans.len() {
@@ -475,7 +456,7 @@ impl Planner {
         };
         let mut forecast_support = None;
         let mut fallback = false;
-        if self.config.forecast_guard && self.config.horizon > 1 && live.is_none() {
+        if self.config.forecast_guard && self.config.horizon > 1 && reachable.is_empty() {
             let (chosen, candidate) = selected_candidate(&stage, &candidates)?;
             if candidate.root != normal {
                 if let Some(baseline) = candidates
@@ -516,22 +497,24 @@ impl Planner {
         }
         let action = stage.decision().action_id.clone();
         let (selected, selected_candidate) = selected_candidate(&stage, &candidates)?;
-        let next_milestone = if let Some(m) = live.filter(|m| {
-            m.remaining[0] == action
-                && candidates
-                    .iter()
-                    .position(|c| std::ptr::eq(c, selected_candidate))
-                    == candidates.iter().position(|c| c.root == m.remaining[0])
-        }) {
-            Some(m.clone())
+        let baseline = candidates
+            .iter()
+            .position(|c| c.root == normal && c.ordinary);
+        let switching = !reachable.is_empty() && !reachable.contains(&selected);
+        let next_milestone = if live.is_some() && !switching {
+            retained
         } else {
-            new_milestone(
-                &candidates,
-                selected,
-                game.purpose(player),
-                game.tick(),
-                self.config.horizon,
-            )
+            baseline.and_then(|baseline| {
+                new_milestone(
+                    &candidates,
+                    selected,
+                    baseline,
+                    &probabilities,
+                    game.purpose(player),
+                    game.tick(),
+                    self.config.horizon,
+                )
+            })
         };
         Ok(Proposal {
             actor,
@@ -544,6 +527,7 @@ impl Planner {
                 reason: if fallback {
                     "uncertain_forecast"
                 } else if live.is_some()
+                    && !switching
                     && next_milestone
                         .as_ref()
                         .is_some_and(|m| live.is_some_and(|old| old.deadline == m.deadline))
@@ -596,16 +580,10 @@ impl Planner {
         let ticket = proposal.actor.commit(proposal.stage, actual_action)?;
         proposal.actor.resolve(ticket, feedback)?;
         let mut next = proposal.next_milestone;
-        if let Some(m) = next.as_mut() {
-            if m.remaining.first().is_some_and(|x| x == actual_action) {
-                m.remaining.remove(0);
-            }
-        }
-        if next.as_ref().is_some_and(|m| {
-            m.remaining.is_empty()
-                || actual_goal >= m.value - 1e-12
-                || proposal.tick + 1 >= m.deadline
-        }) {
+        if next
+            .as_ref()
+            .is_some_and(|m| actual_goal >= m.value - 1e-12 || proposal.tick + 1 >= m.deadline)
+        {
             next = None
         }
         let last_tick = proposal.actor.state()?.last_tick;
@@ -723,14 +701,6 @@ impl Planner {
         }
         let mut candidates = Vec::new();
         for (id, root, first) in &intents {
-            let schedule = if id.is_none() {
-                self.milestone
-                    .as_ref()
-                    .filter(|m| m.remaining.first() == Some(root))
-                    .map(|m| m.remaining.as_slice())
-            } else {
-                None
-            };
             let mut paths = Vec::with_capacity(3 * self.config.scenario_batches);
             for batch in 0..self.config.scenario_batches {
                 for scenario in 0..3 {
@@ -742,7 +712,7 @@ impl Planner {
                         scenario,
                         self.config.horizon,
                         batch_seed(self.config.model_seed, batch),
-                        schedule,
+                        None,
                         Some(beliefs),
                         Some(first),
                         id.is_some(),
@@ -822,6 +792,32 @@ impl Planner {
         bounded.max_regret = bounded_regret(&candidates, &tier, self.config.max_regret);
         let appraisal =
             comparison.preview_continuation(base.context(), &bounded, &allowed_roots)?;
+        let live = self
+            .milestone
+            .as_ref()
+            .filter(|m| game.tick() < m.deadline && game.purpose(player) < m.value - 1e-12);
+        let eligible: std::collections::BTreeSet<usize> = appraisal
+            .decision()
+            .scores
+            .iter()
+            .filter(|s| s.eligible)
+            .filter_map(|s| s.id.strip_prefix("candidate-")?.parse().ok())
+            .collect();
+        let reachable: std::collections::BTreeSet<usize> = live
+            .map(|m| {
+                eligible
+                    .iter()
+                    .copied()
+                    .filter(|&i| {
+                        arrival(&candidates[i], m.value, (m.deadline - game.tick()) as usize)
+                            == Arrival::Reached
+                    })
+                    .collect()
+            })
+            .unwrap_or_default();
+        let permitted = goal_options(&candidates, &eligible, &reachable);
+        // Offers are only a subset of legal roots; they cannot prove the goal impossible.
+        let consent_milestone = live.cloned();
         let outside = tier_appraisal
             .decision()
             .scores
@@ -834,7 +830,7 @@ impl Planner {
             .iter()
             .filter_map(|s| {
                 let i = s.id.strip_prefix("candidate-")?.parse::<usize>().ok()?;
-                if i == 0 || !s.eligible {
+                if i == 0 || !s.eligible || (!reachable.is_empty() && !permitted.contains(&i)) {
                     return None;
                 }
                 // Respect personality tiers first, then compare within the same tier.
@@ -905,13 +901,19 @@ impl Planner {
             if selected != i {
                 return Err(Error::Invalid("agreement plan identity mismatch"));
             }
-            let milestone = new_milestone(
-                &candidates,
-                i,
-                game.purpose(player),
-                game.tick(),
-                self.config.horizon,
-            );
+            let milestone = if live.is_some() && (reachable.is_empty() || reachable.contains(&i)) {
+                consent_milestone.clone()
+            } else {
+                new_milestone(
+                    &candidates,
+                    i,
+                    0,
+                    &vec![1. / candidates[0].paths.len() as f64; candidates[0].paths.len()],
+                    game.purpose(player),
+                    game.tick(),
+                    self.config.horizon,
+                )
+            };
             result.ranked.push(id.clone());
             result.proposals.insert(
                 id.clone(),
@@ -1143,50 +1145,53 @@ fn simulate<G: ArenaGame>(
         purpose: game.purpose(player),
         actions,
         goals,
+        terminal: game.terminal(),
     })
 }
-fn keep_retained_plan(
-    plan: &ContinuationPlan,
+#[derive(PartialEq, Eq)]
+enum Arrival {
+    Reached,
+    Impossible,
+    Unknown,
+}
+fn arrival(candidate: &Candidate, target: f64, remaining: usize) -> Arrival {
+    let mut unknown = false;
+    for path in &candidate.paths {
+        if path
+            .goals
+            .iter()
+            .take(remaining)
+            .any(|v| *v >= target - 1e-12)
+        {
+            continue;
+        }
+        if path.goals.len() < remaining && !path.terminal {
+            unknown = true;
+        } else {
+            return Arrival::Impossible;
+        }
+    }
+    if unknown {
+        Arrival::Unknown
+    } else {
+        Arrival::Reached
+    }
+}
+
+fn goal_options(
     candidates: &[Candidate],
-    incumbent: usize,
-    latest: usize,
-    target: f64,
-    eligible: &impl Fn(usize) -> bool,
-) -> Result<bool> {
-    let index = plan
-        .action
-        .id
-        .strip_prefix("candidate-")
-        .and_then(|v| v.parse::<usize>().ok())
-        .ok_or(Error::Invalid("invalid candidate id"))?;
-    let candidate = candidates
-        .get(index)
-        .ok_or(Error::Invalid("candidate id out of range"))?;
-    let retained = candidates
-        .get(incumbent)
-        .ok_or(Error::Invalid("incumbent id out of range"))?;
-    if plan.root != candidate.root {
-        return Err(Error::Invalid("candidate root mismatch"));
-    }
-    if !eligible(index) {
-        return Ok(false);
-    }
-    if index == incumbent {
-        return Ok(true);
-    }
-    let arrivals: Vec<_> = candidate
-        .paths
+    eligible: &std::collections::BTreeSet<usize>,
+    reachable: &std::collections::BTreeSet<usize>,
+) -> std::collections::BTreeSet<usize> {
+    let best = reachable
         .iter()
-        .map(|p| {
-            p.goals
-                .iter()
-                .position(|v| *v >= target - 1e-12)
-                .map(|i| i + 1)
-        })
-        .collect();
-    Ok(!(candidate.purpose <= retained.purpose + 1e-12
-        && arrivals.iter().all(Option::is_some)
-        && arrivals.iter().flatten().all(|x| latest < *x)))
+        .map(|&i| candidates[i].purpose)
+        .fold(f64::NEG_INFINITY, f64::max);
+    eligible
+        .iter()
+        .copied()
+        .filter(|i| reachable.contains(i) || candidates[*i].purpose > best + 1e-12)
+        .collect()
 }
 
 fn bounded_regret(
@@ -1255,28 +1260,24 @@ fn plans(candidates: &[Candidate], probabilities: &[f64]) -> Vec<ContinuationPla
 fn new_milestone(
     candidates: &[Candidate],
     selected: usize,
+    baseline: usize,
+    probabilities: &[f64],
     origin: f64,
     tick: u64,
     horizon: u32,
 ) -> Option<Milestone> {
     let chosen = candidates.get(selected)?;
-    let other = candidates
-        .iter()
-        .enumerate()
-        .filter(|(i, _)| *i != selected)
-        .map(|(_, c)| c)
-        .map(|c| c.purpose)
-        .fold(origin, f64::max);
+    let normal = candidates.get(baseline)?;
+    if selected == baseline {
+        return None;
+    }
     for i in 1..horizon as usize {
         if chosen
             .paths
             .iter()
-            .any(|p| p.actions.len() <= i || p.goals.len() <= i)
+            .chain(&normal.paths)
+            .any(|p| p.goals.len() <= i)
         {
-            break;
-        }
-        let prefix = &chosen.paths[0].actions[..=i];
-        if chosen.paths.iter().any(|p| &p.actions[..=i] != prefix) {
             break;
         }
         let floor = chosen
@@ -1284,9 +1285,14 @@ fn new_milestone(
             .iter()
             .map(|p| p.goals[i])
             .fold(f64::INFINITY, f64::min);
-        if floor > origin + 1e-12 && floor > other + 1e-12 {
+        let average: f64 = normal
+            .paths
+            .iter()
+            .zip(probabilities)
+            .map(|(p, w)| p.goals[i] * w)
+            .sum();
+        if floor > origin + 1e-12 && floor > average + 1e-12 {
             return Some(Milestone {
-                remaining: prefix.to_vec(),
                 value: floor,
                 deadline: tick + i as u64 + 1,
             });
@@ -1410,6 +1416,158 @@ mod tests {
     }
 
     #[test]
+    fn milestone_checkpoint_unknown_reach_deadline_and_withdrawal() {
+        let mut config = fixture::config("person");
+        config.contract = "arena-estimated-model-v1".into();
+        config.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+        let mut owner = Owner::new(config).unwrap();
+        let mut planner = Planner::new(
+            &owner,
+            Config {
+                horizon: 1,
+                second_moves: 0,
+                ..Config::default()
+            },
+        )
+        .unwrap();
+        planner.milestone = Some(Milestone {
+            value: 0.5,
+            deadline: 2,
+        });
+        let bytes = planner.checkpoint().unwrap();
+        assert!(Planner::restore(&owner, &bytes).is_err());
+        let mut old: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+        old["version"] = "arena-planner-v6".into();
+        assert!(Planner::restore(&owner, &serde_json::to_vec(&old).unwrap()).is_err());
+        let before = owner.state().unwrap().clone();
+        let world = AgreementWorld { tick: 0 };
+        let proposal = planner.propose(&owner, &world, 0).unwrap();
+        assert_eq!(proposal.audit.reason, "keep");
+        assert_eq!(owner.state().unwrap(), &before);
+        let action = proposal.action().to_owned();
+        let (_, feedback) = world.advance(&[action.clone(), "next".into()], 0).unwrap();
+        planner
+            .resolve(&mut owner, proposal, &action, &feedback[0], 0.)
+            .unwrap();
+        assert!(planner.milestone().is_some());
+        let world = AgreementWorld { tick: 1 };
+        let proposal = planner.propose(&owner, &world, 0).unwrap();
+        assert_eq!(proposal.audit.reason, "withdraw");
+        let action = proposal.action().to_owned();
+        let (_, feedback) = world.advance(&[action.clone(), "next".into()], 0).unwrap();
+        planner
+            .resolve(&mut owner, proposal, &action, &feedback[0], 0.)
+            .unwrap();
+        assert!(planner.milestone().is_none());
+
+        let mut owner = Owner::new(fixture_owner_config()).unwrap();
+        let mut planner = Planner::new(
+            &owner,
+            Config {
+                horizon: 1,
+                second_moves: 0,
+                ..Config::default()
+            },
+        )
+        .unwrap();
+        planner.milestone = Some(Milestone {
+            value: 0.5,
+            deadline: 3,
+        });
+        let world = AgreementWorld { tick: 0 };
+        let proposal = planner.propose(&owner, &world, 0).unwrap();
+        let action = proposal.action().to_owned();
+        let (_, feedback) = world.advance(&[action.clone(), "next".into()], 0).unwrap();
+        planner
+            .resolve(&mut owner, proposal, &action, &feedback[0], 0.5)
+            .unwrap();
+        assert!(planner.milestone().is_none());
+    }
+    #[test]
+    fn milestone_restore_checks_clock_and_horizon() {
+        let mut owner = Owner::new(fixture_owner_config()).unwrap();
+        let mut initial = Planner::new(&owner, Config::default()).unwrap();
+        let world = AgreementWorld { tick: 0 };
+        let proposal = initial.propose(&owner, &world, 0).unwrap();
+        let action = proposal.action().to_owned();
+        let (_, feedback) = world.advance(&[action.clone(), "next".into()], 0).unwrap();
+        initial
+            .resolve(&mut owner, proposal, &action, &feedback[0], 0.)
+            .unwrap();
+        let mut planner = Planner::new(
+            &owner,
+            Config {
+                horizon: 2,
+                ..Config::default()
+            },
+        )
+        .unwrap();
+        for (deadline, valid) in [
+            (0, false),
+            (1, true),
+            (2, true),
+            (3, false),
+            (u64::MAX, false),
+        ] {
+            planner.milestone = Some(Milestone {
+                value: 0.5,
+                deadline,
+            });
+            assert_eq!(
+                Planner::restore(&owner, &planner.checkpoint().unwrap()).is_ok(),
+                valid
+            );
+        }
+    }
+    #[test]
+    fn inactive_goal_filter_does_not_bypass_forecast_guard() {
+        let owner = Owner::new(fixture_owner_config()).unwrap();
+        let config = Config {
+            horizon: 3,
+            second_moves: 0,
+            scenario_batches: 3,
+            max_regret: 1.,
+            forecast_guard: true,
+            ..Config::default()
+        };
+        let plain = Planner::new(&owner, config).unwrap();
+        let mut exercised = [false; 2];
+        for seed in 0..30 {
+            let world = crate::games::Hagetaka::new(seed);
+            let baseline = plain.propose(&owner, &world, 0).unwrap();
+            if baseline.audit.forecast_support.is_none() {
+                continue;
+            }
+            for (index, deadline) in [3, 4].into_iter().enumerate() {
+                let mut guarded = plain.clone();
+                guarded.milestone = Some(Milestone {
+                    value: 1.,
+                    deadline,
+                });
+                let proposal = guarded.propose(&owner, &world, 0).unwrap();
+                if proposal.audit.reason == "keep" || proposal.audit.reason == "withdraw" {
+                    assert!(proposal.audit.forecast_support.is_some());
+                    assert_eq!(proposal.action(), baseline.action());
+                    exercised[index] = true;
+                }
+            }
+            if exercised.iter().all(|x| *x) {
+                break;
+            }
+        }
+        assert!(
+            exercised.iter().all(|x| *x),
+            "fixture must exercise both inactive goal states"
+        );
+    }
+    fn fixture_owner_config() -> OwnerConfig {
+        let mut config = fixture::config("person");
+        config.contract = "arena-estimated-model-v1".into();
+        config.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+        config
+    }
+
+    #[test]
     fn consent_evaluates_signed_context_without_reviving_unsigned_failures() {
         let mut config = fixture::config("person");
         config.contract = "arena-estimated-model-v1".into();
@@ -1519,6 +1677,10 @@ mod tests {
                 std::slice::from_ref(&offer)
             )
             .is_err());
+        planner.milestone = Some(Milestone {
+            value: 0.5,
+            deadline: 4,
+        });
         let mut consent = planner
             .consent(
                 &owner,
@@ -1532,6 +1694,7 @@ mod tests {
         assert_eq!(consent.ranked, vec!["joint"]);
         assert_eq!(owner.state().unwrap(), &before);
         let proposal = consent.proposals.remove("joint").unwrap();
+        assert_eq!(proposal.audit.milestone.as_ref().unwrap().value, 0.5);
         let (_, feedback) = world.advance(&["act".into(), "act".into()], 1).unwrap();
         planner
             .resolve(&mut owner, proposal, "act", &feedback[0], 0.)
@@ -1723,14 +1886,7 @@ mod tests {
         assert_eq!(bounded_regret(&rows, &tier, 0.15), 0.);
     }
     #[test]
-    fn retained_filter_uses_original_plan_ids_after_tier_removes_zero_and_two() {
-        let mut rows = vec![
-            candidate("excluded-zero", 0.9, true),
-            candidate("retained", 0.6, false),
-            candidate("excluded-two", 0.9, true),
-            candidate("slow", 0.5, true),
-            candidate("fast", 0.5, true),
-        ];
+    fn arrival_checks_each_branch_and_preserves_unknown_truncation() {
         let outcome = Outcome {
             p: 1.,
             objective: 0.,
@@ -1739,24 +1895,81 @@ mod tests {
             style: [0.; 5],
             cost: 0.,
         };
-        for (i, goals) in [(1, vec![0.6]), (3, vec![0., 0.6]), (4, vec![0.6])] {
-            rows[i].paths.push(Path {
-                outcome: outcome.clone(),
-                purpose: 0.6,
-                actions: vec![],
-                goals,
-            });
-        }
-        let all = plans(&rows, &[1.]);
-        let eligible = |i| [1, 3, 4].contains(&i);
-        let kept: Vec<_> = [1, 3, 4]
+        let path = |actions: &[&str], goals: Vec<f64>, terminal| Path {
+            outcome: outcome.clone(),
+            purpose: 0.,
+            actions: actions.iter().map(|s| s.to_string()).collect(),
+            goals,
+            terminal,
+        };
+        let mut rows = [
+            candidate("excluded", 0., true),
+            candidate("first", 0., true),
+            candidate("excluded", 0., true),
+            candidate("second", 0., true),
+        ];
+        rows[1].paths = vec![
+            path(&["first", "a"], vec![0., 0.6], false),
+            path(&["first", "b"], vec![0.1, 0.7], false),
+        ];
+        rows[3].paths = vec![path(&["second"], vec![0.1], false)];
+        assert!(arrival(&rows[1], 0.6, 2) == Arrival::Reached);
+        assert!(arrival(&rows[3], 0.6, 2) == Arrival::Unknown);
+        rows[3].paths[0].terminal = true;
+        assert!(arrival(&rows[3], 0.6, 2) == Arrival::Impossible);
+        assert!(arrival(&rows[1], 0.6, 1) == Arrival::Impossible);
+        let eligible = BTreeSet::from([1, 3]);
+        let retained: Vec<_> = eligible
             .into_iter()
-            .filter(|i| keep_retained_plan(&all[*i], &rows, 1, 1, 0.6, &eligible).unwrap())
+            .filter(|&i| arrival(&rows[i], 0.6, 2) == Arrival::Reached)
             .collect();
-        assert_eq!(kept, vec![1, 4]);
-        let mut wrong_root = all[4].clone();
-        wrong_root.root = "wrong".into();
-        assert!(keep_retained_plan(&wrong_root, &rows, 1, 1, 0.6, &eligible).is_err());
+        assert_eq!(retained, vec![1]);
+        rows[1].purpose = 0.4;
+        rows[3].purpose = 0.6;
+        assert_eq!(
+            goal_options(&rows, &BTreeSet::from([1, 3]), &BTreeSet::from([1])),
+            BTreeSet::from([1, 3])
+        );
+        assert_eq!(
+            goal_options(&rows, &BTreeSet::from([1]), &BTreeSet::from([1])),
+            BTreeSet::from([1])
+        );
+    }
+
+    #[test]
+    fn milestone_compares_same_time_normal_and_accepts_diverging_paths() {
+        let outcome = Outcome {
+            p: 1.,
+            objective: 0.,
+            needs: [0.; 5],
+            values: [0.; 10],
+            style: [0.; 5],
+            cost: 0.,
+        };
+        let path = |actions: &[&str], goals: Vec<f64>| Path {
+            outcome: outcome.clone(),
+            purpose: 0.,
+            actions: actions.iter().map(|s| s.to_string()).collect(),
+            goals,
+            terminal: false,
+        };
+        let mut normal = candidate("normal", 0.9, true);
+        normal.paths = vec![
+            path(&["normal", "a"], vec![0., 0.2]),
+            path(&["normal", "b"], vec![0., 0.4]),
+        ];
+        let mut chosen = candidate("chosen", 0.4, true);
+        chosen.paths = vec![
+            path(&["chosen", "a"], vec![0., 0.5]),
+            path(&["chosen", "b"], vec![0., 0.6]),
+        ];
+        let rows = vec![normal, chosen];
+        let m = new_milestone(&rows, 1, 0, &[0.5, 0.5], 0., 10, 2).unwrap();
+        assert_eq!((m.value, m.deadline), (0.5, 12));
+        assert!(new_milestone(&rows, 0, 0, &[0.5, 0.5], 0., 10, 2).is_none());
+        let mut same_root = rows;
+        same_root[1].root = same_root[0].root.clone();
+        assert!(new_milestone(&same_root, 1, 0, &[0.5, 0.5], 0., 10, 2).is_some());
     }
 
     #[test]
