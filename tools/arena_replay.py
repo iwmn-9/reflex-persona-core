@@ -48,6 +48,14 @@ def summarize(matches,sources):
             raise ValueError('paired controllers require equal purpose filters')
         if r.get('intent_sharing',False)!=b.get('intent_sharing',False):
             raise ValueError('paired controllers require equal communication')
+        if r.get('intention_protocol')!=b.get('intention_protocol'):
+            raise ValueError('paired controllers require equal intention protocols')
+        if r.get('frozen_reference',False)!=b.get('frozen_reference',False):
+            raise ValueError('paired controllers require equal reference design')
+        if r.get('frozen_reference'):
+            for i,c in enumerate(r['controllers']):
+                if i not in r['focal_players'] and c!=b['controllers'][i]:
+                    raise ValueError('frozen opponents must use identical controller settings')
         focal=r['focal_players'];delta=sum(r['purpose'][i]-b['purpose'][i] for i in focal)/len(focal)
         cases.append(dict(game=r['game'],scene=r['scene'],seed=r['seed'],focal_players=focal,delta=delta,
             classification='equivalent' if abs(delta)<=.005 else 'better' if delta>0 else 'worse',large_negative_diagnostic=delta<=-.02))
@@ -77,6 +85,8 @@ def summarize(matches,sources):
         second_moves=sorted(set(r.get('second_moves',8) for r in matches)),
         max_regret=sorted(set(r.get('max_regret',.15) for r in matches)),
         intent_sharing=sorted(set(r.get('intent_sharing',False) for r in matches)),
+        intention_protocol=sorted(set(r.get('intention_protocol','sequential' if r.get('intent_sharing') else 'none') for r in matches)),
+        frozen_reference=sorted(set(r.get('frozen_reference',False) for r in matches)),
         seconds=dict(min=min(r['seconds'] for r in matches),max=max(r['seconds'] for r in matches)),
         by_game=groups,exchange_all_planned=dict(**social,profile_actions=dict(actions)),focal_comparisons=cases,
         limits=['Purpose deltas are adapter-defined, not win-rate deltas.',
@@ -93,7 +103,7 @@ def main():
         for f in sorted(folder.glob('*.json')):
             r=json.loads(f.read_bytes())
             if not (r.get('complete') and r.get('game') and r.get('trace')):continue
-            identity=(r['game'],r['seed'],r['mode'],r['horizon'],r.get('second_moves',8),r.get('max_regret',.15),r.get('intent_sharing',False),r.get('individual_beliefs',False),r.get('coordination',False),json.dumps(r['trace'][0]['before'],sort_keys=True))
+            identity=(r['game'],r['seed'],r['mode'],r['horizon'],r.get('second_moves',8),r.get('max_regret',.15),r.get('intent_sharing',False),r.get('intention_protocol','sequential' if r.get('intent_sharing') else 'none'),r.get('frozen_reference',False),r.get('individual_beliefs',False),r.get('coordination',False),json.dumps(r['trace'][0]['before'],sort_keys=True))
             if identity in seen:continue
             seen.add(identity)
             selected.add(r['game'])

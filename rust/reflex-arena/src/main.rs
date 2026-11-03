@@ -81,6 +81,7 @@ fn run<G: ArenaGame>(
     individual: bool,
     coordinate: bool,
     share_intentions: bool,
+    frozen_reference: bool,
     output: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let started = Instant::now();
@@ -94,6 +95,8 @@ fn run<G: ArenaGame>(
     let planning: Vec<bool> = (0..world.players())
         .map(|i| mode == "planned" || mode == "challenger" && focal.contains(&i))
         .collect();
+    let modified: Vec<bool> = planning.iter().map(|&p| !frozen_reference || p).collect();
+    let sharing: Vec<bool> = modified.iter().map(|&m| share_intentions && m).collect();
     let profiles: Vec<_> = (0..world.players())
         .map(|i| (i + seed as usize % 4) % 4)
         .collect();
@@ -115,8 +118,8 @@ fn run<G: ArenaGame>(
                 o,
                 Search {
                     horizon: if planning[i] { horizon } else { 1 },
-                    second_moves,
-                    max_regret,
+                    second_moves: if modified[i] { second_moves } else { 8 },
+                    max_regret: if modified[i] { max_regret } else { 0.15 },
                     ..Search::default()
                 },
             )
@@ -161,7 +164,7 @@ fn run<G: ArenaGame>(
         }
         let mut selections = vec![];
         for i in 0..world.players() {
-            if planning[i] && !share_intentions {
+            if planning[i] && !sharing[i] {
                 let proposal = if individual {
                     planners[i].propose_with_beliefs(&owners[i], &world, i, &beliefs[i])?
                 } else {
@@ -178,19 +181,23 @@ fn run<G: ArenaGame>(
                 audits.push(json!({"reason":"reflex","milestone":null,"simulated_nodes":0}));
             }
         }
-        if share_intentions {
-            // Tentative announcements are actual private decisions, not a peek at
-            // hidden opponent policies. Each actor sees only permitted partners.
+        let mut counteroffers = vec![];
+        if sharing.iter().any(|s| *s) {
+            // A revision relying on partners becomes a joint offer. Until every
+            // participant signs, the independent announcements remain executable.
             let initial = choices.clone();
             for offset in 0..world.players() {
                 let i = (offset + tick as usize) % world.players();
+                if !sharing[i] {
+                    continue;
+                }
                 let intentions = Intentions {
                     tick,
                     choices: world
                         .partners(i)
                         .into_iter()
                         .map(|p| {
-                            choices
+                            initial
                                 .get(p)
                                 .map(|a| (p, a.clone()))
                                 .ok_or("invalid communication partner")
@@ -198,7 +205,7 @@ fn run<G: ArenaGame>(
                         .collect::<Result<_, _>>()?,
                 };
                 inputs[i] = public_input_with_intentions(&world, i, &beliefs[i], 701, &intentions)?;
-                if planning[i] {
+                let proposed = if planning[i] {
                     let proposal = planners[i].propose_with_intentions(
                         &owners[i],
                         &world,
@@ -206,34 +213,56 @@ fn run<G: ArenaGame>(
                         &beliefs[i],
                         &intentions,
                     )?;
-                    choices[i] = proposal.action().to_string();
+                    let action = proposal.action().to_string();
                     simulations += proposal.audit.simulated_nodes;
-                    audits[i] = serde_json::to_value(&proposal.audit)?;
-                    selections[i] = Selection::Planned(Box::new(proposal));
-                } else if !intentions.choices.is_empty() {
+                    if intentions.choices.is_empty() {
+                        choices[i] = action.clone();
+                        audits[i] = serde_json::to_value(&proposal.audit)?;
+                        selections[i] = Selection::Planned(Box::new(proposal));
+                    }
+                    action
+                } else {
                     let stage = next_owners[i].prepare_estimated(&inputs[i], false)?;
-                    choices[i] = stage.decision().action_id.clone();
-                    selections[i] = Selection::Reflex(Box::new(stage));
+                    stage.decision().action_id.clone()
+                };
+                if !intentions.choices.is_empty() && proposed != initial[i] {
+                    let mut roots = intentions.choices.clone();
+                    roots.insert(i, proposed.clone());
+                    counteroffers.push(reflex_arena::coordination::Offer {
+                        id: format!("intent:{i}"),
+                        roots,
+                    });
                 }
-                intention_records[i] =
-                    json!({"announced_action":initial[i],"received_intentions":intentions.choices});
+                intention_records[i] = json!({"announced_action":initial[i],"proposed_action":proposed,"received_intentions":intentions.choices});
             }
         }
         let mut agreements = vec![];
         if coordinate {
-            let offers = world.offers(&choices)?;
+            let mut offers = world.offers(&choices)?;
+            offers.extend(counteroffers);
             if !offers.is_empty() {
                 let mut consents = Vec::new();
                 let mut ballots = Vec::new();
                 for i in 0..world.players() {
-                    let consent = planners[i].consent(
-                        &owners[i],
-                        &world,
-                        i,
-                        &beliefs[i],
-                        &choices,
-                        &offers,
-                    )?;
+                    let consent = if sharing[i] {
+                        planners[i].consent_allow_indifference(
+                            &owners[i],
+                            &world,
+                            i,
+                            &beliefs[i],
+                            &choices,
+                            &offers,
+                        )?
+                    } else {
+                        planners[i].consent(
+                            &owners[i],
+                            &world,
+                            i,
+                            &beliefs[i],
+                            &choices,
+                            &offers,
+                        )?
+                    };
                     simulations += consent.simulated_nodes;
                     ballots.push(reflex_arena::coordination::Ballot {
                         actor: i,
@@ -350,7 +379,8 @@ fn run<G: ArenaGame>(
         beliefs = next_beliefs;
         eprintln!("{game} {mode} tick={} nodes={simulations}", world.tick());
     }
-    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,
+    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"intention_protocol":if share_intentions {"mutual-counterproposal-v1"} else {"none"},"frozen_reference":frozen_reference,
+        "controllers":(0..world.players()).map(|i|json!({"planned":planning[i],"settings":planners[i].config(),"intent_sharing":sharing[i]})).collect::<Vec<_>>(),
         "profiles":profiles,"profile_names":NAMES,"focal_players":focal,"ticks":world.tick(),"factual_decisions":checks,
         "simulated_nodes":simulations,"plan_events":counters,"seconds":started.elapsed().as_secs_f64(),
         "purpose":(0..world.players()).map(|i|world.purpose(i)).collect::<Vec<_>>(),
@@ -394,6 +424,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "--beliefs",
             "--coordination",
             "--intent-sharing",
+            "--reference",
         ]
         .contains(key)
         {
@@ -436,12 +467,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let coordinate = coordination == "consent";
     let intent_sharing = *options.get("--intent-sharing").unwrap_or(&"none");
-    if !["none", "sequential"].contains(&intent_sharing)
-        || intent_sharing == "sequential" && !individual
+    if !["none", "proposals"].contains(&intent_sharing)
+        || intent_sharing == "proposals" && (!individual || !coordinate)
     {
-        return Err("sequential intentions need individual public models".into());
+        return Err("intention proposals need individual public models and consent".into());
     }
-    let share_intentions = intent_sharing == "sequential";
+    let share_intentions = intent_sharing == "proposals";
+    let reference = *options.get("--reference").unwrap_or(&"frozen");
+    if !["frozen", "matched"].contains(&reference) {
+        return Err("known reference required".into());
+    }
+    let frozen_reference = reference == "frozen";
     if !["planned", "reflex", "challenger"].contains(&mode) || turns == 0 || turns > 128 {
         return Err("bounded mode/turns required".into());
     }
@@ -465,6 +501,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             individual,
             coordinate,
             share_intentions,
+            frozen_reference,
             output,
         ),
         "hagetaka" => run(
@@ -478,6 +515,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             individual,
             coordinate,
             share_intentions,
+            frozen_reference,
             output,
         ),
         "exchange" => run(
@@ -491,6 +529,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             individual,
             coordinate,
             share_intentions,
+            frozen_reference,
             output,
         ),
         _ => Err("unknown arena".into()),

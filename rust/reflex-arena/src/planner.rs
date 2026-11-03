@@ -563,6 +563,33 @@ impl Planner {
         announced: &[String],
         offers: &[crate::coordination::Offer],
     ) -> Result<Consent> {
+        self.consent_inner(owner, game, player, beliefs, announced, offers, false)
+    }
+
+    /// Also consent to proposals with the same personal score as the outside.
+    pub fn consent_allow_indifference<G: ArenaGame>(
+        &self,
+        owner: &Owner,
+        game: &G,
+        player: usize,
+        beliefs: &Beliefs,
+        announced: &[String],
+        offers: &[crate::coordination::Offer],
+    ) -> Result<Consent> {
+        self.consent_inner(owner, game, player, beliefs, announced, offers, true)
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn consent_inner<G: ArenaGame>(
+        &self,
+        owner: &Owner,
+        game: &G,
+        player: usize,
+        beliefs: &Beliefs,
+        announced: &[String],
+        offers: &[crate::coordination::Offer],
+        allow_indifference: bool,
+    ) -> Result<Consent> {
         let scope = serde_json::to_string(&(
             &owner.config().actor.scope.game,
             &owner.config().actor.scope.episode,
@@ -703,7 +730,13 @@ impl Planner {
                     return None;
                 }
                 // Respect personality tiers first, then compare within the same tier.
-                if outside.eligible && s.score <= outside.score + 1e-9 {
+                if outside.eligible
+                    && if allow_indifference {
+                        s.score < outside.score - 1e-9
+                    } else {
+                        s.score <= outside.score + 1e-9
+                    }
+                {
                     return None;
                 }
                 Some((i, s.score))

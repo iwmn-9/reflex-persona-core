@@ -259,6 +259,87 @@ fn exchange_offers_require_consent_and_only_agreed_proposals_execute() {
     );
 }
 
+#[test]
+fn indifferent_person_accepts_a_benefit_for_another_but_not_own_loss() {
+    use reflex_arena::coordination::Offer;
+    let game = Encounters::new(7, 5);
+    let make_owner = |i| {
+        let mut cfg = fixture::config(&format!("p{i}"));
+        cfg.contract = "arena-estimated-model-v1".into();
+        cfg.predictor.names = vec!["0".into(), "1".into(), "2".into()];
+        cfg.actor.values = [0.; 10];
+        Owner::new(cfg).unwrap()
+    };
+    let owners = [make_owner(0), make_owner(1)];
+    let make_planner = |o: &Owner| {
+        Planner::new(
+            o,
+            Config {
+                horizon: 1,
+                max_regret: 1.,
+                ..Default::default()
+            },
+        )
+        .unwrap()
+    };
+    let planners = [make_planner(&owners[0]), make_planner(&owners[1])];
+    let beliefs = [
+        new_beliefs(&game, &owners[0], 0),
+        new_beliefs(&game, &owners[1], 1),
+    ];
+    let announced = vec!["rest".to_string(); game.players()];
+    let helpful = Offer {
+        id: "helpful".into(),
+        roots: BTreeMap::from([(0, "rest".into()), (1, "alone".into())]),
+    };
+    let harmful = Offer {
+        id: "harmful".into(),
+        roots: BTreeMap::from([(0, "cooperate:1".into()), (1, "claim:0".into())]),
+    };
+    let (baseline, _) = game.advance(&announced, 701).unwrap();
+    let mut joint = announced.clone();
+    joint[1] = "alone".into();
+    let (improved, _) = game.advance(&joint, 701).unwrap();
+    assert!(improved.purpose(1) > baseline.purpose(1));
+    assert_eq!(improved.purpose(0), baseline.purpose(0));
+    // Same-tier fixture: zero values and neutral traits, so own score comes from objective,
+    // needs and risk rather than selecting a different moral tier.
+    let strict = planners[0]
+        .consent(
+            &owners[0],
+            &game,
+            0,
+            &beliefs[0],
+            &announced,
+            &[helpful.clone(), harmful.clone()],
+        )
+        .unwrap();
+    let beneficiary = planners[1]
+        .consent_allow_indifference(
+            &owners[1],
+            &game,
+            1,
+            &beliefs[1],
+            &announced,
+            std::slice::from_ref(&helpful),
+        )
+        .unwrap();
+    assert!(beneficiary.ranked.iter().any(|x| x == "helpful"));
+    let allowed = planners[0]
+        .consent_allow_indifference(
+            &owners[0],
+            &game,
+            0,
+            &beliefs[0],
+            &announced,
+            &[helpful, harmful],
+        )
+        .unwrap();
+    assert!(strict.ranked.is_empty());
+    assert!(allowed.ranked.iter().any(|x| x == "helpful"));
+    assert!(!allowed.ranked.iter().any(|x| x == "harmful"));
+}
+
 #[derive(Clone, Debug)]
 enum Observed {
     Input(u64, Vec<Vec<String>>),

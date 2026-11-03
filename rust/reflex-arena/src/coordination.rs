@@ -42,7 +42,7 @@ pub fn negotiate(
     tick: u64,
 ) -> Result<Agreement> {
     let count = ballots.len();
-    if !(2..=64).contains(&count) || offers.len() > 64 || !label(scope) || tick >= (1_u64 << 63) {
+    if !(2..=64).contains(&count) || offers.len() > 128 || !label(scope) || tick >= (1_u64 << 63) {
         return Err(Error::Invalid(
             "bounded current coordination scope required",
         ));
@@ -214,5 +214,25 @@ mod tests {
         let mut duplicate = offers.clone();
         duplicate.push(offers[0].clone());
         assert!(negotiate(&duplicate, &ballots, &order, &legal, "world", 4).is_err());
+    }
+
+    #[test]
+    fn offer_limit_accepts_128_and_rejects_129() {
+        let (_, mut ballots, order, legal) = setup();
+        for ballot in &mut ballots {
+            ballot.ranked.clear();
+        }
+        let mut offers: Vec<_> = (0..128)
+            .map(|i| Offer {
+                id: format!("offer-{i}"),
+                roots: BTreeMap::from([(0, "join".into()), (1, "join".into())]),
+            })
+            .collect();
+        assert!(negotiate(&offers, &ballots, &order, &legal, "world", 4).is_ok());
+        offers.push(Offer {
+            id: "overflow".into(),
+            roots: offers[0].roots.clone(),
+        });
+        assert!(negotiate(&offers, &ballots, &order, &legal, "world", 4).is_err());
     }
 }
