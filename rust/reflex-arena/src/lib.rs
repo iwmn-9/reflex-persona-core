@@ -7,6 +7,7 @@ pub mod games;
 pub mod planner;
 pub mod robustness;
 pub mod routes;
+pub mod social;
 
 /// Current, non-binding intentions disclosed by all permitted partners.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -32,6 +33,19 @@ pub trait ArenaGame: Clone {
     /// Only these participants may receive this actor's current announced intent.
     fn partners(&self, player: usize) -> Vec<usize>;
     fn offers(&self, announced: &[String]) -> Result<Vec<coordination::Offer>>;
+    /// Public effects on a named person. The core never infers hostility from losing.
+    fn social_bindings(&self, _player: usize) -> Result<BTreeMap<String, social::Binding>> {
+        Ok(BTreeMap::new())
+    }
+    /// Attributable events after a resolved joint turn, one stream per observer.
+    fn social_events(
+        &self,
+        _next: &Self,
+        _choices: &[String],
+        _seed: u64,
+    ) -> Result<Vec<Vec<social::Event>>> {
+        Ok(vec![vec![]; self.players()])
+    }
     /// Game-proposed public subgoals; the same person's policy chooses among them.
     fn route_input(&self, _player: usize) -> Result<Option<reflex_immediate::Observation>> {
         Ok(None)

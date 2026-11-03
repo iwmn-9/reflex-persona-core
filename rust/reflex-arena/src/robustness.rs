@@ -1,7 +1,7 @@
 //! Reappraise existing scenario batches without drawing new world samples.
 use reflex_immediate::{Agent, Config, Continuation, Error, Observation, Result, State};
 use serde::Serialize;
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub struct Support {
@@ -22,6 +22,40 @@ pub fn check(
     base_plan_id: &str,
     batch_size: usize,
 ) -> Result<Support> {
+    check_with_appraisal(
+        config,
+        state,
+        last_tick,
+        observation,
+        allowed,
+        forecast,
+        selected_plan_id,
+        base_plan_id,
+        batch_size,
+        &BTreeMap::new(),
+    )
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn check_with_appraisal(
+    config: &Config,
+    state: &State,
+    last_tick: Option<u64>,
+    observation: &Observation,
+    allowed: &BTreeSet<String>,
+    forecast: &Continuation,
+    selected_plan_id: &str,
+    base_plan_id: &str,
+    batch_size: usize,
+    appraisal: &BTreeMap<String, f64>,
+) -> Result<Support> {
+    if appraisal.values().any(|v| !v.is_finite() || v.abs() > 1.5)
+        || appraisal
+            .keys()
+            .any(|id| !forecast.plans.iter().any(|p| &p.action.id == id))
+    {
+        return Err(Error::Invalid("valid plan appraisal required"));
+    }
     let actor = Agent::from_state(config.clone(), state.clone(), last_tick)?;
     let mut full = forecast.clone();
     full.max_regret = 2.;
@@ -102,7 +136,36 @@ pub fn check(
             .iter()
             .find(|s| s.id == base_plan_id)
             .ok_or(Error::Invalid("base plan score missing"))?;
-        if selected.eligible && (!base.eligible || selected.score + 1e-12 >= base.score) {
+        let selected_score =
+            selected.score + appraisal.get(selected_plan_id).copied().unwrap_or(0.);
+        let base_score = base.score + appraisal.get(base_plan_id).copied().unwrap_or(0.);
+        let social_floor_ok = if appraisal.values().any(|v| *v != 0.) {
+            let baseline_id = prepared
+                .selected_plan()
+                .ok_or(Error::Invalid("batch baseline required"))?;
+            let purpose = |id: &str| {
+                reduced
+                    .plans
+                    .iter()
+                    .find(|p| p.action.id == id)
+                    .map(|p| p.purpose)
+                    .ok_or(Error::Invalid("batch purpose required"))
+            };
+            let best = scores
+                .iter()
+                .filter(|s| s.eligible)
+                .map(|s| purpose(&s.id))
+                .collect::<Result<Vec<_>>>()?
+                .into_iter()
+                .fold(f64::NEG_INFINITY, f64::max);
+            purpose(selected_plan_id)? >= purpose(baseline_id)?.min(best - 0.15) - 1e-9
+        } else {
+            true
+        };
+        if selected.eligible
+            && social_floor_ok
+            && (!base.eligible || selected_score + 1e-12 >= base_score)
+        {
             support.supported_batches += 1;
         }
     }
@@ -202,6 +265,22 @@ mod tests {
                 total_batches: 3,
                 supported: true
             }
+        );
+    }
+
+    #[test]
+    fn appraisal_is_applied_to_each_batch_without_changing_tier() {
+        let (c, s, o, a, f) = data(&[0.1, 0.1, 0.1], &[0.2, 0.2, 0.2]);
+        assert!(
+            !check(&c, &s, None, &o, &a, &f, "chosen", "base", 1)
+                .unwrap()
+                .supported
+        );
+        let bias = BTreeMap::from([("chosen".into(), 0.3)]);
+        assert!(
+            check_with_appraisal(&c, &s, None, &o, &a, &f, "chosen", "base", 1, &bias)
+                .unwrap()
+                .supported
         );
     }
 

@@ -1,4 +1,7 @@
-use crate::ArenaGame;
+use crate::{
+    social::{Binding as SocialBinding, Event as SocialEvent},
+    ArenaGame,
+};
 use reflex_immediate::{Action, NeedInput, Observation, Outcome};
 use reflex_owned::{prediction, progress, Error, Feedback, Input, Result};
 use serde::Serialize;
@@ -114,6 +117,7 @@ fn make_input_scenarios<W: World>(w: &W, p: usize, choices: &[Vec<String>]) -> R
         return Err(err());
     }
     let legal = w.legal(p);
+    let social = w.social_bindings(p)?;
     let mut actions = Vec::new();
     let mut conditional = BTreeMap::new();
     for a in legal {
@@ -129,8 +133,8 @@ fn make_input_scenarios<W: World>(w: &W, p: usize, choices: &[Vec<String>]) -> R
         }
         conditional.insert(a.clone(), outcomes.clone());
         actions.push(Action {
+            target: social.get(&a).map(|b| b.target.clone()),
             id: a,
-            target: None,
             legal: true,
             known_failure: false,
             confidence: 1.,
@@ -462,14 +466,14 @@ impl World for Hagetaka {
     }
 }
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, PartialEq, Serialize)]
 struct Person {
     energy: f64,
     health: f64,
     stock: f64,
     score: f64,
 }
-#[derive(Clone, Serialize)]
+#[derive(Clone, PartialEq, Serialize)]
 pub struct Encounters {
     people: Vec<Person>,
     history: Vec<Vec<String>>,
@@ -495,6 +499,41 @@ impl Encounters {
     }
 }
 impl ArenaGame for Encounters {
+    fn social_bindings(&self, player: usize) -> Result<BTreeMap<String, SocialBinding>> {
+        if player >= self.players() || self.terminal() {
+            return Err(err());
+        }
+        let mut bindings = BTreeMap::new();
+        for action in self.legal(player) {
+            if let Some((kind, target)) = action.split_once(':') {
+                if kind == "cooperate" || kind == "claim" {
+                    let target: usize = target.parse().map_err(|_| err())?;
+                    bindings.insert(
+                        action.clone(),
+                        SocialBinding {
+                            target: target.to_string(),
+                            support: if kind == "cooperate" { 1. } else { -1. },
+                            distress: (1. - self.people[target].health / 8.).clamp(0., 1.),
+                        },
+                    );
+                }
+            }
+        }
+        Ok(bindings)
+    }
+    fn social_events(
+        &self,
+        next: &Self,
+        choices: &[String],
+        seed: u64,
+    ) -> Result<Vec<Vec<SocialEvent>>> {
+        let (resolved, events) = self.resolved(choices, seed, true)?;
+        if resolved != *next {
+            return Err(err());
+        }
+        Ok(events)
+    }
+
     fn partners(&self, player: usize) -> Vec<usize> {
         if player >= self.players() {
             return vec![];
@@ -547,6 +586,98 @@ impl ArenaGame for Encounters {
     }
     fn view(&self) -> Value {
         json!(self)
+    }
+}
+impl Encounters {
+    fn resolved(
+        &self,
+        c: &[String],
+        seed: u64,
+        collect: bool,
+    ) -> Result<(Self, Vec<Vec<SocialEvent>>)> {
+        if self.terminal() || c.len() != 4 || (0..4).any(|p| !self.legal(p).contains(&c[p])) {
+            return Err(err());
+        }
+        let mut events = if collect {
+            vec![vec![]; self.players()]
+        } else {
+            vec![]
+        };
+        let mut n = self.clone();
+        for p in 0..4 {
+            let a = &c[p];
+            if a == "finished" {
+                continue;
+            }
+            let (gain, health) = if a == "rest" {
+                (0.08, 0.)
+            } else if a == "alone" {
+                (0.3, 0.06)
+            } else {
+                let (kind, t) = a.split_once(':').ok_or_else(err)?;
+                let target: usize = t.parse().map_err(|_| err())?;
+                let other = &c[target];
+                let matched = other.ends_with(&format!(":{p}"));
+                if !matched {
+                    (0.12, 0.)
+                } else {
+                    let other_coop = other.starts_with("cooperate:");
+                    let accident = kind == "cooperate"
+                        && other_coop
+                        && rnd(
+                            seed,
+                            self.tick * 16 + p.min(target) as u64 * 4 + p.max(target) as u64,
+                        ) % 100
+                            < 5;
+                    if collect {
+                        events[p].push(SocialEvent {
+                            target: target.to_string(),
+                            event_id: format!("{}:{p}:{target}", self.tick),
+                            tick: self.tick,
+                            agency: !accident,
+                            confidence: 1.,
+                            benefit: if accident {
+                                0.
+                            } else if other_coop {
+                                0.8
+                            } else if kind == "cooperate" {
+                                -1.
+                            } else {
+                                0.
+                            },
+                        });
+                    }
+                    if accident {
+                        (-0.1, -0.15)
+                    } else {
+                        match (kind, other_coop) {
+                            ("cooperate", true) => (0.55, 0.12),
+                            ("cooperate", false) => (-0.15, -0.1),
+                            (_, true) => (0.8, 0.08),
+                            _ => (0.05, -0.02),
+                        }
+                    }
+                }
+            };
+            let u = &mut n.people[p];
+            u.energy = if a == "rest" {
+                (u.energy + 0.4).min(1.)
+            } else {
+                (u.energy - 0.18).max(0.)
+            };
+            u.energy = (u.energy - 0.025).max(0.);
+            u.stock = (u.stock + gain - 0.08).max(0.);
+            u.health = ((u.health + health).clamp(0., 8.) - 0.04).max(0.);
+            u.score += gain;
+        }
+        for (p, choice) in c.iter().enumerate() {
+            n.history[p].push(choice.clone());
+            if n.history[p].len() > 8 {
+                n.history[p].remove(0);
+            }
+        }
+        n.tick += 1;
+        Ok((n, events))
     }
 }
 impl World for Encounters {
@@ -666,66 +797,7 @@ impl World for Encounters {
         ]
     }
     fn transition(&self, c: &[String], seed: u64) -> Result<Self> {
-        if self.terminal() || c.len() != 4 || (0..4).any(|p| !self.legal(p).contains(&c[p])) {
-            return Err(err());
-        }
-        let mut n = self.clone();
-        for p in 0..4 {
-            let a = &c[p];
-            if a == "finished" {
-                continue;
-            }
-            let (gain, health) = if a == "rest" {
-                (0.08, 0.)
-            } else if a == "alone" {
-                (0.3, 0.06)
-            } else {
-                let (kind, t) = a.split_once(':').ok_or_else(err)?;
-                let target: usize = t.parse().map_err(|_| err())?;
-                let other = &c[target];
-                let matched = other.ends_with(&format!(":{p}"));
-                if !matched {
-                    (0.12, 0.)
-                } else {
-                    let other_coop = other.starts_with("cooperate:");
-                    if kind == "cooperate"
-                        && other_coop
-                        && rnd(
-                            seed,
-                            self.tick * 16 + p.min(target) as u64 * 4 + p.max(target) as u64,
-                        ) % 100
-                            < 5
-                    {
-                        (-0.1, -0.15)
-                    } else {
-                        match (kind, other_coop) {
-                            ("cooperate", true) => (0.55, 0.12),
-                            ("cooperate", false) => (-0.15, -0.1),
-                            (_, true) => (0.8, 0.08),
-                            _ => (0.05, -0.02),
-                        }
-                    }
-                }
-            };
-            let u = &mut n.people[p];
-            u.energy = if a == "rest" {
-                (u.energy + 0.4).min(1.)
-            } else {
-                (u.energy - 0.18).max(0.)
-            };
-            u.energy = (u.energy - 0.025).max(0.);
-            u.stock = (u.stock + gain - 0.08).max(0.);
-            u.health = ((u.health + health).clamp(0., 8.) - 0.04).max(0.);
-            u.score += gain;
-        }
-        for (p, choice) in c.iter().enumerate() {
-            n.history[p].push(choice.clone());
-            if n.history[p].len() > 8 {
-                n.history[p].remove(0);
-            }
-        }
-        n.tick += 1;
-        Ok(n)
+        self.resolved(c, seed, false).map(|(world, _)| world)
     }
     fn effect(&self, n: &Self, p: usize, a: &str) -> Outcome {
         let old = &self.people[p];
@@ -778,7 +850,7 @@ impl World for Encounters {
         )
     }
 }
-#[derive(Clone, Serialize)]
+#[derive(Clone, PartialEq, Serialize)]
 struct Unit {
     team: usize,
     x: i32,
@@ -788,7 +860,7 @@ struct Unit {
     kit: i32,
     guard: bool,
 }
-#[derive(Clone, Serialize)]
+#[derive(Clone, PartialEq, Serialize)]
 pub struct Combat {
     units: Vec<Unit>,
     walls: Vec<(i32, i32)>,
@@ -1006,6 +1078,41 @@ impl Combat {
     }
 }
 impl ArenaGame for Combat {
+    fn social_bindings(&self, player: usize) -> Result<BTreeMap<String, SocialBinding>> {
+        if player >= self.players() || self.terminal() {
+            return Err(err());
+        }
+        let mut bindings = BTreeMap::new();
+        for action in self.legal(player) {
+            if let Some((kind, target)) = action.split_once(':') {
+                if kind == "heal" || kind == "shoot" {
+                    let target: usize = target.parse().map_err(|_| err())?;
+                    bindings.insert(
+                        action.clone(),
+                        SocialBinding {
+                            target: target.to_string(),
+                            support: if kind == "heal" { 1. } else { -1. },
+                            distress: (1. - self.units[target].hp as f64 / 9.).clamp(0., 1.),
+                        },
+                    );
+                }
+            }
+        }
+        Ok(bindings)
+    }
+    fn social_events(
+        &self,
+        next: &Self,
+        choices: &[String],
+        seed: u64,
+    ) -> Result<Vec<Vec<SocialEvent>>> {
+        let (resolved, events) = self.resolved(choices, seed, true)?;
+        if resolved != *next {
+            return Err(err());
+        }
+        Ok(events)
+    }
+
     fn current_route(&self, p: usize) -> Option<&str> {
         self.routes.get(p).and_then(Option::as_deref)
     }
@@ -1267,6 +1374,124 @@ impl ArenaGame for Combat {
         json!(self)
     }
 }
+impl Combat {
+    fn resolved(
+        &self,
+        c: &[String],
+        seed: u64,
+        collect: bool,
+    ) -> Result<(Self, Vec<Vec<SocialEvent>>)> {
+        if self.terminal() || c.len() != 6 || (0..6).any(|p| !self.legal(p).contains(&c[p])) {
+            return Err(err());
+        }
+        let mut events = if collect {
+            vec![vec![]; self.players()]
+        } else {
+            vec![]
+        };
+        let mut n = self.clone();
+        for (p, choice) in c.iter().enumerate() {
+            n.units[p].guard = choice == "guard";
+        }
+        let moves: Vec<Option<(i32, i32)>> = c
+            .iter()
+            .map(|a| {
+                let mut s = a.split(':');
+                if s.next() == Some("move") {
+                    Some((s.next()?.parse().ok()?, s.next()?.parse().ok()?))
+                } else {
+                    None
+                }
+            })
+            .collect();
+        for p in 0..6 {
+            if let Some(q) = moves[p] {
+                if moves.iter().filter(|&&x| x == Some(q)).count() == 1 {
+                    n.units[p].x = q.0;
+                    n.units[p].y = q.1;
+                }
+            }
+        }
+        let mut healing = [0; 6];
+        for (p, choice) in c.iter().enumerate() {
+            if choice == "reload" {
+                n.units[p].ammo = 3;
+            } else if let Some(t) = choice.strip_prefix("heal:") {
+                let j: usize = t.parse().map_err(|_| err())?;
+                healing[j] += 4;
+                n.units[p].kit -= 1;
+            }
+        }
+        if collect {
+            // Split only the health actually restored; capped duplicate healing earns no extra credit.
+            for (source, choice) in c.iter().enumerate() {
+                if let Some(t) = choice.strip_prefix("heal:") {
+                    let target: usize = t.parse().map_err(|_| err())?;
+                    if source != target {
+                        let restored = healing[target].min(9 - n.units[target].hp);
+                        events[target].push(SocialEvent {
+                            target: source.to_string(),
+                            event_id: format!("{}:aid:{target}:{source}", self.tick),
+                            tick: self.tick,
+                            agency: true,
+                            confidence: 1.,
+                            benefit: (restored as f64 * 4. / healing[target] as f64) / 9.,
+                        });
+                    }
+                }
+            }
+        }
+        for (p, h) in healing.iter().enumerate() {
+            n.units[p].hp = (n.units[p].hp + h).min(9);
+        }
+        let mut losses = [0; 6];
+        let mut hits = vec![];
+        for (p, choice) in c.iter().enumerate() {
+            if let Some(t) = choice.strip_prefix("shoot:") {
+                let j: usize = t.parse().map_err(|_| err())?;
+                if (rnd(seed, self.tick * 6 + p as u64) % 1_000_000) as f64 / 1_000_000.
+                    < n.chance(p, j)
+                {
+                    losses[j] += 3;
+                    if collect {
+                        hits.push((p, j));
+                    }
+                }
+                n.units[p].ammo -= 1;
+            }
+        }
+        for (source, target) in hits {
+            let lost = losses[target].min(n.units[target].hp);
+            events[target].push(SocialEvent {
+                target: source.to_string(),
+                event_id: format!("{}:damage:{target}:{source}", self.tick),
+                tick: self.tick,
+                agency: true,
+                confidence: 1.,
+                benefit: -(lost as f64 * 3. / losses[target] as f64) / 9.,
+            });
+        }
+        for (p, d) in losses.iter().enumerate() {
+            n.units[p].hp = (n.units[p].hp - d).max(0);
+        }
+        let mut count = [0; 2];
+        for u in &n.units {
+            if u.hp > 0 && u.x == 4 && (1..=3).contains(&u.y) {
+                count[u.team] += 1;
+            }
+        }
+        for t in 0..2 {
+            n.hold[t] = if count[t] > count[1 - t] && count[t] > 0 {
+                (n.hold[t] + 1).min(3)
+            } else {
+                0
+            };
+            n.secured[t] |= n.hold[t] >= 3;
+        }
+        n.tick += 1;
+        Ok((n, events))
+    }
+}
 impl World for Combat {
     fn route_context(&self, p: usize) -> Option<&str> {
         self.routes[p].as_deref()
@@ -1450,76 +1675,7 @@ impl World for Combat {
         ]
     }
     fn transition(&self, c: &[String], seed: u64) -> Result<Self> {
-        if self.terminal() || c.len() != 6 || (0..6).any(|p| !self.legal(p).contains(&c[p])) {
-            return Err(err());
-        }
-        let mut n = self.clone();
-        for (p, choice) in c.iter().enumerate() {
-            n.units[p].guard = choice == "guard";
-        }
-        let moves: Vec<Option<(i32, i32)>> = c
-            .iter()
-            .map(|a| {
-                let mut s = a.split(':');
-                if s.next() == Some("move") {
-                    Some((s.next()?.parse().ok()?, s.next()?.parse().ok()?))
-                } else {
-                    None
-                }
-            })
-            .collect();
-        for p in 0..6 {
-            if let Some(q) = moves[p] {
-                if moves.iter().filter(|&&x| x == Some(q)).count() == 1 {
-                    n.units[p].x = q.0;
-                    n.units[p].y = q.1;
-                }
-            }
-        }
-        let mut healing = [0; 6];
-        for (p, choice) in c.iter().enumerate() {
-            if choice == "reload" {
-                n.units[p].ammo = 3;
-            } else if let Some(t) = choice.strip_prefix("heal:") {
-                let j: usize = t.parse().map_err(|_| err())?;
-                healing[j] += 4;
-                n.units[p].kit -= 1;
-            }
-        }
-        for (p, h) in healing.iter().enumerate() {
-            n.units[p].hp = (n.units[p].hp + h).min(9);
-        }
-        let mut losses = [0; 6];
-        for (p, choice) in c.iter().enumerate() {
-            if let Some(t) = choice.strip_prefix("shoot:") {
-                let j: usize = t.parse().map_err(|_| err())?;
-                if (rnd(seed, self.tick * 6 + p as u64) % 1_000_000) as f64 / 1_000_000.
-                    < n.chance(p, j)
-                {
-                    losses[j] += 3;
-                }
-                n.units[p].ammo -= 1;
-            }
-        }
-        for (p, d) in losses.iter().enumerate() {
-            n.units[p].hp = (n.units[p].hp - d).max(0);
-        }
-        let mut count = [0; 2];
-        for u in &n.units {
-            if u.hp > 0 && u.x == 4 && (1..=3).contains(&u.y) {
-                count[u.team] += 1;
-            }
-        }
-        for t in 0..2 {
-            n.hold[t] = if count[t] > count[1 - t] && count[t] > 0 {
-                (n.hold[t] + 1).min(3)
-            } else {
-                0
-            };
-            n.secured[t] |= n.hold[t] >= 3;
-        }
-        n.tick += 1;
-        Ok(n)
+        self.resolved(c, seed, false).map(|(world, _)| world)
     }
     fn effect(&self, n: &Self, p: usize, a: &str) -> Outcome {
         let u = &self.units[p];
@@ -1557,6 +1713,92 @@ impl World for Combat {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn encounter_events_separate_choice_from_shared_bad_luck() {
+        let game = Encounters::new(1, 8);
+        let choices = vec![
+            "cooperate:1".into(),
+            "cooperate:0".into(),
+            "rest".into(),
+            "rest".into(),
+        ];
+        let accident = (0..1000).find(|&s| rnd(s, 1) % 100 < 5).unwrap();
+        let next = game.transition(&choices, accident).unwrap();
+        let events = game.social_events(&next, &choices, accident).unwrap();
+        assert!(!events[0][0].agency && !events[1][0].agency);
+        assert_eq!(events[0][0].benefit, 0.);
+        assert!(events[2].is_empty());
+        let mut exploit = choices.clone();
+        exploit[1] = "claim:0".into();
+        let next = game.transition(&exploit, accident).unwrap();
+        let events = game.social_events(&next, &exploit, accident).unwrap();
+        assert_eq!(events[0][0].target, "1");
+        assert_eq!(events[0][0].benefit, -1.);
+        assert!(events[0][0].agency);
+        assert_eq!(events[1][0].benefit, 0.8);
+        assert!(game.social_events(&game, &exploit, accident).is_err());
+        let input = game.input(0).unwrap();
+        assert_eq!(
+            input
+                .observation
+                .actions
+                .iter()
+                .find(|a| a.id == "cooperate:1")
+                .unwrap()
+                .target
+                .as_deref(),
+            Some("1")
+        );
+    }
+    #[test]
+    fn combat_events_credit_only_delivered_help_and_damage() {
+        let mut game = Combat::new(1, "open", "eliminate", 10);
+        for (p, xy) in [(0, (3, 1)), (1, (3, 2)), (2, (2, 1)), (3, (4, 1))] {
+            game.units[p].x = xy.0;
+            game.units[p].y = xy.1;
+        }
+        game.units[0].hp = 8;
+        let choices: Vec<String> = ["guard", "heal:0", "heal:0", "shoot:0", "guard", "guard"]
+            .map(str::to_owned)
+            .to_vec();
+        let seed = (0..1000)
+            .find(|&s| {
+                let next = game.transition(&choices, s).unwrap();
+                next.units[0].hp == 6
+            })
+            .unwrap();
+        let next = game.transition(&choices, seed).unwrap();
+        let events = game.social_events(&next, &choices, seed).unwrap();
+        assert_eq!(events[0].len(), 3);
+        let total: f64 = events[0].iter().map(|e| e.benefit).sum();
+        assert!((total - (next.units[0].hp - game.units[0].hp) as f64 / 9.).abs() < 1e-12);
+        for target in ["1", "2"] {
+            assert!(
+                (events[0]
+                    .iter()
+                    .find(|e| e.target == target)
+                    .unwrap()
+                    .benefit
+                    - 0.5 / 9.)
+                    .abs()
+                    < 1e-12
+            );
+        }
+        assert!(events[1].is_empty());
+        assert!(game.social_events(&game, &choices, seed).is_err());
+    }
+    #[test]
+    fn fair_competition_does_not_create_betrayal_memory() {
+        let game = Hagetaka::new(1);
+        let choices = (0..4).map(|p| game.legal(p)[0].clone()).collect::<Vec<_>>();
+        let next = game.transition(&choices, 1).unwrap();
+        assert!(game.social_bindings(0).unwrap().is_empty());
+        assert!(game
+            .social_events(&next, &choices, 1)
+            .unwrap()
+            .iter()
+            .all(Vec::is_empty));
+    }
     fn verify_public_behavior<G: ArenaGame>(game: &G) {
         let first = game.behavior(0, 1).unwrap();
         assert!(!first.context.is_empty());

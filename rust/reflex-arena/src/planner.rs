@@ -1,10 +1,10 @@
 //! Bounded public-model planning. Separate research profile, not fixed H32.
 use crate::{
     behavior::Beliefs, observe_public, public_input, public_input_with_intentions,
-    public_scenarios, public_scenarios_with_intentions, ArenaGame, Intentions,
+    public_scenarios, public_scenarios_with_intentions, social, ArenaGame, Intentions,
 };
 use reflex_immediate::{Action, Continuation, ContinuationPlan, Outcome, ReturnUnits};
-use reflex_owned::{Error, Feedback, LearnedState, Owner, OwnerConfig, Result, Stage};
+use reflex_owned::{Error, Feedback, Input, LearnedState, Owner, OwnerConfig, Result, Stage};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
@@ -145,6 +145,98 @@ impl Proposal {
     }
 }
 
+/// Apply social preference after the owner's existing immediate judgment.
+pub fn prepare_social(
+    owner: &Owner,
+    input: &Input,
+    bindings: &BTreeMap<String, social::Binding>,
+    memory: Option<&social::Memory>,
+) -> Result<Stage> {
+    let stage = owner.prepare_estimated(input, false)?;
+    let Some(memory) = memory else {
+        return Ok(stage);
+    };
+    memory.validate_for(&owner.config().actor, owner.state()?.last_tick)?;
+    let bias = social_bias(memory, stage.context(), bindings)?;
+    let purpose = stage
+        .context()
+        .actions
+        .iter()
+        .map(|a| {
+            (
+                a.id.clone(),
+                a.outcomes
+                    .iter()
+                    .map(|o| o.p * o.objective)
+                    .sum::<f64>()
+                    .clamp(-1., 1.),
+            )
+        })
+        .collect();
+    let selected = social::choose(
+        stage.decision(),
+        &stage.decision().action_id,
+        &purpose,
+        &bias,
+        0.15,
+    )?;
+    if selected == stage.decision().action_id {
+        return Ok(stage);
+    }
+    let action = stage
+        .context()
+        .actions
+        .iter()
+        .find(|a| a.id == selected)
+        .ok_or(Error::Invalid("selected social root required"))?
+        .clone();
+    let forecast = Continuation {
+        owner: owner.config().actor.clone(),
+        state: owner.state()?.intent.clone(),
+        tick: input.observation.tick,
+        target: owner.config().purpose_target.clone(),
+        horizon: 1,
+        max_regret: 2.,
+        units: ReturnUnits {
+            unit: "arena-turn".into(),
+            effects: [1.; 22],
+            root_terms: 1.,
+        },
+        plans: vec![ContinuationPlan {
+            root: selected,
+            action,
+            purpose: 0.,
+            correction: None,
+        }],
+    };
+    owner.with_continuation(stage, &forecast)
+}
+fn social_bias(
+    memory: &social::Memory,
+    observation: &reflex_immediate::Observation,
+    bindings: &BTreeMap<String, social::Binding>,
+) -> Result<BTreeMap<String, f64>> {
+    Ok(memory
+        .scores(observation, bindings)?
+        .into_iter()
+        .map(|(id, score)| (id, score.adjustment))
+        .collect())
+}
+fn plan_bias(forecast: &Continuation, roots: &BTreeMap<String, f64>) -> BTreeMap<String, f64> {
+    forecast
+        .plans
+        .iter()
+        .map(|p| (p.action.id.clone(), *roots.get(&p.root).unwrap_or(&0.)))
+        .collect()
+}
+fn plan_purpose(forecast: &Continuation) -> BTreeMap<String, f64> {
+    forecast
+        .plans
+        .iter()
+        .map(|p| (p.action.id.clone(), p.purpose))
+        .collect()
+}
+
 impl Planner {
     pub fn new(owner: &Owner, config: Config) -> Result<Self> {
         config.validate()?;
@@ -212,7 +304,7 @@ impl Planner {
         game: &G,
         player: usize,
     ) -> Result<Proposal> {
-        self.propose_inner(owner, game, player, None, None)
+        self.propose_inner(owner, game, player, None, None, None)
     }
     pub fn propose_with_beliefs<G: ArenaGame>(
         &self,
@@ -226,7 +318,7 @@ impl Planner {
             &owner.config().actor.scope.episode,
         ))?;
         beliefs.validate(&scope, player, &game.behavior(player, player)?.alphabet)?;
-        self.propose_inner(owner, game, player, Some(beliefs), None)
+        self.propose_inner(owner, game, player, Some(beliefs), None, None)
     }
     pub fn propose_with_intentions<G: ArenaGame>(
         &self,
@@ -241,7 +333,28 @@ impl Planner {
             &owner.config().actor.scope.episode,
         ))?;
         beliefs.validate(&scope, player, &game.behavior(player, player)?.alphabet)?;
-        self.propose_inner(owner, game, player, Some(beliefs), Some(intentions))
+        self.propose_inner(owner, game, player, Some(beliefs), Some(intentions), None)
+    }
+    pub fn propose_social<G: ArenaGame>(
+        &self,
+        owner: &Owner,
+        game: &G,
+        player: usize,
+        beliefs: Option<&Beliefs>,
+        intentions: Option<&Intentions>,
+        memory: Option<&social::Memory>,
+    ) -> Result<Proposal> {
+        if intentions.is_some() && beliefs.is_none() {
+            return Err(Error::Invalid("intentions require public beliefs"));
+        }
+        if let Some(b) = beliefs {
+            let scope = serde_json::to_string(&(
+                &owner.config().actor.scope.game,
+                &owner.config().actor.scope.episode,
+            ))?;
+            b.validate(&scope, player, &game.behavior(player, player)?.alphabet)?;
+        }
+        self.propose_inner(owner, game, player, beliefs, intentions, memory)
     }
     fn propose_inner<G: ArenaGame>(
         &self,
@@ -250,6 +363,7 @@ impl Planner {
         player: usize,
         beliefs: Option<&Beliefs>,
         intentions: Option<&Intentions>,
+        memory: Option<&social::Memory>,
     ) -> Result<Proposal> {
         self.config.validate()?;
         if owner.config() != &self.owner
@@ -276,7 +390,16 @@ impl Planner {
             ));
         }
         let actor = owner.fork_model()?;
-        let stage = actor.prepare_estimated(&input, false)?;
+        let bindings = if memory.is_some() {
+            game.social_bindings(player)?
+        } else {
+            BTreeMap::new()
+        };
+        let stage = prepare_social(&actor, &input, &bindings, memory)?;
+        let root_bias = memory
+            .map(|m| social_bias(m, stage.context(), &bindings))
+            .transpose()?
+            .unwrap_or_default();
         let normal = stage.decision().action_id.clone();
         let allowed = stage.allowed().clone();
         let live = self
@@ -360,6 +483,7 @@ impl Planner {
                             intentions.map(|frame| &frame.choices),
                             false,
                             self.config.route_selection,
+                            memory,
                         )?);
                     }
                 }
@@ -454,11 +578,25 @@ impl Planner {
         } else {
             actor.with_continuation(actor.prepare_estimated(&input, false)?, &filtered)?
         };
+        let selected_before = stage
+            .selected_plan()
+            .ok_or(Error::Invalid("selected plan required"))?
+            .to_owned();
+        let bias = plan_bias(&filtered, &root_bias);
+        let purpose = plan_purpose(&filtered);
+        let mut chosen_id = if memory.is_some() {
+            social::choose(stage.decision(), &selected_before, &purpose, &bias, 0.15)?
+        } else {
+            selected_before.clone()
+        };
         let mut forecast_support = None;
         let mut fallback = false;
         if self.config.forecast_guard && self.config.horizon > 1 && reachable.is_empty() {
-            let (chosen, candidate) = selected_candidate(&stage, &candidates)?;
-            if candidate.root != normal {
+            let chosen = chosen_id
+                .strip_prefix("candidate-")
+                .and_then(|s| s.parse::<usize>().ok())
+                .ok_or(Error::Invalid("selected candidate required"))?;
+            if candidates[chosen].root != normal {
                 if let Some(baseline) = candidates
                     .iter()
                     .position(|c| c.root == normal && c.ordinary)
@@ -470,30 +608,31 @@ impl Planner {
                         .iter()
                         .any(|s| s.id == baseline_id && s.eligible);
                     if baseline_eligible {
-                        let support = crate::robustness::check(
+                        let support = crate::robustness::check_with_appraisal(
                             &owner.config().actor,
                             &before.intent,
                             before.last_tick,
                             stage.context(),
                             stage.allowed(),
                             &filtered,
-                            &format!("candidate-{chosen:03}"),
+                            &chosen_id,
                             &baseline_id,
                             3,
+                            &bias,
                         )?;
                         if !support.supported {
-                            let mut conservative = filtered.clone();
-                            conservative.plans.retain(|p| p.action.id == baseline_id);
-                            stage = actor.with_continuation(
-                                actor.prepare_estimated(&input, false)?,
-                                &conservative,
-                            )?;
+                            chosen_id = baseline_id;
                             fallback = true;
                         }
                         forecast_support = Some(support);
                     }
                 }
             }
+        }
+        if chosen_id != selected_before {
+            let mut single = filtered.clone();
+            single.plans.retain(|p| p.action.id == chosen_id);
+            stage = actor.with_continuation(actor.prepare_estimated(&input, false)?, &single)?;
         }
         let action = stage.decision().action_id.clone();
         let (selected, selected_candidate) = selected_candidate(&stage, &candidates)?;
@@ -606,7 +745,7 @@ impl Planner {
         announced: &[String],
         offers: &[crate::coordination::Offer],
     ) -> Result<Consent> {
-        self.consent_inner(owner, game, player, beliefs, announced, offers, false)
+        self.consent_inner(owner, game, player, beliefs, announced, offers, false, None)
     }
 
     /// Also consent to proposals with the same personal score as the outside.
@@ -619,7 +758,31 @@ impl Planner {
         announced: &[String],
         offers: &[crate::coordination::Offer],
     ) -> Result<Consent> {
-        self.consent_inner(owner, game, player, beliefs, announced, offers, true)
+        self.consent_inner(owner, game, player, beliefs, announced, offers, true, None)
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub fn consent_social<G: ArenaGame>(
+        &self,
+        owner: &Owner,
+        game: &G,
+        player: usize,
+        beliefs: &Beliefs,
+        announced: &[String],
+        offers: &[crate::coordination::Offer],
+        memory: Option<&social::Memory>,
+        allow_indifference: bool,
+    ) -> Result<Consent> {
+        self.consent_inner(
+            owner,
+            game,
+            player,
+            beliefs,
+            announced,
+            offers,
+            allow_indifference,
+            memory,
+        )
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -632,6 +795,7 @@ impl Planner {
         announced: &[String],
         offers: &[crate::coordination::Offer],
         allow_indifference: bool,
+        memory: Option<&social::Memory>,
     ) -> Result<Consent> {
         let scope = serde_json::to_string(&(
             &owner.config().actor.scope.game,
@@ -648,7 +812,16 @@ impl Planner {
         }
         let input = public_input(game, player, beliefs, self.config.model_seed)?;
         let actor = owner.fork_model()?;
-        let base = actor.prepare_estimated(&input, false)?;
+        let bindings = if memory.is_some() {
+            game.social_bindings(player)?
+        } else {
+            BTreeMap::new()
+        };
+        let base = prepare_social(&actor, &input, &bindings, memory)?;
+        let root_bias = memory
+            .map(|m| social_bias(m, base.context(), &bindings))
+            .transpose()?
+            .unwrap_or_default();
         if !base.allowed().contains(&announced[player]) {
             return Err(Error::Invalid(
                 "outside action must be allowed without agreement",
@@ -717,6 +890,7 @@ impl Planner {
                         Some(first),
                         id.is_some(),
                         self.config.route_selection,
+                        memory,
                     )?);
                 }
             }
@@ -824,33 +998,55 @@ impl Planner {
             .iter()
             .find(|s| s.id == "candidate-000")
             .ok_or(Error::Invalid("outside score required"))?;
+        let biases = plan_bias(&bounded, &root_bias);
+        let has_bias = biases.values().any(|v| *v != 0.);
+        let best_purpose = appraisal
+            .decision()
+            .scores
+            .iter()
+            .filter(|s| s.eligible)
+            .filter_map(|s| s.id.strip_prefix("candidate-")?.parse::<usize>().ok())
+            .map(|i| candidates[i].purpose)
+            .fold(f64::NEG_INFINITY, f64::max);
+        let baseline_index = appraisal
+            .selected_plan()
+            .and_then(|s| s.strip_prefix("candidate-"))
+            .and_then(|s| s.parse::<usize>().ok())
+            .ok_or(Error::Invalid("selected plan required"))?;
+        let purpose_floor = candidates[baseline_index].purpose.min(best_purpose - 0.15);
+        let outside_score = outside.score + biases.get("candidate-000").copied().unwrap_or(0.);
         let mut choices: Vec<_> = appraisal
             .decision()
             .scores
             .iter()
             .filter_map(|s| {
                 let i = s.id.strip_prefix("candidate-")?.parse::<usize>().ok()?;
-                if i == 0 || !s.eligible || (!reachable.is_empty() && !permitted.contains(&i)) {
+                if i == 0
+                    || !s.eligible
+                    || (!reachable.is_empty() && !permitted.contains(&i))
+                    || (has_bias && candidates[i].purpose < purpose_floor - 1e-9)
+                {
                     return None;
                 }
                 // Respect personality tiers first, then compare within the same tier.
+                let score = s.score + biases.get(&s.id).copied().unwrap_or(0.);
                 if outside.eligible
                     && if allow_indifference {
-                        s.score < outside.score - 1e-9
+                        score < outside_score - 1e-9
                     } else {
-                        s.score <= outside.score + 1e-9
+                        score <= outside_score + 1e-9
                     }
                 {
                     return None;
                 }
-                Some((i, s.score))
+                Some((i, score))
             })
             .collect();
         let mut supports = BTreeMap::new();
         if self.config.forecast_guard && self.config.horizon > 1 && outside.eligible {
             let mut stable = Vec::new();
             for choice in choices {
-                let support = crate::robustness::check(
+                let support = crate::robustness::check_with_appraisal(
                     &owner.config().actor,
                     &owner.state()?.intent,
                     owner.state()?.last_tick,
@@ -860,6 +1056,7 @@ impl Planner {
                     &format!("candidate-{:03}", choice.0),
                     "candidate-000",
                     3,
+                    &plan_bias(&forecast, &root_bias),
                 )?;
                 if support.supported {
                     supports.insert(choice.0, support);
@@ -981,7 +1178,9 @@ fn simulate<G: ArenaGame>(
     first: Option<&BTreeMap<usize, String>>,
     signed: bool,
     route_selection: bool,
+    memory: Option<&social::Memory>,
 ) -> Result<Path> {
+    let mut social_memory = memory.cloned();
     let mut actor = owner.model()?;
     let mut public = beliefs.cloned();
     let mut game = world.model_world(player, seed.wrapping_add(scenario as u64))?;
@@ -1040,6 +1239,39 @@ fn simulate<G: ArenaGame>(
             return Err(Error::Invalid("matching model observation required"));
         }
         let normal = actor.prepare_estimated(&input)?;
+        let normal = if let Some(m) = &social_memory {
+            let bindings = game.social_bindings(player)?;
+            let bias = social_bias(m, normal.context(), &bindings)?;
+            let purpose = normal
+                .context()
+                .actions
+                .iter()
+                .map(|a| {
+                    (
+                        a.id.clone(),
+                        a.outcomes
+                            .iter()
+                            .map(|o| o.p * o.objective)
+                            .sum::<f64>()
+                            .clamp(-1., 1.),
+                    )
+                })
+                .collect();
+            let selected = social::choose(
+                normal.decision(),
+                &normal.decision().action_id,
+                &purpose,
+                &bias,
+                0.15,
+            )?;
+            if selected != normal.decision().action_id {
+                actor.prepare_root_estimated(&input, &selected)?
+            } else {
+                normal
+            }
+        } else {
+            normal
+        };
         let proposed = if t == 0 {
             Some(root)
         } else if follow_schedule {
@@ -1093,11 +1325,17 @@ fn simulate<G: ArenaGame>(
             return Err(Error::Invalid("modeled choices require all players"));
         }
         choices[player] = action.clone();
-        let (next, feedback) = game.advance(
-            &choices,
-            seed.wrapping_add((scenario as u64) * 37)
-                .wrapping_add(t as u64),
-        )?;
+        let world_seed = seed
+            .wrapping_add((scenario as u64) * 37)
+            .wrapping_add(t as u64);
+        let (next, feedback) = game.advance(&choices, world_seed)?;
+        if let Some(m) = &mut social_memory {
+            let events = game.social_events(&next, &choices, world_seed)?;
+            if events.len() != game.players() {
+                return Err(Error::Invalid("social events require all players"));
+            }
+            m.observe_batch(&events[player], game.tick())?;
+        }
         if next.tick() <= game.tick() || feedback.len() != game.players() {
             return Err(Error::Invalid("modeled transition feedback mismatch"));
         }
@@ -1669,6 +1907,232 @@ mod tests {
         config
     }
 
+    #[derive(Clone)]
+    struct SocialWorld {
+        tick: u64,
+    }
+    impl ArenaGame for SocialWorld {
+        fn players(&self) -> usize {
+            2
+        }
+        fn tick(&self) -> u64 {
+            self.tick
+        }
+        fn terminal(&self) -> bool {
+            self.tick >= 4
+        }
+        fn input(&self, player: usize) -> Result<Input> {
+            let mut input = AgreementWorld { tick: self.tick }.input(player)?;
+            input.observation.actions[0].target = Some("other".into());
+            for a in &mut input.observation.actions {
+                for o in &mut a.outcomes {
+                    o.objective = 0.;
+                }
+            }
+            for rows in input.conditional.values_mut() {
+                for o in rows {
+                    o.objective = 0.;
+                }
+            }
+            Ok(input)
+        }
+        fn behavior(&self, viewer: usize, actor: usize) -> Result<crate::behavior::PublicBehavior> {
+            AgreementWorld { tick: self.tick }.behavior(viewer, actor)
+        }
+        fn input_scenarios(&self, p: usize, _: &[Vec<String>]) -> Result<Input> {
+            self.input(p)
+        }
+        fn model_world(&self, _: usize, _: u64) -> Result<Self> {
+            Ok(self.clone())
+        }
+        fn advance(&self, choices: &[String], seed: u64) -> Result<(Self, Vec<Feedback>)> {
+            let (_, mut feedback) = AgreementWorld { tick: self.tick }.advance(choices, seed)?;
+            for f in &mut feedback {
+                f.observed = Some([0.; 22]);
+            }
+            Ok((
+                Self {
+                    tick: self.tick + 1,
+                },
+                feedback,
+            ))
+        }
+        fn modeled_choices(&self, _: usize, _: &str) -> Result<Vec<String>> {
+            Ok(vec!["next".into(), "next".into()])
+        }
+        fn purpose(&self, _: usize) -> f64 {
+            0.
+        }
+        fn view(&self) -> serde_json::Value {
+            serde_json::json!({"tick": self.tick})
+        }
+        fn partners(&self, p: usize) -> Vec<usize> {
+            vec![1 - p]
+        }
+        fn offers(&self, _: &[String]) -> Result<Vec<crate::coordination::Offer>> {
+            Ok(vec![])
+        }
+        fn social_bindings(&self, _: usize) -> Result<BTreeMap<String, social::Binding>> {
+            Ok(BTreeMap::from([(
+                "act".into(),
+                social::Binding {
+                    target: "other".into(),
+                    support: 1.,
+                    distress: 0.,
+                },
+            )]))
+        }
+        fn social_events(&self, _: &Self, _: &[String], _: u64) -> Result<Vec<Vec<social::Event>>> {
+            let events = (0..12)
+                .map(|i| social::Event {
+                    target: "other".into(),
+                    event_id: format!("{}-{i}", self.tick),
+                    tick: self.tick,
+                    benefit: -1.,
+                    agency: true,
+                    confidence: 1.,
+                })
+                .collect();
+            Ok(vec![events, vec![]])
+        }
+    }
+    #[test]
+    fn simulated_social_learning_is_detached_and_restores_next_choice() {
+        let mut config = fixture_owner_config();
+        config.actor.policy.priority = reflex_immediate::Priority::Finite;
+        config.actor.values[8] = 1.;
+        let mut owner = Owner::new(config).unwrap();
+        let world = SocialWorld { tick: 0 };
+        let mut memory = social::Memory::new(&owner.config().actor).unwrap();
+        let before = memory.checkpoint(&world.view()).unwrap();
+        let plain = simulate(
+            &owner, &world, 0, "act", 0, 2, 1, None, None, None, false, false, None,
+        )
+        .unwrap();
+        let modeled = simulate(
+            &owner,
+            &world,
+            0,
+            "act",
+            0,
+            2,
+            1,
+            None,
+            None,
+            None,
+            false,
+            false,
+            Some(&memory),
+        )
+        .unwrap();
+        assert_eq!(plain.actions[1], "act");
+        assert_eq!(modeled.actions[1], "next");
+        assert_eq!(memory.checkpoint(&world.view()).unwrap(), before);
+        let planner = Planner::new(
+            &owner,
+            Config {
+                horizon: 2,
+                second_moves: 0,
+                ..Config::default()
+            },
+        )
+        .unwrap();
+        let _ = planner
+            .propose_social(&owner, &world, 0, None, None, Some(&memory))
+            .unwrap();
+        assert_eq!(memory.checkpoint(&world.view()).unwrap(), before);
+        let stage = prepare_social(
+            &owner,
+            &world.input(0).unwrap(),
+            &world.social_bindings(0).unwrap(),
+            Some(&memory),
+        )
+        .unwrap();
+        let action = stage.decision().action_id.clone();
+        let choices = vec![action.clone(), "next".into()];
+        let (next, feedback) = world.advance(&choices, 1).unwrap();
+        let ticket = owner.commit(stage, &action).unwrap();
+        owner.resolve(ticket, &feedback[0]).unwrap();
+        memory
+            .observe_batch(&world.social_events(&next, &choices, 1).unwrap()[0], 0)
+            .unwrap();
+        let saved = memory.checkpoint(&next.view()).unwrap();
+        let restored = social::Memory::restore(
+            &owner.config().actor,
+            &next.view(),
+            owner.state().unwrap().last_tick,
+            &saved,
+        )
+        .unwrap();
+        let bindings = next.social_bindings(0).unwrap();
+        let a = prepare_social(&owner, &next.input(0).unwrap(), &bindings, Some(&memory)).unwrap();
+        let b =
+            prepare_social(&owner, &next.input(0).unwrap(), &bindings, Some(&restored)).unwrap();
+        assert_eq!(a.decision().action_id, "next");
+        assert_eq!(a.decision().action_id, b.decision().action_id);
+        let current = Planner::new(
+            &owner,
+            Config {
+                horizon: 1,
+                second_moves: 0,
+                max_regret: 1.,
+                ..Config::default()
+            },
+        )
+        .unwrap();
+        let proposal = current
+            .propose_social(&owner, &next, 0, None, None, Some(&memory))
+            .unwrap();
+        assert_eq!(proposal.action(), "next");
+        let scope = serde_json::to_string(&(
+            &owner.config().actor.scope.game,
+            &owner.config().actor.scope.episode,
+        ))
+        .unwrap();
+        let beliefs = Beliefs::new(scope, 0, vec!["act".into(), "next".into()]).unwrap();
+        let offer = crate::coordination::Offer {
+            id: "joint".into(),
+            roots: BTreeMap::from([(0, "act".into()), (1, "next".into())]),
+        };
+        let announced = vec!["next".into(), "next".into()];
+        let neutral = current
+            .consent_social(
+                &owner,
+                &next,
+                0,
+                &beliefs,
+                &announced,
+                std::slice::from_ref(&offer),
+                None,
+                true,
+            )
+            .unwrap();
+        assert_eq!(neutral.ranked, vec!["joint"]);
+        let social = current
+            .consent_social(
+                &owner,
+                &next,
+                0,
+                &beliefs,
+                &announced,
+                &[offer],
+                Some(&memory),
+                true,
+            )
+            .unwrap();
+        assert!(social.ranked.is_empty());
+        let mut restricted = next.input(0).unwrap();
+        restricted
+            .observation
+            .actions
+            .iter_mut()
+            .find(|a| a.id == "next")
+            .unwrap()
+            .legal = false;
+        let forced = prepare_social(&owner, &restricted, &bindings, Some(&memory)).unwrap();
+        assert_eq!(forced.decision().action_id, "act");
+    }
+
     #[test]
     fn consent_evaluates_signed_context_without_reviving_unsigned_failures() {
         let mut config = fixture::config("person");
@@ -1952,6 +2416,7 @@ mod tests {
                 None,
                 false,
                 enabled,
+                None,
             )
             .unwrap()
         };
@@ -2096,7 +2561,7 @@ mod tests {
         let owner = Owner::new(config).unwrap();
         let root = game.input(0).unwrap().observation.actions[0].id.clone();
         let path = simulate(
-            &owner, &game, 0, &root, 0, 3, 701, None, None, None, false, false,
+            &owner, &game, 0, &root, 0, 3, 701, None, None, None, false, false, None,
         )
         .unwrap();
         let model_world = game.model_world(0, 701).unwrap();

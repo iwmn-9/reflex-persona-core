@@ -4,8 +4,10 @@ use reflex_arena::{
     behavior::Beliefs,
     games::{Combat, Encounters, Hagetaka},
     observe_public,
-    planner::{Config as Search, Planner},
-    public_input, public_input_with_intentions, ArenaGame, Intentions,
+    planner::{prepare_social, Config as Search, Planner},
+    public_input, public_input_with_intentions,
+    social::Memory,
+    ArenaGame, Intentions,
 };
 use reflex_immediate::{Config, Policy, Priority, Scope};
 use reflex_owned::{prediction, Owner, OwnerConfig};
@@ -65,7 +67,7 @@ fn config(game: &str, seed: u64, player: usize, profile: usize) -> OwnerConfig {
             names: vec!["0".into(), "1".into(), "2".into()],
             window: 128,
         },
-        contract: format!("arena-{game}-estimated-model-v14"),
+        contract: format!("arena-{game}-estimated-model-v15"),
         purpose_target: "game-purpose".into(),
     }
 }
@@ -87,6 +89,7 @@ fn run<G: ArenaGame>(
     planning_protocol: &str,
     route_selection: bool,
     forecast_guard: bool,
+    relationships: bool,
     output: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let started = Instant::now();
@@ -143,6 +146,11 @@ fn run<G: ArenaGame>(
     let mut beliefs: Vec<_> = (0..world.players())
         .map(|i| Beliefs::new(scopes[i].clone(), i, alphabets[i].clone()))
         .collect::<Result<_, _>>()?;
+    let social_enabled: Vec<_> = modified.iter().map(|&m| relationships && m).collect();
+    let mut memories: Vec<_> = configs
+        .iter()
+        .map(|c| Memory::new(&c.actor))
+        .collect::<Result<_, _>>()?;
     let mut route_states = vec![RouteState::default(); world.players()];
     let mut trace = vec![];
     let mut checks = 0;
@@ -188,6 +196,7 @@ fn run<G: ArenaGame>(
             .collect::<Result<Vec<_>, _>>()?;
         let mut next_planners = active_planners.clone();
         let mut next_beliefs = beliefs.clone();
+        let mut next_memories = memories.clone();
         let mut choices = vec![];
         let mut audits = vec![];
         let mut intention_records = vec![json!(null); decision_world.players()];
@@ -202,22 +211,25 @@ fn run<G: ArenaGame>(
         let mut selections = vec![];
         for i in 0..decision_world.players() {
             if planning[i] && (!sharing[i] || planning_protocol == "independent") {
-                let proposal = if individual {
-                    active_planners[i].propose_with_beliefs(
-                        &owners[i],
-                        &decision_world,
-                        i,
-                        &beliefs[i],
-                    )?
-                } else {
-                    active_planners[i].propose(&owners[i], &decision_world, i)?
-                };
+                let proposal = active_planners[i].propose_social(
+                    &owners[i],
+                    &decision_world,
+                    i,
+                    individual.then_some(&beliefs[i]),
+                    None,
+                    social_enabled[i].then_some(&memories[i]),
+                )?;
                 choices.push(proposal.action().to_string());
                 simulations += proposal.audit.simulated_nodes;
                 audits.push(serde_json::to_value(&proposal.audit)?);
                 selections.push(Selection::Planned(Box::new(proposal)));
             } else {
-                let s = next_owners[i].prepare_estimated(&inputs[i], false)?;
+                let s = prepare_social(
+                    &next_owners[i],
+                    &inputs[i],
+                    &decision_world.social_bindings(i)?,
+                    social_enabled[i].then_some(&memories[i]),
+                )?;
                 choices.push(s.decision().action_id.clone());
                 selections.push(Selection::Reflex(Box::new(s)));
                 audits.push(json!({"reason":"reflex","milestone":null,"simulated_nodes":0}));
@@ -254,12 +266,13 @@ fn run<G: ArenaGame>(
                     &intentions,
                 )?;
                 let proposed = if planning[i] {
-                    let proposal = active_planners[i].propose_with_intentions(
+                    let proposal = active_planners[i].propose_social(
                         &owners[i],
                         &decision_world,
                         i,
-                        &beliefs[i],
-                        &intentions,
+                        Some(&beliefs[i]),
+                        Some(&intentions),
+                        social_enabled[i].then_some(&memories[i]),
                     )?;
                     let action = proposal.action().to_string();
                     simulations += proposal.audit.simulated_nodes;
@@ -270,7 +283,12 @@ fn run<G: ArenaGame>(
                     }
                     action
                 } else {
-                    let stage = next_owners[i].prepare_estimated(&inputs[i], false)?;
+                    let stage = prepare_social(
+                        &next_owners[i],
+                        &inputs[i],
+                        &decision_world.social_bindings(i)?,
+                        social_enabled[i].then_some(&memories[i]),
+                    )?;
                     stage.decision().action_id.clone()
                 };
                 if !intentions.choices.is_empty() && proposed != initial[i] {
@@ -307,25 +325,16 @@ fn run<G: ArenaGame>(
                 let mut consents = Vec::new();
                 let mut ballots = Vec::new();
                 for i in 0..decision_world.players() {
-                    let consent = if sharing[i] {
-                        active_planners[i].consent_allow_indifference(
-                            &owners[i],
-                            &decision_world,
-                            i,
-                            &beliefs[i],
-                            &choices,
-                            &offers,
-                        )?
-                    } else {
-                        active_planners[i].consent(
-                            &owners[i],
-                            &decision_world,
-                            i,
-                            &beliefs[i],
-                            &choices,
-                            &offers,
-                        )?
-                    };
+                    let consent = active_planners[i].consent_social(
+                        &owners[i],
+                        &decision_world,
+                        i,
+                        &beliefs[i],
+                        &choices,
+                        &offers,
+                        social_enabled[i].then_some(&memories[i]),
+                        sharing[i],
+                    )?;
                     simulations += consent.simulated_nodes;
                     ballots.push(reflex_arena::coordination::Ballot {
                         actor: i,
@@ -393,8 +402,26 @@ fn run<G: ArenaGame>(
                 *counters.entry(reason.into()).or_default() += 1;
             }
         }
-        let (next, mut feedback) =
-            decision_world.advance(&choices, seed.wrapping_mul(1009).wrapping_add(tick))?;
+        let world_seed = seed.wrapping_mul(1009).wrapping_add(tick);
+        let (next, mut feedback) = decision_world.advance(&choices, world_seed)?;
+        let social_events = if social_enabled.iter().any(|&enabled| enabled) {
+            decision_world.social_events(&next, &choices, world_seed)?
+        } else {
+            vec![vec![]; decision_world.players()]
+        };
+        if social_events.len() != decision_world.players() {
+            return Err("all social event streams required".into());
+        }
+        for i in 0..decision_world.players() {
+            next_memories[i].observe_batch(
+                if social_enabled[i] {
+                    &social_events[i]
+                } else {
+                    &[]
+                },
+                tick,
+            )?;
+        }
         if individual {
             for i in 0..decision_world.players() {
                 observe_public(&decision_world, i, &mut next_beliefs[i], &choices)?;
@@ -445,12 +472,31 @@ fn run<G: ArenaGame>(
                 Beliefs::restore(&next_beliefs[i].checkpoint()?, &scopes[i], i, &alphabets[i])?;
             let route_save = next_routes[i].checkpoint(&configs[i].actor, tick)?;
             next_routes[i] = RouteState::restore(&configs[i].actor, tick, &route_save)?;
+            let memory_save = next_memories[i].checkpoint(&next.view())?;
+            next_memories[i] = Memory::restore(
+                &configs[i].actor,
+                &next.view(),
+                next_owners[i].state()?.last_tick,
+                &memory_save,
+            )?;
+            let bindings = decision_world.social_bindings(i)?;
+            let relationship = if social_enabled[i] {
+                if let Some(binding) = bindings.get(&choices[i]) {
+                    json!({"target":binding.target,
+                        "before":memories[i].status(&binding.target, tick)?,
+                        "after":next_memories[i].status(&binding.target, next.tick())?})
+                } else {
+                    json!(null)
+                }
+            } else {
+                json!(null)
+            };
             participants.push(json!({"player":i,"profile":profiles[i],"name":NAMES[profiles[i]],
                 "action":choices[i],"purpose_before":decision_world.purpose(i),"purpose_after":next.purpose(i),
                 "needs":inputs[i].observation.needs,"learning_observations":tick+1,
                 "prediction_observations":next_owners[i].state()?.prediction.observations,
                 "public_behavior_observations":next_beliefs[i].observations(),
-                "planning":audits[i],"intention_input":intention_records[i],"route":route_audits[i],"route_state":next_routes[i]}));
+                "relationship":relationship,"planning":audits[i],"intention_input":intention_records[i],"route":route_audits[i],"route_state":next_routes[i]}));
             checks += 1;
         }
         trace.push(json!({"tick":tick,"before":before,"after":next.view(),"actors":participants,"agreements":agreements,"incompatible_offers":incompatible_offers}));
@@ -458,6 +504,7 @@ fn run<G: ArenaGame>(
         owners = next_owners;
         planners = next_planners;
         beliefs = next_beliefs;
+        memories = next_memories;
         route_states = next_routes;
         eprintln!("{game} {mode} tick={} nodes={simulations}", world.tick());
     }
@@ -471,9 +518,9 @@ fn run<G: ArenaGame>(
         (false, true) => "mutual-counterproposal-v1",
         (false, false) => "none",
     };
-    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"planning_protocol":planning_protocol,"route_selection":route_selection,"forecast_guard":forecast_guard,"intention_protocol":intention_protocol,"frozen_reference":frozen_reference,
+    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"planning_protocol":planning_protocol,"route_selection":route_selection,"forecast_guard":forecast_guard,"relationships":relationships,"intention_protocol":intention_protocol,"frozen_reference":frozen_reference,
         "agreement_compatibility":"public-joint-constraints-v1",
-        "controllers":(0..world.players()).map(|i|json!({"planned":planning[i],"settings":planners[i].config(),"intent_sharing":sharing[i],"joint_constraints":sharing[i],"planning_protocol":if planning[i] && (!sharing[i] || planning_protocol == "independent") {"independent"} else if sharing[i] {"counterproposal"} else {"reflex"}})).collect::<Vec<_>>(),
+        "controllers":(0..world.players()).map(|i|json!({"planned":planning[i],"relationships":social_enabled[i],"settings":planners[i].config(),"intent_sharing":sharing[i],"joint_constraints":sharing[i],"planning_protocol":if planning[i] && (!sharing[i] || planning_protocol == "independent") {"independent"} else if sharing[i] {"counterproposal"} else {"reflex"}})).collect::<Vec<_>>(),
         "profiles":profiles,"profile_names":NAMES,"focal_players":focal,"ticks":world.tick(),"factual_decisions":checks,
         "simulated_nodes":simulations,"plan_events":counters,"seconds":started.elapsed().as_secs_f64(),
         "purpose":(0..world.players()).map(|i|world.purpose(i)).collect::<Vec<_>>(),
@@ -522,6 +569,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "--planning-protocol",
             "--routes",
             "--forecast-guard",
+            "--relationships",
         ]
         .contains(key)
         {
@@ -598,6 +646,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("known forecast guard required".into());
     }
     let forecast_guard = guard_mode == "batch";
+    let relationship_mode = *options.get("--relationships").unwrap_or(&"off");
+    if !["off", "memory"].contains(&relationship_mode) {
+        return Err("known relationship mode required".into());
+    }
+    let relationships = relationship_mode == "memory";
     if !["planned", "reflex", "challenger"].contains(&mode) || turns == 0 || turns > 128 {
         return Err("bounded mode/turns required".into());
     }
@@ -626,6 +679,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             planning_protocol,
             route_selection,
             forecast_guard,
+            relationships,
             output,
         ),
         "hagetaka" => run(
@@ -644,6 +698,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             planning_protocol,
             route_selection,
             forecast_guard,
+            relationships,
             output,
         ),
         "exchange" => run(
@@ -662,6 +717,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             planning_protocol,
             route_selection,
             forecast_guard,
+            relationships,
             output,
         ),
         _ => Err("unknown arena".into()),
