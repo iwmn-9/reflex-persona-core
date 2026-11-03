@@ -4,35 +4,28 @@
   "stable_adoption": false,
   "sources": [
     {
-      "folder": "results\\arena_secured_purpose_20261103",
-      "games": [
-        "combat"
-      ],
-      "binary_sha256": "04429247dfd064f86e3bd25046b5c7f291d1a6bf5ed64056dcbdf47f15d90a7c"
-    },
-    {
-      "folder": "results\\arena_position_confirmation_20261103",
+      "folder": "results\\arena_connected_independent_20261103",
       "games": [
         "combat",
         "exchange",
         "hagetaka"
       ],
-      "binary_sha256": "32d9d1f566ae4f51292c3df4fbe4fbd018f13dd27645b1071d3ea4d795073ff0"
+      "binary_sha256": "1ec980fe8e685b6e90846dd6722fc09bb3159cdb2f6e9cd12a093726e41952d6"
     }
   ],
   "selected_matches": 120,
   "paired_comparisons": 40,
   "all_planned_matches": 40,
-  "factual_decisions": 14178,
+  "factual_decisions": 13566,
   "seeds": [
-    2026110801,
-    2026110802,
-    2026110803,
-    2026110804,
-    2026110805,
-    2026110806,
-    2026110807,
-    2026110808
+    2026110901,
+    2026110902,
+    2026110903,
+    2026110904,
+    2026110905,
+    2026110906,
+    2026110907,
+    2026110908
   ],
   "horizon": [
     6
@@ -59,45 +52,69 @@
   "planning_protocol": [
     "independent"
   ],
+  "route_selection": [
+    true
+  ],
+  "forecast_guard": [
+    true
+  ],
   "prediction_calibrated": [
     false
   ],
   "seconds": {
-    "min": 0.0285988,
-    "max": 92.1137001
+    "min": 0.025983,
+    "max": 73.4624049
   },
   "by_game": {
     "combat": {
       "pairs": 24,
-      "mean_purpose_delta": 0.07993827160493829,
+      "mean_purpose_delta": -0.0537037037037037,
       "classification": {
-        "better": 12,
+        "better": 9,
         "equivalent": 6,
-        "worse": 6
+        "worse": 9
       },
       "large_negative_cases": [
         {
           "game": "combat",
-          "scene": "open / both",
-          "seed": 2026110801,
+          "scene": "cover / either",
+          "seed": 2026110902,
           "focal_players": [
-            3,
-            4,
-            5
-          ],
-          "focal_profiles": [
             0,
             1,
             2
           ],
-          "delta": -0.7185185185185187,
+          "focal_profiles": [
+            2,
+            3,
+            0
+          ],
+          "delta": -1.0,
           "classification": "worse",
           "large_negative_diagnostic": true
         },
         {
           "game": "combat",
           "scene": "open / both",
-          "seed": 2026110803,
+          "seed": 2026110902,
+          "focal_players": [
+            0,
+            1,
+            2
+          ],
+          "focal_profiles": [
+            2,
+            3,
+            0
+          ],
+          "delta": -1.0,
+          "classification": "worse",
+          "large_negative_diagnostic": true
+        },
+        {
+          "game": "combat",
+          "scene": "open / both",
+          "seed": 2026110903,
           "focal_players": [
             3,
             4,
@@ -108,32 +125,32 @@
             3,
             0
           ],
-          "delta": -0.22962962962962963,
+          "delta": -1.0,
           "classification": "worse",
           "large_negative_diagnostic": true
         },
         {
           "game": "combat",
           "scene": "choke / eliminate",
-          "seed": 2026110806,
+          "seed": 2026110904,
           "focal_players": [
             0,
             1,
             2
           ],
           "focal_profiles": [
-            2,
-            3,
-            0
+            0,
+            1,
+            2
           ],
-          "delta": -0.0444444444444444,
+          "delta": -0.1555555555555556,
           "classification": "worse",
           "large_negative_diagnostic": true
         },
         {
           "game": "combat",
-          "scene": "open / both",
-          "seed": 2026110806,
+          "scene": "cover / either",
+          "seed": 2026110906,
           "focal_players": [
             0,
             1,
@@ -151,7 +168,25 @@
         {
           "game": "combat",
           "scene": "open / both",
-          "seed": 2026110807,
+          "seed": 2026110906,
+          "focal_players": [
+            0,
+            1,
+            2
+          ],
+          "focal_profiles": [
+            2,
+            3,
+            0
+          ],
+          "delta": -1.0,
+          "classification": "worse",
+          "large_negative_diagnostic": true
+        },
+        {
+          "game": "combat",
+          "scene": "choke / eliminate",
+          "seed": 2026110907,
           "focal_players": [
             3,
             4,
@@ -162,14 +197,14 @@
             3,
             0
           ],
-          "delta": -1.0,
+          "delta": -0.17037037037037028,
           "classification": "worse",
           "large_negative_diagnostic": true
         },
         {
           "game": "combat",
           "scene": "open / both",
-          "seed": 2026110808,
+          "seed": 2026110908,
           "focal_players": [
             0,
             1,
@@ -188,62 +223,47 @@
     },
     "exchange": {
       "pairs": 8,
-      "mean_purpose_delta": 0.00015624999999999667,
+      "mean_purpose_delta": -0.0019375000000000087,
       "classification": {
-        "worse": 3,
-        "equivalent": 1,
-        "better": 4
+        "better": 2,
+        "worse": 4,
+        "equivalent": 2
       },
-      "large_negative_cases": [
-        {
-          "game": "exchange",
-          "scene": "standard / score",
-          "seed": 2026110801,
-          "focal_players": [
-            0
-          ],
-          "focal_profiles": [
-            1
-          ],
-          "delta": -0.03500000000000003,
-          "classification": "worse",
-          "large_negative_diagnostic": true
-        },
-        {
-          "game": "exchange",
-          "scene": "standard / score",
-          "seed": 2026110803,
-          "focal_players": [
-            0
-          ],
-          "focal_profiles": [
-            3
-          ],
-          "delta": -0.020750000000000046,
-          "classification": "worse",
-          "large_negative_diagnostic": true
-        }
-      ]
+      "large_negative_cases": []
     },
     "hagetaka": {
       "pairs": 8,
-      "mean_purpose_delta": 0.08950892857142859,
+      "mean_purpose_delta": 0.05580357142857142,
       "classification": {
-        "better": 7,
-        "worse": 1
+        "worse": 2,
+        "better": 6
       },
       "large_negative_cases": [
         {
           "game": "hagetaka",
           "scene": "standard / score",
-          "seed": 2026110805,
+          "seed": 2026110901,
           "focal_players": [
             0
           ],
           "focal_profiles": [
             1
           ],
-          "delta": -0.07857142857142851,
+          "delta": -0.05714285714285716,
+          "classification": "worse",
+          "large_negative_diagnostic": true
+        },
+        {
+          "game": "hagetaka",
+          "scene": "standard / score",
+          "seed": 2026110906,
+          "focal_players": [
+            0
+          ],
+          "focal_profiles": [
+            2
+          ],
+          "delta": -0.06428571428571428,
           "classification": "worse",
           "large_negative_diagnostic": true
         }
@@ -254,14 +274,47 @@
     "exchange": {
       "0": {
         "pairs": 2,
-        "mean_purpose_delta": 0.01699999999999996,
+        "mean_purpose_delta": -0.0005000000000000004,
+        "classification": {
+          "equivalent": 1,
+          "worse": 1
+        }
+      },
+      "1": {
+        "pairs": 2,
+        "mean_purpose_delta": 0.003124999999999989,
+        "classification": {
+          "better": 1,
+          "equivalent": 1
+        }
+      },
+      "2": {
+        "pairs": 2,
+        "mean_purpose_delta": -0.01475000000000004,
+        "classification": {
+          "worse": 2
+        }
+      },
+      "3": {
+        "pairs": 2,
+        "mean_purpose_delta": 0.004375000000000018,
+        "classification": {
+          "worse": 1,
+          "better": 1
+        }
+      }
+    },
+    "hagetaka": {
+      "0": {
+        "pairs": 2,
+        "mean_purpose_delta": 0.05357142857142855,
         "classification": {
           "better": 2
         }
       },
       "1": {
         "pairs": 2,
-        "mean_purpose_delta": -0.006624999999999992,
+        "mean_purpose_delta": -0.0017857142857142794,
         "classification": {
           "worse": 1,
           "better": 1
@@ -269,46 +322,15 @@
       },
       "2": {
         "pairs": 2,
-        "mean_purpose_delta": 0.006000000000000005,
-        "classification": {
-          "equivalent": 1,
-          "better": 1
-        }
-      },
-      "3": {
-        "pairs": 2,
-        "mean_purpose_delta": -0.015749999999999986,
-        "classification": {
-          "worse": 2
-        }
-      }
-    },
-    "hagetaka": {
-      "0": {
-        "pairs": 2,
-        "mean_purpose_delta": 0.15,
-        "classification": {
-          "better": 2
-        }
-      },
-      "1": {
-        "pairs": 2,
-        "mean_purpose_delta": 0.04017857142857145,
+        "mean_purpose_delta": 0.04642857142857143,
         "classification": {
           "better": 1,
           "worse": 1
         }
       },
-      "2": {
-        "pairs": 2,
-        "mean_purpose_delta": 0.07857142857142857,
-        "classification": {
-          "better": 2
-        }
-      },
       "3": {
         "pairs": 2,
-        "mean_purpose_delta": 0.0892857142857143,
+        "mean_purpose_delta": 0.12499999999999997,
         "classification": {
           "better": 2
         }
@@ -319,32 +341,32 @@
     "matches": 8,
     "ticks": 256,
     "all_alone_ticks": 0,
-    "mutual_pairs": 252,
-    "mutual_pairs_with_both_gaining": 241,
-    "cooperator_facing_claim": 18,
+    "mutual_pairs": 246,
+    "mutual_pairs_with_both_gaining": 232,
+    "cooperator_facing_claim": 24,
     "profile_actions": {
       "1": {
-        "cooperate": 168,
+        "cooperate": 169,
         "rest": 80,
-        "alone": 3,
-        "claim": 5
-      },
-      "2": {
-        "cooperate": 173,
-        "rest": 80,
+        "claim": 4,
         "alone": 3
       },
-      "3": {
-        "cooperate": 102,
-        "claim": 65,
+      "2": {
+        "cooperate": 174,
         "rest": 80,
-        "alone": 9
+        "alone": 2
+      },
+      "3": {
+        "cooperate": 98,
+        "rest": 80,
+        "claim": 72,
+        "alone": 6
       },
       "0": {
-        "alone": 43,
+        "alone": 48,
         "rest": 80,
-        "cooperate": 122,
-        "claim": 11
+        "cooperate": 115,
+        "claim": 13
       }
     }
   },
@@ -352,119 +374,119 @@
     {
       "game": "exchange",
       "scene": "standard / score",
-      "seed": 2026110801,
+      "seed": 2026110901,
       "focal_players": [
         0
       ],
       "focal_profiles": [
         1
       ],
-      "delta": -0.03500000000000003,
-      "classification": "worse",
-      "large_negative_diagnostic": true
-    },
-    {
-      "game": "exchange",
-      "scene": "standard / score",
-      "seed": 2026110802,
-      "focal_players": [
-        0
-      ],
-      "focal_profiles": [
-        2
-      ],
-      "delta": 0.0012499999999999734,
-      "classification": "equivalent",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "exchange",
-      "scene": "standard / score",
-      "seed": 2026110803,
-      "focal_players": [
-        0
-      ],
-      "focal_profiles": [
-        3
-      ],
-      "delta": -0.020750000000000046,
-      "classification": "worse",
-      "large_negative_diagnostic": true
-    },
-    {
-      "game": "exchange",
-      "scene": "standard / score",
-      "seed": 2026110804,
-      "focal_players": [
-        0
-      ],
-      "focal_profiles": [
-        0
-      ],
-      "delta": 0.023249999999999993,
+      "delta": 0.006249999999999978,
       "classification": "better",
       "large_negative_diagnostic": false
     },
     {
       "game": "exchange",
       "scene": "standard / score",
-      "seed": 2026110805,
+      "seed": 2026110902,
+      "focal_players": [
+        0
+      ],
+      "focal_profiles": [
+        2
+      ],
+      "delta": -0.01475000000000004,
+      "classification": "worse",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "exchange",
+      "scene": "standard / score",
+      "seed": 2026110903,
+      "focal_players": [
+        0
+      ],
+      "focal_profiles": [
+        3
+      ],
+      "delta": -0.016249999999999987,
+      "classification": "worse",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "exchange",
+      "scene": "standard / score",
+      "seed": 2026110904,
+      "focal_players": [
+        0
+      ],
+      "focal_profiles": [
+        0
+      ],
+      "delta": 0.0045000000000000595,
+      "classification": "equivalent",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "exchange",
+      "scene": "standard / score",
+      "seed": 2026110905,
       "focal_players": [
         0
       ],
       "focal_profiles": [
         1
       ],
-      "delta": 0.021750000000000047,
-      "classification": "better",
+      "delta": 0.0,
+      "classification": "equivalent",
       "large_negative_diagnostic": false
     },
     {
       "game": "exchange",
       "scene": "standard / score",
-      "seed": 2026110806,
+      "seed": 2026110906,
       "focal_players": [
         0
       ],
       "focal_profiles": [
         2
       ],
-      "delta": 0.010750000000000037,
-      "classification": "better",
+      "delta": -0.01475000000000004,
+      "classification": "worse",
       "large_negative_diagnostic": false
     },
     {
       "game": "exchange",
       "scene": "standard / score",
-      "seed": 2026110807,
+      "seed": 2026110907,
       "focal_players": [
         0
       ],
       "focal_profiles": [
         3
       ],
-      "delta": -0.010749999999999926,
-      "classification": "worse",
+      "delta": 0.025000000000000022,
+      "classification": "better",
       "large_negative_diagnostic": false
     },
     {
       "game": "exchange",
       "scene": "standard / score",
-      "seed": 2026110808,
+      "seed": 2026110908,
       "focal_players": [
         0
       ],
       "focal_profiles": [
         0
       ],
-      "delta": 0.010749999999999926,
-      "classification": "better",
+      "delta": -0.00550000000000006,
+      "classification": "worse",
       "large_negative_diagnostic": false
     },
     {
       "game": "combat",
       "scene": "choke / eliminate",
-      "seed": 2026110801,
+      "seed": 2026110901,
       "focal_players": [
         3,
         4,
@@ -475,14 +497,14 @@
         1,
         2
       ],
-      "delta": 0.14074074074074072,
+      "delta": 0.13333333333333341,
       "classification": "better",
       "large_negative_diagnostic": false
     },
     {
       "game": "combat",
       "scene": "cover / either",
-      "seed": 2026110801,
+      "seed": 2026110901,
       "focal_players": [
         3,
         4,
@@ -500,7 +522,7 @@
     {
       "game": "combat",
       "scene": "open / both",
-      "seed": 2026110801,
+      "seed": 2026110901,
       "focal_players": [
         3,
         4,
@@ -511,266 +533,50 @@
         1,
         2
       ],
-      "delta": -0.7185185185185187,
+      "delta": 0.0,
+      "classification": "equivalent",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "choke / eliminate",
+      "seed": 2026110902,
+      "focal_players": [
+        0,
+        1,
+        2
+      ],
+      "focal_profiles": [
+        2,
+        3,
+        0
+      ],
+      "delta": 0.1851851851851852,
+      "classification": "better",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "cover / either",
+      "seed": 2026110902,
+      "focal_players": [
+        0,
+        1,
+        2
+      ],
+      "focal_profiles": [
+        2,
+        3,
+        0
+      ],
+      "delta": -1.0,
       "classification": "worse",
       "large_negative_diagnostic": true
     },
     {
       "game": "combat",
-      "scene": "choke / eliminate",
-      "seed": 2026110802,
-      "focal_players": [
-        0,
-        1,
-        2
-      ],
-      "focal_profiles": [
-        2,
-        3,
-        0
-      ],
-      "delta": 0.11111111111111116,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "cover / either",
-      "seed": 2026110802,
-      "focal_players": [
-        0,
-        1,
-        2
-      ],
-      "focal_profiles": [
-        2,
-        3,
-        0
-      ],
-      "delta": 0.0,
-      "classification": "equivalent",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
       "scene": "open / both",
-      "seed": 2026110802,
-      "focal_players": [
-        0,
-        1,
-        2
-      ],
-      "focal_profiles": [
-        2,
-        3,
-        0
-      ],
-      "delta": 0.0,
-      "classification": "equivalent",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "choke / eliminate",
-      "seed": 2026110803,
-      "focal_players": [
-        3,
-        4,
-        5
-      ],
-      "focal_profiles": [
-        2,
-        3,
-        0
-      ],
-      "delta": 0.15555555555555567,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "cover / either",
-      "seed": 2026110803,
-      "focal_players": [
-        3,
-        4,
-        5
-      ],
-      "focal_profiles": [
-        2,
-        3,
-        0
-      ],
-      "delta": 1.0,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "open / both",
-      "seed": 2026110803,
-      "focal_players": [
-        3,
-        4,
-        5
-      ],
-      "focal_profiles": [
-        2,
-        3,
-        0
-      ],
-      "delta": -0.22962962962962963,
-      "classification": "worse",
-      "large_negative_diagnostic": true
-    },
-    {
-      "game": "combat",
-      "scene": "choke / eliminate",
-      "seed": 2026110804,
-      "focal_players": [
-        0,
-        1,
-        2
-      ],
-      "focal_profiles": [
-        0,
-        1,
-        2
-      ],
-      "delta": 0.14814814814814814,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "cover / either",
-      "seed": 2026110804,
-      "focal_players": [
-        0,
-        1,
-        2
-      ],
-      "focal_profiles": [
-        0,
-        1,
-        2
-      ],
-      "delta": 1.0,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "open / both",
-      "seed": 2026110804,
-      "focal_players": [
-        0,
-        1,
-        2
-      ],
-      "focal_profiles": [
-        0,
-        1,
-        2
-      ],
-      "delta": 1.0,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "choke / eliminate",
-      "seed": 2026110805,
-      "focal_players": [
-        3,
-        4,
-        5
-      ],
-      "focal_profiles": [
-        0,
-        1,
-        2
-      ],
-      "delta": 0.15555555555555567,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "cover / either",
-      "seed": 2026110805,
-      "focal_players": [
-        3,
-        4,
-        5
-      ],
-      "focal_profiles": [
-        0,
-        1,
-        2
-      ],
-      "delta": 0.0,
-      "classification": "equivalent",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "open / both",
-      "seed": 2026110805,
-      "focal_players": [
-        3,
-        4,
-        5
-      ],
-      "focal_profiles": [
-        0,
-        1,
-        2
-      ],
-      "delta": 0.0,
-      "classification": "equivalent",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "choke / eliminate",
-      "seed": 2026110806,
-      "focal_players": [
-        0,
-        1,
-        2
-      ],
-      "focal_profiles": [
-        2,
-        3,
-        0
-      ],
-      "delta": -0.0444444444444444,
-      "classification": "worse",
-      "large_negative_diagnostic": true
-    },
-    {
-      "game": "combat",
-      "scene": "cover / either",
-      "seed": 2026110806,
-      "focal_players": [
-        0,
-        1,
-        2
-      ],
-      "focal_profiles": [
-        2,
-        3,
-        0
-      ],
-      "delta": 1.0,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "open / both",
-      "seed": 2026110806,
+      "seed": 2026110902,
       "focal_players": [
         0,
         1,
@@ -788,7 +594,7 @@
     {
       "game": "combat",
       "scene": "choke / eliminate",
-      "seed": 2026110807,
+      "seed": 2026110903,
       "focal_players": [
         3,
         4,
@@ -798,6 +604,276 @@
         2,
         3,
         0
+      ],
+      "delta": 0.3629629629629629,
+      "classification": "better",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "cover / either",
+      "seed": 2026110903,
+      "focal_players": [
+        3,
+        4,
+        5
+      ],
+      "focal_profiles": [
+        2,
+        3,
+        0
+      ],
+      "delta": 0.0,
+      "classification": "equivalent",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "open / both",
+      "seed": 2026110903,
+      "focal_players": [
+        3,
+        4,
+        5
+      ],
+      "focal_profiles": [
+        2,
+        3,
+        0
+      ],
+      "delta": -1.0,
+      "classification": "worse",
+      "large_negative_diagnostic": true
+    },
+    {
+      "game": "combat",
+      "scene": "choke / eliminate",
+      "seed": 2026110904,
+      "focal_players": [
+        0,
+        1,
+        2
+      ],
+      "focal_profiles": [
+        0,
+        1,
+        2
+      ],
+      "delta": -0.1555555555555556,
+      "classification": "worse",
+      "large_negative_diagnostic": true
+    },
+    {
+      "game": "combat",
+      "scene": "cover / either",
+      "seed": 2026110904,
+      "focal_players": [
+        0,
+        1,
+        2
+      ],
+      "focal_profiles": [
+        0,
+        1,
+        2
+      ],
+      "delta": 1.0,
+      "classification": "better",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "open / both",
+      "seed": 2026110904,
+      "focal_players": [
+        0,
+        1,
+        2
+      ],
+      "focal_profiles": [
+        0,
+        1,
+        2
+      ],
+      "delta": 1.0,
+      "classification": "better",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "choke / eliminate",
+      "seed": 2026110905,
+      "focal_players": [
+        3,
+        4,
+        5
+      ],
+      "focal_profiles": [
+        0,
+        1,
+        2
+      ],
+      "delta": -0.007407407407407418,
+      "classification": "worse",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "cover / either",
+      "seed": 2026110905,
+      "focal_players": [
+        3,
+        4,
+        5
+      ],
+      "focal_profiles": [
+        0,
+        1,
+        2
+      ],
+      "delta": 0.0,
+      "classification": "equivalent",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "open / both",
+      "seed": 2026110905,
+      "focal_players": [
+        3,
+        4,
+        5
+      ],
+      "focal_profiles": [
+        0,
+        1,
+        2
+      ],
+      "delta": 0.0,
+      "classification": "equivalent",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "choke / eliminate",
+      "seed": 2026110906,
+      "focal_players": [
+        0,
+        1,
+        2
+      ],
+      "focal_profiles": [
+        2,
+        3,
+        0
+      ],
+      "delta": 0.3037037037037038,
+      "classification": "better",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "cover / either",
+      "seed": 2026110906,
+      "focal_players": [
+        0,
+        1,
+        2
+      ],
+      "focal_profiles": [
+        2,
+        3,
+        0
+      ],
+      "delta": -1.0,
+      "classification": "worse",
+      "large_negative_diagnostic": true
+    },
+    {
+      "game": "combat",
+      "scene": "open / both",
+      "seed": 2026110906,
+      "focal_players": [
+        0,
+        1,
+        2
+      ],
+      "focal_profiles": [
+        2,
+        3,
+        0
+      ],
+      "delta": -1.0,
+      "classification": "worse",
+      "large_negative_diagnostic": true
+    },
+    {
+      "game": "combat",
+      "scene": "choke / eliminate",
+      "seed": 2026110907,
+      "focal_players": [
+        3,
+        4,
+        5
+      ],
+      "focal_profiles": [
+        2,
+        3,
+        0
+      ],
+      "delta": -0.17037037037037028,
+      "classification": "worse",
+      "large_negative_diagnostic": true
+    },
+    {
+      "game": "combat",
+      "scene": "cover / either",
+      "seed": 2026110907,
+      "focal_players": [
+        3,
+        4,
+        5
+      ],
+      "focal_profiles": [
+        2,
+        3,
+        0
+      ],
+      "delta": 0.0,
+      "classification": "equivalent",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "open / both",
+      "seed": 2026110907,
+      "focal_players": [
+        3,
+        4,
+        5
+      ],
+      "focal_profiles": [
+        2,
+        3,
+        0
+      ],
+      "delta": 1.0,
+      "classification": "better",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "combat",
+      "scene": "choke / eliminate",
+      "seed": 2026110908,
+      "focal_players": [
+        0,
+        1,
+        2
+      ],
+      "focal_profiles": [
+        0,
+        1,
+        2
       ],
       "delta": 0.059259259259259345,
       "classification": "better",
@@ -806,61 +882,7 @@
     {
       "game": "combat",
       "scene": "cover / either",
-      "seed": 2026110807,
-      "focal_players": [
-        3,
-        4,
-        5
-      ],
-      "focal_profiles": [
-        2,
-        3,
-        0
-      ],
-      "delta": 0.0,
-      "classification": "equivalent",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "open / both",
-      "seed": 2026110807,
-      "focal_players": [
-        3,
-        4,
-        5
-      ],
-      "focal_profiles": [
-        2,
-        3,
-        0
-      ],
-      "delta": -1.0,
-      "classification": "worse",
-      "large_negative_diagnostic": true
-    },
-    {
-      "game": "combat",
-      "scene": "choke / eliminate",
-      "seed": 2026110808,
-      "focal_players": [
-        0,
-        1,
-        2
-      ],
-      "focal_profiles": [
-        0,
-        1,
-        2
-      ],
-      "delta": 0.14074074074074072,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "combat",
-      "scene": "cover / either",
-      "seed": 2026110808,
+      "seed": 2026110908,
       "focal_players": [
         0,
         1,
@@ -878,7 +900,7 @@
     {
       "game": "combat",
       "scene": "open / both",
-      "seed": 2026110808,
+      "seed": 2026110908,
       "focal_players": [
         0,
         1,
@@ -896,26 +918,54 @@
     {
       "game": "hagetaka",
       "scene": "standard / score",
-      "seed": 2026110801,
+      "seed": 2026110901,
       "focal_players": [
         0
       ],
       "focal_profiles": [
         1
       ],
-      "delta": 0.15892857142857142,
+      "delta": -0.05714285714285716,
+      "classification": "worse",
+      "large_negative_diagnostic": true
+    },
+    {
+      "game": "hagetaka",
+      "scene": "standard / score",
+      "seed": 2026110902,
+      "focal_players": [
+        0
+      ],
+      "focal_profiles": [
+        2
+      ],
+      "delta": 0.15714285714285714,
       "classification": "better",
       "large_negative_diagnostic": false
     },
     {
       "game": "hagetaka",
       "scene": "standard / score",
-      "seed": 2026110802,
+      "seed": 2026110903,
       "focal_players": [
         0
       ],
       "focal_profiles": [
-        2
+        3
+      ],
+      "delta": 0.12142857142857139,
+      "classification": "better",
+      "large_negative_diagnostic": false
+    },
+    {
+      "game": "hagetaka",
+      "scene": "standard / score",
+      "seed": 2026110904,
+      "focal_players": [
+        0
+      ],
+      "focal_profiles": [
+        0
       ],
       "delta": 0.06428571428571428,
       "classification": "better",
@@ -924,84 +974,56 @@
     {
       "game": "hagetaka",
       "scene": "standard / score",
-      "seed": 2026110803,
-      "focal_players": [
-        0
-      ],
-      "focal_profiles": [
-        3
-      ],
-      "delta": 0.10714285714285715,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "hagetaka",
-      "scene": "standard / score",
-      "seed": 2026110804,
-      "focal_players": [
-        0
-      ],
-      "focal_profiles": [
-        0
-      ],
-      "delta": 0.19285714285714284,
-      "classification": "better",
-      "large_negative_diagnostic": false
-    },
-    {
-      "game": "hagetaka",
-      "scene": "standard / score",
-      "seed": 2026110805,
+      "seed": 2026110905,
       "focal_players": [
         0
       ],
       "focal_profiles": [
         1
       ],
-      "delta": -0.07857142857142851,
-      "classification": "worse",
-      "large_negative_diagnostic": true
+      "delta": 0.0535714285714286,
+      "classification": "better",
+      "large_negative_diagnostic": false
     },
     {
       "game": "hagetaka",
       "scene": "standard / score",
-      "seed": 2026110806,
+      "seed": 2026110906,
       "focal_players": [
         0
       ],
       "focal_profiles": [
         2
       ],
-      "delta": 0.09285714285714286,
-      "classification": "better",
-      "large_negative_diagnostic": false
+      "delta": -0.06428571428571428,
+      "classification": "worse",
+      "large_negative_diagnostic": true
     },
     {
       "game": "hagetaka",
       "scene": "standard / score",
-      "seed": 2026110807,
+      "seed": 2026110907,
       "focal_players": [
         0
       ],
       "focal_profiles": [
         3
       ],
-      "delta": 0.07142857142857145,
+      "delta": 0.12857142857142856,
       "classification": "better",
       "large_negative_diagnostic": false
     },
     {
       "game": "hagetaka",
       "scene": "standard / score",
-      "seed": 2026110808,
+      "seed": 2026110908,
       "focal_players": [
         0
       ],
       "focal_profiles": [
         0
       ],
-      "delta": 0.10714285714285715,
+      "delta": 0.042857142857142816,
       "classification": "better",
       "large_negative_diagnostic": false
     }
