@@ -1155,26 +1155,29 @@ enum Arrival {
     Unknown,
 }
 fn arrival(candidate: &Candidate, target: f64, remaining: usize) -> Arrival {
-    let mut unknown = false;
+    let mut reached = 0;
+    let mut missed = 0;
     for path in &candidate.paths {
+        if path.goals.is_empty() {
+            continue;
+        }
         if path
             .goals
             .iter()
             .take(remaining)
             .any(|v| *v >= target - 1e-12)
         {
-            continue;
-        }
-        if path.goals.len() < remaining && !path.terminal {
-            unknown = true;
-        } else {
-            return Arrival::Impossible;
+            reached += 1;
+        } else if path.goals.len() >= remaining || path.terminal {
+            missed += 1;
         }
     }
-    if unknown {
-        Arrival::Unknown
-    } else {
+    if !candidate.paths.is_empty() && reached == candidate.paths.len() {
         Arrival::Reached
+    } else if !candidate.paths.is_empty() && missed == candidate.paths.len() {
+        Arrival::Impossible
+    } else {
+        Arrival::Unknown
     }
 }
 
@@ -1413,6 +1416,105 @@ mod tests {
         fn offers(&self, _: &[String]) -> Result<Vec<crate::coordination::Offer>> {
             Ok(vec![])
         }
+    }
+
+    #[derive(Clone)]
+    struct MixedWorld {
+        tick: u64,
+        value: f64,
+    }
+    impl ArenaGame for MixedWorld {
+        fn players(&self) -> usize {
+            2
+        }
+        fn tick(&self) -> u64 {
+            self.tick
+        }
+        fn terminal(&self) -> bool {
+            self.tick >= 4
+        }
+        fn input(&self, player: usize) -> Result<reflex_owned::Input> {
+            AgreementWorld { tick: self.tick }.input(player)
+        }
+        fn behavior(&self, viewer: usize, actor: usize) -> Result<crate::behavior::PublicBehavior> {
+            AgreementWorld { tick: self.tick }.behavior(viewer, actor)
+        }
+        fn input_scenarios(
+            &self,
+            player: usize,
+            choices: &[Vec<String>],
+        ) -> Result<reflex_owned::Input> {
+            AgreementWorld { tick: self.tick }.input_scenarios(player, choices)
+        }
+        fn partners(&self, player: usize) -> Vec<usize> {
+            vec![1 - player]
+        }
+        fn offers(&self, _: &[String]) -> Result<Vec<crate::coordination::Offer>> {
+            Ok(vec![])
+        }
+        fn model_world(&self, _: usize, _: u64) -> Result<Self> {
+            Ok(self.clone())
+        }
+        fn advance(&self, choices: &[String], seed: u64) -> Result<(Self, Vec<Feedback>)> {
+            let (_, feedback) = AgreementWorld { tick: self.tick }.advance(choices, seed)?;
+            Ok((
+                Self {
+                    tick: self.tick + 1,
+                    value: if self.tick == 0 && choices[1] == "act" {
+                        0.6
+                    } else {
+                        0.
+                    },
+                },
+                feedback,
+            ))
+        }
+        fn modeled_choices(&self, _: usize, response: &str) -> Result<Vec<String>> {
+            Ok(vec![
+                "next".into(),
+                if self.tick == 0 && response == "0" {
+                    "act"
+                } else {
+                    "next"
+                }
+                .into(),
+            ])
+        }
+        fn purpose(&self, _: usize) -> f64 {
+            self.value
+        }
+        fn view(&self) -> serde_json::Value {
+            serde_json::json!({"tick": self.tick})
+        }
+    }
+    #[test]
+    fn mixed_arrivals_keep_goal_until_next_actual_reassessment() {
+        let mut owner = Owner::new(fixture_owner_config()).unwrap();
+        let mut planner = Planner::new(
+            &owner,
+            Config {
+                horizon: 2,
+                second_moves: 0,
+                ..Config::default()
+            },
+        )
+        .unwrap();
+        planner.milestone = Some(Milestone {
+            value: 0.5,
+            deadline: 2,
+        });
+        let world = MixedWorld { tick: 0, value: 0. };
+        let proposal = planner.propose(&owner, &world, 0).unwrap();
+        assert_eq!(proposal.audit.reason, "keep");
+        let action = proposal.action().to_owned();
+        let (next, feedback) = world.advance(&[action.clone(), "next".into()], 0).unwrap();
+        planner
+            .resolve(&mut owner, proposal, &action, &feedback[0], next.value)
+            .unwrap();
+        assert!(planner.milestone().is_some());
+        let proposal = planner.propose(&owner, &next, 0).unwrap();
+        assert_eq!(proposal.audit.reason, "withdraw");
+        assert!(proposal.audit.milestone.is_none());
     }
 
     #[test]
@@ -1914,6 +2016,19 @@ mod tests {
         ];
         rows[3].paths = vec![path(&["second"], vec![0.1], false)];
         assert!(arrival(&rows[1], 0.6, 2) == Arrival::Reached);
+        let mut mixed = candidate("mixed", 0., true);
+        assert!(arrival(&mixed, 0.6, 2) == Arrival::Unknown);
+        mixed.paths = vec![path(&[], vec![], true)];
+        assert!(arrival(&mixed, 0.6, 2) == Arrival::Unknown);
+        mixed.paths = vec![
+            path(&["a", "b"], vec![0., 0.6], false),
+            path(&["a", "c"], vec![0., 0.1], false),
+        ];
+        assert!(arrival(&mixed, 0.6, 2) == Arrival::Unknown);
+        mixed.paths[0] = path(&["a"], vec![0.], false);
+        assert!(arrival(&mixed, 0.6, 2) == Arrival::Unknown);
+        mixed.paths[0].terminal = true;
+        assert!(arrival(&mixed, 0.6, 2) == Arrival::Impossible);
         assert!(arrival(&rows[3], 0.6, 2) == Arrival::Unknown);
         rows[3].paths[0].terminal = true;
         assert!(arrival(&rows[3], 0.6, 2) == Arrival::Impossible);
