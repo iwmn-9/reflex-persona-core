@@ -504,5 +504,86 @@
     "adoption": false,
     "meaning": "On combat-3 all 128 actual states satisfy a sufficient condition for the cap to retain the old choice: full persona tier, mask-invariant scores, retained choice, no progress proof or post-choice guard. Its existing loss is outside this fix. Other trajectories remain unresolved; they are not failures or passes. This diagnostic does not replace registered new long runs.",
     "failed_attempt": "First probe combined a preview callback with forced roots, which the API forbids. Replayed every state through the supported separate preview/forced-action calls; original failed receipt retained."
+  },
+  "gambling_scope": {
+    "input_sha256": "222870bedd9e4bc42fa7300886c36907600d5f296f78a76405b71015bc605477",
+    "results_sha256": "79ba8264c75d8906f97f697949afec17f73099fc3dd6772630176b55de2ab376",
+    "cases": [
+      {
+        "tick": 51,
+        "factual_owner": "9cf26434a8059c2c1d47237b540b6937efc5e52c12eca3b742569198db0a00f5",
+        "old_action": "bond",
+        "action": "bond",
+        "unchanged_action": true,
+        "old_policy": "candidate-003-retry-002-until-gain",
+        "policy": "candidate-003-retry-002",
+        "old_purpose": 0.28576055127409583,
+        "purpose": 0.28688832667312714,
+        "cap": 0.0009609567791942913,
+        "old_cap": 0.0012284073588754412,
+        "checks": {
+          "replayed_actual_history": true,
+          "full_original_purpose_table_exact": true,
+          "original_choice_exact": true,
+          "same_factual_owner": true,
+          "cap_exact": true
+        }
+      },
+      {
+        "tick": 121,
+        "factual_owner": "d7e837a620efb837d736110cb21835763f48dcfe4fec5080f4179965a86b330f",
+        "old_action": "bond",
+        "action": "bond",
+        "unchanged_action": true,
+        "old_policy": "candidate-003-reflex",
+        "policy": "candidate-003-retry-002",
+        "old_purpose": 0.4709627069488499,
+        "purpose": 0.47192602056375665,
+        "cap": 0.0009325309735508463,
+        "old_cap": 0.00107702801578686,
+        "checks": {
+          "replayed_actual_history": true,
+          "full_original_purpose_table_exact": true,
+          "original_choice_exact": true,
+          "same_factual_owner": true,
+          "cap_exact": true
+        }
+      }
+    ],
+    "adoption": false,
+    "created_kernel_absent": true,
+    "main_kernel_preserved": true,
+    "interpretation": "The two unresolved states keep the same physical action while changing selected hypothetical policy. With the other 126 invariant states, no behavioral benefit is expected on this old life. Registered actual candidate long play remains unfinished; no substituted result."
+  },
+  "gambling_loss_decomposition": {
+    "shared_counts": {
+      "bond": 18,
+      "bet:2": 105,
+      "bet:0": 4,
+      "bet:1": 1
+    },
+    "stable_counts": {
+      "bond": 17,
+      "bet:2": 107,
+      "bet:0": 3,
+      "bet:1": 1
+    },
+    "purpose_unit": 384,
+    "additional_completed_preparation_cash_gain": 1.6,
+    "additional_early_wrong_response_exposure_cash": -2.1,
+    "preparation_purpose_delta": 0.004166666666666667,
+    "response_exposure_purpose_delta": -0.005468749999999999,
+    "total_purpose_delta": -0.0013020833333333322,
+    "prediction_at_tick8": {
+      "0": 0.4988495331206051,
+      "1": 0.07299843552670676,
+      "2": 0.42815203135268803
+    },
+    "truth_evaluator_only": {
+      "0": 0.1,
+      "1": 0.1,
+      "2": 0.8
+    },
+    "interpretation": "Exact additive accounting on these completed unclipped lives: one extra completed investment replaces a bet on response 2, and one extra bet on response 0 replaces response 2. It separates contributions, not a new controlled policy experiment. At tick 8 both owners predicted response 0 above 2; the learner could not observe true probabilities. Do not repair this by revealing truth or tuning a game action."
   }
 }
