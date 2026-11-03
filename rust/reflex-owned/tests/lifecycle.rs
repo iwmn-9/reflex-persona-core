@@ -5,6 +5,25 @@ mod support;
 use support::{config, feedback, input};
 
 #[test]
+fn estimated_contract_is_fixed_before_commit_and_learns_surprising_effects() {
+    let mut owner = Owner::new(config("a")).unwrap();
+    let mut surprising = feedback();
+    surprising.observed.as_mut().unwrap()[0] = -0.8;
+    let exact = owner.prepare(&input(0), false).unwrap();
+    let ticket = owner.commit(exact, "act").unwrap();
+    assert!(owner.resolve(ticket, &surprising).is_err());
+    owner.resolve(ticket, &feedback()).unwrap();
+    let estimated = owner.prepare_estimated(&input(1), false).unwrap();
+    let ticket = owner.commit(estimated, "act").unwrap();
+    owner.resolve(ticket, &surprising).unwrap();
+    assert_eq!(owner.state().unwrap().prediction.observations, 2);
+    assert_eq!(
+        owner.state().unwrap().experience.entries[0].samples.len(),
+        2
+    );
+}
+
+#[test]
 fn feedback_is_atomic_missing_is_not_failure_and_receipts_are_owned() {
     let mut a = Owner::new(config("a")).unwrap();
     let mut b = Owner::new(config("b")).unwrap();

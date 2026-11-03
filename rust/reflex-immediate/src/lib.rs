@@ -88,10 +88,14 @@ pub struct Prepared {
     before: Payload,
     tick: u64,
     decision: Decision,
+    selected_plan: Option<String>,
 }
 impl Prepared {
     pub fn decision(&self) -> &Decision {
         &self.decision
+    }
+    pub fn selected_plan(&self) -> Option<&str> {
+        self.selected_plan.as_deref()
     }
 }
 
@@ -143,7 +147,37 @@ impl Agent {
             before: self.current.clone(),
             tick: observation.tick,
             decision,
+            selected_plan: None,
         })
+    }
+
+    /// Replace only the root of an already scored detached-model proposal.
+    /// The caller must isolate this agent from the factual owner.
+    #[doc(hidden)]
+    pub fn model_root(
+        &self,
+        mut prepared: Prepared,
+        observation: &Observation,
+        root: &str,
+    ) -> Result<Prepared> {
+        if prepared.before != self.current || prepared.tick != observation.tick {
+            return Err(Error::Invalid("stale model proposal"));
+        }
+        let action = observation
+            .actions
+            .iter()
+            .find(|a| a.id == root && a.legal && !a.known_failure)
+            .ok_or(Error::Invalid("viable counterfactual root required"))?;
+        prepared.decision.action_id = action.id.clone();
+        prepared.decision.target = action.target.clone();
+        prepared.decision.next_state.intent_action = Some(action.id.clone());
+        prepared.decision.next_state.age =
+            if self.state().intent_action.as_ref() == Some(&action.id) {
+                (self.state().age + 1).min(1_000_000)
+            } else {
+                0
+            };
+        Ok(prepared)
     }
 
     pub fn commit(&mut self, prepared: Prepared, executed_action: &str) -> Result<Decision> {

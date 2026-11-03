@@ -74,6 +74,7 @@ pub struct Stage {
     allowed: BTreeSet<String>,
     proposal: Prepared,
     conditional_read: bool,
+    conditional_exact: bool,
     planned: bool,
     stochastic: bool,
     shadow: Observation,
@@ -82,6 +83,9 @@ pub struct Stage {
 impl Stage {
     pub fn decision(&self) -> &Decision {
         self.proposal.decision()
+    }
+    pub fn selected_plan(&self) -> Option<&str> {
+        self.proposal.selected_plan()
     }
     pub fn context(&self) -> &Observation {
         &self.effective
@@ -107,6 +111,7 @@ struct Pending {
     effective: Observation,
     action: String,
     conditional_read: bool,
+    conditional_exact: bool,
     shadow: Observation,
     probabilities: Vec<f64>,
 }
@@ -117,6 +122,48 @@ pub struct Owner {
     agent: Agent,
     pending: Option<Pending>,
     instance: u64,
+}
+
+/// A detached learner for counterfactual experiments, never the factual owner.
+pub struct ModelOwner {
+    owner: Owner,
+}
+impl ModelOwner {
+    pub fn state(&self) -> Result<&LearnedState> {
+        self.owner.state()
+    }
+    pub fn config(&self) -> &OwnerConfig {
+        self.owner.config()
+    }
+    pub fn prepare(&self, input: &Input) -> Result<Stage> {
+        self.owner.prepare(input, false)
+    }
+    pub fn prepare_estimated(&self, input: &Input) -> Result<Stage> {
+        self.owner.prepare_estimated(input, false)
+    }
+    /// Progress may disallow a modeled root, but physical viability is required.
+    pub fn prepare_root(&self, input: &Input, root: &str) -> Result<Stage> {
+        let mut stage = self.prepare(input)?;
+        stage.proposal = self
+            .owner
+            .agent
+            .model_root(stage.proposal, &stage.effective, root)?;
+        Ok(stage)
+    }
+    pub fn prepare_root_estimated(&self, input: &Input, root: &str) -> Result<Stage> {
+        let mut stage = self.prepare_estimated(input)?;
+        stage.proposal = self
+            .owner
+            .agent
+            .model_root(stage.proposal, &stage.effective, root)?;
+        Ok(stage)
+    }
+    pub fn commit(&mut self, stage: Stage, action: &str) -> Result<Ticket> {
+        self.owner.commit(stage, action)
+    }
+    pub fn resolve(&mut self, ticket: Ticket, feedback: &Feedback) -> Result<()> {
+        self.owner.resolve(ticket, feedback)
+    }
 }
 impl Owner {
     pub fn new(config: OwnerConfig) -> Result<Self> {
@@ -177,6 +224,12 @@ impl Owner {
     pub fn fork_model(&self) -> Result<Self> {
         Self::from_state(self.config.clone(), self.state()?.clone())
     }
+    /// Isolated hypothetical actor. Its feedback never changes this owner.
+    pub fn model(&self) -> Result<ModelOwner> {
+        Ok(ModelOwner {
+            owner: self.fork_model()?,
+        })
+    }
     pub fn predict(&self, inputs: &prediction::Inputs) -> Result<Vec<f64>> {
         self.state()?
             .prediction
@@ -185,6 +238,14 @@ impl Owner {
     /// The supported frozen profile uses the default 64-node read gate, default
     /// pressure/progress, segmented public events, and estimated effect bindings.
     pub fn prepare(&self, input: &Input, stochastic: bool) -> Result<Stage> {
+        self.prepare_inner(input, stochastic, true)
+    }
+    /// Experimental boundary: conditional effects are estimates, not exact rules.
+    /// This contract is fixed before the action and cannot be changed afterwards.
+    pub fn prepare_estimated(&self, input: &Input, stochastic: bool) -> Result<Stage> {
+        self.prepare_inner(input, stochastic, false)
+    }
+    fn prepare_inner(&self, input: &Input, stochastic: bool, exact: bool) -> Result<Stage> {
         self.state()?;
         // Validate the unmodified raw observation before adding any owned state.
         self.agent.preview(&input.observation, stochastic)?;
@@ -298,6 +359,7 @@ impl Owner {
             allowed,
             proposal,
             conditional_read: read,
+            conditional_exact: exact,
             planned: false,
             stochastic,
             shadow,
@@ -349,6 +411,7 @@ impl Owner {
             effective: stage.effective,
             action: executed_action.into(),
             conditional_read: stage.conditional_read,
+            conditional_exact: stage.conditional_exact,
             shadow: stage.shadow,
             probabilities: stage.probabilities,
         });
@@ -377,7 +440,7 @@ impl Owner {
         }
         if let Some(observed) = &feedback.observed {
             experience::validate_vector(observed)?;
-            if p.conditional_read {
+            if p.conditional_exact && p.conditional_read {
                 let rows = &p.input.conditional[&p.action];
                 let matches = |row: &Outcome| {
                     experience::vector(row)

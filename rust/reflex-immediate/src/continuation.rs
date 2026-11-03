@@ -150,6 +150,7 @@ impl Agent {
         Ok(Prepared {
             before: self.current.clone(),
             tick: base.tick,
+            selected_plan: Some(plan.action.id.clone()),
             decision,
         })
     }

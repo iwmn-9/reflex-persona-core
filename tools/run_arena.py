@@ -1,0 +1,81 @@
+"""Finite native multi-NPC comparison and replay export. No cloud or scheduler."""
+import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import subprocess
+
+ROOT=Path(__file__).resolve().parents[1]
+SCENARIOS=(('combat','cover','either'),('combat','open','both'),('combat','choke','eliminate'),
+           ('hagetaka',None,None),('exchange',None,None))
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--seeds',type=int,default=4)
+    p.add_argument('--seed-start',type=int,default=2026110301)
+    p.add_argument('--workers',type=int,default=2)
+    p.add_argument('--horizon',type=int,default=6)
+    p.add_argument('--modes',nargs='+',choices=('reflex','planned','challenger'),default=('reflex','planned'))
+    p.add_argument('--beliefs',choices=('joint','individual'),default='individual')
+    p.add_argument('--coordination',choices=('none','consent'),default='consent')
+    p.add_argument('--games',nargs='+',choices=('combat','hagetaka','exchange'),default=('combat','hagetaka','exchange'))
+    a=p.parse_args()
+    if not 1<=a.seeds<=16 or not 1<=a.workers<=4 or not 1<=a.horizon<=32: p.error('bounded run required')
+    subprocess.run(['cargo','build','--release','--manifest-path',str(ROOT/'rust/Cargo.toml'),'-p','reflex-arena'],check=True)
+    a.output.mkdir(parents=True,exist_ok=False)
+    original=ROOT/'rust/target/release/reflex-arena.exe'
+    if not original.exists(): original=original.with_suffix('')
+    binary=a.output/original.name;shutil.copy2(original,binary)
+    jobs=[]
+    for game,board,goal in SCENARIOS:
+        if game not in a.games:continue
+        for index in range(a.seeds):
+            for mode in a.modes:
+                seed=a.seed_start+index
+                name=f'{game}-{board or "standard"}-{goal or "score"}-{seed}-{mode}'
+                jobs.append(dict(id=name,game=game,map=board,goal=goal,seed=seed,mode=mode))
+    manifest=dict(jobs=jobs,horizon=a.horizon,turns=32,beliefs=a.beliefs,coordination=a.coordination,binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),
+        sources={str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest()
+            for f in sorted((ROOT/'rust').glob('reflex-*/src/*.rs'))},
+        purpose='Native mixed-personality actual games and behavior review; not automatic adoption',
+        old_probability_trials='stopped; not a prerequisite',tiny_equivalence=0.005,severe_regression=-0.02)
+    (a.output/'plan.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf8')
+    def run(job):
+        command=[str(binary.resolve()),'--game',job['game'],'--seed',str(job['seed']),
+            '--mode',job['mode'],'--horizon',str(a.horizon),'--turns','32','--beliefs',a.beliefs,'--coordination',a.coordination,'--out',str((a.output/(job['id']+'.json')).resolve())]
+        if job['map']:command+=['--map',job['map'],'--goal',job['goal']]
+        result=subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,encoding='utf8',timeout=600)
+        if result.returncode:raise RuntimeError(f"{job['id']}: {result.stderr[-2000:]}")
+        report=json.loads((a.output/(job['id']+'.json')).read_bytes())
+        if not report['complete']:raise RuntimeError(f"{job['id']}: incomplete")
+        return dict(job=job,**{k:report[k] for k in ('ticks','factual_decisions','purpose','plan_events','seconds')})
+    completed=[];failures=[]
+    with ThreadPoolExecutor(max_workers=a.workers) as pool:
+        futures={pool.submit(run,j):j for j in jobs}
+        for future in as_completed(futures):
+            try:completed.append(future.result())
+            except Exception as error:failures.append(dict(job=futures[future],error=str(error)))
+            (a.output/'progress.json').write_text(json.dumps(dict(completed=len(completed),expected=len(jobs),failures=failures)),encoding='utf8')
+            print(json.dumps(dict(completed=len(completed),expected=len(jobs),failures=len(failures))),flush=True)
+    comparisons=[]
+    by_id={row['job']['id']:row for row in completed}
+    for row in completed:
+        job=row['job']
+        if job['mode']!='challenger':continue
+        baseline=by_id.get(job['id'].removesuffix('challenger')+'reflex')
+        if baseline is None:continue
+        report=json.loads((a.output/(job['id']+'.json')).read_bytes())
+        focal=report['focal_players']
+        delta=sum(row['purpose'][i]-baseline['purpose'][i] for i in focal)/len(focal)
+        comparisons.append(dict(id=job['id'],game=job['game'],map=job['map'],goal=job['goal'],seed=job['seed'],
+            focal_players=focal,delta=delta,classification='equivalent' if abs(delta)<=.005 else 'better' if delta>0 else 'worse',
+            severe_regression=delta<=-.02))
+    result=dict(complete=not failures and len(completed)==len(jobs),rows=completed,failures=failures,
+        focal_comparisons=comparisons,adopted=False)
+    (a.output/'summary.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8')
+    if failures:raise SystemExit(1)
+
+if __name__=='__main__':main()
