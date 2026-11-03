@@ -1,7 +1,7 @@
 //! Headless simultaneous games with isolated personalities and factual learning.
 use reflex_arena::routes::{self, RouteState};
 use reflex_arena::{
-    behavior::Beliefs,
+    behavior::{Beliefs, ModelSet},
     games::{Combat, Encounters, Hagetaka},
     observe_public,
     planner::{Config as Search, Planner},
@@ -65,7 +65,7 @@ fn config(game: &str, seed: u64, player: usize, profile: usize) -> OwnerConfig {
             names: vec!["0".into(), "1".into(), "2".into()],
             window: 128,
         },
-        contract: format!("arena-{game}-estimated-model-v10"),
+        contract: format!("arena-{game}-estimated-model-v11"),
         purpose_target: "game-purpose".into(),
     }
 }
@@ -87,6 +87,7 @@ fn run<G: ArenaGame>(
     planning_protocol: &str,
     route_selection: bool,
     forecast_guard: bool,
+    opponent_models: ModelSet,
     output: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let started = Instant::now();
@@ -141,7 +142,18 @@ fn run<G: ArenaGame>(
         .map(|i| world.behavior(i, i).map(|f| f.alphabet))
         .collect::<Result<_, _>>()?;
     let mut beliefs: Vec<_> = (0..world.players())
-        .map(|i| Beliefs::new(scopes[i].clone(), i, alphabets[i].clone()))
+        .map(|i| {
+            Beliefs::new_with_models(
+                scopes[i].clone(),
+                i,
+                alphabets[i].clone(),
+                if modified[i] {
+                    opponent_models
+                } else {
+                    ModelSet::Adapter
+                },
+            )
+        })
         .collect::<Result<_, _>>()?;
     let mut route_states = vec![RouteState::default(); world.players()];
     let mut trace = vec![];
@@ -441,8 +453,13 @@ fn run<G: ArenaGame>(
                 let saved_plan = next_planners[i].checkpoint()?;
                 next_planners[i] = Planner::restore(&next_owners[i], &saved_plan)?;
             }
-            next_beliefs[i] =
-                Beliefs::restore(&next_beliefs[i].checkpoint()?, &scopes[i], i, &alphabets[i])?;
+            next_beliefs[i] = Beliefs::restore_with_models(
+                &next_beliefs[i].checkpoint()?,
+                &scopes[i],
+                i,
+                &alphabets[i],
+                beliefs[i].model_set(),
+            )?;
             let route_save = next_routes[i].checkpoint(&configs[i].actor, tick)?;
             next_routes[i] = RouteState::restore(&configs[i].actor, tick, &route_save)?;
             participants.push(json!({"player":i,"profile":profiles[i],"name":NAMES[profiles[i]],
@@ -471,9 +488,9 @@ fn run<G: ArenaGame>(
         (false, true) => "mutual-counterproposal-v1",
         (false, false) => "none",
     };
-    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"planning_protocol":planning_protocol,"route_selection":route_selection,"forecast_guard":forecast_guard,"intention_protocol":intention_protocol,"frozen_reference":frozen_reference,
+    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"planning_protocol":planning_protocol,"route_selection":route_selection,"forecast_guard":forecast_guard,"opponent_models":opponent_models,"intention_protocol":intention_protocol,"frozen_reference":frozen_reference,
         "agreement_compatibility":"public-joint-constraints-v1",
-        "controllers":(0..world.players()).map(|i|json!({"planned":planning[i],"settings":planners[i].config(),"intent_sharing":sharing[i],"joint_constraints":sharing[i],"planning_protocol":if planning[i] && (!sharing[i] || planning_protocol == "independent") {"independent"} else if sharing[i] {"counterproposal"} else {"reflex"}})).collect::<Vec<_>>(),
+        "controllers":(0..world.players()).map(|i|json!({"planned":planning[i],"opponent_models":beliefs[i].model_set(),"settings":planners[i].config(),"intent_sharing":sharing[i],"joint_constraints":sharing[i],"planning_protocol":if planning[i] && (!sharing[i] || planning_protocol == "independent") {"independent"} else if sharing[i] {"counterproposal"} else {"reflex"}})).collect::<Vec<_>>(),
         "profiles":profiles,"profile_names":NAMES,"focal_players":focal,"ticks":world.tick(),"factual_decisions":checks,
         "simulated_nodes":simulations,"plan_events":counters,"seconds":started.elapsed().as_secs_f64(),
         "purpose":(0..world.players()).map(|i|world.purpose(i)).collect::<Vec<_>>(),
@@ -522,6 +539,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "--planning-protocol",
             "--routes",
             "--forecast-guard",
+            "--opponent-models",
         ]
         .contains(key)
         {
@@ -598,6 +616,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("known forecast guard required".into());
     }
     let forecast_guard = guard_mode == "batch";
+    let opponent_models = match *options.get("--opponent-models").unwrap_or(&"adapter") {
+        "adapter" => ModelSet::Adapter,
+        "appraisal-mixture" if individual => ModelSet::AppraisalMixture,
+        _ => return Err("appraisal-mixture requires individual public beliefs".into()),
+    };
     if !["planned", "reflex", "challenger"].contains(&mode) || turns == 0 || turns > 128 {
         return Err("bounded mode/turns required".into());
     }
@@ -626,6 +649,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             planning_protocol,
             route_selection,
             forecast_guard,
+            opponent_models,
             output,
         ),
         "hagetaka" => run(
@@ -644,6 +668,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             planning_protocol,
             route_selection,
             forecast_guard,
+            opponent_models,
             output,
         ),
         "exchange" => run(
@@ -662,6 +687,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             planning_protocol,
             route_selection,
             forecast_guard,
+            opponent_models,
             output,
         ),
         _ => Err("unknown arena".into()),

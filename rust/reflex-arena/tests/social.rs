@@ -2,7 +2,7 @@
 #[path = "../../reflex-owned/tests/support/mod.rs"]
 mod fixture;
 use reflex_arena::{
-    behavior::Beliefs,
+    behavior::{Beliefs, ModelSet},
     coordination::{negotiate, Ballot},
     games::{Combat, Encounters, Hagetaka},
     observe_public,
@@ -44,10 +44,16 @@ fn planner(owner: &Owner) -> Planner {
     .unwrap()
 }
 
-fn restore_round<G: ArenaGame>(game: G) {
+fn restore_round<G: ArenaGame>(game: G, models: ModelSet) {
     let mut person = owner(0);
     let mut planner = planner(&person);
-    let mut beliefs = new_beliefs(&game, &person, 0);
+    let mut beliefs = Beliefs::new_with_models(
+        scope(&person),
+        0,
+        game.behavior(0, 0).unwrap().alphabet,
+        models,
+    )
+    .unwrap();
     let person_before = person.state().unwrap().clone();
     let beliefs_before = beliefs.checkpoint().unwrap();
     let proposal = planner
@@ -118,9 +124,11 @@ fn restore_round<G: ArenaGame>(game: G) {
 }
 #[test]
 fn individual_beliefs_do_not_mutate_and_restore_the_next_decision_in_three_games() {
-    restore_round(Hagetaka::new(7));
-    restore_round(Encounters::new(7, 5));
-    restore_round(Combat::new(7, "open", "eliminate", 5));
+    for models in [ModelSet::Adapter, ModelSet::AppraisalMixture] {
+        restore_round(Hagetaka::new(7), models);
+        restore_round(Encounters::new(7, 5), models);
+        restore_round(Combat::new(7, "open", "eliminate", 5), models);
+    }
 }
 
 #[test]

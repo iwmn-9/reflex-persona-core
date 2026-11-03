@@ -59,6 +59,8 @@ def summarize(matches,sources):
             raise ValueError('paired controllers require equal intention protocols')
         if r.get('frozen_reference',False)!=b.get('frozen_reference',False):
             raise ValueError('paired controllers require equal reference design')
+        if r.get('opponent_models','Adapter')!=b.get('opponent_models','Adapter'):
+            raise ValueError('paired opponent models differ')
         if r.get('forecast_guard',False)!=b.get('forecast_guard',False):
             raise ValueError('paired forecast guard settings differ')
         if r.get('route_selection',False)!=b.get('route_selection',False):
@@ -113,6 +115,7 @@ def summarize(matches,sources):
         scenario_batches=sorted(set(r.get('scenario_batches',1) for r in matches)),
         planning_protocol=sorted(set(r.get('planning_protocol','counterproposal') for r in matches)),
         route_selection=sorted(set(r.get('route_selection',False) for r in matches)),
+        opponent_models=sorted(set(r.get('opponent_models','Adapter') for r in matches)),
         forecast_guard=sorted(set(r.get('forecast_guard',False) for r in matches)),
         prediction_calibrated=sorted(set(r.get('prediction_calibrated',False) for r in matches)),
         seconds=dict(min=min(r['seconds'] for r in matches),max=max(r['seconds'] for r in matches)),
@@ -135,7 +138,7 @@ def main():
             r=json.loads(f.read_bytes())
             if not (r.get('complete') and r.get('game') and r.get('trace')):continue
             identity=(r['game'],r['seed'],r['mode'],r['horizon'],r.get('second_moves',8),r.get('max_regret',.15),r.get('scenario_batches',1),r.get('intent_sharing',False),r.get('intention_protocol','sequential' if r.get('intent_sharing') else 'none'),r.get('frozen_reference',False),r.get('individual_beliefs',False),r.get('coordination',False),json.dumps(r['trace'][0]['before'],sort_keys=True))
-            identity=identity+(r.get('prediction_calibrated',False),r.get('planning_protocol','counterproposal'),r.get('route_selection',False),r.get('forecast_guard',False))
+            identity=identity+(r.get('prediction_calibrated',False),r.get('planning_protocol','counterproposal'),r.get('route_selection',False),r.get('forecast_guard',False),r.get('opponent_models','Adapter'))
             if identity in seen:continue
             seen.add(identity)
             selected.add(r['game'])
