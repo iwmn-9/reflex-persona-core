@@ -5,473 +5,6 @@
   "episodes_registered": 10,
   "branches_complete": 13,
   "branches_registered": 40,
-  "world": {
-    "adoption": false,
-    "complete": false,
-    "development_gate_passed": false,
-    "families": {
-      "gambling": {
-        "conditional_delta": -0.0013020833333332593,
-        "score_delta": 0.002604166666666685
-      }
-    },
-    "gate_checks": {
-      "all_families": false,
-      "complete": false,
-      "concordant_adverse_improvement": false,
-      "no_family_loss": false,
-      "parent_root_audit_complete": true
-    },
-    "independent_confirmation": "Requires C2 reference, C3 benefit and individual-loss review as well.",
-    "pairs": [
-      {
-        "conditional_delta": -0.0013020833333332593,
-        "game": "gambling",
-        "id": "gambling-1-10061201-outside",
-        "profile": 1,
-        "root_candidate_score": 0.4791666666666667,
-        "score": 0.4791666666666667,
-        "score_delta": 0.002604166666666685,
-        "stable_score": 0.4765625
-      }
-    ],
-    "pending": [
-      "auction-0-10061201-outside",
-      "combat-0-10061201-outside",
-      "resources-1-10061202-shift-return",
-      "auction-1-10061202-shift-return",
-      "combat-1-10061202-shift-return",
-      "auction-2-10061202-shift-return",
-      "combat-2-10061202-shift-return",
-      "auction-3-10061202-shift-return",
-      "combat-3-10061201-outside"
-    ],
-    "provenance": {
-      "candidate_registration": {
-        "plan_sha256": "65be26f6b40758be8669ad94b552c183661310818f97b6be4d87aec996c09a89",
-        "source_sha256": "46dc054ee864facb68df28f8d631e2845ca832198f6823219d69cd03780a1c7d"
-      },
-      "candidate_source": "46e2bcd43c972d60a957af6767d204adc9cebc686b7d26d5806f9cb2d39bdc82",
-      "parent_registration": {
-        "plan_sha256": "f679db738d0b7a2cf9016dc2df1c729705ed7414b6b25867fee18363c4185e8a",
-        "source_sha256": "00aa0b95221d7b6ea79635f7b76e95b27863d63d92de3d7668383ec089e9714e"
-      },
-      "parent_source": "e13f06baffc81404554bf931767f46f16e8a6e4e24f7db44f1773f1002812d63"
-    }
-  },
-  "c3": {
-    "C3_development_passed": false,
-    "adoption": false,
-    "complete": false,
-    "families": {
-      "changed": {
-        "auction": {
-          "complete": false,
-          "mean_delta": null,
-          "registered": 4
-        },
-        "combat": {
-          "complete": false,
-          "mean_delta": null,
-          "registered": 4
-        },
-        "gambling": {
-          "complete": true,
-          "mean_delta": {
-            "conditional_increment": 0.1330729166666667,
-            "score_increment": 0.09635416666666667
-          },
-          "registered": 1
-        },
-        "resources": {
-          "complete": true,
-          "mean_delta": {
-            "conditional_increment": 0.1658854166666667,
-            "score_increment": 0.12760416666666669
-          },
-          "registered": 1
-        }
-      },
-      "steady": {
-        "auction": {
-          "complete": false,
-          "mean_delta": null,
-          "registered": 4
-        },
-        "combat": {
-          "complete": false,
-          "mean_delta": null,
-          "registered": 4
-        },
-        "gambling": {
-          "complete": true,
-          "mean_delta": {
-            "conditional_increment": 0.0,
-            "score_increment": 0.0
-          },
-          "registered": 1
-        },
-        "resources": {
-          "complete": true,
-          "mean_delta": {
-            "conditional_increment": 0.0,
-            "score_increment": 0.0
-          },
-          "registered": 1
-        }
-      }
-    },
-    "gate_checks": {
-      "all_registered_windows_complete": false,
-      "changed_expected_gain": false,
-      "four_families": true,
-      "no_expected_family_loss": false,
-      "prediction_recovery": false
-    },
-    "limitations": "Actual-experience intervention on known cases; no predictor-only causality, population inference or unseen-game claim.",
-    "missing": [
-      [
-        "auction-0-10061201-outside",
-        "changed",
-        "frozen"
-      ],
-      [
-        "auction-0-10061201-outside",
-        "changed",
-        "learning"
-      ],
-      [
-        "auction-0-10061201-outside",
-        "steady",
-        "frozen"
-      ],
-      [
-        "auction-0-10061201-outside",
-        "steady",
-        "learning"
-      ],
-      [
-        "auction-1-10061202-shift-return",
-        "changed",
-        "frozen"
-      ],
-      [
-        "auction-1-10061202-shift-return",
-        "changed",
-        "learning"
-      ],
-      [
-        "auction-2-10061202-shift-return",
-        "changed",
-        "frozen"
-      ],
-      [
-        "auction-2-10061202-shift-return",
-        "changed",
-        "learning"
-      ],
-      [
-        "auction-2-10061202-shift-return",
-        "steady",
-        "frozen"
-      ],
-      [
-        "auction-2-10061202-shift-return",
-        "steady",
-        "learning"
-      ],
-      [
-        "auction-3-10061202-shift-return",
-        "changed",
-        "learning"
-      ],
-      [
-        "combat-0-10061201-outside",
-        "changed",
-        "frozen"
-      ],
-      [
-        "combat-0-10061201-outside",
-        "changed",
-        "learning"
-      ],
-      [
-        "combat-0-10061201-outside",
-        "steady",
-        "frozen"
-      ],
-      [
-        "combat-0-10061201-outside",
-        "steady",
-        "learning"
-      ],
-      [
-        "combat-1-10061202-shift-return",
-        "changed",
-        "frozen"
-      ],
-      [
-        "combat-1-10061202-shift-return",
-        "changed",
-        "learning"
-      ],
-      [
-        "combat-1-10061202-shift-return",
-        "steady",
-        "frozen"
-      ],
-      [
-        "combat-1-10061202-shift-return",
-        "steady",
-        "learning"
-      ],
-      [
-        "combat-2-10061202-shift-return",
-        "changed",
-        "frozen"
-      ],
-      [
-        "combat-2-10061202-shift-return",
-        "changed",
-        "learning"
-      ],
-      [
-        "combat-2-10061202-shift-return",
-        "steady",
-        "frozen"
-      ],
-      [
-        "combat-2-10061202-shift-return",
-        "steady",
-        "learning"
-      ],
-      [
-        "combat-3-10061201-outside",
-        "changed",
-        "frozen"
-      ],
-      [
-        "combat-3-10061201-outside",
-        "changed",
-        "learning"
-      ],
-      [
-        "combat-3-10061201-outside",
-        "steady",
-        "frozen"
-      ],
-      [
-        "combat-3-10061201-outside",
-        "steady",
-        "learning"
-      ]
-    ],
-    "pairs": [
-      {
-        "delta": null,
-        "game": "auction",
-        "id": "auction-0-10061201-outside",
-        "prediction_recovered": false,
-        "profile": 0,
-        "window_complete": false,
-        "world_mode": "changed"
-      },
-      {
-        "delta": null,
-        "game": "auction",
-        "id": "auction-0-10061201-outside",
-        "prediction_recovered": false,
-        "profile": 0,
-        "window_complete": false,
-        "world_mode": "steady"
-      },
-      {
-        "delta": null,
-        "game": "combat",
-        "id": "combat-0-10061201-outside",
-        "prediction_recovered": false,
-        "profile": 0,
-        "window_complete": false,
-        "world_mode": "changed"
-      },
-      {
-        "delta": null,
-        "game": "combat",
-        "id": "combat-0-10061201-outside",
-        "prediction_recovered": false,
-        "profile": 0,
-        "window_complete": false,
-        "world_mode": "steady"
-      },
-      {
-        "delta": {
-          "conditional_increment": 0.1658854166666667,
-          "score_increment": 0.12760416666666669
-        },
-        "game": "resources",
-        "id": "resources-1-10061202-shift-return",
-        "prediction_recovered": true,
-        "profile": 1,
-        "window_complete": true,
-        "world_mode": "changed"
-      },
-      {
-        "delta": {
-          "conditional_increment": 0.0,
-          "score_increment": 0.0
-        },
-        "game": "resources",
-        "id": "resources-1-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 1,
-        "window_complete": true,
-        "world_mode": "steady"
-      },
-      {
-        "delta": {
-          "conditional_increment": 0.1330729166666667,
-          "score_increment": 0.09635416666666667
-        },
-        "game": "gambling",
-        "id": "gambling-1-10061201-outside",
-        "prediction_recovered": true,
-        "profile": 1,
-        "window_complete": true,
-        "world_mode": "changed"
-      },
-      {
-        "delta": {
-          "conditional_increment": 0.0,
-          "score_increment": 0.0
-        },
-        "game": "gambling",
-        "id": "gambling-1-10061201-outside",
-        "prediction_recovered": false,
-        "profile": 1,
-        "window_complete": true,
-        "world_mode": "steady"
-      },
-      {
-        "delta": null,
-        "game": "auction",
-        "id": "auction-1-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 1,
-        "window_complete": false,
-        "world_mode": "changed"
-      },
-      {
-        "delta": {
-          "conditional_increment": 0.0023193359375,
-          "score_increment": 0.001220703125
-        },
-        "game": "auction",
-        "id": "auction-1-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 1,
-        "window_complete": true,
-        "world_mode": "steady"
-      },
-      {
-        "delta": null,
-        "game": "combat",
-        "id": "combat-1-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 1,
-        "window_complete": false,
-        "world_mode": "changed"
-      },
-      {
-        "delta": null,
-        "game": "combat",
-        "id": "combat-1-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 1,
-        "window_complete": false,
-        "world_mode": "steady"
-      },
-      {
-        "delta": null,
-        "game": "auction",
-        "id": "auction-2-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 2,
-        "window_complete": false,
-        "world_mode": "changed"
-      },
-      {
-        "delta": null,
-        "game": "auction",
-        "id": "auction-2-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 2,
-        "window_complete": false,
-        "world_mode": "steady"
-      },
-      {
-        "delta": null,
-        "game": "combat",
-        "id": "combat-2-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 2,
-        "window_complete": false,
-        "world_mode": "changed"
-      },
-      {
-        "delta": null,
-        "game": "combat",
-        "id": "combat-2-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 2,
-        "window_complete": false,
-        "world_mode": "steady"
-      },
-      {
-        "delta": null,
-        "game": "auction",
-        "id": "auction-3-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 3,
-        "window_complete": false,
-        "world_mode": "changed"
-      },
-      {
-        "delta": {
-          "conditional_increment": 0.0028808593750000028,
-          "score_increment": 0.002197265625
-        },
-        "game": "auction",
-        "id": "auction-3-10061202-shift-return",
-        "prediction_recovered": false,
-        "profile": 3,
-        "window_complete": true,
-        "world_mode": "steady"
-      },
-      {
-        "delta": null,
-        "game": "combat",
-        "id": "combat-3-10061201-outside",
-        "prediction_recovered": false,
-        "profile": 3,
-        "window_complete": false,
-        "world_mode": "changed"
-      },
-      {
-        "delta": null,
-        "game": "combat",
-        "id": "combat-3-10061201-outside",
-        "prediction_recovered": false,
-        "profile": 3,
-        "window_complete": false,
-        "world_mode": "steady"
-      }
-    ],
-    "prediction_denominator": 10,
-    "prediction_rate": 0.2,
-    "prediction_recovered": 2,
-    "received_branches": 13,
-    "registered_branches": 40
-  },
   "gambling_shared_path_identical": {
     "actual_steps": 128,
     "result_fields": [
@@ -506,5 +39,106 @@
   "cleanup": {
     "created_kernel_absent": true,
     "prior_kernels_preserved": true
-  }
+  },
+  "terminal_pairs": [
+    {
+      "conditional_delta": -0.0013020833333332593,
+      "game": "gambling",
+      "id": "gambling-1-10061201-outside",
+      "profile": 1,
+      "root_candidate_score": 0.4791666666666667,
+      "score": 0.4791666666666667,
+      "score_delta": 0.002604166666666685,
+      "stable_score": 0.4765625
+    }
+  ],
+  "completed_recovery_pairs": [
+    {
+      "delta": {
+        "conditional_increment": 0.1658854166666667,
+        "score_increment": 0.12760416666666669
+      },
+      "game": "resources",
+      "id": "resources-1-10061202-shift-return",
+      "prediction_recovered": true,
+      "profile": 1,
+      "window_complete": true,
+      "world_mode": "changed"
+    },
+    {
+      "delta": {
+        "conditional_increment": 0.0,
+        "score_increment": 0.0
+      },
+      "game": "resources",
+      "id": "resources-1-10061202-shift-return",
+      "prediction_recovered": false,
+      "profile": 1,
+      "window_complete": true,
+      "world_mode": "steady"
+    },
+    {
+      "delta": {
+        "conditional_increment": 0.1330729166666667,
+        "score_increment": 0.09635416666666667
+      },
+      "game": "gambling",
+      "id": "gambling-1-10061201-outside",
+      "prediction_recovered": true,
+      "profile": 1,
+      "window_complete": true,
+      "world_mode": "changed"
+    },
+    {
+      "delta": {
+        "conditional_increment": 0.0,
+        "score_increment": 0.0
+      },
+      "game": "gambling",
+      "id": "gambling-1-10061201-outside",
+      "prediction_recovered": false,
+      "profile": 1,
+      "window_complete": true,
+      "world_mode": "steady"
+    },
+    {
+      "delta": {
+        "conditional_increment": 0.0023193359375,
+        "score_increment": 0.001220703125
+      },
+      "game": "auction",
+      "id": "auction-1-10061202-shift-return",
+      "prediction_recovered": false,
+      "profile": 1,
+      "window_complete": true,
+      "world_mode": "steady"
+    },
+    {
+      "delta": {
+        "conditional_increment": 0.0028808593750000028,
+        "score_increment": 0.002197265625
+      },
+      "game": "auction",
+      "id": "auction-3-10061202-shift-return",
+      "prediction_recovered": false,
+      "profile": 3,
+      "window_complete": true,
+      "world_mode": "steady"
+    }
+  ],
+  "pending_episodes": [
+    "auction-0-10061201-outside",
+    "combat-0-10061201-outside",
+    "resources-1-10061202-shift-return",
+    "auction-1-10061202-shift-return",
+    "combat-1-10061202-shift-return",
+    "auction-2-10061202-shift-return",
+    "combat-2-10061202-shift-return",
+    "auction-3-10061202-shift-return",
+    "combat-3-10061201-outside"
+  ],
+  "pending_recovery_branches": 27,
+  "development_gate_passed": false,
+  "whole_cohort_complete": false,
+  "raw_audit": "results/bounded_partial_20261103_batch1/results_retry.zip"
 }
