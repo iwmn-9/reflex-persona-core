@@ -38,7 +38,7 @@ python tools/arena_replay.py results/my_arena --out evidence/arena/replay.html -
 
 `--forecast-guard batch` は標本に敏感な変更を抑える比較用。計算済みの試走から1バッチずつ外して同じ人格で再採点し、通常継続に対する優位が逆転すれば、元の人格段階と目的帯を満たす通常行動を使う。中間目標へ到達する候補に絞れている間は適用しない。到達が不確かな場合は適用する。共同案も独立行動との比較で確認する。試走数は増やさない。統計的な有意性や予測の正しさの保証ではない。
 
-`--planning-protocol independent` は独立計画の比較用。本人の計画を実行候補にし、合意しなかった場合もその計画を保つ。既定の `counterproposal` は上記の即時判断からの共同修正。独立方式では共有情報による全候補の再探索を重ねない。戦闘では退行も出ており、独立方式の全面採用はしていない。
+`--planning-protocol independent` は本人の計画を実行候補にし、合意しなかった場合もその計画を保つ。上記の研究用推奨構成で使う。既定の `counterproposal` は即時判断からの共同修正。独立方式では共有情報による全候補の再探索を重ねない。安定版への採用とは分ける。
 
 共同案は `offer_compatible` と `negotiate_checked` で実行可能性も確認する。後から受け入れた案が先の案を壊す場合は拒否する。ゲームへ渡す予定は参加者全員が知れる範囲だけで、戦闘では味方同士の同じ移動先を拒否する。独立移動や未共有の敵との衝突は世界の通常ルールで解決する。
 
@@ -52,7 +52,7 @@ python tools/arena_replay.py results/my_arena --out evidence/arena/replay.html -
 
 `--sampling stratified` は同じ予測分布・3標本を各人のCDFの3区間へ分散させ、人物ごとの独立な置換と区間内の乱数で組み合わせる比較用。標本数や世界試走数は増やさない。既定は従来の `independent`。`frozen` の対象外には適用しない。方法は [Owen, Latin hypercube sampling（p.8）](https://artowen.su.domains/reports/siggraph03.pdf) に従う。人物間の非線形な相互作用や実対戦の改善を保証しない。
 
-## 関係記憶の接続（比較中）
+## 関係記憶の接続（実験用・標準採用せず）
 
 `--relationships memory` は既存Pythonの粗い好意・中立・警戒と支援撤回を接続する。既定は `off`。`frozen` の対照と対象外の相手には適用しない。人格係数、勝敗、元の効果予測は変更しない。
 

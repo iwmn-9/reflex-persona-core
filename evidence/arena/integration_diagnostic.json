@@ -1,0 +1,203 @@
+{
+  "format": "native-integration-followup-v1",
+  "stable_adoption": false,
+  "scope": "Actual multiplayer games; optional integrations do not replace the accepted factual-style composition.",
+  "social": {
+    "source": "5b5f95b",
+    "matches": 120,
+    "complete": true,
+    "old_trajectory_when_off": true,
+    "unchanged_other_games": 96,
+    "mean_exchange_delta_over_prior": -0.01565625000000001,
+    "severe_incremental_regressions": [
+      {
+        "id": "exchange-standard-score-2026110802-challenger",
+        "delta": -0.0867500000000001
+      }
+    ],
+    "adopted": false,
+    "lesson": "Nominal cooperation support was not conditional on actually helping the recipient."
+  },
+  "delivered_social": {
+    "source": "e58ba54",
+    "matches": 24,
+    "complete": true,
+    "mean_exchange_delta_over_prior": -0.025843750000000013,
+    "mean_exchange_delta_vs_reflex": -0.008812500000000015,
+    "adopted": false,
+    "lesson": "Correcting the support meaning did not restore long-run self benefit; keep disabled by default."
+  },
+  "alternatives": {
+    "source": "96073b4",
+    "matches": 120,
+    "complete": true,
+    "mean_delta_over_prior": {
+      "combat/cover": 0.0,
+      "combat/open": -0.038888888888888876,
+      "combat/choke": 0.04166666666666663,
+      "hagetaka": 0.00825892857142857,
+      "exchange": 0.0
+    },
+    "adopted": false,
+    "lesson": "Rechecking existing supported alternatives helped some decisions but did not yield a clear overall gain over the accepted composition."
+  },
+  "next_question": "Future negotiation and policy changes are not represented by independent opponent action forecasts. Do not try to solve that solely by more candidate scores or different sample placement.",
+  "replay_probe": {
+    "source": "16 prior exchange replays",
+    "verified_ticks": 512,
+    "groups": {
+      "challenger/agreement": {
+        "actual_class_probability": 0.65795523231741,
+        "actual_match": 1.0,
+        "exact_bias": -0.7249346769122008,
+        "exact_marginal_match": 0.2750653230877992,
+        "n": 412,
+        "sample_bias": -0.7402912621359224,
+        "sample_match": 0.25970873786407755
+      },
+      "challenger/other": {
+        "actual_class_probability": 0.6879112637632939,
+        "actual_match": 0.5350877192982456,
+        "exact_bias": -0.021845338657843508,
+        "exact_marginal_match": 0.5132423806404021,
+        "n": 228,
+        "sample_bias": 0.11695906432748533,
+        "sample_match": 0.652046783625731
+      },
+      "planned/agreement": {
+        "actual_class_probability": 0.6656683007919256,
+        "actual_match": 1.0,
+        "exact_bias": -0.7137551325931631,
+        "exact_marginal_match": 0.2862448674068368,
+        "n": 470,
+        "sample_bias": -0.7276595744680854,
+        "sample_match": 0.27234042553191473
+      },
+      "planned/other": {
+        "actual_class_probability": 0.6549859373698019,
+        "actual_match": 0.3375,
+        "exact_bias": 0.17562558304442116,
+        "exact_marginal_match": 0.5131255830444211,
+        "n": 160,
+        "sample_bias": 0.30000000000000027,
+        "sample_match": 0.6375000000000003
+      }
+    },
+    "limitation": "Conditions on the executed own action and postselected agreement status; not causal effects or an unbiased forecast score. No policy trial was added."
+  },
+  "stratified": {
+    "source": "9228c9a",
+    "complete": true,
+    "matches": 120,
+    "unchanged_reflex": 40,
+    "by_scene": {
+      "combat/choke": {
+        "vs_reflex": 0.24351851851851852,
+        "over_prior": 0.010185185185185193
+      },
+      "combat/cover": {
+        "vs_reflex": 0.125,
+        "over_prior": -0.125
+      },
+      "combat/open": {
+        "vs_reflex": 0.29444444444444445,
+        "over_prior": 0.19722222222222224
+      },
+      "exchange/standard": {
+        "vs_reflex": -0.011031250000000006,
+        "over_prior": -0.028062500000000004
+      },
+      "hagetaka/standard": {
+        "vs_reflex": 0.08325892857142855,
+        "over_prior": 0.05178571428571429
+      }
+    },
+    "by_game": {
+      "combat": {
+        "vs_reflex": 0.22098765432098766,
+        "over_prior": 0.027469135802469142
+      },
+      "exchange": {
+        "vs_reflex": -0.011031250000000006,
+        "over_prior": -0.028062500000000004
+      },
+      "hagetaka": {
+        "vs_reflex": 0.08325892857142855,
+        "over_prior": 0.05178571428571429
+      }
+    },
+    "equal_game_mean": {
+      "vs_reflex": 0.09773844429747207,
+      "over_prior": 0.017064116696061143
+    },
+    "severe_incremental_regressions": [
+      {
+        "id": "combat-cover-either-2026110806-challenger",
+        "game": "combat",
+        "scene": "cover",
+        "vs_reflex": 0.0,
+        "over_prior": -1.0
+      },
+      {
+        "id": "combat-choke-eliminate-2026110802-challenger",
+        "game": "combat",
+        "scene": "choke",
+        "vs_reflex": 0.6074074074074074,
+        "over_prior": -0.03703703703703709
+      },
+      {
+        "id": "combat-choke-eliminate-2026110806-challenger",
+        "game": "combat",
+        "scene": "choke",
+        "vs_reflex": 0.7333333333333334,
+        "over_prior": -0.022222222222222254
+      },
+      {
+        "id": "combat-choke-eliminate-2026110807-challenger",
+        "game": "combat",
+        "scene": "choke",
+        "vs_reflex": 0.0,
+        "over_prior": -0.6222222222222222
+      },
+      {
+        "id": "hagetaka-standard-score-2026110806-challenger",
+        "game": "hagetaka",
+        "scene": "standard",
+        "vs_reflex": 0.12142857142857133,
+        "over_prior": -0.04285714285714293
+      },
+      {
+        "id": "exchange-standard-score-2026110803-challenger",
+        "game": "exchange",
+        "scene": "standard",
+        "vs_reflex": -0.049250000000000016,
+        "over_prior": -0.06800000000000006
+      },
+      {
+        "id": "exchange-standard-score-2026110805-challenger",
+        "game": "exchange",
+        "scene": "standard",
+        "vs_reflex": 0.00550000000000006,
+        "over_prior": -0.050000000000000044
+      },
+      {
+        "id": "exchange-standard-score-2026110806-challenger",
+        "game": "exchange",
+        "scene": "standard",
+        "vs_reflex": -0.028249999999999997,
+        "over_prior": -0.039000000000000035
+      },
+      {
+        "id": "exchange-standard-score-2026110807-challenger",
+        "game": "exchange",
+        "scene": "standard",
+        "vs_reflex": -0.03400000000000003,
+        "over_prior": -0.04125000000000001
+      }
+    ],
+    "max_seconds": 73.1704571,
+    "adopted": false,
+    "lesson": "Same-cost stratification raised the overall mean but worsened exchange as a game group; keep the established independent sampling.",
+    "observed_regression": "cover/either seed 2026110806: P1 fired on ticks 1-3 rather than 2-4, lacked ammunition on the decisive tick 4, and did not join the shots that stopped enemy capture in the prior run. Other actions and stochastic hits also changed; this is not a single-cause counterfactual proof."
+  }
+}
