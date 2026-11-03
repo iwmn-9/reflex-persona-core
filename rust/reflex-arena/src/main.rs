@@ -67,7 +67,7 @@ fn config(game: &str, seed: u64, player: usize, profile: usize) -> OwnerConfig {
             names: vec!["0".into(), "1".into(), "2".into()],
             window: 128,
         },
-        contract: format!("arena-{game}-estimated-model-v15"),
+        contract: format!("arena-{game}-estimated-model-v16"),
         purpose_target: "game-purpose".into(),
     }
 }
@@ -89,6 +89,7 @@ fn run<G: ArenaGame>(
     planning_protocol: &str,
     route_selection: bool,
     forecast_guard: bool,
+    fallback_search: bool,
     relationships: bool,
     output: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error>> {
@@ -131,6 +132,7 @@ fn run<G: ArenaGame>(
                     scenario_batches: if modified[i] { scenario_batches } else { 1 },
                     route_selection: route_selection && modified[i],
                     forecast_guard: forecast_guard && modified[i],
+                    fallback_search: fallback_search && modified[i],
                     ..Search::default()
                 },
             )
@@ -518,7 +520,7 @@ fn run<G: ArenaGame>(
         (false, true) => "mutual-counterproposal-v1",
         (false, false) => "none",
     };
-    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"planning_protocol":planning_protocol,"route_selection":route_selection,"forecast_guard":forecast_guard,"relationships":relationships,"intention_protocol":intention_protocol,"frozen_reference":frozen_reference,
+    let report = json!({"complete":true,"game":game,"seed":seed,"horizon":horizon,"second_moves":second_moves,"max_regret":max_regret,"scenario_batches":scenario_batches,"mode":mode,"individual_beliefs":individual,"coordination":coordinate,"intent_sharing":share_intentions,"planning_protocol":planning_protocol,"route_selection":route_selection,"forecast_guard":forecast_guard,"fallback_search":fallback_search,"relationships":relationships,"intention_protocol":intention_protocol,"frozen_reference":frozen_reference,
         "agreement_compatibility":"public-joint-constraints-v1",
         "controllers":(0..world.players()).map(|i|json!({"planned":planning[i],"relationships":social_enabled[i],"settings":planners[i].config(),"intent_sharing":sharing[i],"joint_constraints":sharing[i],"planning_protocol":if planning[i] && (!sharing[i] || planning_protocol == "independent") {"independent"} else if sharing[i] {"counterproposal"} else {"reflex"}})).collect::<Vec<_>>(),
         "profiles":profiles,"profile_names":NAMES,"focal_players":focal,"ticks":world.tick(),"factual_decisions":checks,
@@ -642,10 +644,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let route_selection = route_mode == "persona";
     let guard_mode = *options.get("--forecast-guard").unwrap_or(&"none");
-    if !["none", "batch"].contains(&guard_mode) {
+    if !["none", "batch", "alternatives"].contains(&guard_mode) {
         return Err("known forecast guard required".into());
     }
-    let forecast_guard = guard_mode == "batch";
+    let forecast_guard = guard_mode != "none";
+    let fallback_search = guard_mode == "alternatives";
     let relationship_mode = *options.get("--relationships").unwrap_or(&"off");
     if !["off", "memory"].contains(&relationship_mode) {
         return Err("known relationship mode required".into());
@@ -679,6 +682,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             planning_protocol,
             route_selection,
             forecast_guard,
+            fallback_search,
             relationships,
             output,
         ),
@@ -698,6 +702,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             planning_protocol,
             route_selection,
             forecast_guard,
+            fallback_search,
             relationships,
             output,
         ),
@@ -717,6 +722,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             planning_protocol,
             route_selection,
             forecast_guard,
+            fallback_search,
             relationships,
             output,
         ),

@@ -29,7 +29,7 @@ def main():
     p.add_argument('--reference',choices=('frozen','matched'),default='frozen')
     p.add_argument('--planning-protocol',choices=('counterproposal','independent'),default='counterproposal')
     p.add_argument('--routes',choices=('none','persona'),default='none')
-    p.add_argument('--forecast-guard',choices=('none','batch'),default='none')
+    p.add_argument('--forecast-guard',choices=('none','batch','alternatives'),default='none')
     p.add_argument('--relationships',choices=('off','memory'),default='off')
     p.add_argument('--games',nargs='+',choices=('combat','hagetaka','exchange'),default=('combat','hagetaka','exchange'))
     p.add_argument('--combat-maps',nargs='+',choices=('cover','open','choke'),default=('cover','open','choke'))
