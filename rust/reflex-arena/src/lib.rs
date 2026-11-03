@@ -155,56 +155,7 @@ fn known_offer_intentions<G: ArenaGame>(
     Ok(known)
 }
 
-fn sample_bits(mut bits: u64) -> u64 {
-    bits = (bits ^ (bits >> 30)).wrapping_mul(0xbf58476d1ce4e5b9);
-    bits = (bits ^ (bits >> 27)).wrapping_mul(0x94d049bb133111eb);
-    bits ^ (bits >> 31)
-}
-fn sample_unit(bits: u64) -> f64 {
-    (bits >> 11) as f64 / ((1_u64 << 53) as f64)
-}
-fn scenario_uniforms(
-    seed: u64,
-    tick: u64,
-    person: usize,
-    sampling: behavior::Sampling,
-) -> [f64; 3] {
-    let key = seed
-        ^ tick.wrapping_mul(0x9e3779b97f4a7c15)
-        ^ (person as u64).wrapping_mul(0xbf58476d1ce4e5b9);
-    match sampling {
-        behavior::Sampling::Independent => std::array::from_fn(|sample| {
-            sample_unit(sample_bits(
-                key ^ (sample as u64).wrapping_mul(0x94d049bb133111eb),
-            ))
-        }),
-        behavior::Sampling::Stratified => {
-            const PERMUTATIONS: [[usize; 3]; 6] = [
-                [0, 1, 2],
-                [0, 2, 1],
-                [1, 0, 2],
-                [1, 2, 0],
-                [2, 0, 1],
-                [2, 1, 0],
-            ];
-            let permutation_bits = sample_bits(key ^ 0x66d1_8c42_a72f_b983);
-            let permutation = PERMUTATIONS[((permutation_bits as u128 * 6) >> 64) as usize];
-            std::array::from_fn(|sample| {
-                let stratum = permutation[sample];
-                let jitter = sample_unit(sample_bits(
-                    key ^ 0x4b71_0d39_f624_cda5 ^ (sample as u64).wrapping_mul(0x94d049bb133111eb),
-                ));
-                let lower = stratum as f64 / 3.;
-                let upper = (stratum + 1) as f64 / 3.;
-                ((stratum as f64 + jitter) / 3.)
-                    .max(lower)
-                    .min(f64::from_bits(upper.to_bits() - 1))
-            })
-        }
-    }
-}
-
-/// Public choices sampled with common random numbers across roots.
+/// Independent public choices, sampled with common random numbers across roots.
 pub fn public_scenarios<G: ArenaGame>(
     game: &G,
     viewer: usize,
@@ -227,8 +178,14 @@ pub fn public_scenarios<G: ArenaGame>(
         } else {
             beliefs.predict(&frame, person)?
         };
-        let uniforms = scenario_uniforms(seed, game.tick(), person, beliefs.sampling());
-        for (u, choices) in uniforms.into_iter().zip(&mut scenarios) {
+        for (sample, choices) in scenarios.iter_mut().enumerate() {
+            let mut bits = seed
+                ^ game.tick().wrapping_mul(0x9e3779b97f4a7c15)
+                ^ (person as u64).wrapping_mul(0xbf58476d1ce4e5b9)
+                ^ (sample as u64).wrapping_mul(0x94d049bb133111eb);
+            bits = (bits ^ (bits >> 30)).wrapping_mul(0xbf58476d1ce4e5b9);
+            bits = (bits ^ (bits >> 27)).wrapping_mul(0x94d049bb133111eb);
+            let u = ((bits ^ (bits >> 31)) >> 11) as f64 / ((1_u64 << 53) as f64);
             let mut sum = 0.;
             let mut selected = &probabilities
                 .last()
@@ -328,70 +285,4 @@ pub fn observe_public<G: ArenaGame>(
     }
     *beliefs = next;
     Ok(())
-}
-
-#[cfg(test)]
-mod sampling_tests {
-    use super::*;
-    use crate::behavior::{Beliefs, Sampling};
-    fn stratum(x: f64) -> usize {
-        if x < 1. / 3. {
-            0
-        } else if x < 2. / 3. {
-            1
-        } else {
-            2
-        }
-    }
-    #[test]
-    fn stratified_points_cover_each_interval_and_permute_independently() {
-        for seed in 0..50 {
-            for person in 0..8 {
-                let points = scenario_uniforms(seed, 7, person, Sampling::Stratified);
-                let mut bins = points.map(stratum);
-                bins.sort();
-                assert_eq!(bins, [0, 1, 2]);
-                assert_eq!(
-                    points,
-                    scenario_uniforms(seed, 7, person, Sampling::Stratified)
-                );
-                assert!(points.iter().all(|u| (0. ..1.).contains(u)));
-            }
-        }
-        let permutations: BTreeSet<_> = (0..8)
-            .map(|person| scenario_uniforms(701, 7, person, Sampling::Stratified).map(stratum))
-            .collect();
-        assert!(permutations.len() > 1);
-        assert_eq!(
-            scenario_uniforms(701, 7, 3, Sampling::Independent),
-            [
-                0.12356013318489922,
-                0.030885602649661448,
-                0.5599001803738469
-            ]
-        );
-    }
-    #[test]
-    fn sampled_public_actions_are_legal_and_replayable() {
-        let game = crate::games::Combat::new(7, "open", "either", 8);
-        let alphabet = game.behavior(0, 0).unwrap().alphabet;
-        for mode in [Sampling::Independent, Sampling::Stratified] {
-            let beliefs =
-                Beliefs::new_with_sampling("test".into(), 0, alphabet.clone(), mode).unwrap();
-            let before = beliefs.checkpoint().unwrap();
-            let rows = public_scenarios(&game, 0, &beliefs, 701).unwrap();
-            assert_eq!(rows, public_scenarios(&game, 0, &beliefs, 701).unwrap());
-            assert_eq!(rows.len(), 3);
-            for row in rows {
-                for (person, action) in row.iter().enumerate() {
-                    assert!(game
-                        .behavior(0, person)
-                        .unwrap()
-                        .actions
-                        .contains_key(action));
-                }
-            }
-            assert_eq!(beliefs.checkpoint().unwrap(), before);
-        }
-    }
 }

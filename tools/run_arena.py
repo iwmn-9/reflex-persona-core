@@ -31,7 +31,6 @@ def main():
     p.add_argument('--routes',choices=('none','persona'),default='none')
     p.add_argument('--forecast-guard',choices=('none','batch','alternatives'),default='none')
     p.add_argument('--relationships',choices=('off','memory'),default='off')
-    p.add_argument('--sampling',choices=('independent','stratified'),default='independent')
     p.add_argument('--games',nargs='+',choices=('combat','hagetaka','exchange'),default=('combat','hagetaka','exchange'))
     p.add_argument('--combat-maps',nargs='+',choices=('cover','open','choke'),default=('cover','open','choke'))
     a=p.parse_args()
@@ -51,7 +50,7 @@ def main():
                 seed=a.seed_start+index
                 name=f'{game}-{board or "standard"}-{goal or "score"}-{seed}-{mode}'
                 jobs.append(dict(id=name,game=game,map=board,goal=goal,seed=seed,mode=mode))
-    manifest=dict(jobs=jobs,horizon=a.horizon,second_moves=a.second_moves,max_regret=a.max_regret,scenario_batches=a.scenario_batches,turns=32,beliefs=a.beliefs,coordination=a.coordination,intent_sharing=a.intent_sharing,reference=a.reference,planning_protocol=a.planning_protocol,routes=a.routes,forecast_guard=a.forecast_guard,relationships=a.relationships,sampling=a.sampling,opponent_models="adapter",binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),
+    manifest=dict(jobs=jobs,horizon=a.horizon,second_moves=a.second_moves,max_regret=a.max_regret,scenario_batches=a.scenario_batches,turns=32,beliefs=a.beliefs,coordination=a.coordination,intent_sharing=a.intent_sharing,reference=a.reference,planning_protocol=a.planning_protocol,routes=a.routes,forecast_guard=a.forecast_guard,relationships=a.relationships,opponent_models="adapter",binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),
         sources={str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest()
             for f in sorted((ROOT/'rust').glob('reflex-*/src/*.rs'))},
         purpose='Native mixed-personality actual games and behavior review; not automatic adoption',
@@ -59,7 +58,7 @@ def main():
     (a.output/'plan.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf8')
     def run(job):
         command=[str(binary.resolve()),'--game',job['game'],'--seed',str(job['seed']),
-            '--mode',job['mode'],'--horizon',str(a.horizon),'--second-moves',str(a.second_moves),'--max-regret',str(a.max_regret),'--scenario-batches',str(a.scenario_batches),'--turns','32','--beliefs',a.beliefs,'--coordination',a.coordination,'--intent-sharing',a.intent_sharing,'--reference',a.reference,'--planning-protocol',a.planning_protocol,'--routes',a.routes,'--forecast-guard',a.forecast_guard,'--relationships',a.relationships,'--sampling',a.sampling,'--out',str((a.output/(job['id']+'.json')).resolve())]
+            '--mode',job['mode'],'--horizon',str(a.horizon),'--second-moves',str(a.second_moves),'--max-regret',str(a.max_regret),'--scenario-batches',str(a.scenario_batches),'--turns','32','--beliefs',a.beliefs,'--coordination',a.coordination,'--intent-sharing',a.intent_sharing,'--reference',a.reference,'--planning-protocol',a.planning_protocol,'--routes',a.routes,'--forecast-guard',a.forecast_guard,'--relationships',a.relationships,'--out',str((a.output/(job['id']+'.json')).resolve())]
         if job['map']:command+=['--map',job['map'],'--goal',job['goal']]
         result=subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,encoding='utf8',timeout=600)
         if result.returncode:raise RuntimeError(f"{job['id']}: {result.stderr[-2000:]}")
