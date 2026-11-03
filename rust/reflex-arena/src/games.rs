@@ -180,6 +180,8 @@ fn make_input_scenarios<W: World>(w: &W, p: usize, choices: &[Vec<String>]) -> R
             opponent: None,
         },
         bindings,
+        // These labels index forecast samples, not world outcomes. Actual play
+        // resolves every independently controlled participant's chosen action.
         responses: prediction::Inputs {
             context: vec![],
             legal: vec!["0".into(), "1".into(), "2".into()],

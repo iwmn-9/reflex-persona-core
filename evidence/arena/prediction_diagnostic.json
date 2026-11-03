@@ -5,226 +5,44 @@
   "replay": {
     "arena_connected_guard_20261103": {
       "matches": 120,
-      "source": "arena_connected_guard_20261103",
-      "sha256": {
-        "rust/reflex-arena/src/behavior.rs": "0e34ca7dbe80d77bd5535d296a519f3aa47524ab360846f032d530ccbe12ad5f",
-        "rust/reflex-arena/src/games.rs": "bcd4a054ac2821b3e0dcd6116344aabd2845ee10ad7b81aa9c5522963030c999",
-        "rust/reflex-arena/src/lib.rs": "cbc9b01521a73f757beb79857b59abbf352448a644c3bd8322e4530ef039b54b",
-        "rust/reflex-owned/src/prediction.rs": "36b04753668cfc049f3a4d3b37d22d26bce8b6372283603de9e5945a1baa5334",
-        "results/arena_action_replay_tmp/src/hypotheses.rs": "4affdfa07d19ba82aa2762244fafa1ed3d6a18296d8a4a9cd26b43af0ea4a16b",
-        "results/arena_action_replay_tmp/src/mixture.rs": "ab3ecaa0a9b111503cdd456ef874bf06554f347cf80a463a225c58f5d5620c65",
-        "results/arena_action_replay_tmp/src/main.rs": "14da6fbbab613f71ad07a372361acc68962f6f5f81ec9279f903f35ddb7cf220",
-        "results/arena_action_replay_tmp/target/release/arena-action-replay.exe": "508d52edc54c9da04041fac94699da49a3c62ff4258f2e4906cf31dd956578d1"
-      },
-      "metrics": {
-        "all": {
-          "combined_class": {
-            "brier": 0.7061641936040978,
-            "logloss": 1.480067300162084,
-            "mean_actual_probability": 0.38311805963417733
-          },
-          "combined_unproposed": 12121,
-          "combined_unproposed_rate": 0.21640392065844208,
-          "new_class": {
-            "brier": 0.7275067316831788,
-            "logloss": 1.5363319184563495,
-            "mean_actual_probability": 0.3808423284907267
-          },
-          "new_unproposed": 27702,
-          "new_unproposed_rate": 0.4945814215064898,
-          "old_class": {
-            "brier": 0.7528995394789285,
-            "logloss": 1.5814184474523285,
-            "mean_actual_probability": 0.3585508686977514
-          },
-          "old_unproposed": 17263,
-          "old_unproposed_rate": 0.30820731641998894,
-          "predictions": 56011
-        },
-        "combat": {
-          "combined_class": {
-            "brier": 0.7350035488270356,
-            "logloss": 1.5180598699098766,
-            "mean_actual_probability": 0.3710755358362808
-          },
-          "combined_unproposed": 8260,
-          "combined_unproposed_rate": 0.194467333725721,
-          "new_class": {
-            "brier": 0.7359421808996593,
-            "logloss": 1.5288739778402691,
-            "mean_actual_probability": 0.37998130741820485
-          },
-          "new_unproposed": 21000,
-          "new_unproposed_rate": 0.49440847557386697,
-          "old_class": {
-            "brier": 0.7931420175400011,
-            "logloss": 1.6403938293438975,
-            "mean_actual_probability": 0.3393593844089858
-          },
-          "old_unproposed": 12280,
-          "old_unproposed_rate": 0.2891112419070041,
-          "predictions": 42475
-        },
-        "exchange": {
-          "combined_class": {
-            "brier": 0.5848333487130559,
-            "logloss": 1.261471476314114,
-            "mean_actual_probability": 0.4611432909572404
-          },
-          "combined_unproposed": 2661,
-          "combined_unproposed_rate": 0.2887369791666667,
-          "new_class": {
-            "brier": 0.7006960232464429,
-            "logloss": 1.5375454162416768,
-            "mean_actual_probability": 0.4038164465871819
-          },
-          "new_unproposed": 4404,
-          "new_unproposed_rate": 0.4778645833333333,
-          "old_class": {
-            "brier": 0.5775462272099018,
-            "logloss": 1.2471415455972215,
-            "mean_actual_probability": 0.46492562639299606
-          },
-          "old_unproposed": 2994,
-          "old_unproposed_rate": 0.3248697916666667,
-          "predictions": 9216
-        },
-        "hagetaka": {
-          "combined_class": {
-            "brier": 0.6814497152296296,
-            "logloss": 1.5728554280659088,
-            "mean_actual_probability": 0.3350684453847318
-          },
-          "combined_unproposed": 1200,
-          "combined_unproposed_rate": 0.2777777777777778,
-          "new_class": {
-            "brier": 0.7017640889709017,
-            "logloss": 1.6070709073642462,
-            "mean_actual_probability": 0.3402965872126668
-          },
-          "new_unproposed": 2298,
-          "new_unproposed_rate": 0.5319444444444444,
-          "old_class": {
-            "brier": 0.731315481661132,
-            "logloss": 1.7146861746863609,
-            "mean_actual_probability": 0.3203121020880749
-          },
-          "old_unproposed": 1989,
-          "old_unproposed_rate": 0.46041666666666664,
-          "predictions": 4320
-        }
+      "logloss_before_after": {
+        "all": [
+          1.5814184474523285,
+          1.480067300162084
+        ],
+        "combat": [
+          1.6403938293438975,
+          1.5180598699098766
+        ],
+        "exchange": [
+          1.2471415455972215,
+          1.261471476314114
+        ],
+        "hagetaka": [
+          1.7146861746863609,
+          1.5728554280659088
+        ]
       }
     },
     "arena_connected_independent_20261103": {
       "matches": 120,
-      "source": "arena_connected_independent_20261103",
-      "sha256": {
-        "rust/reflex-arena/src/behavior.rs": "0e34ca7dbe80d77bd5535d296a519f3aa47524ab360846f032d530ccbe12ad5f",
-        "rust/reflex-arena/src/games.rs": "bcd4a054ac2821b3e0dcd6116344aabd2845ee10ad7b81aa9c5522963030c999",
-        "rust/reflex-arena/src/lib.rs": "cbc9b01521a73f757beb79857b59abbf352448a644c3bd8322e4530ef039b54b",
-        "rust/reflex-owned/src/prediction.rs": "36b04753668cfc049f3a4d3b37d22d26bce8b6372283603de9e5945a1baa5334",
-        "results/arena_action_replay_tmp/src/hypotheses.rs": "4affdfa07d19ba82aa2762244fafa1ed3d6a18296d8a4a9cd26b43af0ea4a16b",
-        "results/arena_action_replay_tmp/src/mixture.rs": "ab3ecaa0a9b111503cdd456ef874bf06554f347cf80a463a225c58f5d5620c65",
-        "results/arena_action_replay_tmp/src/main.rs": "14da6fbbab613f71ad07a372361acc68962f6f5f81ec9279f903f35ddb7cf220",
-        "results/arena_action_replay_tmp/target/release/arena-action-replay.exe": "508d52edc54c9da04041fac94699da49a3c62ff4258f2e4906cf31dd956578d1"
-      },
-      "metrics": {
-        "all": {
-          "combined_class": {
-            "brier": 0.701393457213944,
-            "logloss": 1.4735134991370713,
-            "mean_actual_probability": 0.3843114515400734
-          },
-          "combined_unproposed": 11744,
-          "combined_unproposed_rate": 0.21391231489408208,
-          "new_class": {
-            "brier": 0.7233550098890827,
-            "logloss": 1.5350973638387133,
-            "mean_actual_probability": 0.3820573503279778
-          },
-          "new_unproposed": 27122,
-          "new_unproposed_rate": 0.4940165024316497,
-          "old_class": {
-            "brier": 0.7550601082437981,
-            "logloss": 1.5833275820835468,
-            "mean_actual_probability": 0.35465522228249485
-          },
-          "old_unproposed": 16644,
-          "old_unproposed_rate": 0.3031638767964154,
-          "predictions": 54901
-        },
-        "combat": {
-          "combined_class": {
-            "brier": 0.7307701058570334,
-            "logloss": 1.508121263406018,
-            "mean_actual_probability": 0.3710458997134845
-          },
-          "combined_unproposed": 7865,
-          "combined_unproposed_rate": 0.19013658890366253,
-          "new_class": {
-            "brier": 0.7287364458101621,
-            "logloss": 1.5188308050278099,
-            "mean_actual_probability": 0.38278125018189524
-          },
-          "new_unproposed": 20255,
-          "new_unproposed_rate": 0.48966517587332287,
-          "old_class": {
-            "brier": 0.8004747214065471,
-            "logloss": 1.647571212908914,
-            "mean_actual_probability": 0.3314572925080602
-          },
-          "old_unproposed": 11820,
-          "old_unproposed_rate": 0.28574882146742414,
-          "predictions": 41365
-        },
-        "exchange": {
-          "combined_class": {
-            "brier": 0.5766990458065523,
-            "logloss": 1.2529170399335752,
-            "mean_actual_probability": 0.4686655923155976
-          },
-          "combined_unproposed": 2601,
-          "combined_unproposed_rate": 0.2822265625,
-          "new_class": {
-            "brier": 0.7000341152023571,
-            "logloss": 1.5446507104449074,
-            "mean_actual_probability": 0.4038095243719327
-          },
-          "new_unproposed": 4497,
-          "new_unproposed_rate": 0.4879557291666667,
-          "old_class": {
-            "brier": 0.5671967135902956,
-            "logloss": 1.2323437557830428,
-            "mean_actual_probability": 0.474802088055024
-          },
-          "old_unproposed": 2877,
-          "old_unproposed_rate": 0.3121744791666667,
-          "predictions": 9216
-        },
-        "hagetaka": {
-          "combined_class": {
-            "brier": 0.6861199906421115,
-            "logloss": 1.6127419248392012,
-            "mean_actual_probability": 0.33137668068808435
-          },
-          "combined_unproposed": 1278,
-          "combined_unproposed_rate": 0.29583333333333334,
-          "new_class": {
-            "brier": 0.7215777572402708,
-            "logloss": 1.6704729571008217,
-            "mean_actual_probability": 0.32872120369692637
-          },
-          "new_unproposed": 2370,
-          "new_unproposed_rate": 0.5486111111111112,
-          "old_class": {
-            "brier": 0.7209799164961415,
-            "logloss": 1.7169454418270265,
-            "mean_actual_probability": 0.32046745611582406
-          },
-          "old_unproposed": 1947,
-          "old_unproposed_rate": 0.45069444444444445,
-          "predictions": 4320
-        }
+      "logloss_before_after": {
+        "all": [
+          1.5833275820835468,
+          1.4735134991370713
+        ],
+        "combat": [
+          1.647571212908914,
+          1.508121263406018
+        ],
+        "exchange": [
+          1.2323437557830428,
+          1.2529170399335752
+        ],
+        "hagetaka": [
+          1.7169454418270265,
+          1.6127419248392012
+        ]
       }
     }
   },
@@ -296,5 +114,6 @@
     "Synthetic personas alone omitted social claims; retaining adapter hypotheses improved coverage.",
     "Better average prediction did not produce uniform policy gains. The six-model mode remains optional and unadopted.",
     "Current milestone holds a shared literal prefix, not an abstract goal. It rarely activates in combat."
-  ]
+  ],
+  "removed_from_runtime": "af843b8; historical experiment remains at c8285ed"
 }

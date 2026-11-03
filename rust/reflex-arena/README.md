@@ -8,11 +8,11 @@
 
 ```sh
 cargo build --release --manifest-path rust/Cargo.toml -p reflex-arena
-python tools/run_arena.py --output results/my_arena --seeds 4 --workers 2 --horizon 6 --second-moves 0 --max-regret 1 --scenario-batches 3 --intent-sharing proposals --reference frozen --modes reflex challenger planned
+python tools/run_arena.py --output results/my_arena --seeds 4 --workers 2 --horizon 6 --second-moves 0 --max-regret 1 --scenario-batches 3 --intent-sharing proposals --reference frozen --modes reflex challenger planned --planning-protocol independent --routes persona --forecast-guard batch
 python tools/arena_replay.py results/my_arena --out evidence/arena/replay.html --summary evidence/arena/summary.json --view-modes planned
 ```
 
-`output` は新規フォルダを指定する。CLIの既定値は `reflex`。全員が即時判断と1手の合意評価を使う。`planned` は全員が計画、`challenger` は一チームまたは一人だけ計画を使う。計画の既定上限は6手で、常用の採用は未達。全員が実結果から学ぶ。性能比較は同じ乱数・人格配置の `reflex` と `challenger` の対象者について行う。全員自己対戦の勝率平均で優位性を主張しない。
+`output` は新規フォルダを指定する。CLIの既定値は `reflex`。全員が即時判断と1手の合意評価を使う。`planned` は全員が計画、`challenger` は一チームまたは一人だけ計画を使う。現在の研究用比較は6手・9標本。実ゲームでの常用負荷と未知ゲームの品質は未確認。全員が実結果から学ぶ。性能比較は同じ乱数・人格配置の `reflex` と `challenger` の対象者について行う。全員自己対戦の勝率平均で優位性を主張しない。
 
 `--reference frozen` が比較の既定。reflexは全員、challengerは対象者以外を従来の即時判断（目的帯0.15、1手、予定共有なし）に固定する。変更された本人と、変更されていない相手を同じ対戦に置く。`matched` は過去の切り分け再現用で、対照にも指定した目的帯や共有方式が作用する。
 
